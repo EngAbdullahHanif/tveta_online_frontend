@@ -4,9 +4,9 @@ import axios from 'axios';
 
 import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from 'containers/pages/ListPageHeading';
+import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
 
-import ListPageListing from 'containers/pages/ListPageListing';
+import ListPageListing from 'views/app/teachers/bio/teacher-list/TeacherListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -37,7 +37,7 @@ const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedPageSize, setSelectedPageSize] = useState(8);
+  const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
     column: 'title',
     label: 'Product Name',
@@ -69,7 +69,7 @@ const ThumbListPages = ({ match }) => {
         })
         .then((data) => {
 
-          console.log(data, "lorem sdfkaslhfkalsdhfkashdfkjashfkjncisdahfciundiashfuiaerhfsdkasdnasdkfiasdhihsdiu8kdjljio99999999999999999999999999999999999999999999999999999999999 ")
+          console.log(data, "Teacher list data fatched using axios ")
           console.log("data total Items", data.totalItem)
                   
           setTotalPage(data.totalPage);

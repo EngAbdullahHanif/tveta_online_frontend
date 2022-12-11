@@ -4,9 +4,9 @@ import axios from 'axios';
 
 import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from 'containers/pages/ListPageHeading';
+import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
 import AddNewModal from 'containers/pages/AddNewModal';
-import ListPageListing from 'containers/pages/ListPageListing';
+import ListPageListing from 'views/app/teachers/bio/teacher-list/TeacherListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {

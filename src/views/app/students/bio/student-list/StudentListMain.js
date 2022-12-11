@@ -4,9 +4,9 @@ import axios from 'axios';
 
 import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
-import AddNewModal from 'containers/pages/AddNewModal';
-import ListPageListing from 'views/app/teachers/bio/teacher-list/TeacherListCatagory';
+import ListPageHeading from 'views/app/students/bio/student-list/StudentListHeading';
+
+import ListPageListing from 'views/app/students/bio/student-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -25,7 +25,7 @@ const orderOptions = [
   { column: 'category', label: 'Category' },
   { column: 'status', label: 'Status' },
 ];
-const pageSizes = [4, 8, 12, 20];
+const pageSizes = [10, 20, 40, 80];
 
 const categories = [
   { label: 'Cakes', value: 'Cakes', key: 0 },
@@ -37,7 +37,7 @@ const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedPageSize, setSelectedPageSize] = useState(8);
+  const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
     column: 'title',
     label: 'Product Name',
@@ -63,21 +63,32 @@ const ThumbListPages = ({ match }) => {
         )
         .then((res) => {
           return res.data;
+
+
+       
         })
         .then((data) => {
+
+          console.log(data, "lorem Students Data ")
+          console.log("data total Items", data.totalItem)
+                  
           setTotalPage(data.totalPage);
           setItems(
             data.data.map((x) => {
+                 console.log("Single Value of the array ", x)
               return { ...x, img: x.img.replace('img/', 'img/products/') };
+           
             })
           );
           setSelectedItems([]);
           setTotalItemCount(data.totalItem);
           setIsLoaded(true);
         });
+
     }
     fetchData();
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
+
 
   const onCheckItem = (event, id) => {
     if (
@@ -154,16 +165,20 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
+  console.log("Data displayed on the table", items)
+
   return !isLoaded ? (
     <div className="loading" />
   ) : (
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="menu.thumb-list"
+            heading="د شاگرد لست/لست شاگردان"
+            // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
-          handleChangeSelectAll={handleChangeSelectAll}
+            handleChangeSelectAll={handleChangeSelectAll}
+            // following code is used for order the list based on different element of the prod
           changeOrderBy={(column) => {
             setSelectedOrderOption(
               orderOptions.find((x) => x.column === column)
@@ -187,11 +202,7 @@ const ThumbListPages = ({ match }) => {
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />
-        <AddNewModal
-          modalOpen={modalOpen}
-          toggleModal={() => setModalOpen(!modalOpen)}
-          categories={categories}
-        />
+    
         <ListPageListing
           items={items}
           displayMode={displayMode}
@@ -201,7 +212,8 @@ const ThumbListPages = ({ match }) => {
           totalPage={totalPage}
           onContextMenuClick={onContextMenuClick}
           onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
+            onChangePage={setCurrentPage}
+            
         />
       </div>
     </>

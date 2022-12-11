@@ -8,11 +8,12 @@ import {
   ModalFooter,
 } from 'reactstrap';
 
-import Pagination from './Pagination';
-import ContextMenuContainer from './ContextMenuContainer';
-import DataListView from './DataListView';
-import ImageListView from './ImageListView';
-import ThumbListView from './ThumbListView';
+import Pagination from '../../../../../containers/pages/Pagination';
+import ContextMenuContainer from '../../../../../containers/pages/ContextMenuContainer';
+import DataListView from '../../../../../containers/pages/DataListView';
+import ImageListView from '../../../../../containers/pages/ImageListView';
+import TeacherListBody from './TeacherListBody';
+
 
 
 function collect(props) {
@@ -50,7 +51,7 @@ const ListPageListing = ({
           }
           if (displayMode === 'thumblist') {
             return (
-              <ThumbListView
+              <TeacherListBody
                 key={product.id}
                 product={product}
                 isSelect={selectedItems.includes(product.id)}

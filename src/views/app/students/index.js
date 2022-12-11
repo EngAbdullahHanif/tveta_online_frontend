@@ -10,7 +10,7 @@ const RegisterKankor = React.lazy(() =>
 );
 
 const StudentList = React.lazy(() =>
-  import(/* webpackChunkName: "student-list" */ './bio/student-list')
+  import(/* webpackChunkName: "student-list" */ './bio/student-list/StudentListMain')
 );
 
 const Students = ({ match }) => (

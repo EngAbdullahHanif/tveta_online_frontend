@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-const ThumbListView = ({ product, isSelect, collect, onCheckItem }) => {
+const StudentListBody = ({ product, isSelect, collect, onCheckItem }) => {
   return (
     <Colxx xxs="12" key={product.id} className="mb-3">
       <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
@@ -59,4 +59,4 @@ const ThumbListView = ({ product, isSelect, collect, onCheckItem }) => {
 };
 
 /* React.memo detail : https://reactjs.org/docs/react-api.html#reactpurecomponent  */
-export default React.memo(ThumbListView);
+export default React.memo(StudentListBody);

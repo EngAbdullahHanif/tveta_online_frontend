@@ -17,7 +17,7 @@ import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
-import Breadcrumb from '../navs/Breadcrumb';
+// import Breadcrumb from '../navs/Breadcrumb';
 
 const ListPageHeading = ({
   intl,
@@ -37,7 +37,7 @@ const ListPageHeading = ({
   onSearchKey,
   orderOptions,
   pageSizes,
-  toggleModal,
+  // toggleModal,
   heading,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
@@ -51,16 +51,16 @@ const ListPageHeading = ({
           <h1>
             <IntlMessages id={heading} />
           </h1>
-
           <div className="text-zero top-right-button-container">
-            <Button
+
+            {/* <Button
               color="primary"
               size="lg"
               className="top-right-button"
               onClick={() => toggleModal()}
             >
               <IntlMessages id="pages.add-new" />
-            </Button>
+            </Button> */}
             {'  '}
             <ButtonDropdown
               isOpen={dropdownSplitOpen}
@@ -100,7 +100,7 @@ const ListPageHeading = ({
               </DropdownMenu>
             </ButtonDropdown>
           </div>
-          <Breadcrumb match={match} />
+          {/* <Breadcrumb match={match} /> */}
         </div>
 
         <div className="mb-2">

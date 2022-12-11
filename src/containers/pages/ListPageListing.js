@@ -80,7 +80,7 @@ const ListPageListing = ({
         />
       </Row>
       {/* مودال اطلاعه به کاربر */}
-      <Modal
+      {/* <Modal
         isOpen={modalBasic}
         toggle={() => setModalBasic(!modalBasic)}
       >
@@ -104,7 +104,7 @@ const ListPageListing = ({
             اکی فهمیدم!
           </Button>{' '}
         </ModalFooter>
-      </Modal>
+      </Modal> */}
     </>
   );
 };

@@ -83,6 +83,7 @@ module.exports = {
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.institute_list': 'لست انستیتوت/لیسه',
+  'menu.institute_create': 'ساختن انستیتوت/لیسه',
   'menu.todo': 'لیست To-do',
   'menu.survey': 'نظرسنجی',
   'menu.chat': 'چت',
@@ -464,6 +465,7 @@ module.exports = {
 
   /* 07.10.Forms */
   'forms.basic': 'ساده',
+  'forms.title': 'بیوگرافی',
   'forms.email': 'پست الکترونیک',
   'forms.email-muted':
     'ما هرگز ایمیل شما را با شخص دیگری به اشتراک نمی گذاریم.',
@@ -480,7 +482,7 @@ module.exports = {
   'forms.top-labels-over-line': 'قرارگرفتن برچسب بیرون خط',
   'forms.tags': 'برچسب ها',
   'forms.date': 'تاریخ',
-  'forms.state': 'استان',
+  'forms.tazkira': 'د تذکرې ډول/نوع تذکره',
   'forms.top-labels-in-input': 'قرارگرفتن برچسب داخل اینپوت',
   'forms.email-u': 'پست الکترونیک',
   'forms.password-u': 'کلمه عبور',
@@ -503,7 +505,25 @@ module.exports = {
   'forms.firstname-message': 'لطفا نام خود را وارد کنید',
   'forms.lastname': 'نام خانوادگی',
   'forms.lastname-message': 'لطفا نام خانوادگی خود را وارد کنید',
-  'forms.name': 'نام',
+  'forms.StdName': 'نوم/نام', 
+  'forms.Eng_name': 'انګریزی نوم / نام انگلسی',
+  'forms.StdFatherName': 'د پلار نوم/نام پدر',
+  'forms.Std_father_Eng_Name': 'د پلار نوم په انګریزي/نام پدر به انگلسی',
+  'forms.electronic': 'الکترونیکی',
+  'forms.paper': 'کاغذی',
+  'forms.nameerror': 'نوم اړین دی/ نام ضروری است',
+  'forms.nameChar': 'نوم باید له ۳ تورو ډیر وي/ نام باید بیشتر از ۳ حرف باشد',
+  'forms.englishNameError': 'انګریزی نوم اړین دی/ نام انگلسی ضروری است',
+  'forms.StdFatherNameError': 'د پلار نوم اړین دی/ درج نام پدر ضروری است',
+  'forms.FatherEnglishNameErr': 'د پلار انګریزی نوم اړین دی/ درج نام انگلسی پدر  ضروری است',
+  'forms.StdFatherDutyLabel': 'د پلار دنده/ وظیفه پدر',
+  'forms.StdFatherDutyErr': 'د پلار دنده اړین ده/ وظیفه پدر ضروری است',
+  'forms.StdDoBLabel': 'د زیږیدنې نيټه/ تاریخ تولد',
+  'forms.StdDoBErr': 'د زیږیدنې نیټه اړین دی/ تاریخ تولد ضروری است',
+  'forms.StdFatherDutyLocationLabel': 'د پلار د دندې ځای/محل وظیفه پدر',
+  'forms.StdFatherDutyLocationErr': 'د پلار د دندې ځای اړین دی/محل وظیفه پدر ضروری است',
+
+        
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Inputs سفارشی',

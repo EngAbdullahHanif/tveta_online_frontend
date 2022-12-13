@@ -460,6 +460,7 @@ module.exports = {
   /* 07.10.Forms */
   'forms.basic': 'Basic',
   'forms.email': 'E-mail',
+  'forms.title': 'Biography',
   'forms.email-muted': "We'll never share your email with anyone else.",
   'forms.password': 'Password',
   'forms.password-confirm': 'Confirm Password',
@@ -474,7 +475,7 @@ module.exports = {
   'forms.top-labels-over-line': 'Top Labels Over Line',
   'forms.tags': 'Tags',
   'forms.date': 'Date',
-  'forms.state': 'State',
+  'forms.tazkira': 'ID card (Tazkira)',
   'forms.top-labels-in-input': 'Top Labels In Input',
   'forms.email-u': 'E-MAIL',
   'forms.password-u': 'PASSWORD',
@@ -497,8 +498,28 @@ module.exports = {
   'forms.firstname-message': 'Please enter your first name!',
   'forms.lastname': 'Last name',
   'forms.lastname-message': 'Please enter your last name!',
-  'forms.name': 'Name',
+  'forms.StdName': 'Name',
+  'forms.Eng_name': 'English name',
+  'forms.StdFatherName': 'Father Name',
 
+  'forms.Std_father_Eng_Name': 'Father English Name',
+  'forms.electronic': 'Electronic',
+  'forms.paper': 'Paper',
+  'forms.nameerror': 'Name is required!',
+  'forms.nameChar': 'Name should be atleast  3 character',
+  'forms.englishNameError':'English name is required',
+  'forms.StdFatherNameError': 'father name is required!',
+   'forms.FatherEnglishNameErr': 'Father English Name Is Required!',
+  'forms.StdFatherDutyLabel': 'Father Duty',
+  'forms.StdFatherDutyErr': 'Father Duty Field id Required!',
+  'forms.StdDoBLabel': 'Date of Birth',
+  'forms.StdDoBErr': 'Date of birth Required!',
+  'forms.StdFatherDutyLocationLabel': 'Father Duty Location',
+  'forms.StdFatherDutyLocationErr': 'Father Duty Location is Required!',
+  // 'forms.StdFatherDutyLocationErr': 'Father Duty Location is Required!',
+
+  // TazkiraTypeDefaultValue
+  
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Custom Inputs',
   'form-components.checkboxes': 'Checkboxes',

@@ -78,7 +78,7 @@ const App = ({ match }) => {
             />
 
             <Route
-              path={`${match.url}/institues`}
+              path={`${match.url}/institutes`}
               render={(props) => <Institues {...props} />}
             />
 

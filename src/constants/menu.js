@@ -241,8 +241,8 @@ const data = [
       },
       {
         icon: 'simple-icon-calculator',
-        label: 'menu.survey',
-        to: `${adminRoot}/applications/survey`,
+        label: 'menu.institute_create',
+        to: `${adminRoot}/institutes/institute-create`,
       },
       {
         icon: 'simple-icon-bubbles',

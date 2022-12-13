@@ -77,6 +77,9 @@ const StudentRegistrationBio = () => {
         </AvForm>
       </CardBody>
     </Card>
+
+
+      
   );
 };
 

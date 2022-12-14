@@ -16,9 +16,8 @@ const Footer = () => {
               <p className=" mb-0 text-muted ">اداره تعلیمات تخنیکی و مسلکی</p>
             </Colxx>
             <Colxx className="col-sm-6 d-none d-sm-block">
-             <p className="mb-0 text-muted">Technical and Vocational Education and Training Afghanistan</p>
+             <p className="mb-0 text-muted">Technical and Vocational Education and Training  Authority</p>
             </Colxx>
-           
           </Row>
         </div>
       </div>

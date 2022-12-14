@@ -21,6 +21,7 @@ import {
 } from '../../../../containers/form-validations/FormikFields';
 
 const SignupSchema = Yup.object().shape({
+
   StdName: Yup.string()
      .min(3, <IntlMessages id="forms.nameChar" />)
     .required(<IntlMessages id="forms.nameerror" />),
@@ -46,26 +47,62 @@ const SignupSchema = Yup.object().shape({
 
         StdDoB: Yup.date()
     .required(<IntlMessages id="forms.StdDoBErr" />),
-  
+        
+            StdTazkiraNo: Yup.string()
+    .required(<IntlMessages id="forms.StdTazkiraNoErr" />),
+            
+             StdIdCardPageNo: Yup.string()
+    .required(<IntlMessages id="forms.StdIdCardPageNoErr" />),
+             
+                         StdIdCardCover: Yup.string()
+    .required(<IntlMessages id="forms.StdIdCardCoverErr" />),
+                         
+    StdIdCardSakukNo: Yup.string()
+    .required(<IntlMessages id="forms.StdIdCardSakukNoErr" />),
 
-  
-  
+        Province: Yup.string()
+    .required(<IntlMessages id="forms.ProvinceErr" />),
+        
+           District: Yup.string()
+    .required(<IntlMessages id="forms.DistrictErr" />),
+           
+                   Village: Yup.string()
+    .required(<IntlMessages id="forms.VillageErr" />),
+                   
+                           C_Province: Yup.string()
+    .required(<IntlMessages id="forms.ProvinceErr" />),
+        
+           C_District: Yup.string()
+    .required(<IntlMessages id="forms.DistrictErr" />),
+           
+                   C_Village: Yup.string()
+    .required(<IntlMessages id="forms.VillageErr" />),
+                                    StdPlaceOfBirth: Yup.string()
+    .required(<IntlMessages id="forms.StdPlaceOfBirthErr" />),
+                
  
 });
 
 const options = [
-  { value: 'Electronic', label: 'الکترونیکی' },
-  { value: 'paper', label: 'کاغذی', },
+  { value: 'Electronic', label: <IntlMessages id="forms.StdTazkiraElectronic" />  },
+  { value: 'paper', label: <IntlMessages id="forms.StdTazkiraPaper" />  },
 
+];
+
+const EducationLevelOptions =  [
+  { value: '9th', label: <IntlMessages id="forms.EducationalLevel_9th" />  },
+  { value: '10th', label: <IntlMessages id="forms.EducationalLevel_10th" /> },
+    { value: '11th', label: <IntlMessages id="forms.EducationalLevel_11th" />  },
+  { value: '12th', label: <IntlMessages id="forms.EducationalLevel_12th" /> },  
+      { value: '13th', label: <IntlMessages id="forms.EducationalLevel_13th" />  },
+  { value: '14th', label: <IntlMessages id="forms.EducationalLevel_14th" /> }, 
 ];
 
 
 
 
 
-
-
-const FormikCustomWithTopLabels = () => {
+const StudentRegistraion = () => {
   const onSubmit = (values, { setSubmitting }) => {
     const payload = {
       ...values,
@@ -92,7 +129,8 @@ const FormikCustomWithTopLabels = () => {
                     <CardBody>   
        <Formik
             initialValues={{
-              state: { value: 'Electronic', label: <IntlMessages id="forms.TazkiraTypeDefaultValue"/>} 
+              state: { value: '', label: <IntlMessages id="forms.TazkiraTypeDefaultValue" /> } ,
+              EducationLevel: { value: '', label: <IntlMessages id="forms.EducationLevelDefaultValue"/>} 
             
                  
                   }}
@@ -112,11 +150,9 @@ const FormikCustomWithTopLabels = () => {
                   }) => (
               <Form className="av-tooltip tooltip-label-bottom">
                 
-            {!isNext ? (
-
+            {!isNext? (
                   <Row  className="mb-4">
                   <Colxx xxs="6">
-
                       {/* Name */}
                         <FormGroup className="form-group has-float-label">
                       <Label>
@@ -156,7 +192,6 @@ const FormikCustomWithTopLabels = () => {
                       ) : null}
                       </FormGroup>
 
-                      
                       {/* DOB */}
                     <FormGroup className="form-group has-float-label">
                       <Label className="d-block">
@@ -175,69 +210,68 @@ const FormikCustomWithTopLabels = () => {
                       ) : null}
                       </FormGroup>
 
-                      
-                      {values.state.value === 'paper' ? (
-                        // Tazkira number
-                        <div>
-                        <FormGroup className="form-group has-float-label">
+
+                         {/*Tazkira Type  */}
+                    <FormGroup className="form-group has-float-label">
                       <Label>
-                          <IntlMessages id="forms.Eng_name" />
-                        
+                        <IntlMessages id="forms.TazkiraType" />
                       </Label>
-                      <Field className="form-control" name="EngName" />
-                      {errors.EngName && touched.EngName ? (
+                      <FormikReactSelect
+                        name="state"
+                        id="state"
+                        value={values.state}
+                        options={options}
+                        onChange={setFieldValue }
+                        onBlur={setFieldTouched}
+                          />    
+                
+                      {errors.state && touched.state ? (
                         <div className="invalid-feedback d-block">
-                          {errors.EngName}
+                          {errors.state}
                         </div>
                       ) : null}
                         </FormGroup>
-
-                          {/* Jold */}
-                           <FormGroup className="form-group has-float-label">
+     
+                      {values.state.value === 'paper' ? (
+                        <div>
+                          {/* Safha */}
+                          <div>
+                            <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="forms.name" />
+                        <IntlMessages id="forms.StdIdCardPageNoLabel" />
                       </Label>
-                      <Field className="form-control" name="name" />
-                      {errors.name && touched.name ? (
+                      <Field className="form-control" name="StdIdCardPageNo" />
+                      {errors.StdIdCardPageNo && touched.StdIdCardPageNo ? (
                         <div className="invalid-feedback d-block">
-                          {errors.name}
+                          {errors.StdIdCardPageNo}
                         </div>
                       ) : null}
-                      </FormGroup>)
+                          </FormGroup> 
+                          </div>
+                          
+
                         </div>
                         )
                         : (
-                            // Tazkira number
-                        <FormGroup className="form-group has-float-label">
-                      <Label>
-                          <IntlMessages id="forms.Eng_name" />
-                        
-                      </Label>
-                      <Field className="form-control" name="EngName" />
-                      {errors.EngName && touched.EngName ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.EngName}
-                        </div>
-                      ) : null}
-                        </FormGroup>
-                         
+               
+                          <div></div>
                         )}
     
                        <div className='square border border-dark p-3 '>
-                        <h6 className='p- mb-4'> اوسنی ادرس/ ادرس فعلی</h6>
+                        <h6 className=' mb-4'> اوسنی ادرس/ ادرس فعلی</h6>
 
                       {/* ////////////////////////////////////////////////////////// */}
                       {/* Perment Address */}
                       {/* province */}
                         <FormGroup className="form-group has-float-label">
                       <Label>
-                          <IntlMessages id="forms.Eng_name" />
+                          <IntlMessages id="forms.ProvinceLabel" />
                         
                       </Label>
-                      <Field className="form-control" name="EngName" />
-                      {errors.EngName && touched.EngName ? (
+                      <Field className="form-control" name="C_Province" />
+                      {errors.C_Province && touched.C_Province ? (
                         <div className="invalid-feedback d-block">
-                          {errors.EngName}
+                          {errors.C_Province}
                         </div>
                       ) : null}
                         </FormGroup>
@@ -246,13 +280,13 @@ const FormikCustomWithTopLabels = () => {
                             {/* District */}
                         <FormGroup className="form-group has-float-label">
                       <Label>
-                          <IntlMessages id="forms.Eng_name" />
+                          <IntlMessages id="forms.DistrictLabel" />
                         
                       </Label>
-                      <Field className="form-control" name="EngName" />
-                      {errors.EngName && touched.EngName ? (
+                      <Field className="form-control" name="C_District" />
+                      {errors.C_District && touched.C_District ? (
                         <div className="invalid-feedback d-block">
-                          {errors.EngName}
+                          {errors.C_District}
                         </div>
                       ) : null}
                       </FormGroup>
@@ -261,45 +295,21 @@ const FormikCustomWithTopLabels = () => {
                             {/* village */}
                         <FormGroup className="form-group has-float-label">
                       <Label>
-                          <IntlMessages id="forms.Eng_name" />
+                          <IntlMessages id="forms.VillageLabel" />
                         
                       </Label>
-                      <Field className="form-control" name="EngName" />
-                      {errors.EngName && touched.EngName ? (
+                      <Field className="form-control" name="C_Village" />
+                      {errors.C_Village && touched.C_Village ? (
                         <div className="invalid-feedback d-block">
-                          {errors.EngName}
+                          {errors.C_Village}
                         </div>
                       ) : null}
                         </FormGroup>
 
                         </div>
-                      
-
-
-                      
-
-                        
-                      
-                    
-
-
-  
-
-                    
-                        
-
-
-
-
-        
-
-
                     </Colxx> 
                     
-
-
                     <Colxx xxs="6">
-
                       <div>  
                       {/* Student English Name */}
                       <FormGroup className="form-group has-float-label">
@@ -314,8 +324,6 @@ const FormikCustomWithTopLabels = () => {
                         </div>
                       ) : null}
                       </FormGroup>
-
-                        
 
                           {/*Students Father English Name */}
                       <FormGroup className="form-group has-float-label">
@@ -342,94 +350,115 @@ const FormikCustomWithTopLabels = () => {
                           {errors.StdFatherDutyLocation}
                         </div>
                       ) : null}
+                        </FormGroup>
+                        
+                         <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.PlaceOfBirthLabel" />
+                      </Label>
+                      <Field className="form-control" name="StdPlaceOfBirth" />
+                      {errors.StdPlaceOfBirth ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdPlaceOfBirth}
+                        </div>
+                      ) : null}
                       </FormGroup>
                       
-                     {/*Tazkira Type  */}
-                    <FormGroup className="form-group has-float-label">
+              
+                      
+                        {values.state.value === 'paper' ? (
+
+
+                          <div>
+                                         {/* // Tazkira number */}
+                   <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="forms.tazkira" />
+                          <IntlMessages id="forms.StdTazkiraNoLabel" />
+                        
                       </Label>
-                      <FormikReactSelect
-                        name="state"
-                        id="state"
-                        value={values.state}
-                        options={options}
-                        onChange={setFieldValue }
-                        onBlur={setFieldTouched}
-                          />    
-                
-                      {errors.state && touched.state ? (
+                      <Field className="form-control" name="StdTazkiraNo" />
+                      {errors.StdTazkiraNo && touched.StdTazkiraNo ? (
                         <div className="invalid-feedback d-block">
-                          {errors.state}
+                          {errors.StdTazkiraNo}
                         </div>
                       ) : null}
-                        </FormGroup>
-                      
-                    
+                            </FormGroup>
 
-             
-
-                      
- 
-
-
-                      {values.state.value === 'paper' ? (
-                        //  Sfha
-                    <FormGroup className="form-group has-float-label">
+                           {/* Jold */}
+                           <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="forms.tazkira" />
+                        <IntlMessages id="forms.StdIdCardCoverLabel" />
                       </Label>
-                      <FormikReactSelect
-                        name="state"
-                        id="state"
-                        value={values.state}
-                        options={options}
-                        onChange={setFieldValue && setIdCard=== setFieldValue }
-                        onBlur={setFieldTouched}
-                          />
-                          <div>{}</div>
-                      {errors.state && touched.state ? (
+                      <Field className="form-control" name="StdIdCardCover" />
+                      {errors.StdIdCardCover && touched.StdIdCardCover ? (
                         <div className="invalid-feedback d-block">
-                          {errors.state}
+                          {errors.StdIdCardCover}
                         </div>
                       ) : null}
-                        </FormGroup>
-                        // Di sakok Number
+                      </FormGroup>    
+
+
+
+
+                            {/* Sakuk Number */}
+                      <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.StdIdCardSakukNoLabel" />
+                      </Label>
+                      <Field className="form-control" name="StdIdCardSakukNo" />
+                      {errors.StdIdCardSakukNo && touched.StdIdCardSakukNo ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdIdCardSakukNo}
+                        </div>
+                      ) : null}
+                      </FormGroup>
+                           </div>
                       ) : (
-                          <div></div>
+                            <div>
+                                                         {/* // Tazkira number */}
+                   <FormGroup className="form-group has-float-label">
+                      <Label>
+                          <IntlMessages id="forms.StdTazkiraNoLabel" />
+                        
+                      </Label>
+                      <Field className="form-control" name="StdTazkiraNo" />
+                      {errors.StdTazkiraNo && touched.StdTazkiraNo ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdTazkiraNo}
+                        </div>
+                      ) : null}
+                        </FormGroup> 
+                          </div>
                         )}
-
-
-
                         <div className='square border border-dark p-3'>
-                          <h6 className='p-3'>دایمی ادرس/ ادرس دایمی</h6>
-                    
+                          <h6 className=' mb-4'>دایمی ادرس/ ادرس دایمی</h6>
+
+                       {/* Current address */}
                           {/* province */}
                         <FormGroup className="form-group has-float-label">
                       <Label>
-                          <IntlMessages id="forms.Eng_name" />
-                        
+                          <IntlMessages id="forms.ProvinceLabel" />
                       </Label>
-                      <Field className="form-control" name="EngName" />
-                      {errors.EngName && touched.EngName ? (
+                      <Field className="form-control" name="Province" />
+                      {errors.Province && touched.Province ? (
                         <div className="invalid-feedback d-block">
-                          {errors.EngName}
+                          {errors.Province}
                         </div>
                       ) : null}
                         </FormGroup>
                          
                       
-                      {/* Current address */}
+                   
                             {/* District */}
                         <FormGroup className="form-group has-float-label">
                       <Label>
-                          <IntlMessages id="forms.Eng_name" />
+                          <IntlMessages id="forms.DistrictLabel" />
                         
                       </Label>
-                      <Field className="form-control" name="EngName" />
-                      {errors.EngName && touched.EngName ? (
+                      <Field className="form-control" name="District" />
+                      {errors.District && touched.District ? (
                         <div className="invalid-feedback d-block">
-                          {errors.EngName}
+                          {errors.District}
                         </div>
                       ) : null}
                       </FormGroup>
@@ -438,20 +467,19 @@ const FormikCustomWithTopLabels = () => {
                             {/* village */}
                         <FormGroup className="form-group has-float-label">
                       <Label>
-                          <IntlMessages id="forms.Eng_name" />
+                          <IntlMessages id="forms.VillageLabel" />
                         
                       </Label>
-                      <Field className="form-control" name="EngName" />
-                      {errors.EngName && touched.EngName ? (
+                      <Field className="form-control" name="Village" />
+                      {errors.Village && touched.Village ? (
                         <div className="invalid-feedback d-block">
-                          {errors.EngName}
+                          {errors.Village}
                         </div>
                       ) : null}
                           </FormGroup>
                                 
                         </div>
                       </div>
-
 
                         <Button onClick={() => handleClick(true)} className="float-right mt-5 ">مخته / بعدی</Button>
                       </Colxx>   
@@ -461,16 +489,24 @@ const FormikCustomWithTopLabels = () => {
           <Row>
                       <Colxx xxs="6">
                         
-
-                        {/* درجه تحصیل */}
-                     <FormGroup className="form-group has-float-label">
+                        {/* درجه تحصیل*/}
+                          {/*Tazkira Type  */}
+                    <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="forms.email" />
+                        <IntlMessages id="forms.EducationLevelLabel" />
                       </Label>
-                      <Field className="form-control" name="email" />
-                      {errors.email && touched.email ? (
+                      <FormikReactSelect
+                        name="EdactionLevel"
+                        id="EducationLevel"
+                        value={values.EducationLevel}
+                        options={EducationLevelOptions}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                          />    
+                
+                      {errors.EducationLevel && touched.EducationLevel ? (
                         <div className="invalid-feedback d-block">
-                          {errors.email}
+                          {errors.EducationLevel}
                         </div>
                       ) : null}
                         </FormGroup>
@@ -667,11 +703,7 @@ const FormikCustomWithTopLabels = () => {
                         
                         <Button onClick={() => handleClick(false)} className="float-right m-2">ثبت</Button>
                          
-                      </Colxx> 
-                      
-                     
-
-                                           
+                      </Colxx>                                        
   </Row>    
             )}
           </Form>
@@ -684,5 +716,5 @@ const FormikCustomWithTopLabels = () => {
   );
 };
 
-export default FormikCustomWithTopLabels;
+export default StudentRegistraion;
 

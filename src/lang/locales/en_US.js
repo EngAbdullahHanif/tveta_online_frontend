@@ -475,7 +475,7 @@ module.exports = {
   'forms.top-labels-over-line': 'Top Labels Over Line',
   'forms.tags': 'Tags',
   'forms.date': 'Date',
-  'forms.tazkira': 'ID card (Tazkira)',
+  'forms.TazkiraType': 'ID card (Tazkira) Type',
   'forms.top-labels-in-input': 'Top Labels In Input',
   'forms.email-u': 'E-MAIL',
   'forms.password-u': 'PASSWORD',
@@ -516,10 +516,48 @@ module.exports = {
   'forms.StdDoBErr': 'Date of birth Required!',
   'forms.StdFatherDutyLocationLabel': 'Father Duty Location',
   'forms.StdFatherDutyLocationErr': 'Father Duty Location is Required!',
-  // 'forms.StdFatherDutyLocationErr': 'Father Duty Location is Required!',
+  'forms.TazkiraTypeDefaultValue': 'Select',
+  'forms.StdTazkiraNoLabel': 'Id Card (Tazkira) Number',
+  'forms.StdTazkiraNoErr': 'Tazkira Number is Required!',
+  'forms.StdTazkiraElectronic': 'Electronic',
+  'forms.StdTazkiraPaper': 'Paper',
+  'forms.StdIdCardPageNoLabel': 'Id Card (Tazkira) Page Number',
+  'forms.StdIdCardPageNoErr': 'Tazkira Page Number Required!',
+  'forms.StdIdCardCoverLabel': 'Id Card (Tazkira) Cover',
+  'forms.StdIdCardCoverErr': 'Tazkira Cover Number Is Required!',
+  'forms.StdIdCardSakukNoLabel': 'Folder (Sakok) Number',
+  'forms.StdIdCardSakukNoErr': 'Folder Number Is Required!',
+  'forms.ProvinceLabel': 'Province',
+  'forms.ProvinceErr': 'Province is Required!',
+  'forms.DistrictLabel': 'District',
+  'forms.DistrictErr': 'District Is Required!',
+  'forms.VillageLabel': 'Village/Area',
+  'forms.VillageErr': 'Village Is Required',
+    'forms.PlaceOfBirthLabel': 'Place Birth',
+  'forms.StdPlaceOfBirthErr': 'Place of Birth Requiered!',
 
-  // TazkiraTypeDefaultValue
+  // Second page of student biography
+  'forms.EducationalLevel_9th': 'Ninth Grade',
+  'forms.EducationalLevel_10th': 'tenth Grade',
+  'forms.EducationalLevel_11th': 'Eleventh Grade',
+  'forms.EducationalLevel_12th': 'Tvilfth Grade',
+  'forms.EducationalLevel_13th': 'Thirteenth Grade',
+  'forms.EducationalLevel_14rh': 'Fourteenth Grade',
+  'forms.EducationLevelLabel': 'Education Level',
+  'forms.EducationLevelDefaultValue': 'Select',
+
+
+    
+
+
   
+
+           
+
+  
+  
+
+
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Custom Inputs',
   'form-components.checkboxes': 'Checkboxes',

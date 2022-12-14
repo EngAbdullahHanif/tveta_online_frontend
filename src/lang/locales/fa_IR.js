@@ -482,7 +482,7 @@ module.exports = {
   'forms.top-labels-over-line': 'قرارگرفتن برچسب بیرون خط',
   'forms.tags': 'برچسب ها',
   'forms.date': 'تاریخ',
-  'forms.tazkira': 'د تذکرې ډول/نوع تذکره',
+  'forms.TazkiraType': 'د تذکرې ډول/نوع تذکره',
   'forms.top-labels-in-input': 'قرارگرفتن برچسب داخل اینپوت',
   'forms.email-u': 'پست الکترونیک',
   'forms.password-u': 'کلمه عبور',
@@ -522,6 +522,38 @@ module.exports = {
   'forms.StdDoBErr': 'د زیږیدنې نیټه اړین دی/ تاریخ تولد ضروری است',
   'forms.StdFatherDutyLocationLabel': 'د پلار د دندې ځای/محل وظیفه پدر',
   'forms.StdFatherDutyLocationErr': 'د پلار د دندې ځای اړین دی/محل وظیفه پدر ضروری است',
+  'forms.TazkiraTypeDefaultValue': 'ټاکل/ انتخاب',
+  'forms.StdTazkiraNoLabel': 'د تذکرې شمیره/ نمبر تذکره',
+  'forms.StdTazkiraNoErr': 'د تذکرې شمیره اړینه ده /نمبر تذکره ضروری است',
+  'forms.StdTazkiraElectronic': 'الکترونیکی',
+  'forms.StdTazkiraPaper': 'کاغذی',
+  'forms.StdIdCardPageNoLabel': 'د صفحې شمیره/شماره صفحه',
+  'forms.StdIdCardPageNoErr': 'د صفحې شمیره اړین ده/ شماره صفحه ضروری است',
+  'forms.StdIdCardCoverLabel': 'جلد',
+  'forms.StdIdCardCoverErr': 'د تذکرې جلد شمیره اړینه ده/ درج جلد ضروری است ',
+  'forms.StdIdCardSakukNoLabel': 'د صکوک نمبر/ نمبر صکوک',
+  'forms.StdIdCardSakukNoErr': 'د صکوکو نمبر اړین دی/ نمبر صکوک ضروری است',
+  'forms.ProvinceLabel': 'ولایت',
+  'forms.ProvinceErr': 'ولایت اړین دی/ ولایت ضروری است!',
+  'forms.DistrictLabel': 'ولسوالی/ ناحیه',
+  'forms.DistrictErr': 'ولسوالی اړین دی/ ولسوالی ضروری است',
+  'forms.VillageLabel': 'کلی/قریه',
+  'forms.VillageErr': 'قریه اړین ده/ قریه ضروری است',
+    'forms.PlaceOfBirthLabel': 'د زیږیدو ځای /مکان تولد',
+  'forms.StdPlaceOfBirthErr': 'د زیږیدو ځای اړین دی /مکان تولد ضروری است',
+
+    // Second page of student biography
+  'forms.EducationalLevel_9th': 'نهم صنف / صنف نهم',
+  'forms.EducationalLevel_10th': 'لسم ټولګی/ صنف دهم',
+  'forms.EducationalLevel_11th': 'یوولسم ټولګی / صنف یازدهم',
+  'forms.EducationalLevel_12th': 'دولسم ټولګی/ صنف دوازدهم',
+  'forms.EducationalLevel_13th': 'دیارلسم ټولګی صنف سیزدهم',
+  'forms.EducationalLevel_14th': 'څورلسم ټولګی/ صنف چهاردهم',
+  'forms.EducationLevelLabel': 'د زده کړو کچه/ سطح تحصیل',
+    'forms.EducationLevelDefaultValue': 'ټاکل/ انتخاب',
+    
+
+
 
         
 

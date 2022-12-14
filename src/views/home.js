@@ -8,6 +8,8 @@ import Headroom from 'react-headroom';
 import GlideComponent from 'components/carousel/GlideComponent';
 import { buyUrl, adminRoot } from 'constants/defaultValues';
 import logo from '../assets/img/logo2.png';
+import { Row } from 'reactstrap';
+import { Colxx } from 'components/common/CustomBootstrap';
 
 const slideSettings = {
   type: 'carousel',
@@ -760,7 +762,7 @@ const Home = () => {
                     تا محصولات با کیفیت عالی براتون تهیه کنیم
                   </p>
                 </div>
-                <div className="col-12 offset-0 col-lg-6 offset-lg-3 newsletter-input-container">
+                {/* <div className="col-12 offset-0 col-lg-6 offset-lg-3 newsletter-input-container">
                   <div className="text-center mb-3">
                     <a
                       className="btn btn-secondary btn-xl"
@@ -771,7 +773,7 @@ const Home = () => {
                       خرید قالب
                     </a>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -803,7 +805,18 @@ const Home = () => {
               <div className="row">
                 <div className="col-12" />
                 <div className="col-12 text-center">
-                  <p className="mb-0">2021 © فاطمه کاظمی زاده</p>
+                           <Row>
+            <Colxx xxs="12" sm="3">
+              <p className="mb-0 text-muted">د تخنیکی او مسلکی زده کړو اداره</p>
+            </Colxx>
+             <Colxx > 
+              <p className=" mb-0 text-muted ">اداره تعلیمات تخنیکی و مسلکی</p>
+            </Colxx>
+            <Colxx className="col-sm-6 d-none d-sm-block">
+             <p className="mb-0 text-muted">Technical and Vocational Education and Training Afghanistan</p>
+            </Colxx>
+           
+          </Row>
                 </div>
               </div>
             </div>

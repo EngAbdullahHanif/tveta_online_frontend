@@ -505,7 +505,7 @@ module.exports = {
   'forms.Std_father_Eng_Name': 'Father English Name',
   'forms.electronic': 'Electronic',
   'forms.paper': 'Paper',
-  'forms.nameerror': 'Name is required!',
+  'forms.StdKankorNameErr': 'Name is required!',
   'forms.nameChar': 'Name should be atleast  3 character',
   'forms.englishNameError':'English name is required',
   'forms.StdFatherNameError': 'father name is required!',
@@ -601,9 +601,27 @@ module.exports = {
   'forms.StdSchoolProvinceOptions_32': 'Uruzgan',
   'forms.StdSchoolProvinceOptions_33': 'Wardak',
   'forms.StdSchoolProvinceOptions_34': 'Zabul',
-
   'forms.StdSchoolProvinceLabel': 'School Province',
   'forms.StdSchoolProvinceErr': 'province Required',
+
+  // Student Kankor form title
+  'forms.Kankorformstitle': 'Kakor Result', 
+  'forms.StdKankorIdLabel': 'Kankor Id', 
+  'forms.StdKankorIdErr': 'Kankor Id Required!',
+  'forms.KankorMarksLabel': 'Attained Marks in Kankor', 
+  'forms.KankorMarksErr': 'Kankor Makrs required!',
+  'forms.InstituteLabel': 'Institute', 
+  'forms.InstituteErr': 'Institute required!',
+    'forms.FieldLabel': 'Field', 
+  'forms.FieldErr': 'Field Required!',
+    'forms.StudyTimeLabel': 'Time', 
+  'forms.StudyTimeErr': 'Time!',
+  'forms.StudyTimeOption_1': 'Day Shift', 
+  'forms.StudyTimeOption_2': 'Night Shift',
+
+
+  
+  
 
 
 

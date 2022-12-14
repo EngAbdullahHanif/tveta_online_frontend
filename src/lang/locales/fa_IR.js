@@ -511,7 +511,7 @@ module.exports = {
   'forms.Std_father_Eng_Name': 'د پلار نوم په انګریزي/نام پدر به انگلسی',
   'forms.electronic': 'الکترونیکی',
   'forms.paper': 'کاغذی',
-  'forms.nameerror': 'نوم اړین دی/ نام ضروری است',
+  'forms.StdKankorNameErr': 'نوم اړین دی/ نام ضروری است',
   'forms.nameChar': 'نوم باید له ۳ تورو ډیر وي/ نام باید بیشتر از ۳ حرف باشد',
   'forms.englishNameError': 'انګریزی نوم اړین دی/ نام انگلسی ضروری است',
   'forms.StdFatherNameError': 'د پلار نوم اړین دی/ درج نام پدر ضروری است',
@@ -610,6 +610,25 @@ module.exports = {
 
   'forms.StdSchoolProvinceLabel': 'د ښونځی ولایت/ولایت مکتب',
   'forms.StdSchoolProvinceErr': 'د ښونځی ولایت اړین دی/ ولایت مکتب ضروری است',
+
+
+  // Student Kankor Forms Result
+  'forms.Kankorformstitle': 'د کانکور پایلې/ نتایج کانکور',
+  'forms.StdKankorIdLabel': 'د کانکور ایدی/ ایدی کانکور', 
+  'forms.StdKankorIdErr': 'د کانکور ایدی اړین دی / ایدی کانکور ضروری است',
+   'forms.KankorMarksLabel': 'د کانکور نومرې/ نمرات کانکور', 
+  'forms.KankorMarksErr': 'د کانکور نورې اړینې دي/ درج نمرات کانکور ضروری است',
+  'forms.InstituteLabel': 'انستیتوت', 
+  'forms.InstituteErr': 'انستیتوت اړین دی / انستیتوت ضروری است',
+  'forms.FieldLabel': 'رشته', 
+  'forms.FieldErr': 'رشته اړین دی/ رشته ضروری است',
+     'forms.StudyTimeLabel': 'وخت/ وقت', 
+  'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',
+   'forms.StudyTimeOption_1': 'ورځنی/ روزانه', 
+  'forms.StudyTimeOption_2': 'شپې/ شبانه',
+
+
+
 
     
 

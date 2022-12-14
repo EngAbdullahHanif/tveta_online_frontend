@@ -573,7 +573,6 @@ const StudentRegistraion = () => {
                                 
                         </div>
                       </div>
-
                         <Button onClick={() => handleClick(true)} className="float-right mt-5 ">مخته / بعدی</Button>
                       </Colxx>   
                  </Row>
@@ -695,7 +694,6 @@ const StudentRegistraion = () => {
                       </Colxx>     
                       <Colxx xxs="6">
                         
-
                         {/* سال فراغت */}
                       <FormGroup className="form-group has-float-label">
                       <Label className="d-block">
@@ -714,8 +712,6 @@ const StudentRegistraion = () => {
                         </div>
                       ) : null}
                         </FormGroup>
-                        
-
                         
                         {/*School province*/}
                      <FormGroup className="form-group has-float-label">
@@ -778,8 +774,6 @@ const StudentRegistraion = () => {
                         </div>
                       ) : null}
                         </FormGroup> */}
-
-
 
                         <Button onClick={() => handleClick(false)} className="float-right m-2 mt-5">ثبت</Button>
                          

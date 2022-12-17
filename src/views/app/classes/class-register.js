@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -54,16 +55,26 @@ const systemOption = [
 // });
 
 const SubjcetRegister = () => {
-  const [subjectType, setSubjectType] = useState({});
-  const [systemType, setSystemType] = useState({});
-
-  const initialValues = {
-    subjectType: { value: '0', label: 'وتاکئ / انتخاب کنید' },
-    systemType: { value: '0', label: 'وتاکئ / انتخاب کنید' },
-  };
-
+  const initialValues = {};
   const onRegister = (values) => {
     console.log(values);
+    const data = {
+      name: values.className,
+      semester: values.semester,
+    };
+    console.log('data', data);
+
+    axios
+      .post('http://localhost:8000/institute/classs/', data)
+      .then((response) => {
+        console.log(response);
+        console.log('data sent to the server2');
+      })
+      .catch((error) => {
+        console.log('data sent to the server4');
+        console.log(error);
+      });
+
     if (!loading) {
       // if (values.email !== '' && values.password !== '') {
       //   loginUserAction(values, history);

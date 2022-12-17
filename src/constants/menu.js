@@ -405,6 +405,11 @@ const data = [
     subs: [
       {
         icon: 'simple-icon-logout',
+        label: 'class.list',
+        to: `${adminRoot}/classes/classes`,
+      },
+      {
+        icon: 'simple-icon-logout',
         label: 'class.register',
         to: `${adminRoot}/classes/register`,
       },

@@ -460,6 +460,7 @@ module.exports = {
   /* 07.10.Forms */
   'forms.basic': 'Basic',
   'forms.email': 'E-mail',
+  'forms.title': 'Biography',
   'forms.email-muted': "We'll never share your email with anyone else.",
   'forms.password': 'Password',
   'forms.password-confirm': 'Confirm Password',
@@ -474,7 +475,7 @@ module.exports = {
   'forms.top-labels-over-line': 'Top Labels Over Line',
   'forms.tags': 'Tags',
   'forms.date': 'Date',
-  'forms.state': 'State',
+  'forms.TazkiraType': 'ID card (Tazkira) Type',
   'forms.top-labels-in-input': 'Top Labels In Input',
   'forms.email-u': 'E-MAIL',
   'forms.password-u': 'PASSWORD',
@@ -497,7 +498,192 @@ module.exports = {
   'forms.firstname-message': 'Please enter your first name!',
   'forms.lastname': 'Last name',
   'forms.lastname-message': 'Please enter your last name!',
-  'forms.name': 'Name',
+  'forms.StdName': 'Name',
+  'forms.Eng_name': 'English name',
+  'forms.StdFatherName': 'Father Name',
+
+  'forms.Std_father_Eng_Name': 'Father English Name',
+  'forms.electronic': 'Electronic',
+  'forms.paper': 'Paper',
+  'forms.StdKankorNameErr': 'Name is required!',
+  'forms.nameChar': 'Name should be atleast  3 character',
+  'forms.englishNameError':'English name is required',
+  'forms.StdFatherNameError': 'father name is required!',
+   'forms.FatherEnglishNameErr': 'Father English Name Is Required!',
+  'forms.StdFatherDutyLabel': 'Father Duty',
+  'forms.StdFatherDutyErr': 'Father Duty Field id Required!',
+  'forms.StdDoBLabel': 'Date of Birth',
+  'forms.StdDoBErr': 'Date of birth Required!',
+  'forms.StdFatherDutyLocationLabel': 'Father Duty Location',
+  'forms.StdFatherDutyLocationErr': 'Father Duty Location is Required!',
+  'forms.TazkiraTypeDefaultValue': 'Select',
+  'forms.StdTazkiraNoLabel': 'Id Card (Tazkira) Number',
+  'forms.StdTazkiraNoErr': 'Tazkira Number is Required!',
+  'forms.StdTazkiraElectronic': 'Electronic',
+  'forms.StdTazkiraPaper': 'Paper',
+  'forms.StdIdCardPageNoLabel': 'Id Card (Tazkira) Page Number',
+  'forms.StdIdCardPageNoErr': 'Tazkira Page Number Required!',
+  'forms.StdIdCardCoverLabel': 'Id Card (Tazkira) Cover',
+  'forms.StdIdCardCoverErr': 'Tazkira Cover Number Is Required!',
+  'forms.StdIdCardSakukNoLabel': 'Folder (Sakok) Number',
+  'forms.StdIdCardSakukNoErr': 'Folder Number Is Required!',
+  'forms.PermanentAddressLabel': 'Permanent Address',
+  'forms.CurrentAddresslabel': 'Current Address',
+  'forms.ProvinceLabel': 'Province',
+  'forms.ProvinceErr': 'Province is Required!',
+  'forms.DistrictLabel': 'District',
+  'forms.DistrictErr': 'District Is Required!',
+  'forms.VillageLabel': 'Village/Area',
+  'forms.VillageErr': 'Village Is Required',
+    'forms.PlaceOfBirthLabel': 'Place Birth',
+  'forms.StdPlaceOfBirthErr': 'Place of Birth Requiered!',
+
+  // Second page of student biography
+  'forms.EducationalLevel_9th': 'Ninth Grade',
+  'forms.EducationalLevel_10th': 'tenth Grade',
+  'forms.EducationalLevel_11th': 'Eleventh Grade',
+  'forms.EducationalLevel_12th': 'Tvilfth Grade',
+  'forms.EducationalLevel_13th': 'Thirteenth Grade',
+  'forms.EducationalLevel_14th': 'Fourteenth Grade',
+  'forms.EducationLevelLabel': 'Education Level',
+  'forms.EducationLevelDefaultValue': 'Select',
+  'forms.StPreShcoolLabel': 'Graduated School',
+  'forms.StPreShcoolErr': 'School Required!',
+  'forms.StudentTypeContiniues': 'Continues',
+  'forms.StudentTypeNonContiniues': 'Non Continues',
+'forms.StudentTypeLabel': 'Student Type',
+  'forms.StudentTypeErr': 'STudent Type Required!',
+    'forms.StudyTypeGraduated': 'Graduated',
+'forms.StudyTypeInrolled': 'Inrolled',
+  'forms.StudyTypeDismissed': 'Dismissed',
+  'forms.StudyTypeLabel': 'Study Type',
+  'forms.StudyTypeErr': 'Study Type Required!',
+  'forms.StdInteranceOption_1': 'Direct',
+  'forms.StdInteranceOption_2': 'Institute Exam',
+  'forms.StdInteranceOption_3': 'General Kankor',
+  'forms.StdInteranceTypeLabel': 'Interance Type',
+  'forms.StdInteranceTypeErr': 'Interance Type Required!',
+  'forms.StdGraduationYearLabel': 'Graduation Year',
+  'forms.StdGraduationYearErr': 'Graduation Year Is Required!',
+
+  // provinces of Afghanistan
+  'forms.StdSchoolProvinceOptions_1': 'Badakhshan',
+  'forms.StdSchoolProvinceOptions_2': 'BadGhis',
+  'forms.StdSchoolProvinceOptions_3': 'Baghlan',
+  'forms.StdSchoolProvinceOptions_4': 'Balkh',
+  'forms.StdSchoolProvinceOptions_5': 'Bamyan',
+  'forms.StdSchoolProvinceOptions_6': 'DayKundi',
+  'forms.StdSchoolProvinceOptions_7': 'Farah',
+  'forms.StdSchoolProvinceOptions_8': 'Faryab',
+  'forms.StdSchoolProvinceOptions_9': 'Ghazni',
+  'forms.StdSchoolProvinceOptions_10': 'Ghor',
+  'forms.StdSchoolProvinceOptions_11': 'Helmand',
+  'forms.StdSchoolProvinceOptions_12': 'Herat',
+  'forms.StdSchoolProvinceOptions_13': 'Jowzjan',
+  'forms.StdSchoolProvinceOptions_14': 'Kabul',
+  'forms.StdSchoolProvinceOptions_15': 'Kandahar',
+  'forms.StdSchoolProvinceOptions_16': 'Kapisa',
+  'forms.StdSchoolProvinceOptions_17': 'Khost',
+  'forms.StdSchoolProvinceOptions_18': 'Kunar',
+  'forms.StdSchoolProvinceOptions_19': 'Kunduz',
+  'forms.StdSchoolProvinceOptions_20': 'Laghman',
+  'forms.StdSchoolProvinceOptions_21': 'Logar',
+  'forms.StdSchoolProvinceOptions_22': 'Nangarhar',
+  'forms.StdSchoolProvinceOptions_23': 'Nimruz',
+  'forms.StdSchoolProvinceOptions_24': 'Nuristan',
+  'forms.StdSchoolProvinceOptions_25': 'Paktia',  
+  'forms.StdSchoolProvinceOptions_26': 'paktika',
+  'forms.StdSchoolProvinceOptions_27': 'Panjshir',
+  'forms.StdSchoolProvinceOptions_28': 'Parwan',
+  'forms.StdSchoolProvinceOptions_29': 'Samangan',
+  'forms.StdSchoolProvinceOptions_30': 'Sar-e Pol',
+  'forms.StdSchoolProvinceOptions_31': 'Takhar',
+  'forms.StdSchoolProvinceOptions_32': 'Uruzgan',
+  'forms.StdSchoolProvinceOptions_33': 'Wardak',
+  'forms.StdSchoolProvinceOptions_34': 'Zabul',
+  'forms.StdSchoolProvinceLabel': 'School Province',
+  'forms.StdSchoolProvinceErr': 'province Required',
+
+  // Student Kankor form title
+  'forms.Kankorformstitle': 'Kakor Result', 
+  'forms.StdKankorIdLabel': 'Kankor Id', 
+  'forms.StdKankorIdErr': 'Kankor Id Required!',
+  'forms.KankorMarksLabel': 'Attained Marks in Kankor', 
+  'forms.KankorMarksErr': 'Kankor Makrs required!',
+  'forms.InstituteLabel': 'Institute', 
+  'forms.InstituteErr': 'Institute required!',
+    'forms.FieldLabel': 'Field', 
+  'forms.FieldErr': 'Field Required!',
+    'forms.StudyTimeLabel': 'Time', 
+  'forms.StudyTimeErr': 'Time!',
+  'forms.StudyTimeOption_1': 'Day Shift', 
+  'forms.StudyTimeOption_2': 'Night Shift',
+  'forms.SubimssionButton': 'Submit',
+    
+  // Student Attendance
+  'forms.AttendanceTitle': 'Student Attendance',
+  'forms.StdIdLabel': 'Student Id',
+  'forms.StdIdErr': 'Student Id Required!',
+  'forms.StdPresentLabel': 'Present',
+  'forms.StdPresentErr': 'this field is required!',
+  'forms.StdAbsentLabel': 'Absent',
+  'forms.StdAbsentErr': 'this field is required!',
+  'forms.StdSicknessLabel': 'Sickness',
+  'forms.StdSicknessErr': 'this field is required!',
+  'forms.StdNecessaryWorkLabel': 'Necessary Work',
+  'forms.StdNecessaryWorkErr': 'this field is required!',
+
+// // Subject
+//   'forms.SubjectTitle': 'Subject Registration',
+//   'forms.SubjectNameLabel': 'Name',
+//   'forms.SubjectNameErr': 'Name is Required!',
+//   'forms.SubjectCreditLabel': 'Credit',
+//   'forms.SubjectCreditErr': 'Credit is Required!',
+//   'forms.SubjectTypeLabel': 'Type',
+//   'forms.SubjectTypeErr': 'Subject Type is Required!',
+
+//   'forms.TypeOption_1': 'Core',
+//   'forms.TypeOption_2': 'Sup',
+    
+
+
+  
+  
+
+
+        
+     
+
+  
+  
+
+
+    
+
+
+
+  
+  
+
+
+
+
+  
+  
+
+  
+
+
+    
+
+
+  
+
+           
+
+  
+  
+
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Custom Inputs',

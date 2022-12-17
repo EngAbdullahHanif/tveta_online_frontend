@@ -9,27 +9,14 @@ const Footer = () => {
       <div className="footer-content">
         <div className="container-fluid">
           <Row>
-            <Colxx xxs="12" sm="6">
-              <p className="mb-0 text-muted">فاطمه کاظمی زاده @2021</p>
+            <Colxx xxs="12" sm="3">
+              <p className="mb-0 text-muted">د تخنیکی او مسلکی زده کړو اداره</p>
+            </Colxx>
+             <Colxx > 
+              <p className=" mb-0 text-muted ">اداره تعلیمات تخنیکی و مسلکی</p>
             </Colxx>
             <Colxx className="col-sm-6 d-none d-sm-block">
-              <ul className="breadcrumb pt-0 pr-0 float-right">
-                <li className="breadcrumb-item mb-0">
-                  <Link className="btn-link" href="https://www.rtl-theme.com/gogo-react-bootstrap-4-admin-dashboard/discussions/" >
-                    نظرات کاربران
-                  </Link>
-                </li>
-                <li className="breadcrumb-item mb-0">
-                  <Link className="btn-link" href="https://www.rtl-theme.com/?p=94491" >
-                    خرید قالب
-                  </Link>
-                </li>
-                <li className="breadcrumb-item mb-0">
-                  <Link className="btn-link" href="https://www.rtl-theme.com/gogo-react-bootstrap-4-admin-dashboard/" >
-                    داکیومنت
-                  </Link>
-                </li>
-              </ul>
+             <p className="mb-0 text-muted">Technical and Vocational Education and Training  Authority</p>
             </Colxx>
           </Row>
         </div>

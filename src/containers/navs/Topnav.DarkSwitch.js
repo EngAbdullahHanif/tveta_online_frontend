@@ -42,7 +42,7 @@ const TopnavDarkSwitch = () => {
         target="tooltip_switch"
         toggle={() => setTooltipOpen(!tooltipOpen)}
       >
-        تم تیره
+        صفحه تاریک
       </Tooltip>
     </div>
   );

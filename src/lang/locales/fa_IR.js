@@ -44,6 +44,11 @@ module.exports = {
   'unauthorized.detail':
     'شما مجاز به مشاهده صفحه موردنظر برای دسترسی به آن نیستید.',
 
+  gender: 'جنسیت',
+
+  province: 'ولایت',
+  district: 'ولسوالی',
+  vilage: 'قریه',
   /* 02.User Login, Logout, Register */
   'user.login-title': 'ورود',
   'user.register': 'ثبت نام',
@@ -83,7 +88,7 @@ module.exports = {
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.institute_list': 'لست انستیتوت/لیسه',
-  'menu.institute_create': 'ساختن انستیتوت/لیسه',
+  'menu.institute_register': 'ثبت انستیتوت/لیسه',
   'menu.todo': 'لیست To-do',
   'menu.survey': 'نظرسنجی',
   'menu.chat': 'چت',
@@ -110,6 +115,7 @@ module.exports = {
   'menu.sortable': 'مرتب سازی',
   'menu.tables': 'جدول ها',
   'menu.subjects': 'مضمون',
+  'menu.classes': 'صنف',
   'menu.subhidden': 'پنهان - Subhidden',
   'menu.hidden': 'مخفی - Hidden',
   'menu.visible': 'فعال - Visible',
@@ -814,8 +820,21 @@ module.exports = {
   'wizard.registered': 'ثبت نام شما با موفقیت انجام شد!',
   'wizard.async': 'Async save for 3 seconds!',
 
+  'inst.name': 'انستیتوت نوم / نام انستیتوت',
+  'inst.register.title': 'د انستیتوت ثبت کول / ثبت انستیتوت',
+  'inst.type': 'د انستیتوت ډول / نوعیت انستیتوت',
 
+  'subject.name': 'د مضمون نوم / نام مضمون',
+  'subject.english_name': 'د مضمون انگلیسی نوم / نام انگلیسی مضمون',
+  'subject.credits': 'کریډټ / اعتبار',
+  'subject.type': 'د مضمون ډول / نوعیت مضمون',
+  'subject.system_type': 'د مضمون سیسټم ډول / نوعیت سیستم مضمون',
+  'subject.code': 'د مضمون کوډ / کد مضمون',
+  'subject.register.title': 'د مضمون ثبت کول / ثبت مضمون',
+  'subject.register': 'مضمون ثبت کول / ثبت مضمون',
 
-
-
+  'class.name': 'د صنف نوم / نام صنف',
+  'class.semester': 'د صنف سمستر / سمستر صنف',
+  'class.register.title': 'د صنف ثبت کول / ثبت صنف',
+  'class.register': 'صنف ثبت کول / ثبت صنف',
 };

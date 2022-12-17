@@ -31,12 +31,22 @@ const validateEmail = (value) => {
 };
 
 const Login = ({ history, loading, error, loginUserAction }) => {
+  console.log('loading', loading);
+  console.log('loginUserAction', loginUserAction);
+  console.log('history', history);
   const [email] = useState('demo@gogo.com');
   const [password] = useState('gogo123');
 
   useEffect(() => {
     if (error) {
-      NotificationManager.warning(error, 'ارور ورود به سایت', 3000, null, null, '');
+      NotificationManager.warning(
+        error,
+        'ارور ورود به سایت',
+        3000,
+        null,
+        null,
+        ''
+      );
     }
   }, [error]);
 
@@ -59,11 +69,10 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             <p className="white mb-0">
               برای ورود به سیستم نام کاربری و رمز خود را وارد کنید
               <br />
-              اگه حساب کاربری نداری نگران نباش، از {' '}
+              اگه حساب کاربری نداری نگران نباش، از{' '}
               <NavLink to="/user/register" className="white">
                 اینجا
-              </NavLink>
-              {' '}
+              </NavLink>{' '}
               میتونی تو سایت اسمتو بویسی
             </p>
           </div>

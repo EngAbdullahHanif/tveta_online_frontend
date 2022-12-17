@@ -5,52 +5,54 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-const TeacherListForm = ({ product, isSelect, collect, onCheckItem }) => {
+const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
   return (
-    <Colxx xxs="12" key={product.id} className="mb-3">
-      <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
+    <Colxx xxs="12" key={teacher.id} className="mb-3">
+      <ContextMenuTrigger id="menu_id" data={teacher.id} collect={collect}>
         <Card
-          onClick={(event) => onCheckItem(event, product.id)}
+          onClick={(event) => onCheckItem(event, teacher.id)}
           className={classnames('d-flex flex-row', {
             active: isSelect,
           })}
         >
-          <NavLink to={`?p=${product.id}`} className="d-flex">
+          {/* <NavLink to={`?p=${teacher.id}`} className="d-flex">
             <img
-              alt={product.title}
-              src={product.img}
+              alt={teacher.title}
+              src={teacher.img}
               className="list-thumbnail responsive border-0 card-img-left"
             />
-          </NavLink>
+          </NavLink> */}
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-              <NavLink to={`?p=${product.id}`} className="w-40 w-sm-100">
+              <NavLink to={`${teacher.id}`} className="">
                 <p className="list-item-heading mb-1 truncate">
-                  {product.title}
+                  <span className="mr-5">{teacher.id}</span>
+                  {teacher.name}
                 </p>
               </NavLink>
-              <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                {product.category}
-              </p>
-              <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                {product.date}
-              </p>
-              <div className="w-15 w-sm-100">
-                <Badge color={product.statusColor} pill>
-                  {product.status}
-                </Badge>
-              </div>
+              <p className="mb-1 text-small">{teacher.father_name}</p>
+              <p className="mb-1 text-small">{teacher.current_province}</p>
+              <p className="mb-1 text-small">{teacher.phone_number}</p>
+              <p className="mb-1 text-small">{teacher.major}</p>
+              <p className="mb-1 text-small">{teacher.grade}</p>
+              {teacher.status_type === '2' && (
+                <div className="mb-1 text-small">
+                  <Badge color="danger" pill>
+                    منفک
+                  </Badge>
+                </div>
+              )}
             </div>
-            <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
+            {/* <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
               <CustomInput
                 className="item-check mb-0"
                 type="checkbox"
-                id={`check_${product.id}`}
+                id={`check_${teacher.id}`}
                 checked={isSelect}
                 onChange={() => {}}
                 label=""
               />
-            </div>
+            </div> */}
           </div>
         </Card>
       </ContextMenuTrigger>
@@ -59,4 +61,4 @@ const TeacherListForm = ({ product, isSelect, collect, onCheckItem }) => {
 };
 
 /* React.memo detail : https://reactjs.org/docs/react-api.html#reactpurecomponent  */
-export default React.memo(TeacherListForm);
+export default React.memo(TeacherListBody);

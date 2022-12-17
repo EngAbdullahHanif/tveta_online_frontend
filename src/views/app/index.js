@@ -22,8 +22,16 @@ const Teachers = React.lazy(() =>
   import(/* webpackChunkName: "teachers" */ './teachers')
 );
 
-const Institues = React.lazy(() =>
+const Institutes = React.lazy(() =>
   import(/* webpackChunkName: "institues" */ './institutes')
+);
+
+const Subjects = React.lazy(() =>
+  import(/* webpackChunkName: "subjects" */ './subjects')
+);
+
+const Classes = React.lazy(() =>
+  import(/* webpackChunkName: "classes" */ './classes')
 );
 
 const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
@@ -79,9 +87,17 @@ const App = ({ match }) => {
 
             <Route
               path={`${match.url}/institutes`}
-              render={(props) => <Institues {...props} />}
+              render={(props) => <Institutes {...props} />}
+            />
+            <Route
+              path={`${match.url}/subjects`}
+              render={(props) => <Subjects {...props} />}
             />
 
+            <Route
+              path={`${match.url}/classes`}
+              render={(props) => <Classes {...props} />}
+            />
             <Route
               path={`${match.url}/blank-page`}
               render={(props) => <BlankPage {...props} />}

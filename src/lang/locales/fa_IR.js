@@ -626,6 +626,35 @@ module.exports = {
   'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',
    'forms.StudyTimeOption_1': 'ورځنی/ روزانه', 
   'forms.StudyTimeOption_2': 'شپې/ شبانه',
+  'forms.SubimssionButton': 'ثبت',
+   
+    // Student Attendance
+  'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',
+  'forms.StdIdLabel': ' د شاګرد ایډي/ ایدی شاگرد',
+  'forms.StdIdErr': 'د شاګرد ایډي اړین دی/ ایدی شاگرد ضروری است',
+  'forms.StdPresentLabel': 'حاضر/ سوب',
+  'forms.StdPresentErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
+  'forms.StdAbsentLabel': 'ناسوب / غیر حاضر',
+  'forms.StdAbsentErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
+  'forms.StdSicknessLabel': 'ناروغی/ مریضی',
+  'forms.StdSicknessErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
+  'forms.StdNecessaryWorkLabel': 'اړین کار/ کار ضروری',
+  'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
+
+
+  // Subject
+  
+  // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
+  // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',
+  // 'forms.SubjectNameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است!',
+  // 'forms.SubjectCreditLabel': 'کریدت',
+  // 'forms.SubjectCreditErr': 'د مضمون کریدت اړین دی/ کریدت مضمون ضروری است',
+  // 'forms.SubjectTypeLabel': 'ډول/ نوع',
+  // 'forms.SubjectTypeErr': 'د مضمون ډول اړین دی / نوع مضمون ضروری است',
+
+  //   'forms.TypeOption_1': 'اصلی',
+  // 'forms.TypeOption_2': 'فرعی',
+  
 
 
 

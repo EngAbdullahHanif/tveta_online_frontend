@@ -618,6 +618,48 @@ module.exports = {
   'forms.StudyTimeErr': 'Time!',
   'forms.StudyTimeOption_1': 'Day Shift', 
   'forms.StudyTimeOption_2': 'Night Shift',
+  'forms.SubimssionButton': 'Submit',
+    
+  // Student Attendance
+  'forms.AttendanceTitle': 'Student Attendance',
+  'forms.StdIdLabel': 'Student Id',
+  'forms.StdIdErr': 'Student Id Required!',
+  'forms.StdPresentLabel': 'Present',
+  'forms.StdPresentErr': 'this field is required!',
+  'forms.StdAbsentLabel': 'Absent',
+  'forms.StdAbsentErr': 'this field is required!',
+  'forms.StdSicknessLabel': 'Sickness',
+  'forms.StdSicknessErr': 'this field is required!',
+  'forms.StdNecessaryWorkLabel': 'Necessary Work',
+  'forms.StdNecessaryWorkErr': 'this field is required!',
+
+// // Subject
+//   'forms.SubjectTitle': 'Subject Registration',
+//   'forms.SubjectNameLabel': 'Name',
+//   'forms.SubjectNameErr': 'Name is Required!',
+//   'forms.SubjectCreditLabel': 'Credit',
+//   'forms.SubjectCreditErr': 'Credit is Required!',
+//   'forms.SubjectTypeLabel': 'Type',
+//   'forms.SubjectTypeErr': 'Subject Type is Required!',
+
+//   'forms.TypeOption_1': 'Core',
+//   'forms.TypeOption_2': 'Sup',
+    
+
+
+  
+  
+
+
+        
+     
+
+  
+  
+
+
+    
+
 
 
   

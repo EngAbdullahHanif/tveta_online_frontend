@@ -775,7 +775,7 @@ const StudentRegistraion = () => {
                       ) : null}
                         </FormGroup> */}
 
-                        <Button onClick={() => handleClick(false)} className="float-right m-2 mt-5">ثبت</Button>
+                        <Button onClick={() => handleClick(false)} className="float-right m-2 mt-5">{<IntlMessages id="forms.SubimssionButton"/> }</Button>
                          
                       </Colxx>                                        
   </Row>    

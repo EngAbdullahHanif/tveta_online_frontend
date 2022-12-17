@@ -1,86 +1,183 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import { MDBFile } from 'mdb-react-ui-kit';
-import 'react-datepicker/dist/react-datepicker.css';
-import {
-  AvForm,
-  AvField,
-  AvGroup,
-  AvInput,
-  AvFeedback,
-  AvRadioGroup,
-  AvRadio,
-  AvCheckboxGroup,
-  AvCheckbox,
-} from 'availity-reactstrap-validation';
-import { Button, Label, Card, CardBody, Row } from 'reactstrap';
-import { Colxx } from 'components/common/CustomBootstrap';
-import { useState } from 'react';
+import React, {useState} from 'react';
+import { Formik, Form, Field } from 'formik';
 
-const StudentRegistrationBio = () => {
-  const [selectedDate, setSelectedDate] = useState('');
-  const [IdCard, setIdCard] = useState(null);
-  const onSubmit = (event, errors, values) => {
-    console.log(errors);
-    console.log(values);
-    if (errors.length === 0) {
-      // submit
-    }
+
+import * as Yup from 'yup';
+import {
+  Row,
+  Card,
+  CardBody,
+  FormGroup,
+  Label,
+  Button,
+  CardTitle,
+} from 'reactstrap';
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx } from 'components/common/CustomBootstrap';
+import {
+  FormikReactSelect,
+  FormikTagsInput,
+  FormikDatePicker,
+} from '../../../../containers/form-validations/FormikFields';
+
+const SignupSchema = Yup.object().shape({
+
+StdId: Yup.string()
+    //  .min(3, <IntlMessages id="forms.StdId" />)
+    .required(<IntlMessages id="forms.StdIdErr" />),
+  
+     StdPresent: Yup.string()
+    .required(<IntlMessages id="forms.StdPresentErr" />),
+     
+    StdAbsent: Yup.string()
+    .required(<IntlMessages id="forms.StdAbsentErr" />),
+                   
+      StdSickness: Yup.string()
+      .required(<IntlMessages id="forms.StdSicknessErr" />),
+  
+    StdNecessaryWork: Yup.string()
+      .required(<IntlMessages id="forms.StdNecessaryWorkErr" />),
+
+               
+ 
+});
+
+
+
+
+const StudentAttendance = () => {
+  const onSubmit = (values, { setSubmitting }) => {
+    const payload = {
+      ...values,
+      state: values.state.value,
+    };
+    setTimeout(() => {
+      console.log(JSON.stringify(payload, null, 2));
+      setSubmitting(false);
+    }, 1000);
   };
 
-  console.log(IdCard, ' this is Id card');
+  
 
   return (
-    <Card className="mb-5">
-      <h4 className="mt-5 m-5"> دحاضرۍ ثبت/ ثبت حاضری</h4>
-
-      <CardBody>
-        <AvForm
-          className="av-tooltip tooltip-label-right p-5"
-          onSubmit={(event, errors, values) => onSubmit(event, errors, values)}
-        >
-          <Row>
-            <Colxx>
-              <AvGroup>
-                <Label>آی ډی</Label>
-                <AvInput name="name" required />
-                <AvFeedback>/نوم ضروری دی/نام اجباری است!</AvFeedback>
-              </AvGroup>
-
-              <AvGroup>
-                <Label>سوب/ حاضر</Label>
-                <AvField name="maxPropString" type="number" max="10000000000" />
-              </AvGroup>
-
-              <AvGroup>
-                <Label>ناسوب/غیر حاضر</Label>
-                <AvField name="maxPropString" type="number" max="10000000000" />
-              </AvGroup>
-
-              <AvGroup>
-                <Label>بیمار/ مریض</Label>
-                <AvField name="maxPropString" type="number" max="10000000000" />
-              </AvGroup>
-
-              <AvGroup>
-                <Label> ضروروی کار/ کار ضروری (رخصت)</Label>
-                <AvField name="maxPropString" type="number" max="10000000000" />
-              </AvGroup>
-
-              <AvGroup>
-                <Label>نمرې/ نمرات</Label>
-                <AvField name="maxPropString" type="number" max="10000000000" />
-              </AvGroup>
-            </Colxx>
-          </Row>
-          <Button color="primary m-4">ثبت</Button>
-        </AvForm>
-      </CardBody>
-    </Card>
-
-
+    <>
       
+      <Card>
+        <h3 className="mt-5 m-5">{ <IntlMessages id="forms.AttendanceTitle" />}</h3>
+                    <CardBody>   
+       <Formik
+            initialValues={{              
+                  }}
+                  validationSchema={SignupSchema}
+                  onSubmit={onSubmit}
+                >
+                  {({
+                    handleSubmit,
+                    setFieldValue,
+                    setFieldTouched,
+                    handleChange,
+                    handleBlur,
+                    values,
+                    errors,
+                    touched,
+                    isSubmitting,
+                  }) => (
+              <Form className="av-tooltip tooltip-label-bottom">
+                
+         
+             <Row className='justify-content-center'>
+                  <Colxx xxs="10">
+                    
+                    {/* Student Id */}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.StdIdLabel" />
+                      </Label>
+                      <Field className="form-control" name="StdId" />
+                      {errors.StdId && touched.StdId ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdId}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+
+
+                    {/*Present  */}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.StdPresentLabel" />
+                      </Label>
+                      <Field className="form-control" name="StdPresent" type='number' />
+                      {errors.StdPresent && touched.StdPresent ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdPresent}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                    
+
+
+                    {/* ABsent */}
+                   <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.StdAbsentLabel" />
+                      </Label>
+                      <Field className="form-control" name="StdAbsent" type='number' />
+                      {errors.StdAbsent && touched.StdAbsent ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdAbsent}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                    
+
+                    {/* Sickness */}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.StdSicknessLabelLabel" />
+                      </Label>
+                      <Field className="form-control" name="StdSicknessLabel" type='number' />
+                      {errors.StdSicknessLabel && touched.StdSicknessLabel ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdSicknessLabel}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                
+
+                    
+                    {/* Necessary Work */}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                      </Label>
+                      <Field className="form-control" name="StdNecessaryWork" type='number' />
+                      {errors.StdNecessaryWork && touched.StdNecessaryWork ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdNecessaryWork}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                    
+                
+                    <Button className="float-right m-3 ">{<IntlMessages id="forms.SubimssionButton"/> }
+                    </Button>
+                      
+                  </Colxx>
+                </Row>
+              
+
+
+
+          </Form>
+                  )}
+                </Formik>
+         
+       </CardBody>
+                    </Card>
+      </>
   );
 };
 
-export default StudentRegistrationBio;
+export default StudentAttendance;
+

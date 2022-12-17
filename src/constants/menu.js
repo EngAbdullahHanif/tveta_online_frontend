@@ -241,8 +241,8 @@ const data = [
       },
       {
         icon: 'simple-icon-calculator',
-        label: 'menu.survey',
-        to: `${adminRoot}/applications/survey`,
+        label: 'menu.institute_register',
+        to: `${adminRoot}/institutes/register`,
       },
       {
         icon: 'simple-icon-bubbles',
@@ -388,34 +388,25 @@ const data = [
     id: 'subjects',
     icon: 'simple-icon-book-open',
     label: 'menu.subjects',
-    to: `${adminRoot}/menu`,
+    to: `${adminRoot}/subjects`,
     subs: [
       {
         icon: 'simple-icon-logout',
-        label: 'menu.types',
-        to: `${adminRoot}/menu/types`,
+        label: 'subject.register',
+        to: `${adminRoot}/subjects/register`,
       },
+    ],
+  },
+  {
+    id: 'classess',
+    icon: 'simple-icon-book-open',
+    label: 'menu.classes',
+    to: `${adminRoot}/classes`,
+    subs: [
       {
-        icon: 'simple-icon-layers',
-        label: 'menu.levels',
-        to: `${adminRoot}/menu/levels`,
-        subs: [
-          {
-            icon: 'simple-icon-arrow-right',
-            label: 'menu.third-level-1',
-            to: `${adminRoot}/menu/levels/third-level-1`,
-          },
-          {
-            icon: 'simple-icon-arrow-right',
-            label: 'menu.third-level-2',
-            to: `${adminRoot}/menu/levels/third-level-2`,
-          },
-          {
-            icon: 'simple-icon-arrow-right',
-            label: 'menu.third-level-3',
-            to: `${adminRoot}/menu/levels/third-level-3`,
-          },
-        ],
+        icon: 'simple-icon-logout',
+        label: 'class.register',
+        to: `${adminRoot}/classes/register`,
       },
     ],
   },

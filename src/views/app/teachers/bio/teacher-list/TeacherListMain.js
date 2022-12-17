@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-import { servicePath } from 'constants/defaultValues';
+// import { servicePath } from 'constants/defaultValues';
 
 import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
 
@@ -18,7 +18,10 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
+const servicePath = 'http://localhost:8000';
+
 const apiUrl = `${servicePath}/cakes/paging`;
+const teacherApiUrl = `${servicePath}/teachers/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -58,37 +61,38 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     async function fetchData() {
       axios
-        .get(
-          `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
-        )
+        // .get(
+        //   `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+        // )
+        // get data from localhost:8000/api/teachers
+        .get(`${teacherApiUrl}`)
         .then((res) => {
           return res.data;
-
-
-       
         })
         .then((data) => {
+          console.log(data, 'Teacher list data fatched using axios ');
+          console.log('data total Items', data.totalItem);
 
-          console.log(data, "Teacher list data fatched using axios ")
-          console.log("data total Items", data.totalItem)
-                  
-          setTotalPage(data.totalPage);
-          setItems(
-            data.data.map((x) => {
-                 console.log("Single Value of the array ", x)
-              return { ...x, img: x.img.replace('img/', 'img/products/') };
-           
-            })
-          );
+          // setTotalPage(data.totalPage);
+          // setItems(data.data);
+          // set fecahed data to items
+          setItems(data);
+
+          // setSelectedItems([]);
+
+          // setItems(
+          //   data.data.map((x) => {
+          //     console.log('Single Value of the array ', x);
+          //     return { ...x, img: x.img.replace('img/', 'img/products/') };
+          //   })
+          // );
           setSelectedItems([]);
           setTotalItemCount(data.totalItem);
           setIsLoaded(true);
         });
-
     }
     fetchData();
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
-
 
   const onCheckItem = (event, id) => {
     if (
@@ -165,7 +169,7 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  console.log("Data displayed on the table", items)
+  console.log('Data displayed on the table', items);
 
   return !isLoaded ? (
     <div className="loading" />
@@ -173,12 +177,12 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-            heading="د استاد لست/ لست استادان"
-            // Using display mode we can change the display of the list.
+          heading="د استاد لست/ لست استادان"
+          // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
-            handleChangeSelectAll={handleChangeSelectAll}
-            // following code is used for order the list based on different element of the prod
+          handleChangeSelectAll={handleChangeSelectAll}
+          // following code is used for order the list based on different element of the prod
           changeOrderBy={(column) => {
             setSelectedOrderOption(
               orderOptions.find((x) => x.column === column)
@@ -194,15 +198,15 @@ const ThumbListPages = ({ match }) => {
           selectedItemsLength={selectedItems ? selectedItems.length : 0}
           itemsLength={items ? items.length : 0}
           onSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setSearch(e.target.value.toLowerCase());
-            }
+            setSearch(e.target.value.toLowerCase());
+            // if (e.key === 'Enter') {
+            // }
           }}
           orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />
-    
+
         <ListPageListing
           items={items}
           displayMode={displayMode}
@@ -212,8 +216,7 @@ const ThumbListPages = ({ match }) => {
           totalPage={totalPage}
           onContextMenuClick={onContextMenuClick}
           onContextMenu={onContextMenu}
-            onChangePage={setCurrentPage}
-            
+          onChangePage={setCurrentPage}
         />
       </div>
     </>

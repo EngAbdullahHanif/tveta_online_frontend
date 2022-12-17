@@ -8,11 +8,11 @@ import {
   ModalFooter,
 } from 'reactstrap';
 
-import Pagination from '../../../../../containers/pages/Pagination';
-import ContextMenuContainer from '../../../../../containers/pages/ContextMenuContainer';
-import DataListView from '../../../../../containers/pages/DataListView';
-import ImageListView from '../../../../../containers/pages/ImageListView';
-import TeacherListBody from './TeacherListBody';
+import Pagination from '../../../../containers/pages/Pagination';
+import ContextMenuContainer from '../../../../containers/pages/ContextMenuContainer';
+import DataListView from '../../../../containers/pages/DataListView';
+import ImageListView from '../../../../containers/pages/ImageListView';
+import InstituteListBody from './InstituteListBody';
 
 function collect(props) {
   return { data: props.data };
@@ -39,13 +39,13 @@ const ListPageListing = ({
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((teacher) => {
+        {items.map((institute) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
-                key={teacher.id}
-                teacher={teacher}
-                isSelect={selectedItems.includes(teacher.id)}
+                key={institute.id}
+                institute={institute}
+                isSelect={selectedItems.includes(institute.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -53,10 +53,10 @@ const ListPageListing = ({
           }
           if (displayMode === 'thumblist') {
             return (
-              <TeacherListBody
-                key={teacher.id}
-                teacher={teacher}
-                isSelect={selectedItems.includes(teacher.id)}
+              <InstituteListBody
+                key={institute.id}
+                institute={institute}
+                isSelect={selectedItems.includes(institute.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -64,9 +64,9 @@ const ListPageListing = ({
           }
           return (
             <DataListView
-              key={teacher.id}
-              teacher={teacher}
-              isSelect={selectedItems.includes(teacher.id)}
+              key={institute.id}
+              institute={institute}
+              isSelect={selectedItems.includes(institute.id)}
               onCheckItem={onCheckItem}
               collect={collect}
             />

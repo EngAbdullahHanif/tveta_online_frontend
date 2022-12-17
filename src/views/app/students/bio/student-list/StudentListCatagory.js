@@ -14,8 +14,6 @@ import DataListView from '../../../../../containers/pages/DataListView';
 import ImageListView from '../../../../../containers/pages/ImageListView';
 import StudentListBody from './StudentListBody';
 
-
-
 function collect(props) {
   return { data: props.data };
 }
@@ -31,19 +29,18 @@ const ListPageListing = ({
   onContextMenu,
   onChangePage,
 }) => {
-
   const [modalBasic, setModalBasic] = useState(true);
 
   return (
     <>
       <Row>
-        {items.map((product) => {
+        {items.map((student) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
-                key={product.id}
-                product={product}
-                isSelect={selectedItems.includes(product.id)}
+                key={student.id}
+                student={student}
+                isSelect={selectedItems.includes(student.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -52,9 +49,9 @@ const ListPageListing = ({
           if (displayMode === 'thumblist') {
             return (
               <StudentListBody
-                key={product.id}
-                product={product}
-                isSelect={selectedItems.includes(product.id)}
+                key={student.id}
+                student={student}
+                isSelect={selectedItems.includes(student.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -62,9 +59,9 @@ const ListPageListing = ({
           }
           return (
             <DataListView
-              key={product.id}
-              product={product}
-              isSelect={selectedItems.includes(product.id)}
+              key={student.id}
+              student={student}
+              isSelect={selectedItems.includes(student.id)}
               onCheckItem={onCheckItem}
               collect={collect}
             />

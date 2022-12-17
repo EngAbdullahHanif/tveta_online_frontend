@@ -4,9 +4,9 @@ import axios from 'axios';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from 'views/app/students/bio/student-list/StudentListHeading';
+import ListPageHeading from './InstituteListHeading';
 
-import ListPageListing from 'views/app/students/bio/student-list/StudentListCatagory';
+import ListPageListing from './InstituteListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -19,15 +19,16 @@ const getIndex = (value, arr, prop) => {
 };
 
 const servicePath = 'http://localhost:8000';
+
 const apiUrl = `${servicePath}/cakes/paging`;
-const studentApiUrl = `${servicePath}/api/`;
+const instituteApiUrl = `${servicePath}/institute/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
   { column: 'category', label: 'Category' },
   { column: 'status', label: 'Status' },
 ];
-const pageSizes = [10, 20, 40, 80];
+const pageSizes = [4, 8, 12, 20];
 
 const categories = [
   { label: 'Cakes', value: 'Cakes', key: 0 },
@@ -63,24 +64,26 @@ const ThumbListPages = ({ match }) => {
         // .get(
         //   `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
         // )
-        .get(`${studentApiUrl}?main_province=${search}`)
-
+        // get data from localhost:8000/institute
+        .get(`${instituteApiUrl}`)
         .then((res) => {
+          console.log('res.data', res.data);
           return res.data;
         })
         .then((data) => {
-          console.log('api', `main_province=${match.params.search}`);
-          // console.log(data, 'lorem Students Data ');
-          // console.log('data total Items', data);
-
           // setTotalPage(data.totalPage);
+          // setItems(data.data);
+          // set fecahed data to items
+          setItems(data);
+
+          // setSelectedItems([]);
+
           // setItems(
           //   data.data.map((x) => {
           //     console.log('Single Value of the array ', x);
           //     return { ...x, img: x.img.replace('img/', 'img/products/') };
           //   })
           // );
-          setItems(data);
           setSelectedItems([]);
           setTotalItemCount(data.totalItem);
           setIsLoaded(true);
@@ -172,7 +175,7 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د شاگرد لست/لست شاگردان"
+          heading="د انستیوت لست/ لست انستیتوت ها"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -193,9 +196,9 @@ const ThumbListPages = ({ match }) => {
           selectedItemsLength={selectedItems ? selectedItems.length : 0}
           itemsLength={items ? items.length : 0}
           onSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setSearch(e.target.value.toLowerCase());
-            }
+            setSearch(e.target.value.toLowerCase());
+            // if (e.key === 'Enter') {
+            // }
           }}
           orderOptions={orderOptions}
           pageSizes={pageSizes}

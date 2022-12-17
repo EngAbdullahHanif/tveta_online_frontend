@@ -147,6 +147,9 @@ module.exports = {
   'menu.layouts': 'Layouts',
   'menu.validations': 'Validations',
   'menu.wizard': 'Wizard',
+  'menu.field': 'Fields',
+  'menu.field-register': 'Register',
+    
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -387,10 +390,10 @@ module.exports = {
   'button.light': 'Light',
   'button.dark': 'Dark',
   'button.states-text':
-    'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
+  'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
   'button.click-here': 'Click Here',
   'button.states-text-alternate':
-    'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
+  'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
   'button.primary-link': 'Primary Link',
   'button.link': 'Link',
   'button.primary-button': 'Primary Button',
@@ -631,7 +634,21 @@ module.exports = {
   'forms.StdSicknessLabel': 'Sickness',
   'forms.StdSicknessErr': 'this field is required!',
   'forms.StdNecessaryWorkLabel': 'Necessary Work',
-  'forms.StdNecessaryWorkErr': 'this field is required!',
+
+  // Field Registration
+  'field.FieldRegisterTitle': 'Field Registeration',
+  'field.FieldNameLabel': 'Name',
+  'field.FieldNameErr': 'Field Name Required!',
+  'field.FieldEngNameLabel': 'English Name',
+  'field.FieldEngNameErr': 'Field English Namer Required!',
+  'field.SemesterLabel': 'Semester',
+  'field.SemesterErr': 'Class Required!',
+  'field.SubjectsLabel': 'Subjects',
+  'field.SubjectsErr': 'Field Subjects Required!',
+  'field.FieldIdLabel': 'Field Id',
+  'field.FieldIdErr': 'Field Id Required!',
+
+  
 
 // // Subject
 //   'forms.SubjectTitle': 'Subject Registration',

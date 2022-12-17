@@ -410,6 +410,25 @@ const data = [
       },
     ],
   },
+  
+  {
+    id: 'fields',
+    icon: 'simple-icon-book-open',
+    label: 'menu.field',
+    to: `${adminRoot}/fields`,
+    subs: [
+      {
+        icon: 'simple-icon-logout',
+        label: 'menu.field-register',
+        to: `${adminRoot}/fields/register`,
+      },
+      {
+        icon: 'simple-icon-logout',
+        label: 'class.fields',
+        to: `${adminRoot}/fields/fields`,
+      },
+    ],
+  },
   {
     id: 'blankpage',
     icon: 'iconsminds-bucket',

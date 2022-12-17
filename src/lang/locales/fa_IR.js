@@ -159,6 +159,9 @@ module.exports = {
   'menu.layouts': 'طرح بندی',
   'menu.validations': 'اعتبار سنجی ها',
   'menu.wizard': 'ویزارد',
+  'menu.field': 'رشته ها / رشتې',
+
+
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -647,9 +650,21 @@ module.exports = {
   'forms.StdNecessaryWorkLabel': 'اړین کار/ کار ضروری',
   'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
 
+  // Field Registration
+  'field.FieldRegisterTitle': 'ثبت رشته / درشتې ثبت',
+  'field.FieldNameLabel': 'نوم/ نام',
+  'field.FieldNameErr': 'نوم اړین دی/ نام ضروری است',
+   'field.FieldEngNameLabel': 'انګریزی نوم/ نام انگلسی',
+  'field.FieldEngNameErr': 'انګریزی نوم اړین دی/ نام انګلسی ضروری است',
+  'field.SemesterLabel': 'سمستر',
+  'field.SemesterErr': 'سمستر اړین دی/ درج سمستر ضروری است',
+  'field.SubjectsLabel': 'مضمونونه/ مضامین',
+  'field.SubjectsErr': 'مضمونونه اړین دي/ درج مضامین ضروری است',
+  'field.FieldIdLabel': 'د رشتی آیدی/ ایدی رشته',
+  'field.FieldIdErr': 'د رشتې ایدی اړین دی/ ایدی رشته ضروری است',
+
 
   // Subject
-  
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
   // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',
   // 'forms.SubjectNameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است!',

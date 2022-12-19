@@ -52,23 +52,21 @@ const genderOptions = [
   { value: '3', label: 'مختلط' },
 ];
 
-// const InstituteRegistgerSchema = Yup.object().shape({
-//   email: Yup.string()
-//     .email('ایمیل که وارد کردی نامعتبره')
-//     .required('پست الکترونیک اجباریه!'),
-//   password: Yup.string().required('کلمه عبور اجباریه!'),
-//   tags: Yup.array()
-//     .min(3, 'حداقل 3 تا تگ انتخاب کنید')
-//     .required('حداقل یک تگ اجباریه'),
-//   date: Yup.date().nullable().required('تاریخ اجباریه!'),
-//   state: Yup.object()
-//     .shape({
-//       label: Yup.string().required(),
-//       value: Yup.string().required(),
-//     })
-//     .nullable()
-//     .required('استان اجباریه!'),
-// });
+const InstituteRegistgerSchema = Yup.object().shape({
+  instName: Yup.string().required('name is required'),
+  // password: Yup.string().required('کلمه عبور اجباریه!'),
+  // tags: Yup.array()
+  //   .min(3, 'حداقل 3 تا تگ انتخاب کنید')
+  //   .required('حداقل یک تگ اجباریه'),
+  // date: Yup.date().nullable().required('تاریخ اجباریه!'),
+  // state: Yup.object()
+  //   .shape({
+  //     label: Yup.string().required(),
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required('استان اجباریه!'),
+});
 
 const InstituteRegister = () => {
   const [province, setProvince] = useState({});
@@ -113,7 +111,7 @@ const InstituteRegister = () => {
       .then((response) => {
         console.log(response);
 
-        window.location.reload(false);
+        // window.location.reload(false);
       })
       .catch((error) => {
         console.log(error);
@@ -132,7 +130,7 @@ const InstituteRegister = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={onRegister}
-            // validationSchema={InstituteRegistgerSchema}
+            validationSchema={InstituteRegistgerSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-bottom">

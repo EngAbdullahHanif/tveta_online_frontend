@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -21,146 +21,188 @@ import {
 } from '../../../../containers/form-validations/FormikFields';
 
 const SignupSchema = Yup.object().shape({
-
   StdName: Yup.string()
-     .min(3, <IntlMessages id="forms.nameChar" />)
+    .min(3, <IntlMessages id="forms.nameChar" />)
     .required(<IntlMessages id="forms.StdKankorNameErr" />),
-  
-     StdKankorId: Yup.string()
-    .required(<IntlMessages id="forms.StdKankorIdErr" />),
-     
-   StdFatherName: Yup.string()
+
+  StdKankorId: Yup.string().required(
+    <IntlMessages id="forms.StdKankorIdErr" />
+  ),
+
+  StdFatherName: Yup.string()
     // .min(3 'ستاسو دپلار نوم سم ندی/ نام پدر شما اشتباه است')
     .required(<IntlMessages id="forms.StdFatherNameError" />),
-                   
-      KankorMarks: Yup.number()
-      .required(<IntlMessages id="forms.KankorMarksErr" />),
-  
-  Institute: Yup.string()
-      .required(<IntlMessages id="forms.InstituteErr" />),
-    
-Field: Yup.string()
-    .required(<IntlMessages id="forms.FieldErr" />),
 
+  KankorMarks: Yup.number().required(
+    <IntlMessages id="forms.KankorMarksErr" />
+  ),
 
+  Institute: Yup.string().required(<IntlMessages id="forms.InstituteErr" />),
 
+  Field: Yup.string().required(<IntlMessages id="forms.FieldErr" />),
 
-        StudyTime: Yup.string()
-    .required(<IntlMessages id="forms.StudyTimeErr" />),
-
-                                    
-                
- 
+  StudyTime: Yup.string().required(<IntlMessages id="forms.StudyTimeErr" />),
 });
 
 const options = [
-  { value: 'Electronic', label: <IntlMessages id="forms.StdTazkiraElectronic" />  },
-  { value: 'paper', label: <IntlMessages id="forms.StdTazkiraPaper" />  },
-
+  {
+    value: 'Electronic',
+    label: <IntlMessages id="forms.StdTazkiraElectronic" />,
+  },
+  { value: 'paper', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
 ];
 
-const StdInteranceOptions =  [
-  { value: '1', label: <IntlMessages id="forms.StdInteranceOption_1" />  },
+const StdInteranceOptions = [
+  { value: '1', label: <IntlMessages id="forms.StdInteranceOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StdInteranceOption_2" /> },
   { value: '3', label: <IntlMessages id="forms.StdInteranceOption_3" /> },
 ];
 
-
-
-
 const StudyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-
 ];
 
-
-const InstituteOptions =  [
-  { value: '1', label: "Option1"  },
-  { value: '2', label: "Option2" },
-  { value: '3', label: "Option3" },
-
+const InstituteOptions = [
+  { value: '1', label: 'Option1' },
+  { value: '2', label: 'Option2' },
+  { value: '3', label: 'Option3' },
 ];
 
-const FieldOptions =  [
-  { value: '1', label: "Option1"  },
-  { value: '2', label: "Option2" },
-  { value: '3', label: "Option3" },
-
+const FieldOptions = [
+  { value: '1', label: 'Option1' },
+  { value: '2', label: 'Option2' },
+  { value: '3', label: 'Option3' },
 ];
-
 
 const StudentRegistraion = () => {
-  const onSubmit = (values, { setSubmitting }) => {
-    const payload = {
-      ...values,
-      state: values.state.value,
-    };
-    setTimeout(() => {
-      console.log(JSON.stringify(payload, null, 2));
-      setSubmitting(false);
-    }, 1000);
+  const initialValues = {
+    StdSchoolProvince: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    Province: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    C_Province: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    Institute: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    StudyTime: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    Field: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
   };
-  const [isNext, setIsNext] = useState(false);
-  const [IdCard, setIdCard] = useState(null);
+  const [fields, setFields] = useState([]);
+  const [institutes, setInstitutes] = useState([]);
+  const [departments, setDepartments] = useState([]);
 
-  const handleClick = (event) => {
-     setIsNext(event);
+  const fetchInstitutes = async () => {
+    const response = await axios.get('http://localhost:8000/institute/');
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setInstitutes(updatedData);
   };
-  
+  const fetchFields = async () => {
+    const response = await axios.get('http://localhost:8000/institute/filed/');
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setFields(updatedData);
+  };
+  const fetchDepartments = async () => {
+    const response = await axios.get(
+      'http://localhost:8000/institute/department/'
+    );
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setDepartments(updatedData);
+  };
+
+  const onRegister = (values) => {
+    console.log('values', values);
+    console.log('institue', values.Department.value);
+    const data = {
+      name: values.StdName,
+      father_name: values.StdFatherName,
+      Institute: values.Institute.value,
+      field_id: values.Field.value,
+      Dept_id: values.Department.value,
+      score: values.KankorMarks,
+      date: values.StdInteranceDate,
+      //uncomment this line to send data to the server
+      // kankor_id: values.StdKankorId,
+      // study_time: values.StudyTime.value,
+    };
+
+    console.log('data', data);
+
+    axios
+      .post('http://localhost:8000/api/Create_kankorResults/', data)
+      .then((response) => {
+        console.log(response);
+        console.log('data sent to the server2');
+      })
+      .catch((error) => {
+        console.log('data sent to the server4');
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+    fetchFields();
+    fetchDepartments();
+  }, []);
+
+  console.log('fields', fields);
+  console.log('institutes', institutes);
 
   return (
     <>
-      
       <Card>
-        <h3 className="mt-5 m-5">{ <IntlMessages id="forms.Kankorformstitle" />}</h3>
-                    <CardBody>   
-       <Formik
-            initialValues={{
-              StdSchoolProvince: { value: '', label: <IntlMessages id="forms.EducationLevelDefaultValue" /> },
-              Province: { value: '', label: <IntlMessages id="forms.EducationLevelDefaultValue" /> },
-              C_Province: { value: '', label: <IntlMessages id="forms.EducationLevelDefaultValue" /> },
-              Institute: { value: '', label: <IntlMessages id="forms.EducationLevelDefaultValue" /> },
-              StudyTime: { value: '', label: <IntlMessages id="forms.EducationLevelDefaultValue" /> },
-              Field: { value: '', label: <IntlMessages id="forms.EducationLevelDefaultValue" /> },
-              
-                  }}
-                  validationSchema={SignupSchema}
-                  onSubmit={onSubmit}
-                >
-                  {({
-                    handleSubmit,
-                    setFieldValue,
-                    setFieldTouched,
-                    handleChange,
-                    handleBlur,
-                    values,
-                    errors,
-                    touched,
-                    isSubmitting,
-                  }) => (
+        <h3 className="mt-5 m-5">
+          {<IntlMessages id="forms.Kankorformstitle" />}
+        </h3>
+        <CardBody>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={onRegister}
+            // validationSchema={InstituteRegistgerSchema}
+          >
+            {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-bottom">
-                
-          
-          
-          <Row>
+                <Row>
                   <Colxx xxs="6">
-                    
-                      {/* Name */}
-                        <FormGroup className="form-group has-float-label">
+                    {/* Name */}
+                    <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="forms.StdName" />
                       </Label>
                       <Field className="form-control" name="StdName" />
-                      {errors.StdName && touched.StdName? (
+                      {errors.StdName && touched.StdName ? (
                         <div className="invalid-feedback d-block">
                           {errors.StdName}
                         </div>
                       ) : null}
                     </FormGroup>
 
-                         {/*Father Name  */}
-                  <FormGroup className="form-group has-float-label">
+                    {/*Father Name  */}
+                    <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="forms.StdFatherName" />
                       </Label>
@@ -171,11 +213,9 @@ const StudentRegistraion = () => {
                         </div>
                       ) : null}
                     </FormGroup>
-                    
-
 
                     {/* Institutes */}
-                      <FormGroup className="form-group has-float-label">
+                    <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="forms.InstituteLabel" />
                       </Label>
@@ -183,20 +223,19 @@ const StudentRegistraion = () => {
                         name="Institute"
                         id="Institute"
                         value={values.Institute}
-                        options={InstituteOptions}
+                        options={institutes}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                          />     
+                      />
                       {errors.Institute && touched.Institute ? (
                         <div className="invalid-feedback d-block">
                           {errors.Institute}
                         </div>
                       ) : null}
                     </FormGroup>
-                    
 
                     {/* Study time */}
-                       <FormGroup className="form-group has-float-label">
+                    <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="forms.StudyTimeLabel" />
                       </Label>
@@ -207,47 +246,68 @@ const StudentRegistraion = () => {
                         options={StudyTimeOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                          />     
+                      />
                       {errors.StudyTime && touched.StudyTime ? (
                         <div className="invalid-feedback d-block">
                           {errors.StudyTime}
                         </div>
                       ) : null}
-                        </FormGroup>          
-                  </Colxx> 
+                    </FormGroup>
+
+                    {/* Department */}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.studyDepartment" />
+                      </Label>
+                      <FormikReactSelect
+                        name="Department"
+                        id="Department"
+                        value={values.Department}
+                        options={departments}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                      />
+                      {errors.Department && touched.Department ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.Department}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                  </Colxx>
 
                   <Colxx xxs="6">
-                    
-                       {/* Exam Id */}
-                      <FormGroup className="form-group has-float-label">
+                    {/* Exam Id */}
+                    <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="forms.StdKankorIdLabel" />
                       </Label>
                       <Field className="form-control" name="StdKankorId" />
-                      {errors.StdKankorId && touched.StdKankorId? (
+                      {errors.StdKankorId && touched.StdKankorId ? (
                         <div className="invalid-feedback d-block">
                           {errors.StdKankorId}
                         </div>
                       ) : null}
                     </FormGroup>
-                    
-                  
+
                     {/* Kankor Marks */}
-                      <FormGroup className="form-group has-float-label">
+                    <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="forms.KankorMarksLabel" />
                       </Label>
-                      <Field className="form-control" name="KankorMarks" type='number'/>
-                      {errors.KankorMarks && touched.KankorMarks? (
+                      <Field
+                        className="form-control"
+                        name="KankorMarks"
+                        type="number"
+                      />
+                      {errors.KankorMarks && touched.KankorMarks ? (
                         <div className="invalid-feedback d-block">
                           {errors.KankorMarks}
                         </div>
                       ) : null}
                     </FormGroup>
-                    
 
-                     {/* Field */}
-                      <FormGroup className="form-group has-float-label">
+                    {/* Field */}
+                    <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="forms.FieldLabel" />
                       </Label>
@@ -255,28 +315,59 @@ const StudentRegistraion = () => {
                         name="Field"
                         id="Field"
                         value={values.Field}
-                        options={FieldOptions}
+                        options={fields}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                          />     
+                      />
                       {errors.Field && touched.Field ? (
                         <div className="invalid-feedback d-block">
                           {errors.Field}
                         </div>
                       ) : null}
-                        </FormGroup>
-  
-                        <Button onClick={() => handleClick(false)} className="float-right m-2 mt-5">ثبت</Button>
-                      
-                      </Colxx>                                        
-  </Row>    
-          </Form>
-                  )}
-                </Formik>
-         
-       </CardBody>
-                    </Card>
-      </>
+                    </FormGroup>
+
+                    {/* date */}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.RegistrationDateLabel" />
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="StdInteranceDate"
+                        type="date"
+                      />
+                      {errors.StdInteranceDate && touched.StdInteranceDate ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdInteranceDate}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+
+                    <div className="d-flex justify-content-between align-items-center">
+                      <Button
+                        color="primary"
+                        className={`btn-shadow btn-multiple-state`}
+                        size="lg"
+                        type="submit"
+                      >
+                        <span className="spinner d-inline-block">
+                          <span className="bounce1" />
+                          <span className="bounce2" />
+                          <span className="bounce3" />
+                        </span>
+                        <span className="label">
+                          <IntlMessages id="forms.SubimssionButton" />
+                        </span>
+                      </Button>
+                    </div>
+                  </Colxx>
+                </Row>
+              </Form>
+            )}
+          </Formik>
+        </CardBody>
+      </Card>
+    </>
   );
 };
 

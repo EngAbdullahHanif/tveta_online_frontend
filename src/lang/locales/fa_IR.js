@@ -633,7 +633,9 @@ module.exports = {
   'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',
   'forms.StudyTimeOption_1': 'ورځنی/ روزانه',
   'forms.StudyTimeOption_2': 'شپې/ شبانه',
+  'forms.studyDepartment': 'دیپارتمنت',
   'forms.SubimssionButton': 'ثبت',
+  'forms.RegistrationDateLabel': 'د ثبت نام وخت/ تاریخ ثبت نام',
 
   // Student Attendance
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',

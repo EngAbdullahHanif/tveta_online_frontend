@@ -9,28 +9,16 @@ const data = [
     // roles: [UserRole.Admin, UserRole.Editor],
     subs: [
       {
-        icon: 'simple-icon-briefcase',
+        icon: 'iconsminds-students',
         label: 'menu.teacher_list',
         to: `${adminRoot}/teachers/teachers`,
         // roles: [UserRole.Admin],
       },
-      {
-        icon: 'simple-icon-pie-chart',
-        label: 'menu.analytics',
-        to: `${adminRoot}/dashboards/analytics`,
+        {
+        icon: 'iconsminds-add-user',
+        label: 'menu.teacher-registration',
+        to: `${adminRoot}/teachers/register`,
         // roles: [UserRole.Admin],
-      },
-      {
-        icon: 'simple-icon-basket-loaded',
-        label: 'menu.ecommerce',
-        to: `${adminRoot}/dashboards/ecommerce`,
-        // roles: [UserRole.Editor],
-      },
-      {
-        icon: 'simple-icon-doc',
-        label: 'menu.content',
-        to: `${adminRoot}/dashboards/content`,
-        // roles: [UserRole.Editor],
       },
     ],
   },
@@ -54,22 +42,20 @@ const data = [
         // roles: [UserRole.Admin],
       },
       {
-        icon: 'simple-icon-user-follow',
+        icon: 'iconsminds-students',
         label: 'menu.student_list',
         to: `${adminRoot}/students/students`,
         // roles: [UserRole.Admin],
       },
-      {
-        icon: 'simple-icon-basket-loaded',
-        label: 'menu.ecommerce',
-        to: `${adminRoot}/dashboards/ecommerce`,
-        // roles: [UserRole.Editor],
+          {
+        icon: 'simple-icon-plus',
+        label: 'menu.student-marks-register',
+        to: `${adminRoot}/students/marks-register`,
       },
-      {
-        icon: 'simple-icon-doc',
-        label: 'menu.content',
-        to: `${adminRoot}/dashboards/content`,
-        // roles: [UserRole.Editor],
+              {
+        icon: 'simple-icon-plus',
+        label: 'menu.attendance-registration',
+        to: `${adminRoot}/students/attendance-register`,
       },
     ],
   },
@@ -235,19 +221,14 @@ const data = [
     to: `${adminRoot}/institutes`,
     subs: [
       {
-        icon: 'simple-icon-check',
+        icon: 'iconsminds-home',
         label: 'menu.institute_list',
         to: `${adminRoot}/institutes/institutes`,
       },
       {
-        icon: 'simple-icon-calculator',
+        icon: 'simple-icon-plus',
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
-      },
-      {
-        icon: 'simple-icon-bubbles',
-        label: 'menu.chat',
-        to: `${adminRoot}/applications/chat`,
       },
     ],
   },
@@ -391,7 +372,7 @@ const data = [
     to: `${adminRoot}/subjects`,
     subs: [
       {
-        icon: 'simple-icon-logout',
+        icon: 'simple-icon-plus',
         label: 'subject.register',
         to: `${adminRoot}/subjects/register`,
       },
@@ -399,12 +380,12 @@ const data = [
   },
   {
     id: 'classess',
-    icon: 'simple-icon-book-open',
+    icon: 'iconsminds-home-4',
     label: 'menu.classes',
     to: `${adminRoot}/classes`,
     subs: [
       {
-        icon: 'simple-icon-logout',
+        icon: 'simple-icon-plus',
         label: 'class.register',
         to: `${adminRoot}/classes/register`,
       },
@@ -413,12 +394,12 @@ const data = [
   
   {
     id: 'fields',
-    icon: 'simple-icon-book-open',
+    icon: 'simple-icon-layers',
     label: 'menu.field',
     to: `${adminRoot}/fields`,
     subs: [
       {
-        icon: 'simple-icon-logout',
+        icon: 'simple-icon-plus',
         label: 'menu.field-register',
         to: `${adminRoot}/fields/register`,
       },

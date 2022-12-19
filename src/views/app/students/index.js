@@ -12,7 +12,12 @@ const RegisterKankor = React.lazy(() =>
 const StudentList = React.lazy(() =>
   import(/* webpackChunkName: "student-list" */ './bio/student-list/StudentListMain')
 );
-
+const MarksRegistration = React.lazy(() =>
+  import(/* webpackChunkName: "marks-register" */ './marks-register')
+);
+const AttendanceRegistration = React.lazy(() =>
+  import(/* webpackChunkName: "attendance-register" */ './attendence/resgister')
+);
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -29,6 +34,15 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/students`}
         render={(props) => <StudentList {...props} />}
+      />
+
+          <Route
+        path={`${match.url}/marks-register`}
+        render={(props) => <MarksRegistration {...props} />}
+      />
+             <Route
+        path={`${match.url}/attendance-register`}
+        render={(props) => <AttendanceRegistration {...props} />}
       />
 
       {/* <ProtectedRoute

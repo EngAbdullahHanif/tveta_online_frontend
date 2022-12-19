@@ -47,8 +47,8 @@ module.exports = {
   gender: 'جنسیت',
 
   province: 'ولایت',
-  district: 'ولسوالی',
-  vilage: 'قریه',
+  district: 'ولسوال/ناحیه',
+  vilage: 'کلی/ قریه',
   /* 02.User Login, Logout, Register */
   'user.login-title': 'ورود',
   'user.register': 'ثبت نام',
@@ -69,7 +69,7 @@ module.exports = {
   'menu.home': 'خانه',
   'menu.app': 'خانه',
   'menu.teacher': 'استاد',
-  'menu.teacher_list': 'لست استادان',
+  'menu.teacher_list': 'د استادانو لست/ لست استاد',
   'menu.default': 'پیش فرض',
   'menu.analytics': 'تجزیه و تحلیل',
   'menu.ecommerce': 'تجارت الکترونیک',
@@ -160,6 +160,11 @@ module.exports = {
   'menu.validations': 'اعتبار سنجی ها',
   'menu.wizard': 'ویزارد',
   'menu.field': 'رشته ها / رشتې',
+  'menu.teacher-registration': 'د استاد ثبت/ ثبت استاد',
+  'menu.field-register': 'د رشتی ثبت/ ثبت رشته',
+  'menu.student-marks-register': 'نومرې/ نمرات',
+  'menu.attendance-registration':'د حاضری ثبت/ درج حاضری',
+   
 
 
 
@@ -531,7 +536,7 @@ module.exports = {
   'forms.StdDoBErr': 'د زیږیدنې نیټه اړین دی/ تاریخ تولد ضروری است',
   'forms.StdFatherDutyLocationLabel': 'د پلار د دندې ځای/محل وظیفه پدر',
   'forms.StdFatherDutyLocationErr': 'د پلار د دندې ځای اړین دی/محل وظیفه پدر ضروری است',
-  'forms.TazkiraTypeDefaultValue': 'ټاکل/ انتخاب',
+  'forms.TazkiraTypeDefaultValue': 'وټاکئ / انتخاب کنید',
   'forms.StdTazkiraNoLabel': 'د تذکرې شمیره/ نمبر تذکره',
   'forms.StdTazkiraNoErr': 'د تذکرې شمیره اړینه ده /نمبر تذکره ضروری است',
   'forms.StdTazkiraElectronic': 'الکترونیکی',
@@ -631,7 +636,7 @@ module.exports = {
   'forms.InstituteErr': 'انستیتوت اړین دی / انستیتوت ضروری است',
   'forms.FieldLabel': 'رشته', 
   'forms.FieldErr': 'رشته اړین دی/ رشته ضروری است',
-     'forms.StudyTimeLabel': 'وخت/ وقت', 
+  'forms.StudyTimeLabel': 'وخت/ وقت', 
   'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',
    'forms.StudyTimeOption_1': 'ورځنی/ روزانه', 
   'forms.StudyTimeOption_2': 'شپې/ شبانه',
@@ -662,6 +667,81 @@ module.exports = {
   'field.SubjectsErr': 'مضمونونه اړین دي/ درج مضامین ضروری است',
   'field.FieldIdLabel': 'د رشتی آیدی/ ایدی رشته',
   'field.FieldIdErr': 'د رشتې ایدی اړین دی/ ایدی رشته ضروری است',
+
+
+
+  
+  // Teacher Registration section
+  'teacher.RegisterTitle': 'د استادانو ثبتول/ ثبت اساتید',
+  'teacher.NameLabel': 'نوم/ نام',
+  'teacher.NameErr': 'نوم اړین دی / نام ضروری است',
+  'teacher.FatherNameLabel':'د پلار نوم/ نام پدر',
+  'teacher.FatherNameErr': 'د پلار نوم ضروری دی/ نام پدر ضروری است',
+  'teacher.EnglishNameLabel':'انګریزی نوم/ نام انگلسی',
+  'teacher.EnglishNameErr': 'انګریزی نوم اړین دی/ نام انگلسی ضروری است',
+  'teacher.GrandFatherNameLabel':'د نیکه نوم/ نام پدر کلان',
+  'teacher.GrandFatherNameErr': 'د نیکه نوم اړین دی/ نام پدر کلان ضروری است',
+  'teacher.TazkiraNoLabel':'د تذکرې شمیره/ نمبر تذکره',
+  'teacher.TazkiraNoErr': 'د تذکرې شمیره اړین ده/ نمبر تذکره ضروری است',
+  'teacher.IdCardPageNoLabel':'پاڼه/ صفحه',
+  'teacher.IdCardPageNoErr': 'د پاڼې شمیره اړینه ده/ نمبر صفحه ضروری است',
+  'teacher.IdCardJoldNoLabel': 'جلد',
+  'teacher.IdCardJoldNoErr': 'دجلد شمیره اړینه ده/ نمبر جلد ضروری است',
+  'teacher.PhoneNoLabel':'د تلفن شمیره/ نمبر تلفن',
+  'teacher.PhoneNoErr': 'د تلفن شمیره اړینه ده/ نمبر تلفن ضروری است',
+   'teacher.EmailLabel':'برښنالیک/ ایمیل آدرس',
+  'teacher.EmailErr': 'برښنا لیک اړین دی/ ایمیل ادرس ضروری است',
+  'teacher.EmailRequiredErr': 'برښنا لیک سم ندی/ ایمیل آدرس درست نیست', 
+  'teacher.LevelOfEducationLabel': 'زده کړې/ تحصیل',
+  'teacher.LevelOfEducationErr': 'زدکړې اړینې ډي/ نوشتن سطح تحصیل ضروری است',
+  'teacher.EducationLevelOption_1': '14 years degree',
+  'teacher.EducationLevelOption_2': 'Bachelor',
+  'teacher.EducationLevelOption_3': 'Master',
+  'teacher.EducationLevelOption_4': 'PHD',
+  'teacher.MajorLabel':'تحصیلی رشته/ رشته تحصیلی',
+  'teacher.MajorErr': 'تحصیلی رشته اړینه ده/ رشته تحصیلی ضروری است',
+  'teacher.DoBLabel': 'زیږیدنې نیټه/ تاریخ تولد',
+  'teacher.DoBErr': 'د زیږیدنې نیټه اړینه ده/ تاریخ تولد ضروری است',
+  'teacher.StatusOption_1':'فعال',
+  'teacher.StatusOption_2': 'منفک/تنقیص',
+  'teacher.StatusLabel':'د دندې حالت/ حالت وظیفوی',
+  'teacher.StatusErr': 'د استاد حالت انتخابول اړین دی/انتخاب حالت ضروری است',
+  
+  // Grade Options
+   'teacher.GradeOption_3': 'دریم بست / بست سه ',
+  'teacher.GradeOption_4': 'څلورم بست / بست چهارم',
+  'teacher.GradeOption_5': 'پنځم بست/ بست پنجم',
+  'teacher.GradeOption_6': 'شپږم بست/ بست ششم',    
+  'teacher.GradeOption_7': 'اووم بست/ بست هفتم',
+  'teacher.GradeOption_8': 'اتم بست / بست هشتم',
+  'teacher.GradeLabel': 'بست',
+  'teacher.GradeErr': 'بست اړین ده / بست ضروری است',
+
+  
+  // Teacher Step
+  'teacher.StepOption_1': 'لومړی قدم/ قدم اول',
+  'teacher.StepOption_2': 'دوهم قدم/ قدم دوم',
+  'teacher.StepOption_3': 'دریم قدم / قدم سوم',
+  'teacher.StepOption_4': 'څلورم قدم/ قدم چهارم',
+  'teacher.StepOption_5': 'پنځم قدم/ قدم پنجم',
+  'teacher.StepOption_6': 'شپږم قدم / قدم ششم',
+  'teacher.StepLabel': 'پل/ قدم',
+  'teacher.StepErr': 'پل اړین دی/ قدم ضروری است',
+  'SubmitButton': 'ثبت',
+    
+
+  // institute
+  'institute.studentgenderOption_1': 'نارینه/ذکور',
+  'institute.studentgenderOption_2': 'ښځینه/ ذکور',
+  'institute.studentgenderOption_3': 'دواړه/مختلط',
+
+  
+  // Type
+  'institute.instTypeOptions_1': 'دولتی',
+  'institute.instTypeOptions_2': 'خصوصی',
+  
+  
+  
 
 
   // Subject

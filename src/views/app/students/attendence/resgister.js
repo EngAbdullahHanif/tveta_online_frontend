@@ -134,7 +134,7 @@ const StudentAttendance = () => {
                     {/* Sickness */}
                     <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="forms.StdSicknessLabelLabel" />
+                        <IntlMessages id="forms.StdSicknessLabel" />
                       </Label>
                       <Field className="form-control" name="StdSicknessLabel" type='number' />
                       {errors.StdSicknessLabel && touched.StdSicknessLabel ? (

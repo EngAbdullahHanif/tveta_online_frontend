@@ -5,6 +5,11 @@ const TeacherList = React.lazy(() =>
   import(/* webpackChunkName: "teacher-list" */ './bio/teacher-list/TeacherListMain')
 );
 
+// This used to create a sub memu of the sidebar.
+const TeacherRegister = React.lazy(() =>
+  import(/* webpackChunkName: "teacher-register" */ './bio/teacher-register')
+);
+
 const Teachers = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -12,6 +17,12 @@ const Teachers = ({ match }) => (
       <Route
         path={`${match.url}/teachers`}
         render={(props) => <TeacherList {...props} />}
+      />
+
+      {/* Teacher register sub menu is created */}
+         <Route
+        path={`${match.url}/register`}
+        render={(props) => <TeacherRegister {...props} />}
       />
 
       <Redirect to="/error" />

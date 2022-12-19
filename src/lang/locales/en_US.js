@@ -62,7 +62,9 @@ module.exports = {
   /* 03.Menu */
   'menu.home': 'Home',
   'menu.app': 'Home',
+    'menu.teacher': 'Teacher',
   'menu.Teacher': 'Teacher',
+    'menu.teacher_list': 'Teacher List',
   'menu.default': 'Default',
   'menu.analytics': 'Analytics',
   'menu.ecommerce': 'Ecommerce',
@@ -141,6 +143,7 @@ module.exports = {
   'menu.miscellaneous': 'Miscellaneous',
   'menu.portfolio': 'Portfolio',
   'menu.social': 'Social',
+  'menu.classes': 'Class',
   'menu.details-alt': 'Details Alt',
   'menu.forms': 'Forms',
   'menu.components': 'Components',
@@ -149,6 +152,12 @@ module.exports = {
   'menu.wizard': 'Wizard',
   'menu.field': 'Fields',
   'menu.field-register': 'Register',
+  'menu.teacher-registration': 'Register',
+  'menu.menu.student-marks-register': 'Add marks',
+  'menu.attendance-registration':'Attendance Registration',
+
+  
+
     
 
   /* 04.Dashboards */
@@ -541,6 +550,7 @@ module.exports = {
     'forms.PlaceOfBirthLabel': 'Place Birth',
   'forms.StdPlaceOfBirthErr': 'Place of Birth Requiered!',
 
+
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',
   'forms.EducationalLevel_10th': 'tenth Grade',
@@ -624,6 +634,7 @@ module.exports = {
   'forms.SubimssionButton': 'Submit',
     
   // Student Attendance
+  
   'forms.AttendanceTitle': 'Student Attendance',
   'forms.StdIdLabel': 'Student Id',
   'forms.StdIdErr': 'Student Id Required!',
@@ -647,6 +658,96 @@ module.exports = {
   'field.SubjectsErr': 'Field Subjects Required!',
   'field.FieldIdLabel': 'Field Id',
   'field.FieldIdErr': 'Field Id Required!',
+
+
+  // Teacher Registration section
+  
+  'teacher.RegisterTitle': 'Teacher Registration',
+  'teacher.NameLabel': 'Name',
+  'teacher.NameErr': 'Teacher Name Required!',
+  'teacher.FatherNameLabel':'Father Name',
+  'teacher.FatherNameErr': 'Teacher Father Name Required!',
+  'teacher.EnglishNameLabel':'English Name',
+  'teacher.EnglishNameErr': 'Teacher English Name Required!',
+  'teacher.GrandFatherNameLabel':'Grand Father Name',
+  'teacher.GrandFatherNameErr': 'Grand Father Name Required!',
+  'teacher.TazkiraNoLabel':'Id Card (Tazkira) Number',
+  'teacher.TazkiraNoErr': 'Id Card Number required!',
+  'teacher.IdCardPageNoLabel':'Id Card (Tazkira) Page Number',
+  'teacher.IdCardPageNoErr': 'Id Card Page Number required!',
+  'teacher.IdCardJoldNoLabel':'Folder (Jold)',
+  'teacher.IdCardJoldNoErr': 'Id Card Jold is required!',
+  'teacher.PhoneNoLabel':'Contact No',
+  'teacher.PhoneNoErr': 'Contact number is Required!',
+  'teacher.EmailLabel':'Email Address',
+  'teacher.EmailErr': 'Email is Required!',
+  'teacher.EmailRequiredErr': 'Email is incorrect!',
+  'teacher.LevelOfEducationLabel': 'Education Level',
+  'teacher.LevelOfEducationErr': 'Education Level Required!',
+  'teacher.EducationLevelOption_1': '14 years degree',
+  'teacher.EducationLevelOption_2': 'Bachelor',
+  'teacher.EducationLevelOption_3': 'Master',
+  'teacher.EducationLevelOption_4': 'PHD',
+  'teacher.MajorLabel':'Major (Field)',
+  'teacher.MajorErr': 'Major is Required!',
+  'teacher.DoBLabel':'Date of Birth',
+  'teacher.DoBErr': 'Date of Birth is Required!',
+  'teacher.StatusOption_1':'Active',
+  'teacher.StatusOption_2': 'Dismissed',
+  'teacher.StatusLabel':'Status',
+  'teacher.StatusErr': 'Teacher Status is Required!',
+
+  // Teacher Grade
+  'teacher.GradeOption_3': 'Third Grade ',
+  'teacher.GradeOption_4': 'Fourth Grade',
+  'teacher.GradeOption_5': 'Fifth Grade',
+  'teacher.GradeOption_6': 'Sixth Grade',    
+  'teacher.GradeOption_7': 'Seventh Grade',
+  'teacher.GradeOption_8': 'Eigth Grade',
+  'teacher.GradeLabel': 'Grade',
+  'teacher.GradeErr': 'Grade Is Required!',
+
+
+  // Teacher Step
+  'teacher.StepOption_1': 'First Step',
+  'teacher.StepOption_2': 'Second Step',
+  'teacher.StepOption_3': 'Third Step',
+  'teacher.StepOption_4': 'Fourth Step',
+  'teacher.StepOption_5': 'Fifth Step',
+  'teacher.StepOption_6': 'Sixth Step',
+  'teacher.StepLabel': 'Step',
+  'teacher.StepErr': 'Step Is Required!',
+  'SubmitButton': 'Submit',
+
+  // Institute
+  'inst.register.title': 'Institute/School Registration',
+  'inst.name': 'Name',
+  'inst.type': 'Type',
+
+  // Gender
+  'institute.studentgenderOption_1': 'Male',
+  'institute.studentgenderOption_2': 'Female',
+  'institute.studentgenderOption_3': 'Both',
+
+  // Type
+  'institute.instTypeOptions_1': 'Public',
+  'institute.instTypeOptions_2': 'Private',
+
+      
+    
+  
+  
+   
+  
+
+  
+  
+
+  
+
+  
+   
+
 
   
 

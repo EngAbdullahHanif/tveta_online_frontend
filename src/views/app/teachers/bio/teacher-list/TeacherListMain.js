@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
+import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -28,6 +29,15 @@ const orderOptions = [
   { column: 'category', label: 'Category' },
   { column: 'status', label: 'Status' },
 ];
+
+const genderOptions = [
+  {
+    column: 'all',
+    label: 'تول / همه',
+  },
+  { column: '1', label: 'ذکور' },
+  { column: '2', label: 'اناث' },
+];
 const pageSizes = [4, 8, 12, 20];
 
 const categories = [
@@ -36,63 +46,245 @@ const categories = [
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
 
+const Provinces = [
+  {
+    column: 'all',
+    label: 'تول / همه',
+  },
+  {
+    column: '1',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
+  },
+  {
+    column: '2',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
+  },
+  {
+    column: '3',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
+  },
+  {
+    column: '4',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
+  },
+  {
+    column: '5',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
+  },
+  {
+    column: '6',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
+  },
+  {
+    column: '7',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
+  },
+  {
+    column: '8',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
+  },
+  {
+    column: '9',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
+  },
+  {
+    column: '10',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
+  },
+  {
+    column: '11',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
+  },
+  {
+    column: '12',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
+  },
+  {
+    column: '13',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
+  },
+  {
+    column: 'کابل',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
+  },
+  {
+    column: '15',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
+  },
+  {
+    column: '16',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
+  },
+  {
+    column: '17',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
+  },
+  {
+    column: '18',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
+  },
+  {
+    column: '19',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
+  },
+  {
+    column: '20',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    column: '21',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
+  },
+  {
+    column: '22',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
+  },
+  {
+    column: '23',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
+  },
+  {
+    column: '24',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
+  },
+  {
+    column: '25',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
+  },
+  {
+    column: '26',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
+  },
+  {
+    column: '27',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
+  },
+  {
+    column: '28',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
+  },
+  {
+    column: '29',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    column: '30',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
+  },
+  {
+    column: '31',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
+  },
+  {
+    column: '32',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
+  },
+  {
+    column: '33',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
+  },
+  {
+    column: '34',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+  },
+];
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
-  const [selectedOrderOption, setSelectedOrderOption] = useState({
+  const [selectedGenderOption, setSelectedGenderOption] = useState({
     column: 'title',
-    label: 'Product Name',
+    label: 'جنیست',
+  });
+  const [selectedProvinceOption, setSelectedProvinceOption] = useState({
+    column: 'title',
+    label: 'ولایت',
   });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
-  const [search, setSearch] = useState('');
+  const [teacherId, setTeacherId] = useState('');
+  const [province, setProvince] = useState('');
+  const [district, setDistrict] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedOrderOption]);
+  }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
 
   useEffect(() => {
     async function fetchData() {
-      axios
-        // .get(
-        //   `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
-        // )
-        // get data from localhost:8000/api/teachers
-        .get(`${teacherApiUrl}`)
-        .then((res) => {
-          return res.data;
-        })
-        .then((data) => {
-          console.log(data, 'Teacher list data fatched using axios ');
-          console.log('data total Items', data.totalItem);
+      if (selectedProvinceOption.column === 'all') {
+        axios
+          .get(`${teacherApiUrl}?id=${teacherId}&current_district=${district}`)
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log('district', district);
+            console.log(
+              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            );
 
-          // setTotalPage(data.totalPage);
-          // setItems(data.data);
-          // set fecahed data to items
-          setItems(data);
+            setItems(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else if (selectedGenderOption.column === 'all') {
+        axios
+          .get(
+            `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+          )
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            );
 
-          // setSelectedItems([]);
+            setItems(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else {
+        axios
 
-          // setItems(
-          //   data.data.map((x) => {
-          //     console.log('Single Value of the array ', x);
-          //     return { ...x, img: x.img.replace('img/', 'img/products/') };
-          //   })
-          // );
-          setSelectedItems([]);
-          setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        });
+          // get data from localhost:8000/api/teachers
+          .get(
+            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+          )
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            );
+            setItems(data);
+
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      }
     }
+
     fetchData();
-  }, [selectedPageSize, currentPage, selectedOrderOption, search]);
+  }, [
+    selectedPageSize,
+    currentPage,
+    selectedGenderOption,
+    selectedProvinceOption,
+    teacherId,
+    province,
+  ]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -183,26 +375,43 @@ const ThumbListPages = ({ match }) => {
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeOrderBy={(column) => {
-            setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
+          changeGenderBy={(column) => {
+            setSelectedGenderOption(
+              genderOptions.find((x) => x.column === column)
+            );
+          }}
+          changeProvinceBy={(column) => {
+            setSelectedProvinceOption(
+              Provinces.find((x) => x.column === column)
             );
           }}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}
-          selectedOrderOption={selectedOrderOption}
+          selectedGenderOption={selectedGenderOption}
+          selectedProvinceOption={selectedProvinceOption}
+          genderOptions={genderOptions}
+          provinces={Provinces}
           match={match}
           startIndex={startIndex}
           endIndex={endIndex}
           selectedItemsLength={selectedItems ? selectedItems.length : 0}
           itemsLength={items ? items.length : 0}
-          onSearchKey={(e) => {
-            setSearch(e.target.value.toLowerCase());
-            // if (e.key === 'Enter') {
-            // }
+          onIdSearchKey={(e) => {
+            if (e.key === 'Enter') {
+              setTeacherId(e.target.value.toLowerCase());
+            }
           }}
-          orderOptions={orderOptions}
+          onProvinceSearchKey={(e) => {
+            if (e.key === 'Enter') {
+              setProvince(e.target.value.toLowerCase());
+            }
+          }}
+          onDistrictSearchKey={(e) => {
+            if (e.key === 'Enter') {
+              setDistrict(e.target.value.toLowerCase());
+            }
+          }}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />

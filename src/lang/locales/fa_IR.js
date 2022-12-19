@@ -830,4 +830,11 @@ module.exports = {
   'class.register.title': 'د صنف ثبت کول / ثبت صنف',
   'class.register': 'صنف ثبت کول / ثبت صنف',
   'class.list': 'د صنف لیست / لیست صنف',
+
+  'search.district': 'ولسوالی ',
+  'search.province': 'ولایت',
+
+  'search.id': 'آیدی',
+  filter: ' فلتر بر اساس ',
+  'pages.reset': 'ری سیت',
 };

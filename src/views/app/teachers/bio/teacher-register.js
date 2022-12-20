@@ -422,7 +422,7 @@ const TeacherRegistration = () => {
                       ) : null}
                       </FormGroup>
  
-                      <Button onClick={() => handleClick(false)} className="float-right m-4 ">مخته / بعدی</Button>
+                      <Button onClick={() => handleClick(false)} className="float-right m-4 "><IntlMessages id='button.Next'/></Button>
                     </Colxx>
   
                    
@@ -532,7 +532,7 @@ const TeacherRegistration = () => {
 
 
 
-                          <Button onClick={() => handleClick(true)} className="m-4">شاته/ عقب</Button>
+                          <Button onClick={() => handleClick(true)} className="m-4"><IntlMessages id= 'button.Back'/></Button>
 
 
                   </Colxx>

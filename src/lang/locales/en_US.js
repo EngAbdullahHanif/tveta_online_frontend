@@ -398,6 +398,9 @@ module.exports = {
   'button.info': 'Info',
   'button.light': 'Light',
   'button.dark': 'Dark',
+  'button.Next': 'Next',
+  'button.Back': 'Back',
+   
   'button.states-text':
   'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
   'button.click-here': 'Click Here',
@@ -719,19 +722,59 @@ module.exports = {
   'teacher.StepErr': 'Step Is Required!',
   'SubmitButton': 'Submit',
 
+
+
+
   // Institute
   'inst.register.title': 'Institute/School Registration',
   'inst.name': 'Name',
   'inst.type': 'Type',
-
   // Gender
   'institute.studentgenderOption_1': 'Male',
   'institute.studentgenderOption_2': 'Female',
   'institute.studentgenderOption_3': 'Both',
-
   // Type
   'institute.instTypeOptions_1': 'Public',
   'institute.instTypeOptions_2': 'Private',
+
+
+  // Marks
+  'marks.SectionLabel': 'Section',
+  'marks.SemesterLabel': 'Semester',
+  'marks.SubjectLabel': 'Subject',
+  'marks.SemesterOption_1': 'First',
+  'marks.SemesterOption_2': 'Second',
+  'marks.SemesterOption_3': 'Third',
+  'marks.SemesterOption_4': 'Fourth',
+  'marks.SectionOption_1': 'A',
+  'marks.SectionOption_2': 'B',
+  'marks.SectionOption_3': 'C',
+  'marks.SectionOption_4': 'D',
+  'marks.SectionOption_5': 'E',
+  'marks.ClassLabel': 'Class',
+  'marks.ClassOption_1': '9th',
+  'marks.ClassOption_2': '10th',
+  'marks.ClassOption_3': '11th',
+  'marks.ClassOption_4': '12th',
+  'marks.ClassOption_5': '13th',
+  'marks.ClassOption_6': '14th',
+  'marks.No': 'No.', 
+  'marks.FullName': 'FullName',
+  'marks.ID': 'ID',
+  'marks.FatherName': 'FatherName',
+  'marks.Marks': 'Marks',
+
+
+
+  
+
+          
+        
+
+    
+
+
+
 
       
     

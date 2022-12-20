@@ -406,6 +406,8 @@ module.exports = {
   'button.info': 'اینفو - Info',
   'button.light': 'روشن',
   'button.dark': 'تیره',
+  'button.Next': 'مخته/ بعدی',
+  'button.Back': 'شاته/ قبلی',
   'button.states-text':
     'این دکمه یک اسپینر را برای 2 ثانیه نمایش می دهد و یک ارور آیکن برای 3 ثانیه قبل از سوئیچ شدن به حالت عادی.این موقعیت میتواند با حذف یا اضافه کردن کلاس ها اتفاق بیوفتد',
   'button.click-here': 'اینجا کلیک کنید',
@@ -734,11 +736,36 @@ module.exports = {
   'institute.studentgenderOption_1': 'نارینه/ذکور',
   'institute.studentgenderOption_2': 'ښځینه/ ذکور',
   'institute.studentgenderOption_3': 'دواړه/مختلط',
-
-  
   // Type
   'institute.instTypeOptions_1': 'دولتی',
   'institute.instTypeOptions_2': 'خصوصی',
+
+  //
+  'marks.SectionLabel': 'سکشن',
+  'marks.SemesterLabel': 'سمستر',
+  'marks.SubjectLabel': 'مضمون',
+  'marks.SemesterOption_1': 'لومړی/ اول',
+  'marks.SemesterOption_2': 'دوهم /دوم',
+  'marks.SemesterOption_3': 'دریم/ سوم',
+  'marks.SemesterOption_4': 'څلورم/ چهارم',
+  'marks.SectionOption_1': 'الف',
+  'marks.SectionOption_2': 'ب',
+  'marks.SectionOption_3': 'ج',
+  'marks.SectionOption_4': 'د',
+  'marks.SectionOption_5': 'ح',
+  'marks.ClassLabel': 'ټولګی/ صنف',
+  'marks.ClassOption_1': 'نهم',
+  'marks.ClassOption_2': 'لسم/ دهم',
+  'marks.ClassOption_3': 'یوولسم/ یازدهم',
+  'marks.ClassOption_4': 'دولسم/ دوازدهم',
+  'marks.ClassOption_5': 'دیارلسم/ سیزدهم',
+  'marks.ClassOption_6': 'څورلسم/ چهاردهم',
+   'marks.No': 'شماره', 
+  'marks.FullName': 'نوم/ نام',
+  'marks.FatherName': 'د پلارنوم/نام پدر',
+    'marks.ID': 'آیدی',
+  'marks.Marks': 'نمرې / نمرات',
+        
   
   
   

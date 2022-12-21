@@ -61,10 +61,14 @@ const ListPageHeading = ({
   onResetClick,
   reset,
   institutes,
+  onInstituteSelect,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
 
+  const [selectedInstitute, setSelectedInstitute] = useState('');
+  console.log('selectedInstitute', selectedInstitute);
+  onInstituteSelect(selectedInstitute);
   const { messages } = intl;
 
   return (
@@ -233,7 +237,10 @@ const ListPageHeading = ({
 
               <Row>
                 <Colxx xs="12" sm="12" className="mb-4">
-                  <ReactAutoSugegst data={institutes} />
+                  <ReactAutoSugegst
+                    data={institutes}
+                    // onSelect={(e) => setSelectedInstitute(e)}
+                  />
                 </Colxx>
               </Row>
 

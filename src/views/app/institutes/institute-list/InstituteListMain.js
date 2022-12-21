@@ -241,16 +241,14 @@ const ThumbListPages = ({ match }) => {
           setRest(false);
         }
         axios
-          .get(
-            `${instituteApiUrl}?id=${instituteId}&current_district=${district}`
-          )
+          .get(`${instituteApiUrl}?id=${instituteId}&district=${district}`)
           .then((res) => {
             console.log('res.data', res.data);
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${instituteApiUrl}?id=${instituteId}&current_district=${district}`
+              `${instituteApiUrl}?id=${instituteId}&district=${district}`
             );
 
             setItems(data);
@@ -261,14 +259,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedProvinceOption.column === 'all') {
         axios
           .get(
-            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&current_district=${district}`
+            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&current_district=${district}`
+              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
             );
 
             setItems(data);
@@ -279,14 +277,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedGenderOption.column === 'all') {
         axios
           .get(
-            `${instituteApiUrl}?id=${instituteId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${instituteApiUrl}?id=${instituteId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+              `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
             );
 
             setItems(data);
@@ -298,14 +296,14 @@ const ThumbListPages = ({ match }) => {
         axios
           // get data from localhost:8000/api/student
           .get(
-            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
             );
             setItems(data);
 
@@ -352,7 +350,7 @@ const ThumbListPages = ({ match }) => {
     search,
     selectedGenderOption,
     selectedProvinceOption,
-    studentId,
+    instituteId,
     province,
     district,
     rest,
@@ -483,7 +481,7 @@ const ThumbListPages = ({ match }) => {
           provinces={provinces}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
-              setStudentId(e.target.value.toLowerCase());
+              setInstituteId(e.target.value.toLowerCase());
             }
           }}
           onProvinceSearchKey={(e) => {

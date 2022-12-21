@@ -360,6 +360,7 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     fetchInstitutes();
   }, []);
+
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||

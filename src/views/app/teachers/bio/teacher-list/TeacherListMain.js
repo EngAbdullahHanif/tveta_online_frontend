@@ -213,13 +213,14 @@ const ThumbListPages = ({ match }) => {
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
   const [institutes, setInstitutes] = useState([]);
+  const [institute, setInstitute] = useState('');
 
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
 
   useEffect(() => {
-    console.log('teacherId', teacherId);
+    console.log('institute', institute);
     async function fetchData() {
       if (
         selectedProvinceOption.column === 'all' &&
@@ -454,6 +455,7 @@ const ThumbListPages = ({ match }) => {
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
+          onInstituteSelect={setInstitute}
         />
 
         <ListPageListing

@@ -2,7 +2,9 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const TeacherList = React.lazy(() =>
-  import(/* webpackChunkName: "teacher-list" */ './bio/teacher-list/TeacherListMain')
+  import(
+    /* webpackChunkName: "teacher-list" */ './bio/teacher-list/TeacherListMain'
+  )
 );
 
 // This used to create a sub memu of the sidebar.
@@ -10,6 +12,10 @@ const TeacherRegister = React.lazy(() =>
   import(/* webpackChunkName: "teacher-register" */ './bio/teacher-register')
 );
 
+// This used to create a sub memu of the sidebar.
+const TeacherProfile = React.lazy(() =>
+  import(/* webpackChunkName: "profile" */ './bio/teacher-profile')
+);
 const Teachers = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -20,9 +26,13 @@ const Teachers = ({ match }) => (
       />
 
       {/* Teacher register sub menu is created */}
-         <Route
+      <Route
         path={`${match.url}/register`}
         render={(props) => <TeacherRegister {...props} />}
+      />
+      <Route
+        path={`${match.url}/profile`}
+        render={(props) => <TeacherProfile {...props} />}
       />
 
       <Redirect to="/error" />

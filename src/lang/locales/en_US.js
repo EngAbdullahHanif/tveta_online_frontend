@@ -62,9 +62,9 @@ module.exports = {
   /* 03.Menu */
   'menu.home': 'Home',
   'menu.app': 'Home',
-    'menu.teacher': 'Teacher',
+  'menu.teacher': 'Teacher',
   'menu.Teacher': 'Teacher',
-    'menu.teacher_list': 'Teacher List',
+  'menu.teacher_list': 'Teacher List',
   'menu.default': 'Default',
   'menu.analytics': 'Analytics',
   'menu.ecommerce': 'Ecommerce',
@@ -154,11 +154,10 @@ module.exports = {
   'menu.field-register': 'Register',
   'menu.teacher-registration': 'Register',
   'menu.menu.student-marks-register': 'Add marks',
-  'menu.attendance-registration':'Attendance Registration',
-
-  
-
-    
+  'menu.attendance-registration': 'Attendance Registration',
+  'menu.dorm-commision': 'Regisration hostel',
+  'menu.teacher-profile': 'Teacher Profile',
+  'marks.title': 'Marks Entry',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -400,12 +399,14 @@ module.exports = {
   'button.dark': 'Dark',
   'button.Next': 'Next',
   'button.Back': 'Back',
-   
+  'button.TeacherBackround': 'Background',
+  'button.Teacherprofile': 'profile',
+
   'button.states-text':
-  'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
+    'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
   'button.click-here': 'Click Here',
   'button.states-text-alternate':
-  'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
+    'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
   'button.primary-link': 'Primary Link',
   'button.link': 'Link',
   'button.primary-button': 'Primary Button',
@@ -522,9 +523,9 @@ module.exports = {
   'forms.paper': 'Paper',
   'forms.StdKankorNameErr': 'Name is required!',
   'forms.nameChar': 'Name should be atleast  3 character',
-  'forms.englishNameError':'English name is required',
+  'forms.englishNameError': 'English name is required',
   'forms.StdFatherNameError': 'father name is required!',
-   'forms.FatherEnglishNameErr': 'Father English Name Is Required!',
+  'forms.FatherEnglishNameErr': 'Father English Name Is Required!',
   'forms.StdFatherDutyLabel': 'Father Duty',
   'forms.StdFatherDutyErr': 'Father Duty Field id Required!',
   'forms.StdDoBLabel': 'Date of Birth',
@@ -550,9 +551,8 @@ module.exports = {
   'forms.DistrictErr': 'District Is Required!',
   'forms.VillageLabel': 'Village/Area',
   'forms.VillageErr': 'Village Is Required',
-    'forms.PlaceOfBirthLabel': 'Place Birth',
+  'forms.PlaceOfBirthLabel': 'Place Birth',
   'forms.StdPlaceOfBirthErr': 'Place of Birth Requiered!',
-
 
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',
@@ -567,10 +567,10 @@ module.exports = {
   'forms.StPreShcoolErr': 'School Required!',
   'forms.StudentTypeContiniues': 'Continues',
   'forms.StudentTypeNonContiniues': 'Non Continues',
-'forms.StudentTypeLabel': 'Student Type',
+  'forms.StudentTypeLabel': 'Student Type',
   'forms.StudentTypeErr': 'STudent Type Required!',
-    'forms.StudyTypeGraduated': 'Graduated',
-'forms.StudyTypeInrolled': 'Inrolled',
+  'forms.StudyTypeGraduated': 'Graduated',
+  'forms.StudyTypeInrolled': 'Inrolled',
   'forms.StudyTypeDismissed': 'Dismissed',
   'forms.StudyTypeLabel': 'Study Type',
   'forms.StudyTypeErr': 'Study Type Required!',
@@ -607,7 +607,7 @@ module.exports = {
   'forms.StdSchoolProvinceOptions_22': 'Nangarhar',
   'forms.StdSchoolProvinceOptions_23': 'Nimruz',
   'forms.StdSchoolProvinceOptions_24': 'Nuristan',
-  'forms.StdSchoolProvinceOptions_25': 'Paktia',  
+  'forms.StdSchoolProvinceOptions_25': 'Paktia',
   'forms.StdSchoolProvinceOptions_26': 'paktika',
   'forms.StdSchoolProvinceOptions_27': 'Panjshir',
   'forms.StdSchoolProvinceOptions_28': 'Parwan',
@@ -621,23 +621,23 @@ module.exports = {
   'forms.StdSchoolProvinceErr': 'province Required',
 
   // Student Kankor form title
-  'forms.Kankorformstitle': 'Kakor Result', 
-  'forms.StdKankorIdLabel': 'Kankor Id', 
+  'forms.Kankorformstitle': 'Kakor Result',
+  'forms.StdKankorIdLabel': 'Kankor Id',
   'forms.StdKankorIdErr': 'Kankor Id Required!',
-  'forms.KankorMarksLabel': 'Attained Marks in Kankor', 
+  'forms.KankorMarksLabel': 'Attained Marks in Kankor',
   'forms.KankorMarksErr': 'Kankor Makrs required!',
-  'forms.InstituteLabel': 'Institute', 
+  'forms.InstituteLabel': 'Institute/School',
   'forms.InstituteErr': 'Institute required!',
-    'forms.FieldLabel': 'Field', 
+  'forms.FieldLabel': 'Field',
   'forms.FieldErr': 'Field Required!',
-    'forms.StudyTimeLabel': 'Time', 
+  'forms.StudyTimeLabel': 'Time',
   'forms.StudyTimeErr': 'Time!',
-  'forms.StudyTimeOption_1': 'Day Shift', 
+  'forms.StudyTimeOption_1': 'Day Shift',
   'forms.StudyTimeOption_2': 'Night Shift',
   'forms.SubimssionButton': 'Submit',
-    
+
   // Student Attendance
-  
+
   'forms.AttendanceTitle': 'Student Attendance',
   'forms.StdIdLabel': 'Student Id',
   'forms.StdIdErr': 'Student Id Required!',
@@ -662,27 +662,26 @@ module.exports = {
   'field.FieldIdLabel': 'Field Id',
   'field.FieldIdErr': 'Field Id Required!',
 
-
   // Teacher Registration section
-  
+
   'teacher.RegisterTitle': 'Teacher Registration',
   'teacher.NameLabel': 'Name',
   'teacher.NameErr': 'Teacher Name Required!',
-  'teacher.FatherNameLabel':'Father Name',
+  'teacher.FatherNameLabel': 'Father Name',
   'teacher.FatherNameErr': 'Teacher Father Name Required!',
-  'teacher.EnglishNameLabel':'English Name',
+  'teacher.EnglishNameLabel': 'English Name',
   'teacher.EnglishNameErr': 'Teacher English Name Required!',
-  'teacher.GrandFatherNameLabel':'Grand Father Name',
+  'teacher.GrandFatherNameLabel': 'Grand Father Name',
   'teacher.GrandFatherNameErr': 'Grand Father Name Required!',
-  'teacher.TazkiraNoLabel':'Id Card (Tazkira) Number',
+  'teacher.TazkiraNoLabel': 'Id Card (Tazkira) Number',
   'teacher.TazkiraNoErr': 'Id Card Number required!',
-  'teacher.IdCardPageNoLabel':'Id Card (Tazkira) Page Number',
+  'teacher.IdCardPageNoLabel': 'Id Card (Tazkira) Page Number',
   'teacher.IdCardPageNoErr': 'Id Card Page Number required!',
-  'teacher.IdCardJoldNoLabel':'Folder (Jold)',
+  'teacher.IdCardJoldNoLabel': 'Folder (Jold)',
   'teacher.IdCardJoldNoErr': 'Id Card Jold is required!',
-  'teacher.PhoneNoLabel':'Contact No',
+  'teacher.PhoneNoLabel': 'Contact No',
   'teacher.PhoneNoErr': 'Contact number is Required!',
-  'teacher.EmailLabel':'Email Address',
+  'teacher.EmailLabel': 'Email Address',
   'teacher.EmailErr': 'Email is Required!',
   'teacher.EmailRequiredErr': 'Email is incorrect!',
   'teacher.LevelOfEducationLabel': 'Education Level',
@@ -691,25 +690,25 @@ module.exports = {
   'teacher.EducationLevelOption_2': 'Bachelor',
   'teacher.EducationLevelOption_3': 'Master',
   'teacher.EducationLevelOption_4': 'PHD',
-  'teacher.MajorLabel':'Major (Field)',
+  'teacher.MajorLabel': 'Major (Field)',
   'teacher.MajorErr': 'Major is Required!',
-  'teacher.DoBLabel':'Date of Birth',
+  'teacher.DoBLabel': 'Date of Birth',
   'teacher.DoBErr': 'Date of Birth is Required!',
-  'teacher.StatusOption_1':'Active',
+  'teacher.StatusOption_1': 'Active',
   'teacher.StatusOption_2': 'Dismissed',
-  'teacher.StatusLabel':'Status',
+  'teacher.StatusLabel': 'Status',
   'teacher.StatusErr': 'Teacher Status is Required!',
+  'teacher.Profile': 'Teacher profile',
 
   // Teacher Grade
   'teacher.GradeOption_3': 'Third Grade ',
   'teacher.GradeOption_4': 'Fourth Grade',
   'teacher.GradeOption_5': 'Fifth Grade',
-  'teacher.GradeOption_6': 'Sixth Grade',    
+  'teacher.GradeOption_6': 'Sixth Grade',
   'teacher.GradeOption_7': 'Seventh Grade',
   'teacher.GradeOption_8': 'Eigth Grade',
   'teacher.GradeLabel': 'Grade',
   'teacher.GradeErr': 'Grade Is Required!',
-
 
   // Teacher Step
   'teacher.StepOption_1': 'First Step',
@@ -720,10 +719,7 @@ module.exports = {
   'teacher.StepOption_6': 'Sixth Step',
   'teacher.StepLabel': 'Step',
   'teacher.StepErr': 'Step Is Required!',
-  'SubmitButton': 'Submit',
-
-
-
+  SubmitButton: 'Submit',
 
   // Institute
   'inst.register.title': 'Institute/School Registration',
@@ -736,7 +732,6 @@ module.exports = {
   // Type
   'institute.instTypeOptions_1': 'Public',
   'institute.instTypeOptions_2': 'Private',
-
 
   // Marks
   'marks.SectionLabel': 'Section',
@@ -758,93 +753,23 @@ module.exports = {
   'marks.ClassOption_4': '12th',
   'marks.ClassOption_5': '13th',
   'marks.ClassOption_6': '14th',
-  'marks.No': 'No.', 
+  'marks.No': 'No.',
   'marks.FullName': 'FullName',
   'marks.ID': 'ID',
   'marks.FatherName': 'FatherName',
   'marks.Marks': 'Marks',
 
+  // // Subject
+  //   'forms.SubjectTitle': 'Subject Registration',
+  //   'forms.SubjectNameLabel': 'Name',
+  //   'forms.SubjectNameErr': 'Name is Required!',
+  //   'forms.SubjectCreditLabel': 'Credit',
+  //   'forms.SubjectCreditErr': 'Credit is Required!',
+  //   'forms.SubjectTypeLabel': 'Type',
+  //   'forms.SubjectTypeErr': 'Subject Type is Required!',
 
-
-  
-
-          
-        
-
-    
-
-
-
-
-      
-    
-  
-  
-   
-  
-
-  
-  
-
-  
-
-  
-   
-
-
-  
-
-// // Subject
-//   'forms.SubjectTitle': 'Subject Registration',
-//   'forms.SubjectNameLabel': 'Name',
-//   'forms.SubjectNameErr': 'Name is Required!',
-//   'forms.SubjectCreditLabel': 'Credit',
-//   'forms.SubjectCreditErr': 'Credit is Required!',
-//   'forms.SubjectTypeLabel': 'Type',
-//   'forms.SubjectTypeErr': 'Subject Type is Required!',
-
-//   'forms.TypeOption_1': 'Core',
-//   'forms.TypeOption_2': 'Sup',
-    
-
-
-  
-  
-
-
-        
-     
-
-  
-  
-
-
-    
-
-
-
-  
-  
-
-
-
-
-  
-  
-
-  
-
-
-    
-
-
-  
-
-           
-
-  
-  
-
+  //   'forms.TypeOption_1': 'Core',
+  //   'forms.TypeOption_2': 'Sup',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Custom Inputs',

@@ -52,7 +52,6 @@ const ListPageHeading = ({
             <IntlMessages id={heading} />
           </h1>
           <div className="text-zero top-right-button-container">
-
             {/* <Button
               color="primary"
               size="lg"

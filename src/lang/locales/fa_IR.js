@@ -163,10 +163,10 @@ module.exports = {
   'menu.teacher-registration': 'د استاد ثبت/ ثبت استاد',
   'menu.field-register': 'د رشتی ثبت/ ثبت رشته',
   'menu.student-marks-register': 'نومرې/ نمرات',
-  'menu.attendance-registration':'د حاضری ثبت/ درج حاضری',
-   
-
-
+  'menu.attendance-registration': 'د حاضری ثبت/ درج حاضری',
+  'menu.dorm-commision': 'د لیلی شمولیت/ شمولیت در لیلیه',
+  'menu.teacher-profile': 'پروفایل استاد/ استاد فروفایل',
+  'marks.title': 'ثبت نمرات/ د نومرو ثبت',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -408,6 +408,8 @@ module.exports = {
   'button.dark': 'تیره',
   'button.Next': 'مخته/ بعدی',
   'button.Back': 'شاته/ قبلی',
+  'button.TeacherBackround': 'سوانح',
+  'button.Teacherprofile': 'پروفایل',
   'button.states-text':
     'این دکمه یک اسپینر را برای 2 ثانیه نمایش می دهد و یک ارور آیکن برای 3 ثانیه قبل از سوئیچ شدن به حالت عادی.این موقعیت میتواند با حذف یا اضافه کردن کلاس ها اتفاق بیوفتد',
   'button.click-here': 'اینجا کلیک کنید',
@@ -521,7 +523,7 @@ module.exports = {
   'forms.firstname-message': 'لطفا نام خود را وارد کنید',
   'forms.lastname': 'نام خانوادگی',
   'forms.lastname-message': 'لطفا نام خانوادگی خود را وارد کنید',
-  'forms.StdName': 'نوم/نام', 
+  'forms.StdName': 'نوم/نام',
   'forms.Eng_name': 'انګریزی نوم / نام انگلسی',
   'forms.StdFatherName': 'د پلار نوم/نام پدر',
   'forms.Std_father_Eng_Name': 'د پلار نوم په انګریزي/نام پدر به انگلسی',
@@ -531,13 +533,15 @@ module.exports = {
   'forms.nameChar': 'نوم باید له ۳ تورو ډیر وي/ نام باید بیشتر از ۳ حرف باشد',
   'forms.englishNameError': 'انګریزی نوم اړین دی/ نام انگلسی ضروری است',
   'forms.StdFatherNameError': 'د پلار نوم اړین دی/ درج نام پدر ضروری است',
-  'forms.FatherEnglishNameErr': 'د پلار انګریزی نوم اړین دی/ درج نام انگلسی پدر  ضروری است',
+  'forms.FatherEnglishNameErr':
+    'د پلار انګریزی نوم اړین دی/ درج نام انگلسی پدر  ضروری است',
   'forms.StdFatherDutyLabel': 'د پلار دنده/ وظیفه پدر',
   'forms.StdFatherDutyErr': 'د پلار دنده اړین ده/ وظیفه پدر ضروری است',
   'forms.StdDoBLabel': 'د زیږیدنې نيټه/ تاریخ تولد',
   'forms.StdDoBErr': 'د زیږیدنې نیټه اړین دی/ تاریخ تولد ضروری است',
   'forms.StdFatherDutyLocationLabel': 'د پلار د دندې ځای/محل وظیفه پدر',
-  'forms.StdFatherDutyLocationErr': 'د پلار د دندې ځای اړین دی/محل وظیفه پدر ضروری است',
+  'forms.StdFatherDutyLocationErr':
+    'د پلار د دندې ځای اړین دی/محل وظیفه پدر ضروری است',
   'forms.TazkiraTypeDefaultValue': 'وټاکئ / انتخاب کنید',
   'forms.StdTazkiraNoLabel': 'د تذکرې شمیره/ نمبر تذکره',
   'forms.StdTazkiraNoErr': 'د تذکرې شمیره اړینه ده /نمبر تذکره ضروری است',
@@ -557,10 +561,10 @@ module.exports = {
   'forms.DistrictErr': 'ولسوالی اړین دی/ ولسوالی ضروری است',
   'forms.VillageLabel': 'کلی/قریه',
   'forms.VillageErr': 'قریه اړین ده/ قریه ضروری است',
-    'forms.PlaceOfBirthLabel': 'د زیږیدو ځای /مکان تولد',
+  'forms.PlaceOfBirthLabel': 'د زیږیدو ځای /مکان تولد',
   'forms.StdPlaceOfBirthErr': 'د زیږیدو ځای اړین دی /مکان تولد ضروری است',
 
-    // Second page of student biography
+  // Second page of student biography
   'forms.EducationalLevel_9th': 'نهم صنف / صنف نهم',
   'forms.EducationalLevel_10th': 'لسم ټولګی/ صنف دهم',
   'forms.EducationalLevel_11th': 'یوولسم ټولګی / صنف یازدهم',
@@ -578,18 +582,18 @@ module.exports = {
   'forms.StudyTypeGraduated': 'فارغ',
   'forms.StudyTypeInrolled': 'جاری',
   'forms.StudyTypeDismissed': 'منفک',
-    'forms.StudyTypeLabel': 'د شاګرد وضعیت/ حالت شاگرد',
+  'forms.StudyTypeLabel': 'د شاګرد وضعیت/ حالت شاگرد',
   'forms.StudyTypeErr': 'د شاگرد وضعیت اړین دی/ حالت شاگرد ضروری است',
-   'forms.StdInteranceOption_1': 'حکمی',
+  'forms.StdInteranceOption_1': 'حکمی',
   'forms.StdInteranceOption_2': 'اختصاصی کانکور/کانکور اختصاصی',
   'forms.StdInteranceOption_3': 'عمومی کانکور / کانکور عمومی',
   'forms.StdInteranceTypeLabel': 'د شمولیت ډول/ نوع شمولیت',
   'forms.StdInteranceTypeErr': 'د شمولیت ډول اړین دی/ نوع شمولیت ضروری است',
-    'forms.StdGraduationYearLabel': 'د فراغت کال / سال فراغت',
+  'forms.StdGraduationYearLabel': 'د فراغت کال / سال فراغت',
   'forms.StdGraduationYearErr': 'د فراغت کال اړین دی/ سال فراغت ضروری است',
 
   // ولایات
-   'forms.StdSchoolProvinceOptions_1': 'بدخشان',
+  'forms.StdSchoolProvinceOptions_1': 'بدخشان',
   'forms.StdSchoolProvinceOptions_2': 'بادغیس',
   'forms.StdSchoolProvinceOptions_3': 'بغلان',
   'forms.StdSchoolProvinceOptions_4': 'بلخ',
@@ -613,7 +617,7 @@ module.exports = {
   'forms.StdSchoolProvinceOptions_22': 'ننگرهار',
   'forms.StdSchoolProvinceOptions_23': 'نیمروز',
   'forms.StdSchoolProvinceOptions_24': 'نورستان',
-  'forms.StdSchoolProvinceOptions_25': 'پکتیا',  
+  'forms.StdSchoolProvinceOptions_25': 'پکتیا',
   'forms.StdSchoolProvinceOptions_26': 'پکتیکا',
   'forms.StdSchoolProvinceOptions_27': 'پنجشیر',
   'forms.StdSchoolProvinceOptions_28': 'پروان',
@@ -627,24 +631,23 @@ module.exports = {
   'forms.StdSchoolProvinceLabel': 'د ښونځی ولایت/ولایت مکتب',
   'forms.StdSchoolProvinceErr': 'د ښونځی ولایت اړین دی/ ولایت مکتب ضروری است',
 
-
   // Student Kankor Forms Result
   'forms.Kankorformstitle': 'د کانکور پایلې/ نتایج کانکور',
-  'forms.StdKankorIdLabel': 'د کانکور ایدی/ ایدی کانکور', 
+  'forms.StdKankorIdLabel': 'د کانکور ایدی/ ایدی کانکور',
   'forms.StdKankorIdErr': 'د کانکور ایدی اړین دی / ایدی کانکور ضروری است',
-   'forms.KankorMarksLabel': 'د کانکور نومرې/ نمرات کانکور', 
+  'forms.KankorMarksLabel': 'د کانکور نومرې/ نمرات کانکور',
   'forms.KankorMarksErr': 'د کانکور نورې اړینې دي/ درج نمرات کانکور ضروری است',
-  'forms.InstituteLabel': 'انستیتوت', 
+  'forms.InstituteLabel': 'انستیتوت/لیسه',
   'forms.InstituteErr': 'انستیتوت اړین دی / انستیتوت ضروری است',
-  'forms.FieldLabel': 'رشته', 
+  'forms.FieldLabel': 'رشته',
   'forms.FieldErr': 'رشته اړین دی/ رشته ضروری است',
-  'forms.StudyTimeLabel': 'وخت/ وقت', 
+  'forms.StudyTimeLabel': 'وخت/ وقت',
   'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',
-   'forms.StudyTimeOption_1': 'ورځنی/ روزانه', 
+  'forms.StudyTimeOption_1': 'ورځنی/ روزانه',
   'forms.StudyTimeOption_2': 'شپې/ شبانه',
   'forms.SubimssionButton': 'ثبت',
-   
-    // Student Attendance
+
+  // Student Attendance
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',
   'forms.StdIdLabel': ' د شاګرد ایډي/ ایدی شاگرد',
   'forms.StdIdErr': 'د شاګرد ایډي اړین دی/ ایدی شاگرد ضروری است',
@@ -661,7 +664,7 @@ module.exports = {
   'field.FieldRegisterTitle': 'ثبت رشته / درشتې ثبت',
   'field.FieldNameLabel': 'نوم/ نام',
   'field.FieldNameErr': 'نوم اړین دی/ نام ضروری است',
-   'field.FieldEngNameLabel': 'انګریزی نوم/ نام انگلسی',
+  'field.FieldEngNameLabel': 'انګریزی نوم/ نام انگلسی',
   'field.FieldEngNameErr': 'انګریزی نوم اړین دی/ نام انګلسی ضروری است',
   'field.SemesterLabel': 'سمستر',
   'field.SemesterErr': 'سمستر اړین دی/ درج سمستر ضروری است',
@@ -670,56 +673,53 @@ module.exports = {
   'field.FieldIdLabel': 'د رشتی آیدی/ ایدی رشته',
   'field.FieldIdErr': 'د رشتې ایدی اړین دی/ ایدی رشته ضروری است',
 
-
-
-  
   // Teacher Registration section
   'teacher.RegisterTitle': 'د استادانو ثبتول/ ثبت اساتید',
   'teacher.NameLabel': 'نوم/ نام',
   'teacher.NameErr': 'نوم اړین دی / نام ضروری است',
-  'teacher.FatherNameLabel':'د پلار نوم/ نام پدر',
+  'teacher.FatherNameLabel': 'د پلار نوم/ نام پدر',
   'teacher.FatherNameErr': 'د پلار نوم ضروری دی/ نام پدر ضروری است',
-  'teacher.EnglishNameLabel':'انګریزی نوم/ نام انگلسی',
+  'teacher.EnglishNameLabel': 'انګریزی نوم/ نام انگلسی',
   'teacher.EnglishNameErr': 'انګریزی نوم اړین دی/ نام انگلسی ضروری است',
-  'teacher.GrandFatherNameLabel':'د نیکه نوم/ نام پدر کلان',
+  'teacher.GrandFatherNameLabel': 'د نیکه نوم/ نام پدر کلان',
   'teacher.GrandFatherNameErr': 'د نیکه نوم اړین دی/ نام پدر کلان ضروری است',
-  'teacher.TazkiraNoLabel':'د تذکرې شمیره/ نمبر تذکره',
+  'teacher.TazkiraNoLabel': 'د تذکرې شمیره/ نمبر تذکره',
   'teacher.TazkiraNoErr': 'د تذکرې شمیره اړین ده/ نمبر تذکره ضروری است',
-  'teacher.IdCardPageNoLabel':'پاڼه/ صفحه',
+  'teacher.IdCardPageNoLabel': 'پاڼه/ صفحه',
   'teacher.IdCardPageNoErr': 'د پاڼې شمیره اړینه ده/ نمبر صفحه ضروری است',
   'teacher.IdCardJoldNoLabel': 'جلد',
   'teacher.IdCardJoldNoErr': 'دجلد شمیره اړینه ده/ نمبر جلد ضروری است',
-  'teacher.PhoneNoLabel':'د تلفن شمیره/ نمبر تلفن',
+  'teacher.PhoneNoLabel': 'د تلفن شمیره/ نمبر تلفن',
   'teacher.PhoneNoErr': 'د تلفن شمیره اړینه ده/ نمبر تلفن ضروری است',
-   'teacher.EmailLabel':'برښنالیک/ ایمیل آدرس',
+  'teacher.EmailLabel': 'برښنالیک/ ایمیل آدرس',
   'teacher.EmailErr': 'برښنا لیک اړین دی/ ایمیل ادرس ضروری است',
-  'teacher.EmailRequiredErr': 'برښنا لیک سم ندی/ ایمیل آدرس درست نیست', 
+  'teacher.EmailRequiredErr': 'برښنا لیک سم ندی/ ایمیل آدرس درست نیست',
   'teacher.LevelOfEducationLabel': 'زده کړې/ تحصیل',
   'teacher.LevelOfEducationErr': 'زدکړې اړینې ډي/ نوشتن سطح تحصیل ضروری است',
   'teacher.EducationLevelOption_1': '14 years degree',
   'teacher.EducationLevelOption_2': 'Bachelor',
   'teacher.EducationLevelOption_3': 'Master',
   'teacher.EducationLevelOption_4': 'PHD',
-  'teacher.MajorLabel':'تحصیلی رشته/ رشته تحصیلی',
+  'teacher.MajorLabel': 'تحصیلی رشته/ رشته تحصیلی',
   'teacher.MajorErr': 'تحصیلی رشته اړینه ده/ رشته تحصیلی ضروری است',
   'teacher.DoBLabel': 'زیږیدنې نیټه/ تاریخ تولد',
   'teacher.DoBErr': 'د زیږیدنې نیټه اړینه ده/ تاریخ تولد ضروری است',
-  'teacher.StatusOption_1':'فعال',
+  'teacher.StatusOption_1': 'فعال',
   'teacher.StatusOption_2': 'منفک/تنقیص',
-  'teacher.StatusLabel':'د دندې حالت/ حالت وظیفوی',
+  'teacher.StatusLabel': 'د دندې حالت/ حالت وظیفوی',
   'teacher.StatusErr': 'د استاد حالت انتخابول اړین دی/انتخاب حالت ضروری است',
-  
+  'teacher.Profile': 'د استاد پروفایل/ پروفایل استاد',
+
   // Grade Options
-   'teacher.GradeOption_3': 'دریم بست / بست سه ',
+  'teacher.GradeOption_3': 'دریم بست / بست سه ',
   'teacher.GradeOption_4': 'څلورم بست / بست چهارم',
   'teacher.GradeOption_5': 'پنځم بست/ بست پنجم',
-  'teacher.GradeOption_6': 'شپږم بست/ بست ششم',    
+  'teacher.GradeOption_6': 'شپږم بست/ بست ششم',
   'teacher.GradeOption_7': 'اووم بست/ بست هفتم',
   'teacher.GradeOption_8': 'اتم بست / بست هشتم',
   'teacher.GradeLabel': 'بست',
   'teacher.GradeErr': 'بست اړین ده / بست ضروری است',
 
-  
   // Teacher Step
   'teacher.StepOption_1': 'لومړی قدم/ قدم اول',
   'teacher.StepOption_2': 'دوهم قدم/ قدم دوم',
@@ -729,8 +729,7 @@ module.exports = {
   'teacher.StepOption_6': 'شپږم قدم / قدم ششم',
   'teacher.StepLabel': 'پل/ قدم',
   'teacher.StepErr': 'پل اړین دی/ قدم ضروری است',
-  'SubmitButton': 'ثبت',
-    
+  SubmitButton: 'ثبت',
 
   // institute
   'institute.studentgenderOption_1': 'نارینه/ذکور',
@@ -760,16 +759,11 @@ module.exports = {
   'marks.ClassOption_4': 'دولسم/ دوازدهم',
   'marks.ClassOption_5': 'دیارلسم/ سیزدهم',
   'marks.ClassOption_6': 'څورلسم/ چهاردهم',
-   'marks.No': 'شماره', 
+  'marks.No': 'شماره',
   'marks.FullName': 'نوم/ نام',
   'marks.FatherName': 'د پلارنوم/نام پدر',
-    'marks.ID': 'آیدی',
+  'marks.ID': 'آیدی',
   'marks.Marks': 'نمرې / نمرات',
-        
-  
-  
-  
-
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
@@ -782,16 +776,6 @@ module.exports = {
 
   //   'forms.TypeOption_1': 'اصلی',
   // 'forms.TypeOption_2': 'فرعی',
-  
-
-
-
-
-    
-
-
-
-        
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Inputs سفارشی',

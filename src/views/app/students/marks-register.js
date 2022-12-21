@@ -116,7 +116,7 @@ const [inNext, setIsNext] = useState(true);
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {<IntlMessages id="subject.register.title" />}
+          {<IntlMessages id="marks.title" />}
         </h3>
         <CardBody>
           <Formik

@@ -837,4 +837,5 @@ module.exports = {
   'search.id': 'آیدی',
   filter: ' فلتر بر اساس ',
   'pages.reset': 'ری سیت',
+  'institute.search': 'د انستیتوت لتول',
 };

@@ -194,11 +194,11 @@ const ThumbListPages = ({ match }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedGenderOption, setSelectedGenderOption] = useState({
-    column: 'title',
+    column: 'all',
     label: 'جنیست',
   });
   const [selectedProvinceOption, setSelectedProvinceOption] = useState({
-    column: 'title',
+    column: 'all',
     label: 'ولایت',
   });
 
@@ -211,23 +211,51 @@ const ThumbListPages = ({ match }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
+  const [rest, setRest] = useState(0);
+  const [institutes, setInstitutes] = useState([]);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
 
   useEffect(() => {
+    console.log('teacherId', teacherId);
     async function fetchData() {
-      if (selectedProvinceOption.column === 'all') {
+      if (
+        selectedProvinceOption.column === 'all' &&
+        selectedGenderOption.column === 'all'
+      ) {
+        if (rest == true) {
+          setDistrict('');
+          setTeacherId('');
+          setRest(false);
+        }
         axios
           .get(`${teacherApiUrl}?id=${teacherId}&current_district=${district}`)
           .then((res) => {
             return res.data;
           })
           .then((data) => {
-            console.log('district', district);
             console.log(
-              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+              `${teacherApiUrl}?id=${teacherId}&current_district=${district}`
+            );
+
+            setItems(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else if (selectedProvinceOption.column === 'all') {
+        axios
+          .get(
+            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}`
+          )
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}`
             );
 
             setItems(data);
@@ -255,8 +283,7 @@ const ThumbListPages = ({ match }) => {
           });
       } else {
         axios
-
-          // get data from localhost:8000/api/teachers
+          // get data from localhost:8000/teachers
           .get(
             `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
           )
@@ -284,8 +311,22 @@ const ThumbListPages = ({ match }) => {
     selectedProvinceOption,
     teacherId,
     province,
+    district,
+    rest,
   ]);
 
+  const fetchInstitutes = async () => {
+    const response = await axios.get('http://localhost:8000/institute/');
+    const updatedData = await response.data.map((item) => ({
+      id: item.id,
+      name: item.name,
+    }));
+    setInstitutes(updatedData);
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+  }, []);
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||
@@ -336,8 +377,6 @@ const ThumbListPages = ({ match }) => {
 
   const onContextMenuClick = (e, data) => {
     // params : (e,data,target)
-    console.log('onContextMenuClick - selected items', selectedItems);
-    console.log('onContextMenuClick - action : ', data.action);
   };
 
   const onContextMenu = (e, data) => {
@@ -361,8 +400,6 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  console.log('Data displayed on the table', items);
-
   return !isLoaded ? (
     <div className="loading" />
   ) : (
@@ -385,13 +422,13 @@ const ThumbListPages = ({ match }) => {
               Provinces.find((x) => x.column === column)
             );
           }}
-          changePageSize={setSelectedPageSize}
-          selectedPageSize={selectedPageSize}
-          totalItemCount={totalItemCount}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
           genderOptions={genderOptions}
           provinces={Provinces}
+          changePageSize={setSelectedPageSize}
+          selectedPageSize={selectedPageSize}
+          totalItemCount={totalItemCount}
           match={match}
           startIndex={startIndex}
           endIndex={endIndex}
@@ -412,8 +449,11 @@ const ThumbListPages = ({ match }) => {
               setDistrict(e.target.value.toLowerCase());
             }
           }}
+          onResetClick={setRest}
+          reset={rest}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
+          institutes={institutes}
         />
 
         <ListPageListing

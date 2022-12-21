@@ -1,6 +1,9 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
+
+import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import {
   Row,
@@ -15,14 +18,13 @@ import {
   Label,
   FormGroup,
   Input,
+  Card,
+  CardBody,
+  CardTitle,
 } from 'reactstrap';
 
 import { injectIntl } from 'react-intl';
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from '../../../../../containers/form-validations/FormikFields';
+import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
@@ -36,29 +38,33 @@ const ListPageHeading = ({
   displayMode,
   changeDisplayMode,
   handleChangeSelectAll,
-  changeGenderBy,
   changePageSize,
   selectedPageSize,
   totalItemCount,
-  selectedGenderOption,
-  genderOptions,
-  selectedProvinceOption,
-  provinces,
-  changeProvinceBy,
   match,
   startIndex,
   endIndex,
   selectedItemsLength,
   itemsLength,
-  onIdSearchKey,
-  onProvinceSearchKey,
-  onDistrictSearchKey,
   pageSizes,
   // toggleModal,
   heading,
+  onIdSearchKey,
+  changeGenderBy,
+  selectedGenderOption,
+  genderOptions,
+  selectedProvinceOption,
+  provinces,
+  changeProvinceBy,
+  onDistrictSearchKey,
+  onProvinceSearchKey,
+  onResetClick,
+  reset,
+  institutes,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
+
   const { messages } = intl;
 
   return (
@@ -182,7 +188,6 @@ const ListPageHeading = ({
                   })}
                 </DropdownMenu>
               </UncontrolledDropdown>
-
               <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                 <DropdownToggle caret color="outline-dark" size="xs">
                   <IntlMessages id="filter" />
@@ -207,7 +212,6 @@ const ListPageHeading = ({
                   })}
                 </DropdownMenu>
               </UncontrolledDropdown>
-
               <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                 <input
                   type="text"
@@ -226,14 +230,23 @@ const ListPageHeading = ({
                   onKeyPress={(e) => onIdSearchKey(e)}
                 />
               </div>
-              {/* create a rest button  */}
+
+              <Row>
+                <Colxx xs="12" sm="12" className="mb-4">
+                  <ReactAutoSugegst data={institutes} />
+                </Colxx>
+              </Row>
+
               <Button
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
                 onClick={() => {
-                  // changeGenderBy('all');
+                  changeGenderBy('all');
                   changeProvinceBy('all');
+                  document.getElementById('district').value = '';
+                  document.getElementById('search').value = '';
+                  onResetClick(!reset);
                 }}
               >
                 <IntlMessages id="pages.reset" />

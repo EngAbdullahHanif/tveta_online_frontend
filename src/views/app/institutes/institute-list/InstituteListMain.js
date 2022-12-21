@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
+import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -28,6 +29,157 @@ const orderOptions = [
   { column: 'category', label: 'Category' },
   { column: 'status', label: 'Status' },
 ];
+
+const genderOptions = [
+  {
+    column: 'all',
+    label: 'تول / همه',
+  },
+  { column: '1', label: 'ذکور' },
+  { column: '2', label: 'اناث' },
+];
+const provinces = [
+  {
+    column: 'all',
+    label: 'تول / همه',
+  },
+  {
+    column: '1',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
+  },
+  {
+    column: '2',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
+  },
+  {
+    column: '3',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
+  },
+  {
+    column: '4',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
+  },
+  {
+    column: '5',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
+  },
+  {
+    column: '6',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
+  },
+  {
+    column: '7',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
+  },
+  {
+    column: '8',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
+  },
+  {
+    column: '9',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
+  },
+  {
+    column: '10',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
+  },
+  {
+    column: '11',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
+  },
+  {
+    column: '12',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
+  },
+  {
+    column: '13',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
+  },
+  {
+    column: 'کابل',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
+  },
+  {
+    column: '15',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
+  },
+  {
+    column: '16',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
+  },
+  {
+    column: '17',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
+  },
+  {
+    column: '18',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
+  },
+  {
+    column: '19',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
+  },
+  {
+    column: '20',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    column: '21',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
+  },
+  {
+    column: '22',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
+  },
+  {
+    column: '23',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
+  },
+  {
+    column: '24',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
+  },
+  {
+    column: '25',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
+  },
+  {
+    column: '26',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
+  },
+  {
+    column: '27',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
+  },
+  {
+    column: '28',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
+  },
+  {
+    column: '29',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    column: '30',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
+  },
+  {
+    column: '31',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
+  },
+  {
+    column: '32',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
+  },
+  {
+    column: '33',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
+  },
+  {
+    column: '34',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+  },
+];
 const pageSizes = [4, 8, 12, 20];
 
 const categories = [
@@ -53,44 +205,158 @@ const ThumbListPages = ({ match }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
+  const [rest, setRest] = useState(0);
+  // const [institutes, setInstitutes] = useState([]);
+  const [instituteId, setInstituteId] = useState('');
+  const [province, setProvince] = useState('');
+  const [district, setDistrict] = useState('');
+  const [selectedGenderOption, setSelectedGenderOption] = useState({
+    column: 'all',
+    label: 'جنیست',
+  });
+  const [selectedProvinceOption, setSelectedProvinceOption] = useState({
+    column: 'all',
+    label: 'ولایت',
+  });
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedOrderOption]);
+  }, [
+    selectedPageSize,
+    selectedOrderOption,
+    selectedOrderOption,
+    selectedGenderOption,
+    selectedProvinceOption,
+  ]);
 
   useEffect(() => {
     async function fetchData() {
-      axios
-        // .get(
-        //   `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
-        // )
-        // get data from localhost:8000/institute
-        .get(`${instituteApiUrl}`)
-        .then((res) => {
-          console.log('res.data', res.data);
-          return res.data;
-        })
-        .then((data) => {
-          // setTotalPage(data.totalPage);
-          // setItems(data.data);
-          // set fecahed data to items
-          setItems(data);
+      if (
+        selectedProvinceOption.column === 'all' &&
+        selectedGenderOption.column === 'all'
+      ) {
+        if (rest == true) {
+          setDistrict('');
+          setInstituteId('');
+          setRest(false);
+        }
+        axios
+          .get(
+            `${instituteApiUrl}?id=${instituteId}&current_district=${district}`
+          )
+          .then((res) => {
+            console.log('res.data', res.data);
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `${instituteApiUrl}?id=${instituteId}&current_district=${district}`
+            );
 
-          // setSelectedItems([]);
+            setItems(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else if (selectedProvinceOption.column === 'all') {
+        axios
+          .get(
+            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&current_district=${district}`
+          )
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&current_district=${district}`
+            );
 
-          // setItems(
-          //   data.data.map((x) => {
-          //     console.log('Single Value of the array ', x);
-          //     return { ...x, img: x.img.replace('img/', 'img/products/') };
-          //   })
-          // );
-          setSelectedItems([]);
-          setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        });
+            setItems(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else if (selectedGenderOption.column === 'all') {
+        axios
+          .get(
+            `${instituteApiUrl}?id=${instituteId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+          )
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `${instituteApiUrl}?id=${instituteId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            );
+
+            setItems(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else {
+        axios
+          // get data from localhost:8000/api/student
+          .get(
+            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+          )
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            );
+            setItems(data);
+
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      }
+
+      // axios
+      //   // .get(
+      //   //   `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+      //   // )
+      //   // get data from localhost:8000/institute
+      //   .get(`${instituteApiUrl}`)
+      //   .then((res) => {
+      //     console.log('res.data', res.data);
+      //     return res.data;
+      //   })
+      //   .then((data) => {
+      //     // setTotalPage(data.totalPage);
+      //     // setItems(data.data);
+      //     // set fecahed data to items
+      //     setItems(data);
+
+      //     // setSelectedItems([]);
+
+      //     // setItems(
+      //     //   data.data.map((x) => {
+      //     //     console.log('Single Value of the array ', x);
+      //     //     return { ...x, img: x.img.replace('img/', 'img/products/') };
+      //     //   })
+      //     // );
+      //     setSelectedItems([]);
+      //     setTotalItemCount(data.totalItem);
+      //     setIsLoaded(true);
+      //   });
     }
     fetchData();
-  }, [selectedPageSize, currentPage, selectedOrderOption, search]);
+  }, [
+    selectedPageSize,
+    currentPage,
+    selectedOrderOption,
+    search,
+    selectedGenderOption,
+    selectedProvinceOption,
+    studentId,
+    province,
+    district,
+    rest,
+  ]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -167,8 +433,6 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  console.log('Data displayed on the table', items);
-
   return !isLoaded ? (
     <div className="loading" />
   ) : (
@@ -203,6 +467,37 @@ const ThumbListPages = ({ match }) => {
           orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
+          changeGenderBy={(column) => {
+            setSelectedGenderOption(
+              genderOptions.find((x) => x.column === column)
+            );
+          }}
+          changeProvinceBy={(column) => {
+            setSelectedProvinceOption(
+              provinces.find((x) => x.column === column)
+            );
+          }}
+          selectedGenderOption={selectedGenderOption}
+          selectedProvinceOption={selectedProvinceOption}
+          genderOptions={genderOptions}
+          provinces={provinces}
+          onIdSearchKey={(e) => {
+            if (e.key === 'Enter') {
+              setStudentId(e.target.value.toLowerCase());
+            }
+          }}
+          onProvinceSearchKey={(e) => {
+            if (e.key === 'Enter') {
+              setProvince(e.target.value.toLowerCase());
+            }
+          }}
+          onDistrictSearchKey={(e) => {
+            if (e.key === 'Enter') {
+              setDistrict(e.target.value.toLowerCase());
+            }
+          }}
+          onResetClick={setRest}
+          reset={rest}
         />
 
         <ListPageListing

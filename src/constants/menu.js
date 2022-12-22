@@ -434,6 +434,24 @@ const data = [
     ],
   },
   {
+    id: 'hr-evaluations',
+    icon: 'simple-icon-book-open',
+    label: 'menu.hr-evaluation',
+    to: `${adminRoot}/hr-evaluations`,
+    subs: [
+      {
+        icon: 'simple-icon-logout',
+        label: 'evaluation.list',
+        to: `${adminRoot}/hr-evaluations/hr-evaluations`,
+      },
+      {
+        icon: 'simple-icon-logout',
+        label: 'evaluation.register',
+        to: `${adminRoot}/hr-evaluations/register`,
+      },
+    ],
+  },
+  {
     id: 'blankpage',
     icon: 'iconsminds-bucket',
     label: 'menu.blank-page',

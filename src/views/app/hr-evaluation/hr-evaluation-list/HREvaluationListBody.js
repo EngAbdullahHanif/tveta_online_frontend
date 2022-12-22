@@ -38,16 +38,11 @@ const EvaluationListBody = ({
               <p className="mb-1 text-small">
                 {hrEvaluation.institute_id.name}
               </p>
-              <p className="mb-1 text-small">
-                {hrEvaluation.department_id.filed.name}
-              </p>
-              <p className="mb-1 text-small">
-                {hrEvaluation.department_id.name}
-              </p>
-              <p className="mb-1 text-small">{hrEvaluation.class_id.name}</p>
-              <p className="mb-1 text-small">{hrEvaluation.subject_id.name}</p>
               <p className="mb-1 text-small">{hrEvaluation.score}</p>
-              <p className="mb-1 text-small">{hrEvaluation.evaluation_date}</p>
+              <p className="mb-1 text-small">{hrEvaluation.current_grade}</p>
+              <p className="mb-1 text-small">{hrEvaluation.new_grade}</p>
+              <p className="mb-1 text-small">{hrEvaluation.current_step}</p>
+              <p className="mb-1 text-small">{hrEvaluation.new_step}</p>
             </div>
           </div>
         </Card>

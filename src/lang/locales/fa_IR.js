@@ -835,6 +835,11 @@ module.exports = {
   'evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',
   'evaluation.register': 'ارزیابی ثبت کول / ثبت ارزیابی',
 
+  'menu.hr-evaluation': 'منابع بشری ارزیابی',
+  'hr-evaluation.list': 'د ارزیابی لیست ',
+  'hr-evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',
+  'hr-evaluation.register': 'ارزیابی ثبت کول / ثبت ارزیابی',
+
   'search.district': 'ولسوالی ',
   'search.province': 'ولایت',
 

@@ -34,6 +34,10 @@ const Classes = React.lazy(() =>
   import(/* webpackChunkName: "classes" */ './classes')
 );
 
+const Evaluations = React.lazy(() =>
+  import(/* webpackChunkName: "evaluation" */ './evaluations')
+);
+
 const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
 const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
 const BlankPage = React.lazy(() =>
@@ -97,6 +101,11 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/classes`}
               render={(props) => <Classes {...props} />}
+            />
+
+            <Route
+              path={`${match.url}/evaluations`}
+              render={(props) => <Evaluations {...props} />}
             />
             <Route
               path={`${match.url}/blank-page`}

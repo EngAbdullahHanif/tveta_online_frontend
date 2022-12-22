@@ -416,6 +416,24 @@ const data = [
     ],
   },
   {
+    id: 'evaluations',
+    icon: 'simple-icon-book-open',
+    label: 'menu.evaluation',
+    to: `${adminRoot}/evaluations`,
+    subs: [
+      {
+        icon: 'simple-icon-logout',
+        label: 'evaluation.list',
+        to: `${adminRoot}/evaluations/evaluations`,
+      },
+      {
+        icon: 'simple-icon-logout',
+        label: 'evaluation.register',
+        to: `${adminRoot}/evaluations/register`,
+      },
+    ],
+  },
+  {
     id: 'blankpage',
     icon: 'iconsminds-bucket',
     label: 'menu.blank-page',

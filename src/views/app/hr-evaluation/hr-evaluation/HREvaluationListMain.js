@@ -4,9 +4,9 @@ import axios from 'axios';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './EvaluationListHeading';
+import ListPageHeading from './HREvaluationListHeading';
 
-import ListPageListing from './EvaluationListCatagory';
+import ListPageListing from './HREvaluationListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -21,7 +21,7 @@ const getIndex = (value, arr, prop) => {
 const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
-const instituteApiUrl = `${servicePath}/teachers/evaluation/`;
+const instituteApiUrl = `${servicePath}/teachers/hr-evaluation/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -175,7 +175,7 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د ارزیابیو لست/ لست ارزیابی ها"
+          heading="د منابع بشری ارزیابیو لست/ لست ارزیابی های منابع بشری"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}

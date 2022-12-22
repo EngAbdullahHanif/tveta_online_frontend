@@ -830,6 +830,10 @@ module.exports = {
   'class.register.title': 'د صنف ثبت کول / ثبت صنف',
   'class.register': 'صنف ثبت کول / ثبت صنف',
   'class.list': 'د صنف لیست / لیست صنف',
+  'menu.evaluation': 'ارزیابی',
+  'evaluation.list': 'د ارزیابی لیست ',
+  'evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',
+  'evaluation.register': 'ارزیابی ثبت کول / ثبت ارزیابی',
 
   'search.district': 'ولسوالی ',
   'search.province': 'ولایت',

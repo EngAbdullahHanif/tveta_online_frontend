@@ -12,7 +12,7 @@ import Pagination from '../../../../containers/pages/Pagination';
 import ContextMenuContainer from '../../../../containers/pages/ContextMenuContainer';
 import DataListView from '../../../../containers/pages/DataListView';
 import ImageListView from '../../../../containers/pages/ImageListView';
-import EvaluationListBody from './EvaluationListBody';
+import HREvaluationListBody from './HREvaluationListBody';
 
 function collect(props) {
   return { data: props.data };
@@ -39,7 +39,7 @@ const ListPageListing = ({
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((evaluation) => {
+        {items.map((hrEvaluation) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
@@ -53,10 +53,10 @@ const ListPageListing = ({
           }
           if (displayMode === 'thumblist') {
             return (
-              <EvaluationListBody
-                key={evaluation.id}
-                evaluation={evaluation}
-                isSelect={selectedItems.includes(evaluation.id)}
+              <HREvaluationListBody
+                key={hrEvaluation.id}
+                hrEvaluation={hrEvaluation}
+                isSelect={selectedItems.includes(hrEvaluation.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />

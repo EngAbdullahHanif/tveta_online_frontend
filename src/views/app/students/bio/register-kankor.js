@@ -153,12 +153,8 @@ const StudentRegistraion = () => {
 
     axios
       .post('http://localhost:8000/api/Create_kankorResults/', data)
-      .then((response) => {
-        console.log(response);
-        console.log('data sent to the server2');
-      })
+      .then((response) => {})
       .catch((error) => {
-        console.log('data sent to the server4');
         console.log(error);
       });
   };

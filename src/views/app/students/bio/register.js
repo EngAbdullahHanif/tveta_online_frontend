@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -241,6 +242,41 @@ const StdSchoolProvinceOptions = [
   },
 ];
 
+const initialValues = {
+  state: {
+    value: '',
+    label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
+  },
+  EducationLevel: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  StudentType: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  StudyType: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  StdInteranceType: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  StdSchoolProvince: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  Province: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  C_Province: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+};
+
 const StudentRegistraion = (values) => {
   const [isNext, setIsNext] = useState(false);
   const [IdCard, setIdCard] = useState(null);
@@ -250,7 +286,55 @@ const StudentRegistraion = (values) => {
     setIsNext(event);
   };
   const onRegister = (values) => {
-    console.log('values', values);
+    // if (!values) {
+    //   return;
+    // }
+    //send data to server
+    const data = {
+      std_id: '1',
+      name: values.StdName,
+      Eng_name: values.StdEngName,
+      father_name: values.StdFatherName,
+      Eng_father_name: values.StdFatherEngName,
+      cover_number: values.StdIdCardCover,
+      page_number: values.StdIdCardPageNo,
+      registration_number: values.StdTazkiraNo,
+      Sukuk_number: values.StdIdCardSakukNo,
+      main_province: values.Province.value,
+      main_district: values.District,
+      main_village: values.Village,
+      current_province: values.C_Province.value,
+      current_district: values.C_District,
+      current_village: values.C_Village,
+      birth_date: values.StdDoB,
+      fatherـprofession: values.StdFatherDuty,
+      fatherـplaceـofـduty: values.StdFatherDutyLocation,
+      finished_grade: values.EducationLevel.value,
+      // finished_grade_year: values.StdGraduationYear,
+      finished_grade_year: 2022,
+      school: values.StPreShcool,
+      schoolـprovince: values.StdSchoolProvince.value,
+      study_types: 1,
+      // study_types: add study types (فارغ، جاری، منفک)
+      student_type: values.StudentType.value,
+      internse_type: values.StdInteranceType.value,
+      // std_photo: 'images/1.jpg',
+      // Documents: 'images/2.jpg',
+
+      //add student photo
+
+      //add more documents
+    };
+    console.log('data', data);
+
+    axios
+      .post('http://localhost:8000/api/', data)
+      .then((res) => {
+        console.log('res', res);
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
   };
 
   return (
@@ -259,42 +343,9 @@ const StudentRegistraion = (values) => {
         <h3 className="mt-5 m-5">{<IntlMessages id="forms.title" />}</h3>
         <CardBody>
           <Formik
-            initialValues={{
-              state: {
-                value: '',
-                label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-              },
-              EducationLevel: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              StudentType: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              StudyType: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              StdInteranceType: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              StdSchoolProvince: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              Province: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              C_Province: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-            }}
-            validationSchema={RegisterSchema}
+            initialValues={initialValues}
             onSubmit={onRegister}
+            // validationSchema={InstituteRegistgerSchema}
           >
             {({
               handleSubmit,
@@ -777,7 +828,7 @@ const StudentRegistraion = (values) => {
                           <IntlMessages id="forms.StdGraduationYearLabel" />
                         </Label>
                         <FormikDatePicker
-                          name="date"
+                          name="StdGraduationYear"
                           id="date"
                           value={values.date}
                           onChange={setFieldValue}

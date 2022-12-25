@@ -309,30 +309,6 @@ const ThumbListPages = ({ match }) => {
             setIsLoaded(true);
           });
       }
-
-      // axios
-      //   .get(`${studentApiUrl}?main_province=${search}`)
-
-      //   .then((res) => {
-      //     return res.data;
-      //   })
-      //   .then((data) => {
-      //     console.log('api', `main_province=${match.params.search}`);
-      //     // console.log(data, 'lorem Students Data ');
-      //     // console.log('data total Items', data);
-
-      //     // setTotalPage(data.totalPage);
-      //     // setItems(
-      //     //   data.data.map((x) => {
-      //     //     console.log('Single Value of the array ', x);
-      //     //     return { ...x, img: x.img.replace('img/', 'img/products/') };
-      //     //   })
-      //     // );
-      //     setItems(data);
-      //     setSelectedItems([]);
-      //     setTotalItemCount(data.totalItem);
-      //     setIsLoaded(true);
-      //   });
     }
     fetchData();
   }, [

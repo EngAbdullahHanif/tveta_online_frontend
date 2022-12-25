@@ -847,4 +847,8 @@ module.exports = {
   filter: ' فلتر بر اساس ',
   'pages.reset': 'ری سیت',
   'institute.search': 'د انستیتوت لتول',
+  'evaluation.filter': 'فلتر',
+
+  'dorm.list': 'د لیلی لیست',
+  'dorm.register': 'د لیلی ثبت',
 };

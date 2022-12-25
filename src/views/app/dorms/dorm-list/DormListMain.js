@@ -4,9 +4,9 @@ import axios from 'axios';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './EvaluationListHeading';
+import ListPageHeading from './DormListHeading';
 
-import ListPageListing from './EvaluationListCatagory';
+import ListPageListing from './DormListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -21,7 +21,7 @@ const getIndex = (value, arr, prop) => {
 const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
-const instituteApiUrl = `${servicePath}/teachers/evaluation/`;
+const instituteApiUrl = `${servicePath}/students/dorm/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },

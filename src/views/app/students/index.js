@@ -10,7 +10,9 @@ const RegisterKankor = React.lazy(() =>
 );
 
 const StudentList = React.lazy(() =>
-  import(/* webpackChunkName: "student-list" */ './bio/student-list/StudentListMain')
+  import(
+    /* webpackChunkName: "student-list" */ './bio/student-list/StudentListMain'
+  )
 );
 const MarksRegistration = React.lazy(() =>
   import(/* webpackChunkName: "marks-register" */ './marks-register')
@@ -18,6 +20,10 @@ const MarksRegistration = React.lazy(() =>
 const AttendanceRegistration = React.lazy(() =>
   import(/* webpackChunkName: "attendance-register" */ './attendence/resgister')
 );
+const StudentProfile = React.lazy(() =>
+  import(/* webpackChunkName: "student-profile" */ './bio/student-profile')
+);
+
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -36,13 +42,17 @@ const Students = ({ match }) => (
         render={(props) => <StudentList {...props} />}
       />
 
-          <Route
+      <Route
         path={`${match.url}/marks-register`}
         render={(props) => <MarksRegistration {...props} />}
       />
-             <Route
+      <Route
         path={`${match.url}/attendance-register`}
         render={(props) => <AttendanceRegistration {...props} />}
+      />
+      <Route
+        path={`${match.url}/student-profile`}
+        render={(props) => <StudentProfile {...props} />}
       />
 
       {/* <ProtectedRoute

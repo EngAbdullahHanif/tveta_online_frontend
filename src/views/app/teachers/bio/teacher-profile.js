@@ -53,7 +53,7 @@ const TeacherProfile = () => {
             <Colxx className="mt-5 m-5" xxs="8">
               <h3>{<IntlMessages id="teacher.Profile" />}</h3>
             </Colxx>
-            <Colxx className="mt-4">
+            <Colxx className="mt-4 max">
               <div className="d-flex align-items-center flex-column">
                 <img src={logo} alt="Logo" width={'30%'} />
                 <p>
@@ -73,87 +73,87 @@ const TeacherProfile = () => {
           </Row>
           <Row>
             <Colxx
-              className=" d-flex justify-content-center "
+              className=" d-flex justify-content-center"
               style={{ marginRight: '21%' }}
             >
               {' '}
-              <Button
-                style={{ backgroundColor: !isNext ? 'blue' : '' }}
-                size="lg"
-                className="m-2"
-                onClick={() => {
-                  handleClick(false);
-                }}
-              >
-                <span className="spinner d-inline-block">
-                  <span className="bounce1" />
-                  <span className="bounce2" />
-                  <span className="bounce3" />
-                </span>
-                <span className="label">
-                  <IntlMessages id="button.TeacherBackround" />
-                </span>
-              </Button>{' '}
-              <Button
-                style={{ backgroundColor: isNext ? 'blue' : '' }}
-                size="lg"
-                className="m-2"
-                onClick={() => {
-                  handleClick(true);
-                }}
-              >
-                <span className="spinner d-inline-block">
-                  <span className="bounce1" />
-                  <span className="bounce2" />
-                  <span className="bounce3" />
-                </span>
-                <span className="label">
-                  <IntlMessages id="button.Teacherprofile" />
-                </span>
-              </Button>
+              <div className="d-inline-block">
+                <Button
+                  style={{ backgroundColor: !isNext ? 'blue' : '' }}
+                  size="lg"
+                  className="m-2"
+                  onClick={() => {
+                    handleClick(false);
+                  }}
+                >
+                  <span className="spinner d-inline-block">
+                    <span className="bounce1" />
+                    <span className="bounce2" />
+                    <span className="bounce3" />
+                  </span>
+                  <span className="label">
+                    <IntlMessages id="button.TeacherBackround" />
+                  </span>
+                </Button>{' '}
+                <Button
+                  style={{ backgroundColor: isNext ? 'blue' : '' }}
+                  size="lg"
+                  className="m-2"
+                  onClick={() => {
+                    handleClick(true);
+                  }}
+                >
+                  <span className="spinner d-inline-block">
+                    <span className="bounce1" />
+                    <span className="bounce2" />
+                    <span className="bounce3" />
+                  </span>
+                  <span className="label">
+                    <IntlMessages id="button.Teacherprofile" />
+                  </span>
+                </Button>
+              </div>
             </Colxx>
           </Row>
           {isNext ? (
-            <div>
-              <Row className="justify-content-center border border-primary rounded m-5">
-                <Colxx className=" p-5  border rounded" xxs="">
-                  <Label>
-                    <IntlMessages id="teacher.NameLabel" />
-                  </Label>
-                  <h3>احمد شبیر</h3>
-                  <Label>
-                    <IntlMessages id="teacher.FatherNameLabel" />
-                  </Label>
-                  <h3>عبدالرحیم</h3>
-                  <Label>
-                    <IntlMessages id="teacher.PhoneNoLabel" />
-                  </Label>
-                  <h3>077000000000</h3>
-                  <Label>
-                    <IntlMessages id="teacher.EmailLabel" />
-                  </Label>
-                  <h3>ahamd12@gmail.com</h3>
-                  <Label>
-                    <IntlMessages id="teacher.StatusLabel" />
-                  </Label>
-                  <h3>فعال</h3>
-                </Colxx>
-                <Colxx className="p-5 border rounded">
-                  <Label>
-                    <IntlMessages id="forms.InstituteLabel" />
-                  </Label>
-                  <h3>نیما</h3>
-                  <Label>
-                    <IntlMessages id="teacher.GradeLabel" />
-                  </Label>
-                  <h3>چهارم</h3>
-                  <Label>
-                    <IntlMessages id="teacher.StepLabel" />
-                  </Label>
-                  <h3>چهارم</h3>
-                </Colxx>
-              </Row>
-            </div>
+            <Row className="justify-content-center border border-primary rounded m-5 ">
+              <Colxx className=" p-5  border rounded">
+                <Label>
+                  <IntlMessages id="teacher.NameLabel" />
+                </Label>
+                <h3>احمد شبیر</h3>
+                <Label>
+                  <IntlMessages id="teacher.FatherNameLabel" />
+                </Label>
+                <h3>عبدالرحیم</h3>
+                <Label>
+                  <IntlMessages id="teacher.PhoneNoLabel" />
+                </Label>
+                <h3>077000000000</h3>
+                <Label>
+                  <IntlMessages id="teacher.EmailLabel" />
+                </Label>
+                <h3>ahamd12@gmail.com</h3>
+                <Label>
+                  <IntlMessages id="teacher.StatusLabel" />
+                </Label>
+                <h3>فعال</h3>
+              </Colxx>
+              <Colxx className="p-5 border rounded">
+                <Label>
+                  <IntlMessages id="forms.InstituteLabel" />
+                </Label>
+                <h3>نیما</h3>
+                <Label>
+                  <IntlMessages id="teacher.GradeLabel" />
+                </Label>
+                <h3>چهارم</h3>
+                <Label>
+                  <IntlMessages id="teacher.StepLabel" />
+                </Label>
+                <h3>چهارم</h3>
+              </Colxx>
+            </Row>
           ) : (
             <div className="p-2">
               <FormGroup className="form-group has-float-label m-5">

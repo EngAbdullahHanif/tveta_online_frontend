@@ -63,6 +63,11 @@ const data = [
         label: 'menu.attendance-registration',
         to: `${adminRoot}/students/attendance-register`,
       },
+      {
+        icon: 'simple-icon-user',
+        label: 'menu.student-profile',
+        to: `${adminRoot}/students/student-profile`,
+      },
     ],
   },
   // {

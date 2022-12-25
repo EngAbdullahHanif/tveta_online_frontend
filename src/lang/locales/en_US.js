@@ -158,6 +158,7 @@ module.exports = {
   'menu.dorm-commision': 'Regisration hostel',
   'menu.teacher-profile': 'Teacher Profile',
   'marks.title': 'Marks Entry',
+  ' menu.student-profile': 'Student Profile',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -581,6 +582,7 @@ module.exports = {
   'forms.StdInteranceTypeErr': 'Interance Type Required!',
   'forms.StdGraduationYearLabel': 'Graduation Year',
   'forms.StdGraduationYearErr': 'Graduation Year Is Required!',
+  'student.results': 'Results',
 
   // provinces of Afghanistan
   'forms.StdSchoolProvinceOptions_1': 'Badakhshan',
@@ -635,6 +637,7 @@ module.exports = {
   'forms.StudyTimeOption_1': 'Day Shift',
   'forms.StudyTimeOption_2': 'Night Shift',
   'forms.SubimssionButton': 'Submit',
+  'student.Profile': 'Student Profile',
 
   // Student Attendance
 
@@ -763,7 +766,9 @@ module.exports = {
   //   'forms.SubjectTitle': 'Subject Registration',
   //   'forms.SubjectNameLabel': 'Name',
   //   'forms.SubjectNameErr': 'Name is Required!',
-  //   'forms.SubjectCreditLabel': 'Credit',
+  'forms.SubjectCreditLabel': 'Credit',
+  'subject.type': ' Subject Type',
+
   //   'forms.SubjectCreditErr': 'Credit is Required!',
   //   'forms.SubjectTypeLabel': 'Type',
   //   'forms.SubjectTypeErr': 'Subject Type is Required!',

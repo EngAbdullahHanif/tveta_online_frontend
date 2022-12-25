@@ -166,6 +166,7 @@ module.exports = {
   'menu.attendance-registration': 'د حاضری ثبت/ درج حاضری',
   'menu.dorm-commision': 'د لیلی شمولیت/ شمولیت در لیلیه',
   'menu.teacher-profile': 'پروفایل استاد/ استاد فروفایل',
+  'menu.student-profile': 'پروفایل شاگرد/ د شاگرد پروفایل',
   'marks.title': 'ثبت نمرات/ د نومرو ثبت',
 
   /* 04.Dashboards */
@@ -591,6 +592,7 @@ module.exports = {
   'forms.StdInteranceTypeErr': 'د شمولیت ډول اړین دی/ نوع شمولیت ضروری است',
   'forms.StdGraduationYearLabel': 'د فراغت کال / سال فراغت',
   'forms.StdGraduationYearErr': 'د فراغت کال اړین دی/ سال فراغت ضروری است',
+  'student.results': 'پایلې/ نتایج',
 
   // ولایات
   'forms.StdSchoolProvinceOptions_1': 'بدخشان',
@@ -646,6 +648,7 @@ module.exports = {
   'forms.StudyTimeOption_1': 'ورځنی/ روزانه',
   'forms.StudyTimeOption_2': 'شپې/ شبانه',
   'forms.SubimssionButton': 'ثبت',
+  'student.Profile': ' د شاگرد پروفایل/ پروفایل شاگرد',
 
   // Student Attendance
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',
@@ -769,7 +772,7 @@ module.exports = {
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
   // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',
   // 'forms.SubjectNameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است!',
-  // 'forms.SubjectCreditLabel': 'کریدت',
+   'forms.SubjectCreditLabel': 'کریدت',
   // 'forms.SubjectCreditErr': 'د مضمون کریدت اړین دی/ کریدت مضمون ضروری است',
   // 'forms.SubjectTypeLabel': 'ډول/ نوع',
   // 'forms.SubjectTypeErr': 'د مضمون ډول اړین دی / نوع مضمون ضروری است',

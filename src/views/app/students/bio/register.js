@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -19,9 +20,9 @@ import {
   FormikDatePicker,
 } from '../../../../containers/form-validations/FormikFields';
 
-const SignupSchema = Yup.object().shape({
+const RegisterSchema = Yup.object().shape({
   StdName: Yup.string()
-    .min(3, <IntlMessages id="forms.nameChar" />)
+    // .min(3, <IntlMessages id="forms.nameChar" />)
     .required(<IntlMessages id="forms.nameerror" />),
 
   StdEngName: Yup.string()
@@ -62,13 +63,13 @@ const SignupSchema = Yup.object().shape({
     <IntlMessages id="forms.StdIdCardSakukNoErr" />
   ),
 
-  Province: Yup.string().required(<IntlMessages id="forms.ProvinceErr" />),
+  // Province: Yup.string().required(<IntlMessages id="forms.ProvinceErr" />),
 
   District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
 
   Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 
-  C_Province: Yup.string().required(<IntlMessages id="forms.ProvinceErr" />),
+  // C_Province: Yup.string().required(<IntlMessages id="forms.ProvinceErr" />),
 
   C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
 
@@ -81,19 +82,19 @@ const SignupSchema = Yup.object().shape({
     <IntlMessages id="forms.StPreShcoolErr" />
   ),
 
-  StudentType: Yup.string().required(
-    <IntlMessages id="forms.StudentTypeErr" />
-  ),
+  // StudentType: Yup.string().required(
+  //   <IntlMessages id="forms.StudentTypeErr" />
+  // ),
 
   StudyType: Yup.string().required(<IntlMessages id="forms.StudyTypeErr" />),
 
-  StdInteranceType: Yup.string().required(
-    <IntlMessages id="forms.StdInteranceTypeErr" />
-  ),
+  // StdInteranceType: Yup.string().required(
+  //   <IntlMessages id="forms.StdInteranceTypeErr" />
+  // ),
 
-  StdGraduationYear: Yup.string().required(
-    <IntlMessages id="forms.StdGraduationYearErr" />
-  ),
+  // StdGraduationYear: Yup.string().required(
+  //   <IntlMessages id="forms.StdGraduationYearErr" />
+  // ),
 });
 
 const options = [
@@ -241,22 +242,99 @@ const StdSchoolProvinceOptions = [
   },
 ];
 
-const StudentRegistraion = () => {
-  const onSubmit = (values, { setSubmitting }) => {
-    const payload = {
-      ...values,
-      state: values.state.value,
-    };
-    setTimeout(() => {
-      console.log(JSON.stringify(payload, null, 2));
-      setSubmitting(false);
-    }, 1000);
-  };
+const initialValues = {
+  state: {
+    value: '',
+    label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
+  },
+  EducationLevel: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  StudentType: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  StudyType: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  StdInteranceType: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  StdSchoolProvince: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  Province: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+  C_Province: {
+    value: '',
+    label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+  },
+};
+
+const StudentRegistraion = (values) => {
   const [isNext, setIsNext] = useState(false);
   const [IdCard, setIdCard] = useState(null);
+  // console.log('values', values);
 
   const handleClick = (event) => {
     setIsNext(event);
+  };
+  const onRegister = (values) => {
+    // if (!values) {
+    //   return;
+    // }
+    //send data to server
+    const data = {
+      std_id: '1',
+      name: values.StdName,
+      Eng_name: values.StdEngName,
+      father_name: values.StdFatherName,
+      Eng_father_name: values.StdFatherEngName,
+      cover_number: values.StdIdCardCover,
+      page_number: values.StdIdCardPageNo,
+      registration_number: values.StdTazkiraNo,
+      Sukuk_number: values.StdIdCardSakukNo,
+      main_province: values.Province.value,
+      main_district: values.District,
+      main_village: values.Village,
+      current_province: values.C_Province.value,
+      current_district: values.C_District,
+      current_village: values.C_Village,
+      birth_date: values.StdDoB,
+      fatherـprofession: values.StdFatherDuty,
+      fatherـplaceـofـduty: values.StdFatherDutyLocation,
+      finished_grade: values.EducationLevel.value,
+      // finished_grade_year: values.StdGraduationYear,
+      finished_grade_year: 2022,
+      school: values.StPreShcool,
+      schoolـprovince: values.StdSchoolProvince.value,
+      study_types: 1,
+      // study_types: add study types (فارغ، جاری، منفک)
+      student_type: values.StudentType.value,
+      internse_type: values.StdInteranceType.value,
+      // std_photo: 'images/1.jpg',
+      // Documents: 'images/2.jpg',
+
+      //add student photo
+
+      //add more documents
+    };
+    console.log('data', data);
+
+    axios
+      .post('http://localhost:8000/api/', data)
+      .then((res) => {
+        console.log('res', res);
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
   };
 
   return (
@@ -265,42 +343,9 @@ const StudentRegistraion = () => {
         <h3 className="mt-5 m-5">{<IntlMessages id="forms.title" />}</h3>
         <CardBody>
           <Formik
-            initialValues={{
-              state: {
-                value: '',
-                label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-              },
-              EducationLevel: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              StudentType: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              StudyType: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              StdInteranceType: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              StdSchoolProvince: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              Province: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              C_Province: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-            }}
-            validationSchema={SignupSchema}
-            onSubmit={onSubmit}
+            initialValues={initialValues}
+            onSubmit={onRegister}
+            // validationSchema={InstituteRegistgerSchema}
           >
             {({
               handleSubmit,
@@ -709,7 +754,7 @@ const StudentRegistraion = () => {
                       </FormGroup>
 
                       {/* Study type */}
-                      <FormGroup className="form-group has-float-label">
+                      {/* <FormGroup className="form-group has-float-label">
                         <Label>
                           <IntlMessages id="forms.StudyTypeLabel" />
                         </Label>
@@ -727,7 +772,7 @@ const StudentRegistraion = () => {
                             {errors.StudyType}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
 
                       {/* internse type*/}
                       <FormGroup className="form-group has-float-label">
@@ -783,7 +828,7 @@ const StudentRegistraion = () => {
                           <IntlMessages id="forms.StdGraduationYearLabel" />
                         </Label>
                         <FormikDatePicker
-                          name="date"
+                          name="StdGraduationYear"
                           id="date"
                           value={values.date}
                           onChange={setFieldValue}
@@ -858,8 +903,10 @@ const StudentRegistraion = () => {
                         </FormGroup> */}
 
                       <Button
-                        onClick={() => handleClick(false)}
                         className="float-right m-2 mt-5"
+                        type="submit"
+                        // onSubmit={handleSubmit}
+                        // onClick={}
                       >
                         {<IntlMessages id="forms.SubimssionButton" />}
                       </Button>

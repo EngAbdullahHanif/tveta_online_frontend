@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -75,22 +76,100 @@ const FieldOptions = [
 ];
 
 const StudentRegistraion = () => {
-  const onSubmit = (values, { setSubmitting }) => {
-    const payload = {
-      ...values,
-      state: values.state.value,
-    };
-    setTimeout(() => {
-      console.log(JSON.stringify(payload, null, 2));
-      setSubmitting(false);
-    }, 1000);
+  const initialValues = {
+    StdSchoolProvince: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    Province: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    C_Province: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    Institute: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    StudyTime: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    Field: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
   };
-  const [isNext, setIsNext] = useState(false);
-  const [IdCard, setIdCard] = useState(null);
+  const [fields, setFields] = useState([]);
+  const [institutes, setInstitutes] = useState([]);
+  const [departments, setDepartments] = useState([]);
+
+  const fetchInstitutes = async () => {
+    const response = await axios.get('http://localhost:8000/institute/');
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setInstitutes(updatedData);
+  };
+  const fetchFields = async () => {
+    const response = await axios.get('http://localhost:8000/institute/filed/');
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setFields(updatedData);
+  };
+  const fetchDepartments = async () => {
+    const response = await axios.get(
+      'http://localhost:8000/institute/department/'
+    );
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setDepartments(updatedData);
+  };
 
   const handleClick = (event) => {
     setIsNext(event);
   };
+  const onRegister = (values) => {
+    console.log('values', values);
+    console.log('institue', values.Department.value);
+    const data = {
+      name: values.StdName,
+      father_name: values.StdFatherName,
+      Institute: values.Institute.value,
+      field_id: values.Field.value,
+      Dept_id: values.Department.value,
+      score: values.KankorMarks,
+      date: values.StdInteranceDate,
+      //uncomment this line to send data to the server
+      // kankor_id: values.StdKankorId,
+      // study_time: values.StudyTime.value,
+    };
+
+    console.log('data', data);
+
+    axios
+      .post('http://localhost:8000/api/Create_kankorResults/', data)
+      .then((response) => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+    fetchFields();
+    fetchDepartments();
+  }, []);
+
+  console.log('fields', fields);
+  console.log('institutes', institutes);
 
   return (
     <>
@@ -100,46 +179,11 @@ const StudentRegistraion = () => {
         </h3>
         <CardBody>
           <Formik
-            initialValues={{
-              StdSchoolProvince: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              Province: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              C_Province: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              Institute: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              StudyTime: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-              Field: {
-                value: '',
-                label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-              },
-            }}
-            validationSchema={SignupSchema}
-            onSubmit={onSubmit}
+            initialValues={initialValues}
+            onSubmit={onRegister}
+            // validationSchema={InstituteRegistgerSchema}
           >
-            {({
-              handleSubmit,
-              setFieldValue,
-              setFieldTouched,
-              handleChange,
-              handleBlur,
-              values,
-              errors,
-              touched,
-              isSubmitting,
-            }) => (
+            {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-bottom">
                 <Row>
                   <Colxx xxs="6">
@@ -178,7 +222,7 @@ const StudentRegistraion = () => {
                         name="Institute"
                         id="Institute"
                         value={values.Institute}
-                        options={InstituteOptions}
+                        options={institutes}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
@@ -205,6 +249,26 @@ const StudentRegistraion = () => {
                       {errors.StudyTime && touched.StudyTime ? (
                         <div className="invalid-feedback d-block">
                           {errors.StudyTime}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+
+                    {/* Department */}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.studyDepartment" />
+                      </Label>
+                      <FormikReactSelect
+                        name="Department"
+                        id="Department"
+                        value={values.Department}
+                        options={departments}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                      />
+                      {errors.Department && touched.Department ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.Department}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -250,7 +314,7 @@ const StudentRegistraion = () => {
                         name="Field"
                         id="Field"
                         value={values.Field}
-                        options={FieldOptions}
+                        options={fields}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
@@ -261,12 +325,40 @@ const StudentRegistraion = () => {
                       ) : null}
                     </FormGroup>
 
-                    <Button
-                      onClick={() => handleClick(false)}
-                      className="float-right m-2 mt-5"
-                    >
-                      ثبت
-                    </Button>
+                    {/* date */}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="forms.RegistrationDateLabel" />
+                      </Label>
+                      <Field
+                        className="form-control"
+                        name="StdInteranceDate"
+                        type="date"
+                      />
+                      {errors.StdInteranceDate && touched.StdInteranceDate ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.StdInteranceDate}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+
+                    <div className="d-flex justify-content-between align-items-center">
+                      <Button
+                        color="primary"
+                        className={`btn-shadow btn-multiple-state`}
+                        size="lg"
+                        type="submit"
+                      >
+                        <span className="spinner d-inline-block">
+                          <span className="bounce1" />
+                          <span className="bounce2" />
+                          <span className="bounce3" />
+                        </span>
+                        <span className="label">
+                          <IntlMessages id="forms.SubimssionButton" />
+                        </span>
+                      </Button>
+                    </div>
                   </Colxx>
                 </Row>
               </Form>

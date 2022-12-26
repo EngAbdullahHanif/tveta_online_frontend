@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -77,23 +78,21 @@ const genderOptions = [
   { value: '3', label: <IntlMessages id="institute.studentgenderOption_3" /> },
 ];
 
-// const InstituteRegistgerSchema = Yup.object().shape({
-//   email: Yup.string()
-//     .email('ایمیل که وارد کردی نامعتبره')
-//     .required('پست الکترونیک اجباریه!'),
-//   password: Yup.string().required('کلمه عبور اجباریه!'),
-//   tags: Yup.array()
-//     .min(3, 'حداقل 3 تا تگ انتخاب کنید')
-//     .required('حداقل یک تگ اجباریه'),
-//   date: Yup.date().nullable().required('تاریخ اجباریه!'),
-//   state: Yup.object()
-//     .shape({
-//       label: Yup.string().required(),
-//       value: Yup.string().required(),
-//     })
-//     .nullable()
-//     .required('استان اجباریه!'),
-// });
+const InstituteRegistgerSchema = Yup.object().shape({
+  instName: Yup.string().required('name is required'),
+  // password: Yup.string().required('کلمه عبور اجباریه!'),
+  // tags: Yup.array()
+  //   .min(3, 'حداقل 3 تا تگ انتخاب کنید')
+  //   .required('حداقل یک تگ اجباریه'),
+  // date: Yup.date().nullable().required('تاریخ اجباریه!'),
+  // state: Yup.object()
+  //   .shape({
+  //     label: Yup.string().required(),
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required('استان اجباریه!'),
+});
 
 const InstituteRegister = () => {
   const [province, setProvince] = useState({});
@@ -108,13 +107,45 @@ const InstituteRegister = () => {
   };
 
   const onRegister = (values) => {
-    console.log(values);
-    if (!loading) {
-      // if (values.email !== '' && values.password !== '') {
-      //   loginUserAction(values, history);
-      // }
-    }
+    // if (!values.province || values.province.value === '0') {
+    //   return;
+    // }
+    // if (!values.instType || values.instType.value === '0') {
+    //   return;
+    // }
+
+    // insert the data to the API with Axios here and redirect to the current page
+    const data = {
+      name: values.instName,
+      province: values.province.value,
+      district: values.district,
+      village: values.vilage,
+      type: values.instType.value,
+      gender: values.gender.value,
+    };
+    //conver the data to JSON
+    // const dataJSON = JSON.stringify(data);
+
+    // console.log('data sent to the server1');
+
+    //send the data to https://localhost:8000/institutes with Axios
+
+    //define content type in the axios header
+
+    axios
+      .post('http://localhost:8000/institute/', data)
+      .then((response) => {
+        console.log(response);
+
+        // window.location.reload(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log(data);
   };
+
   return (
     <>
       <Card>
@@ -125,7 +156,7 @@ const InstituteRegister = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={onRegister}
-            // validationSchema={InstituteRegistgerSchema}
+            validationSchema={InstituteRegistgerSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-bottom">

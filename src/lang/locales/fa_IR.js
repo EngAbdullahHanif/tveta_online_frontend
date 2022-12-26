@@ -543,7 +543,7 @@ module.exports = {
   'forms.StdFatherDutyLocationLabel': 'د پلار د دندې ځای/محل وظیفه پدر',
   'forms.StdFatherDutyLocationErr':
     'د پلار د دندې ځای اړین دی/محل وظیفه پدر ضروری است',
-  'forms.TazkiraTypeDefaultValue': 'وټاکئ / انتخاب کنید',
+  'forms.TazkiraTypeDefaultValue': 'ټاکل/ انتخاب',
   'forms.StdTazkiraNoLabel': 'د تذکرې شمیره/ نمبر تذکره',
   'forms.StdTazkiraNoErr': 'د تذکرې شمیره اړینه ده /نمبر تذکره ضروری است',
   'forms.StdTazkiraElectronic': 'الکترونیکی',
@@ -647,8 +647,10 @@ module.exports = {
   'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',
   'forms.StudyTimeOption_1': 'ورځنی/ روزانه',
   'forms.StudyTimeOption_2': 'شپې/ شبانه',
+  'forms.studyDepartment': 'دیپارتمنت',
   'forms.SubimssionButton': 'ثبت',
   'student.Profile': ' د شاگرد پروفایل/ پروفایل شاگرد',
+  'forms.RegistrationDateLabel': 'د ثبت نام وخت/ تاریخ ثبت نام',
 
   // Student Attendance
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',
@@ -769,10 +771,12 @@ module.exports = {
   'marks.Marks': 'نمرې / نمرات',
 
   // Subject
+  // Subject
+
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
   // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',
   // 'forms.SubjectNameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است!',
-   'forms.SubjectCreditLabel': 'کریدت',
+  'forms.SubjectCreditLabel': 'کریدت',
   // 'forms.SubjectCreditErr': 'د مضمون کریدت اړین دی/ کریدت مضمون ضروری است',
   // 'forms.SubjectTypeLabel': 'ډول/ نوع',
   // 'forms.SubjectTypeErr': 'د مضمون ډول اړین دی / نوع مضمون ضروری است',
@@ -946,4 +950,26 @@ module.exports = {
   'class.semester': 'د صنف سمستر / سمستر صنف',
   'class.register.title': 'د صنف ثبت کول / ثبت صنف',
   'class.register': 'صنف ثبت کول / ثبت صنف',
+  'class.list': 'د صنف لیست / لیست صنف',
+  'menu.evaluation': 'ارزیابی',
+  'evaluation.list': 'د ارزیابی لیست ',
+  'evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',
+  'evaluation.register': 'ارزیابی ثبت کول / ثبت ارزیابی',
+
+  'menu.hr-evaluation': 'منابع بشری ارزیابی',
+  'hr-evaluation.list': 'د ارزیابی لیست ',
+  'hr-evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',
+  'hr-evaluation.register': 'ارزیابی ثبت کول / ثبت ارزیابی',
+
+  'search.district': 'ولسوالی ',
+  'search.province': 'ولایت',
+
+  'search.id': 'آیدی',
+  filter: ' فلتر بر اساس ',
+  'pages.reset': 'ری سیت',
+  'institute.search': 'د انستیتوت لتول',
+  'evaluation.filter': 'فلتر',
+
+  'dorm.list': 'د لیلی لیست',
+  'dorm.register': 'د لیلی ثبت',
 };

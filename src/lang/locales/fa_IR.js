@@ -511,7 +511,7 @@ module.exports = {
   'forms.firstname-message': 'لطفا نام خود را وارد کنید',
   'forms.lastname': 'نام خانوادگی',
   'forms.lastname-message': 'لطفا نام خانوادگی خود را وارد کنید',
-  'forms.StdName': 'نوم/نام', 
+  'forms.StdName': 'نوم/نام',
   'forms.Eng_name': 'انګریزی نوم / نام انگلسی',
   'forms.StdFatherName': 'د پلار نوم/نام پدر',
   'forms.Std_father_Eng_Name': 'د پلار نوم په انګریزي/نام پدر به انگلسی',
@@ -521,13 +521,15 @@ module.exports = {
   'forms.nameChar': 'نوم باید له ۳ تورو ډیر وي/ نام باید بیشتر از ۳ حرف باشد',
   'forms.englishNameError': 'انګریزی نوم اړین دی/ نام انگلسی ضروری است',
   'forms.StdFatherNameError': 'د پلار نوم اړین دی/ درج نام پدر ضروری است',
-  'forms.FatherEnglishNameErr': 'د پلار انګریزی نوم اړین دی/ درج نام انگلسی پدر  ضروری است',
+  'forms.FatherEnglishNameErr':
+    'د پلار انګریزی نوم اړین دی/ درج نام انگلسی پدر  ضروری است',
   'forms.StdFatherDutyLabel': 'د پلار دنده/ وظیفه پدر',
   'forms.StdFatherDutyErr': 'د پلار دنده اړین ده/ وظیفه پدر ضروری است',
   'forms.StdDoBLabel': 'د زیږیدنې نيټه/ تاریخ تولد',
   'forms.StdDoBErr': 'د زیږیدنې نیټه اړین دی/ تاریخ تولد ضروری است',
   'forms.StdFatherDutyLocationLabel': 'د پلار د دندې ځای/محل وظیفه پدر',
-  'forms.StdFatherDutyLocationErr': 'د پلار د دندې ځای اړین دی/محل وظیفه پدر ضروری است',
+  'forms.StdFatherDutyLocationErr':
+    'د پلار د دندې ځای اړین دی/محل وظیفه پدر ضروری است',
   'forms.TazkiraTypeDefaultValue': 'ټاکل/ انتخاب',
   'forms.StdTazkiraNoLabel': 'د تذکرې شمیره/ نمبر تذکره',
   'forms.StdTazkiraNoErr': 'د تذکرې شمیره اړینه ده /نمبر تذکره ضروری است',
@@ -547,10 +549,10 @@ module.exports = {
   'forms.DistrictErr': 'ولسوالی اړین دی/ ولسوالی ضروری است',
   'forms.VillageLabel': 'کلی/قریه',
   'forms.VillageErr': 'قریه اړین ده/ قریه ضروری است',
-    'forms.PlaceOfBirthLabel': 'د زیږیدو ځای /مکان تولد',
+  'forms.PlaceOfBirthLabel': 'د زیږیدو ځای /مکان تولد',
   'forms.StdPlaceOfBirthErr': 'د زیږیدو ځای اړین دی /مکان تولد ضروری است',
 
-    // Second page of student biography
+  // Second page of student biography
   'forms.EducationalLevel_9th': 'نهم صنف / صنف نهم',
   'forms.EducationalLevel_10th': 'لسم ټولګی/ صنف دهم',
   'forms.EducationalLevel_11th': 'یوولسم ټولګی / صنف یازدهم',
@@ -568,18 +570,18 @@ module.exports = {
   'forms.StudyTypeGraduated': 'فارغ',
   'forms.StudyTypeInrolled': 'جاری',
   'forms.StudyTypeDismissed': 'منفک',
-    'forms.StudyTypeLabel': 'د شاګرد وضعیت/ حالت شاگرد',
+  'forms.StudyTypeLabel': 'د شاګرد وضعیت/ حالت شاگرد',
   'forms.StudyTypeErr': 'د شاگرد وضعیت اړین دی/ حالت شاگرد ضروری است',
-   'forms.StdInteranceOption_1': 'حکمی',
+  'forms.StdInteranceOption_1': 'حکمی',
   'forms.StdInteranceOption_2': 'اختصاصی کانکور/کانکور اختصاصی',
   'forms.StdInteranceOption_3': 'عمومی کانکور / کانکور عمومی',
   'forms.StdInteranceTypeLabel': 'د شمولیت ډول/ نوع شمولیت',
   'forms.StdInteranceTypeErr': 'د شمولیت ډول اړین دی/ نوع شمولیت ضروری است',
-    'forms.StdGraduationYearLabel': 'د فراغت کال / سال فراغت',
+  'forms.StdGraduationYearLabel': 'د فراغت کال / سال فراغت',
   'forms.StdGraduationYearErr': 'د فراغت کال اړین دی/ سال فراغت ضروری است',
 
   // ولایات
-   'forms.StdSchoolProvinceOptions_1': 'بدخشان',
+  'forms.StdSchoolProvinceOptions_1': 'بدخشان',
   'forms.StdSchoolProvinceOptions_2': 'بادغیس',
   'forms.StdSchoolProvinceOptions_3': 'بغلان',
   'forms.StdSchoolProvinceOptions_4': 'بلخ',
@@ -603,7 +605,7 @@ module.exports = {
   'forms.StdSchoolProvinceOptions_22': 'ننگرهار',
   'forms.StdSchoolProvinceOptions_23': 'نیمروز',
   'forms.StdSchoolProvinceOptions_24': 'نورستان',
-  'forms.StdSchoolProvinceOptions_25': 'پکتیا',  
+  'forms.StdSchoolProvinceOptions_25': 'پکتیا',
   'forms.StdSchoolProvinceOptions_26': 'پکتیکا',
   'forms.StdSchoolProvinceOptions_27': 'پنجشیر',
   'forms.StdSchoolProvinceOptions_28': 'پروان',
@@ -617,24 +619,25 @@ module.exports = {
   'forms.StdSchoolProvinceLabel': 'د ښونځی ولایت/ولایت مکتب',
   'forms.StdSchoolProvinceErr': 'د ښونځی ولایت اړین دی/ ولایت مکتب ضروری است',
 
-
   // Student Kankor Forms Result
   'forms.Kankorformstitle': 'د کانکور پایلې/ نتایج کانکور',
-  'forms.StdKankorIdLabel': 'د کانکور ایدی/ ایدی کانکور', 
+  'forms.StdKankorIdLabel': 'د کانکور ایدی/ ایدی کانکور',
   'forms.StdKankorIdErr': 'د کانکور ایدی اړین دی / ایدی کانکور ضروری است',
-   'forms.KankorMarksLabel': 'د کانکور نومرې/ نمرات کانکور', 
+  'forms.KankorMarksLabel': 'د کانکور نومرې/ نمرات کانکور',
   'forms.KankorMarksErr': 'د کانکور نورې اړینې دي/ درج نمرات کانکور ضروری است',
-  'forms.InstituteLabel': 'انستیتوت', 
+  'forms.InstituteLabel': 'انستیتوت',
   'forms.InstituteErr': 'انستیتوت اړین دی / انستیتوت ضروری است',
-  'forms.FieldLabel': 'رشته', 
+  'forms.FieldLabel': 'رشته',
   'forms.FieldErr': 'رشته اړین دی/ رشته ضروری است',
-     'forms.StudyTimeLabel': 'وخت/ وقت', 
+  'forms.StudyTimeLabel': 'وخت/ وقت',
   'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',
-   'forms.StudyTimeOption_1': 'ورځنی/ روزانه', 
+  'forms.StudyTimeOption_1': 'ورځنی/ روزانه',
   'forms.StudyTimeOption_2': 'شپې/ شبانه',
+  'forms.studyDepartment': 'دیپارتمنت',
   'forms.SubimssionButton': 'ثبت',
-   
-    // Student Attendance
+  'forms.RegistrationDateLabel': 'د ثبت نام وخت/ تاریخ ثبت نام',
+
+  // Student Attendance
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',
   'forms.StdIdLabel': ' د شاګرد ایډي/ ایدی شاگرد',
   'forms.StdIdErr': 'د شاګرد ایډي اړین دی/ ایدی شاگرد ضروری است',
@@ -647,9 +650,8 @@ module.exports = {
   'forms.StdNecessaryWorkLabel': 'اړین کار/ کار ضروری',
   'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
 
-
   // Subject
-  
+
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
   // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',
   // 'forms.SubjectNameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است!',
@@ -660,16 +662,6 @@ module.exports = {
 
   //   'forms.TypeOption_1': 'اصلی',
   // 'forms.TypeOption_2': 'فرعی',
-  
-
-
-
-
-    
-
-
-
-        
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Inputs سفارشی',
@@ -837,4 +829,26 @@ module.exports = {
   'class.semester': 'د صنف سمستر / سمستر صنف',
   'class.register.title': 'د صنف ثبت کول / ثبت صنف',
   'class.register': 'صنف ثبت کول / ثبت صنف',
+  'class.list': 'د صنف لیست / لیست صنف',
+  'menu.evaluation': 'ارزیابی',
+  'evaluation.list': 'د ارزیابی لیست ',
+  'evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',
+  'evaluation.register': 'ارزیابی ثبت کول / ثبت ارزیابی',
+
+  'menu.hr-evaluation': 'منابع بشری ارزیابی',
+  'hr-evaluation.list': 'د ارزیابی لیست ',
+  'hr-evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',
+  'hr-evaluation.register': 'ارزیابی ثبت کول / ثبت ارزیابی',
+
+  'search.district': 'ولسوالی ',
+  'search.province': 'ولایت',
+
+  'search.id': 'آیدی',
+  filter: ' فلتر بر اساس ',
+  'pages.reset': 'ری سیت',
+  'institute.search': 'د انستیتوت لتول',
+  'evaluation.filter': 'فلتر',
+
+  'dorm.list': 'د لیلی لیست',
+  'dorm.register': 'د لیلی ثبت',
 };

@@ -2,7 +2,9 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const TeacherList = React.lazy(() =>
-  import(/* webpackChunkName: "teacher-list" */ './bio/teacher-list/TeacherListMain')
+  import(
+    /* webpackChunkName: "teacher-list" */ './bio/teacher-list/TeacherListMain'
+  )
 );
 
 const Teachers = ({ match }) => (

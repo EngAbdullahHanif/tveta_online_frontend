@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -63,7 +64,28 @@ const SubjectRegister = () => {
   };
 
   const onRegister = (values) => {
-    console.log(values);
+    console.log('values', values);
+
+    const data = {
+      name: values.subjectName,
+      english_name: values.englishName,
+      code: values.subjectCode,
+      credits: values.credits,
+      type: values.subjectType.value,
+      system_type: values.systemType.value,
+    };
+    console.log('data', data);
+    axios
+      .post('http://localhost:8000/institute/subject/', data)
+      .then((response) => {
+        console.log(response);
+        console.log('data sent to the server2');
+      })
+      .catch((error) => {
+        console.log('data sent to the server4');
+        console.log(error);
+      });
+
     if (!loading) {
       // if (values.email !== '' && values.password !== '') {
       //   loginUserAction(values, history);

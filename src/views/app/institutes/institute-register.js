@@ -25,15 +25,41 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
-const provinceOptions = [
-  { value: 'kabul', label: 'کابل' },
-  { value: 'herat', label: 'هرات' },
-  { value: 'kandahar', label: 'کندهار' },
-  { value: 'mazar', label: 'مزار' },
-  { value: 'jalaabad', label: 'جلااباد' },
-  { value: 'kunar', label: 'کنر' },
-  { value: 'laghman', label: 'لغمان' },
-  { value: 'sarepul', label: 'سرپل' },
+const ProvinceOptions = [
+  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
+  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
+  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
+  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
+  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
+  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
+  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
+  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
+  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
+  { value: '10', label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" /> },
+  { value: '11', label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" /> },
+  { value: '12', label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" /> },
+  { value: '13', label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" /> },
+  { value: '14', label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" /> },
+  { value: '15', label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" /> },
+  { value: '16', label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" /> },
+  { value: '17', label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" /> },
+  { value: '18', label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" /> },
+  { value: '19', label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" /> },
+  { value: '20', label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" /> },
+  { value: '21', label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" /> },
+  { value: '22', label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" /> },
+  { value: '23', label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" /> },
+  { value: '24', label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" /> },
+  { value: '25', label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" /> },
+  { value: '26', label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" /> },
+  { value: '27', label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" /> },
+  { value: '28', label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" /> },
+  { value: '29', label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" /> },
+  { value: '30', label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" /> },
+  { value: '31', label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" /> },
+  { value: '32', label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" /> },
+  { value: '33', label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" /> },
+  { value: '34', label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" /> },
 ];
 
 const options = [
@@ -42,14 +68,14 @@ const options = [
 ];
 
 const instTypeOptions = [
-  { value: '1', label: 'دولتی' },
-  { value: '2', label: 'شخصی' },
+  { value: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
+  { value: '2', label: <IntlMessages id="institute.instTypeOptions_2" /> },
 ];
 
 const genderOptions = [
-  { value: '1', label: 'ذکور' },
-  { value: '2', label: 'اناث' },
-  { value: '3', label: 'مختلط' },
+  { value: '1', label: <IntlMessages id="institute.studentgenderOption_1" /> },
+  { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
+  { value: '3', label: <IntlMessages id="institute.studentgenderOption_3" /> },
 ];
 
 const InstituteRegistgerSchema = Yup.object().shape({
@@ -75,9 +101,9 @@ const InstituteRegister = () => {
   const [] = useState('وتاکئ / انتخاب کنید');
 
   const initialValues = {
-    province: { value: '0', label: 'وتاکئ / انتخاب کنید' },
-    instType: { value: '0', label: 'وتاکئ / انتخاب کنید' },
-    gender: { value: '0', label: 'وتاکئ / انتخاب کنید' },
+    province: { value: '', label: <IntlMessages id="forms.TazkiraTypeDefaultValue" /> },
+      instType: { value: '', label: <IntlMessages id="forms.TazkiraTypeDefaultValue" /> },
+      gender: { value: '', label: <IntlMessages id="forms.TazkiraTypeDefaultValue" /> },
   };
 
   const onRegister = (values) => {
@@ -134,6 +160,11 @@ const InstituteRegister = () => {
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-bottom">
+
+
+                <Row  className='justify-content-center'>
+                  <Colxx xxs='10'>
+          
                 <FormGroup className="form-group has-float-label">
                   <Label>
                     <IntlMessages id="inst.name" />
@@ -154,11 +185,11 @@ const InstituteRegister = () => {
                   <Label>
                     <IntlMessages id="province" />
                   </Label>
-                  <FormikReactSelect
-                    name="province"
-                    id="province"
-                    value={values.province}
-                    options={provinceOptions}
+                      <FormikReactSelect
+                        name="province"
+                        id="province"
+                        value={values.province}
+                        options={ProvinceOptions}
                     onChange={setFieldValue}
                     onBlur={setFieldTouched}
                   />
@@ -231,10 +262,9 @@ const InstituteRegister = () => {
                   ) : null}
                 </FormGroup>
 
-                <div className="d-flex justify-content-between align-items-center">
+                <div className="d-flex justify-content-between align-items-center float-right">
                   <Button
-                    color="primary"
-                    className={`btn-shadow btn-multiple-state`}
+                    className='m-4'
                     size="lg"
                     type="submit"
                   >
@@ -244,10 +274,14 @@ const InstituteRegister = () => {
                       <span className="bounce3" />
                     </span>
                     <span className="label">
-                      <IntlMessages id="user.register" />
+                      <IntlMessages id="forms.SubimssionButton" />
                     </span>
                   </Button>
-                </div>
+                  </div>
+
+        
+                  </Colxx>
+               </Row>
               </Form>
             )}
           </Formik>

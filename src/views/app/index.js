@@ -34,6 +34,9 @@ const Classes = React.lazy(() =>
   import(/* webpackChunkName: "classes" */ './classes')
 );
 
+const Fields = React.lazy(() =>
+  import(/* webpackChunkName: "fields" */ './fields')
+);
 const Evaluations = React.lazy(() =>
   import(/* webpackChunkName: "evaluation" */ './evaluations')
 );
@@ -114,6 +117,10 @@ const App = ({ match }) => {
               render={(props) => <Classes {...props} />}
             />
 
+            <Route
+              path={`${match.url}/fields`}
+              render={(props) => <Fields {...props} />}
+            />
             <Route
               path={`${match.url}/evaluations`}
               render={(props) => <Evaluations {...props} />}

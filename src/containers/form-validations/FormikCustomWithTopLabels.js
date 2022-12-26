@@ -47,6 +47,8 @@ const options = [
 ];
 
 const FormikCustomWithTopLabels = () => {
+
+  console.log(values, "sdfasd")
   const onSubmit = (values, { setSubmitting }) => {
     const payload = {
       ...values,
@@ -172,7 +174,7 @@ const FormikCustomWithTopLabels = () => {
                       ) : null}
                     </FormGroup>
 
-                    <Button color="primary" type="submit">
+                    <Button color="primary" type="submit" onSubmit={handleSubmit}>
                       ارسال فرم
                     </Button>
                   </Form>

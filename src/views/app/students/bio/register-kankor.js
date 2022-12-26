@@ -133,6 +133,9 @@ const StudentRegistraion = () => {
     setDepartments(updatedData);
   };
 
+  const handleClick = (event) => {
+    setIsNext(event);
+  };
   const onRegister = (values) => {
     console.log('values', values);
     console.log('institue', values.Department.value);

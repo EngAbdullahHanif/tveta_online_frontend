@@ -770,9 +770,41 @@ module.exports = {
   'marks.ID': 'آیدی',
   'marks.Marks': 'نمرې / نمرات',
 
-  // Subject
-  // Subject
+  // Dorm
+  'dorm.RegisterTitle': 'د لیلې ثبت/ ثبت لیلیه',
+  'dorm.NameLabel': 'د لیلې نوم/ نام لیلیه',
+  'dorm.NameErr': 'د لیلی نوم اړین دی/ نام لیلیه ضروری است',
+  'dorm.Gender': 'د لیلې جندر/ جندر لیلیه',
+  'dorm.GenderOptions_1': 'نارینه/ ذکور',
+  'dorm.GenderOptions_2': 'ښځینه/ اناث',
+  'dorm.GenderOptions_3': '‌دواړه/ مختلط',
+  'dorm.BuildingTypeLabel': ' د تعمیر ډول/ نوع تعمیر',
+  'dorm.BuildingTypeOptions_1': 'دولتی',
+  'dorm.BuildingTypeOptions_2': 'خصوصی',
+  'dorm.PublicBuildingOwnerLabel': 'د دولتی تعمیر مالکیت/مالکیت تعمیر دولتی',
+  'dorm.PublicBuildingOwnerLabelOption_1':
+    'د تخنیکی او مسکلی زده کړو اداره/ اداره تعلبمات تخنبکب و مسلکی',
+  'dorm.PublicBuildingOwnerLabelOption_2': 'بل ارګان/ ارگان دیگر',
+  'dorm.PrivateBuildingTypeLabel': 'د خصوصی تعمیر نوعیت/ نوعیت تعمیر شخصی',
+  'dorm.PrivateBuildingTypeOption_1': 'کرایی',
+  'dorm.PrivateBuildingTypeOption_2': 'کمکی',
+  'dorm.CapicityLabel': 'گنجایش/ ظرفیت',
+  'dorm.CapicityErr': 'د لیلی ظرفیت ارقام اړین دي/ ارقام لیلیه ضروری است',
+  'dorm.QuotaErr': 'د شاګردانو سهمیه اړین دی/ سهمیه شاگردان در لیلیه ضروری است',
+  'dorm.QuotaLabel': 'سهمیه',
+  'dorm.TotalBuildingNoLabel':
+    'په لیلیه کې د تعمیرونو شمیر/ تعداد تعمیر در لیلیه',
+  'dorm.TotalBuildingNoErr':
+    'په لیلیه کې د تعمیرونو شمیر اړین دی/ تعداد تعمیر در لیلیه ضروری است',
 
+  'dorm.TotalRoomsErr': 'د خونو لیکل اړین دی/ نوشتن اطاق ضروری است',
+  'dorm.TotalRoomsLabel': ' ټولې خونې / تعداد اطاق',
+  'dorm.TotalKitchensLabel': 'پخلنځي/ تعداد آشپز خانه',
+  'dorm.TotalKitchensErr': ' پخلنځي لیکل اړین دی / تعداد آشپزخانه ضروری است',
+  'dorm.ToiletLabel': 'د تشنابو شمیر/ تعداد تشناب',
+  'dorm.ToiletErr': 'د تشنابو شمیر اړین دی / تعداد تشناب ضروری است',
+
+  // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
   // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',
   // 'forms.SubjectNameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است!',

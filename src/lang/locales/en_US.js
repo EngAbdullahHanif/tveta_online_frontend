@@ -762,6 +762,38 @@ module.exports = {
   'marks.FatherName': 'FatherName',
   'marks.Marks': 'Marks',
 
+  // Dorm
+  'dorm.RegisterTitle': 'Dorm Registration',
+  'dorm.NameLabel': 'Dorm Name',
+  'dorm.NameErr': 'Dorm Name Required!',
+  'dorm.Gender': ' Gender',
+  'dorm.GenderOptions_1': ' Male',
+  'dorm.GenderOptions_2': ' Female',
+  'dorm.GenderOptions_3': 'Both',
+  'dorm.BuildingTypeLabel': ' Building Type',
+  'dorm.BuildingTypeOptions_1': 'Public',
+  'dorm.BuildingTypeOptions_2': ' Private',
+  'dorm.PublicBuildingOwnerLabel': 'Public Building Owned By',
+  'dorm.PublicBuildingOwnerLabelOption_1': 'TVETA',
+  'dorm.PublicBuildingOwnerLabelOption_2': 'Other public Organization',
+  'dorm.PrivateBuildingTypeLabel': 'Private Building Type',
+  'dorm.PrivateBuildingTypeOption_1': 'ًRental',
+  'dorm.PrivateBuildingTypeOption_2': 'Assisted',
+  'dorm.CapicityLabel': 'Capicity',
+  'dorm.CapicityErr': 'Dorm Capicity is Required!',
+  'dorm.QuotaErr': 'Dorm  Quota is required!',
+  'dorm.QuotaLabel': 'Dorm  Quota',
+  'dorm.TotalBuildingNoLabel': 'Total Buiding',
+  'dorm.TotalBuildingNoErr': ' Total Buiding Required!',
+  'dorm.TotalRoomsErr': ' Total Number of Rooms Required!',
+  'dorm.TotalRoomsLabel': ' Total Number of Rooms',
+  'dorm.TotalKitchensLabel': ' Total Kitchens',
+  'dorm.TotalKitchensErr': ' Total Number of Kitchens Required!',
+  'dorm.ToiletLabel': ' Total Toilets',
+  'dorm.ToiletErr': ' Total Number of Toilets Required!',
+
+  // Subject
+
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',
   //   'forms.SubjectNameLabel': 'Name',

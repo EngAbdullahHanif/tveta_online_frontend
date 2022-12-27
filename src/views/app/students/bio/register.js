@@ -816,7 +816,7 @@ const StudentRegistraion = (values) => {
 
                       <Button
                         onClick={() => handleClick(false)}
-                        className="m-2"
+                        className=" m-5"
                       >
                         شاته/ عقب
                       </Button>
@@ -903,7 +903,7 @@ const StudentRegistraion = (values) => {
                         </FormGroup> */}
 
                       <Button
-                        className="float-right m-2 mt-5"
+                        className="float-right m-5"
                         type="submit"
                         // onSubmit={handleSubmit}
                         // onClick={}

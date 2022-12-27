@@ -69,6 +69,7 @@ module.exports = {
   'menu.home': 'خانه',
   'menu.app': 'خانه',
   'menu.teacher': 'استاد',
+  'menu.teacher-evaluation': 'د استاد ارزیابی/ ارزیابی ا',
   'menu.teacher_list': 'د استادانو لست/ لست استاد',
   'menu.default': 'پیش فرض',
   'menu.analytics': 'تجزیه و تحلیل',
@@ -168,6 +169,7 @@ module.exports = {
   'menu.teacher-profile': 'پروفایل استاد/ استاد فروفایل',
   'menu.student-profile': 'پروفایل شاگرد/ د شاگرد پروفایل',
   'marks.title': 'ثبت نمرات/ د نومرو ثبت',
+  'menu.student-register-in-dorm': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -664,6 +666,7 @@ module.exports = {
   'forms.StdSicknessErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
   'forms.StdNecessaryWorkLabel': 'اړین کار/ کار ضروری',
   'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
+  'forms.ConfirmButton': 'تایید/ تصدیق',
 
   // Field Registration
   'field.FieldRegisterTitle': 'ثبت رشته / درشتې ثبت',
@@ -734,7 +737,7 @@ module.exports = {
   'teacher.StepOption_6': 'شپږم قدم / قدم ششم',
   'teacher.StepLabel': 'پل/ قدم',
   'teacher.StepErr': 'پل اړین دی/ قدم ضروری است',
-  SubmitButton: 'ثبت',
+  'button.SubmitButton': 'ثبت',
 
   // institute
   'institute.studentgenderOption_1': 'نارینه/ذکور',
@@ -803,6 +806,24 @@ module.exports = {
   'dorm.TotalKitchensErr': ' پخلنځي لیکل اړین دی / تعداد آشپزخانه ضروری است',
   'dorm.ToiletLabel': 'د تشنابو شمیر/ تعداد تشناب',
   'dorm.ToiletErr': 'د تشنابو شمیر اړین دی / تعداد تشناب ضروری است',
+
+  // Student Registration
+  'dorm.StudentRegisterTitle': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
+  'search.studentId': 'لټون/ جستجو',
+  'search.studentIdSearchLabel':
+    'د شاګرد  دننه کړئ / لطفا آیدی شاگرد را وراد نماید',
+  'dorm.SearchResult': 'د لټون پایله/ نتیجه جستجو...',
+  'forms.NoData': 'پورتنۍ آیډي شتون نه لري/ آیدی فوق در سیستم موجود نیست',
+  'forms.StudentResidentsPlace': 'د شاګرد استوګنځی/ محل بود و باش شاگرد',
+
+  // Teacher Evaluation
+  'teacher.EvalautionTitle': 'د استاد ارزونه/ ارزیابی استاد',
+  'teacher.InstituteLabel': 'انستیتوت  / انستیتوت',
+  'teacher.InstituteErr': 'انستیتوت  ضروری دی/انستیتوت ضروری است',
+  'teacher.DepartmentLabel': ' دیپارټمنت / دیپارتمنت',
+  'teacher.DepartmentErr': ' دیپارټمنت اړین دی/  دیپارتمنت ضروری است',
+  'teacher.ClassLabel': 'د ټولګی / صنف',
+  'teacher.ClassErr': 'د ټولګی اړین دی/ آیدی صنف ضروری است',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',

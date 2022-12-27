@@ -64,6 +64,7 @@ module.exports = {
   'menu.app': 'Home',
   'menu.teacher': 'Teacher',
   'menu.Teacher': 'Teacher',
+  'menu.teacher-evaluation': 'Teacher Evaluation',
   'menu.teacher_list': 'Teacher List',
   'menu.default': 'Default',
   'menu.analytics': 'Analytics',
@@ -158,7 +159,8 @@ module.exports = {
   'menu.dorm-commision': 'Regisration hostel',
   'menu.teacher-profile': 'Teacher Profile',
   'marks.title': 'Marks Entry',
-  ' menu.student-profile': 'Student Profile',
+  'menu.student-profile': 'Student Profile',
+  'menu.student-register-in-dorm': 'Student Registration',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -651,6 +653,7 @@ module.exports = {
   'forms.StdSicknessLabel': 'Sickness',
   'forms.StdSicknessErr': 'this field is required!',
   'forms.StdNecessaryWorkLabel': 'Necessary Work',
+  'forms.ConfirmButton': 'Confirm',
 
   // Field Registration
   'field.FieldRegisterTitle': 'Field Registeration',
@@ -722,7 +725,7 @@ module.exports = {
   'teacher.StepOption_6': 'Sixth Step',
   'teacher.StepLabel': 'Step',
   'teacher.StepErr': 'Step Is Required!',
-  SubmitButton: 'Submit',
+  'button.SubmitButton': 'Submit',
 
   // Institute
   'inst.register.title': 'Institute/School Registration',
@@ -764,7 +767,7 @@ module.exports = {
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',
-  'dorm.NameLabel': 'Dorm Name',
+  'dorm.': 'Dorm Name',
   'dorm.NameErr': 'Dorm Name Required!',
   'dorm.Gender': ' Gender',
   'dorm.GenderOptions_1': ' Male',
@@ -792,8 +795,28 @@ module.exports = {
   'dorm.ToiletLabel': ' Total Toilets',
   'dorm.ToiletErr': ' Total Number of Toilets Required!',
 
-  // Subject
+  // Students Registration in Dorm
+  'dorm.StudentRegisterTitle': 'Student Registration',
+  'search.studentId': 'Search',
+  'search.studentIdSearchLabel': 'Please Enter the student Id ',
+  'dorm.SearchResult': 'Search Result...',
+  'forms.NoData': 'The Above Entered Id is not Registered',
+  'forms.StudentResidentsPlace': 'Student Residance Place',
 
+  // Teacher Evaluation
+  'teacher.EvalautionTitle': 'Teacher Evaluation',
+  'teacher.InstituteLabel': 'Institute ',
+  'teacher.InstituteErr': 'Institute Required!',
+  'teacher.DepartmentLabel': 'Department',
+  'teacher.DepartmentErr': 'Department Required!',
+  'teacher.ClassLabel': 'Class ',
+  'teacher.ClassIErr': 'Class Required!',
+
+
+
+
+
+  // Subject
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',
   //   'forms.SubjectNameLabel': 'Name',

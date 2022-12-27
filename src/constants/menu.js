@@ -26,6 +26,12 @@ const data = [
         to: `${adminRoot}/teachers/profile`,
         // roles: [UserRole.Admin],
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.teacher-evaluation',
+        to: `${adminRoot}/teachers/teacher-evalaution`,
+        // roles: [UserRole.Admin],
+      },
     ],
   },
   {
@@ -260,9 +266,9 @@ const data = [
         to: `${adminRoot}/dorms/register`,
       },
       {
-        icon: 'simple-icon-bubbles',
-        label: 'menu.chat',
-        to: `${adminRoot}/applications/chat`,
+        icon: 'simple-icon-plus',
+        label: 'menu.student-register-in-dorm',
+        to: `${adminRoot}/dorms/student-register`,
       },
     ],
   },

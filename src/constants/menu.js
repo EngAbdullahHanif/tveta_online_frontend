@@ -6,31 +6,27 @@ const data = [
     icon: 'iconsminds-student-male',
     label: 'menu.teacher',
     to: `${adminRoot}/teacher`,
-    // roles: [UserRole.Admin, UserRole.Editor],
+
     subs: [
       {
         icon: 'iconsminds-students',
         label: 'menu.teacher_list',
         to: `${adminRoot}/teachers/teachers`,
-        // roles: [UserRole.Admin],
       },
       {
         icon: 'iconsminds-add-user',
         label: 'menu.teacher-registration',
         to: `${adminRoot}/teachers/register`,
-        // roles: [UserRole.Admin],
       },
       {
         icon: 'iconsminds-student-male',
         label: 'menu.teacher-profile',
         to: `${adminRoot}/teachers/profile`,
-        // roles: [UserRole.Admin],
       },
       {
         icon: 'simple-icon-plus',
         label: 'menu.teacher-evaluation',
         to: `${adminRoot}/teachers/teacher-evalaution`,
-        // roles: [UserRole.Admin],
       },
     ],
   },
@@ -334,9 +330,9 @@ const data = [
         to: `${adminRoot}/evaluations/evaluations`,
       },
       {
-        icon: 'simple-icon-logout',
-        label: 'evaluation.register',
-        to: `${adminRoot}/evaluations/register`,
+        icon: 'simple-icon-plus',
+        label: 'menu.teacher-promotion-demotion',
+        to: `${adminRoot}/evaluations/promotion-demotion`,
       },
     ],
   },
@@ -352,9 +348,9 @@ const data = [
         to: `${adminRoot}/hr-evaluations/hr-evaluations`,
       },
       {
-        icon: 'simple-icon-logout',
-        label: 'evaluation.register',
-        to: `${adminRoot}/hr-evaluations/register`,
+        icon: 'simple-icon-plus',
+        label: 'menu.teacher-HR-evaluation',
+        to: `${adminRoot}/hr-evaluations/teacher-hr-evaluation`,
       },
     ],
   },

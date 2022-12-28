@@ -161,6 +161,8 @@ module.exports = {
   'marks.title': 'Marks Entry',
   'menu.student-profile': 'Student Profile',
   'menu.student-register-in-dorm': 'Student Registration',
+  'menu.teacher-HR-evaluation': 'HR Evaluation',
+  'menu.teacher-promotion-demotion': 'Promotion/Demotion',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -804,16 +806,44 @@ module.exports = {
   'forms.StudentResidentsPlace': 'Student Residance Place',
 
   // Teacher Evaluation
+  'teacher.IdLabel': 'Teacher Id',
   'teacher.EvalautionTitle': 'Teacher Evaluation',
-  'teacher.InstituteLabel': 'Institute ',
-  'teacher.InstituteErr': 'Institute Required!',
-  'teacher.DepartmentLabel': 'Department',
-  'teacher.DepartmentErr': 'Department Required!',
-  'teacher.ClassLabel': 'Class ',
-  'teacher.ClassIErr': 'Class Required!',
+  'teacher.InstituteIdLabel': 'Institute Id',
+  // 'teacher.InstituteIdErr': 'Institute Id Required!',
+  'teacher.departmentIdLabel': 'Department Id',
+  // 'teacher.departmentIdErr': 'Department Id Required!',
+  'teacher.classIdLabel': 'Class  Id',
+  // 'teacher.classIdErr': 'Class Id Required!',
+  'teacher.subjectIdLabel': 'Subject Id',
+  // 'teacher.subjectIdErr': 'Subject Id is Required!',
+  'teacher.topicLabel': 'Topic',
+  'teacher.topicErr': 'Evaluation Topic  is Required!',
+  'teacher.evaluatorLabel': 'Evaluator',
+  'teacher.evaluatorErr': 'Evaluator Name Topic  is Required!',
+  'teacher.evaluationTypeOption_1': 'Goal Oriented',
+  'teacher.evaluationTypeOption_2': 'Activity Oriented',
+  'teacher.strengthPointsLabel': 'Strength Points',
+  'teacher.strengthPointsErr': 'Strength Points  Required!',
+  'teacher.weakNessPointsLabel': 'Weakness Points',
+  'teacher.weaknessPointsErr': 'Weakness Points  Required!',
+  'teacher.marksLabel': 'Marks',
+  'teacher.marksErr': 'Marks  Required!',
+  'teacher.evaluationDateLabel': 'Evaluation Date',
+  'teacher.evaluationDateErr': 'Evaluation Date is  Required!',
+  'teacher.suggestionLabel': 'Suggestions',
+  // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
 
+  // HR Evaluation
+  'teacher.EvalautionHrTitle': 'Teacher Hr Evaluation',
+  'teacher.curretGradeLabel': 'Current Grade',
+  'teacher.currentStepLabel': 'Current Step',
+  'teacher.newGradeLabel': 'New Grade',
+  'teacher.newStepLabel': 'New Step',
 
-
+  // Promotion and demotion
+  'teacher.PromotionDemotionTitle': 'Teacher Promotion/Demotion',
+  'teacher.promotionLabel': 'Teacher Promotion',
+  'teacher.demotionLabel': 'Demotion',
 
 
   // Subject

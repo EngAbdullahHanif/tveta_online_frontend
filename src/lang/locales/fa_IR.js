@@ -69,7 +69,7 @@ module.exports = {
   'menu.home': 'خانه',
   'menu.app': 'خانه',
   'menu.teacher': 'استاد',
-  'menu.teacher-evaluation': 'د استاد ارزیابی/ ارزیابی ا',
+  'menu.teacher-evaluation': 'د استاد ارزیابی/ ارزیابی استاد',
   'menu.teacher_list': 'د استادانو لست/ لست استاد',
   'menu.default': 'پیش فرض',
   'menu.analytics': 'تجزیه و تحلیل',
@@ -170,6 +170,8 @@ module.exports = {
   'menu.student-profile': 'پروفایل شاگرد/ د شاگرد پروفایل',
   'marks.title': 'ثبت نمرات/ د نومرو ثبت',
   'menu.student-register-in-dorm': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
+  'menu.teacher-HR-evaluation': 'د بشری منابع ارزونه/ ارزیابی منابع بشری',
+  'menu.teacher-promotion-demotion': 'مکافات / مجازات',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -818,12 +820,46 @@ module.exports = {
 
   // Teacher Evaluation
   'teacher.EvalautionTitle': 'د استاد ارزونه/ ارزیابی استاد',
-  'teacher.InstituteLabel': 'انستیتوت  / انستیتوت',
-  'teacher.InstituteErr': 'انستیتوت  ضروری دی/انستیتوت ضروری است',
-  'teacher.DepartmentLabel': ' دیپارټمنت / دیپارتمنت',
-  'teacher.DepartmentErr': ' دیپارټمنت اړین دی/  دیپارتمنت ضروری است',
-  'teacher.ClassLabel': 'د ټولګی / صنف',
-  'teacher.ClassErr': 'د ټولګی اړین دی/ آیدی صنف ضروری است',
+  'teacher.IdLabel': 'د استاد آیډی/ آیدی استاد',
+  'teacher.InstituteIdLabel': ' د انستیتوت آیډی/ آیدی انستیتوت',
+  // 'teacher.InstituteIdErr': 'Institute Id Required!',
+  'teacher.departmentIdLabel': 'د ډیپارتمڼت آیډی/ آیدی دیپارتمنت',
+  // 'teacher.departmentIdErr': 'Department Id Required!',
+  'teacher.classIdLabel': 'دټولګي آیډی/ آیدی صنف',
+  // 'teacher.classIdErr': 'Class Id Required!',
+  'teacher.subjectIdLabel': ' د مضمون آیډی/ آیدی مضمون',
+  // 'teacher.subjectIdErr': 'د مضموت آیډی اړینه ده/  آیدی مضمون ضروری است',
+  'teacher.topicLabel': 'د ارزونې موضوع/ موضوع ارزیابی',
+  'teacher.topicErr': 'د ارزیابی موضوع اړین دی / موضوع ارزیابی ضروری است',
+  'teacher.evaluatorLabel': 'ارزونکي نوم/ نام ارزیابی کننده',
+  'teacher.evaluatorErr': 'د ارزونکي نوم اړین دی/ نام ارزیابی کننده ضروری است',
+  'teacher.evaluationTypeLabel': 'د ارزونې ډول / نوع ارزیابی',
+  'teacher.evaluationTypeOption_1': 'هدف محور',
+  'teacher.evaluationTypeOption_2': 'فعالیت محور',
+  'teacher.strengthPointsLabel': 'د قوت ټکي/ نقاط قوت',
+  'teacher.strengthPointsErr': 'د قوت ټکي اړین دي/ نقاط قوت ضروری است',
+  'teacher.weaknessPointsLabel': 'د ضعف ټکي/ نقاط ضعف',
+  'teacher.weaknessPointsErr': 'د ضعف ټکي اړین دی/ نقاط ضعف ضروروی است',
+  'teacher.marksLabel': 'نمرې/ نمرات',
+  'teacher.marksErr': 'نمرې اړین دي/ نمرات ضروری است',
+  'teacher.evaluationDateLabel': ' د ارزونې نیټه/ تاریخ ارزیابی',
+  'teacher.evaluationDateErr':
+    'د ارزونې نیټه اړینه ده / تاریخ ارزیابی ضروری است',
+  'teacher.suggestionLabel': 'پیشنهاد / نظریات',
+  // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
+
+  // Hr Evaluation
+  'teacher.EvalautionHrTitle':
+    'د استاد ارزونه د بشری منابع لخوا/ ارزیابی استاد توسط منابع بشری',
+  'teacher.curretGradeLabel': 'اوسنی بست/ بست فعلی',
+  'teacher.currentStepLabel': 'اوسنی پل / قدم فعلی',
+  'teacher.newGradeLabel': 'نوی بست/ بست جدید',
+  'teacher.newStepLabel': 'نوی پل/ قدم جدید',
+
+  // Promotion and demotion
+  'teacher.PromotionDemotionTitle': 'مکافات /مجازات',
+  'teacher.promotionLabel': 'مکافات',
+  'teacher.demotionLabel': 'مجازات',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
@@ -1006,9 +1042,6 @@ module.exports = {
   'class.list': 'د صنف لیست / لیست صنف',
   'menu.evaluation': 'ارزیابی',
   'evaluation.list': 'د ارزیابی لیست ',
-  'evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',
-  'evaluation.register': 'ارزیابی ثبت کول / ثبت ارزیابی',
-
   'menu.hr-evaluation': 'منابع بشری ارزیابی',
   'hr-evaluation.list': 'د ارزیابی لیست ',
   'hr-evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',

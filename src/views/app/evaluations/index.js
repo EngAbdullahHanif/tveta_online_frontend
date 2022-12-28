@@ -7,6 +7,12 @@ const EvaluationList = React.lazy(() =>
   )
 );
 
+const PromotionDemotion = React.lazy(() =>
+  import(
+    /* webpackChunkName: "promotion-demotion" */ './teacher-promotion-demotion'
+  )
+);
+
 const Evaluations = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -14,6 +20,10 @@ const Evaluations = ({ match }) => (
       <Route
         path={`${match.url}/evaluations`}
         render={(props) => <EvaluationList {...props} />}
+      />
+      <Route
+        path={`${match.url}/promotion-demotion`}
+        render={(props) => <PromotionDemotion {...props} />}
       />
 
       <Redirect to="/error" />

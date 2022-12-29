@@ -56,7 +56,7 @@ const ListPageHeading = ({
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   const { messages } = intl;
-
+  console.log('institutes', institutes);
   return (
     <Row>
       <Colxx xxs="12">

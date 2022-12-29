@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
@@ -203,7 +202,7 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState([]);
+  const [institutes, setInstitutes] = useState();
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
@@ -330,7 +329,15 @@ const ThumbListPages = ({ match }) => {
       id: item.id,
       name: item.name,
     }));
+    // convert updateData to object
+    // const updatedDataObject = Object.assign(
+    //   {},
+    //   ...updatedData.map((item) => ({ name: item.name }))
+    // );
+    // console.log('updatedDataObject', updatedDataObject);
+
     setInstitutes(updatedData);
+    // setInstitutes(updatedData);
   };
 
   useEffect(() => {

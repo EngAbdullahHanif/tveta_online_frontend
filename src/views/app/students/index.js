@@ -37,7 +37,7 @@ const Students = ({ match }) => (
         path={`${match.url}/register-kankor`}
         render={(props) => <RegisterKankor {...props} />}
       />
-      <Route
+      <Route  
         path={`${match.url}/students`}
         render={(props) => <StudentList {...props} />}
       />
@@ -51,7 +51,7 @@ const Students = ({ match }) => (
         render={(props) => <AttendanceRegistration {...props} />}
       />
       <Route
-        path={`${match.url}/student-profile`}
+        path={`${match.url}/:studentId`}
         render={(props) => <StudentProfile {...props} />}
       />
 

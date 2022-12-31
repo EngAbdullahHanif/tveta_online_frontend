@@ -6,31 +6,27 @@ const data = [
     icon: 'iconsminds-student-male',
     label: 'menu.teacher',
     to: `${adminRoot}/teacher`,
-    // roles: [UserRole.Admin, UserRole.Editor],
+
     subs: [
       {
-        icon: 'simple-icon-briefcase',
+        icon: 'iconsminds-students',
         label: 'menu.teacher_list',
         to: `${adminRoot}/teachers/teachers`,
-        // roles: [UserRole.Admin],
       },
       {
-        icon: 'simple-icon-pie-chart',
-        label: 'menu.analytics',
-        to: `${adminRoot}/dashboards/analytics`,
-        // roles: [UserRole.Admin],
+        icon: 'iconsminds-add-user',
+        label: 'menu.teacher-registration',
+        to: `${adminRoot}/teachers/register`,
       },
       {
-        icon: 'simple-icon-basket-loaded',
-        label: 'menu.ecommerce',
-        to: `${adminRoot}/dashboards/ecommerce`,
-        // roles: [UserRole.Editor],
+        icon: 'iconsminds-student-male',
+        label: 'menu.teacher-profile',
+        to: `${adminRoot}/teachers/profile`,
       },
       {
-        icon: 'simple-icon-doc',
-        label: 'menu.content',
-        to: `${adminRoot}/dashboards/content`,
-        // roles: [UserRole.Editor],
+        icon: 'simple-icon-plus',
+        label: 'menu.teacher-evaluation',
+        to: `${adminRoot}/teachers/teacher-evalaution`,
       },
     ],
   },
@@ -54,22 +50,25 @@ const data = [
         // roles: [UserRole.Admin],
       },
       {
-        icon: 'simple-icon-user-follow',
+        icon: 'iconsminds-students',
         label: 'menu.student_list',
         to: `${adminRoot}/students/students`,
         // roles: [UserRole.Admin],
       },
       {
-        icon: 'simple-icon-basket-loaded',
-        label: 'menu.ecommerce',
-        to: `${adminRoot}/dashboards/ecommerce`,
-        // roles: [UserRole.Editor],
+        icon: 'simple-icon-plus',
+        label: 'menu.student-marks-register',
+        to: `${adminRoot}/students/marks-register`,
       },
       {
-        icon: 'simple-icon-doc',
-        label: 'menu.content',
-        to: `${adminRoot}/dashboards/content`,
-        // roles: [UserRole.Editor],
+        icon: 'simple-icon-plus',
+        label: 'menu.attendance-registration',
+        to: `${adminRoot}/students/attendance-register`,
+      },
+      {
+        icon: 'simple-icon-user',
+        label: 'menu.student-profile',
+        to: `${adminRoot}/students/student-profile`,
       },
     ],
   },
@@ -235,19 +234,14 @@ const data = [
     to: `${adminRoot}/institutes`,
     subs: [
       {
-        icon: 'simple-icon-check',
+        icon: 'iconsminds-home',
         label: 'menu.institute_list',
         to: `${adminRoot}/institutes/institutes`,
       },
       {
-        icon: 'simple-icon-calculator',
-        label: 'menu.survey',
-        to: `${adminRoot}/applications/survey`,
-      },
-      {
-        icon: 'simple-icon-bubbles',
-        label: 'menu.chat',
-        to: `${adminRoot}/applications/chat`,
+        icon: 'simple-icon-plus',
+        label: 'menu.institute_register',
+        to: `${adminRoot}/institutes/register`,
       },
     ],
   },
@@ -255,132 +249,22 @@ const data = [
     id: 'dorms',
     icon: 'iconsminds-hotel',
     label: 'menu.dorms',
-    to: `${adminRoot}/ui`,
+    to: `${adminRoot}/dorms`,
     subs: [
       {
-        id: 'ui-forms',
-        label: 'menu.forms',
-        to: `${adminRoot}/ui/forms`,
-        subs: [
-          {
-            icon: 'simple-icon-notebook',
-            label: 'menu.layouts',
-            to: `${adminRoot}/ui/forms/layouts`,
-          },
-          {
-            icon: 'simple-icon-puzzle',
-            label: 'menu.components',
-            to: `${adminRoot}/ui/forms/components`,
-          },
-          {
-            icon: 'simple-icon-check',
-            label: 'menu.validations',
-            to: `${adminRoot}/ui/forms/validations`,
-          },
-          {
-            icon: 'simple-icon-magic-wand',
-            label: 'menu.wizard',
-            to: `${adminRoot}/ui/forms/wizard`,
-          },
-        ],
+        icon: 'simple-icon-check',
+        label: 'dorm.list',
+        to: `${adminRoot}/dorms/dorms`,
       },
       {
-        id: 'ui-components',
-        label: 'menu.components',
-        to: `${adminRoot}/ui/components`,
-        subs: [
-          {
-            icon: 'simple-icon-bell',
-            label: 'menu.alerts',
-            to: `${adminRoot}/ui/components/alerts`,
-          },
-          {
-            icon: 'simple-icon-badge',
-            label: 'menu.badges',
-            to: `${adminRoot}/ui/components/badges`,
-          },
-          {
-            icon: 'simple-icon-control-play',
-            label: 'menu.buttons',
-            to: `${adminRoot}/ui/components/buttons`,
-          },
-          {
-            icon: 'simple-icon-layers',
-            label: 'menu.cards',
-            to: `${adminRoot}/ui/components/cards`,
-          },
-          {
-            icon: 'simple-icon-picture',
-            label: 'menu.carousel',
-            to: `${adminRoot}/ui/components/carousel`,
-          },
-          {
-            icon: 'simple-icon-chart',
-            label: 'menu.charts',
-            to: `${adminRoot}/ui/components/charts`,
-          },
-          {
-            icon: 'simple-icon-arrow-up',
-            label: 'menu.collapse',
-            to: `${adminRoot}/ui/components/collapse`,
-          },
-          {
-            icon: 'simple-icon-arrow-down',
-            label: 'menu.dropdowns',
-            to: `${adminRoot}/ui/components/dropdowns`,
-          },
-          {
-            icon: 'simple-icon-book-open',
-            label: 'menu.editors',
-            to: `${adminRoot}/ui/components/editors`,
-          },
-
-          {
-            icon: 'simple-icon-star',
-            label: 'menu.icons',
-            to: `${adminRoot}/ui/components/icons`,
-          },
-          {
-            icon: 'simple-icon-note',
-            label: 'menu.input-groups',
-            to: `${adminRoot}/ui/components/input-groups`,
-          },
-          {
-            icon: 'simple-icon-screen-desktop',
-            label: 'menu.jumbotron',
-            to: `${adminRoot}/ui/components/jumbotron`,
-          },
-          {
-            icon: 'simple-icon-map',
-            label: 'menu.maps',
-            to: `${adminRoot}/ui/components/maps`,
-          },
-          {
-            icon: 'simple-icon-docs',
-            label: 'menu.modal',
-            to: `${adminRoot}/ui/components/modal`,
-          },
-          {
-            icon: 'simple-icon-cursor',
-            label: 'menu.navigation',
-            to: `${adminRoot}/ui/components/navigation`,
-          },
-          {
-            icon: 'simple-icon-pin',
-            label: 'menu.popover-tooltip',
-            to: `${adminRoot}/ui/components/popover-tooltip`,
-          },
-          {
-            icon: 'simple-icon-shuffle',
-            label: 'menu.sortable',
-            to: `${adminRoot}/ui/components/sortable`,
-          },
-          {
-            icon: 'simple-icon-grid',
-            label: 'menu.tables',
-            to: `${adminRoot}/ui/components/tables`,
-          },
-        ],
+        icon: 'simple-icon-calculator',
+        label: 'dorm.register',
+        to: `${adminRoot}/dorms/register`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.student-register-in-dorm',
+        to: `${adminRoot}/dorms/student-register`,
       },
     ],
   },
@@ -388,34 +272,85 @@ const data = [
     id: 'subjects',
     icon: 'simple-icon-book-open',
     label: 'menu.subjects',
-    to: `${adminRoot}/menu`,
+    to: `${adminRoot}/subjects`,
+    subs: [
+      {
+        icon: 'simple-icon-plus',
+        label: 'subject.register',
+        to: `${adminRoot}/subjects/register`,
+      },
+    ],
+  },
+  {
+    id: 'classess',
+    icon: 'iconsminds-home-4',
+    label: 'menu.classes',
+    to: `${adminRoot}/classes`,
     subs: [
       {
         icon: 'simple-icon-logout',
-        label: 'menu.types',
-        to: `${adminRoot}/menu/types`,
+        label: 'class.list',
+        to: `${adminRoot}/classes/classes`,
       },
       {
-        icon: 'simple-icon-layers',
-        label: 'menu.levels',
-        to: `${adminRoot}/menu/levels`,
-        subs: [
-          {
-            icon: 'simple-icon-arrow-right',
-            label: 'menu.third-level-1',
-            to: `${adminRoot}/menu/levels/third-level-1`,
-          },
-          {
-            icon: 'simple-icon-arrow-right',
-            label: 'menu.third-level-2',
-            to: `${adminRoot}/menu/levels/third-level-2`,
-          },
-          {
-            icon: 'simple-icon-arrow-right',
-            label: 'menu.third-level-3',
-            to: `${adminRoot}/menu/levels/third-level-3`,
-          },
-        ],
+        icon: 'simple-icon-logout',
+        label: 'class.register',
+        to: `${adminRoot}/classes/register`,
+      },
+    ],
+  },
+
+  {
+    id: 'fields',
+    icon: 'simple-icon-layers',
+    label: 'menu.field',
+    to: `${adminRoot}/fields`,
+    subs: [
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.field-register',
+        to: `${adminRoot}/fields/register`,
+      },
+      {
+        icon: 'simple-icon-logout',
+        label: 'class.fields',
+        to: `${adminRoot}/fields/fields`,
+      },
+    ],
+  },
+  {
+    id: 'evaluations',
+    icon: 'simple-icon-book-open',
+    label: 'menu.evaluation',
+    to: `${adminRoot}/evaluations`,
+    subs: [
+      {
+        icon: 'simple-icon-logout',
+        label: 'evaluation.list',
+        to: `${adminRoot}/evaluations/evaluations`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.teacher-promotion-demotion',
+        to: `${adminRoot}/evaluations/promotion-demotion`,
+      },
+    ],
+  },
+  {
+    id: 'hr-evaluations',
+    icon: 'simple-icon-book-open',
+    label: 'menu.hr-evaluation',
+    to: `${adminRoot}/hr-evaluations`,
+    subs: [
+      {
+        icon: 'simple-icon-logout',
+        label: 'evaluation.list',
+        to: `${adminRoot}/hr-evaluations/hr-evaluations`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.teacher-HR-evaluation',
+        to: `${adminRoot}/hr-evaluations/teacher-hr-evaluation`,
       },
     ],
   },

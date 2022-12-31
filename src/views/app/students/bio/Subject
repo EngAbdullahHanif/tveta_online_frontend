@@ -1,0 +1,892 @@
+// import React, {useState} from 'react';
+// import { Formik, Form, Field } from 'formik';
+
+// import * as Yup from 'yup';
+// import {
+//   Row,
+//   Card,
+//   CardBody,
+//   FormGroup,
+//   Label,
+//   Button,
+//   CardTitle,
+// } from 'reactstrap';
+// import IntlMessages from 'helpers/IntlMessages';
+// import { Colxx } from 'components/common/CustomBootstrap';
+// import {
+//   FormikReactSelect,
+//   FormikTagsInput,
+//   FormikDatePicker,
+// } from '../../../../containers/form-validations/FormikFields';
+
+// const SignupSchema = Yup.object().shape({
+
+// SubjectName: Yup.string()
+//     //  .min(3, <IntlMessages id="forms.StdId" />)
+//     .required(<IntlMessages id="forms.SubjectNameErr" />),
+
+//     //  SubjectCredit: Yup.number()
+//     // .required(<IntlMessages id="forms.SubjectCreditErr" />),
+
+//     // SubjectType : Yup.number()
+//     // .required(<IntlMessages id="forms.SubjectTypeErr" />),
+//   // The yup validation of the selection should be studied
+
+// });
+
+// const SubjectCreditOptions =  [
+//   { value: '1', label: "1"  },
+//   { value: '2', label:  "2"},
+//   { value: '3', label: "3"},
+//   { value: '4', label: "4"},
+// ];
+
+// const SubjectTypeOptions =  [
+//   { value: '1', label:  <IntlMessages id = "forms.TypeOption_1"/> },
+//   { value: '2', label: <IntlMessages id = "forms.TypeOption_2"/>},
+
+// ];
+
+// const StudentAttendance = () => {
+//   const onSubmit = (values, { setSubmitting }) => {
+//     const payload = {
+//       ...values,
+//       state: values.state.value,
+//     };
+//     setTimeout(() => {
+//       console.log(JSON.stringify(payload, null, 2));
+//       setSubmitting(false);
+//     }, 1000);
+//   };
+
+//   return (
+//     <>
+
+//       <Card>
+//         <h3 className="mt-5 m-5">{ <IntlMessages id="forms.SubjectTitle" />}</h3>
+//                     <CardBody>
+//        <Formik
+//             initialValues={{
+//               SubjectCredit: { value: '', label: <IntlMessages id="forms.TazkiraTypeDefaultValue" /> },
+//                SubjectType: { value: '', label: <IntlMessages id="forms.TazkiraTypeDefaultValue" /> },
+
+//                   }}
+//                   validationSchema={SignupSchema}
+//                   onSubmit={onSubmit}
+//                 >
+//                   {({
+//                     handleSubmit,
+//                     setFieldValue,
+//                     setFieldTouched,
+//                     handleChange,
+//                     handleBlur,
+//                     values,
+//                     errors,
+//                     touched,
+//                     isSubmitting,
+//                   }) => (
+//               <Form className="av-tooltip tooltip-label-bottom">
+
+//              <Row className='justify-content-center'>
+//                   <Colxx xxs="10">
+
+//                     {/* Student Id */}
+//                     <FormGroup className="form-group has-float-label">
+//                       <Label>
+//                         <IntlMessages id="forms.SubjectNameLabel" />
+//                       </Label>
+//                       <Field className="form-control" name="SubjectName" />
+//                       {errors.SubjectName && touched.SubjectName ? (
+//                         <div className="invalid-feedback d-block">
+//                           {errors.SubjectName}
+//                         </div>
+//                       ) : null}
+//                     </FormGroup>
+
+//                     {/*Credit */}
+//                          <FormGroup className="form-group has-float-label">
+//                       <Label>
+//                         <IntlMessages id="forms.SubjectCreditLabel" />
+//                       </Label>
+//                       <FormikReactSelect
+//                         name="SubjectCredit"
+//                         id="SubjectCredit"
+//                         value={values.SubjectCredit}
+//                         options={SubjectCreditOptions}
+//                         onChange={setFieldValue}
+//                         onBlur={setFieldTouched}
+//                           />
+//                       {errors.SubjectCredit && touched.SubjectCredit ? (
+//                         <div className="invalid-feedback d-block">
+//                           {errors.SubjectCredit}
+//                         </div>
+//                       ) : null}
+//                     </FormGroup>
+
+//                     {/*Type */}
+//                                <FormGroup className="form-group has-float-label">
+//                       <Label>
+//                         <IntlMessages id="forms.SubjectTypeLabel" />
+//                       </Label>
+//                       <FormikReactSelect
+//                         name="SubjectType"
+//                         id="SubjectType"
+//                         value={values.SubjectType}
+//                         options={SubjectTypeOptions}
+//                         onChange={setFieldValue}
+//                         onBlur={setFieldTouched}
+//                           />
+//                       {errors.SubjectType && touched.SubjectType ? (
+//                         <div className="invalid-feedback d-block">
+//                           {errors.SubjectType}
+//                         </div>
+//                       ) : null}
+//                     </FormGroup>
+
+//                     <Button className="float-right m-3 ">{<IntlMessages id="forms.SubimssionButton"/> }
+//                     </Button>
+
+//                   </Colxx>
+//                 </Row>
+
+//           </Form>
+//                   )}
+//                 </Formik>
+
+//        </CardBody>
+//                     </Card>
+//       </>
+//   );
+// };
+
+// export default StudentAttendance;
+
+<Row>
+  <Colxx xxs="6">
+    {/* Name */}
+    <FormGroup className="form-group has-float-label">
+      <Label>
+        <IntlMessages id="forms.StdName" />
+      </Label>
+      <Field className="form-control" name="StdName" />
+      {errors.StdName && touched.StdName ? (
+        <div className="invalid-feedback d-block">{errors.StdName}</div>
+      ) : null}
+    </FormGroup>
+
+    {/*Father Name  */}
+    <FormGroup className="form-group has-float-label">
+      <Label>
+        <IntlMessages id="forms.StdFatherName" />
+      </Label>
+      <Field className="form-control" name="StdFatherName" />
+      {errors.StdFatherName && touched.StdFatherName ? (
+        <div className="invalid-feedback d-block">{errors.StdFatherName}</div>
+      ) : null}
+    </FormGroup>
+
+    {/* Institutes */}
+    <FormGroup className="form-group has-float-label">
+      <Label>
+        <IntlMessages id="forms.InstituteLabel" />
+      </Label>
+      <FormikReactSelect
+        name="Institute"
+        id="Institute"
+        value={values.Institute}
+        options={InstituteOptions}
+        onChange={setFieldValue}
+        onBlur={setFieldTouched}
+      />
+      {errors.Institute && touched.Institute ? (
+        <div className="invalid-feedback d-block">{errors.Institute}</div>
+      ) : null}
+    </FormGroup>
+
+    {/* Study time */}
+    <FormGroup className="form-group has-float-label">
+      <Label>
+        <IntlMessages id="forms.StudyTimeLabel" />
+      </Label>
+      <FormikReactSelect
+        name="StudyTime"
+        id="StudyTime"
+        value={values.StudyTime}
+        options={StudyTimeOptions}
+        onChange={setFieldValue}
+        onBlur={setFieldTouched}
+      />
+      {errors.StudyTime && touched.StudyTime ? (
+        <div className="invalid-feedback d-block">{errors.StudyTime}</div>
+      ) : null}
+    </FormGroup>
+  </Colxx>
+
+  <Colxx xxs="6">
+    {/* Exam Id */}
+    <FormGroup className="form-group has-float-label">
+      <Label>
+        <IntlMessages id="forms.StdKankorIdLabel" />
+      </Label>
+      <Field className="form-control" name="StdKankorId" />
+      {errors.StdKankorId && touched.StdKankorId ? (
+        <div className="invalid-feedback d-block">{errors.StdKankorId}</div>
+      ) : null}
+    </FormGroup>
+
+    {/* Kankor Marks */}
+    <FormGroup className="form-group has-float-label">
+      <Label>
+        <IntlMessages id="forms.KankorMarksLabel" />
+      </Label>
+      <Field className="form-control" name="KankorMarks" type="number" />
+      {errors.KankorMarks && touched.KankorMarks ? (
+        <div className="invalid-feedback d-block">{errors.KankorMarks}</div>
+      ) : null}
+    </FormGroup>
+
+    {/* Field */}
+    <FormGroup className="form-group has-float-label">
+      <Label>
+        <IntlMessages id="forms.FieldLabel" />
+      </Label>
+      <FormikReactSelect
+        name="Field"
+        id="Field"
+        value={values.Field}
+        options={FieldOptions}
+        onChange={setFieldValue}
+        onBlur={setFieldTouched}
+      />
+      {errors.Field && touched.Field ? (
+        <div className="invalid-feedback d-block">{errors.Field}</div>
+      ) : null}
+    </FormGroup>
+
+    <Button onClick={() => handleClick(false)} className="float-right m-2 mt-5">
+      ثبت
+    </Button>
+  </Colxx>
+</Row>;
+
+<Formik>
+  {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
+    <Form className="av-tooltip tooltip-label-bottom">
+      {/* Institutes */}
+      <FormGroup className="form-group has-float-label">
+        <Label>
+          <IntlMessages id="forms.InstituteLabel" />
+        </Label>
+        <FormikReactSelect
+          name="Institute"
+          id="Institute"
+          value={values.Institute}
+          options={institutes}
+          onChange={setFieldValue}
+          onBlur={setFieldTouched}
+        />
+        {errors.Institute && touched.Institute ? (
+          <div className="invalid-feedback d-block">{errors.Institute}</div>
+        ) : null}
+      </FormGroup>
+
+      <div className="d-flex justify-content-between align-items-center">
+        <Button
+          color="primary"
+          className={`btn-shadow btn-multiple-state`}
+          size="lg"
+          type="submit"
+        >
+          <span className="spinner d-inline-block">
+            <span className="bounce1" />
+            <span className="bounce2" />
+            <span className="bounce3" />
+          </span>
+          <span className="label">
+            <IntlMessages id="forms.SubimssionButton" />
+          </span>
+        </Button>
+      </div>
+    </Form>
+  )}
+</Formik>;
+
+// starts here
+
+<Formik
+  initialValues={{
+    state: {
+      value: '',
+      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
+    },
+    EducationLevel: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    StudentType: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    StudyType: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    StdInteranceType: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    StdSchoolProvince: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    Province: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+    C_Province: {
+      value: '',
+      label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
+    },
+  }}
+  validationSchema={RegisterSchema}
+  onSubmit={onRegister}
+>
+  {({
+    handleSubmit,
+    setFieldValue,
+    setFieldTouched,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    touched,
+    isSubmitting,
+  }) => (
+    <Form className="av-tooltip tooltip-label-bottom">
+      {!isNext ? (
+        <Row className="mb-4">
+          <Colxx xxs="6">
+            {/* Name */}
+            <FormGroup className="form-group has-float-label">
+              <Label>
+                <IntlMessages id="forms.StdName" />
+              </Label>
+              <Field className="form-control" name="StdName" />
+              {errors.StdName && touched.StdName ? (
+                <div className="invalid-feedback d-block">{errors.StdName}</div>
+              ) : null}
+            </FormGroup>
+
+            {/* Father Name */}
+            <FormGroup className="form-group has-float-label">
+              <Label>
+                <IntlMessages id="forms.StdFatherName" />
+              </Label>
+              <Field className="form-control" name="StdFatherName" />
+              {errors.StdFatherName && touched.StdFatherName ? (
+                <div className="invalid-feedback d-block">
+                  {errors.StdFatherName}
+                </div>
+              ) : null}
+            </FormGroup>
+
+            {/* Father Duty */}
+            <FormGroup className="form-group has-float-label">
+              <Label>
+                <IntlMessages id="forms.StdFatherDutyLabel" />
+              </Label>
+              <Field className="form-control" name="StdFatherDuty" />
+              {errors.StdFatherDuty && touched.StdFatherDuty ? (
+                <div className="invalid-feedback d-block">
+                  {errors.StdFatherDuty}
+                </div>
+              ) : null}
+            </FormGroup>
+
+            {/* DOB */}
+            <FormGroup className="form-group has-float-label">
+              <Label className="d-block">
+                <IntlMessages id="forms.StdDoBLabel" />
+              </Label>
+              <FormikDatePicker
+                name="StdDoB"
+                value={values.StdDoB}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+              />
+              {errors.StdDoB && touched.StdDoB ? (
+                <div className="invalid-feedback d-block">{errors.StdDoB}</div>
+              ) : null}
+            </FormGroup>
+
+            {/*Tazkira Type  */}
+            <FormGroup className="form-group has-float-label">
+              <Label>
+                <IntlMessages id="forms.TazkiraType" />
+              </Label>
+              <FormikReactSelect
+                name="state"
+                id="state"
+                value={values.state}
+                options={options}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+              />
+
+              {errors.state && touched.state ? (
+                <div className="invalid-feedback d-block">{errors.state}</div>
+              ) : null}
+            </FormGroup>
+
+            {values.state.value === 'paper' ? (
+              <div>
+                {/* Safha */}
+                <div>
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="forms.StdIdCardPageNoLabel" />
+                    </Label>
+                    <Field className="form-control" name="StdIdCardPageNo" />
+                    {errors.StdIdCardPageNo && touched.StdIdCardPageNo ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.StdIdCardPageNo}
+                      </div>
+                    ) : null}
+                  </FormGroup>
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
+
+            <div className="square border border-dark p-3 ">
+              <h6 className=" mb-4">
+                {' '}
+                {<IntlMessages id="forms.CurrentAddresslabel" />}
+              </h6>
+
+              {/* Current Address */}
+              {/* province Current */}
+              <FormGroup className="form-group has-float-label">
+                <Label>
+                  <IntlMessages id="forms.ProvinceLabel" />
+                </Label>
+                <FormikReactSelect
+                  name="C_Province"
+                  id="C_Province"
+                  value={values.C_Province}
+                  options={StdSchoolProvinceOptions}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                {errors.C_Province && touched.C_Province ? (
+                  <div className="invalid-feedback d-block">
+                    {errors.C_Province}
+                  </div>
+                ) : null}
+              </FormGroup>
+
+              {/* District */}
+              <FormGroup className="form-group has-float-label">
+                <Label>
+                  <IntlMessages id="forms.DistrictLabel" />
+                </Label>
+                <Field className="form-control" name="C_District" />
+                {errors.C_District && touched.C_District ? (
+                  <div className="invalid-feedback d-block">
+                    {errors.C_District}
+                  </div>
+                ) : null}
+              </FormGroup>
+
+              {/* village */}
+              <FormGroup className="form-group has-float-label">
+                <Label>
+                  <IntlMessages id="forms.VillageLabel" />
+                </Label>
+                <Field className="form-control" name="C_Village" />
+                {errors.C_Village && touched.C_Village ? (
+                  <div className="invalid-feedback d-block">
+                    {errors.C_Village}
+                  </div>
+                ) : null}
+              </FormGroup>
+            </div>
+          </Colxx>
+
+          <Colxx xxs="6">
+            <div>
+              {/* Student English Name */}
+              <FormGroup className="form-group has-float-label">
+                <Label>
+                  <IntlMessages id="forms.Eng_name" />
+                </Label>
+                <Field className="form-control" name="StdEngName" />
+                {errors.StdEngName && touched.StdEngName ? (
+                  <div className="invalid-feedback d-block">
+                    {errors.StdEngName}
+                  </div>
+                ) : null}
+              </FormGroup>
+
+              {/*Students Father English Name */}
+              <FormGroup className="form-group has-float-label">
+                <Label>
+                  <IntlMessages id="forms.Std_father_Eng_Name" />
+                </Label>
+                <Field className="form-control" name="StdFatherEngName" />
+                {errors.StdFatherEngName && touched.StdFatherEngName ? (
+                  <div className="invalid-feedback d-block">
+                    {errors.StdFatherEngName}
+                  </div>
+                ) : null}
+              </FormGroup>
+
+              {/* Father duty place */}
+              <FormGroup className="form-group has-float-label">
+                <Label>
+                  <IntlMessages id="forms.StdFatherDutyLocationLabel" />
+                </Label>
+                <Field className="form-control" name="StdFatherDutyLocation" />
+                {errors.StdFatherDutyLocation &&
+                touched.StdFatherDutyLocation ? (
+                  <div className="invalid-feedback d-block">
+                    {errors.StdFatherDutyLocation}
+                  </div>
+                ) : null}
+              </FormGroup>
+
+              <FormGroup className="form-group has-float-label">
+                <Label>
+                  <IntlMessages id="forms.PlaceOfBirthLabel" />
+                </Label>
+                <Field className="form-control" name="StdPlaceOfBirth" />
+                {errors.StdPlaceOfBirth ? (
+                  <div className="invalid-feedback d-block">
+                    {errors.StdPlaceOfBirth}
+                  </div>
+                ) : null}
+              </FormGroup>
+
+              {values.state.value === 'paper' ? (
+                <div>
+                  {/* // Tazkira number */}
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="forms.StdTazkiraNoLabel" />
+                    </Label>
+                    <Field className="form-control" name="StdTazkiraNo" />
+                    {errors.StdTazkiraNo && touched.StdTazkiraNo ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.StdTazkiraNo}
+                      </div>
+                    ) : null}
+                  </FormGroup>
+
+                  {/* Jold */}
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="forms.StdIdCardCoverLabel" />
+                    </Label>
+                    <Field className="form-control" name="StdIdCardCover" />
+                    {errors.StdIdCardCover && touched.StdIdCardCover ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.StdIdCardCover}
+                      </div>
+                    ) : null}
+                  </FormGroup>
+
+                  {/* Sakuk Number */}
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="forms.StdIdCardSakukNoLabel" />
+                    </Label>
+                    <Field className="form-control" name="StdIdCardSakukNo" />
+                    {errors.StdIdCardSakukNo && touched.StdIdCardSakukNo ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.StdIdCardSakukNo}
+                      </div>
+                    ) : null}
+                  </FormGroup>
+                </div>
+              ) : (
+                <div>
+                  {/* // Tazkira number */}
+                  <FormGroup className="form-group has-float-label">
+                    <Label>
+                      <IntlMessages id="forms.StdTazkiraNoLabel" />
+                    </Label>
+                    <Field className="form-control" name="StdTazkiraNo" />
+                    {errors.StdTazkiraNo && touched.StdTazkiraNo ? (
+                      <div className="invalid-feedback d-block">
+                        {errors.StdTazkiraNo}
+                      </div>
+                    ) : null}
+                  </FormGroup>
+                </div>
+              )}
+
+              <div className="square border border-dark p-3">
+                <h6 className=" mb-4">
+                  {<IntlMessages id="forms.PermanentAddressLabel" />}
+                </h6>
+
+                {/* province permanent*/}
+                <FormGroup className="form-group has-float-label">
+                  <Label>
+                    <IntlMessages id="forms.ProvinceLabel" />
+                  </Label>
+                  <FormikReactSelect
+                    name="Province"
+                    id="Province"
+                    value={values.Province}
+                    options={StdSchoolProvinceOptions}
+                    onChange={setFieldValue}
+                    onBlur={setFieldTouched}
+                  />
+                  {errors.Province && touched.Province ? (
+                    <div className="invalid-feedback d-block">
+                      {errors.Province}
+                    </div>
+                  ) : null}
+                </FormGroup>
+
+                {/* District  permanent*/}
+                <FormGroup className="form-group has-float-label">
+                  <Label>
+                    <IntlMessages id="forms.DistrictLabel" />
+                  </Label>
+                  <Field className="form-control" name="District" />
+                  {errors.District && touched.District ? (
+                    <div className="invalid-feedback d-block">
+                      {errors.District}
+                    </div>
+                  ) : null}
+                </FormGroup>
+
+                {/* village permanent */}
+                <FormGroup className="form-group has-float-label">
+                  <Label>
+                    <IntlMessages id="forms.VillageLabel" />
+                  </Label>
+                  <Field className="form-control" name="Village" />
+                  {errors.Village && touched.Village ? (
+                    <div className="invalid-feedback d-block">
+                      {errors.Village}
+                    </div>
+                  ) : null}
+                </FormGroup>
+              </div>
+            </div>
+            <Button
+              onClick={() => handleClick(true)}
+              className="float-right mt-5 "
+            >
+              مخته / بعدی
+            </Button>
+          </Colxx>
+        </Row>
+      ) : (
+        <Row>
+          <Colxx xxs="6">
+            {/* درجه تحصیل*/}
+            <FormGroup className="form-group has-float-label">
+              <Label>
+                <IntlMessages id="forms.EducationLevelLabel" />
+              </Label>
+              <FormikReactSelect
+                name="EducationLevel"
+                id="EducationLevel"
+                value={values.EducationLevel}
+                options={EducationLevelOptions}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+              />
+
+              {errors.EducationLevel && touched.EducationLevel ? (
+                <div className="invalid-feedback d-block">
+                  {errors.EducationLevel}
+                </div>
+              ) : null}
+            </FormGroup>
+
+            {/* Student Maktab*/}
+            <FormGroup className="form-group has-float-label">
+              <Label>
+                <IntlMessages id="forms.StPreShcoolLabel" />
+              </Label>
+              <Field className="form-control" name="StPreShcool" />
+              {errors.StPreShcool && touched.StPreShcool ? (
+                <div className="invalid-feedback d-block">
+                  {errors.StPreShcool}
+                </div>
+              ) : null}
+            </FormGroup>
+
+            {/* Study type */}
+            {/* <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="forms.StudyTypeLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="StudyType"
+                          id="StudyType"
+                          value={values.StudyType}
+                          options={StudyTypeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+
+                        {errors.StudyType && touched.StudyType ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.StudyType}
+                          </div>
+                        ) : null}
+                      </FormGroup> */}
+
+            {/* internse type*/}
+            <FormGroup className="form-group has-float-label">
+              <Label>
+                <IntlMessages id="forms.StdInteranceTypeLabel" />
+              </Label>
+              <FormikReactSelect
+                name="StdInteranceType"
+                id="StdInteranceType"
+                value={values.StdInteranceType}
+                options={StdInteranceOptions}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+              />
+
+              {errors.StdInteranceType && touched.StdInteranceType ? (
+                <div className="invalid-feedback d-block">
+                  {errors.StdInteranceType}
+                </div>
+              ) : null}
+            </FormGroup>
+
+            {/* Documents Upload  */}
+            {/*
+                      <FormGroup className="form-group has-float-label">
+                      <Label className="d-block">
+                        <IntlMessages id="form-components.date" />
+                      </Label>
+                      <FormikDatePicker
+                        name="date"
+                        value={values.date}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                      />
+                      {errors.date && touched.date ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.date}
+                        </div>
+                      ) : null}
+                        </FormGroup> */}
+
+            <Button onClick={() => handleClick(false)} className="m-2">
+              شاته/ عقب
+            </Button>
+          </Colxx>
+          <Colxx xxs="6">
+            {/* سال فراغت */}
+            <FormGroup className="form-group has-float-label">
+              <Label className="d-block">
+                <IntlMessages id="forms.StdGraduationYearLabel" />
+              </Label>
+              <FormikDatePicker
+                name="date"
+                id="date"
+                value={values.date}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+              />
+              {errors.StdGraduationYear && touched.StdGraduationYear ? (
+                <div className="invalid-feedback d-block">
+                  {errors.StdGraduationYear}
+                </div>
+              ) : null}
+            </FormGroup>
+
+            {/*School province*/}
+            <FormGroup className="form-group has-float-label">
+              <Label>
+                <IntlMessages id="forms.StdSchoolProvinceLabel" />
+              </Label>
+              <FormikReactSelect
+                name="StdSchoolProvince"
+                id="StdSchoolProvince"
+                value={values.StdSchoolProvince}
+                options={StdSchoolProvinceOptions}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+              />
+              {errors.StdSchoolProvince && touched.StdSchoolProvince ? (
+                <div className="invalid-feedback d-block">
+                  {errors.StdSchoolProvince}
+                </div>
+              ) : null}
+            </FormGroup>
+
+            {/*Student Type*/}
+            <FormGroup className="form-group has-float-label">
+              <Label>
+                <IntlMessages id="forms.StudentTypeLabel" />
+              </Label>
+              <FormikReactSelect
+                name="StudentType"
+                id="StudentType"
+                value={values.StudentType}
+                options={StudentTypeOptions}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+              />
+              {errors.StudentType && touched.StudentType ? (
+                <div className="invalid-feedback d-block">
+                  {errors.StudentType}
+                </div>
+              ) : null}
+            </FormGroup>
+
+            {/* Student photo* Is Remainin*/}
+            {/* 
+                      <FormGroup className="form-group has-float-label">
+                      <Label className="d-block">
+                        <IntlMessages id="form-components.date" />
+                      </Label>
+                      <FormikDatePicker
+                        name="date"
+                        value={values.date}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                      />
+                      {errors.date && touched.date ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.date}
+                        </div>
+                      ) : null}
+                        </FormGroup> */}
+
+            <Button
+              className="float-right m-2 mt-5"
+              type="submit"
+              // onSubmit={handleSubmit}
+              // onClick={}
+            >
+              {<IntlMessages id="forms.SubimssionButton" />}
+            </Button>
+          </Colxx>
+        </Row>
+      )}
+    </Form>
+  )}
+</Formik>;
+
+myoject = {};
+exams = STUDENT_MARKS.objects.filter((studetn_id = 1));
+for (exam in exams) {
+  marks = exam.exam_marks_id.all();
+  myobject[exam.exam_id] = marks;
+}
+exam = STUDENT_MARKS.objects.get((id = 1));
+marks = exam.exam_marks_id.all();

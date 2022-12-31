@@ -1,5 +1,10 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
+
+import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
+
 import {
   Row,
   Button,
@@ -10,38 +15,60 @@ import {
   DropdownToggle,
   CustomInput,
   Collapse,
+  Label,
+  FormGroup,
+  Input,
+  Card,
+  CardBody,
+  CardTitle,
 } from 'reactstrap';
+
 import { injectIntl } from 'react-intl';
+import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
-import Breadcrumb from '../navs/Breadcrumb';
+import { province } from 'lang/locales/fa_IR';
+// import Breadcrumb from '../navs/Breadcrumb';
 
 const ListPageHeading = ({
   intl,
   displayMode,
   changeDisplayMode,
   handleChangeSelectAll,
-  changeOrderBy,
   changePageSize,
   selectedPageSize,
   totalItemCount,
-  selectedOrderOption,
   match,
   startIndex,
   endIndex,
   selectedItemsLength,
   itemsLength,
-  onSearchKey,
-  orderOptions,
   pageSizes,
-  toggleModal,
+  // toggleModal,
   heading,
+  onIdSearchKey,
+  changeGenderBy,
+  selectedGenderOption,
+  genderOptions,
+  selectedProvinceOption,
+  provinces,
+  changeProvinceBy,
+  onDistrictSearchKey,
+  onProvinceSearchKey,
+  onResetClick,
+  reset,
+  institutes,
+  onInstituteSelect,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
+
+  const [selectedInstitute, setSelectedInstitute] = useState('');
+  console.log('selectedInstitute', selectedInstitute);
+  onInstituteSelect(selectedInstitute);
   const { messages } = intl;
 
   return (
@@ -51,16 +78,15 @@ const ListPageHeading = ({
           <h1>
             <IntlMessages id={heading} />
           </h1>
-
           <div className="text-zero top-right-button-container">
-            <Button
+            {/* <Button
               color="primary"
               size="lg"
               className="top-right-button"
               onClick={() => toggleModal()}
             >
               <IntlMessages id="pages.add-new" />
-            </Button>
+            </Button> */}
             {'  '}
             <ButtonDropdown
               isOpen={dropdownSplitOpen}
@@ -100,7 +126,7 @@ const ListPageHeading = ({
               </DropdownMenu>
             </ButtonDropdown>
           </div>
-          <Breadcrumb match={match} />
+          {/* <Breadcrumb match={match} /> */}
         </div>
 
         <div className="mb-2">
@@ -148,17 +174,41 @@ const ListPageHeading = ({
             </span>
 
             <div className="d-block d-md-inline-block pt-1">
-              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
+              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                 <DropdownToggle caret color="outline-dark" size="xs">
-                  <IntlMessages id="pages.orderby" />
-                  {selectedOrderOption.label}
+                  <IntlMessages id="filter" />
+                  {selectedGenderOption.label}
                 </DropdownToggle>
                 <DropdownMenu>
-                  {orderOptions.map((order, index) => {
+                  {genderOptions.map((order, index) => {
                     return (
                       <DropdownItem
                         key={index}
-                        onClick={() => changeOrderBy(order.column)}
+                        onClick={() => changeGenderBy(order.column)}
+                      >
+                        {order.label}
+                      </DropdownItem>
+                    );
+                  })}
+                </DropdownMenu>
+              </UncontrolledDropdown>
+              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                <DropdownToggle caret color="outline-dark" size="xs">
+                  <IntlMessages id="filter" />
+                  {selectedProvinceOption.label}
+                </DropdownToggle>
+                <DropdownMenu
+                  style={{
+                    height: '200px',
+                    overflowY: 'scroll',
+                    overflowX: 'hidden',
+                  }}
+                >
+                  {provinces.map((order, index) => {
+                    return (
+                      <DropdownItem
+                        key={index}
+                        onClick={() => changeProvinceBy(order.column)}
                       >
                         {order.label}
                       </DropdownItem>
@@ -169,16 +219,50 @@ const ListPageHeading = ({
               <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                 <input
                   type="text"
-                  name="keyword"
-                  id="search"
-                  placeholder={messages['menu.search']}
-                  onKeyPress={(e) => onSearchKey(e)}
+                  name="district"
+                  id="district"
+                  placeholder={messages['search.district']}
+                  onKeyPress={(e) => onDistrictSearchKey(e)}
                 />
               </div>
+              <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                <input
+                  type="text"
+                  name="keyword"
+                  id="search"
+                  placeholder={messages['search.id']}
+                  onKeyPress={(e) => onIdSearchKey(e)}
+                />
+              </div>
+
+              <Row>
+                <Colxx xs="12" sm="12" className="mb-4">
+                  <ReactAutoSugegst
+                    data={institutes}
+                    // onSelect={(e) => setSelectedInstitute(e)}
+                  />
+                </Colxx>
+              </Row>
+
+              <Button
+                color="outline-dark"
+                size="xs"
+                className="float-md-left mb-1"
+                onClick={() => {
+                  changeGenderBy('all');
+                  changeProvinceBy('all');
+                  document.getElementById('district').value = '';
+                  document.getElementById('search').value = '';
+                  onResetClick(!reset);
+                }}
+              >
+                <IntlMessages id="pages.reset" />
+              </Button>
             </div>
+
             <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>
-              <UncontrolledDropdown className="d-inline-block">
+              <UncontrolledDropdown className="d-inline-block ">
                 <DropdownToggle caret color="outline-dark" size="xs">
                   {selectedPageSize}
                 </DropdownToggle>

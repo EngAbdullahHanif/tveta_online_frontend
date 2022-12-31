@@ -22,8 +22,30 @@ const Teachers = React.lazy(() =>
   import(/* webpackChunkName: "teachers" */ './teachers')
 );
 
-const Institues = React.lazy(() =>
+const Institutes = React.lazy(() =>
   import(/* webpackChunkName: "institues" */ './institutes')
+);
+
+const Subjects = React.lazy(() =>
+  import(/* webpackChunkName: "subjects" */ './subjects')
+);
+
+const Classes = React.lazy(() =>
+  import(/* webpackChunkName: "classes" */ './classes')
+);
+
+const Fields = React.lazy(() =>
+  import(/* webpackChunkName: "fields" */ './fields')
+);
+const Evaluations = React.lazy(() =>
+  import(/* webpackChunkName: "evaluation" */ './evaluations')
+);
+const HREvaluations = React.lazy(() =>
+  import(/* webpackChunkName: "hr-evaluation" */ './hr-evaluation')
+);
+
+const Dorms = React.lazy(() =>
+  import(/* webpackChunkName: "dorms" */ './dorms')
 );
 
 const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
@@ -73,15 +95,40 @@ const App = ({ match }) => {
               render={(props) => <Students {...props} />}
             />
             <Route
+              path={`${match.url}/dorms`}
+              render={(props) => <Dorms {...props} />}
+            />
+            <Route
               path={`${match.url}/teachers`}
               render={(props) => <Teachers {...props} />}
             />
 
             <Route
-              path={`${match.url}/institues`}
-              render={(props) => <Institues {...props} />}
+              path={`${match.url}/institutes`}
+              render={(props) => <Institutes {...props} />}
+            />
+            <Route
+              path={`${match.url}/subjects`}
+              render={(props) => <Subjects {...props} />}
             />
 
+            <Route
+              path={`${match.url}/classes`}
+              render={(props) => <Classes {...props} />}
+            />
+
+            <Route
+              path={`${match.url}/fields`}
+              render={(props) => <Fields {...props} />}
+            />
+            <Route
+              path={`${match.url}/evaluations`}
+              render={(props) => <Evaluations {...props} />}
+            />
+            <Route
+              path={`${match.url}/hr-evaluations`}
+              render={(props) => <HREvaluations {...props} />}
+            />
             <Route
               path={`${match.url}/blank-page`}
               render={(props) => <BlankPage {...props} />}

@@ -8,12 +8,11 @@ import {
   ModalFooter,
 } from 'reactstrap';
 
-import Pagination from './Pagination';
-import ContextMenuContainer from './ContextMenuContainer';
-import DataListView from './DataListView';
-import ImageListView from './ImageListView';
-import ThumbListView from './ThumbListView';
-
+import Pagination from '../../../../../containers/pages/Pagination';
+import ContextMenuContainer from '../../../../../containers/pages/ContextMenuContainer';
+import DataListView from '../../../../../containers/pages/DataListView';
+import ImageListView from '../../../../../containers/pages/ImageListView';
+import TeacherListBody from './TeacherListBody';
 
 function collect(props) {
   return { data: props.data };
@@ -30,19 +29,23 @@ const ListPageListing = ({
   onContextMenu,
   onChangePage,
 }) => {
-
   const [modalBasic, setModalBasic] = useState(true);
 
   return (
     <>
       <Row>
-        {items.map((product) => {
+        {items.length === 0 ? (
+          <div className="no-result">
+            <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
+          </div>
+        ) : null}
+        {items.map((teacher) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
-                key={product.id}
-                product={product}
-                isSelect={selectedItems.includes(product.id)}
+                key={teacher.id}
+                teacher={teacher}
+                isSelect={selectedItems.includes(teacher.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -50,10 +53,10 @@ const ListPageListing = ({
           }
           if (displayMode === 'thumblist') {
             return (
-              <ThumbListView
-                key={product.id}
-                product={product}
-                isSelect={selectedItems.includes(product.id)}
+              <TeacherListBody
+                key={teacher.id}
+                teacher={teacher}
+                isSelect={selectedItems.includes(teacher.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -61,9 +64,9 @@ const ListPageListing = ({
           }
           return (
             <DataListView
-              key={product.id}
-              product={product}
-              isSelect={selectedItems.includes(product.id)}
+              key={teacher.id}
+              teacher={teacher}
+              isSelect={selectedItems.includes(teacher.id)}
               onCheckItem={onCheckItem}
               collect={collect}
             />
@@ -80,7 +83,7 @@ const ListPageListing = ({
         />
       </Row>
       {/* مودال اطلاعه به کاربر */}
-      <Modal
+      {/* <Modal
         isOpen={modalBasic}
         toggle={() => setModalBasic(!modalBasic)}
       >
@@ -104,7 +107,7 @@ const ListPageListing = ({
             اکی فهمیدم!
           </Button>{' '}
         </ModalFooter>
-      </Modal>
+      </Modal> */}
     </>
   );
 };

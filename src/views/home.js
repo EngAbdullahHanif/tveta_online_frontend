@@ -8,6 +8,11 @@ import Headroom from 'react-headroom';
 import GlideComponent from 'components/carousel/GlideComponent';
 import { buyUrl, adminRoot } from 'constants/defaultValues';
 import logo from '../assets/img/logo2.png';
+import CarPhoto from '../assets/img/blog/car.png';
+import CarPhoto1 from '../assets/img/blog/car1.png';
+import CarPhoto2 from '../assets/img/blog/car2.png';
+import { Row } from 'reactstrap';
+import { Colxx } from 'components/common/CustomBootstrap';
 
 const slideSettings = {
   type: 'carousel',
@@ -453,11 +458,7 @@ const Home = () => {
               <div className="row home-row" ref={refRowHome}>
                 <div className="col-12 d-block d-md-none">
                   <NavLink to="/">
-                    <img
-                      alt="mobile hero"
-                      className="mobile-hero"
-                      src="/assets/img/landing-page/home-hero-mobile.png"
-                    />
+                    <img className="mobile-hero" src={CarPhoto} />
                   </NavLink>
                 </div>
 
@@ -465,18 +466,19 @@ const Home = () => {
                   <div className="home-text">
                     <div className="display-1 text-bold">
                       {' '}
-                      جادوی کارِ ما رو <br />
-                      توی جزئیاتش ببین
+                      موتر ساخته شده در مرکز نو آوری اداره تعلیمات تخنیکی و
+                      مسلکی افغانستان
                     </div>
                     <p className="white mb-5">
-                      قالب گوگو یه ترکیبی از نهایت خلاقیت یه گرافیست، کدزنی و
-                      خود زنی یه برنامه نویس و نهایت تلاش یک ux کار هست
+                      دکورنیو چارو وزارت عالي رتبه مسولینو له 2022 ماډل موټر
+                      لیدنه وکړه!
                       <br />
                       <br />
-                      درسته که قالب اجزا و صفحات زیادی داره ولی سعی کردیم از
-                      زبانها و تنولوژی هایی استفاده کنیم که یکسان باشند <br />
+                      د تخنيکي او مسلکي زده کړو ادارې سرپرست مولوي غلام حيدر
+                      شهامت سره مل دکورنیو چارو وزارت ددفتر عمومي رئیس مولوي زين
+                      الله عابد او دمقام یاور مولوی صاحب ثاقب له نوي جوړ شوي
+                      موټر ليدنه وکړه.
                       <br />
-                      دموی قالب رو ببین حتما ازش خوشت میاد 😊
                     </p>
                     {/* eslint-disable-next-line react/jsx-no-target-blank */}
                     <a
@@ -491,10 +493,7 @@ const Home = () => {
                 <div className="col-12 col-xl-7 offset-xl-1 col-lg-7 col-md-6  d-none d-md-block">
                   {/* eslint-disable-next-line react/jsx-no-target-blank */}
                   <a href={adminRoot} target="_blank">
-                    <img
-                      alt="hero"
-                      src="/assets/img/landing-page/home-hero.png"
-                    />
+                    <img alt="hero" src={CarPhoto} />
                   </a>
                 </div>
               </div>
@@ -540,18 +539,15 @@ const Home = () => {
             <div className="container" id="features">
               <div className="row">
                 <div className="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
-                  <h1>ویژگی ها تو یه نظر</h1>
+                  <h1>جلسه اصلاحی برگزار شد</h1>
                   <p>
-                    ما قبل از اینکه این قالب رو بنویسیم، به این فکر کردیم که
-                    خودمون بعنوان برنامه نویس، چه نیازها و انتظاراتی از یه قالب
-                    مدیرت میتونیم داشته باشیم؟!
+                    ما قبل از اینکه این قالب رو بنویسیم، به این فکر کردیم کجلسه
+                    هفته‌وار اصلاحی اداره تعلیمات تخنیکی و مسلکی با سخنرانی
+                    مولوی سید احمد، امام جماعت و اشتراک کارمندان این اداره
+                    برگزار شد.
                     <br />
-                    بعد همه ی اون مواردی که تهیه کردیم رو بعنوان الویت های اصلی
-                    در گوگو قرار دادیم
-                    <br />
-                    ما دوست داشتیم قالبی که استفاده میکنیم پیچیده نباشه، سرعت
-                    عمل خوبی داشته باشه و اجزای اضافی نداشته باشه که حجم قالب
-                    زیاد بشه!
+                    مولوی سیداحمد در سخنرانی خود درباره امانت‌داری و وفا به‌عهد
+                    صحبت کرد و کارمندان را به رعایت امانت توصیه نمود.
                   </p>
                 </div>
               </div>
@@ -571,7 +567,7 @@ const Home = () => {
                       <div className="col-12 col-md-6 col-lg-6 offset-lg-1 offset-md-0 position-relative">
                         <img
                           alt={feature.title}
-                          src={feature.img}
+                          src={CarPhoto1}
                           className="feature-image-right feature-image-charts position-relative"
                         />
                       </div>
@@ -694,7 +690,7 @@ const Home = () => {
                         <NavLink to={app.path}>
                           <img
                             alt={app.title}
-                            src={app.img}
+                            src={CarPhoto2}
                             className="app-image"
                           />
                         </NavLink>
@@ -760,7 +756,7 @@ const Home = () => {
                     تا محصولات با کیفیت عالی براتون تهیه کنیم
                   </p>
                 </div>
-                <div className="col-12 offset-0 col-lg-6 offset-lg-3 newsletter-input-container">
+                {/* <div className="col-12 offset-0 col-lg-6 offset-lg-3 newsletter-input-container">
                   <div className="text-center mb-3">
                     <a
                       className="btn btn-secondary btn-xl"
@@ -771,7 +767,7 @@ const Home = () => {
                       خرید قالب
                     </a>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -803,7 +799,24 @@ const Home = () => {
               <div className="row">
                 <div className="col-12" />
                 <div className="col-12 text-center">
-                  <p className="mb-0">2021 © فاطمه کاظمی زاده</p>
+                  <Row>
+                    <Colxx xxs="12" sm="3">
+                      <p className="mb-0 text-muted">
+                        د تخنیکی او مسلکی زده کړو اداره
+                      </p>
+                    </Colxx>
+                    <Colxx>
+                      <p className=" mb-0 text-muted ">
+                        اداره تعلیمات تخنیکی و مسلکی
+                      </p>
+                    </Colxx>
+                    <Colxx className="col-sm-6 d-none d-sm-block">
+                      <p className="mb-0 text-muted">
+                        Technical and Vocational Education and Training
+                        Authority
+                      </p>
+                    </Colxx>
+                  </Row>
                 </div>
               </div>
             </div>

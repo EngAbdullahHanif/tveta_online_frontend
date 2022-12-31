@@ -13,7 +13,7 @@ export const subHiddenBreakpoint = 1440;
 export const menuHiddenBreakpoint = 768;
 export const defaultLocale = 'fa';
 export const localeOptions = [
-  { id: 'fa', name: 'فارسی', direction: 'rtl' },
+  { id: 'fa', name: 'پشتو/ دری', direction: 'rtl' },
   { id: 'en', name: 'English', direction: 'ltr' }
   // ,
   // { id: 'es', name: 'Español', direction: 'ltr' },
@@ -31,7 +31,7 @@ export const firebaseConfig = {
 
 export const currentUser = {
   id: 1,
-  title: 'فاطمه کاظمی زاده',
+  title: 'سمیع الله رحیمی',
   img: '/assets/img/profiles/l-1.jpg',
   date: 'آخرین بازدید امروز 15:24',
   role: UserRole.Admin,

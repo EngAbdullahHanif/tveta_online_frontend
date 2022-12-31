@@ -182,27 +182,32 @@ const MarksRegistration = ({ match }) => {
 
   const handleClick = (event) => {
     setIsNext(event);
-
-    const fetchStudents = async () => {
-      const response = await axios.get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute}&classs=${selectedClass}&study_time=${selecedStudyTime}&department=${selectedDepartment}&educational_year=${selectedEducationalYear}`,
-        data
-      );
-      const updatedData = await response.data.map((item) => ({
-        name: item.name,
-        studentId: item.student_id,
-        registrationNumber: item.registration_number,
-      }));
-      setStudents(updatedData);
-      setIsLoaded(true);
-    };
-    useEffect(() => {
-      fetchStudents();
-    });
+    axios
+      .get(
+        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+      )
+      .then((response) => {
+        console.log('response.data', response.data);
+        setStudents(response.data);
+      });
+    console.log('students', students);
   };
 
   const onSubmit = (values) => {
     console.log('values', values);
+    students.map((student) => {
+      const data = {
+        student: student.student_id,
+        subject: selectedSubject.value,
+        classs: selectedClass.value,
+        institute: selectedInstitute.value,
+        department: selectedDepartment.value,
+        study_time: selecedStudyTime.value,
+        educational_year: selectedEducationalYear,
+        mark: values.score[student.student_id],
+      };
+      axios.post('http://localhost:8000/api/marks/', data);
+    });
   };
   return (
     <>
@@ -251,7 +256,7 @@ const MarksRegistration = ({ match }) => {
                           options={StudyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
-                          onClick={setSelectedStudyTime(values.StudyTime.value)}
+                          onClick={setSelectedStudyTime(values.StudyTime)}
                           required
                         />
                         {errors.StudyTime && touched.StudyTime ? (
@@ -269,9 +274,9 @@ const MarksRegistration = ({ match }) => {
                           className="form-control"
                           name="educationlaYear"
                           // assign value to selectedEducationalYear
-                          // onClick={setSelectedEducationalYear(
-                          //   values.educationlaYear
-                          // )}
+                          onClick={setSelectedEducationalYear(
+                            values.educationlaYear
+                          )}
                           required
                         />
                         {errors.educationlaYear && touched.educationlaYear ? (
@@ -294,7 +299,7 @@ const MarksRegistration = ({ match }) => {
                           options={classes}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
-                          // onClick={setSelectedClass(values.classs.value)}
+                          onClick={setSelectedClass(values.classs)}
                           required
                         />
                         {errors.Classs && touched.Classs ? (
@@ -315,9 +320,7 @@ const MarksRegistration = ({ match }) => {
                           options={departments}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
-                          // onClick={setSelectedDepartment(
-                          //   values.department.value
-                          // )}
+                          onClick={setSelectedDepartment(values.department)}
                           required
                         />
                         {errors.Field && touched.Field ? (
@@ -338,7 +341,7 @@ const MarksRegistration = ({ match }) => {
                           options={subjects}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
-                          // onClick={setSelectedSubject(values.subject.value)}
+                          onClick={setSelectedSubject(values.subject)}
                           required
                         />
                         {errors.subject && touched.subject ? (
@@ -367,42 +370,43 @@ const MarksRegistration = ({ match }) => {
                         <Label>
                           <IntlMessages id="forms.FieldLabel" />
                         </Label>
-                        <h6>{selectedDepartment}</h6>
+                        {console.log('selectedDepartment', selectedDepartment)}
+                        <h6>{selectedDepartment.label}</h6>
                       </Colxx>
 
                       <Colxx xxs="2">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
                         </Label>
-                        <h6>{selectedClass}</h6>
+                        <h6>{selectedClass.label}</h6>
                       </Colxx>
 
                       <Colxx xxs="2">
                         <Label>
                           <IntlMessages id="forms.StudyTimeLabel" />
                         </Label>
-                        <h6>{selecedStudyTime}</h6>
+                        <h6>{selecedStudyTime.label}</h6>
                       </Colxx>
 
                       <Colxx xxs="2">
                         <Label>
                           <IntlMessages id="marks.SemesterLabel" />
                         </Label>
-                        <h6>{selectedClass}</h6>
+                        <h6>{selectedClass.label}</h6>
                       </Colxx>
 
                       <Colxx xxs="2">
                         <Label>
                           <IntlMessages id="marks.SectionLabel" />
                         </Label>
-                        <h6>{selectedClass}</h6>
+                        <h6>{selectedClass.label}</h6>
                       </Colxx>
 
                       <Colxx xxs="2">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
                         </Label>
-                        <h6>{selectedSubject}</h6>
+                        <h6>{selectedSubject.label}</h6>
                       </Colxx>
                     </Row>
 
@@ -451,53 +455,29 @@ const MarksRegistration = ({ match }) => {
                             overflowX: 'hidden',
                           }}
                         >
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Samiullah</td>
-                            <td>the Bird</td>
-                            <td>123123</td>
+                          {students.map((student, index) => (
+                            <tr>
+                              <th scope="row">{index}</th>
+                              <td>{student.name}</td>
+                              <td>{student.father_name}</td>
+                              <td>{student.student_id}</td>
 
-                            <div class="form-group mx-sm-3 mb-2">
-                              {/* <label for="inputPassword2" class="sr-only">
-                                Password
-                              </label>
-                              <input
-                                type="number"
-                                class="form-control"
-                                id="inputPassword2"
-                                placeholder="marks"
-                              /> */}
-                              <FormGroup className="form-group">
-                                <Field
-                                  type="number"
-                                  className="form-control"
-                                  name="score"
-                                />
-                                {errors.score && touched.score ? (
-                                  <div className="invalid-feedback d-block">
-                                    {errors.score}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                            <div class="form-group mx-sm-3 mb-2">
-                              <label for="inputPassword2" class="sr-only">
-                                Password
-                              </label>
-                              <input
-                                type="number"
-                                class="form-control"
-                                id="inputPassword2"
-                                placeholder="marks"
-                              />
-                            </div>
-                          </tr>
+                              <div class="form-group mx-sm-3 mb-2">
+                                <FormGroup className="form-group">
+                                  <Field
+                                    type="number"
+                                    className="form-control"
+                                    name={`score[${student.student_id}]`}
+                                  />
+                                  {errors.score && touched.score ? (
+                                    <div className="invalid-feedback d-block">
+                                      {errors.score}
+                                    </div>
+                                  ) : null}
+                                </FormGroup>
+                              </div>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </Row>

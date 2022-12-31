@@ -6,6 +6,9 @@ const TeacherList = React.lazy(() =>
     /* webpackChunkName: "teacher-list" */ './bio/teacher-list/TeacherListMain'
   )
 );
+const TeacherEvaluation = React.lazy(() =>
+  import(/* webpackChunkName: "teacher-evaluation" */ './teacher-evaluation')
+);
 
 // This used to create a sub memu of the sidebar.
 const TeacherRegister = React.lazy(() =>
@@ -15,6 +18,10 @@ const TeacherRegister = React.lazy(() =>
 // This used to create a sub memu of the sidebar.
 const TeacherProfile = React.lazy(() =>
   import(/* webpackChunkName: "profile" */ './bio/teacher-profile')
+);
+
+const TeacherHrEvaluation = React.lazy(() =>
+  import(/* webpackChunkName: "hr-evaluation" */ '../hr-evaluation/teacher-hr-evaluation')
 );
 const Teachers = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -33,6 +40,14 @@ const Teachers = ({ match }) => (
       <Route
         path={`${match.url}/:teacherId`}
         render={(props) => <TeacherProfile {...props} />}
+      />
+      <Route
+        path={`${match.url}/teacher-evalaution`}
+        render={(props) => <TeacherEvaluation {...props} />}
+      />
+      <Route
+        path={`${match.url}/teacher-hr-evalaution`}
+        render={(props) => <TeacherHrEvaluation {...props} />}
       />
 
       <Redirect to="/error" />

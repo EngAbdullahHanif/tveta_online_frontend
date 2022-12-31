@@ -69,6 +69,7 @@ module.exports = {
   'menu.home': 'خانه',
   'menu.app': 'خانه',
   'menu.teacher': 'استاد',
+  'menu.teacher-evaluation': 'د استاد ارزیابی/ ارزیابی استاد',
   'menu.teacher_list': 'د استادانو لست/ لست استاد',
   'menu.default': 'پیش فرض',
   'menu.analytics': 'تجزیه و تحلیل',
@@ -168,6 +169,9 @@ module.exports = {
   'menu.teacher-profile': 'پروفایل استاد/ استاد فروفایل',
   'menu.student-profile': 'پروفایل شاگرد/ د شاگرد پروفایل',
   'marks.title': 'ثبت نمرات/ د نومرو ثبت',
+  'menu.student-register-in-dorm': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
+  'menu.teacher-HR-evaluation': 'د بشری منابع ارزونه/ ارزیابی منابع بشری',
+  'menu.teacher-promotion-demotion': 'مکافات / مجازات',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -664,6 +668,7 @@ module.exports = {
   'forms.StdSicknessErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
   'forms.StdNecessaryWorkLabel': 'اړین کار/ کار ضروری',
   'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
+  'forms.ConfirmButton': 'تایید/ تصدیق',
 
   // Field Registration
   'field.FieldRegisterTitle': 'ثبت رشته / درشتې ثبت',
@@ -735,7 +740,7 @@ module.exports = {
   'teacher.StepOption_6': 'شپږم قدم / قدم ششم',
   'teacher.StepLabel': 'پل/ قدم',
   'teacher.StepErr': 'پل اړین دی/ قدم ضروری است',
-  SubmitButton: 'ثبت',
+  'button.SubmitButton': 'ثبت',
 
   // institute
   'institute.studentgenderOption_1': 'نارینه/ذکور',
@@ -771,9 +776,93 @@ module.exports = {
   'marks.ID': 'آیدی',
   'marks.Marks': 'نمرې / نمرات',
 
-  // Subject
-  // Subject
+  // Dorm
+  'dorm.RegisterTitle': 'د لیلې ثبت/ ثبت لیلیه',
+  'dorm.NameLabel': 'د لیلې نوم/ نام لیلیه',
+  'dorm.NameErr': 'د لیلی نوم اړین دی/ نام لیلیه ضروری است',
+  'dorm.Gender': 'د لیلې جندر/ جندر لیلیه',
+  'dorm.GenderOptions_1': 'نارینه/ ذکور',
+  'dorm.GenderOptions_2': 'ښځینه/ اناث',
+  'dorm.GenderOptions_3': '‌دواړه/ مختلط',
+  'dorm.BuildingTypeLabel': ' د تعمیر ډول/ نوع تعمیر',
+  'dorm.BuildingTypeOptions_1': 'دولتی',
+  'dorm.BuildingTypeOptions_2': 'خصوصی',
+  'dorm.PublicBuildingOwnerLabel': 'د دولتی تعمیر مالکیت/مالکیت تعمیر دولتی',
+  'dorm.PublicBuildingOwnerLabelOption_1':
+    'د تخنیکی او مسکلی زده کړو اداره/ اداره تعلبمات تخنبکب و مسلکی',
+  'dorm.PublicBuildingOwnerLabelOption_2': 'بل ارګان/ ارگان دیگر',
+  'dorm.PrivateBuildingTypeLabel': 'د خصوصی تعمیر نوعیت/ نوعیت تعمیر شخصی',
+  'dorm.PrivateBuildingTypeOption_1': 'کرایی',
+  'dorm.PrivateBuildingTypeOption_2': 'کمکی',
+  'dorm.CapicityLabel': 'گنجایش/ ظرفیت',
+  'dorm.CapicityErr': 'د لیلی ظرفیت ارقام اړین دي/ ارقام لیلیه ضروری است',
+  'dorm.QuotaErr': 'د شاګردانو سهمیه اړین دی/ سهمیه شاگردان در لیلیه ضروری است',
+  'dorm.QuotaLabel': 'سهمیه',
+  'dorm.TotalBuildingNoLabel':
+    'په لیلیه کې د تعمیرونو شمیر/ تعداد تعمیر در لیلیه',
+  'dorm.TotalBuildingNoErr':
+    'په لیلیه کې د تعمیرونو شمیر اړین دی/ تعداد تعمیر در لیلیه ضروری است',
 
+  'dorm.TotalRoomsErr': 'د خونو لیکل اړین دی/ نوشتن اطاق ضروری است',
+  'dorm.TotalRoomsLabel': ' ټولې خونې / تعداد اطاق',
+  'dorm.TotalKitchensLabel': 'پخلنځي/ تعداد آشپز خانه',
+  'dorm.TotalKitchensErr': ' پخلنځي لیکل اړین دی / تعداد آشپزخانه ضروری است',
+  'dorm.ToiletLabel': 'د تشنابو شمیر/ تعداد تشناب',
+  'dorm.ToiletErr': 'د تشنابو شمیر اړین دی / تعداد تشناب ضروری است',
+
+  // Student Registration
+  'dorm.StudentRegisterTitle': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
+  'search.studentId': 'لټون/ جستجو',
+  'search.studentIdSearchLabel':
+    'د شاګرد  دننه کړئ / لطفا آیدی شاگرد را وراد نماید',
+  'dorm.SearchResult': 'د لټون پایله/ نتیجه جستجو...',
+  'forms.NoData': 'پورتنۍ آیډي شتون نه لري/ آیدی فوق در سیستم موجود نیست',
+  'forms.StudentResidentsPlace': 'د شاګرد استوګنځی/ محل بود و باش شاگرد',
+
+  // Teacher Evaluation
+  'teacher.EvalautionTitle': 'د استاد ارزونه/ ارزیابی استاد',
+  'teacher.IdLabel': 'د استاد آیډی/ آیدی استاد',
+  'teacher.InstituteIdLabel': ' د انستیتوت آیډی/ آیدی انستیتوت',
+  // 'teacher.InstituteIdErr': 'Institute Id Required!',
+  'teacher.departmentIdLabel': 'د ډیپارتمڼت آیډی/ آیدی دیپارتمنت',
+  // 'teacher.departmentIdErr': 'Department Id Required!',
+  'teacher.classIdLabel': 'دټولګي آیډی/ آیدی صنف',
+  // 'teacher.classIdErr': 'Class Id Required!',
+  'teacher.subjectIdLabel': ' د مضمون آیډی/ آیدی مضمون',
+  // 'teacher.subjectIdErr': 'د مضموت آیډی اړینه ده/  آیدی مضمون ضروری است',
+  'teacher.topicLabel': 'د ارزونې موضوع/ موضوع ارزیابی',
+  'teacher.topicErr': 'د ارزیابی موضوع اړین دی / موضوع ارزیابی ضروری است',
+  'teacher.evaluatorLabel': 'ارزونکي نوم/ نام ارزیابی کننده',
+  'teacher.evaluatorErr': 'د ارزونکي نوم اړین دی/ نام ارزیابی کننده ضروری است',
+  'teacher.evaluationTypeLabel': 'د ارزونې ډول / نوع ارزیابی',
+  'teacher.evaluationTypeOption_1': 'هدف محور',
+  'teacher.evaluationTypeOption_2': 'فعالیت محور',
+  'teacher.strengthPointsLabel': 'د قوت ټکي/ نقاط قوت',
+  'teacher.strengthPointsErr': 'د قوت ټکي اړین دي/ نقاط قوت ضروری است',
+  'teacher.weaknessPointsLabel': 'د ضعف ټکي/ نقاط ضعف',
+  'teacher.weaknessPointsErr': 'د ضعف ټکي اړین دی/ نقاط ضعف ضروروی است',
+  'teacher.marksLabel': 'نمرې/ نمرات',
+  'teacher.marksErr': 'نمرې اړین دي/ نمرات ضروری است',
+  'teacher.evaluationDateLabel': ' د ارزونې نیټه/ تاریخ ارزیابی',
+  'teacher.evaluationDateErr':
+    'د ارزونې نیټه اړینه ده / تاریخ ارزیابی ضروری است',
+  'teacher.suggestionLabel': 'پیشنهاد / نظریات',
+  // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
+
+  // Hr Evaluation
+  'teacher.EvalautionHrTitle':
+    'د استاد ارزونه د بشری منابع لخوا/ ارزیابی استاد توسط منابع بشری',
+  'teacher.curretGradeLabel': 'اوسنی بست/ بست فعلی',
+  'teacher.currentStepLabel': 'اوسنی پل / قدم فعلی',
+  'teacher.newGradeLabel': 'نوی بست/ بست جدید',
+  'teacher.newStepLabel': 'نوی پل/ قدم جدید',
+
+  // Promotion and demotion
+  'teacher.PromotionDemotionTitle': 'مکافات /مجازات',
+  'teacher.promotionLabel': 'مکافات',
+  'teacher.demotionLabel': 'مجازات',
+
+  // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
   // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',
   // 'forms.SubjectNameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است!',
@@ -955,9 +1044,6 @@ module.exports = {
   'class.list': 'د صنف لیست / لیست صنف',
   'menu.evaluation': 'ارزیابی',
   'evaluation.list': 'د ارزیابی لیست ',
-  'evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',
-  'evaluation.register': 'ارزیابی ثبت کول / ثبت ارزیابی',
-
   'menu.hr-evaluation': 'منابع بشری ارزیابی',
   'hr-evaluation.list': 'د ارزیابی لیست ',
   'hr-evaluation.register.title': 'د ارزیابی ثبت کول / ثبت ارزیابی',

@@ -64,6 +64,7 @@ module.exports = {
   'menu.app': 'Home',
   'menu.teacher': 'Teacher',
   'menu.Teacher': 'Teacher',
+  'menu.teacher-evaluation': 'Teacher Evaluation',
   'menu.teacher_list': 'Teacher List',
   'menu.default': 'Default',
   'menu.analytics': 'Analytics',
@@ -158,7 +159,10 @@ module.exports = {
   'menu.dorm-commision': 'Regisration hostel',
   'menu.teacher-profile': 'Teacher Profile',
   'marks.title': 'Marks Entry',
-  ' menu.student-profile': 'Student Profile',
+  'menu.student-profile': 'Student Profile',
+  'menu.student-register-in-dorm': 'Student Registration',
+  'menu.teacher-HR-evaluation': 'HR Evaluation',
+  'menu.teacher-promotion-demotion': 'Promotion/Demotion',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -651,6 +655,7 @@ module.exports = {
   'forms.StdSicknessLabel': 'Sickness',
   'forms.StdSicknessErr': 'this field is required!',
   'forms.StdNecessaryWorkLabel': 'Necessary Work',
+  'forms.ConfirmButton': 'Confirm',
 
   // Field Registration
   'field.FieldRegisterTitle': 'Field Registeration',
@@ -722,7 +727,7 @@ module.exports = {
   'teacher.StepOption_6': 'Sixth Step',
   'teacher.StepLabel': 'Step',
   'teacher.StepErr': 'Step Is Required!',
-  SubmitButton: 'Submit',
+  'button.SubmitButton': 'Submit',
 
   // Institute
   'inst.register.title': 'Institute/School Registration',
@@ -762,6 +767,86 @@ module.exports = {
   'marks.FatherName': 'FatherName',
   'marks.Marks': 'Marks',
 
+  // Dorm
+  'dorm.RegisterTitle': 'Dorm Registration',
+  'dorm.': 'Dorm Name',
+  'dorm.NameErr': 'Dorm Name Required!',
+  'dorm.Gender': ' Gender',
+  'dorm.GenderOptions_1': ' Male',
+  'dorm.GenderOptions_2': ' Female',
+  'dorm.GenderOptions_3': 'Both',
+  'dorm.BuildingTypeLabel': ' Building Type',
+  'dorm.BuildingTypeOptions_1': 'Public',
+  'dorm.BuildingTypeOptions_2': ' Private',
+  'dorm.PublicBuildingOwnerLabel': 'Public Building Owned By',
+  'dorm.PublicBuildingOwnerLabelOption_1': 'TVETA',
+  'dorm.PublicBuildingOwnerLabelOption_2': 'Other public Organization',
+  'dorm.PrivateBuildingTypeLabel': 'Private Building Type',
+  'dorm.PrivateBuildingTypeOption_1': 'ًRental',
+  'dorm.PrivateBuildingTypeOption_2': 'Assisted',
+  'dorm.CapicityLabel': 'Capicity',
+  'dorm.CapicityErr': 'Dorm Capicity is Required!',
+  'dorm.QuotaErr': 'Dorm  Quota is required!',
+  'dorm.QuotaLabel': 'Dorm  Quota',
+  'dorm.TotalBuildingNoLabel': 'Total Buiding',
+  'dorm.TotalBuildingNoErr': ' Total Buiding Required!',
+  'dorm.TotalRoomsErr': ' Total Number of Rooms Required!',
+  'dorm.TotalRoomsLabel': ' Total Number of Rooms',
+  'dorm.TotalKitchensLabel': ' Total Kitchens',
+  'dorm.TotalKitchensErr': ' Total Number of Kitchens Required!',
+  'dorm.ToiletLabel': ' Total Toilets',
+  'dorm.ToiletErr': ' Total Number of Toilets Required!',
+
+  // Students Registration in Dorm
+  'dorm.StudentRegisterTitle': 'Student Registration',
+  'search.studentId': 'Search',
+  'search.studentIdSearchLabel': 'Please Enter the student Id ',
+  'dorm.SearchResult': 'Search Result...',
+  'forms.NoData': 'The Above Entered Id is not Registered',
+  'forms.StudentResidentsPlace': 'Student Residance Place',
+
+  // Teacher Evaluation
+  'teacher.IdLabel': 'Teacher Id',
+  'teacher.EvalautionTitle': 'Teacher Evaluation',
+  'teacher.InstituteIdLabel': 'Institute Id',
+  // 'teacher.InstituteIdErr': 'Institute Id Required!',
+  'teacher.departmentIdLabel': 'Department Id',
+  // 'teacher.departmentIdErr': 'Department Id Required!',
+  'teacher.classIdLabel': 'Class  Id',
+  // 'teacher.classIdErr': 'Class Id Required!',
+  'teacher.subjectIdLabel': 'Subject Id',
+  // 'teacher.subjectIdErr': 'Subject Id is Required!',
+  'teacher.topicLabel': 'Topic',
+  'teacher.topicErr': 'Evaluation Topic  is Required!',
+  'teacher.evaluatorLabel': 'Evaluator',
+  'teacher.evaluatorErr': 'Evaluator Name Topic  is Required!',
+  'teacher.evaluationTypeOption_1': 'Goal Oriented',
+  'teacher.evaluationTypeOption_2': 'Activity Oriented',
+  'teacher.strengthPointsLabel': 'Strength Points',
+  'teacher.strengthPointsErr': 'Strength Points  Required!',
+  'teacher.weakNessPointsLabel': 'Weakness Points',
+  'teacher.weaknessPointsErr': 'Weakness Points  Required!',
+  'teacher.marksLabel': 'Marks',
+  'teacher.marksErr': 'Marks  Required!',
+  'teacher.evaluationDateLabel': 'Evaluation Date',
+  'teacher.evaluationDateErr': 'Evaluation Date is  Required!',
+  'teacher.suggestionLabel': 'Suggestions',
+  // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
+
+  // HR Evaluation
+  'teacher.EvalautionHrTitle': 'Teacher Hr Evaluation',
+  'teacher.curretGradeLabel': 'Current Grade',
+  'teacher.currentStepLabel': 'Current Step',
+  'teacher.newGradeLabel': 'New Grade',
+  'teacher.newStepLabel': 'New Step',
+
+  // Promotion and demotion
+  'teacher.PromotionDemotionTitle': 'Teacher Promotion/Demotion',
+  'teacher.promotionLabel': 'Teacher Promotion',
+  'teacher.demotionLabel': 'Demotion',
+
+
+  // Subject
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',
   //   'forms.SubjectNameLabel': 'Name',

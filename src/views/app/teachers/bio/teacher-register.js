@@ -733,7 +733,7 @@ const TeacherRegistration = () => {
                             <span className="bounce3" />
                           </span>
                           <span className="label">
-                            <IntlMessages id="SubmitButton" />
+                            <IntlMessages id="button.SubmitButton" />
                           </span>
                         </Button>
                       </div>

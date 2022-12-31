@@ -59,8 +59,6 @@ const SignupSchema = Yup.object().shape({
 });
 
 const TeacherEvaluation = () => {
-
-  
   const initialValues = {
     evaluationType: {
       value: '0',

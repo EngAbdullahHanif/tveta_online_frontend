@@ -821,6 +821,8 @@ module.exports = {
 
   // Teacher Evaluation
   'teacher.EvalautionTitle': 'د استاد ارزونه/ ارزیابی استاد',
+  'teacher.EvalautionTitle1':
+    'د استاد ارزیابي د ټویټا اداری لخوا/ ارزیابی توسط اداره تعلیمات تخنیکی و مسلکی',
   'teacher.IdLabel': 'د استاد آیډی/ آیدی استاد',
   'teacher.InstituteIdLabel': ' د انستیتوت آیډی/ آیدی انستیتوت',
   // 'teacher.InstituteIdErr': 'Institute Id Required!',
@@ -852,6 +854,7 @@ module.exports = {
   // Hr Evaluation
   'teacher.EvalautionHrTitle':
     'د استاد ارزونه د بشری منابع لخوا/ ارزیابی استاد توسط منابع بشری',
+  'teacher.EvalautionHrTitle1': 'د بشري منابعو ارزیابی/ ارزیابی منابع بشري',
   'teacher.curretGradeLabel': 'اوسنی بست/ بست فعلی',
   'teacher.currentStepLabel': 'اوسنی پل / قدم فعلی',
   'teacher.newGradeLabel': 'نوی بست/ بست جدید',

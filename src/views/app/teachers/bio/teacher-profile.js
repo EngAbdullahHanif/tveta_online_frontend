@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { useParams } from 'react-router-dom';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -28,11 +30,31 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import Classes from 'views/app/classes';
-
-console.log(logo);
+const servicePath = 'http://localhost:8000';
+const teacherApiUrl = `${servicePath}/teachers/`;
 
 const TeacherProfile = () => {
   const [isNext, setIsNext] = useState(true);
+  const { teacherId } = useParams();
+  const [teacher, setTeacher] = useState([]);
+  const [institute, setInstitute] = useState([]);
+
+  useEffect(() => {
+    async function fetchTeacher() {
+      const response = await axios.get(`${teacherApiUrl}?id=${teacherId}`);
+      const data = response.data;
+      setTeacher(data);
+
+      const instituteResponse = await axios.get(
+        `${teacherApiUrl}institute/?teacher_id=${teacherId}`
+      );
+      console.log(`${teacherApiUrl}institute/?teacher_id=${teacherId}`);
+      const instituteData = await instituteResponse.data;
+      setInstitute(instituteData);
+    }
+    fetchTeacher();
+  }, []);
+  console.log('teacher', teacher);
 
   const handleClick = (event) => {
     setIsNext(event);
@@ -115,178 +137,188 @@ const TeacherProfile = () => {
               </div>
             </Colxx>
           </Row>
-          {isNext ? (
-            <Row className="justify-content-center border border-primary rounded m-5 ">
-              <Colxx className=" p-5  border rounded">
-                <Label>
-                  <IntlMessages id="teacher.NameLabel" />
-                </Label>
-                <h3>احمد شبیر</h3>
-                <Label>
-                  <IntlMessages id="teacher.FatherNameLabel" />
-                </Label>
-                <h3>عبدالرحیم</h3>
-                <Label>
-                  <IntlMessages id="teacher.PhoneNoLabel" />
-                </Label>
-                <h3>077000000000</h3>
-                <Label>
-                  <IntlMessages id="teacher.EmailLabel" />
-                </Label>
-                <h3>ahamd12@gmail.com</h3>
-                <Label>
-                  <IntlMessages id="teacher.StatusLabel" />
-                </Label>
-                <h3>فعال</h3>
-              </Colxx>
-              <Colxx className="p-5 border rounded">
-                <Label>
-                  <IntlMessages id="forms.InstituteLabel" />
-                </Label>
-                <h3>نیما</h3>
-                <Label>
-                  <IntlMessages id="teacher.GradeLabel" />
-                </Label>
-                <h3>چهارم</h3>
-                <Label>
-                  <IntlMessages id="teacher.StepLabel" />
-                </Label>
-                <h3>چهارم</h3>
-              </Colxx>
-            </Row>
-          ) : (
-            <div className="p-2">
-              <FormGroup className="form-group has-float-label m-5">
-                <Label>مکافات / مجازات</Label>
-                <Row
-                  className="border border-primary  p-2"
-                  style={{ borderRadius: '5px', minHeight: '200px' }}
-                >
-                  <Colxx className="m-3 border">
-                    {' '}
-                    <h1 className="p-2">مکافات</h1>
-                    <div className="p-2" style={{ minHeight: '150px' }}>
-                      یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری که
-                      انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار نباشد
-                      روش ها و تکنیک های دیگر برای تبدیل شدن به استاد خوب موثر
-                      واقع نخواهد شد. استاد باید دروسی را تدریس کند که خودش به
-                      آن درس ها علاقه دارد و بر آن دروس مسلط است. اساتید عالی
-                      معمولا همواره در حال یادگیری هستند و تونایی های خودشان را
-                      به صورت مداوم افزایش می دهند. این اساتید در کلاس درس به
-                      دانشجو احترام می گذارند و سعی می کنند مطالب را از دید
-                      دانشجو ببینند و به ساده ترین زبان ممکن مطالب را توضیح می
-                      دهند. در کلاس های دانشگاه بسیار خوب است کلاس به صورت
-                      دوطرفه و تعاملی برگزار گردد. اساتید خوب که دانشجویان راضی
-                      و موفقی دارند اینطور نیست که در کلاس فقط خودشان حرف بزنند
-                      و متکلم وحده باشند. به هر میزان دانشجویان در کلاس مشارکت
-                      بیشتری داشته باشند در نهایت بازدهی کلاس بالاتر خواهد بود.
-                      اساتید خوب با پرسیدن سوالات مناسب حین تدریس سطح سواد
-                      دانشجویان را مورد ارزیابی قرار می دهند و متناسب با آن
-                      تدریس می کنند. این اساتید جو راحت و آزادی را در کلاس ایجاد
-                      می نمایند به گونه ای که دانشجویان در عین حال که به استاد و
-                      کلاس احترام می گذارند سوالات خودشان را هم راحت می پرسند و
-                      اظهار نظر می کنند. در ادامه با استناد به مقالات معتبر علمی
-                      در رابطه با ویژگی های استاد خوب توضیح داده می شود.
-                    </div>
+          {teacher.length > 0 && institute.length > 0 && (
+            <>
+              {isNext ? (
+                <Row className="justify-content-center border border-primary rounded m-5 ">
+                  <Colxx className=" p-5  border rounded">
+                    <Label>
+                      <IntlMessages id="teacher.NameLabel" />
+                    </Label>
+                    <h3>{teacher[0].name}</h3>
+                    <Label>
+                      <IntlMessages id="teacher.FatherNameLabel" />
+                    </Label>
+                    <h3>{teacher[0].father_name}</h3>
+                    <Label>
+                      <IntlMessages id="teacher.PhoneNoLabel" />
+                    </Label>
+                    <h3>{teacher[0].phone_number}</h3>
+                    <Label>
+                      <IntlMessages id="teacher.EmailLabel" />
+                    </Label>
+                    <h3>{teacher[0].email}</h3>
+                    <Label>
+                      <IntlMessages id="teacher.StatusLabel" />
+                    </Label>
+                    {teacher[0].status_type === '1' ? (
+                      <h3>فعال</h3>
+                    ) : (
+                      <h3>غیر فعال</h3>
+                    )}
                   </Colxx>
-
-                  <Colxx className="m-3 border">
-                    {' '}
-                    <h1 className="p-2">مجازات</h1>
-                    <div className="p-2" style={{ minHeight: '150px' }}>
-                      یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری که
-                      انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار نباشد
-                      روش ها و تکنیک های دیگر برای تبدیل شدن به استاد خوب موثر
-                      واقع نخواهد شد. استاد باید دروسی را تدریس کند که خودش به
-                      آن درس ها علاقه دارد و بر آن دروس مسلط است. اساتید عالی
-                      معمولا همواره در حال یادگیری هستند و تونایی های خودشان را
-                      به صورت مداوم افزایش می دهند. این اساتید در کلاس درس به
-                      دانشجو احترام می گذارند و سعی می کنند مطالب را از دید
-                      دانشجو ببینند و به ساده ترین زبان ممکن مطالب را توضیح می
-                      دهند.
-                    </div>
+                  <Colxx className="p-5 border rounded">
+                    <Label>
+                      <IntlMessages id="forms.InstituteLabel" />
+                    </Label>
+                    <h3>{institute[0].institute_id.name}</h3>
+                    <Label>
+                      <IntlMessages id="teacher.GradeLabel" />
+                    </Label>
+                    <h3>{teacher[0].grade}</h3>
+                    <Label>
+                      <IntlMessages id="teacher.StepLabel" />
+                    </Label>
+                    <h3>{teacher[0].step}</h3>
                   </Colxx>
                 </Row>
-              </FormGroup>
+              ) : (
+                <div className="p-2">
+                  <FormGroup className="form-group has-float-label m-5">
+                    <Label>مکافات / مجازات</Label>
+                    <Row
+                      className="border border-primary  p-2"
+                      style={{ borderRadius: '5px', minHeight: '200px' }}
+                    >
+                      <Colxx className="m-3 border">
+                        {' '}
+                        <h1 className="p-2">مکافات</h1>
+                        <div className="p-2" style={{ minHeight: '150px' }}>
+                          یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری
+                          که انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار
+                          نباشد روش ها و تکنیک های دیگر برای تبدیل شدن به استاد
+                          خوب موثر واقع نخواهد شد. استاد باید دروسی را تدریس کند
+                          که خودش به آن درس ها علاقه دارد و بر آن دروس مسلط است.
+                          اساتید عالی معمولا همواره در حال یادگیری هستند و
+                          تونایی های خودشان را به صورت مداوم افزایش می دهند. این
+                          اساتید در کلاس درس به دانشجو احترام می گذارند و سعی می
+                          کنند مطالب را از دید دانشجو ببینند و به ساده ترین زبان
+                          ممکن مطالب را توضیح می دهند. در کلاس های دانشگاه بسیار
+                          خوب است کلاس به صورت دوطرفه و تعاملی برگزار گردد.
+                          اساتید خوب که دانشجویان راضی و موفقی دارند اینطور نیست
+                          که در کلاس فقط خودشان حرف بزنند و متکلم وحده باشند. به
+                          هر میزان دانشجویان در کلاس مشارکت بیشتری داشته باشند
+                          در نهایت بازدهی کلاس بالاتر خواهد بود. اساتید خوب با
+                          پرسیدن سوالات مناسب حین تدریس سطح سواد دانشجویان را
+                          مورد ارزیابی قرار می دهند و متناسب با آن تدریس می
+                          کنند. این اساتید جو راحت و آزادی را در کلاس ایجاد می
+                          نمایند به گونه ای که دانشجویان در عین حال که به استاد
+                          و کلاس احترام می گذارند سوالات خودشان را هم راحت می
+                          پرسند و اظهار نظر می کنند. در ادامه با استناد به
+                          مقالات معتبر علمی در رابطه با ویژگی های استاد خوب
+                          توضیح داده می شود.
+                        </div>
+                      </Colxx>
 
-              <FormGroup className="form-group has-float-label  m-5">
-                <Label>ارزیابی استاد/د استاد ارزیابی</Label>
-                <Row
-                  className="border border-primary p-2"
-                  style={{ borderRadius: '5px', minHeight: '200px' }}
-                >
-                  <Colxx className="m-3">
-                    {' '}
-                    <h1 className="p-2">ارزیابی سالانه</h1>
-                    <div className="p-2" style={{ minHeight: '150px' }}>
-                      یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری که
-                      انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار نباشد
-                      روش ها و تکنیک های دیگر برای تبدیل شدن به استاد خوب موثر
-                      واقع نخواهد شد. استاد باید دروسی را تدریس کند که خودش به
-                      آن درس ها علاقه دارد و بر آن دروس مسلط است. اساتید عالی
-                      معمولا همواره در حال یادگیری هستند و تونایی های خودشان را
-                      به صورت مداوم افزایش می دهند. این اساتید در کلاس درس به
-                      دانشجو احترام می گذارند و سعی می کنند مطالب را از دید
-                      دانشجو ببینند و به ساده ترین زبان ممکن مطالب را توضیح می
-                      دهند.
-                    </div>
-                  </Colxx>
-                </Row>
-              </FormGroup>
+                      <Colxx className="m-3 border">
+                        {' '}
+                        <h1 className="p-2">مجازات</h1>
+                        <div className="p-2" style={{ minHeight: '150px' }}>
+                          یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری
+                          که انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار
+                          نباشد روش ها و تکنیک های دیگر برای تبدیل شدن به استاد
+                          خوب موثر واقع نخواهد شد. استاد باید دروسی را تدریس کند
+                          که خودش به آن درس ها علاقه دارد و بر آن دروس مسلط است.
+                          اساتید عالی معمولا همواره در حال یادگیری هستند و
+                          تونایی های خودشان را به صورت مداوم افزایش می دهند. این
+                          اساتید در کلاس درس به دانشجو احترام می گذارند و سعی می
+                          کنند مطالب را از دید دانشجو ببینند و به ساده ترین زبان
+                          ممکن مطالب را توضیح می دهند.
+                        </div>
+                      </Colxx>
+                    </Row>
+                  </FormGroup>
 
-              <FormGroup className="form-group has-float-label  m-5">
-                <Label>
-                  ارزیابی د تخنیکی او مسلکی زده کړو اداری لخوا/ ارزیابی توسط
-                  اداره تعلیمات تخنیکی و مسلکی
-                </Label>
-                <Row
-                  className="border border-primary p-2"
-                  style={{ borderRadius: '5px', minHeight: '200px' }}
-                >
-                  <Colxx className="m-3">
-                    {' '}
-                    <h1 className="p-2">ارزیابی</h1>
-                    <div className="p-2" style={{ minHeight: '150px' }}>
-                      یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری که
-                      انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار نباشد
-                      روش ها و تکنیک های دیگر برای تبدیل شدن به استاد خوب موثر
-                      واقع نخواهد شد. استاد باید دروسی را تدریس کند که خودش به
-                      آن درس ها علاقه دارد و بر آن دروس مسلط است. اساتید عالی
-                      معمولا همواره در حال یادگیری هستند و تونایی های خودشان را
-                      به صورت مداوم افزایش می دهند. این اساتید در کلاس درس به
-                      دانشجو احترام می گذارند و سعی می کنند مطالب را از دید
-                      دانشجو ببینند و به ساده ترین زبان ممکن مطالب را توضیح می
-                      دهند.
-                    </div>
-                  </Colxx>
-                </Row>
-              </FormGroup>
+                  <FormGroup className="form-group has-float-label  m-5">
+                    <Label>ارزیابی استاد/د استاد ارزیابی</Label>
+                    <Row
+                      className="border border-primary p-2"
+                      style={{ borderRadius: '5px', minHeight: '200px' }}
+                    >
+                      <Colxx className="m-3">
+                        {' '}
+                        <h1 className="p-2">ارزیابی سالانه</h1>
+                        <div className="p-2" style={{ minHeight: '150px' }}>
+                          یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری
+                          که انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار
+                          نباشد روش ها و تکنیک های دیگر برای تبدیل شدن به استاد
+                          خوب موثر واقع نخواهد شد. استاد باید دروسی را تدریس کند
+                          که خودش به آن درس ها علاقه دارد و بر آن دروس مسلط است.
+                          اساتید عالی معمولا همواره در حال یادگیری هستند و
+                          تونایی های خودشان را به صورت مداوم افزایش می دهند. این
+                          اساتید در کلاس درس به دانشجو احترام می گذارند و سعی می
+                          کنند مطالب را از دید دانشجو ببینند و به ساده ترین زبان
+                          ممکن مطالب را توضیح می دهند.
+                        </div>
+                      </Colxx>
+                    </Row>
+                  </FormGroup>
 
-              <FormGroup className="form-group has-float-label  m-5">
-                <Label>د تبدیلی سوابق / سوابق تبدیلی</Label>
-                <Row
-                  className="border border-primary p-2"
-                  style={{ borderRadius: '5px', minHeight: '200px' }}
-                >
-                  <Colxx className="m-3">
-                    {' '}
-                    <h1 className="p-2">تبدیلی</h1>
-                    <div className="p-2" style={{ minHeight: '150px' }}>
-                      یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری که
-                      انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار نباشد
-                      روش ها و تکنیک های دیگر برای تبدیل شدن به استاد خوب موثر
-                      واقع نخواهد شد. استاد باید دروسی را تدریس کند که خودش به
-                      آن درس ها علاقه دارد و بر آن دروس مسلط است. اساتید عالی
-                      معمولا همواره در حال یادگیری هستند و تونایی های خودشان را
-                      به صورت مداوم افزایش می دهند. این اساتید در کلاس درس به
-                      دانشجو احترام می گذارند و سعی می کنند مطالب را از دید
-                      دانشجو ببینند و به ساده ترین زبان ممکن مطالب را توضیح می
-                      دهند.
-                    </div>
-                  </Colxx>
-                </Row>
-              </FormGroup>
-            </div>
+                  <FormGroup className="form-group has-float-label  m-5">
+                    <Label>
+                      ارزیابی د تخنیکی او مسلکی زده کړو اداری لخوا/ ارزیابی توسط
+                      اداره تعلیمات تخنیکی و مسلکی
+                    </Label>
+                    <Row
+                      className="border border-primary p-2"
+                      style={{ borderRadius: '5px', minHeight: '200px' }}
+                    >
+                      <Colxx className="m-3">
+                        {' '}
+                        <h1 className="p-2">ارزیابی</h1>
+                        <div className="p-2" style={{ minHeight: '150px' }}>
+                          یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری
+                          که انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار
+                          نباشد روش ها و تکنیک های دیگر برای تبدیل شدن به استاد
+                          خوب موثر واقع نخواهد شد. استاد باید دروسی را تدریس کند
+                          که خودش به آن درس ها علاقه دارد و بر آن دروس مسلط است.
+                          اساتید عالی معمولا همواره در حال یادگیری هستند و
+                          تونایی های خودشان را به صورت مداوم افزایش می دهند. این
+                          اساتید در کلاس درس به دانشجو احترام می گذارند و سعی می
+                          کنند مطالب را از دید دانشجو ببینند و به ساده ترین زبان
+                          ممکن مطالب را توضیح می دهند.
+                        </div>
+                      </Colxx>
+                    </Row>
+                  </FormGroup>
+
+                  <FormGroup className="form-group has-float-label  m-5">
+                    <Label>د تبدیلی سوابق / سوابق تبدیلی</Label>
+                    <Row
+                      className="border border-primary p-2"
+                      style={{ borderRadius: '5px', minHeight: '200px' }}
+                    >
+                      <Colxx className="m-3">
+                        {' '}
+                        <h1 className="p-2">تبدیلی</h1>
+                        <div className="p-2" style={{ minHeight: '150px' }}>
+                          یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری
+                          که انجام می دهد علاقه داشته باشد. اگر علاقه ای در کار
+                          نباشد روش ها و تکنیک های دیگر برای تبدیل شدن به استاد
+                          خوب موثر واقع نخواهد شد. استاد باید دروسی را تدریس کند
+                          که خودش به آن درس ها علاقه دارد و بر آن دروس مسلط است.
+                          اساتید عالی معمولا همواره در حال یادگیری هستند و
+                          تونایی های خودشان را به صورت مداوم افزایش می دهند. این
+                          اساتید در کلاس درس به دانشجو احترام می گذارند و سعی می
+                          کنند مطالب را از دید دانشجو ببینند و به ساده ترین زبان
+                          ممکن مطالب را توضیح می دهند.
+                        </div>
+                      </Colxx>
+                    </Row>
+                  </FormGroup>
+                </div>
+              )}
+            </>
           )}
         </CardBody>
       </Card>

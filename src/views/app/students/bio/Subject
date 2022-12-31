@@ -881,3 +881,12 @@
     </Form>
   )}
 </Formik>;
+
+myoject = {};
+exams = STUDENT_MARKS.objects.filter((studetn_id = 1));
+for (exam in exams) {
+  marks = exam.exam_marks_id.all();
+  myobject[exam.exam_id] = marks;
+}
+exam = STUDENT_MARKS.objects.get((id = 1));
+marks = exam.exam_marks_id.all();

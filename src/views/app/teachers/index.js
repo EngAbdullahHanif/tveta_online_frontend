@@ -38,7 +38,7 @@ const Teachers = ({ match }) => (
         render={(props) => <TeacherRegister {...props} />}
       />
       <Route
-        path={`${match.url}/profile`}
+        path={`${match.url}/:teacherId`}
         render={(props) => <TeacherProfile {...props} />}
       />
       <Route

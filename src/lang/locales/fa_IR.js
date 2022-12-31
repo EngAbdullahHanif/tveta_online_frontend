@@ -677,6 +677,7 @@ module.exports = {
   'field.FieldEngNameLabel': 'انګریزی نوم/ نام انگلسی',
   'field.FieldEngNameErr': 'انګریزی نوم اړین دی/ نام انګلسی ضروری است',
   'field.SemesterLabel': 'سمستر',
+  'field.SectionLabel': 'سکشن/ بخش',
   'field.SemesterErr': 'سمستر اړین دی/ درج سمستر ضروری است',
   'field.SubjectsLabel': 'مضمونونه/ مضامین',
   'field.SubjectsErr': 'مضمونونه اړین دي/ درج مضامین ضروری است',
@@ -1023,6 +1024,7 @@ module.exports = {
   'wizard.async': 'Async save for 3 seconds!',
 
   'inst.name': 'انستیتوت نوم / نام انستیتوت',
+  institute: 'انستیتوت',
   'inst.register.title': 'د انستیتوت ثبت کول / ثبت انستیتوت',
   'inst.type': 'د انستیتوت ډول / نوعیت انستیتوت',
 
@@ -1058,4 +1060,6 @@ module.exports = {
 
   'dorm.list': 'د لیلی لیست',
   'dorm.register': 'د لیلی ثبت',
+
+  'forms.educationYear': 'تحصیلی کال / سال تحصیلی',
 };

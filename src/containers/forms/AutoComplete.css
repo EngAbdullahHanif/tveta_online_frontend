@@ -1,0 +1,21 @@
+.searchcontainer {
+  border-radius: 10px;
+  position: absolute;
+  width: 90%;
+  background-color: inherit;
+}
+
+.search {
+  line-height: 10px;
+  background-color: inherit;
+  color: inherit;
+  width: 100%;
+  outline: none;
+  border: solid gray 1px;
+  border-radius: 15px;
+  width: 140%;
+}
+
+#para :hover {
+  background-color: red;
+}

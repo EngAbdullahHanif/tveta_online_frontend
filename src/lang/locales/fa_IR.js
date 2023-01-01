@@ -864,6 +864,7 @@ module.exports = {
   'teacher.PromotionDemotionTitle': 'مکافات /مجازات',
   'teacher.promotionLabel': 'مکافات',
   'teacher.demotionLabel': 'مجازات',
+  'teacher.Transfer': 'داستاد تبدیلي/ تبدیلی استاد',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',

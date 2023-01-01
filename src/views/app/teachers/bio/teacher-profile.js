@@ -306,7 +306,7 @@ const TeacherProfile = () => {
                     <Card className="mb-4">
                       <CardBody>
                         <CardTitle>
-                          <IntlMessages id="teacher.EvalautionHrTitle1" />
+                          <IntlMessages id="teacher.Transfer" />
                         </CardTitle>
 
                         <Table striped>
@@ -327,26 +327,12 @@ const TeacherProfile = () => {
                               <th>
                                 <IntlMessages id="teacher.newGradeLabel" />
                               </th>
-                              <th>
-                                {' '}
-                                <IntlMessages id="teacher.newStepLabel" />
-                              </th>
-                              <th>
-                                {' '}
-                                <IntlMessages id="marks.Marks" />
-                              </th>
-                              <th>
-                                {' '}
-                                <IntlMessages id="teacher.evaluationDateLabel" />
-                              </th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <th scope="row">2</th>
-                              <td>ملکی</td>
-                              <td>@black_ml84</td>
-                              <td>حسن</td>
+
                               <td>شریفی</td>
                               <td>@hsn_shrf548</td>
                               <td>حسن</td>

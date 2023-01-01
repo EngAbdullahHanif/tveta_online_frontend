@@ -846,7 +846,7 @@ module.exports = {
   'teacher.PromotionDemotionTitle': 'Teacher Promotion/Demotion',
   'teacher.promotionLabel': 'Teacher Promotion',
   'teacher.demotionLabel': 'Demotion',
-
+  'teacher.Transfer': 'Teacher Transfer',
   // Subject
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',

@@ -172,6 +172,7 @@ module.exports = {
   'menu.student-register-in-dorm': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
   'menu.teacher-HR-evaluation': 'د بشری منابع ارزونه/ ارزیابی منابع بشری',
   'menu.teacher-promotion-demotion': 'مکافات / مجازات',
+  'menu.teacher-transfer': ' د استاد تبدیلی/ تبدیلی استاد',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',

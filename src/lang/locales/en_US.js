@@ -163,6 +163,7 @@ module.exports = {
   'menu.student-register-in-dorm': 'Student Registration',
   'menu.teacher-HR-evaluation': 'HR Evaluation',
   'menu.teacher-promotion-demotion': 'Promotion/Demotion',
+  'menu.teacher-transfer': 'Teacher Transfer',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -671,7 +672,6 @@ module.exports = {
   'field.FieldIdErr': 'Field Id Required!',
 
   // Teacher Registration section
-
   'teacher.RegisterTitle': 'Teacher Registration',
   'teacher.NameLabel': 'Name',
   'teacher.NameErr': 'Teacher Name Required!',
@@ -847,6 +847,14 @@ module.exports = {
   'teacher.promotionLabel': 'Teacher Promotion',
   'teacher.demotionLabel': 'Demotion',
   'teacher.Transfer': 'Teacher Transfer',
+
+
+  // Teacher Transfer
+  // treacher.TansferTitle
+
+
+
+
   // Subject
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',

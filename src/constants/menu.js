@@ -28,6 +28,11 @@ const data = [
         label: 'menu.teacher-evaluation',
         to: `${adminRoot}/teachers/teacher-evalaution`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.teacher-transfer',
+        to: `${adminRoot}/teachers/teacher-transfer`,
+      },
     ],
   },
   {

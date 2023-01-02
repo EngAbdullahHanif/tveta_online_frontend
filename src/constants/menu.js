@@ -248,6 +248,11 @@ const data = [
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.institute-upgrade',
+        to: `${adminRoot}/institutes/institute-upgrade`,
+      },
     ],
   },
   {

@@ -164,6 +164,7 @@ module.exports = {
   'menu.teacher-HR-evaluation': 'HR Evaluation',
   'menu.teacher-promotion-demotion': 'Promotion/Demotion',
   'menu.teacher-transfer': 'Teacher Transfer',
+  'menu.institute-upgrade': 'Institute/School Upgrade',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -846,14 +847,28 @@ module.exports = {
   'teacher.PromotionDemotionTitle': 'Teacher Promotion/Demotion',
   'teacher.promotionLabel': 'Teacher Promotion',
   'teacher.demotionLabel': 'Demotion',
-  'teacher.Transfer': 'Teacher Transfer',
-
 
   // Teacher Transfer
-  // treacher.TansferTitle
+  'teacher.Transfer': 'Teacher Transfer',
+  'treacher.TansferTitle': 'Teacher Transfer',
+  'search.teacherIdSearchLabel': 'Please Enter The Teacher Id',
+  'button.Teacher-transfer': 'Transfer',
+  'teacher.TransferNewInfoTittle': 'New Institute',
+  'teacher.transferDateLabel': 'Transfer Date',
+  'teacher.fileUploadBttn': 'Upload',
+  'teacher.transferDocuments': 'Transfer Documents',
 
-
-
+  // Institute Upgrade
+  'institute.UpgradeTitle': 'Institute/School Upgrade',
+  'search.instituteIdSearchLabel': 'Please Enter The Institute Id',
+  'button.institute-upgrade': 'Upgrade',
+  'forms.upgradingOptionsLabel': 'Upgrade',
+  'institute.upgradingOptions_1': 'Institute',
+  'institute.upgradingOptions_2': 'Special Educations',
+  'institute.upgradingOptions_3': 'Private Institute',
+  'institute.newNameLabel': 'New Name',
+  'institute.upgradeDateLabel': 'Upgrading Date',
+  'institute.upgradingDocuments': 'Upgrading Documents',
 
   // Subject
   // // Subject

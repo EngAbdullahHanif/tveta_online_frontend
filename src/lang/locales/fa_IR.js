@@ -173,6 +173,7 @@ module.exports = {
   'menu.teacher-HR-evaluation': 'د بشری منابع ارزونه/ ارزیابی منابع بشری',
   'menu.teacher-promotion-demotion': 'مکافات / مجازات',
   'menu.teacher-transfer': ' د استاد تبدیلی/ تبدیلی استاد',
+  'menu.institute-upgrade': 'د انستیتوت/ ښونخي/ مکتب ارتقا',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -865,7 +866,30 @@ module.exports = {
   'teacher.PromotionDemotionTitle': 'مکافات /مجازات',
   'teacher.promotionLabel': 'مکافات',
   'teacher.demotionLabel': 'مجازات',
+
+  // Teacher Transfer
   'teacher.Transfer': 'داستاد تبدیلي/ تبدیلی استاد',
+  'treacher.TansferTitle': 'تبدیلی',
+  'search.teacherIdSearchLabel':
+    'د استاد آیډی ولیکئ/ لطفا آیدی استاد را وارد نماید',
+  'button.Teacher-transfer': 'تبدیل',
+  'teacher.TransferNewInfoTittle': 'نوی انستیتوت/ انستیتوت جدید',
+  'teacher.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
+  'teacher.fileUploadBttn': 'آپلود',
+  'teacher.transferDocuments': 'د تبدیلی اسناد/ اسناد تبدیلي',
+
+  // Institute Upgrade
+  'institute.UpgradeTitle': 'د انستیتوت ارتقا/ ارتقای انستیتوت',
+  'search.instituteIdSearchLabel':
+    'د انستیتوت نوم ولیکئ/لطفا نام انستیتوت را وارد نماید',
+  'button.institute-upgrade': 'ارتقا',
+  'forms.upgradingOptionsLabel': 'د ارتقا ډول/ نوعیت ارتقا',
+  'institute.upgradingOptions_1': 'انستیتوت',
+  'institute.upgradingOptions_2': 'ځانګړي زده کړې/ تعلیمات خاص',
+  'institute.upgradingOptions_3': 'انستیتوت خصوصی/ خصوصی انستیتوت',
+  'institute.newNameLabel': 'نوی نوم/ نام جدید',
+  'institute.upgradeDateLabel': 'د ارتقا نیټه/تاریخ ارتقا',
+  'institute.upgradingDocuments': 'د ارتقا اسناد/ اسناد ارتقا',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',

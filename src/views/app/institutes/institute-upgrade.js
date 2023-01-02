@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import './../../dorms/dorm-register.css';
-import profilePhoto from './../../../../../src/assets/img/profiles/22.jpg';
+import './../dorms/dorm-register.css';
+
+import profilePhoto from './../../../assets/img/profiles/22.jpg';
 
 import * as Yup from 'yup';
 import {
@@ -31,16 +32,17 @@ import {
 import { useEffect } from 'react';
 import { institute } from 'lang/locales/fa_IR';
 
-const instituteOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
+const upgradingOptions = [
+  { value: '1', label: <IntlMessages id="institute.upgradingOptions_1" /> },
+  { value: '2', label: <IntlMessages id="institute.upgradingOptions_2" /> },
+  { value: '3', label: <IntlMessages id="institute.upgradingOptions_3" /> },
 ];
 
 const SignupSchema = Yup.object().shape({});
 
 const DormRegistration = (values) => {
   const initialValues = {
-    Province: {
+    upgradingOptions: {
       value: '',
       label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
     },
@@ -64,7 +66,7 @@ const DormRegistration = (values) => {
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {<IntlMessages id="treacher.TansferTitle" />}
+          {<IntlMessages id="institute.UpgradeTitle" />}
         </h3>
         <CardBody>
           <Formik
@@ -79,7 +81,7 @@ const DormRegistration = (values) => {
                     {' '}
                     <Row className="justify-content-center inlineBlock">
                       <Label>
-                        <IntlMessages id="search.teacherIdSearchLabel" />
+                        <IntlMessages id="search.instituteIdSearchLabel" />
                       </Label>
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -185,7 +187,7 @@ const DormRegistration = (values) => {
                                           paddingInline: '30px',
                                         }}
                                       >
-                                        <IntlMessages id="button.Teacher-transfer" />
+                                        <IntlMessages id="button.institute-upgrade" />
                                       </Button>
                                     </Colxx>
                                   </Row>
@@ -220,29 +222,37 @@ const DormRegistration = (values) => {
                   <div>
                     <Row className="mb-4 justify-content-center">
                       <Colxx xxs="8">
-                        <div className=" p-3">
-                          <h6 className=" mb-4">
-                            {
-                              <IntlMessages id="teacher.TransferNewInfoTittle" />
-                            }
-                          </h6>
-
+                        <div className="  p-3">
                           {/* Institute Name*/}
                           <FormGroup className="form-group has-float-label ">
                             <Label>
-                              <IntlMessages id="forms.InstituteLabel" />
+                              <IntlMessages id="forms.upgradingOptionsLabel" />
                             </Label>
                             <FormikReactSelect
-                              name="ّinstitute"
+                              name="upgradingOptions"
                               id="ّinstitute"
-                              value={values.institute}
-                              options={instituteOptions}
+                              value={values.upgradingOptions}
+                              options={upgradingOptions}
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
                             />
-                            {errors.institute && touched.institute ? (
+                            {errors.upgradingOptions &&
+                            touched.upgradingOptions ? (
                               <div className="invalid-feedback d-block">
-                                {errors.institute}
+                                {errors.upgradingOptions}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+
+                          {/* New Name */}
+                          <FormGroup className="form-group has-float-label">
+                            <Label>
+                              <IntlMessages id="institute.newNameLabel" />
+                            </Label>
+                            <Field className="form-control" name="newName" />
+                            {errors.newName && touched.newName ? (
+                              <div className="invalid-feedback d-block">
+                                {errors.newName}
                               </div>
                             ) : null}
                           </FormGroup>
@@ -250,7 +260,7 @@ const DormRegistration = (values) => {
                           {/* date */}
                           <FormGroup className="form-group has-float-label">
                             <Label>
-                              <IntlMessages id="teacher.transferDateLabel" />
+                              <IntlMessages id="institute.upgradeDateLabel" />
                             </Label>
                             <Field
                               className="form-control"
@@ -267,7 +277,7 @@ const DormRegistration = (values) => {
 
                           <FormGroup>
                             <Label>
-                              <IntlMessages id="teacher.transferDocuments" />
+                              <IntlMessages id="institute.upgradingDocuments" />
                             </Label>
                             <InputGroup className="mb-3">
                               <InputGroupAddon addonType="prepend">

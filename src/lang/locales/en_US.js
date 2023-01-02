@@ -808,6 +808,7 @@ module.exports = {
   // Teacher Evaluation
   'teacher.IdLabel': 'Teacher Id',
   'teacher.EvalautionTitle': 'Teacher Evaluation',
+  'teacher.EvalautionTitle1': 'Teacher Evaluation By TVETA',
   'teacher.InstituteIdLabel': 'Institute Id',
   // 'teacher.InstituteIdErr': 'Institute Id Required!',
   'teacher.departmentIdLabel': 'Department Id',
@@ -835,6 +836,7 @@ module.exports = {
 
   // HR Evaluation
   'teacher.EvalautionHrTitle': 'Teacher Hr Evaluation',
+  'teacher.EvalautionHrTitle1': 'HR Evaluation',
   'teacher.curretGradeLabel': 'Current Grade',
   'teacher.currentStepLabel': 'Current Step',
   'teacher.newGradeLabel': 'New Grade',
@@ -844,8 +846,7 @@ module.exports = {
   'teacher.PromotionDemotionTitle': 'Teacher Promotion/Demotion',
   'teacher.promotionLabel': 'Teacher Promotion',
   'teacher.demotionLabel': 'Demotion',
-
-
+  'teacher.Transfer': 'Teacher Transfer',
   // Subject
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',

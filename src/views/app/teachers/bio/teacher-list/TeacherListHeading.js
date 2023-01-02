@@ -1,4 +1,4 @@
-/* eslint-disable react/no-array-index-key */
+
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
@@ -239,7 +239,6 @@ const ListPageHeading = ({
                 <Colxx xs="12" sm="12" className="mb-4">
                   <ReactAutoSugegst
                     data={institutes}
-                    // onSelect={(e) => setSelectedInstitute(e)}
                   />
                 </Colxx>
               </Row>

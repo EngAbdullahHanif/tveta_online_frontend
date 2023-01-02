@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
+
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
@@ -144,6 +146,10 @@ const SignupSchema = Yup.object().shape({
   Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 });
 
+const servicePath = 'http://localhost:8000';
+
+const instituteApiUrl = `${servicePath}/institute/`;
+
 const DormRegistration = (values) => {
   const initialValues = {
     Province: {
@@ -152,18 +158,47 @@ const DormRegistration = (values) => {
     },
   };
 
-  const [data, setData] = useState(2);
+  const [data, setData] = useState([]);
+  const [student, setStudent] = useState('');
+  const [institutes, setInstitutes] = useState([]);
 
   const [isNext, setIsNext] = useState(true);
+  const fetchInstitutes = async () => {
+    const response = await axios.get(instituteApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setInstitutes(updatedData);
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+  }, []);
+
   const handleClick = (event) => {
     setIsNext(event);
   };
 
-  const [message, setMessage] = useState('');
-
-  console.log(message, 'Message');
   const handleChange = (event) => {
-    setMessage(event.target.value);
+    setData(event.target.value);
+  };
+
+  const handleSearch = () => {
+    //search student by student id in database
+    console.log(`http://localhost:8000/api/?student_id=${data}`);
+    axios.get(`http://localhost:8000/api/?student_id=${data}`).then((res) => {
+      setStudent(res.data);
+    });
+  };
+  const handleRegister = (values) => {
+    const institute = values.institute.value;
+    const student_id = student[0].student_id;
+    const educationlaYear = values.educationlaYear;
+
+    console.log(institute);
+    console.log(student_id);
+    console.log(educationlaYear);
   };
 
   return (
@@ -175,8 +210,8 @@ const DormRegistration = (values) => {
         <CardBody>
           <Formik
             initialValues={initialValues}
-            // onSubmit={onRegister}
-            validationSchema={SignupSchema}
+            onSubmit={handleRegister}
+            // validationSchema={SignupSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-bottom">
@@ -192,6 +227,7 @@ const DormRegistration = (values) => {
                           <button
                             class="btn btn-outline-secondary"
                             type="button"
+                            onClick={handleSearch}
                           >
                             <IntlMessages id="search.studentId" />
                           </button>
@@ -207,7 +243,7 @@ const DormRegistration = (values) => {
                       </div>
 
                       <Colxx style={{ paddingInline: '3%' }}>
-                        {data == 1 ? (
+                        {student.length > 0 ? (
                           <div className="border rounded">
                             <Label>
                               <h6 className="mt-5 m-5">
@@ -236,11 +272,11 @@ const DormRegistration = (values) => {
                                       <Label>
                                         <IntlMessages id="teacher.NameLabel" />
                                       </Label>
-                                      <h3>احمد شبیر</h3>
+                                      <h3>{student[0].name}</h3>
                                       <Label>
                                         <IntlMessages id="teacher.FatherNameLabel" />
                                       </Label>
-                                      <h3>عبدالرحیم</h3>
+                                      <h3>{student[0].father_name}</h3>
                                       <Label>
                                         <IntlMessages id="teacher.PhoneNoLabel" />
                                       </Label>
@@ -302,7 +338,7 @@ const DormRegistration = (values) => {
                         ) : (
                           <div
                             className={
-                              message == '' ? 'd-none' : 'border rounded'
+                              student == '' ? 'd-none' : 'border rounded'
                             }
                           >
                             <Label>
@@ -331,48 +367,40 @@ const DormRegistration = (values) => {
                             {<IntlMessages id="forms.StudentResidentsPlace" />}
                           </h6>
 
-                          {/* province permanent*/}
                           <FormGroup className="form-group has-float-label ">
                             <Label>
-                              <IntlMessages id="forms.ProvinceLabel" />
+                              <IntlMessages id="forms.InstituteLabel" />
                             </Label>
                             <FormikReactSelect
-                              name="Province"
-                              id="Province"
-                              value={values.Province}
-                              options={StdSchoolProvinceOptions}
+                              name="institute"
+                              id="institute"
+                              value={values.institute}
+                              options={institutes}
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
+                              required
                             />
-                            {errors.Province && touched.Province ? (
+
+                            {errors.institute && touched.institute ? (
                               <div className="invalid-feedback d-block">
-                                {errors.Province}
+                                {errors.institute}
                               </div>
                             ) : null}
                           </FormGroup>
-
-                          {/* District  permanent*/}
-                          <FormGroup className="form-group has-float-label">
+                          <FormGroup className="form-group has-float-label mt-5">
                             <Label>
-                              <IntlMessages id="forms.DistrictLabel" />
+                              <IntlMessages id="forms.educationYear" />
                             </Label>
-                            <Field className="form-control" name="District" />
-                            {errors.District && touched.District ? (
+                            <Field
+                              type="number"
+                              className="form-control"
+                              name="educationlaYear"
+                              required
+                            />
+                            {errors.educationlaYear &&
+                            touched.educationlaYear ? (
                               <div className="invalid-feedback d-block">
-                                {errors.District}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-
-                          {/* village permanent */}
-                          <FormGroup className="form-group has-float-label">
-                            <Label>
-                              <IntlMessages id="forms.VillageLabel" />
-                            </Label>
-                            <Field className="form-control" name="Village" />
-                            {errors.Village && touched.Village ? (
-                              <div className="invalid-feedback d-block">
-                                {errors.Village}
+                                {errors.educationlaYear}
                               </div>
                             ) : null}
                           </FormGroup>

@@ -165,13 +165,13 @@ const ListPageHeading = ({
                   {selectedGenderOption.label}
                 </DropdownToggle>
                 <DropdownMenu>
-                  {genderOptions.map((order, index) => {
+                  {genderOptions.map((gender, index) => {
                     return (
                       <DropdownItem
                         key={index}
-                        onClick={() => changeGenderBy(order.column)}
+                        onClick={() => changeGenderBy(gender.column)}
                       >
-                        {order.label}
+                        {gender.label}
                       </DropdownItem>
                     );
                   })}

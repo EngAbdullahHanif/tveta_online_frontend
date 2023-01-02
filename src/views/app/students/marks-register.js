@@ -221,29 +221,27 @@ const MarksRegistration = ({ match }) => {
                   <Row className="m-5">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
-                      {institutes.length > 0 && (
-                        <FormGroup className="form-group has-float-label ">
-                          <Label>
-                            <IntlMessages id="forms.InstituteLabel" />
-                          </Label>
-                          <FormikReactSelect
-                            name="institute"
-                            id="institute"
-                            value={values.institute}
-                            options={institutes}
-                            onChange={setFieldValue}
-                            onBlur={setFieldTouched}
-                            onClick={setSelectedInstitute(values.institute)}
-                            required
-                          />
+                      <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          <IntlMessages id="forms.InstituteLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="institute"
+                          id="institute"
+                          value={values.institute}
+                          options={institutes}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          onClick={setSelectedInstitute(values.institute)}
+                          required
+                        />
 
-                          {errors.institute && touched.institute ? (
-                            <div className="invalid-feedback d-block">
-                              {errors.institute}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                      )}
+                        {errors.institute && touched.institute ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.institute}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
                       <FormGroup className="form-group has-float-label mt-5  ">
                         <Label>

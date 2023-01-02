@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
+import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -21,7 +22,7 @@ const getIndex = (value, arr, prop) => {
 const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
-const instituteApiUrl = `${servicePath}/students/dorm/`;
+const instituteApiUrl = `${servicePath}/api/listofdorms`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -36,13 +37,155 @@ const categories = [
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
 
-const filterOptions = [
+const provinces = [
   {
     column: 'all',
     label: 'تول / همه',
   },
-  { column: '1', label: 'ارزیابی شوی' },
-  { column: '2', label: 'نا ارزیابی سوی' },
+  {
+    column: '1',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
+  },
+  {
+    column: '2',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
+  },
+  {
+    column: '3',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
+  },
+  {
+    column: '4',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
+  },
+  {
+    column: '5',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
+  },
+  {
+    column: '6',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
+  },
+  {
+    column: '7',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
+  },
+  {
+    column: '8',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
+  },
+  {
+    column: '9',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
+  },
+  {
+    column: '10',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
+  },
+  {
+    column: '11',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
+  },
+  {
+    column: '12',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
+  },
+  {
+    column: '13',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
+  },
+  {
+    column: 'کابل',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
+  },
+  {
+    column: '15',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
+  },
+  {
+    column: '16',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
+  },
+  {
+    column: '17',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
+  },
+  {
+    column: '18',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
+  },
+  {
+    column: '19',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
+  },
+  {
+    column: '20',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    column: '21',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
+  },
+  {
+    column: '22',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
+  },
+  {
+    column: '23',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
+  },
+  {
+    column: '24',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
+  },
+  {
+    column: '25',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
+  },
+  {
+    column: '26',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
+  },
+  {
+    column: '27',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
+  },
+  {
+    column: '28',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
+  },
+  {
+    column: '29',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    column: '30',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
+  },
+  {
+    column: '31',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
+  },
+  {
+    column: '32',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
+  },
+  {
+    column: '33',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
+  },
+  {
+    column: '34',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+  },
+];
+const genderOptions = [
+  {
+    column: 'all',
+    label: 'تول / همه',
+  },
+  { column: '1', label: 'ذکور' },
+  { column: '2', label: 'اناث' },
 ];
 
 const ThumbListPages = ({ match }) => {
@@ -58,12 +201,10 @@ const ThumbListPages = ({ match }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
-  const [search, setSearch] = useState('');
+  const [name, setName] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
-  const [items, setItems] = useState([]);
+  const [dorms, setDorms] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
   const [selectedFilter, setSelectFilter] = useState({
     column: 'all',
     label: 'تول / همه',
@@ -86,35 +227,24 @@ const ThumbListPages = ({ match }) => {
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
-    console.log('startdate', startDate);
-    console.log('enddate', endDate);
-
+    console.log('name', name);
     async function fetchData() {
       axios
-        .get(`${instituteApiUrl}?start_date=${startDate}&end_date=${endDate}`)
+        .get(`${instituteApiUrl}`)
 
         .then((res) => {
-          console.log(
-            `${instituteApiUrl}?start_date=${startDate}&end_date=${endDate}`
-          );
+          console.log(`${instituteApiUrl}`);
           return res.data;
         })
         .then((data) => {
-          setItems(data);
+          setDorms(data);
           setSelectedItems([]);
           setTotalItemCount(data.totalItem);
           setIsLoaded(true);
         });
     }
     fetchData();
-  }, [
-    selectedPageSize,
-    currentPage,
-    selectedOrderOption,
-    search,
-    startDate,
-    endDate,
-  ]);
+  }, [selectedPageSize, currentPage, selectedOrderOption, name]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -191,15 +321,13 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  console.log('Data displayed on the table', items);
-
   return !isLoaded ? (
     <div className="loading" />
   ) : (
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د ارزیابیو لست/ لست ارزیابی ها"
+          heading="د لیلیو لست/ لست لیله ها"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -210,10 +338,6 @@ const ThumbListPages = ({ match }) => {
               orderOptions.find((x) => x.column === column)
             );
           }}
-          changeFilterOption={(column) => {
-            setSelectFilter(filterOptions.find((x) => x.column === column));
-          }}
-          filterOptions={filterOptions}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}
@@ -222,21 +346,33 @@ const ThumbListPages = ({ match }) => {
           startIndex={startIndex}
           endIndex={endIndex}
           selectedItemsLength={selectedItems ? selectedItems.length : 0}
-          itemsLength={items ? items.length : 0}
-          onSearchKey={(e) => {
-            setSearch(e.target.value.toLowerCase());
+          itemsLength={dorms ? dorms.length : 0}
+          onSearchName={(e) => {
+            setName(e.target.value.toLowerCase());
             // if (e.key === 'Enter') {
             // }
           }}
           orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
-          onSelectStartDate={setStartDate}
-          onSelectEndDate={setEndDate}
+          changeGenderBy={(column) => {
+            setSelectedGenderOption(
+              genderOptions.find((x) => x.column === column)
+            );
+          }}
+          changeProvinceBy={(column) => {
+            setSelectedProvinceOption(
+              provinces.find((x) => x.column === column)
+            );
+          }}
+          selectedGenderOption={selectedGenderOption}
+          selectedProvinceOption={selectedProvinceOption}
+          genderOptions={genderOptions}
+          provinces={provinces}
         />
 
         <ListPageListing
-          items={items}
+          dorms={dorms}
           displayMode={displayMode}
           selectedItems={selectedItems}
           onCheckItem={onCheckItem}

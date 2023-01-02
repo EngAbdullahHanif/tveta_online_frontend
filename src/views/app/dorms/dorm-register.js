@@ -228,13 +228,23 @@ const DormRegistration = (values) => {
     IdCardJoldNo: '0',
   };
 
-  const [isNext, setIsNext] = useState(true);
-  const handleClick = (event) => {
-    setIsNext(event);
-  };
-
   const onRegister = (values) => {
     console.log(' The Values', values);
+    if (errors) {
+      return;
+    }
+    if (!values) {
+      return;
+    }
+    //insert data to database
+    axios
+      .post('http://localhost:3000/api/dorms', values)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

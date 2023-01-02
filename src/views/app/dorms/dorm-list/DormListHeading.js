@@ -24,24 +24,27 @@ const ListPageHeading = ({
   displayMode,
   changeDisplayMode,
   handleChangeSelectAll,
-  changeOrderBy,
   changePageSize,
   selectedPageSize,
   totalItemCount,
-  selectedOrderOption,
   match,
   startIndex,
   endIndex,
   selectedItemsLength,
   itemsLength,
-  onSearchKey,
-  orderOptions,
+  onSearchName,
   pageSizes,
   // toggleModal,
   heading,
   onSelectStartDate,
   onSelectEndDate,
-  filterOptions,
+  genderOption,
+  selectedGenderOption,
+  changeGenderBy,
+  provinces,
+  selectedProvinceOption,
+  changeProvinceBy,
+  genderOptions,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
@@ -158,16 +161,40 @@ const ListPageHeading = ({
               <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                 <DropdownToggle caret color="outline-dark" size="xs">
                   <IntlMessages id="evaluation.filter" />
-                  {/* {selectedOrderOption.label} */}
+                  {selectedGenderOption.label}
                 </DropdownToggle>
                 <DropdownMenu>
-                  {filterOptions.map((order, index) => {
+                  {genderOptions.map((gender, index) => {
                     return (
                       <DropdownItem
                         key={index}
-                        onClick={() => changeOrderBy(order.column)}
+                        onClick={() => changeGenderBy(gender.column)}
                       >
-                        {order.label}
+                        {gender.label}
+                      </DropdownItem>
+                    );
+                  })}
+                </DropdownMenu>
+              </UncontrolledDropdown>
+              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                <DropdownToggle caret color="outline-dark" size="xs">
+                  <IntlMessages id="filter" />
+                  {selectedProvinceOption.label}
+                </DropdownToggle>
+                <DropdownMenu
+                  style={{
+                    height: '200px',
+                    overflowY: 'scroll',
+                    overflowX: 'hidden',
+                  }}
+                >
+                  {provinces.map((province, index) => {
+                    return (
+                      <DropdownItem
+                        key={index}
+                        onClick={() => changeProvinceBy(province.column)}
+                      >
+                        {province.label}
                       </DropdownItem>
                     );
                   })}
@@ -179,27 +206,7 @@ const ListPageHeading = ({
                   name="keyword"
                   id="search"
                   placeholder={messages['menu.search']}
-                  onKeyPress={(e) => onSearchKey(e)}
-                />
-              </div>
-
-              <div className=" d-inline-block float-md-left mr-10 mb-1 align-top">
-                <label>تاریخ شروع: </label>
-
-                <input
-                  type="date"
-                  name="start_date"
-                  id="start_date"
-                  onChange={(e) => onSelectStartDate(e.target.value)}
-                />
-              </div>
-              <div className=" d-inline-block float-md-left mr-10 mb-1 align-top">
-                <label>تاریخ ختم: </label>
-                <input
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  onChange={(e) => onSelectEndDate(e.target.value)}
+                  onKeyPress={(e) => onSearchName(e)}
                 />
               </div>
             </div>

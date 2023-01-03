@@ -816,6 +816,7 @@ module.exports = {
   'search.studentIdSearchLabel':
     'د شاګرد  دننه کړئ / لطفا آیدی شاگرد را وراد نماید',
   'dorm.SearchResult': 'د لټون پایله/ نتیجه جستجو...',
+  'dorm.search.name': 'نوم',
   'forms.NoData': 'پورتنۍ آیډي شتون نه لري/ آیدی فوق در سیستم موجود نیست',
   'forms.StudentResidentsPlace': 'د شاګرد استوګنځی/ محل بود و باش شاگرد',
 

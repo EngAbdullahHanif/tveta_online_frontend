@@ -23,6 +23,7 @@ const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const teacherApiUrl = `${servicePath}/teachers/`;
+const teacherInstituteApiUrl = `${servicePath}/teachers/institute/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -220,9 +221,16 @@ const ThumbListPages = ({ match }) => {
   }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
 
   useEffect(() => {
-    console.log('institute', institute);
+    console.log('institute123', institute);
     async function fetchData() {
-      if (
+      if (institute !== '') {
+        const res = await axios.get(
+          `${teacherInstituteApiUrl}?institute_id=${institute}`
+        );
+        setItems(res.data);
+        setTotalItemCount(res.data.totalItem);
+        setIsLoaded(true);
+      } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'
       ) {
@@ -314,6 +322,7 @@ const ThumbListPages = ({ match }) => {
     province,
     district,
     rest,
+    institute,
   ]);
 
   const fetchInstitutes = async () => {

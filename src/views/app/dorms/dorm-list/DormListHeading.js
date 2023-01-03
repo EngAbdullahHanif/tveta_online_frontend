@@ -205,7 +205,7 @@ const ListPageHeading = ({
                   type="text"
                   name="keyword"
                   id="search"
-                  placeholder={messages['menu.search']}
+                  placeholder={messages['dorm.search.name']}
                   onKeyPress={(e) => onSearchName(e)}
                 />
               </div>

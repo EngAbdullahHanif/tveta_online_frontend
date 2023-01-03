@@ -22,7 +22,7 @@ const getIndex = (value, arr, prop) => {
 const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
-const instituteApiUrl = `${servicePath}/api/listofdorms`;
+const dormUrl = `${servicePath}/institute/dorms`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -201,7 +201,6 @@ const ThumbListPages = ({ match }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
-  const [name, setName] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
   const [dorms, setDorms] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
@@ -210,7 +209,8 @@ const ThumbListPages = ({ match }) => {
     label: 'تول / همه',
   });
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState([]);
+  const [dormsFilterList, setDormsFilterList] = useState([]);
+  const [dormName, setDormName] = useState('');
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
@@ -225,26 +225,126 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedOrderOption]);
+  const fetchDorms = async () => {
+    const response = await axios.get(`${dormUrl}`);
+    const updatedData = await response.data.map((item) => ({
+      id: item.id,
+      name: item.name,
+    }));
+    setDormsFilterList(updatedData);
+    console.log('dormsFilterList', dormsFilterList);
+  };
 
   useEffect(() => {
-    console.log('name', name);
-    async function fetchData() {
-      axios
-        .get(`${instituteApiUrl}`)
+    fetchDorms();
+  }, []);
 
-        .then((res) => {
-          console.log(`${instituteApiUrl}`);
-          return res.data;
-        })
-        .then((data) => {
-          setDorms(data);
-          setSelectedItems([]);
-          setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        });
+  useEffect(() => {
+    console.log('district', district);
+    async function fetchData() {
+      if (dormName !== '') {
+        axios
+          .get(`${dormUrl}?id=${dormName.id}`)
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(`${dormUrl}?id=${dormName.id}`);
+
+            setDorms(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else if (
+        selectedProvinceOption.column === 'all' &&
+        selectedGenderOption.column === 'all'
+      ) {
+        if (rest == true) {
+          setDistrict('');
+          setRest(false);
+        }
+        axios
+          .get(`${dormUrl}?district=${district}`)
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(`print${dormUrl}`);
+
+            setDorms(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else if (selectedProvinceOption.column === 'all') {
+        axios
+          .get(
+            `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
+          )
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `1${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
+            );
+
+            setDorms(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else if (selectedGenderOption.column === 'all') {
+        axios
+          .get(
+            `${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
+          )
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `2${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
+            );
+
+            setDorms(data);
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      } else {
+        axios
+          // get data from localhost:8000/dorms
+          .get(
+            `${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+          )
+          .then((res) => {
+            return res.data;
+          })
+          .then((data) => {
+            console.log(
+              `3${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+            );
+            setDorms(data);
+
+            setSelectedItems([]);
+            setTotalItemCount(data.totalItem);
+            setIsLoaded(true);
+          });
+      }
     }
     fetchData();
-  }, [selectedPageSize, currentPage, selectedOrderOption, name]);
+  }, [
+    selectedPageSize,
+    currentPage,
+    selectedOrderOption,
+    dormName,
+    rest,
+    district,
+    selectedGenderOption,
+    selectedProvinceOption,
+  ]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -347,10 +447,10 @@ const ThumbListPages = ({ match }) => {
           endIndex={endIndex}
           selectedItemsLength={selectedItems ? selectedItems.length : 0}
           itemsLength={dorms ? dorms.length : 0}
-          onSearchName={(e) => {
-            setName(e.target.value.toLowerCase());
-            // if (e.key === 'Enter') {
-            // }
+          onSearchDistrict={(e) => {
+            if (e.key === 'Enter') {
+              setDistrict(e.target.value.toLowerCase());
+            }
           }}
           orderOptions={orderOptions}
           pageSizes={pageSizes}
@@ -369,6 +469,10 @@ const ThumbListPages = ({ match }) => {
           selectedProvinceOption={selectedProvinceOption}
           genderOptions={genderOptions}
           provinces={provinces}
+          dormsFilterList={dormsFilterList}
+          onDormSelect={setDormName}
+          onResetClick={setRest}
+          reset={rest}
         />
 
         <ListPageListing

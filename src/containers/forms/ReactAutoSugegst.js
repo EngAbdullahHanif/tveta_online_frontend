@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { injectIntl } from 'react-intl';
 import Search from './search';
 
-const ReactAutoSugegstExample = ({ intl, data, select }) => {
+const ReactAutoSugegstExample = ({ intl, data, select, placeholder }) => {
   var result = data.map((a) => a.name);
   const [selectedOption, setSelectedOption] = useState({});
 
@@ -18,6 +18,7 @@ const ReactAutoSugegstExample = ({ intl, data, select }) => {
   return (
     <Search
       inst={result}
+      placeholder={placeholder}
       ChangeSelectedOption={(option) => {
         findSelectedInstitute(option);
       }}

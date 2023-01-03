@@ -12,6 +12,7 @@ import {
   Collapse,
 } from 'reactstrap';
 import { injectIntl } from 'react-intl';
+import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
@@ -32,7 +33,7 @@ const ListPageHeading = ({
   endIndex,
   selectedItemsLength,
   itemsLength,
-  onSearchName,
+  onSearchDistrict,
   pageSizes,
   // toggleModal,
   heading,
@@ -45,9 +46,15 @@ const ListPageHeading = ({
   selectedProvinceOption,
   changeProvinceBy,
   genderOptions,
+  dormsFilterList,
+  onDormSelect,
+  onResetClick,
+  reset,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
+  const [selectDrom, setSelectDorm] = useState('');
+  onDormSelect(selectDrom);
   const { messages } = intl;
   const [startDate, setStartDate] = useState(null);
 
@@ -158,57 +165,82 @@ const ListPageHeading = ({
             </span>
 
             <div className="d-block d-md-inline-block pt-1">
-              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-                <DropdownToggle caret color="outline-dark" size="xs">
-                  <IntlMessages id="evaluation.filter" />
-                  {selectedGenderOption.label}
-                </DropdownToggle>
-                <DropdownMenu>
-                  {genderOptions.map((gender, index) => {
-                    return (
-                      <DropdownItem
-                        key={index}
-                        onClick={() => changeGenderBy(gender.column)}
-                      >
-                        {gender.label}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                <DropdownToggle caret color="outline-dark" size="xs">
-                  <IntlMessages id="filter" />
-                  {selectedProvinceOption.label}
-                </DropdownToggle>
-                <DropdownMenu
-                  style={{
-                    height: '200px',
-                    overflowY: 'scroll',
-                    overflowX: 'hidden',
-                  }}
-                >
-                  {provinces.map((province, index) => {
-                    return (
-                      <DropdownItem
-                        key={index}
-                        onClick={() => changeProvinceBy(province.column)}
-                      >
-                        {province.label}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                <input
-                  type="text"
-                  name="keyword"
-                  id="search"
-                  placeholder={messages['dorm.search.name']}
-                  onKeyPress={(e) => onSearchName(e)}
-                />
+              <div className="row">
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="evaluation.filter" />
+                    {selectedGenderOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {genderOptions.map((gender, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeGenderBy(gender.column)}
+                        >
+                          {gender.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectedProvinceOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {provinces.map((province, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeProvinceBy(province.column)}
+                        >
+                          {province.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  <input
+                    type="text"
+                    name="district"
+                    id="district"
+                    placeholder={messages['dorm.search.district']}
+                    onKeyPress={(e) => onSearchDistrict(e)}
+                  />
+                </div>
+                <div className="">
+                  <ReactAutoSugegst
+                    data={dormsFilterList}
+                    select={(opt) => {
+                      setSelectDorm(opt);
+                    }}
+                    placeholder={messages['dorm.search.name']}
+                  />
+                </div>
               </div>
+              <Button
+                color="outline-dark"
+                size="xs"
+                className="float-md-left mb-1"
+                onClick={() => {
+                  changeGenderBy('all');
+                  changeProvinceBy('all');
+                  document.getElementById('district').value = '';
+                  setSelectDorm('');
+                  onResetClick(!reset);
+                }}
+              >
+                <IntlMessages id="pages.reset" />
+              </Button>
             </div>
             <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>

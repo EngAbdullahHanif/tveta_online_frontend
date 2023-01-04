@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import './../../dorms/dorm-register.css';
-import profilePhoto from './../../../../../src/assets/img/profiles/22.jpg';
+import './../dorms/dorm-register.css';
+import profilePhoto from './../../../assets/img/profiles/22.jpg';
 
 import * as Yup from 'yup';
 import {
@@ -12,11 +12,11 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
   InputGroup,
   InputGroupAddon,
   CustomInput,
+  CardTitle,
+  Input,
 } from 'reactstrap';
 import Select from 'react-select';
 
@@ -29,7 +29,6 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
-import { institute } from 'lang/locales/fa_IR';
 
 const instituteOptions = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
@@ -38,7 +37,7 @@ const instituteOptions = [
 
 const SignupSchema = Yup.object().shape({});
 
-const DormRegistration = (values) => {
+const StudentsTransfer = (values) => {
   const initialValues = {
     institute: {
       value: '',
@@ -64,7 +63,7 @@ const DormRegistration = (values) => {
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {<IntlMessages id="treacher.TansferTitle" />}
+          {<IntlMessages id="student.transferTitle" />}
         </h3>
         <CardBody>
           <Formik
@@ -79,7 +78,7 @@ const DormRegistration = (values) => {
                     {' '}
                     <Row className="justify-content-center inlineBlock">
                       <Label>
-                        <IntlMessages id="search.teacherIdSearchLabel" />
+                        <IntlMessages id="search.studentIdSearchLabel" />
                       </Label>
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -99,7 +98,6 @@ const DormRegistration = (values) => {
                           onChange={handleChange}
                         />
                       </div>
-
                       <Colxx style={{ paddingInline: '3%' }}>
                         {data == 1 ? (
                           <div className="border rounded">
@@ -185,7 +183,7 @@ const DormRegistration = (values) => {
                                           paddingInline: '30px',
                                         }}
                                       >
-                                        <IntlMessages id="button.Teacher-transfer" />
+                                        <IntlMessages id="student.buttonTransfer" />
                                       </Button>
                                     </Colxx>
                                   </Row>
@@ -233,8 +231,8 @@ const DormRegistration = (values) => {
                               <IntlMessages id="forms.InstituteLabel" />
                             </Label>
                             <FormikReactSelect
-                              name="institute"
-                              id="institute"
+                              name="ّinstitute"
+                              id="ّinstitute"
                               value={values.institute}
                               options={instituteOptions}
                               onChange={setFieldValue}
@@ -250,7 +248,7 @@ const DormRegistration = (values) => {
                           {/* date */}
                           <FormGroup className="form-group has-float-label">
                             <Label>
-                              <IntlMessages id="teacher.transferDateLabel" />
+                              <IntlMessages id="student.transferDateLabel" />
                             </Label>
                             <Field
                               className="form-control"
@@ -267,11 +265,10 @@ const DormRegistration = (values) => {
 
                           <FormGroup>
                             <Label>
-                              <IntlMessages id="teacher.transferDocuments" />
+                              <IntlMessages id="student.transferDocuments" />
                             </Label>
                             <InputGroup className="mb-3">
                               <InputGroupAddon addonType="prepend">
-                                {/* <IntlMessages id="teacher.fileUploadBttn" /> */}
                                 آپلود
                               </InputGroupAddon>
                               <CustomInput
@@ -294,8 +291,6 @@ const DormRegistration = (values) => {
                           }}
                           className="float-right m-2 mt-5"
                           type="submit"
-                          // onSubmit={handleSubmit}
-                          // onClick={}
                         >
                           {<IntlMessages id="forms.SubimssionButton" />}
                         </Button>
@@ -312,4 +307,4 @@ const DormRegistration = (values) => {
   );
 };
 
-export default DormRegistration;
+export default StudentsTransfer;

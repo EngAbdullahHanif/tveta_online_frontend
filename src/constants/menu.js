@@ -75,6 +75,12 @@ const data = [
         label: 'menu.student-profile',
         to: `${adminRoot}/students/student-profile`,
       },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.student-transfer',
+        to: `${adminRoot}/students/student-transfer`,
+        newWindow: false,
+      },
     ],
   },
   // {

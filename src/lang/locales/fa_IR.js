@@ -174,6 +174,7 @@ module.exports = {
   'menu.teacher-promotion-demotion': 'مکافات / مجازات',
   'menu.teacher-transfer': ' د استاد تبدیلی/ تبدیلی استاد',
   'menu.institute-upgrade': 'د انستیتوت/ ښونخي/ مکتب ارتقا',
+  'menu.student-transfer': 'د شاگرد تبدیلی/ تبدیلی شاگرد',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -890,6 +891,13 @@ module.exports = {
   'institute.newNameLabel': 'نوی نوم/ نام جدید',
   'institute.upgradeDateLabel': 'د ارتقا نیټه/تاریخ ارتقا',
   'institute.upgradingDocuments': 'د ارتقا اسناد/ اسناد ارتقا',
+
+  // Student Transfer
+  'student.buttonTransfer': 'تبدیل',
+  'student.transferTitle': 'د شاګرد تبدیلی/ تبدیلی شاگرد',
+  'student.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
+  'student.transferDocuments': 'د تبدیلی اسناد / اسناد تبدیلی',
+  
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',

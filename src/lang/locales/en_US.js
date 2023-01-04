@@ -165,6 +165,7 @@ module.exports = {
   'menu.teacher-promotion-demotion': 'Promotion/Demotion',
   'menu.teacher-transfer': 'Teacher Transfer',
   'menu.institute-upgrade': 'Institute/School Upgrade',
+  'menu.student-transfer': 'Student Transfer',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -869,6 +870,12 @@ module.exports = {
   'institute.newNameLabel': 'New Name',
   'institute.upgradeDateLabel': 'Upgrading Date',
   'institute.upgradingDocuments': 'Upgrading Documents',
+
+  // Student Transfer
+  'student.buttonTransfer': 'Transfer',
+  'student.transferTitle': 'Transfer',
+  'student.transferDateLabel': 'Transfer Date',
+  'student.transferDocuments': 'Upgrading Documents',
 
   // Subject
   // // Subject

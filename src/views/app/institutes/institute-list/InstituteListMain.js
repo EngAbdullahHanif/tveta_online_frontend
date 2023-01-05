@@ -210,6 +210,8 @@ const ThumbListPages = ({ match }) => {
   const [instituteId, setInstituteId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
+  const [institutes, setInstitutes] = useState([]);
+  const [institute, setInstitute] = useState('');
   const [selectedGenderOption, setSelectedGenderOption] = useState({
     column: 'all',
     label: 'جنیست',
@@ -231,7 +233,13 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     async function fetchData() {
-      if (
+      if (institute !== '') {
+        const res = await axios.get(`${instituteApiUrl}?id=${institute.id}`);
+        console.log('res', res.data);
+        setItems(res.data);
+        setTotalItemCount(res.data.totalItem);
+        setIsLoaded(true);
+      } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'
       ) {
@@ -312,35 +320,6 @@ const ThumbListPages = ({ match }) => {
             setIsLoaded(true);
           });
       }
-
-      // axios
-      //   // .get(
-      //   //   `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
-      //   // )
-      //   // get data from localhost:8000/institute
-      //   .get(`${instituteApiUrl}`)
-      //   .then((res) => {
-      //     console.log('res.data', res.data);
-      //     return res.data;
-      //   })
-      //   .then((data) => {
-      //     // setTotalPage(data.totalPage);
-      //     // setItems(data.data);
-      //     // set fecahed data to items
-      //     setItems(data);
-
-      //     // setSelectedItems([]);
-
-      //     // setItems(
-      //     //   data.data.map((x) => {
-      //     //     console.log('Single Value of the array ', x);
-      //     //     return { ...x, img: x.img.replace('img/', 'img/products/') };
-      //     //   })
-      //     // );
-      //     setSelectedItems([]);
-      //     setTotalItemCount(data.totalItem);
-      //     setIsLoaded(true);
-      //   });
     }
     fetchData();
   }, [
@@ -354,7 +333,20 @@ const ThumbListPages = ({ match }) => {
     province,
     district,
     rest,
+    institute,
   ]);
+  const fetchInstitutes = async () => {
+    const response = await axios.get('http://localhost:8000/institute/');
+    const updatedData = await response.data.map((item) => ({
+      id: item.id,
+      name: item.name,
+    }));
+    setInstitutes(updatedData);
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+  }, []);
 
   const onCheckItem = (event, id) => {
     if (
@@ -496,6 +488,8 @@ const ThumbListPages = ({ match }) => {
           }}
           onResetClick={setRest}
           reset={rest}
+          institutes={institutes}
+          onInstituteSelect={setInstitute}
         />
 
         <ListPageListing

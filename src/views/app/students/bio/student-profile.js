@@ -52,14 +52,14 @@ const StudentProfile = () => {
       setStudent(data);
 
       const instituteResponse = await axios.get(
-        `${studentApiUrl}stdInstitutes/?student_id=${studentId}`
+        `${studentApiUrl}student_institutes/?student_id=${studentId}`
       );
       const instituteData = await instituteResponse.data;
       setInstitute(instituteData);
 
       //type =1 means current class or continued class
       const classResponse = await axios.get(
-        `${studentApiUrl}stdClass/?student_id=${studentId}&type=1`
+        `${studentApiUrl}student_class/?student_id=${studentId}&type=1`
       );
       const classData = await classResponse.data;
       setClasss(classData);
@@ -174,11 +174,11 @@ const StudentProfile = () => {
                       <Label>
                         <IntlMessages id="teacher.PhoneNoLabel" />
                       </Label>
-                      <h3>077000000000</h3>
+                      <h3>{student[0].phone_number}</h3>
                       <Label>
                         <IntlMessages id="teacher.EmailLabel" />
                       </Label>
-                      <h3>ahamd12@gmail.com</h3>
+                      <h3>{student[0].email}</h3>
 
                       <Label>
                         <IntlMessages id="forms.InstituteLabel" />
@@ -205,8 +205,443 @@ const StudentProfile = () => {
                 <>
                   {/* {marks.length == 0 && ( */}
                   <>
-                    {/* for loop in the length of marks */}
-                    {marks.map((mark, index) => (
+                    <div className="p-2">
+                      <FormGroup className="form-group has-float-label m-5">
+                        <Label>سمستر ریکارد</Label>
+                        <Row
+                          className="border border-primary  p-2 d-block"
+                          style={{
+                            borderRadius: '5px',
+                            minHeight: '200px',
+                          }}
+                        >
+                          <Colxx>
+                            <Card className="mb-4">
+                              <CardBody>
+                                <div
+                                  style={{
+                                    display: 'inline-flex',
+                                    width: '50%',
+                                  }}
+                                >
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="forms.StdIdLabel" />
+                                      <h6>{student[0].student_id}</h6>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="marks.ClassLabel" />
+                                      <h6>لسم صنف </h6>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="field.SemesterLabel" />
+                                      <h6>اول سمستر</h6>
+                                    </span>
+                                  </Colxx>
+                                </div>
+                                <Table bordered>
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>
+                                        <IntlMessages id="marks.SubjectLabel" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="forms.SubjectCreditLabel" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="subject.type" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="marks.Marks" />
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td>کمپیوتر</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">2</th>
+                                      <td>کمپیوتر</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">3</th>
+                                      <td>کمپیوتر</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                  </tbody>
+                                </Table>
+                                <Row>
+                                  {' '}
+                                  <Colxx xxs="3">
+                                    {' '}
+                                    <span>
+                                      فیصدی سمستر
+                                      <h5>85%</h5>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx xxs="3">
+                                    {' '}
+                                    <span>
+                                      GPA
+                                      <h5>3.5</h5>
+                                    </span>
+                                  </Colxx>
+                                </Row>
+                              </CardBody>
+                            </Card>
+                          </Colxx>
+                        </Row>
+                      </FormGroup>
+                    </div>
+                    <div className="p-2">
+                      <FormGroup className="form-group has-float-label m-5">
+                        <Label>سمستر ریکارد</Label>
+                        <Row
+                          className="border border-primary  p-2 d-block"
+                          style={{
+                            borderRadius: '5px',
+                            minHeight: '200px',
+                          }}
+                        >
+                          <Colxx>
+                            <Card className="mb-4">
+                              <CardBody>
+                                <div
+                                  style={{
+                                    display: 'inline-flex',
+                                    width: '50%',
+                                  }}
+                                >
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="forms.StdIdLabel" />
+                                      <h6>{student[0].student_id}</h6>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="marks.ClassLabel" />
+                                      <h6>لسم صنف </h6>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="field.SemesterLabel" />
+                                      <h6>دوهم سمستر</h6>
+                                    </span>
+                                  </Colxx>
+                                </div>
+                                <Table bordered>
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>
+                                        <IntlMessages id="marks.SubjectLabel" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="forms.SubjectCreditLabel" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="subject.type" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="marks.Marks" />
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td>پشتو</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">2</th>
+                                      <td>دری</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">3</th>
+                                      <td>ریاضی</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                  </tbody>
+                                </Table>
+                                <Row>
+                                  {' '}
+                                  <Colxx xxs="3">
+                                    {' '}
+                                    <span>
+                                      فیصدی سمستر
+                                      <h5>80%</h5>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx xxs="3">
+                                    {' '}
+                                    <span>
+                                      GPA
+                                      <h5>3.2</h5>
+                                    </span>
+                                  </Colxx>
+                                </Row>
+                              </CardBody>
+                            </Card>
+                          </Colxx>
+                        </Row>
+                      </FormGroup>
+                    </div>
+                    <div className="p-2">
+                      <FormGroup className="form-group has-float-label m-5">
+                        <Label>سمستر ریکارد</Label>
+                        <Row
+                          className="border border-primary  p-2 d-block"
+                          style={{
+                            borderRadius: '5px',
+                            minHeight: '200px',
+                          }}
+                        >
+                          <Colxx>
+                            <Card className="mb-4">
+                              <CardBody>
+                                <div
+                                  style={{
+                                    display: 'inline-flex',
+                                    width: '50%',
+                                  }}
+                                >
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="forms.StdIdLabel" />
+                                      <h6>{student[0].student_id}</h6>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="marks.ClassLabel" />
+                                      <h6>یولسم صنف </h6>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="field.SemesterLabel" />
+                                      <h6>اول سمستر</h6>
+                                    </span>
+                                  </Colxx>
+                                </div>
+                                <Table bordered>
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>
+                                        <IntlMessages id="marks.SubjectLabel" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="forms.SubjectCreditLabel" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="subject.type" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="marks.Marks" />
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td>برنامه نویسی</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">2</th>
+                                      <td>ساینس</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">3</th>
+                                      <td>فزیک</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                  </tbody>
+                                </Table>
+                                <Row>
+                                  {' '}
+                                  <Colxx xxs="3">
+                                    {' '}
+                                    <span>
+                                      فیصدی سمستر
+                                      <h5>90%</h5>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx xxs="3">
+                                    {' '}
+                                    <span>
+                                      GPA
+                                      <h5>3.8</h5>
+                                    </span>
+                                  </Colxx>
+                                </Row>
+                              </CardBody>
+                            </Card>
+                          </Colxx>
+                        </Row>
+                      </FormGroup>
+                    </div>
+                    <div className="p-2">
+                      <FormGroup className="form-group has-float-label m-5">
+                        <Label>سمستر ریکارد</Label>
+                        <Row
+                          className="border border-primary  p-2 d-block"
+                          style={{
+                            borderRadius: '5px',
+                            minHeight: '200px',
+                          }}
+                        >
+                          <Colxx>
+                            <Card className="mb-4">
+                              <CardBody>
+                                <div
+                                  style={{
+                                    display: 'inline-flex',
+                                    width: '50%',
+                                  }}
+                                >
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="forms.StdIdLabel" />
+                                      <h6>{student[0].student_id}</h6>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="marks.ClassLabel" />
+                                      <h6>یولسم صنف </h6>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx>
+                                    <span>
+                                      <IntlMessages id="field.SemesterLabel" />
+                                      <h6>دوهم سمستر</h6>
+                                    </span>
+                                  </Colxx>
+                                </div>
+                                <Table bordered>
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>
+                                        <IntlMessages id="marks.SubjectLabel" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="forms.SubjectCreditLabel" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="subject.type" />
+                                      </th>
+                                      <th>
+                                        {' '}
+                                        <IntlMessages id="marks.Marks" />
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td>ریاضی</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">2</th>
+                                      <td>کمیا</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">3</th>
+                                      <td>ثقافت</td>
+
+                                      <td>3</td>
+                                      <td>اصلی</td>
+                                      <td>85</td>
+                                    </tr>
+                                  </tbody>
+                                </Table>
+                                <Row>
+                                  {' '}
+                                  <Colxx xxs="3">
+                                    {' '}
+                                    <span>
+                                      فیصدی سمستر
+                                      <h5>85%</h5>
+                                    </span>
+                                  </Colxx>
+                                  <Colxx xxs="3">
+                                    {' '}
+                                    <span>
+                                      GPA
+                                      <h5>3.5</h5>
+                                    </span>
+                                  </Colxx>
+                                </Row>
+                              </CardBody>
+                            </Card>
+                          </Colxx>
+                        </Row>
+                      </FormGroup>
+                    </div>
+                    {/* {marks.map((mark, index) => (
                       <div className="p-2">
                         <FormGroup className="form-group has-float-label m-5">
                           <Label>سمستر ریکارد</Label>
@@ -316,7 +751,7 @@ const StudentProfile = () => {
                           </Row>
                         </FormGroup>
                       </div>
-                    ))}
+                    ))} */}
                   </>
                   {/* )} */}
                 </>

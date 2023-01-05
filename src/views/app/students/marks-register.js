@@ -124,6 +124,9 @@ const MarksRegistration = ({ match }) => {
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selecedStudyTime, setSelectedStudyTime] = useState('');
   const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
+  const [passingScore, setPassingScore] = useState(55);
+  const [subjectGrad, setSubjectGrad] = useState();
+  const [subjectGPA, setSubjectGPA] = useState();
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
@@ -195,18 +198,33 @@ const MarksRegistration = ({ match }) => {
 
   const onSubmit = (values) => {
     console.log('values', values);
+    const educational_year = selectedEducationalYear;
+    const institute_id = selectedInstitute.value;
+    const department = selectedDepartment.value;
+    const class_id = selectedClass.value;
+    const subject_id = selectedSubject.value;
     students.map((student) => {
+      const examData = {
+        educational_year: educational_year,
+        student_id: student.student_id,
+        institute_id: institute_id,
+        Department: department,
+        class_id: class_id,
+      };
+      //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
+      //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
+      console.log('exam', examData);
       const data = {
-        student: student.student_id,
-        subject: selectedSubject.value,
-        classs: selectedClass.value,
-        institute: selectedInstitute.value,
-        department: selectedDepartment.value,
-        study_time: selecedStudyTime.value,
-        educational_year: selectedEducationalYear,
+        subject: subject_id,
+        exam_types: 1,
+        passing_score: passingScore,
+        grad: subjectGrad,
+        Gpa: subjectGPA,
+        user_id: 1,
         mark: values.score[student.student_id],
       };
-      axios.post('http://localhost:8000/api/marks/', data);
+      console.log('data', data);
+      // axios.post('http://localhost:8000/api/marks/', data);
     });
   };
   return (

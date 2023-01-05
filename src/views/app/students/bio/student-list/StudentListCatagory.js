@@ -34,6 +34,11 @@ const ListPageListing = ({
   return (
     <>
       <Row>
+        {items.length === 0 ? (
+          <div className="no-result">
+            <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
+          </div>
+        ) : null}
         {items.map((student) => {
           if (displayMode === 'imagelist') {
             return (
@@ -77,32 +82,6 @@ const ListPageListing = ({
           onContextMenu={onContextMenu}
         />
       </Row>
-      {/* مودال اطلاعه به کاربر */}
-      {/* <Modal
-        isOpen={modalBasic}
-        toggle={() => setModalBasic(!modalBasic)}
-      >
-        <ModalHeader>
-          یک پیام از طرف طراح محصول (فاطمه کاظمی) :
-        </ModalHeader>
-        <ModalBody>
-          کاربر عزیزی که الان این صفحه رو باز کردی
-          <br />
-          شاید برات سوال باشه که چرا این صفحه انگلیسیه. خب باید بگم داده های این صفحه کاملا داره از وب سرویس خونده میشه و من هیچ دخالتی در ویرایش داده ها ندارم
-          <br />
-          میتونم اونو برات بصورت استاتیک و فارسی بزارم ولی دیگه برات این صفحه کاربردی نداره چون اصل استفاده ی این صفحه نمونه ی وب سرویس و فراخوانی داده از اونه
-          <br />
-          منم بخاطر همین بهش هیچ دست نمیزنم
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            color="primary"
-            onClick={() => setModalBasic(false)}
-          >
-            اکی فهمیدم!
-          </Button>{' '}
-        </ModalFooter>
-      </Modal> */}
     </>
   );
 };

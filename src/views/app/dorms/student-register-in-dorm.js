@@ -147,8 +147,13 @@ const SignupSchema = Yup.object().shape({
 });
 
 const servicePath = 'http://localhost:8000';
-
-const instituteApiUrl = `${servicePath}/institute/`;
+const studentAPIUrl = `${servicePath}/api/`;
+const dormsApiUrl = `${servicePath}/institute/dorms/`;
+const studentDormsApiUrl = `${servicePath}/api/student_dorms_create/`;
+const dormTypeOptions = [
+  { value: '1', label: 'بدل عاشه' },
+  { value: '2', label: 'بدیل عاشه' },
+];
 
 const DormRegistration = (values) => {
   const initialValues = {
@@ -160,20 +165,20 @@ const DormRegistration = (values) => {
 
   const [data, setData] = useState([]);
   const [student, setStudent] = useState('');
-  const [institutes, setInstitutes] = useState([]);
+  const [dorms, setDorms] = useState([]);
 
   const [isNext, setIsNext] = useState(true);
-  const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
+  const fetchDorms = async () => {
+    const response = await axios.get(dormsApiUrl);
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name,
     }));
-    setInstitutes(updatedData);
+    setDorms(updatedData);
   };
 
   useEffect(() => {
-    fetchInstitutes();
+    fetchDorms();
   }, []);
 
   const handleClick = (event) => {
@@ -186,19 +191,38 @@ const DormRegistration = (values) => {
 
   const handleSearch = () => {
     //search student by student id in database
-    console.log(`http://localhost:8000/api/?student_id=${data}`);
-    axios.get(`http://localhost:8000/api/?student_id=${data}`).then((res) => {
+    console.log(`${studentAPIUrl}?student_id=${data}`);
+    axios.get(`${studentAPIUrl}?student_id=${data}`).then((res) => {
       setStudent(res.data);
     });
   };
   const handleRegister = (values) => {
-    const institute = values.institute.value;
-    const student_id = student[0].student_id;
-    const educationlaYear = values.educationlaYear;
+    // const dorm_id = values.dorm.value;
+    // const student_id = student[0].student_id;
+    // const dorm_type = values.dormType.value;
+    // const educational_year = values.educationalYear;
+    // console.log(dorm_id);
+    // console.log(student_id);
+    // console.log(dorm_type);
+    // console.log(educational_year);
+    const data = {
+      dorm_id: values.dorm.value,
+      student_id: student[0].student_id,
+      dorm_type: values.dormType.value,
+      educational_year: values.educationalYear,
+      user_id: 1,
+    };
 
-    console.log(institute);
-    console.log(student_id);
-    console.log(educationlaYear);
+    console.log(data);
+    axios
+      .post(`${studentDormsApiUrl}`, data)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -336,11 +360,7 @@ const DormRegistration = (values) => {
                             </Row>
                           </div>
                         ) : (
-                          <div
-                            className={
-                              student == '' ? 'd-none' : 'border rounded'
-                            }
-                          >
+                          <div>
                             <Label>
                               <h6 className="mt-5 m-5">
                                 {<IntlMessages id="dorm.SearchResult" />}
@@ -372,35 +392,54 @@ const DormRegistration = (values) => {
                               <IntlMessages id="forms.InstituteLabel" />
                             </Label>
                             <FormikReactSelect
-                              name="institute"
-                              id="institute"
-                              value={values.institute}
-                              options={institutes}
+                              name="dorm"
+                              id="dorm"
+                              value={values.dorm}
+                              options={dorms}
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
                               required
                             />
 
-                            {errors.institute && touched.institute ? (
+                            {errors.dorm && touched.dorm ? (
                               <div className="invalid-feedback d-block">
-                                {errors.institute}
+                                {errors.dorm}
                               </div>
                             ) : null}
                           </FormGroup>
-                          <FormGroup className="form-group has-float-label mt-5">
+                          <FormGroup className="form-group has-float-label">
+                            <Label>
+                              <IntlMessages id="dorm.BuildingTypeLabel" />
+                            </Label>
+                            <FormikReactSelect
+                              name="dormType"
+                              id="dormType"
+                              value={values.dormType}
+                              options={dormTypeOptions}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                              required
+                            />
+                            {errors.dormType && touched.dormType ? (
+                              <div className="invalid-feedback d-block">
+                                {errors.dormType}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+                          <FormGroup className="form-group has-float-label">
                             <Label>
                               <IntlMessages id="forms.educationYear" />
                             </Label>
                             <Field
                               type="number"
                               className="form-control"
-                              name="educationlaYear"
+                              name="educationalYear"
                               required
                             />
-                            {errors.educationlaYear &&
-                            touched.educationlaYear ? (
+                            {errors.educationalYear &&
+                            touched.educationalYear ? (
                               <div className="invalid-feedback d-block">
-                                {errors.educationlaYear}
+                                {errors.educationalYear}
                               </div>
                             ) : null}
                           </FormGroup>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -18,6 +19,9 @@ import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
+
+const servicePath = 'http://localhost:8000';
+const dormCreateAPI = `${servicePath}/institute/dorms_create/`;
 
 import {
   FormikReactSelect,
@@ -187,18 +191,6 @@ const SignupSchema = Yup.object().shape({
 
 const DormRegistration = (values) => {
   const initialValues = {
-    TazkiraType: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    LevelOfEducation: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    Status: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
     Gender: {
       value: '0',
       label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
@@ -219,28 +211,54 @@ const DormRegistration = (values) => {
       value: '',
       label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
     },
-    C_Province: {
-      value: '',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-
-    IdCardPageNo: '0',
-    IdCardJoldNo: '0',
   };
+
+  const [dormTypeOption, setDormTypeOption] = useState('');
 
   const onRegister = (values) => {
     console.log(' The Values', values);
-    if (errors) {
-      return;
-    }
-    if (!values) {
-      return;
-    }
+    // if (errors) {
+    //   console.log('error');
+
+    //   return;
+    // }
+    // if (!values) {
+    //   console.log('empty');
+
+    //   return;
+    // }
     //insert data to database
+
+    if (values.BuildingType.value == '1') {
+      setDormTypeOption(values.PublicBuildingOwner.value);
+    } else {
+      setDormTypeOption(values.PrivateBuildingType.value);
+    }
+
+    //REMOVE USER FROM HERE LATTER, IT'S JUST FOR TESTING PURPOSE
+
+    const data = {
+      name: values.Name,
+      provence: values.Province.value,
+      district: values.District,
+      gender_type: values.Gender.value,
+      dorm_type: values.BuildingType.value,
+      dorm_type_option: dormTypeOption,
+      building_qty: values.TotalBuildingNo,
+      rooms_qty: values.TotalRooms,
+      kitchen_qty: values.TotalKitchens,
+      toilet_qty: values.Toilet,
+      dorm_quota: values.Quota,
+      dorm_capacity: values.Capicity,
+      user_id: 1,
+    };
+
     axios
-      .post('http://localhost:3000/api/dorms', values)
+      .post(dormCreateAPI, data)
       .then((response) => {
         console.log(response);
+
+        // window.location.reload(false);
       })
       .catch((error) => {
         console.log(error);
@@ -278,7 +296,11 @@ const DormRegistration = (values) => {
                       <Label>
                         <IntlMessages id="dorm.CapicityLabel" />
                       </Label>
-                      <Field className="form-control" name="Capicity" />
+                      <Field
+                        className="form-control"
+                        name="Capicity"
+                        type="number"
+                      />
                       {errors.Capicity && touched.Capicity ? (
                         <div className="invalid-feedback d-block">
                           {errors.Capicity}
@@ -360,7 +382,11 @@ const DormRegistration = (values) => {
                       <Label>
                         <IntlMessages id="dorm.TotalKitchensLabel" />
                       </Label>
-                      <Field className="form-control" name="TotalKitchens" />
+                      <Field
+                        className="form-control"
+                        name="TotalKitchens"
+                        type="number"
+                      />
                       {errors.TotalKitchens && touched.TotalKitchens ? (
                         <div className="invalid-feedback d-block">
                           {errors.TotalKitchens}
@@ -416,7 +442,11 @@ const DormRegistration = (values) => {
                       <Label>
                         <IntlMessages id="dorm.QuotaLabel" />
                       </Label>
-                      <Field className="form-control" name="Quota" />
+                      <Field
+                        className="form-control"
+                        name="Quota"
+                        type="number"
+                      />
                       {errors.Quota && touched.Quota ? (
                         <div className="invalid-feedback d-block">
                           {errors.Quota}
@@ -429,7 +459,11 @@ const DormRegistration = (values) => {
                       <Label>
                         <IntlMessages id="dorm.TotalBuildingNoLabel" />
                       </Label>
-                      <Field className="form-control" name="TotalBuildingNo" />
+                      <Field
+                        className="form-control"
+                        name="TotalBuildingNo"
+                        type="number"
+                      />
                       {errors.TotalBuildingNo && touched.TotalBuildingNo ? (
                         <div className="invalid-feedback d-block">
                           {errors.TotalBuildingNo}
@@ -442,7 +476,11 @@ const DormRegistration = (values) => {
                       <Label>
                         <IntlMessages id="dorm.TotalRoomsLabel" />
                       </Label>
-                      <Field className="form-control" name="TotalRooms" />
+                      <Field
+                        className="form-control"
+                        name="TotalRooms"
+                        type="number"
+                      />
                       {errors.TotalRooms && touched.TotalRooms ? (
                         <div className="invalid-feedback d-block">
                           {errors.TotalRooms}
@@ -455,7 +493,11 @@ const DormRegistration = (values) => {
                       <Label>
                         <IntlMessages id="dorm.ToiletLabel" />
                       </Label>
-                      <Field className="form-control" name="Toilet" />
+                      <Field
+                        className="form-control"
+                        name="Toilet"
+                        type="number"
+                      />
                       {errors.Toilet && touched.Toilet ? (
                         <div className="invalid-feedback d-block">
                           {errors.Toilet}

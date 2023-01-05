@@ -241,6 +241,7 @@ const ListPageHeading = ({
                     select={(opt) => {
                       setSelectedInstitute(opt);
                     }}
+                    placeholder={messages['search.institute.name']}
                   />
                 </div>
               </div>
@@ -254,6 +255,7 @@ const ListPageHeading = ({
                   changeProvinceBy('all');
                   document.getElementById('district').value = '';
                   document.getElementById('search').value = '';
+                  setSelectedInstitute('');
                   onResetClick(!reset);
                 }}
               >

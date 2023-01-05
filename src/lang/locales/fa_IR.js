@@ -1033,6 +1033,7 @@ module.exports = {
   institute: 'انستیتوت',
   'inst.register.title': 'د انستیتوت ثبت کول / ثبت انستیتوت',
   'inst.type': 'د انستیتوت ډول / نوعیت انستیتوت',
+  'search.institute.name': 'د انستیتوت نوم ',
 
   'subject.name': 'د مضمون نوم / نام مضمون',
   'subject.english_name': 'د مضمون انگلیسی نوم / نام انگلیسی مضمون',

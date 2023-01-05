@@ -295,6 +295,11 @@ const data = [
         label: 'subject.register',
         to: `${adminRoot}/subjects/register`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'subject.curriculum',
+        to: `${adminRoot}/subjects/curriculum`,
+      },
     ],
   },
   {

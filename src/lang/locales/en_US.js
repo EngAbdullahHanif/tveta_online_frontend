@@ -877,6 +877,14 @@ module.exports = {
   'student.transferDateLabel': 'Transfer Date',
   'student.transferDocuments': 'Upgrading Documents',
 
+  // Curriculum
+  'subject.curriculum': 'Curriculum',
+  'curriculum.curriculumTittle': 'Curriculum',
+  'curriculum.departmentIdLabel': 'Department Id',
+  'curriculum.subjectdLabel': 'Subject',
+  'curriculum.classLabel': 'Class',
+  'curriculum.eduactionalYearLabel': 'Educational Year',
+
   // Subject
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',

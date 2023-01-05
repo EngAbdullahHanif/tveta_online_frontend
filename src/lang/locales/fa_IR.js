@@ -897,7 +897,14 @@ module.exports = {
   'student.transferTitle': 'د شاګرد تبدیلی/ تبدیلی شاگرد',
   'student.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
   'student.transferDocuments': 'د تبدیلی اسناد / اسناد تبدیلی',
-  
+
+  // Curriculum
+  'subject.curriculum': 'د نصاب ثبت / ثبت نصاب',
+  'curriculum.curriculumTittle': 'د نصاب ثبت/ ثبت نصاب',
+  'curriculum.departmentIdLabel': 'دیپارتمنت',
+  'curriculum.subjectdLabel': 'مضمون',
+  'curriculum.classLabel': 'ټولګی/ صنف',
+  'curriculum.eduactionalYearLabel': 'تعلیمی کال/سال تعلیمی',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',

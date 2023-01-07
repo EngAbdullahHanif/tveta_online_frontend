@@ -4,9 +4,9 @@ import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from 'views/app/students/bio/student-list/StudentListHeading';
+import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
 
-import ListPageListing from 'views/app/students/bio/student-list/StudentListCatagory';
+import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {

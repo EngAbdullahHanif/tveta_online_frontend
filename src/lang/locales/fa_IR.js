@@ -1069,4 +1069,5 @@ module.exports = {
   'dorm.register': 'د لیلی ثبت',
 
   'forms.educationYear': 'تحصیلی کال / سال تحصیلی',
+  educationYear: 'تحصیلی کال ',
 };

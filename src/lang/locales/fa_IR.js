@@ -175,6 +175,7 @@ module.exports = {
   'menu.teacher-transfer': ' د استاد تبدیلی/ تبدیلی استاد',
   'menu.institute-upgrade': 'د انستیتوت/ ښونخي/ مکتب ارتقا',
   'menu.student-transfer': 'د شاگرد تبدیلی/ تبدیلی شاگرد',
+  'menu.Institute-details': 'مشخصات انستیتوت',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -905,6 +906,17 @@ module.exports = {
   'curriculum.subjectdLabel': 'مضمون',
   'curriculum.classLabel': 'ټولګی/ صنف',
   'curriculum.eduactionalYearLabel': 'تعلیمی کال/سال تعلیمی',
+
+  //Institute Details Page
+  'institute.detailsTitle': 'نور مالومات/ معلومات بیشتر',
+  'institute.totalStudents': 'د شاګردانو تعداد/ تعداد شاگردان',
+  'institute.totalStudentsMale': 'نارینه/ مذکر',
+  'institute.totalStudentsFemale': 'ښّځینه/مونث',
+  'institute.totalTeachers': 'د استادانو تعداد/ تعداد استادان',
+  'institute.totalDepartments': 'ډیپارتمنتونه/ دیپارتمنت ها',
+  'institute.Greduated_12': 'دوولسم پاس/ فارغین دوازده',
+  'institute.Greduated_14': 'څورلسم پاس/ فارغین چهارده',
+  'menu.dorm-details': 'معلومات اضافی لیلیه',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',

@@ -259,6 +259,11 @@ const data = [
         label: 'menu.institute-upgrade',
         to: `${adminRoot}/institutes/institute-upgrade`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.Institute-details',
+        to: `${adminRoot}/institutes/institute-details`,
+      },
     ],
   },
   {
@@ -281,6 +286,11 @@ const data = [
         icon: 'simple-icon-plus',
         label: 'menu.student-register-in-dorm',
         to: `${adminRoot}/dorms/student-register`,
+      },
+      {
+        icon: 'simple-icon-check',
+        label: 'menu.dorm-details',
+        to: `${adminRoot}/dorms/details`,
       },
     ],
   },

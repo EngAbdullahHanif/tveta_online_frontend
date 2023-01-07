@@ -166,6 +166,8 @@ module.exports = {
   'menu.teacher-transfer': 'Teacher Transfer',
   'menu.institute-upgrade': 'Institute/School Upgrade',
   'menu.student-transfer': 'Student Transfer',
+  'menu.Institute-details': 'Institute Details',
+  'menu.dorm-details': 'Dorm Details',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -884,6 +886,16 @@ module.exports = {
   'curriculum.subjectdLabel': 'Subject',
   'curriculum.classLabel': 'Class',
   'curriculum.eduactionalYearLabel': 'Educational Year',
+
+  //Institute Details Page
+  'institute.detailsTitle': 'More Details',
+  'institute.totalStudents': 'Total Students',
+  'institute.totalStudentsMale': 'Male',
+  'institute.totalStudentsFemale': 'Female',
+  'institute.totalTeachers': 'Total Teachers',
+  'institute.totalDepartments': 'Total Departments',
+  'institute.Greduated_12': '12th Class Graduated',
+  'institute.Greduated_14': '14th Class Graduated',
 
   // Subject
   // // Subject

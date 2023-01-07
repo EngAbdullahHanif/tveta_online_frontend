@@ -15,7 +15,9 @@ const InstitueCreate = React.lazy(() =>
 const InstituteUpgrade = React.lazy(() =>
   import(/* webpackChunkName: "institute-upgrade" */ './institute-upgrade')
 );
-
+const InstituteDetails = React.lazy(() =>
+  import(/* webpackChunkName: "institute-details" */ './institute-details')
+);
 const Institues = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -37,6 +39,10 @@ const Institues = ({ match }) => (
       <Route
         path={`${match.url}/institute-upgrade`}
         render={(props) => <InstituteUpgrade {...props} />}
+      />
+      <Route
+        path={`${match.url}/institute-details`}
+        render={(props) => <InstituteDetails {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

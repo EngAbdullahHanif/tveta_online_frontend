@@ -21,7 +21,7 @@ const getIndex = (value, arr, prop) => {
 const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
-const instituteApiUrl = `${servicePath}/students/dorm/`;
+const instituteApiUrl = `${servicePath}/institute/dorms/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },

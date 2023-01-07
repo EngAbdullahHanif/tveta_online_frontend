@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import './AutoComplete.css';
 import IntlMessages from 'helpers/IntlMessages';
 import { injectIntl } from 'react-intl';
-const Autocomplete = ({ inst, intl }) => {
+const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
   //   const { messages } = intl;
   const [searchtext, setSearchtext] = useState('');
   const [suggest, setSuggest] = useState([]);
   const [resfound, setResfound] = useState(true);
+
   const handleChange = (e) => {
     let searchval = e.target.value;
     let suggestion = [];
@@ -23,6 +24,7 @@ const Autocomplete = ({ inst, intl }) => {
 
   const suggestedText = (value) => {
     console.log(value, 'suggested institute in search bar');
+    ChangeSelectedOption(value);
     setSearchtext(value);
     setSuggest([]);
   };
@@ -52,11 +54,11 @@ const Autocomplete = ({ inst, intl }) => {
     );
   };
   return (
-    <div className="container">
+    <div className="">
       <div>
         <input
           type="text"
-          placeholder=" انستیتوت  "
+          placeholder={placeholder}
           className="search"
           value={searchtext}
           onChange={handleChange}
@@ -65,7 +67,12 @@ const Autocomplete = ({ inst, intl }) => {
       <div
         className="searchcontainer mr-1 float-md-left  mb-1"
         color="outline-dark"
-        style={{ overflowY: 'auto', maxHeight: '200px' }}
+        style={{
+          overflowY: 'auto',
+          maxHeight: '200px',
+          width: '200px',
+          zIndex: 4,
+        }}
       >
         {getSuggestions()}
       </div>

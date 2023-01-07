@@ -12,7 +12,7 @@ import Pagination from '../../../../../containers/pages/Pagination';
 import ContextMenuContainer from '../../../../../containers/pages/ContextMenuContainer';
 import DataListView from '../../../../../containers/pages/DataListView';
 import ImageListView from '../../../../../containers/pages/ImageListView';
-import TeacherListBody from './TeacherListBody';
+import KankorStudentListBody from './KankorStudentListBody';
 
 function collect(props) {
   return { data: props.data };
@@ -39,13 +39,13 @@ const ListPageListing = ({
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((teacher) => {
+        {items.map((student) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
-                key={teacher.id}
-                teacher={teacher}
-                isSelect={selectedItems.includes(teacher.id)}
+                key={student.id}
+                student={student}
+                isSelect={selectedItems.includes(student.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -53,10 +53,10 @@ const ListPageListing = ({
           }
           if (displayMode === 'thumblist') {
             return (
-              <TeacherListBody
-                key={teacher.id}
-                teacher={teacher}
-                isSelect={selectedItems.includes(teacher.id)}
+              <KankorStudentListBody
+                key={student.id}
+                student={student}
+                isSelect={selectedItems.includes(student.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -64,9 +64,9 @@ const ListPageListing = ({
           }
           return (
             <DataListView
-              key={teacher.id}
-              teacher={teacher}
-              isSelect={selectedItems.includes(teacher.id)}
+              key={student.id}
+              student={student}
+              isSelect={selectedItems.includes(student.id)}
               onCheckItem={onCheckItem}
               collect={collect}
             />

@@ -19,7 +19,7 @@ function collect(props) {
 }
 
 const ListPageListing = ({
-  items,
+  dorms,
   displayMode,
   selectedItems,
   onCheckItem,
@@ -34,18 +34,18 @@ const ListPageListing = ({
   return (
     <>
       <Row>
-        {items.length === 0 ? (
+        {dorms.length === 0 ? (
           <div className="no-result">
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((dorm) => {
+        {dorms.map((dorm) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
-                key={institute.id}
-                institute={institute}
-                isSelect={selectedItems.includes(institute.id)}
+                key={dorm.id}
+                dorm={dorm}
+                isSelect={selectedItems.includes(dorm.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -64,9 +64,9 @@ const ListPageListing = ({
           }
           return (
             <DataListView
-              key={institute.id}
-              institute={institute}
-              isSelect={selectedItems.includes(institute.id)}
+              key={dorm.id}
+              dorm={dorm}
+              isSelect={selectedItems.includes(dorm.id)}
               onCheckItem={onCheckItem}
               collect={collect}
             />

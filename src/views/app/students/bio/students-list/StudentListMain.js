@@ -4,9 +4,9 @@ import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from 'views/app/students/bio/student-list/StudentListHeading';
+import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
 
-import ListPageListing from 'views/app/students/bio/student-list/StudentListCatagory';
+import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -21,6 +21,8 @@ const getIndex = (value, arr, prop) => {
 const servicePath = 'http://localhost:8000';
 const apiUrl = `${servicePath}/cakes/paging`;
 const studentApiUrl = `${servicePath}/api/`;
+const studentInstituteApiUrl = `${servicePath}/api/student_institutes/`;
+const instituteApiUrl = `${servicePath}/institute/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -92,7 +94,7 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
   },
   {
-    column: '12',
+    column: 'هرات',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
   },
   {
@@ -203,6 +205,8 @@ const ThumbListPages = ({ match }) => {
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
   const [institutes, setInstitutes] = useState();
+  const [institute, setInstitute] = useState('');
+
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
@@ -225,7 +229,20 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     async function fetchData() {
-      if (
+      console.log('institute', institute);
+      console.log('province', province);
+      console.log('district', district);
+      console.log('studentId', studentId);
+      console.log('selectedGenderOption', selectedGenderOption);
+
+      if (institute !== '') {
+        const res = await axios.get(
+          `${studentInstituteApiUrl}?institute_id=${institute.id}`
+        );
+        setItems(res.data);
+        setTotalItemCount(res.data.totalItem);
+        setIsLoaded(true);
+      } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'
       ) {
@@ -236,7 +253,7 @@ const ThumbListPages = ({ match }) => {
         }
         axios
           .get(
-            `${studentApiUrl}?std_id=${studentId}&current_district=${district}`
+            `${studentApiUrl}?student_id=${studentId}&current_district=${district}`
           )
           .then((res) => {
             console.log('res.data', res.data);
@@ -244,7 +261,7 @@ const ThumbListPages = ({ match }) => {
           })
           .then((data) => {
             console.log(
-              `${studentApiUrl}?std_id=${studentId}&current_district=${district}`
+              `${studentApiUrl}?student_id=${studentId}&current_district=${district}`
             );
 
             setItems(data);
@@ -255,14 +272,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedProvinceOption.column === 'all') {
         axios
           .get(
-            `${studentApiUrl}?std_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`
+            `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${studentApiUrl}?std_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`
+              `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`
             );
 
             setItems(data);
@@ -273,14 +290,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedGenderOption.column === 'all') {
         axios
           .get(
-            `${studentApiUrl}?std_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            `${studentApiUrl}?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${studentApiUrl}?std_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+              `${studentApiUrl}?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
             );
 
             setItems(data);
@@ -292,14 +309,14 @@ const ThumbListPages = ({ match }) => {
         axios
           // get data from localhost:8000/api/student
           .get(
-            `${studentApiUrl}?std_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${studentApiUrl}?std_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+              `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
             );
             setItems(data);
 
@@ -321,23 +338,16 @@ const ThumbListPages = ({ match }) => {
     province,
     district,
     rest,
+    institute,
   ]);
 
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
+    const response = await axios.get(instituteApiUrl);
     const updatedData = await response.data.map((item) => ({
       id: item.id,
       name: item.name,
     }));
-    // convert updateData to object
-    // const updatedDataObject = Object.assign(
-    //   {},
-    //   ...updatedData.map((item) => ({ name: item.name }))
-    // );
-    // console.log('updatedDataObject', updatedDataObject);
-
     setInstitutes(updatedData);
-    // setInstitutes(updatedData);
   };
 
   useEffect(() => {
@@ -485,6 +495,7 @@ const ThumbListPages = ({ match }) => {
           onResetClick={setRest}
           reset={rest}
           institutes={institutes}
+          onInstituteSelect={setInstitute}
         />
 
         <ListPageListing

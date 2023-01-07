@@ -29,6 +29,9 @@ const AttendanceRegistration = React.lazy(() =>
 const StudentProfile = React.lazy(() =>
   import(/* webpackChunkName: "student-profile" */ './bio/student-profile')
 );
+const StudentTransfer = React.lazy(() =>
+  import(/* webpackChunkName: "student-transfer" */ './student-transfer')
+);
 
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -60,9 +63,13 @@ const Students = ({ match }) => (
         path={`${match.url}/attendance-register`}
         render={(props) => <AttendanceRegistration {...props} />}
       />
-      <Route
+      {/* <Route
         path={`${match.url}/:studentId`}
         render={(props) => <StudentProfile {...props} />}
+      /> */}
+      <Route
+        path={`${match.url}/student-transfer`}
+        render={(props) => <StudentTransfer {...props} />}
       />
 
       {/* <ProtectedRoute

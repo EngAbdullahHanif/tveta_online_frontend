@@ -172,6 +172,10 @@ module.exports = {
   'menu.student-register-in-dorm': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
   'menu.teacher-HR-evaluation': 'د بشری منابع ارزونه/ ارزیابی منابع بشری',
   'menu.teacher-promotion-demotion': 'مکافات / مجازات',
+  'menu.teacher-transfer': ' د استاد تبدیلی/ تبدیلی استاد',
+  'menu.institute-upgrade': 'د انستیتوت/ ښونخي/ مکتب ارتقا',
+  'menu.student-transfer': 'د شاگرد تبدیلی/ تبدیلی شاگرد',
+  'menu.Institute-details': 'مشخصات انستیتوت',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -866,7 +870,55 @@ module.exports = {
   'teacher.PromotionDemotionTitle': 'مکافات /مجازات',
   'teacher.promotionLabel': 'مکافات',
   'teacher.demotionLabel': 'مجازات',
+
+  // Teacher Transfer
   'teacher.Transfer': 'داستاد تبدیلي/ تبدیلی استاد',
+  'treacher.TansferTitle': 'تبدیلی',
+  'search.teacherIdSearchLabel':
+    'د استاد آیډی ولیکئ/ لطفا آیدی استاد را وارد نماید',
+  'button.Teacher-transfer': 'تبدیل',
+  'teacher.TransferNewInfoTittle': 'نوی انستیتوت/ انستیتوت جدید',
+  'teacher.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
+  'teacher.fileUploadBttn': 'آپلود',
+  'teacher.transferDocuments': 'د تبدیلی اسناد/ اسناد تبدیلي',
+
+  // Institute Upgrade
+  'institute.UpgradeTitle': 'د انستیتوت ارتقا/ ارتقای انستیتوت',
+  'search.instituteIdSearchLabel':
+    'د انستیتوت نوم ولیکئ/لطفا نام انستیتوت را وارد نماید',
+  'button.institute-upgrade': 'ارتقا',
+  'forms.upgradingOptionsLabel': 'د ارتقا ډول/ نوعیت ارتقا',
+  'institute.upgradingOptions_1': 'انستیتوت',
+  'institute.upgradingOptions_2': 'ځانګړي زده کړې/ تعلیمات خاص',
+  'institute.upgradingOptions_3': 'انستیتوت خصوصی/ خصوصی انستیتوت',
+  'institute.newNameLabel': 'نوی نوم/ نام جدید',
+  'institute.upgradeDateLabel': 'د ارتقا نیټه/تاریخ ارتقا',
+  'institute.upgradingDocuments': 'د ارتقا اسناد/ اسناد ارتقا',
+
+  // Student Transfer
+  'student.buttonTransfer': 'تبدیل',
+  'student.transferTitle': 'د شاګرد تبدیلی/ تبدیلی شاگرد',
+  'student.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
+  'student.transferDocuments': 'د تبدیلی اسناد / اسناد تبدیلی',
+
+  // Curriculum
+  'subject.curriculum': 'د نصاب ثبت / ثبت نصاب',
+  'curriculum.curriculumTittle': 'د نصاب ثبت/ ثبت نصاب',
+  'curriculum.departmentIdLabel': 'دیپارتمنت',
+  'curriculum.subjectdLabel': 'مضمون',
+  'curriculum.classLabel': 'ټولګی/ صنف',
+  'curriculum.eduactionalYearLabel': 'تعلیمی کال/سال تعلیمی',
+
+  //Institute Details Page
+  'institute.detailsTitle': 'نور مالومات/ معلومات بیشتر',
+  'institute.totalStudents': 'د شاګردانو تعداد/ تعداد شاگردان',
+  'institute.totalStudentsMale': 'نارینه/ مذکر',
+  'institute.totalStudentsFemale': 'ښّځینه/مونث',
+  'institute.totalTeachers': 'د استادانو تعداد/ تعداد استادان',
+  'institute.totalDepartments': 'ډیپارتمنتونه/ دیپارتمنت ها',
+  'institute.Greduated_12': 'دوولسم پاس/ فارغین دوازده',
+  'institute.Greduated_14': 'څورلسم پاس/ فارغین چهارده',
+  'menu.dorm-details': 'معلومات اضافی لیلیه',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',

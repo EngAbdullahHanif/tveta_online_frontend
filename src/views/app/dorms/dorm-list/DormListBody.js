@@ -27,10 +27,14 @@ const DormListBody = ({ dorm, isSelect, collect, onCheckItem }) => {
               <NavLink to={`${dorm.id}`} className="">
                 <p className="list-item-heading mb-1 truncate">
                   <span className="mr-5">{dorm.id}</span>
-                  {dorm.teacher_id.name}
+                  {dorm.name}
                 </p>
               </NavLink>
-              <p className="mb-1 text-small">{dorm.institute_id.name}</p>
+              <p className="mb-1 text-small">{dorm.province}</p>
+              <p className="mb-1 text-small">{dorm.province}</p>
+              <p className="mb-1 text-small">{dorm.capacity}</p>
+              <p className="mb-1 text-small">{dorm.quota}</p>
+              <p className="mb-1 text-small">{dorm.building_type}</p>
             </div>
           </div>
         </Card>

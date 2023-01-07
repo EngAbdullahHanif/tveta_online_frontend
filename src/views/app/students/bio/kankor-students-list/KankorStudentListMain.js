@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './InstituteListHeading';
+import ListPageHeading from 'views/app/students/bio/kankor-students-list/KankorStudentListHeading';
 
-import ListPageListing from './InstituteListCatagory';
+import ListPageListing from 'views/app/students/bio/kankor-students-list/KankorStudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -20,8 +19,9 @@ const getIndex = (value, arr, prop) => {
 };
 
 const servicePath = 'http://localhost:8000';
-
 const apiUrl = `${servicePath}/cakes/paging`;
+const studentApiUrl = `${servicePath}/api/kankorResults/`;
+const studentInstituteApiUrl = `${servicePath}/api/student_institutes/`;
 const instituteApiUrl = `${servicePath}/institute/`;
 
 const orderOptions = [
@@ -29,7 +29,13 @@ const orderOptions = [
   { column: 'category', label: 'Category' },
   { column: 'status', label: 'Status' },
 ];
+const pageSizes = [10, 20, 40, 80];
 
+const categories = [
+  { label: 'Cakes', value: 'Cakes', key: 0 },
+  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
+  { label: 'Desserts', value: 'Desserts', key: 2 },
+];
 const genderOptions = [
   {
     column: 'all',
@@ -88,7 +94,7 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
   },
   {
-    column: '12',
+    column: 'هرات',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
   },
   {
@@ -180,14 +186,6 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
-const pageSizes = [4, 8, 12, 20];
-
-const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
-];
-
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -206,12 +204,13 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
-  // const [institutes, setInstitutes] = useState([]);
-  const [instituteId, setInstituteId] = useState('');
+  const [institutes, setInstitutes] = useState();
+  const [institute, setInstitute] = useState('');
+
+  const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
-  const [institutes, setInstitutes] = useState([]);
-  const [institute, setInstitute] = useState('');
+  const [educationYear, setEducationYear] = useState('');
   const [selectedGenderOption, setSelectedGenderOption] = useState({
     column: 'all',
     label: 'جنیست',
@@ -220,22 +219,36 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
-
   useEffect(() => {
     setCurrentPage(1);
   }, [
     selectedPageSize,
-    selectedOrderOption,
     selectedOrderOption,
     selectedGenderOption,
     selectedProvinceOption,
   ]);
 
   useEffect(() => {
+    console.log('studentId', studentId);
     async function fetchData() {
+      console.log('institute', institute);
+      console.log('province', province);
+      console.log('district', district);
+      console.log('studentId', studentId);
+      console.log('selectedGenderOption', selectedGenderOption);
+
+      // if (educationYear !== '') {
+      //   const res = await axios.get(
+      //     `${studentApiUrl}?&educational_year=${educationYear}`
+      //   );
+      //   setItems(res.data);
+      //   setTotalItemCount(res.data.totalItem);
+      //   setIsLoaded(true);
+      // } else
       if (institute !== '') {
-        const res = await axios.get(`${instituteApiUrl}?id=${institute.id}`);
-        console.log('res', res.data);
+        const res = await axios.get(
+          `${studentApiUrl}?Institute=${institute.id}&educational_year=${educationYear}&province=${province}&district=${district}&student_id=${studentId}`
+        );
         setItems(res.data);
         setTotalItemCount(res.data.totalItem);
         setIsLoaded(true);
@@ -245,18 +258,21 @@ const ThumbListPages = ({ match }) => {
       ) {
         if (rest == true) {
           setDistrict('');
-          setInstituteId('');
+          setEducationYear('');
+          setStudentId('');
           setRest(false);
         }
         axios
-          .get(`${instituteApiUrl}?id=${instituteId}&district=${district}`)
+          .get(
+            `${studentApiUrl}?educational_year=${educationYear}&id=${studentId}&district=${district}`
+          )
           .then((res) => {
             console.log('res.data', res.data);
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${instituteApiUrl}?id=${instituteId}&district=${district}`
+              `${studentApiUrl}?educational_year=${educationYear}&id=${studentId}&district=${district}`
             );
 
             setItems(data);
@@ -267,14 +283,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedProvinceOption.column === 'all') {
         axios
           .get(
-            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
+            `${studentApiUrl}?id=${studentId}&gender=${selectedGenderOption.column}&district=${district}&educational_year=${educationYear}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
+              `${studentApiUrl}?id=${studentId}&gender=${selectedGenderOption.column}&district=${district}&educational_year=${educationYear}`
             );
 
             setItems(data);
@@ -285,14 +301,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedGenderOption.column === 'all') {
         axios
           .get(
-            `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
+            `${studentApiUrl}?id=${studentId}&province=${selectedProvinceOption.column}&district=${district}&educational_year=${educationYear}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
+              `${studentApiUrl}?id=${studentId}&province=${selectedProvinceOption.column}&district=${district}&educational_year=${educationYear}`
             );
 
             setItems(data);
@@ -300,18 +316,25 @@ const ThumbListPages = ({ match }) => {
             setTotalItemCount(data.totalItem);
             setIsLoaded(true);
           });
+      } else if (educationYear !== '') {
+        const res = await axios.get(
+          `${studentApiUrl}?&educational_year=${educationYear}`
+        );
+        setItems(res.data);
+        setTotalItemCount(res.data.totalItem);
+        setIsLoaded(true);
       } else {
         axios
           // get data from localhost:8000/api/student
           .get(
-            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+            `${studentApiUrl}?id=${studentId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}&educational_year=${educationYear}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+              `${studentApiUrl}?id=${studentId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}&educational_year=${educationYear}`
             );
             setItems(data);
 
@@ -329,14 +352,16 @@ const ThumbListPages = ({ match }) => {
     search,
     selectedGenderOption,
     selectedProvinceOption,
-    instituteId,
+    studentId,
     province,
     district,
     rest,
     institute,
+    educationYear,
   ]);
+
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
+    const response = await axios.get(instituteApiUrl);
     const updatedData = await response.data.map((item) => ({
       id: item.id,
       name: item.name,
@@ -429,7 +454,7 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د انستیوت لست/ لست انستیتوت ها"
+          heading="د شاگرد لست/لست شاگردان"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -450,9 +475,9 @@ const ThumbListPages = ({ match }) => {
           selectedItemsLength={selectedItems ? selectedItems.length : 0}
           itemsLength={items ? items.length : 0}
           onSearchKey={(e) => {
-            setSearch(e.target.value.toLowerCase());
-            // if (e.key === 'Enter') {
-            // }
+            if (e.key === 'Enter') {
+              setSearch(e.target.value.toLowerCase());
+            }
           }}
           orderOptions={orderOptions}
           pageSizes={pageSizes}
@@ -473,7 +498,7 @@ const ThumbListPages = ({ match }) => {
           provinces={provinces}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
-              setInstituteId(e.target.value.toLowerCase());
+              setStudentId(e.target.value.toLowerCase());
             }
           }}
           onProvinceSearchKey={(e) => {
@@ -490,6 +515,11 @@ const ThumbListPages = ({ match }) => {
           reset={rest}
           institutes={institutes}
           onInstituteSelect={setInstitute}
+          onEducationYearSelect={(e) => {
+            if (e.key === 'Enter') {
+              setEducationYear(e.target.value);
+            }
+          }}
         />
 
         <ListPageListing

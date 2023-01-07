@@ -1,8 +1,8 @@
 .searchcontainer {
-  border-radius: 10px;
+  /* border-radius: 10px; */
   position: absolute;
-  width: 90%;
-  background-color: inherit;
+  /* width: 90%; */
+  /* background-color: inherit; */
 }
 
 .search {

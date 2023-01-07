@@ -53,12 +53,12 @@ const ListPageHeading = ({
   reset,
   institutes,
   onInstituteSelect,
+  onEducationYearSelect,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   const { messages } = intl;
   const [selectedInstitute, setSelectedInstitute] = useState('');
-  console.log('selectedInstitute12', selectedInstitute);
   onInstituteSelect(selectedInstitute);
   return (
     <Row>
@@ -169,13 +169,13 @@ const ListPageHeading = ({
                     {selectedGenderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {genderOptions.map((order, index) => {
+                    {genderOptions.map((gender, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeGenderBy(order.column)}
+                          onClick={() => changeGenderBy(gender.column)}
                         >
-                          {order.label}
+                          {gender.label}
                         </DropdownItem>
                       );
                     })}
@@ -214,30 +214,32 @@ const ListPageHeading = ({
                     onKeyPress={(e) => onDistrictSearchKey(e)}
                   />
                 </div>
-                {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
-                    name="keyword"
-                    id="search"
+                    name="student_id"
+                    id="student_id"
                     placeholder={messages['search.id']}
                     onKeyPress={(e) => onIdSearchKey(e)}
                   />
-                </div> */}
-                <div className="">
-                  <ReactAutoSugegst
-                    data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
-                    }}
-                    placeholder={messages['dorm.search.name']}
-                  />
                 </div>
 
-                {/* <Row>
-                <Colxx xs="12" sm="12" className="mb-4">
-                  <ReactAutoSugegst data={institutes} />
-                </Colxx>
-              </Row> */}
+                <ReactAutoSugegst
+                  data={institutes}
+                  select={(opt) => {
+                    setSelectedInstitute(opt);
+                  }}
+                  placeholder={messages['search.institute.name']}
+                />
+              </div>
+              <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                <input
+                  type="text"
+                  name="educationYear"
+                  id="educationYear"
+                  placeholder={messages['educationYear']}
+                  onKeyPress={(e) => onEducationYearSelect(e)}
+                />
               </div>
               <Button
                 color="outline-dark"
@@ -247,7 +249,9 @@ const ListPageHeading = ({
                   changeGenderBy('all');
                   changeProvinceBy('all');
                   document.getElementById('district').value = '';
-                  // document.getElementById('search').value = '';
+                  document.getElementById('student_id').value = '';
+                  document.getElementById('educationYear').value = '';
+                  onEducationYearSelect('');
                   setSelectedInstitute('');
                   onResetClick(!reset);
                 }}

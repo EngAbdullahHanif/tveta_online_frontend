@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { injectIntl } from 'react-intl';
-import ReactAutoSuggest from 'components/common/ReactAutoSuggest';
-import cakes from 'data/cakes';
 import Search from './search';
 
-// const pata = cakes.map((item) => {
-//   return { name: item.title };
-// });
-
-const ReactAutoSugegstExample = ({ intl, data }) => {
-  const [value, setValue] = useState('');
-  const { messages } = intl;
-
+const ReactAutoSugegstExample = ({ intl, data, select, placeholder }) => {
   var result = data.map((a) => a.name);
+  const [selectedOption, setSelectedOption] = useState({});
 
-  console.log('data400', result);
-  const [fatchedData] = useState(result);
+  //find the selected institute from result array
+  const findSelectedInstitute = (op) => {
+    const selectedInstitute = data.find((a) => a.name === op);
+    setSelectedOption(selectedInstitute);
+    select(selectedInstitute);
+    console.log('selectedOption', selectedOption);
+    console.log('selectedInstitute', selectedInstitute);
+  };
 
-  return <Search inst={result} />;
+  return (
+    <Search
+      inst={result}
+      placeholder={placeholder}
+      ChangeSelectedOption={(option) => {
+        findSelectedInstitute(option);
+      }}
+    />
+  );
 };
 
 export default injectIntl(ReactAutoSugegstExample);

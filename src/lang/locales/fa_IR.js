@@ -820,6 +820,8 @@ module.exports = {
   'search.studentIdSearchLabel':
     'د شاګرد  دننه کړئ / لطفا آیدی شاگرد را وراد نماید',
   'dorm.SearchResult': 'د لټون پایله/ نتیجه جستجو...',
+  'dorm.search.name': 'نوم',
+  'dorm.search.district': 'ولسوالی',
   'forms.NoData': 'پورتنۍ آیډي شتون نه لري/ آیدی فوق در سیستم موجود نیست',
   'forms.StudentResidentsPlace': 'د شاګرد استوګنځی/ محل بود و باش شاگرد',
 
@@ -1083,6 +1085,7 @@ module.exports = {
   institute: 'انستیتوت',
   'inst.register.title': 'د انستیتوت ثبت کول / ثبت انستیتوت',
   'inst.type': 'د انستیتوت ډول / نوعیت انستیتوت',
+  'search.institute.name': 'د انستیتوت نوم ',
 
   'subject.name': 'د مضمون نوم / نام مضمون',
   'subject.english_name': 'د مضمون انگلیسی نوم / نام انگلیسی مضمون',
@@ -1118,4 +1121,5 @@ module.exports = {
   'dorm.register': 'د لیلی ثبت',
 
   'forms.educationYear': 'تحصیلی کال / سال تحصیلی',
+  educationYear: 'تحصیلی کال ',
 };

@@ -32,6 +32,14 @@ const StudentProfile = React.lazy(() =>
 const StudentTransfer = React.lazy(() =>
   import(/* webpackChunkName: "student-transfer" */ './student-transfer')
 );
+const MarksDisplay = React.lazy(() =>
+  import(/* webpackChunkName: "marks-display" */ './marks-display-onesubject')
+);
+const MarksDisplayAllSubs = React.lazy(() =>
+  import(
+    /* webpackChunkName: "marks-display-allsubs" */ './marks-display-all-subs'
+  )
+);
 
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -70,6 +78,16 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/student-transfer`}
         render={(props) => <StudentTransfer {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/marks-display`}
+        render={(props) => <MarksDisplay {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/marks-display-allsubs`}
+        render={(props) => <MarksDisplayAllSubs {...props} />}
       />
 
       {/* <ProtectedRoute

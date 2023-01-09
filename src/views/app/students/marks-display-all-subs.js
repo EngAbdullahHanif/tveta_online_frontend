@@ -26,17 +26,17 @@ import {
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
 
-const LevelOfEdcationOptions = [
-  { value: '1', label: 'اصلی' },
-  { value: '2', label: 'فرعی' },
-];
+// const LevelOfEdcationOptions = [
+//   { value: '1', label: 'اصلی' },
+//   { value: '2', label: 'فرعی' },
+// ];
 
-const FieldOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
+// const FieldOptions = [
+//   { value: '14th', label: 'Computer Science' },
+//   { value: 'bachelor', label: 'Agriculture' },
+//   { value: 'master', label: 'BBA' },
+//   { value: 'PHD', label: 'Mechenical Engineering' },
+// ];
 
 const SemesterOptions = [
   { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
@@ -45,34 +45,34 @@ const SemesterOptions = [
   //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
 ];
 
-const SectionOptions = [
-  { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-];
+// const SectionOptions = [
+//   { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
+//   { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
+//   { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
+//   { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
+//   { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
+// ];
 
-const ClassOptions = [
-  { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-  { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-];
+// const ClassOptions = [
+//   { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
+//   { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
+//   { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
+//   { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
+//   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
+//   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
+// ];
 
 const StudyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
-const SubjectOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
+// const SubjectOptions = [
+//   { value: '14th', label: 'Computer Science' },
+//   { value: 'bachelor', label: 'Agriculture' },
+//   { value: 'master', label: 'BBA' },
+//   { value: 'PHD', label: 'Mechenical Engineering' },
+// ];
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -112,7 +112,7 @@ const initialValues = {
   },
 };
 
-const MarksRegistration = ({ match }) => {
+const AllSubjectsMarks = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [inNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -233,7 +233,9 @@ const MarksRegistration = ({ match }) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">{<IntlMessages id="marks.title" />}</h3>
+        <h3 className="mt-5 m-5">
+          {<IntlMessages id="marks.marksDisplayTitle" />}
+        </h3>
         <CardBody>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
@@ -349,27 +351,6 @@ const MarksRegistration = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5">
-                        <Label>
-                          <IntlMessages id="marks.SubjectLabel" />
-                        </Label>
-                        <FormikReactSelect
-                          name="subject"
-                          id="subject"
-                          value={values.subject}
-                          options={subjects}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          onClick={setSelectedSubject(values.subject)}
-                          required
-                        />
-                        {errors.subject && touched.subject ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.subject}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
                       <Button
                         onClick={() => handleClick(false)}
                         className="float-right "
@@ -420,13 +401,6 @@ const MarksRegistration = ({ match }) => {
                         </Label>
                         <h6>{selectedClass.label}</h6>
                       </Colxx>
-
-                      <Colxx xxs="2">
-                        <Label>
-                          <IntlMessages id="marks.SubjectLabel" />
-                        </Label>
-                        <h6>{selectedSubject.label}</h6>
-                      </Colxx>
                     </Row>
 
                     <Row
@@ -434,22 +408,43 @@ const MarksRegistration = ({ match }) => {
                       style={{ marginInline: '16%' }}
                     >
                       <table className="table">
+                        <thead className="thead-dark ">
+                          <tr>
+                            <th colspan="4" className="border text-center">
+                              <IntlMessages id="marks.studentChar" />
+                            </th>
+                            <th colspan="3" className="border text-center">
+                              <IntlMessages id="marks.marksDisplayTitle" />
+                            </th>
+                          </tr>
+                        </thead>
                         <thead className="thead-dark">
                           <tr>
-                            <th scope="col">
+                            <th
+                              scope="col"
+                              className="border text-center "
+                              style={{ maxWidth: '20px' }}
+                            >
                               <IntlMessages id="marks.No" />
                             </th>
-                            <th scope="col">
+                            <th scope="col" className="border text-center">
                               <IntlMessages id="marks.FullName" />
                             </th>
-                            <th scope="col">
+                            <th scope="col" className="border text-center">
                               <IntlMessages id="marks.FatherName" />
                             </th>
-                            <th scope="col">
+                            <th scope="col" className="border text-center">
                               <IntlMessages id="marks.ID" />
                             </th>
-                            <th scope="col">
-                              <IntlMessages id="marks.Marks" />
+
+                            <th scope="col" className="border text-center">
+                              <IntlMessages id="کمیا" />
+                            </th>
+                            <th scope="col" className="border text-center">
+                              <IntlMessages id="قزیک" />
+                            </th>
+                            <th scope="col" className="border text-center">
+                              <IntlMessages id="دری" />
                             </th>
                           </tr>
                         </thead>
@@ -480,22 +475,7 @@ const MarksRegistration = ({ match }) => {
                               <td>{student.name}</td>
                               <td>{student.father_name}</td>
                               <td>{student.student_id}</td>
-
-                              {/* Marks Entry */}
-                              <div class="form-group mx-sm-3 mb-2">
-                                <FormGroup className="form-group">
-                                  <Field
-                                    type="number"
-                                    className="form-control"
-                                    name={`score[${student.student_id}]`}
-                                  />
-                                  {errors.score && touched.score ? (
-                                    <div className="invalid-feedback d-block">
-                                      {errors.score}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
+                              <td>{student.marks}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -518,20 +498,31 @@ const MarksRegistration = ({ match }) => {
                         </tbody>
                         <tfoot className="thead-dark">
                           <tr>
-                            <th scope="col">
+                            <th
+                              scope="col"
+                              className="border text-center "
+                              style={{ maxWidth: '20px' }}
+                            >
                               <IntlMessages id="marks.No" />
                             </th>
-                            <th scope="col">
+                            <th scope="col" className="border text-center">
                               <IntlMessages id="marks.FullName" />
                             </th>
-                            <th scope="col">
+                            <th scope="col" className="border text-center">
                               <IntlMessages id="marks.FatherName" />
                             </th>
-                            <th scope="col">
+                            <th scope="col" className="border text-center">
                               <IntlMessages id="marks.ID" />
                             </th>
-                            <th scope="col">
-                              <IntlMessages id="marks.Marks" />
+
+                            <th scope="col" className="border text-center">
+                              <IntlMessages id="کمیا" />
+                            </th>
+                            <th scope="col" className="border text-center">
+                              <IntlMessages id="قزیک" />
+                            </th>
+                            <th scope="col" className="border text-center">
+                              <IntlMessages id="دری" />
                             </th>
                           </tr>
                         </tfoot>
@@ -540,28 +531,11 @@ const MarksRegistration = ({ match }) => {
                     <Row className=" justify-content-center">
                       <Colxx xxs="9" className="m-5">
                         <Button
-                          className=" m-4 "
+                          className=" m-4"
                           onClick={() => handleClick(true)}
                         >
                           <IntlMessages id="button.Back" />
                         </Button>
-
-                        <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                          <Button
-                            className={`btn-shadow btn-multiple-state `}
-                            size="lg"
-                            type="submit"
-                          >
-                            <span className="spinner d-inline-block">
-                              <span className="bounce1" />
-                              <span className="bounce2" />
-                              <span className="bounce3" />
-                            </span>
-                            <span className="label">
-                              <IntlMessages id="button.SubmitButton" />
-                            </span>
-                          </Button>
-                        </div>
                       </Colxx>
                     </Row>
                   </>
@@ -575,4 +549,4 @@ const MarksRegistration = ({ match }) => {
   );
 };
 
-export default MarksRegistration;
+export default AllSubjectsMarks;

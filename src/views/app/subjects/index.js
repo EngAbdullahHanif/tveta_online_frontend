@@ -21,6 +21,7 @@ const Subjects = ({ match }) => (
         path={`${match.url}/curriculum`}
         render={(props) => <Curriculum {...props} />}
       />
+
       <Redirect to="/error" />
     </Switch>
   </Suspense>

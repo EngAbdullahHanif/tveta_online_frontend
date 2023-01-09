@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
+import { NotificationManager } from 'components/common/react-notifications';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -21,7 +22,8 @@ const getIndex = (value, arr, prop) => {
 const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
-const instituteApiUrl = `${servicePath}/teachers/evaluation/`;
+const evaluationApiUrl = `${servicePath}/teachers/evaluation/`;
+const instituteApiUrl = `${servicePath}/institute/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -42,8 +44,48 @@ const filterOptions = [
     label: 'تول / همه',
   },
   { column: '1', label: 'ارزیابی شوی' },
-  { column: '2', label: 'نا ارزیابی سوی' },
+  { column: '0', label: 'نا ارزیابی سوی' },
 ];
+const createNotification = (type, className) => {
+  const cName = className || '';
+  switch (type) {
+    case 'success':
+      NotificationManager.success(
+        'استاد موفقانه رجستر شو',
+        'موفقیت',
+        3000,
+        null,
+        null,
+        cName
+      );
+      break;
+    case 'warning':
+      NotificationManager.warning(
+        'لطفا انستیتوت هم انتخاب کری',
+        'اخطاریه',
+        3000,
+        null,
+        null,
+        cName
+      );
+      break;
+    case 'error':
+      NotificationManager.error(
+        'استاد ثبت نشو،لطفا معلومات دقیق دننه کی',
+        'خطا',
+        5000,
+        () => {
+          alert('callback');
+        },
+        null,
+        cName
+      );
+      break;
+    default:
+      NotificationManager.info('Info message');
+      break;
+  }
+};
 
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -64,12 +106,18 @@ const ThumbListPages = ({ match }) => {
   const [lastChecked, setLastChecked] = useState(null);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [evaluationYear, setEvaluationYear] = useState('');
+  const [institute, setInstitute] = useState({
+    id: '',
+    label: '',
+  });
+  const [institutes, setInstitutes] = useState([]);
+
   const [selectedFilter, setSelectFilter] = useState({
     column: 'all',
     label: 'تول / همه',
   });
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState([]);
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
@@ -86,16 +134,19 @@ const ThumbListPages = ({ match }) => {
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
-    console.log('startdate', startDate);
-    console.log('enddate', endDate);
+    if (selectedFilter.column == 0 && institute == '') {
+      createNotification('warning', 'filled');
+    }
 
     async function fetchData() {
       axios
-        .get(`${instituteApiUrl}?start_date=${startDate}&end_date=${endDate}`)
+        .get(
+          `${evaluationApiUrl}?evaluated=${selectedFilter.column}&evaluation_year=${evaluationYear}&institute_id=${institute.id}`
+        )
 
         .then((res) => {
           console.log(
-            `${instituteApiUrl}?start_date=${startDate}&end_date=${endDate}`
+            `${evaluationApiUrl}?evaluated=${selectedFilter.column}&evaluation_year=${evaluationYear}&institute_id=${institute.id}`
           );
           return res.data;
         })
@@ -114,8 +165,23 @@ const ThumbListPages = ({ match }) => {
     search,
     startDate,
     endDate,
+    selectedFilter,
+    evaluationYear,
+    institute,
   ]);
 
+  const fetchInstitutes = async () => {
+    const response = await axios.get(instituteApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      id: item.id,
+      name: item.name,
+    }));
+    setInstitutes(updatedData);
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+  }, []);
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||
@@ -205,11 +271,6 @@ const ThumbListPages = ({ match }) => {
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeOrderBy={(column) => {
-            setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
-            );
-          }}
           changeFilterOption={(column) => {
             setSelectFilter(filterOptions.find((x) => x.column === column));
           }}
@@ -217,7 +278,6 @@ const ThumbListPages = ({ match }) => {
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}
-          selectedOrderOption={selectedOrderOption}
           match={match}
           startIndex={startIndex}
           endIndex={endIndex}
@@ -228,11 +288,24 @@ const ThumbListPages = ({ match }) => {
             // if (e.key === 'Enter') {
             // }
           }}
-          orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
+          changeFilterBy={(column) => {
+            setSelectedOrderOption(
+              orderOptions.find((x) => x.column === column)
+            );
+          }}
+          orderOptions={orderOptions}
+          selectedOrderOption={selectedOrderOption}
           onSelectStartDate={setStartDate}
           onSelectEndDate={setEndDate}
+          onEvaluationYearChange={(e) => {
+            if (e.key === 'Enter') {
+              setEvaluationYear(e.target.value);
+            }
+          }}
+          institutes={institutes}
+          onInstituteSelect={setInstitute}
         />
 
         <ListPageListing

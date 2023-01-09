@@ -43,10 +43,10 @@ const Teachers = ({ match }) => (
         path={`${match.url}/teacher-hr-evalaution`}
         render={(props) => <TeacherHrEvaluation {...props} />}
       />
-      {/* <Route
-        path={`${match.url}/:teacherId`}
+      <Route
+        path={`${match.url}/teacher/:teacherId`}
         render={(props) => <TeacherProfile {...props} />}
-      /> */}
+      />
       <Route
         path={`${match.url}/teacher-evalaution`}
         render={(props) => <TeacherEvaluation {...props} />}

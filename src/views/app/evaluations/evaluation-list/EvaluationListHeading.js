@@ -15,6 +15,7 @@ import { injectIntl } from 'react-intl';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
+import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
 // import Breadcrumb from '../navs/Breadcrumb';
@@ -24,7 +25,7 @@ const ListPageHeading = ({
   displayMode,
   changeDisplayMode,
   handleChangeSelectAll,
-  changeOrderBy,
+  changeFilterOption,
   changePageSize,
   selectedPageSize,
   totalItemCount,
@@ -42,11 +43,17 @@ const ListPageHeading = ({
   onSelectStartDate,
   onSelectEndDate,
   filterOptions,
+  onEvaluationYearChange,
+  institutes,
+  onInstituteSelect,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   const { messages } = intl;
   const [startDate, setStartDate] = useState(null);
+  const [selectedInstitute, setSelectedInstitute] = useState('');
+  console.log('selectedInstitute', selectedInstitute);
+  onInstituteSelect(selectedInstitute);
 
   //useefftect after startdate changed
   // useEffect(() => {
@@ -155,35 +162,53 @@ const ListPageHeading = ({
             </span>
 
             <div className="d-block d-md-inline-block pt-1">
-              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-                <DropdownToggle caret color="outline-dark" size="xs">
-                  <IntlMessages id="evaluation.filter" />
-                  {/* {selectedOrderOption.label} */}
-                </DropdownToggle>
-                <DropdownMenu>
-                  {filterOptions.map((order, index) => {
-                    return (
-                      <DropdownItem
-                        key={index}
-                        onClick={() => changeOrderBy(order.column)}
-                      >
-                        {order.label}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                <input
-                  type="text"
-                  name="keyword"
-                  id="search"
-                  placeholder={messages['menu.search']}
-                  onKeyPress={(e) => onSearchKey(e)}
+              <div className="row">
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="evaluation.filter" />
+                    {/* {selectedOrderOption.label} */}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {filterOptions.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeFilterOption(order.column)}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  <input
+                    type="text"
+                    name="keyword"
+                    id="search"
+                    placeholder={messages['menu.search']}
+                    onKeyPress={(e) => onSearchKey(e)}
+                  />
+                </div>
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  <input
+                    type="number"
+                    name="evaluationYear"
+                    id="search"
+                    placeholder={messages['menu.search']}
+                    onKeyPress={(e) => onEvaluationYearChange(e)}
+                  />
+                </div>
+                <ReactAutoSugegst
+                  data={institutes}
+                  select={(opt) => {
+                    setSelectedInstitute(opt);
+                  }}
+                  placeholder={messages['search.institute.name']}
                 />
               </div>
 
-              <div className=" d-inline-block float-md-left mr-10 mb-1 align-top">
+              {/* <div className=" d-inline-block float-md-left mr-10 mb-1 align-top">
                 <label>تاریخ شروع: </label>
 
                 <input
@@ -201,7 +226,7 @@ const ListPageHeading = ({
                   id="endDate"
                   onChange={(e) => onSelectEndDate(e.target.value)}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>

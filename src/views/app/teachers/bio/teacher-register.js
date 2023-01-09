@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import { NotificationManager } from 'components/common/react-notifications';
 
+import axios from 'axios';
 import * as Yup from 'yup';
 import {
   Row,
@@ -23,6 +25,9 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
+
+const servicePath = 'http://localhost:8000';
+const teacherResitgerAPIUrl = `${servicePath}/teachers/`;
 
 const TazkiraOptions = [
   { value: '1', label: <IntlMessages id="forms.StdTazkiraElectronic" /> },
@@ -185,7 +190,11 @@ const StdSchoolProvinceOptions = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
-
+const genderOptions = [
+  { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
+  { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
+  { value: '3', label: <IntlMessages id="dorm.GenderOptions_3" /> },
+];
 const SignupSchema = Yup.object().shape({
   Name: Yup.string().required(<IntlMessages id="teacher.NameErr" />),
 
@@ -269,8 +278,8 @@ const TeacherRegistration = () => {
       label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
     },
 
-    IdCardPageNo: '0',
-    IdCardJoldNo: '0',
+    IdCardPageNo: 0,
+    IdCardJoldNo: 0,
   };
 
   const [isNext, setIsNext] = useState(true);
@@ -278,8 +287,79 @@ const TeacherRegistration = () => {
     setIsNext(event);
   };
 
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'استاد موفقانه رجستر شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'استاد ثبت نشو،لطفا معلومات دقیق دننه کی',
+          'خطا',
+          5000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
   const onRegister = (values) => {
-    console.log(' The Values', values);
+    //REMOVE USER_ID LATER, IT IS JUST FOR TESTING
+    //UNCOMMENT TEACHER_PHOTO LATER, when the frontend updated
+    const data = {
+      name: values.Name,
+      father_name: values.FatherName,
+      grand_father_name: values.GrandFatherName,
+      cover_number: values.IdCardJoldNo,
+      registration_number: values.TazkiraNo,
+      gender: values.gender.value,
+      main_province: values.Province.value,
+      main_district: values.District,
+      main_village: values.Village,
+      current_province: values.C_Province.value,
+      current_district: values.C_District,
+      current_village: values.C_Village,
+      education_degree: values.LevelOfEducation.value,
+      major: values.Major.value,
+      phone_number: values.PhoneNo,
+      email: values.Email,
+      birth_date: values.DoB,
+      status_type: values.Status.value,
+      grade: values.Grade.value,
+      step: values.Step.value,
+      user_id: 1,
+      // teacher_photo: values.TeacherPhoto,
+    };
+    console.log('The Data', data);
+
+    axios
+      .post(teacherResitgerAPIUrl, data)
+      .then((res) => {
+        console.log('The Response', res);
+        createNotification('success', 'filled');
+      })
+      .catch((err) => {
+        createNotification('error', 'filled');
+        console.log('The Error ', err);
+        console.log('The Error ', err.message);
+        console.log('The Error response ', err.response);
+        console.log('The Error response.data ', err.response.data);
+        console.log('The Error response.status', err.response.status);
+      });
   };
 
   return (
@@ -311,7 +391,6 @@ const TeacherRegistration = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-
                       {/* Father Name */}
                       <FormGroup className="form-group has-float-label">
                         <Label>
@@ -324,7 +403,6 @@ const TeacherRegistration = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-
                       {/* Tazkira Type */}
                       <FormGroup className="form-group has-float-label">
                         <Label>
@@ -344,7 +422,6 @@ const TeacherRegistration = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-
                       {values.TazkiraType.value === '2' ? (
                         <div>
                           {/* Safha */}
@@ -369,7 +446,6 @@ const TeacherRegistration = () => {
                       ) : (
                         <div></div>
                       )}
-
                       {/* Contact No */}
                       <FormGroup className="form-group has-float-label">
                         <Label>
@@ -386,7 +462,6 @@ const TeacherRegistration = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-
                       <FormGroup className="form-group has-float-label">
                         <Label className="d-block">
                           <IntlMessages id="teacher.DoBLabel" />
@@ -407,7 +482,7 @@ const TeacherRegistration = () => {
                     </Colxx>
                     <Colxx xxs="6">
                       {/* Teacher English Name */}
-                      <FormGroup className="form-group has-float-label">
+                      {/* <FormGroup className="form-group has-float-label">
                         <Label>
                           <IntlMessages id="teacher.EnglishNameLabel" />
                         </Label>
@@ -417,7 +492,7 @@ const TeacherRegistration = () => {
                             {errors.EnglishName}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
 
                       {/* Grand Father Name */}
                       <FormGroup className="form-group has-float-label">
@@ -431,6 +506,26 @@ const TeacherRegistration = () => {
                         {errors.GrandFatherName && touched.GrandFatherName ? (
                           <div className="invalid-feedback d-block">
                             {errors.GrandFatherName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Gender */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="gender" />
+                        </Label>
+                        <FormikReactSelect
+                          name="gender"
+                          id="gender"
+                          value={values.gender}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          options={genderOptions}
+                          required
+                        />
+                        {errors.gender && touched.gender ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.gender}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -567,6 +662,7 @@ const TeacherRegistration = () => {
                           </div>
                         ) : null}
                       </FormGroup>
+
                       <div className="square border border-dark p-3">
                         <h6 className=" mb-4">
                           {<IntlMessages id="forms.PermanentAddressLabel" />}

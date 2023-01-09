@@ -211,6 +211,7 @@ const MarksRegistration = ({ match }) => {
         Department: department,
         class_id: class_id,
       };
+
       //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
       //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
       console.log('exam', examData);

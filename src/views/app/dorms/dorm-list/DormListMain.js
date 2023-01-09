@@ -287,7 +287,7 @@ const ThumbListPages = ({ match }) => {
           })
           .then((data) => {
             console.log(
-              `1${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
+              `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
             );
 
             setDorms(data);

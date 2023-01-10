@@ -183,22 +183,41 @@ const ListPageHeading = ({
                 />
               </div>
 
-              <div className=" d-inline-block float-md-left mr-10 mb-1 align-top">
+              <div className=" d-inline-block float-md-left ml-3 mb-1 align-top ">
                 <label>تاریخ شروع: </label>
 
                 <input
                   type="date"
                   name="start_date"
                   id="start_date"
+                  style={{
+                    backgroundColor: 'inherit',
+                    color: 'inherit',
+                    marginInline: '3px',
+                    padding: '1px',
+                    paddingInline: '10px',
+                    borderRadius: '15px',
+                    border: '0.1px solid gray',
+                  }}
                   onChange={(e) => onSelectStartDate(e.target.value)}
                 />
               </div>
-              <div className=" d-inline-block float-md-left mr-10 mb-1 align-top">
+              <div className=" d-inline-block float-md-left ml-4 mb-1 align-top">
                 <label>تاریخ ختم: </label>
                 <input
                   type="date"
                   name="endDate"
                   id="endDate"
+                  style={{
+                    backgroundColor: 'inherit',
+                    color: 'inherit',
+                    marginInline: '3px',
+                    borderRadius: '10px',
+                    paddingInline: '10px',
+                    padding: '1px',
+                    borderRadius: '15px',
+                    border: '0.1px solid gray',
+                  }}
                   onChange={(e) => onSelectEndDate(e.target.value)}
                 />
               </div>

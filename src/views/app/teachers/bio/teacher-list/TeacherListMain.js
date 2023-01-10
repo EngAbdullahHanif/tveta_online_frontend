@@ -470,18 +470,90 @@ const ThumbListPages = ({ match }) => {
           institutes={institutes}
           onInstituteSelect={setInstitute}
         />
-
-        <ListPageListing
-          items={items}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
+        <table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark"
+            style={{ maxHeight: '55px' }}
+          >
+            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+              <th
+                style={{
+                  width: '16%',
+                  insetInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdName" />
+              </th>
+              <th
+                style={{
+                  width: '16%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdFatherName" />
+              </th>
+              <th
+                style={{
+                  width: '16%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="forms.ProvinceLabel" />
+              </th>
+              <th
+                style={{
+                  width: '16%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.PhoneNoLabel" />
+              </th>
+              <th
+                style={{
+                  width: '16%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.MajorLabel" />
+              </th>
+              <th
+                style={{
+                  width: '16%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.GradeLabel" />
+              </th>
+            </tr>
+          </thead>
+          <ListPageListing
+            items={items}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
+        </table>
       </div>
     </>
   );

@@ -7,7 +7,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 
 const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
   return (
-    <Colxx xxs="12" key={teacher.id} className="mb-3">
+    <Colxx xxs="12" key={teacher.id} className="mt-2">
       <ContextMenuTrigger id="menu_id" data={teacher.id} collect={collect}>
         <Card
           onClick={(event) => onCheckItem(event, teacher.id)}
@@ -15,26 +15,50 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
             active: isSelect,
           })}
         >
-          {/* <NavLink to={`?p=${teacher.id}`} className="d-flex">
-            <img
-              alt={teacher.title}
-              src={teacher.img}
-              className="list-thumbnail responsive border-0 card-img-left"
-            />
-          </NavLink> */}
-          <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-              <NavLink to={`${teacher.id}`} className="">
+          <div
+            className="pl-2 d-flex flex-grow-1 min-width-zero"
+            style={{ maxHeight: '50px', width: '100%' }}
+          >
+            <div
+              className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
+              style={{ width: '100%' }}
+            >
+              <NavLink to={`${teacher.id}`} style={{ width: '16%' }}>
                 <p className="list-item-heading mb-1 truncate">
                   <span className="mr-5">{teacher.id}</span>
                   {teacher.name}
                 </p>
               </NavLink>
-              <p className="mb-1 text-small">{teacher.father_name}</p>
-              <p className="mb-1 text-small">{teacher.current_province}</p>
-              <p className="mb-1 text-small">{teacher.phone_number}</p>
-              <p className="mb-1 text-small">{teacher.major}</p>
-              <p className="mb-1 text-small">{teacher.grade}</p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '16%', textAlign: 'right' }}
+              >
+                {teacher.father_name}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '16%', textAlign: 'right' }}
+              >
+                {teacher.current_province}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '16%', textAlign: 'right' }}
+              >
+                {teacher.phone_number}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '16%', textAlign: 'right' }}
+              >
+                {teacher.major}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
+              >
+                {teacher.grade}
+              </p>
               {teacher.status_type === '2' && (
                 <div className="mb-1 text-small">
                   <Badge color="danger" pill>

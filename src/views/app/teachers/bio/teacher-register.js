@@ -47,6 +47,7 @@ const GradeOptions = [
   { value: '7', label: <IntlMessages id="teacher.GradeOption_7" /> },
   { value: '8', label: <IntlMessages id="teacher.GradeOption_8" /> },
 ];
+
 const StepOptions = [
   { value: '1', label: <IntlMessages id="teacher.StepOption_1" /> },
   { value: '2', label: <IntlMessages id="teacher.StepOption_2" /> },
@@ -190,6 +191,7 @@ const StdSchoolProvinceOptions = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
+
 const genderOptions = [
   { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
   { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
@@ -241,9 +243,6 @@ const SignupSchema = Yup.object().shape({
 });
 
 const TeacherRegistration = () => {
-  const [subjectType, setSubjectType] = useState({});
-  const [systemType, setSystemType] = useState({});
-
   const initialValues = {
     TazkiraType: {
       value: '0',
@@ -281,7 +280,6 @@ const TeacherRegistration = () => {
     IdCardPageNo: 0,
     IdCardJoldNo: 0,
   };
-
   const [isNext, setIsNext] = useState(true);
   const handleClick = (event) => {
     setIsNext(event);

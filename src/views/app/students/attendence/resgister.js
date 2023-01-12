@@ -39,14 +39,17 @@ const SignupSchema = Yup.object().shape({
 
 const StudentAttendance = () => {
   const onSubmit = (values, { setSubmitting }) => {
-    const payload = {
-      ...values,
-      state: values.state.value,
-    };
-    setTimeout(() => {
-      console.log(JSON.stringify(payload, null, 2));
-      setSubmitting(false);
-    }, 1000);
+    // const payload = {
+    //   ...values,
+    //   state: values.state.value,
+    // };
+    // setTimeout(() => {
+    //   console.log(JSON.stringify(payload, null, 2));
+    //   setSubmitting(false);
+    // }, 1000);
+
+    console.log('values', values);
+    const data = {};
   };
 
   return (
@@ -58,7 +61,7 @@ const StudentAttendance = () => {
         <CardBody>
           <Formik
             initialValues={{}}
-            validationSchema={SignupSchema}
+            // validationSchema={SignupSchema}
             onSubmit={onSubmit}
           >
             {({

@@ -1,9 +1,5 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
-
-import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
-
 import {
   Row,
   Button,
@@ -14,22 +10,14 @@ import {
   DropdownToggle,
   CustomInput,
   Collapse,
-  Label,
-  FormGroup,
-  Input,
-  Card,
-  CardBody,
-  CardTitle,
 } from 'reactstrap';
-
 import { injectIntl } from 'react-intl';
-import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
+import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
-import { province } from 'lang/locales/fa_IR';
 // import Breadcrumb from '../navs/Breadcrumb';
 
 const ListPageHeading = ({
@@ -45,30 +33,35 @@ const ListPageHeading = ({
   endIndex,
   selectedItemsLength,
   itemsLength,
+  onSearchDistrict,
   pageSizes,
   // toggleModal,
   heading,
-  onIdSearchKey,
-  changeGenderBy,
-  selectedGenderOption,
-  genderOptions,
-  selectedProvinceOption,
+  onSelectStartDate,
+  onSelectEndDate,
+  genderOption,
+  selectedDormTypeOption,
+  changeDormTypeBy,
   provinces,
+  selectedProvinceOption,
   changeProvinceBy,
-  onDistrictSearchKey,
-  onProvinceSearchKey,
+  DormTypeOptions,
+  dormsFilterList,
+  onDormSelect,
   onResetClick,
   reset,
-  institutes,
-  onInstituteSelect,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
-
-  const [selectedInstitute, setSelectedInstitute] = useState('');
-  onInstituteSelect(selectedInstitute);
+  const [selectDrom, setSelectDorm] = useState('');
+  onDormSelect(selectDrom);
   const { messages } = intl;
+  const [startDate, setStartDate] = useState(null);
 
+  //useefftect after startdate changed
+  // useEffect(() => {
+  //   console.log('start date changed', startDate);
+  // }, [startDate]);
   return (
     <Row>
       <Colxx xxs="12">
@@ -173,19 +166,19 @@ const ListPageHeading = ({
 
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                   <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="filter" />
-                    {selectedGenderOption.label}
+                    <IntlMessages id="evaluation.filter" />
+                    {selectedDormTypeOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {genderOptions.map((order, index) => {
+                    {DormTypeOptions.map((gender, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeGenderBy(order.column)}
+                          onClick={() => changeDormTypeBy(gender.column)}
                         >
-                          {order.label}
+                          {gender.label}
                         </DropdownItem>
                       );
                     })}
@@ -193,7 +186,7 @@ const ListPageHeading = ({
                 </UncontrolledDropdown>
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="filter" />
+                    {/* <IntlMessages id="filter" /> */}
                     {selectedProvinceOption.label}
                   </DropdownToggle>
                   <DropdownMenu
@@ -203,13 +196,13 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
-                    {provinces.map((order, index) => {
+                    {provinces.map((province, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeProvinceBy(order.column)}
+                          onClick={() => changeProvinceBy(province.column)}
                         >
-                          {order.label}
+                          {province.label}
                         </DropdownItem>
                       );
                     })}
@@ -220,51 +213,38 @@ const ListPageHeading = ({
                     type="text"
                     name="district"
                     id="district"
-                    placeholder={messages['search.district']}
-                    onKeyPress={(e) => onDistrictSearchKey(e)}
+                    placeholder={messages['dorm.search.district']}
+                    onKeyPress={(e) => onSearchDistrict(e)}
                   />
                 </div>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="keyword"
-                    id="search"
-                    placeholder={messages['search.id']}
-                    onKeyPress={(e) => onIdSearchKey(e)}
-                  />
-                </div>
-
                 <div className="">
                   <ReactAutoSugegst
-                    data={institutes}
+                    data={dormsFilterList}
                     select={(opt) => {
-                      setSelectedInstitute(opt);
+                      setSelectDorm(opt);
                     }}
-                    placeholder={messages['search.institute.name']}
+                    placeholder={messages['dorm.search.name']}
                   />
                 </div>
               </div>
-
               <Button
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
                 onClick={() => {
-                  changeGenderBy('all');
+                  changeDormTypeBy('all');
                   changeProvinceBy('all');
                   document.getElementById('district').value = '';
-                  document.getElementById('search').value = '';
-                  setSelectedInstitute('');
+                  setSelectDorm('');
                   onResetClick(!reset);
                 }}
               >
                 <IntlMessages id="pages.reset" />
               </Button>
             </div>
-
             <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>
-              <UncontrolledDropdown className="d-inline-block ">
+              <UncontrolledDropdown className="d-inline-block">
                 <DropdownToggle caret color="outline-dark" size="xs">
                   {selectedPageSize}
                 </DropdownToggle>

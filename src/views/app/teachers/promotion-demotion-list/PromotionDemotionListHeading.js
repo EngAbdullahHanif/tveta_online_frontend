@@ -23,7 +23,7 @@ import {
 } from 'reactstrap';
 
 import { injectIntl } from 'react-intl';
-import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
+import { FormikReactSelect } from '../../../../containers/form-validations/FormikFields';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
@@ -173,7 +173,7 @@ const ListPageHeading = ({
 
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark" size="xs">
                     <IntlMessages id="filter" />
                     {selectedGenderOption.label}
@@ -223,13 +223,13 @@ const ListPageHeading = ({
                     placeholder={messages['search.district']}
                     onKeyPress={(e) => onDistrictSearchKey(e)}
                   />
-                </div>
+                </div> */}
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
                     name="keyword"
                     id="search"
-                    placeholder={messages['search.id']}
+                    placeholder={messages['teacher.id']}
                     onKeyPress={(e) => onIdSearchKey(e)}
                   />
                 </div>
@@ -250,9 +250,6 @@ const ListPageHeading = ({
                 size="xs"
                 className="float-md-left mb-1"
                 onClick={() => {
-                  changeGenderBy('all');
-                  changeProvinceBy('all');
-                  document.getElementById('district').value = '';
                   document.getElementById('search').value = '';
                   setSelectedInstitute('');
                   onResetClick(!reset);

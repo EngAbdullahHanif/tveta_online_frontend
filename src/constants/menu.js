@@ -266,6 +266,11 @@ const data = [
         label: 'menu.student-register-in-dorm',
         to: `${adminRoot}/dorms/student-register`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.dorm-students',
+        to: `${adminRoot}/dorms/students`,
+      },
     ],
   },
   {

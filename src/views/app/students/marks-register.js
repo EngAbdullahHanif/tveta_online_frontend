@@ -137,7 +137,7 @@ const MarksRegistration = ({ match }) => {
     setInstitutes(updatedData);
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
+    const response = await axios.get('http://localhost:8000/institute/field/');
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name,
@@ -196,11 +196,11 @@ const MarksRegistration = ({ match }) => {
     console.log('students', students);
   };
 
-  const onSubmit = (values) => {
-    console.log('values', values);
+  const onSubmit = async (values) => {
+    // console.log('values', values);
     const educational_year = selectedEducationalYear;
     const institute_id = selectedInstitute.value;
-    const department = selectedDepartment.value;
+    const department_id = selectedDepartment.value;
     const class_id = selectedClass.value;
     const subject_id = selectedSubject.value;
     students.map((student) => {
@@ -208,13 +208,34 @@ const MarksRegistration = ({ match }) => {
         educational_year: educational_year,
         student_id: student.student_id,
         institute_id: institute_id,
-        Department: department,
+        Department: department_id,
         class_id: class_id,
       };
+      console.log('examData', examData);
+      //send data to create_marks api to create exam
+      // const exam = axios.post(
+      //   'http://localhost:8000/api/create_marks/',
+      //   examData
+      // );
 
+      axios
+        .post('http://localhost:8000/api/create_marks/', examData)
+        .then((res) => {
+          console.log('res', res);
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+
+      // const response = axios.post(
+      //   `http://localhost:8000/api/create_marks/`,
+      //   examData
+      // );
+      // const exam = response.data;
+      // console.log('exam', exam);
       //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
       //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-      console.log('exam', examData);
+      // console.log('exam', examData);
       const data = {
         subject: subject_id,
         exam_types: 1,
@@ -224,7 +245,7 @@ const MarksRegistration = ({ match }) => {
         user_id: 1,
         mark: values.score[student.student_id],
       };
-      console.log('data', data);
+      // console.log('data', data);
       // axios.post('http://localhost:8000/api/marks/', data);
     });
   };

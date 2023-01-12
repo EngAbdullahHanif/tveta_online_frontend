@@ -170,6 +170,7 @@ module.exports = {
   'menu.student-profile': 'پروفایل شاگرد/ د شاگرد پروفایل',
   'marks.title': 'ثبت نمرات/ د نومرو ثبت',
   'menu.student-register-in-dorm': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
+  'menu.dorm-students': 'د لیلی شاگردان/ شاگردان لیلیه',
   'menu.teacher-HR-evaluation': 'د بشری منابع ارزونه/ ارزیابی منابع بشری',
   'menu.teacher-promotion-demotion': 'مکافات / مجازات',
 
@@ -826,6 +827,7 @@ module.exports = {
   'teacher.EvalautionTitle1':
     'د استاد ارزیابي د ټویټا اداری لخوا/ ارزیابی توسط اداره تعلیمات تخنیکی و مسلکی',
   'teacher.IdLabel': 'د استاد آیډی/ آیدی استاد',
+  'teacher.id': 'د استاد آیډی',
   'teacher.InstituteIdLabel': ' د انستیتوت آیډی/ آیدی انستیتوت',
   // 'teacher.InstituteIdErr': 'Institute Id Required!',
   'teacher.departmentIdLabel': 'د ډیپارتمڼت آیډی/ آیدی دیپارتمنت',
@@ -851,6 +853,10 @@ module.exports = {
   'teacher.evaluationDateErr':
     'د ارزونې نیټه اړینه ده / تاریخ ارزیابی ضروری است',
   'teacher.suggestionLabel': 'پیشنهاد / نظریات',
+  'teacher.promotion.type': 'نوعیت',
+  'teacher.promotion.type1': 'مکافات',
+  'teacher.promotion.type2': 'مجازات',
+  'teacher.promotion.description': 'توضیحات',
   // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
 
   // Hr Evaluation

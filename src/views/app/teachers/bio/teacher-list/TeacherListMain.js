@@ -478,8 +478,18 @@ const ThumbListPages = ({ match }) => {
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
               <th
                 style={{
-                  width: '16%',
-                  insetInline: '0%',
+                  width: '11%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="marks.No" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
@@ -488,7 +498,7 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '16%',
+                  width: '15%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -498,7 +508,7 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '16%',
+                  width: '15%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -509,7 +519,7 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '16%',
+                  width: '14%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -520,7 +530,7 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '16%',
+                  width: '15%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -531,7 +541,7 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '16%',
+                  width: '10%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',

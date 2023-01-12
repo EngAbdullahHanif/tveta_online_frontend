@@ -23,39 +23,41 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
               className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`${teacher.id}`} style={{ width: '16%' }}>
+              <NavLink to={`${teacher.id}`} style={{ width: '10%' }}>
+                <p className="list-item-heading mb-1 truncate">{teacher.id}</p>
+              </NavLink>
+              <NavLink to={`${teacher.id}`} style={{ width: '15%' }}>
                 <p className="list-item-heading mb-1 truncate">
-                  <span className="mr-5">{teacher.id}</span>
                   {teacher.name}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
-                style={{ width: '16%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right' }}
               >
                 {teacher.father_name}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '16%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right' }}
               >
                 {teacher.current_province}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '16%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right' }}
               >
                 {teacher.phone_number}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '16%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right' }}
               >
                 {teacher.major}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                style={{ width: '14%', textAlign: 'right' }}
               >
                 {teacher.grade}
               </p>

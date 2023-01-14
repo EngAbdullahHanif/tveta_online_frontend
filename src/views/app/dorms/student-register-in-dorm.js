@@ -205,6 +205,8 @@ const DormRegistration = (values) => {
     // console.log(student_id);
     // console.log(dorm_type);
     // console.log(educational_year);
+
+    //REMOVE USER FROM HERE LATTER, IT'S JUST FOR TESTING PURPOSE
     const data = {
       dorm_id: values.dorm.value,
       student_id: student[0].student_id,

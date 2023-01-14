@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import axios from 'axios';
+import { NotificationManager } from 'components/common/react-notifications';
 
 import * as Yup from 'yup';
 import {
@@ -24,31 +26,118 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
-const evaluationTypeOptions = [
-  { value: '1', label: <IntlMessages id="teacher.evaluationTypeOption_1" /> },
-  { value: '2', label: <IntlMessages id="teacher.evaluationTypeOption_2" /> },
+const servicePath = 'http://localhost:8000';
+const institutesApiUrl = `${servicePath}/institute/`;
+const teachersApiUrl = `${servicePath}/teachers/`;
+const promotionDemotionAPIUrl = `${servicePath}/teachers/create_teachers_bonusandpunish/`;
+
+const promotionTypeOptions = [
+  { value: '1', label: <IntlMessages id="teacher.promotion.type1" /> },
+  { value: '2', label: <IntlMessages id="teacher.promotion.type1" /> },
 ];
 
 const SignupSchema = Yup.object().shape({
   evaluator: Yup.string().required(<IntlMessages id="teacher.evaluatorErr" />),
 });
+const createNotification = (type, className) => {
+  const cName = className || '';
+  switch (type) {
+    case 'success':
+      NotificationManager.success(
+        'استاد موفقانه رجستر شو',
+        'موفقیت',
+        3000,
+        null,
+        null,
+        cName
+      );
+      break;
+    case 'error':
+      NotificationManager.error(
+        'استاد ثبت نشو،لطفا معلومات دقیق دننه کی',
+        'خطا',
+        5000,
+        () => {
+          alert('callback');
+        },
+        null,
+        cName
+      );
+      break;
+    default:
+      NotificationManager.info('Info message');
+      break;
+  }
+};
 
+const initialValues = {
+  teacher: {
+    value: '0',
+    label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
+  },
+  institute: {
+    value: '0',
+    label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
+  },
+};
 const TeacherEvaluation = () => {
-  const initialValues = {
-    evaluationType: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
+  const [institutes, setInstitutes] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
-    Id: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    InstituteId: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
+  const fetchInstitutes = async () => {
+    const response = await axios.get(institutesApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setInstitutes(updatedData);
   };
+
+  const fetchTeachers = async () => {
+    const response = await axios.get(teachersApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.id,
+    }));
+    setTeachers(updatedData);
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+    fetchTeachers();
+  }, []);
+
+  const onRegister = (values) => {
+    console.log('values', values);
+    console.log('1', values.teacher.value);
+    console.log('2', values.institute.value);
+    console.log('3', values.evaluationDate);
+    console.log('4', values.promotionType.value);
+    console.log('details12', details);
+
+    // REMOVE USER_ID WHEN THE AUTHENTICATION IS DONE
+    const data = {
+      teacher_id: values.teacher.value,
+      institute_id: values.institute.value,
+      evaluation_date: values.evaluationDate,
+      type: values.promotionType.value,
+      details: details,
+      user_id: 1,
+    };
+    console.log('data', data);
+    axios
+      .post(promotionDemotionAPIUrl, data)
+      .then((response) => {
+        console.log(response);
+        createNotification('success', 'filled');
+      })
+      .catch((error) => {
+        console.log(error);
+        createNotification('error', 'filled');
+      });
+  };
+
+  var [details, setDetails] = useState('');
 
   return (
     <>
@@ -59,8 +148,8 @@ const TeacherEvaluation = () => {
         <CardBody>
           <Formik
             initialValues={initialValues}
-            // onSubmit={onRegister}
-            validationSchema={SignupSchema}
+            onSubmit={onRegister}
+            // validationSchema={SignupSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-bottom">
@@ -72,20 +161,21 @@ const TeacherEvaluation = () => {
                         <IntlMessages id="teacher.IdLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="Id"
-                        id="Id"
-                        value={values.Id}
-                        options={evaluationTypeOptions}
+                        name="teacher"
+                        id="teacher"
+                        value={values.teacher}
+                        options={teachers}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
                       />
-                      {errors.Id && touched.Id ? (
+                      {errors.teacher && touched.teacher ? (
                         <div className="invalid-feedback d-block">
-                          {errors.Id}
+                          {errors.teacher}
                         </div>
                       ) : null}
                     </FormGroup>
+
                     {/* Evalualtion Date */}
                     <FormGroup className="form-group has-float-label">
                       <Label>
@@ -104,23 +194,41 @@ const TeacherEvaluation = () => {
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="5">
-                    {/* ّInstitute ID*/}
+                    {/* Institutes */}
                     <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="teacher.InstituteIdLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="InstituteId"
-                        id="InstituteId"
-                        value={values.InstituteId}
-                        options={evaluationTypeOptions}
+                        name="institute"
+                        id="institute"
+                        value={values.institute}
+                        options={institutes}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                        required
                       />
-                      {errors.InstituteId && touched.InstituteId ? (
+                      {errors.institute && touched.institute ? (
                         <div className="invalid-feedback d-block">
-                          {errors.InstituteId}
+                          {errors.institute}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                    {/* type */}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="teacher.promotion.type" />
+                      </Label>
+                      <FormikReactSelect
+                        name="promotionType"
+                        id="promotionType"
+                        value={values.promotionType}
+                        options={promotionTypeOptions}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                      />
+                      {errors.promotionType && touched.promotionType ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.promotionType}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -128,38 +236,42 @@ const TeacherEvaluation = () => {
                 </Row>
                 <Row className="justify-content-center">
                   <Colxx xxs="10">
-                    {/* Promotion */}
+                    {/* details */}
                     <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="teacher.promotionLabel" />
+                        <IntlMessages id="teacher.promotion.description" />
                       </Label>
                       <textarea
                         className="form-control"
-                        name="promotion"
-                        rows={4}
+                        name="details"
+                        id="details"
+                        onChange={(e) => setDetails(e.target.value)}
+                        rows={5}
                       />
-                      {errors.promotion && touched.promotion ? (
+                      {errors.details && touched.details ? (
                         <div className="invalid-feedback d-block">
-                          {errors.promotion}
+                          {errors.details}
                         </div>
                       ) : null}
                     </FormGroup>
                     {/* Demotion*/}
-                    <FormGroup className="form-group has-float-label">
+                    {/* <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="teacher.demotionLabel" />
                       </Label>
                       <textarea
                         className="form-control"
                         name="weaknessPoints"
+                        id="weaknessPoints"
                         rows={4}
+                        type="textarea"
                       />
-                      {errors.suggestion && touched.suggestion ? (
+                      {errors.weaknessPoints && touched.weaknessPoints ? (
                         <div className="invalid-feedback d-block">
-                          {errors.suggestion}
+                          {errors.weaknessPoints}
                         </div>
                       ) : null}
-                    </FormGroup>
+                    </FormGroup> */}
 
                     <div className="d-flex justify-content-between align-items-center m-4 float-right">
                       <Button

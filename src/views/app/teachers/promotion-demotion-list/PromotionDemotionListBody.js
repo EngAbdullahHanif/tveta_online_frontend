@@ -5,40 +5,50 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
+const PromotionDemotionListBody = ({
+  promotionDemotion,
+  isSelect,
+  collect,
+  onCheckItem,
+}) => {
   return (
-    <Colxx xxs="12" key={teacher.id} className="mb-3">
-      <ContextMenuTrigger id="menu_id" data={teacher.id} collect={collect}>
+    <Colxx xxs="12" key={promotionDemotion.id} className="mb-3">
+      <ContextMenuTrigger
+        id="menu_id"
+        data={promotionDemotion.id}
+        collect={collect}
+      >
         <Card
-          onClick={(event) => onCheckItem(event, teacher.id)}
+          onClick={(event) => onCheckItem(event, promotionDemotion.id)}
           className={classnames('d-flex flex-row', {
             active: isSelect,
           })}
         >
-          {/* <NavLink to={`?p=${teacher.id}`} className="d-flex">
-            <img
-              alt={teacher.title}
-              src={teacher.img}
-              className="list-thumbnail responsive border-0 card-img-left"
-            />
-          </NavLink> */}
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-              <NavLink to={`teacher/${teacher.id}`} className="">
+              <NavLink
+                to={`promotionDemotion/${promotionDemotion.id}`}
+                className=""
+              >
                 <p className="list-item-heading mb-1 truncate">
-                  <span className="mr-5">{teacher.id}</span>
-                  {teacher.name}
+                  <span className="mr-5">{promotionDemotion.id}</span>
+                  {promotionDemotion.teacher_id.name}
                 </p>
               </NavLink>
-              <p className="mb-1 text-small">{teacher.father_name}</p>
-              <p className="mb-1 text-small">{teacher.current_province}</p>
-              <p className="mb-1 text-small">{teacher.phone_number}</p>
-              <p className="mb-1 text-small">{teacher.major}</p>
-              <p className="mb-1 text-small">{teacher.grade}</p>
-              {teacher.status_type === '2' && (
+              <p className="mb-1 text-small">
+                {promotionDemotion.institute_id.name}
+              </p>
+
+              {promotionDemotion.type === '1' ? (
                 <div className="mb-1 text-small">
-                  <Badge color="danger" pill>
-                    منفک
+                  <Badge color="primary" pill>
+                    مکافات
+                  </Badge>
+                </div>
+              ) : (
+                <div className="mb-1 text-small">
+                  <Badge color="secondary" pill>
+                    مجازات
                   </Badge>
                 </div>
               )}
@@ -61,4 +71,4 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
 };
 
 /* React.memo detail : https://reactjs.org/docs/react-api.html#reactpurecomponent  */
-export default React.memo(TeacherListBody);
+export default React.memo(PromotionDemotionListBody);

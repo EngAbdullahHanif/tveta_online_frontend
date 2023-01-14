@@ -163,6 +163,11 @@ module.exports = {
   'menu.student-register-in-dorm': 'Student Registration',
   'menu.teacher-HR-evaluation': 'HR Evaluation',
   'menu.teacher-promotion-demotion': 'Promotion/Demotion',
+  'menu.teacher-transfer': 'Teacher Transfer',
+  'menu.institute-upgrade': 'Institute/School Upgrade',
+  'menu.student-transfer': 'Student Transfer',
+  'menu.Institute-details': 'Institute Details',
+  'menu.dorm-details': 'Dorm Details',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -671,7 +676,6 @@ module.exports = {
   'field.FieldIdErr': 'Field Id Required!',
 
   // Teacher Registration section
-
   'teacher.RegisterTitle': 'Teacher Registration',
   'teacher.NameLabel': 'Name',
   'teacher.NameErr': 'Teacher Name Required!',
@@ -846,7 +850,53 @@ module.exports = {
   'teacher.PromotionDemotionTitle': 'Teacher Promotion/Demotion',
   'teacher.promotionLabel': 'Teacher Promotion',
   'teacher.demotionLabel': 'Demotion',
+
+  // Teacher Transfer
   'teacher.Transfer': 'Teacher Transfer',
+  'treacher.TansferTitle': 'Teacher Transfer',
+  'search.teacherIdSearchLabel': 'Please Enter The Teacher Id',
+  'button.Teacher-transfer': 'Transfer',
+  'teacher.TransferNewInfoTittle': 'New Institute',
+  'teacher.transferDateLabel': 'Transfer Date',
+  'teacher.fileUploadBttn': 'Upload',
+  'teacher.transferDocuments': 'Transfer Documents',
+
+  // Institute Upgrade
+  'institute.UpgradeTitle': 'Institute/School Upgrade',
+  'search.instituteIdSearchLabel': 'Please Enter The Institute Id',
+  'button.institute-upgrade': 'Upgrade',
+  'forms.upgradingOptionsLabel': 'Upgrade',
+  'institute.upgradingOptions_1': 'Institute',
+  'institute.upgradingOptions_2': 'Special Educations',
+  'institute.upgradingOptions_3': 'Private Institute',
+  'institute.newNameLabel': 'New Name',
+  'institute.upgradeDateLabel': 'Upgrading Date',
+  'institute.upgradingDocuments': 'Upgrading Documents',
+
+  // Student Transfer
+  'student.buttonTransfer': 'Transfer',
+  'student.transferTitle': 'Transfer',
+  'student.transferDateLabel': 'Transfer Date',
+  'student.transferDocuments': 'Upgrading Documents',
+
+  // Curriculum
+  'subject.curriculum': 'Curriculum',
+  'curriculum.curriculumTittle': 'Curriculum',
+  'curriculum.departmentIdLabel': 'Department Id',
+  'curriculum.subjectdLabel': 'Subject',
+  'curriculum.classLabel': 'Class',
+  'curriculum.eduactionalYearLabel': 'Educational Year',
+
+  //Institute Details Page
+  'institute.detailsTitle': 'More Details',
+  'institute.totalStudents': 'Total Students',
+  'institute.totalStudentsMale': 'Male',
+  'institute.totalStudentsFemale': 'Female',
+  'institute.totalTeachers': 'Total Teachers',
+  'institute.totalDepartments': 'Total Departments',
+  'institute.Greduated_12': '12th Class Graduated',
+  'institute.Greduated_14': '14th Class Graduated',
+
   // Subject
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',

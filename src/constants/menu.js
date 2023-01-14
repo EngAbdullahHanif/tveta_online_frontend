@@ -28,6 +28,11 @@ const data = [
         label: 'menu.teacher-evaluation',
         to: `${adminRoot}/teachers/teacher-evalaution`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.teacher-transfer',
+        to: `${adminRoot}/teachers/teacher-transfer`,
+      },
     ],
   },
   {
@@ -69,6 +74,12 @@ const data = [
         icon: 'simple-icon-user',
         label: 'menu.student-profile',
         to: `${adminRoot}/students/student-profile`,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.student-transfer',
+        to: `${adminRoot}/students/student-transfer`,
+        newWindow: false,
       },
     ],
   },
@@ -243,6 +254,16 @@ const data = [
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.institute-upgrade',
+        to: `${adminRoot}/institutes/institute-upgrade`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.Institute-details',
+        to: `${adminRoot}/institutes/institute-details`,
+      },
     ],
   },
   {
@@ -271,6 +292,11 @@ const data = [
         label: 'menu.dorm-students',
         to: `${adminRoot}/dorms/students`,
       },
+      {
+        icon: 'simple-icon-check',
+        label: 'menu.dorm-details',
+        to: `${adminRoot}/dorms/details`,
+      },
     ],
   },
   {
@@ -283,6 +309,11 @@ const data = [
         icon: 'simple-icon-plus',
         label: 'subject.register',
         to: `${adminRoot}/subjects/register`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'subject.curriculum',
+        to: `${adminRoot}/subjects/curriculum`,
       },
     ],
   },

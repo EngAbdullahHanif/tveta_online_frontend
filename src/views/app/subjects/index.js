@@ -5,6 +5,9 @@ const SubjectRegister = React.lazy(() =>
   import(/* webpackChunkName: "subject-register" */ './subject-register')
 );
 
+const Curriculum = React.lazy(() =>
+  import(/* webpackChunkName: "curriculum" */ './curriculum')
+);
 const Subjects = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -14,6 +17,10 @@ const Subjects = ({ match }) => (
         render={(props) => <SubjectRegister {...props} />}
       />
 
+      <Route
+        path={`${match.url}/curriculum`}
+        render={(props) => <Curriculum {...props} />}
+      />
       <Redirect to="/error" />
     </Switch>
   </Suspense>

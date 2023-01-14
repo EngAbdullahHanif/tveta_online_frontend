@@ -9,7 +9,6 @@ import {
   Row,
   Card,
   CardBody,
-  // Form,
   FormGroup,
   Label,
   Button,
@@ -83,11 +82,11 @@ const orderOptions = [
 const pageSizes = [10, 20, 40, 80];
 
 const initialValues = {
-  Field: {
+  department: {
     value: '',
     label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
   },
-  Semester: {
+  semester: {
     value: '',
     label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
   },
@@ -95,15 +94,19 @@ const initialValues = {
     value: '',
     label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
   },
-  Subject: {
+  subject: {
     value: '',
     label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
   },
-  Class: {
+  classs: {
     value: '',
     label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
   },
   StudyTime: {
+    value: '',
+    label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
+  },
+  institute: {
     value: '',
     label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
   },
@@ -340,9 +343,9 @@ const MarksRegistration = ({ match }) => {
                           onClick={setSelectedClass(values.classs)}
                           required
                         />
-                        {errors.Classs && touched.Classs ? (
+                        {errors.classs && touched.classs ? (
                           <div className="invalid-feedback d-block">
-                            {errors.Classs}
+                            {errors.classs}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -361,9 +364,9 @@ const MarksRegistration = ({ match }) => {
                           onClick={setSelectedDepartment(values.department)}
                           required
                         />
-                        {errors.Field && touched.Field ? (
+                        {errors.department && touched.department ? (
                           <div className="invalid-feedback d-block">
-                            {errors.Field}
+                            {errors.department}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -576,7 +579,7 @@ const MarksRegistration = ({ match }) => {
                               <span className="bounce3" />
                             </span>
                             <span className="label">
-                              <IntlMessages id="SubmitButton" />
+                              <IntlMessages id="button.SubmitButton" />
                             </span>
                           </Button>
                         </div>

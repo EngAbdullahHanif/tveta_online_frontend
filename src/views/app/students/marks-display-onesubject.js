@@ -112,7 +112,7 @@ const initialValues = {
   },
 };
 
-const StudentAttendance = ({ match }) => {
+const MarksDisplay = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [inNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -234,7 +234,7 @@ const StudentAttendance = ({ match }) => {
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {<IntlMessages id="forms.AttendanceTitle" />}
+          {<IntlMessages id="marks.marksDisplayTitle" />}
         </h3>
         <CardBody>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -385,7 +385,7 @@ const StudentAttendance = ({ match }) => {
                   <>
                     <Row
                       className="border border me-5 p-1 "
-                      style={{ marginInline: '10%' }}
+                      style={{ marginInline: '16%' }}
                     >
                       <Colxx xxs="2">
                         <Label>
@@ -422,53 +422,36 @@ const StudentAttendance = ({ match }) => {
                         </Label>
                         <h6>{selectedClass.label}</h6>
                       </Colxx>
+
+                      <Colxx xxs="2">
+                        <Label>
+                          <IntlMessages id="marks.SubjectLabel" />
+                        </Label>
+                        <h6>{selectedSubject.label}</h6>
+                      </Colxx>
                     </Row>
 
                     <Row
                       className="justify-content-center  border border"
-                      style={{ marginInline: '10%' }}
+                      style={{ marginInline: '16%' }}
                     >
                       <table className="table">
-                        <thead className="thead-dark ">
-                          <tr>
-                            <th colspan="4" className="border text-center">
-                              <IntlMessages id="marks.studentChar" />
-                            </th>
-                            <th colspan="4" className="border text-center">
-                              <IntlMessages id="marks.marksDisplayTitle" />
-                            </th>
-                          </tr>
-                        </thead>
                         <thead className="thead-dark">
                           <tr>
-                            <th
-                              scope="col"
-                              className="border text-center "
-                              style={{ maxWidth: '20px ', minWidth: '50px' }}
-                            >
+                            <th scope="col">
                               <IntlMessages id="marks.No" />
                             </th>
-                            <th scope="col" className="border text-center">
+                            <th scope="col">
                               <IntlMessages id="marks.FullName" />
                             </th>
-                            <th scope="col" className="border text-center">
+                            <th scope="col">
                               <IntlMessages id="marks.FatherName" />
                             </th>
-                            <th scope="col" className="border text-center">
+                            <th scope="col">
                               <IntlMessages id="marks.ID" />
                             </th>
-
-                            <th scope="col" className="border text-center">
-                              <IntlMessages id="forms.StdPresentLabel" />
-                            </th>
-                            <th scope="col" className="border text-center">
-                              <IntlMessages id="forms.StdAbsentLabel" />
-                            </th>
-                            <th scope="col" className="border text-center">
-                              <IntlMessages id="forms.StdNecessaryWorkLabel" />
-                            </th>
-                            <th scope="col" className="border text-center">
-                              <IntlMessages id="forms.StdSicknessLabel" />
+                            <th scope="col">
+                              <IntlMessages id="marks.Marks" />
                             </th>
                           </tr>
                         </thead>
@@ -478,7 +461,7 @@ const StudentAttendance = ({ match }) => {
                     <Row
                       className="justify-content-center  border border"
                       style={{
-                        marginInline: '10%',
+                        marginInline: '16%',
                         height: '30rem',
                         overflowY: 'scroll',
                         overflowX: 'hidden',
@@ -498,67 +481,8 @@ const StudentAttendance = ({ match }) => {
                               <th scope="row">{index}</th>
                               <td>{student.name}</td>
                               <td>{student.father_name}</td>
-                              <td>{student.student_id}</td>; ; ;{/* Present*/}
-                              <div class="form-group mx-sm-3 mb-2">
-                                <FormGroup className="form-group">
-                                  <Field
-                                    type="number"
-                                    className="form-control"
-                                    name={`StdPresent[${student.student_id}]`}
-                                  />
-                                  {errors.StdPresent && touched.StdPresent ? (
-                                    <div className="invalid-feedback d-block">
-                                      {errors.StdPresent}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
-                              {/* Absent */}
-                              <div class="form-group mx-sm-3 mb-2">
-                                <FormGroup className="form-group">
-                                  <Field
-                                    type="number"
-                                    className="form-control"
-                                    name={`StdAbsent[${student.student_id}]`}
-                                  />
-                                  {errors.StdAbsent && touched.StdAbsent ? (
-                                    <div className="invalid-feedback d-block">
-                                      {errors.StdAbsent}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
-                              {/* Necessary Work */}
-                              <div class="form-group mx-sm-3 mb-2">
-                                <FormGroup className="form-group">
-                                  <Field
-                                    type="number"
-                                    className="form-control"
-                                    name={`StdNecessaryWork[${student.student_id}]`}
-                                  />
-                                  {errors.StdNecessaryWork &&
-                                  touched.StdNecessaryWork ? (
-                                    <div className="invalid-feedback d-block">
-                                      {errors.StdNecessaryWork}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
-                              {/* SickNess */}
-                              <div class="form-group mx-sm-3 mb-2">
-                                <FormGroup className="form-group">
-                                  <Field
-                                    type="number"
-                                    className="form-control"
-                                    name={`StdSickness[${student.student_id}]`}
-                                  />
-                                  {errors.StdSickness && touched.StdSickness ? (
-                                    <div className="invalid-feedback d-block">
-                                      {errors.StdSickness}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
+                              <td>{student.student_id}</td>
+                              <td>{student.marks}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -567,7 +491,7 @@ const StudentAttendance = ({ match }) => {
                     <Row
                       className="justify-content-center  border border"
                       style={{
-                        marginInline: '10%',
+                        marginInline: '16%',
                       }}
                     >
                       <table class="table ">
@@ -581,34 +505,20 @@ const StudentAttendance = ({ match }) => {
                         </tbody>
                         <tfoot className="thead-dark">
                           <tr>
-                            <th
-                              scope="col"
-                              className="border text-center "
-                              style={{ maxWidth: '20px' }}
-                            >
+                            <th scope="col">
                               <IntlMessages id="marks.No" />
                             </th>
-                            <th scope="col" className="border text-center">
+                            <th scope="col">
                               <IntlMessages id="marks.FullName" />
                             </th>
-                            <th scope="col" className="border text-center">
+                            <th scope="col">
                               <IntlMessages id="marks.FatherName" />
                             </th>
-                            <th scope="col" className="border text-center">
+                            <th scope="col">
                               <IntlMessages id="marks.ID" />
                             </th>
-
-                            <th scope="col" className="border text-center">
-                              <IntlMessages id="forms.StdPresentLabel" />
-                            </th>
-                            <th scope="col" className="border text-center">
-                              <IntlMessages id="forms.StdAbsentLabel" />
-                            </th>
-                            <th scope="col" className="border text-center">
-                              <IntlMessages id="forms.StdNecessaryWorkLabel" />
-                            </th>
-                            <th scope="col" className="border text-center">
-                              <IntlMessages id="forms.StdSicknessLabel" />
+                            <th scope="col">
+                              <IntlMessages id="marks.Marks" />
                             </th>
                           </tr>
                         </tfoot>
@@ -622,23 +532,6 @@ const StudentAttendance = ({ match }) => {
                         >
                           <IntlMessages id="button.Back" />
                         </Button>
-
-                        <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                          <Button
-                            className={`btn-shadow btn-multiple-state `}
-                            size="lg"
-                            type="submit"
-                          >
-                            <span className="spinner d-inline-block">
-                              <span className="bounce1" />
-                              <span className="bounce2" />
-                              <span className="bounce3" />
-                            </span>
-                            <span className="label">
-                              <IntlMessages id="button.SubmitButton" />
-                            </span>
-                          </Button>
-                        </div>
                       </Colxx>
                     </Row>
                   </>
@@ -652,4 +545,4 @@ const StudentAttendance = ({ match }) => {
   );
 };
 
-export default StudentAttendance;
+export default MarksDisplay;

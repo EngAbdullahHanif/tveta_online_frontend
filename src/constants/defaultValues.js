@@ -14,7 +14,7 @@ export const menuHiddenBreakpoint = 768;
 export const defaultLocale = 'fa';
 export const localeOptions = [
   { id: 'fa', name: 'پشتو/ دری', direction: 'rtl' },
-  { id: 'en', name: 'English', direction: 'ltr' }
+  { id: 'en', name: 'English', direction: 'ltr' },
   // ,
   // { id: 'es', name: 'Español', direction: 'ltr' },
   // { id: 'enrtl', name: 'English - RTL', direction: 'rtl' },

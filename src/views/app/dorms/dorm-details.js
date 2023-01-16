@@ -44,105 +44,17 @@ const DormDetails = (values) => {
 
       <Separator className="mb-5" />
       <Row>
-        <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card>
+        <Colxx xxs="6" sm="4" md="3" className="mb-4 ">
+          <Card style={{ minHeight: '180px' }}>
             <CardBody className="text-center">
               <b>
                 <p>
-                  <IntlMessages id="institute.totalStudents" />
+                  <IntlMessages id="dorm.PublicBuildingOwnerLabel" />
                 </p>
               </b>
-              <Row className="">
+              <Row className="m-2">
                 <Colxx>
-                  <b>
-                    {' '}
-                    <IntlMessages id="institute.totalStudentsMale" />
-                  </b>
-                  <p>58 نفر</p>
-                </Colxx>
-                <Colxx>
-                  <b>
-                    <IntlMessages id="institute.totalStudentsFemale" />
-                  </b>
-                  <p>58 نفر</p>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-        <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card>
-            <CardBody className="text-center">
-              <b>
-                <p>
-                  <IntlMessages id="institute.totalTeachers" />
-                </p>
-              </b>
-              <Row className="">
-                <Colxx>
-                  <b>
-                    {' '}
-                    <IntlMessages id="institute.totalStudentsMale" />
-                  </b>
-                  <p>58 نفر</p>
-                </Colxx>
-                <Colxx>
-                  <b>
-                    <IntlMessages id="institute.totalStudentsFemale" />
-                  </b>
-                  <p>58 نفر</p>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-        <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card>
-            <CardBody className="text-center">
-              <b>
-                <p>
-                  <IntlMessages id="institute.Greduated_12" />
-                </p>
-              </b>
-              <Row className="">
-                <Colxx>
-                  <b>
-                    {' '}
-                    <IntlMessages id="institute.totalStudentsMale" />
-                  </b>
-                  <p>58 نفر</p>
-                </Colxx>
-                <Colxx>
-                  <b>
-                    <IntlMessages id="institute.totalStudentsFemale" />
-                  </b>
-                  <p>58 نفر</p>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-        <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card>
-            <CardBody className="text-center">
-              <b>
-                <p>
-                  <IntlMessages id="institute.Greduated_14" />
-                </p>
-              </b>
-              <Row className="">
-                <Colxx>
-                  <b>
-                    {' '}
-                    <IntlMessages id="institute.totalStudentsMale" />
-                  </b>
-                  <p>58 نفر</p>
-                </Colxx>
-                <Colxx>
-                  <b>
-                    <IntlMessages id="institute.totalStudentsFemale" />
-                  </b>
-                  <p>58 نفر</p>
+                  د تخنیکی او مسلکی تعلیماتو اداره/ اداره تعلیمات تخنیکی و مسلکی
                 </Colxx>
               </Row>
             </CardBody>
@@ -150,18 +62,87 @@ const DormDetails = (values) => {
         </Colxx>
 
         <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card>
+          <Card style={{ minHeight: '180px' }}>
             <CardBody className="text-center">
               <b>
                 <p>
-                  <IntlMessages id="institute.totalDepartments" />
+                  <IntlMessages id="dorm.PrivateBuildingTypeLabel" />
                 </p>
               </b>
-              <Row className="d-block">
-                <Colxx>کمپیوتر ساینس</Colxx>
+              <Row className="m-2">
+                <Colxx> کرایی</Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
 
-                <Colxx>برق</Colxx>
-                <Colxx>میخانیک</Colxx>
+        <Colxx xxs="6" sm="4" md="3" className="mb-4">
+          <Card style={{ minHeight: '180px' }}>
+            <CardBody className="text-center">
+              <b>
+                <p>
+                  <IntlMessages id="dorm.TotalBuildingNoLabel" />
+                </p>
+              </b>
+              <Row className="m-2">
+                <Colxx>
+                  {' '}
+                  <h2>8 </h2>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        <Colxx xxs="6" sm="4" md="3" className="mb-4">
+          <Card style={{ minHeight: '180px' }}>
+            <CardBody className="text-center">
+              <b>
+                <p>
+                  <IntlMessages id="dorm.TotalRoomsLabel" />
+                </p>
+              </b>
+              <Row className="m-2">
+                <Colxx>
+                  {' '}
+                  <h2>48 </h2>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        <Colxx xxs="6" sm="4" md="3" className="mb-4">
+          <Card style={{ minHeight: '180px' }}>
+            <CardBody className="text-center">
+              <b>
+                <p>
+                  <IntlMessages id="dorm.TotalKitchensLabel" />
+                </p>
+              </b>
+              <Row className="m-2">
+                <Colxx>
+                  {' '}
+                  <h2>8 </h2>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        <Colxx xxs="6" sm="4" md="3" className="mb-4">
+          <Card style={{ minHeight: '180px' }}>
+            <CardBody className="text-center">
+              <b>
+                <p>
+                  <IntlMessages id="dorm.ToiletLabel" />
+                </p>
+              </b>
+              <Row className="m-2">
+                <Colxx>
+                  {' '}
+                  <h2>14 </h2>
+                </Colxx>
               </Row>
             </CardBody>
           </Card>

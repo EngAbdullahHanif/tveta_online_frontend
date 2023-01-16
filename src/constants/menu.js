@@ -81,6 +81,18 @@ const data = [
         to: `${adminRoot}/students/student-transfer`,
         newWindow: false,
       },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.marks-display',
+        to: `${adminRoot}/students/marks-display`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.marks-display-all-subs',
+        to: `${adminRoot}/students/marks-display-allsubs`,
+        newWindow: false,
+      },
     ],
   },
   // {
@@ -370,8 +382,15 @@ const data = [
         label: 'menu.teacher-promotion-demotion',
         to: `${adminRoot}/evaluations/promotion-demotion`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'جزیات ارزیابی',
+        to: `${adminRoot}/evaluations/evaluation-details`,
+      },
     ],
   },
+
+  
   {
     id: 'hr-evaluations',
     icon: 'simple-icon-book-open',

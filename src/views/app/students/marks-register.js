@@ -503,6 +503,7 @@ const MarksRegistration = ({ match }) => {
                               <td>{student.father_name}</td>
                               <td>{student.student_id}</td>
 
+                              {/* Marks Entry */}
                               <div class="form-group mx-sm-3 mb-2">
                                 <FormGroup className="form-group">
                                   <Field

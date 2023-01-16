@@ -75,6 +75,8 @@ const Students = ({ match }) => (
         path={`${match.url}/:studentId`}
         render={(props) => <StudentProfile {...props} />}
       /> */}
+
+
       <Route
         path={`${match.url}/student-transfer`}
         render={(props) => <StudentTransfer {...props} />}

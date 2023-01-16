@@ -300,6 +300,11 @@ const data = [
         to: `${adminRoot}/dorms/student-register`,
       },
       {
+        icon: 'simple-icon-plus',
+        label: 'menu.dorm-students',
+        to: `${adminRoot}/dorms/students`,
+      },
+      {
         icon: 'simple-icon-check',
         label: 'menu.dorm-details',
         to: `${adminRoot}/dorms/details`,

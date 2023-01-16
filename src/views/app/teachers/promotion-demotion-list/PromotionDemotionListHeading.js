@@ -1,5 +1,9 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
+
+import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
+
 import {
   Row,
   Button,
@@ -10,14 +14,22 @@ import {
   DropdownToggle,
   CustomInput,
   Collapse,
+  Label,
+  FormGroup,
+  Input,
+  Card,
+  CardBody,
+  CardTitle,
 } from 'reactstrap';
+
 import { injectIntl } from 'react-intl';
+import { FormikReactSelect } from '../../../../containers/form-validations/FormikFields';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
-import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
+import { province } from 'lang/locales/fa_IR';
 // import Breadcrumb from '../navs/Breadcrumb';
 
 const ListPageHeading = ({
@@ -25,40 +37,38 @@ const ListPageHeading = ({
   displayMode,
   changeDisplayMode,
   handleChangeSelectAll,
-  changeFilterOption,
   changePageSize,
   selectedPageSize,
   totalItemCount,
-  selectedOrderOption,
   match,
   startIndex,
   endIndex,
   selectedItemsLength,
   itemsLength,
-  onSearchKey,
-  orderOptions,
   pageSizes,
   // toggleModal,
   heading,
-  onSelectStartDate,
-  onSelectEndDate,
-  filterOptions,
-  onEvaluationYearChange,
+  onIdSearchKey,
+  changeGenderBy,
+  selectedGenderOption,
+  genderOptions,
+  selectedProvinceOption,
+  provinces,
+  changeProvinceBy,
+  onDistrictSearchKey,
+  onProvinceSearchKey,
+  onResetClick,
+  reset,
   institutes,
   onInstituteSelect,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
-  const { messages } = intl;
-  const [startDate, setStartDate] = useState(null);
-  const [selectedInstitute, setSelectedInstitute] = useState('');
-  console.log('selectedInstitute', selectedInstitute);
-  onInstituteSelect(selectedInstitute);
 
-  //useefftect after startdate changed
-  // useEffect(() => {
-  //   console.log('start date changed', startDate);
-  // }, [startDate]);
+  const [selectedInstitute, setSelectedInstitute] = useState('');
+  onInstituteSelect(selectedInstitute);
+  const { messages } = intl;
+
   return (
     <Row>
       <Colxx xxs="12">
@@ -163,17 +173,41 @@ const ListPageHeading = ({
 
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
+                {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="evaluation.filter" />
-                    {/* {selectedOrderOption.label} */}
+                    <IntlMessages id="filter" />
+                    {selectedGenderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {filterOptions.map((order, index) => {
+                    {genderOptions.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeFilterOption(order.column)}
+                          onClick={() => changeGenderBy(order.column)}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectedProvinceOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {provinces.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeProvinceBy(order.column)}
                         >
                           {order.label}
                         </DropdownItem>
@@ -184,72 +218,50 @@ const ListPageHeading = ({
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
-                    name="keyword"
-                    id="search"
-                    placeholder={messages['menu.search']}
-                    onKeyPress={(e) => onSearchKey(e)}
+                    name="district"
+                    id="district"
+                    placeholder={messages['search.district']}
+                    onKeyPress={(e) => onDistrictSearchKey(e)}
                   />
-                </div>
+                </div> */}
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
-                    type="number"
-                    name="evaluationYear"
+                    type="text"
+                    name="keyword"
                     id="search"
-                    placeholder={messages['menu.search']}
-                    onKeyPress={(e) => onEvaluationYearChange(e)}
+                    placeholder={messages['teacher.id']}
+                    onKeyPress={(e) => onIdSearchKey(e)}
                   />
                 </div>
-                <ReactAutoSugegst
-                  data={institutes}
-                  select={(opt) => {
-                    setSelectedInstitute(opt);
-                  }}
-                  placeholder={messages['search.institute.name']}
-                />
+
+                <div className="">
+                  <ReactAutoSugegst
+                    data={institutes}
+                    select={(opt) => {
+                      setSelectedInstitute(opt);
+                    }}
+                    placeholder={messages['search.institute.name']}
+                  />
+                </div>
               </div>
 
-              {/* <div className=" d-inline-block float-md-left mr-10 mb-1 align-top">
-                <label>تاریخ شروع: </label>
-
-                <input
-                  type="date"
-                  name="start_date"
-                  id="start_date"
-                  style={{
-                    backgroundColor: 'inherit',
-                    color: 'inherit',
-                    marginInline: '3px',
-                    padding: '1px',
-                    paddingInline: '10px',
-                    borderRadius: '15px',
-                    border: '0.1px solid gray',
-                  }}
-                  onChange={(e) => onSelectStartDate(e.target.value)}
-                />
-              </div>
-              <div className=" d-inline-block float-md-left ml-4 mb-1 align-top">
-                <label>تاریخ ختم: </label>
-                <input
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  style={{
-                    backgroundColor: 'inherit',
-                    color: 'inherit',
-                    marginInline: '3px',
-                    borderRadius: '10px',
-                    paddingInline: '10px',
-                    padding: '1px',
-                    borderRadius: '15px',
-                    border: '0.1px solid gray',
-                  }}
-                  onChange={(e) => onSelectEndDate(e.target.value)}
-                />
-              </div> */}
+              <Button
+                color="outline-dark"
+                size="xs"
+                className="float-md-left mb-1"
+                onClick={() => {
+                  document.getElementById('search').value = '';
+                  setSelectedInstitute('');
+                  onResetClick(!reset);
+                }}
+              >
+                <IntlMessages id="pages.reset" />
+              </Button>
             </div>
+
             <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>
-              <UncontrolledDropdown className="d-inline-block">
+              <UncontrolledDropdown className="d-inline-block ">
                 <DropdownToggle caret color="outline-dark" size="xs">
                   {selectedPageSize}
                 </DropdownToggle>

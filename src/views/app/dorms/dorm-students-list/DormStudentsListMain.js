@@ -5,9 +5,9 @@ import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './DormListHeading';
+import ListPageHeading from './DormStudentsListHeading';
 
-import ListPageListing from './DormListCatagory';
+import ListPageListing from './DormStudentsListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -20,9 +20,9 @@ const getIndex = (value, arr, prop) => {
 };
 
 const servicePath = 'http://localhost:8000';
-
 const apiUrl = `${servicePath}/cakes/paging`;
 const dormUrl = `${servicePath}/institute/dorms`;
+const dormStudentsUrl = `${servicePath}/api/student_dorms`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -30,13 +30,11 @@ const orderOptions = [
   { column: 'status', label: 'Status' },
 ];
 const pageSizes = [4, 8, 12, 20];
-
 const categories = [
   { label: 'Cakes', value: 'Cakes', key: 0 },
   { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
-
 const provinces = [
   {
     column: 'all',
@@ -179,13 +177,13 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
-const genderOptions = [
+const DormTypeOptions = [
   {
     column: 'all',
     label: 'تول / همه',
   },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
+  { column: '1', label: 'بدل عاشه' },
+  { column: '2', label: 'بدیل عاشه' },
 ];
 
 const ThumbListPages = ({ match }) => {
@@ -197,7 +195,6 @@ const ThumbListPages = ({ match }) => {
     column: 'title',
     label: 'Product Name',
   });
-
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
@@ -211,12 +208,11 @@ const ThumbListPages = ({ match }) => {
   const [rest, setRest] = useState(0);
   const [dormsFilterList, setDormsFilterList] = useState([]);
   const [dormName, setDormName] = useState('');
-  const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
-  const [selectedGenderOption, setSelectedGenderOption] = useState({
+  const [selectedDormTypeOption, setSelectedDormTypeOption] = useState({
     column: 'all',
-    label: 'جنیست',
+    label: '',
   });
   const [selectedProvinceOption, setSelectedProvinceOption] = useState({
     column: 'all',
@@ -242,96 +238,23 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     console.log('district', district);
     async function fetchData() {
+      if (selectedDormTypeOption.column == 'all') {
+        console.log('selectedDormTypeOption', selectedDormTypeOption.column);
+        setSelectedDormTypeOption({ column: '', label: '' });
+        console.log('selectedDormTypeOption', selectedDormTypeOption.column);
+      }
       if (dormName !== '') {
-        axios
-          .get(`${dormUrl}?id=${dormName.id}`)
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(`${dormUrl}?id=${dormName.id}`);
-
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setRest(false);
-        }
-        axios
-          .get(`${dormUrl}?district=${district}`)
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(`print${dormUrl}`);
-
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-            );
-
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `2${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-            );
-
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        const response = await axios.get(
+          `${dormStudentsUrl}/?dorm_id=${dormName.id}&district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`
+        );
+        setDorms(response.data);
+        setIsLoaded(true);
       } else {
-        axios
-          // get data from localhost:8000/dorms
-          .get(
-            `${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `3${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-            );
-            setDorms(data);
-
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        const response = await axios.get(
+          `${dormStudentsUrl}/?district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`
+        );
+        setDorms(response.data);
+        setIsLoaded(true);
       }
     }
     fetchData();
@@ -342,7 +265,7 @@ const ThumbListPages = ({ match }) => {
     dormName,
     rest,
     district,
-    selectedGenderOption,
+    selectedDormTypeOption,
     selectedProvinceOption,
   ]);
 
@@ -455,9 +378,9 @@ const ThumbListPages = ({ match }) => {
           orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
-          changeGenderBy={(column) => {
-            setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+          changeDormTypeBy={(column) => {
+            setSelectedDormTypeOption(
+              DormTypeOptions.find((x) => x.column === column)
             );
           }}
           changeProvinceBy={(column) => {
@@ -465,9 +388,9 @@ const ThumbListPages = ({ match }) => {
               provinces.find((x) => x.column === column)
             );
           }}
-          selectedGenderOption={selectedGenderOption}
+          selectedDormTypeOption={selectedDormTypeOption}
           selectedProvinceOption={selectedProvinceOption}
-          genderOptions={genderOptions}
+          DormTypeOptions={DormTypeOptions}
           provinces={provinces}
           dormsFilterList={dormsFilterList}
           onDormSelect={setDormName}
@@ -476,7 +399,7 @@ const ThumbListPages = ({ match }) => {
         />
 
         <ListPageListing
-          dorms={dorms}
+          dormStudents={dorms}
           displayMode={displayMode}
           selectedItems={selectedItems}
           onCheckItem={onCheckItem}

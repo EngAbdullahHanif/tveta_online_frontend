@@ -26,7 +26,7 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
               {/* send this to localhost/students/:id */}
 
-              <NavLink to={`${student.student_id}`} className="">
+              <NavLink to={`student/${student.student_id}`} className="">
                 <p className="list-item-heading mb-1 truncate ">
                   <span className="mr-5">{student.student_id}</span>
                   {student.name}

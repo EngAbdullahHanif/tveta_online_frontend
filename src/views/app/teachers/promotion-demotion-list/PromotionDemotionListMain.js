@@ -5,9 +5,9 @@ import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './DormListHeading';
+import ListPageHeading from 'views/app/teachers/promotion-demotion-list/PromotionDemotionListHeading';
 
-import ListPageListing from './DormListCatagory';
+import ListPageListing from 'views/app/teachers/promotion-demotion-list/PromotionDemotionListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -22,12 +22,23 @@ const getIndex = (value, arr, prop) => {
 const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
-const dormUrl = `${servicePath}/institute/dorms`;
+const teacherApiUrl = `${servicePath}/teachers/`;
+const instituteApiUrl = `${servicePath}/institute/`;
+const promotionDemotionAPIUrl = `${servicePath}/teachers/teachers_bonusandpunish/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
   { column: 'category', label: 'Category' },
   { column: 'status', label: 'Status' },
+];
+
+const genderOptions = [
+  {
+    column: 'all',
+    label: 'تول / همه',
+  },
+  { column: '1', label: 'ذکور' },
+  { column: '2', label: 'اناث' },
 ];
 const pageSizes = [4, 8, 12, 20];
 
@@ -37,7 +48,7 @@ const categories = [
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
 
-const provinces = [
+const Provinces = [
   {
     column: 'all',
     label: 'تول / همه',
@@ -179,41 +190,11 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
-const genderOptions = [
-  {
-    column: 'all',
-    label: 'تول / همه',
-  },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
-];
-
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
-  const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'title',
-    label: 'Product Name',
-  });
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [totalItemCount, setTotalItemCount] = useState(0);
-  const [totalPage, setTotalPage] = useState(1);
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [dorms, setDorms] = useState([]);
-  const [lastChecked, setLastChecked] = useState(null);
-  const [selectedFilter, setSelectFilter] = useState({
-    column: 'all',
-    label: 'تول / همه',
-  });
-  const [rest, setRest] = useState(0);
-  const [dormsFilterList, setDormsFilterList] = useState([]);
-  const [dormName, setDormName] = useState('');
-  const [studentId, setStudentId] = useState('');
-  const [province, setProvince] = useState('');
-  const [district, setDistrict] = useState('');
   const [selectedGenderOption, setSelectedGenderOption] = useState({
     column: 'all',
     label: 'جنیست',
@@ -222,130 +203,62 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [totalItemCount, setTotalItemCount] = useState(0);
+  const [totalPage, setTotalPage] = useState(1);
+  const [teacherId, setTeacherId] = useState('');
+  const [province, setProvince] = useState('');
+  const [district, setDistrict] = useState('');
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [items, setItems] = useState([]);
+  const [lastChecked, setLastChecked] = useState(null);
+  const [rest, setRest] = useState(0);
+  const [institutes, setInstitutes] = useState([]);
+  const [institute, setInstitute] = useState('');
+  const [instituteTeachers, setInstituteTeachers] = useState([]);
+
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedOrderOption]);
-  const fetchDorms = async () => {
-    const response = await axios.get(`${dormUrl}`);
+  }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
+
+  useEffect(() => {
+    console.log('institute', institute);
+
+    async function fetchData() {
+      if (institute !== '') {
+        const response = await axios.get(
+          `${promotionDemotionAPIUrl}?institute_id=${institute.id}`
+        );
+        setItems(response.data);
+        setTotalItemCount(response.data.totalItem);
+        setIsLoaded(true);
+      } else {
+        const res = await axios.get(
+          `${promotionDemotionAPIUrl}?teacher_id=${teacherId}`
+        );
+        console.log('res', res.data);
+        setItems(res.data);
+        setTotalItemCount(res.data.totalItem);
+        setIsLoaded(true);
+      }
+    }
+
+    fetchData();
+  }, [selectedPageSize, currentPage, teacherId, rest, institute]);
+
+  const fetchInstitutes = async () => {
+    const response = await axios.get(instituteApiUrl);
     const updatedData = await response.data.map((item) => ({
       id: item.id,
       name: item.name,
     }));
-    setDormsFilterList(updatedData);
-    console.log('dormsFilterList', dormsFilterList);
+    setInstitutes(updatedData);
   };
 
   useEffect(() => {
-    fetchDorms();
+    fetchInstitutes();
   }, []);
-
-  useEffect(() => {
-    console.log('district', district);
-    async function fetchData() {
-      if (dormName !== '') {
-        axios
-          .get(`${dormUrl}?id=${dormName.id}`)
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(`${dormUrl}?id=${dormName.id}`);
-
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setRest(false);
-        }
-        axios
-          .get(`${dormUrl}?district=${district}`)
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(`print${dormUrl}`);
-
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-            );
-
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `2${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-            );
-
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else {
-        axios
-          // get data from localhost:8000/dorms
-          .get(
-            `${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `3${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-            );
-            setDorms(data);
-
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      }
-    }
-    fetchData();
-  }, [
-    selectedPageSize,
-    currentPage,
-    selectedOrderOption,
-    dormName,
-    rest,
-    district,
-    selectedGenderOption,
-    selectedProvinceOption,
-  ]);
-
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||
@@ -396,8 +309,6 @@ const ThumbListPages = ({ match }) => {
 
   const onContextMenuClick = (e, data) => {
     // params : (e,data,target)
-    console.log('onContextMenuClick - selected items', selectedItems);
-    console.log('onContextMenuClick - action : ', data.action);
   };
 
   const onContextMenu = (e, data) => {
@@ -427,34 +338,12 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د لیلیو لست/ لست لیله ها"
+          heading="د استادانو مکافات او مجازات لست"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeOrderBy={(column) => {
-            setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
-            );
-          }}
-          changePageSize={setSelectedPageSize}
-          selectedPageSize={selectedPageSize}
-          totalItemCount={totalItemCount}
-          selectedOrderOption={selectedOrderOption}
-          match={match}
-          startIndex={startIndex}
-          endIndex={endIndex}
-          selectedItemsLength={selectedItems ? selectedItems.length : 0}
-          itemsLength={dorms ? dorms.length : 0}
-          onSearchDistrict={(e) => {
-            if (e.key === 'Enter') {
-              setDistrict(e.target.value.toLowerCase());
-            }
-          }}
-          orderOptions={orderOptions}
-          pageSizes={pageSizes}
-          toggleModal={() => setModalOpen(!modalOpen)}
           changeGenderBy={(column) => {
             setSelectedGenderOption(
               genderOptions.find((x) => x.column === column)
@@ -462,21 +351,46 @@ const ThumbListPages = ({ match }) => {
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              provinces.find((x) => x.column === column)
+              Provinces.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
           genderOptions={genderOptions}
-          provinces={provinces}
-          dormsFilterList={dormsFilterList}
-          onDormSelect={setDormName}
+          provinces={Provinces}
+          changePageSize={setSelectedPageSize}
+          selectedPageSize={selectedPageSize}
+          totalItemCount={totalItemCount}
+          match={match}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          selectedItemsLength={selectedItems ? selectedItems.length : 0}
+          itemsLength={items ? items.length : 0}
+          onIdSearchKey={(e) => {
+            if (e.key === 'Enter') {
+              setTeacherId(e.target.value.toLowerCase());
+            }
+          }}
+          onProvinceSearchKey={(e) => {
+            if (e.key === 'Enter') {
+              setProvince(e.target.value.toLowerCase());
+            }
+          }}
+          onDistrictSearchKey={(e) => {
+            if (e.key === 'Enter') {
+              setDistrict(e.target.value.toLowerCase());
+            }
+          }}
           onResetClick={setRest}
           reset={rest}
+          pageSizes={pageSizes}
+          toggleModal={() => setModalOpen(!modalOpen)}
+          institutes={institutes}
+          onInstituteSelect={setInstitute}
         />
 
         <ListPageListing
-          dorms={dorms}
+          items={items}
           displayMode={displayMode}
           selectedItems={selectedItems}
           onCheckItem={onCheckItem}

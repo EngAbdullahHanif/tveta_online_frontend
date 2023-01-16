@@ -12,10 +12,10 @@ import {
   Collapse,
 } from 'reactstrap';
 import { injectIntl } from 'react-intl';
+import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
-import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
 // import Breadcrumb from '../navs/Breadcrumb';
@@ -25,35 +25,38 @@ const ListPageHeading = ({
   displayMode,
   changeDisplayMode,
   handleChangeSelectAll,
-  changeFilterOption,
   changePageSize,
   selectedPageSize,
   totalItemCount,
-  selectedOrderOption,
   match,
   startIndex,
   endIndex,
   selectedItemsLength,
   itemsLength,
-  onSearchKey,
-  orderOptions,
+  onSearchDistrict,
   pageSizes,
   // toggleModal,
   heading,
   onSelectStartDate,
   onSelectEndDate,
-  filterOptions,
-  onEvaluationYearChange,
-  institutes,
-  onInstituteSelect,
+  genderOption,
+  selectedDormTypeOption,
+  changeDormTypeBy,
+  provinces,
+  selectedProvinceOption,
+  changeProvinceBy,
+  DormTypeOptions,
+  dormsFilterList,
+  onDormSelect,
+  onResetClick,
+  reset,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
+  const [selectDrom, setSelectDorm] = useState('');
+  onDormSelect(selectDrom);
   const { messages } = intl;
   const [startDate, setStartDate] = useState(null);
-  const [selectedInstitute, setSelectedInstitute] = useState('');
-  console.log('selectedInstitute', selectedInstitute);
-  onInstituteSelect(selectedInstitute);
 
   //useefftect after startdate changed
   // useEffect(() => {
@@ -166,16 +169,40 @@ const ListPageHeading = ({
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                   <DropdownToggle caret color="outline-dark" size="xs">
                     <IntlMessages id="evaluation.filter" />
-                    {/* {selectedOrderOption.label} */}
+                    {selectedDormTypeOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {filterOptions.map((order, index) => {
+                    {DormTypeOptions.map((gender, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeFilterOption(order.column)}
+                          onClick={() => changeDormTypeBy(gender.column)}
                         >
-                          {order.label}
+                          {gender.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    {/* <IntlMessages id="filter" /> */}
+                    {selectedProvinceOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {provinces.map((province, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeProvinceBy(province.column)}
+                        >
+                          {province.label}
                         </DropdownItem>
                       );
                     })}
@@ -184,68 +211,36 @@ const ListPageHeading = ({
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
-                    name="keyword"
-                    id="search"
-                    placeholder={messages['menu.search']}
-                    onKeyPress={(e) => onSearchKey(e)}
+                    name="district"
+                    id="district"
+                    placeholder={messages['dorm.search.district']}
+                    onKeyPress={(e) => onSearchDistrict(e)}
                   />
                 </div>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="number"
-                    name="evaluationYear"
-                    id="search"
-                    placeholder={messages['menu.search']}
-                    onKeyPress={(e) => onEvaluationYearChange(e)}
+                <div className="">
+                  <ReactAutoSugegst
+                    data={dormsFilterList}
+                    select={(opt) => {
+                      setSelectDorm(opt);
+                    }}
+                    placeholder={messages['dorm.search.name']}
                   />
                 </div>
-                <ReactAutoSugegst
-                  data={institutes}
-                  select={(opt) => {
-                    setSelectedInstitute(opt);
-                  }}
-                  placeholder={messages['search.institute.name']}
-                />
               </div>
-
-              {/* <div className=" d-inline-block float-md-left mr-10 mb-1 align-top">
-                <label>تاریخ شروع: </label>
-
-                <input
-                  type="date"
-                  name="start_date"
-                  id="start_date"
-                  style={{
-                    backgroundColor: 'inherit',
-                    color: 'inherit',
-                    marginInline: '3px',
-                    padding: '1px',
-                    paddingInline: '10px',
-                    borderRadius: '15px',
-                    border: '0.1px solid gray',
-                  }}
-                  onChange={(e) => onSelectStartDate(e.target.value)}
-                />
-              </div>
-              <div className=" d-inline-block float-md-left ml-4 mb-1 align-top">
-                <label>تاریخ ختم: </label>
-                <input
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  style={{
-                    backgroundColor: 'inherit',
-                    color: 'inherit',
-                    marginInline: '3px',
-                    borderRadius: '10px',
-                    paddingInline: '10px',
-                    padding: '1px',
-                    borderRadius: '15px',
-                    border: '0.1px solid gray',
-                  }}
-                  onChange={(e) => onSelectEndDate(e.target.value)}
-                />
-              </div> */}
+              <Button
+                color="outline-dark"
+                size="xs"
+                className="float-md-left mb-1"
+                onClick={() => {
+                  changeDormTypeBy('all');
+                  changeProvinceBy('all');
+                  document.getElementById('district').value = '';
+                  setSelectDorm('');
+                  onResetClick(!reset);
+                }}
+              >
+                <IntlMessages id="pages.reset" />
+              </Button>
             </div>
             <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>

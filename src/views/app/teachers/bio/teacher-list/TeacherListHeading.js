@@ -66,7 +66,6 @@ const ListPageHeading = ({
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
 
   const [selectedInstitute, setSelectedInstitute] = useState('');
-  console.log('selectedInstitute12', selectedInstitute);
   onInstituteSelect(selectedInstitute);
   const { messages } = intl;
 

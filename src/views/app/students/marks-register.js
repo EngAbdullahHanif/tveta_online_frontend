@@ -199,58 +199,97 @@ const MarksRegistration = ({ match }) => {
     console.log('students', students);
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = (values) => {
     // console.log('values', values);
     const educational_year = selectedEducationalYear;
     const institute_id = selectedInstitute.value;
     const department_id = selectedDepartment.value;
     const class_id = selectedClass.value;
     const subject_id = selectedSubject.value;
-    students.map((student) => {
-      const examData = {
-        educational_year: educational_year,
-        student_id: student.student_id,
-        institute_id: institute_id,
-        Department: department_id,
-        class_id: class_id,
-      };
-      console.log('examData', examData);
-      //send data to create_marks api to create exam
-      // const exam = axios.post(
-      //   'http://localhost:8000/api/create_marks/',
-      //   examData
-      // );
+    console.log('educational_year', educational_year);
+    console.log('institute_id', institute_id);
+    console.log('department_id', department_id);
+    console.log('class_id', class_id);
+    console.log('subject_id', subject_id);
 
-      axios
-        .post('http://localhost:8000/api/create_marks/', examData)
-        .then((res) => {
-          console.log('res', res);
-        })
-        .catch((err) => {
-          console.log('err', err);
-        });
+    const examData = {
+      educational_year: 1400,
+      student_id: 'ab-123',
+      institute_id: 1,
+      Department: 1,
+      class_id: 1,
+      user_id: 1,
+      verification: 1,
+      TotalMarks: 0,
+      TotalPercentage: 0,
+      grad: 0,
+      TotalGpa: 0,
+      exam_remarks: 0,
+      mark_results: 0,
+      verify_by: 1,
+    };
+    const exam = axios.post(
+      'http://localhost:8000/api/create_marks/',
+      examData
+    );
+    console.log('exam', exam);
 
-      // const response = axios.post(
-      //   `http://localhost:8000/api/create_marks/`,
-      //   examData
-      // );
-      // const exam = response.data;
-      // console.log('exam', exam);
-      //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-      //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-      // console.log('exam', examData);
-      const data = {
-        subject: subject_id,
-        exam_types: 1,
-        passing_score: passingScore,
-        grad: subjectGrad,
-        Gpa: subjectGPA,
-        user_id: 1,
-        mark: values.score[student.student_id],
-      };
-      // console.log('data', data);
-      // axios.post('http://localhost:8000/api/marks/', data);
-    });
+    // students.map((student) => {
+    //   const examData = {
+    //     educational_year: educational_year,
+    //     student_id: student.student_id,
+    //     institute_id: institute_id,
+    //     Department: department_id,
+    //     class_id: class_id,
+    //     user_id: 1,
+    //     verification: 1,
+    //     TotalMarks: 0,
+    //     TotalPercentage: 0,
+    //     grad: 0,
+    //     TotalGpa: 0,
+    //     exam_remarks: 0,
+    //     mark_results: 0,
+    //     verify_by: 1,
+    //   };
+    //   //send data to create_marks api to create exam
+    //   // const exam = axios.post(
+    //   //   'http://localhost:8000/api/create_marks/',
+    //   //   examData
+    //   // );
+
+    //   // axios
+    //   //   .post('http://localhost:8000/api/create_marks/', examData)
+    //   //   .then((res) => {
+    //   //     console.log('res', res);
+    //   //     console.log('response');
+    //   //   })
+    //   //   .catch((err) => {
+    //   //     console.log('response123123');
+    //   //     console.log('err', err);
+    //   //   });
+    //   // console.log('testing');
+
+    //   const response = axios.post(
+    //     `http://localhost:8000/api/create_marks/`,
+    //     examData
+    //   );
+    //   const exam = response;
+    //   console.log('exam', exam);
+    //   //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
+    //   //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
+    //   // console.log('exam', examData);
+    //   const data = {
+    //     subject: subject_id,
+    //     exam_types: 1,
+    //     passing_score: passingScore,
+    //     grad: subjectGrad,
+    //     Gpa: subjectGPA,
+    //     user_id: 1,
+    //     mark: values.score[student.student_id],
+    //   };
+    //   // console.log('data', data);
+    //   // axios.post('http://localhost:8000/api/marks/', data);
+    // });
   };
   return (
     <>

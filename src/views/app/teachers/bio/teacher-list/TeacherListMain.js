@@ -224,15 +224,16 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     console.log('institute', institute);
+    console.log('current page', currentPage);
     async function fetchData() {
       if (institute !== '') {
         const res = await axios.get(
-          `${teacherInstituteApiUrl}?institute_id=${institute.id}`
+          `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
         );
         console.log('res', res.data);
         setInstituteTeachers(res.data);
         setItems(res.data);
-        setTotalItemCount(res.data.totalItem);
+        setTotalItemCount(res.data.count);
         setIsLoaded(true);
       } else if (
         selectedProvinceOption.column === 'all' &&
@@ -244,16 +245,19 @@ const ThumbListPages = ({ match }) => {
           setRest(false);
         }
         axios
-          .get(`${teacherApiUrl}?id=${teacherId}&current_district=${district}`)
+          .get(
+            `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+          )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_district=${district}`
+              `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
             );
 
             setItems(data);
+            setTotalPage(data.total_pages);
             setSelectedItems([]);
             setTotalItemCount(data.totalItem);
             setIsLoaded(true);
@@ -261,14 +265,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedProvinceOption.column === 'all') {
         axios
           .get(
-            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}`
+            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}`
+              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
             );
 
             setItems(data);
@@ -279,14 +283,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedGenderOption.column === 'all') {
         axios
           .get(
-            `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+              `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
             );
 
             setItems(data);
@@ -298,14 +302,14 @@ const ThumbListPages = ({ match }) => {
         axios
           // get data from localhost:8000/teachers
           .get(
-            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
             );
             setItems(data);
 

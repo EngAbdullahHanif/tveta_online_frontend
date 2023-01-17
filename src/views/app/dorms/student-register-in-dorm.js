@@ -5,6 +5,7 @@ import axios from 'axios';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import { NotificationManager } from 'components/common/react-notifications';
 
 import * as Yup from 'yup';
 import {
@@ -196,6 +197,36 @@ const DormRegistration = (values) => {
       setStudent(res.data);
     });
   };
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'شاگرد موفقانه لیلی ته رجستر شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          5000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
   const handleRegister = (values) => {
     // const dorm_id = values.dorm.value;
     // const student_id = student[0].student_id;
@@ -219,10 +250,12 @@ const DormRegistration = (values) => {
     axios
       .post(`${studentDormsApiUrl}`, data)
       .then((res) => {
+        createNotification('success', 'filled');
         console.log(res);
         console.log(res.data);
       })
       .catch((err) => {
+        createNotification('error', 'filled');
         console.log(err);
       });
   };
@@ -391,7 +424,8 @@ const DormRegistration = (values) => {
 
                           <FormGroup className="form-group has-float-label ">
                             <Label>
-                              <IntlMessages id="forms.InstituteLabel" />
+                              {/* <IntlMessages id="forms.InstituteLabel" /> */}
+                              لیله
                             </Label>
                             <FormikReactSelect
                               name="dorm"
@@ -411,7 +445,8 @@ const DormRegistration = (values) => {
                           </FormGroup>
                           <FormGroup className="form-group has-float-label">
                             <Label>
-                              <IntlMessages id="dorm.BuildingTypeLabel" />
+                              {/* <IntlMessages id="dorm.BuildingTypeLabel" /> */}
+                              نوع
                             </Label>
                             <FormikReactSelect
                               name="dormType"

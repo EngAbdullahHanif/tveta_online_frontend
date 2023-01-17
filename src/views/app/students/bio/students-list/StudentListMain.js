@@ -240,7 +240,7 @@ const ThumbListPages = ({ match }) => {
           `${studentInstituteApiUrl}?institute_id=${institute.id}`
         );
         setItems(res.data);
-        setTotalItemCount(res.data.totalItem);
+        setTotalItemCount(res.data);
         setIsLoaded(true);
       } else if (
         selectedProvinceOption.column === 'all' &&
@@ -256,17 +256,20 @@ const ThumbListPages = ({ match }) => {
             `${studentApiUrl}?student_id=${studentId}&current_district=${district}`
           )
           .then((res) => {
-            console.log('res.data', res.data);
+            // console.log('res.data', res.data);
+            // console.log('res.data.results', res.data.results);
             return res.data;
           })
           .then((data) => {
-            console.log(
-              `${studentApiUrl}?student_id=${studentId}&current_district=${district}`
-            );
+            // console.log('res.data', data.results);
 
+            console.log(
+              `${studentApiUrl}?student_id=${studentId}&current_district=${district} 1`
+            );
+            console.log('data', data);
             setItems(data);
             setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
+            setTotalItemCount(data);
             setIsLoaded(true);
           });
       } else if (selectedProvinceOption.column === 'all') {
@@ -279,7 +282,7 @@ const ThumbListPages = ({ match }) => {
           })
           .then((data) => {
             console.log(
-              `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`
+              `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district} 2`
             );
 
             setItems(data);
@@ -429,6 +432,7 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
+  console.log('items', items);
   return !isLoaded ? (
     <div className="loading" />
   ) : (

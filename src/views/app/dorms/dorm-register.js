@@ -330,6 +330,7 @@ const DormRegistration = (values) => {
                     </FormGroup>
                     {values.BuildingType.value == '1' ? (
                       <div>
+                        {/* DormOwner */}
                         <FormGroup className="form-group has-float-label">
                           <Label>
                             <IntlMessages id="dorm.PublicBuildingOwnerLabel" />

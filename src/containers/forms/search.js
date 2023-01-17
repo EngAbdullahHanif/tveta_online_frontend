@@ -35,15 +35,19 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
     }
 
     return (
-      <div className="bg-primary " id="para">
+      <div className="bg-primary  " id="para">
         {suggest.map((item, index) => {
           return (
-            <div key={index}>
+            <div key={index} className="divs">
               <p
-                style={{ paddingInline: '10%' }}
+                style={{
+                  paddingInline: '10%',
+                  marginTop: '-15px',
+                  marginBottom: '-18px',
+                  padding: '10px',
+                }}
                 onClick={() => suggestedText(item)}
               >
-                {' '}
                 {item}
               </p>
               {index !== suggest.length - 1 && <hr />}
@@ -54,8 +58,8 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
     );
   };
   return (
-    <div className="">
-      <div>
+    <>
+      <div className='searchDiv'>
         <input
           type="text"
           placeholder={placeholder}
@@ -65,18 +69,19 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
         />
       </div>
       <div
-        className="searchcontainer mr-1 float-md-left  mb-1"
+        className="searchcontainer ml-3"
         color="outline-dark"
         style={{
           overflowY: 'auto',
           maxHeight: '200px',
-          width: '200px',
+          width: '195px',
+          borderRadius: '10px',
           zIndex: 4,
         }}
       >
         {getSuggestions()}
       </div>
-    </div>
+    </>
   );
 };
 export default Autocomplete;

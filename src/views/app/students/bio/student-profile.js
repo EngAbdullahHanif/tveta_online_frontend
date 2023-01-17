@@ -64,11 +64,11 @@ const StudentProfile = () => {
       const classData = await classResponse.data;
       setClasss(classData);
 
-      const marksResponse = await axios.get(
-        `${studentApiUrl}stdmarks_Results/?student_id=${studentId}`
-      );
-      const marksData = await marksResponse.data;
-      setMarks(marksData);
+      // const marksResponse = await axios.get(
+      //   `${studentApiUrl}stdmarks_Results/?student_id=${studentId}`
+      // );
+      // const marksData = await marksResponse.data;
+      // setMarks(marksData);
     }
     fetchStudent();
   }, []);

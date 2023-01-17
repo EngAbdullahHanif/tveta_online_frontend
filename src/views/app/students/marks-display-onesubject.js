@@ -112,7 +112,7 @@ const initialValues = {
   },
 };
 
-const MarksRegistration = ({ match }) => {
+const MarksDisplay = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [inNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -140,7 +140,7 @@ const MarksRegistration = ({ match }) => {
     setInstitutes(updatedData);
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/field/');
+    const response = await axios.get('http://localhost:8000/institute/filed/');
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name,
@@ -200,101 +200,42 @@ const MarksRegistration = ({ match }) => {
   };
 
   const onSubmit = (values) => {
-    // console.log('values', values);
+    console.log('values', values);
     const educational_year = selectedEducationalYear;
     const institute_id = selectedInstitute.value;
-    const department_id = selectedDepartment.value;
+    const department = selectedDepartment.value;
     const class_id = selectedClass.value;
     const subject_id = selectedSubject.value;
-    console.log('educational_year', educational_year);
-    console.log('institute_id', institute_id);
-    console.log('department_id', department_id);
-    console.log('class_id', class_id);
-    console.log('subject_id', subject_id);
-
-    const examData = {
-      educational_year: 1400,
-      student_id: 'ab-123',
-      institute_id: 1,
-      Department: 1,
-      class_id: 1,
-      user_id: 1,
-      verification: 1,
-      TotalMarks: 0,
-      TotalPercentage: 0,
-      grad: 0,
-      TotalGpa: 0,
-      exam_remarks: 0,
-      mark_results: 0,
-      verify_by: 1,
-    };
-    const exam = axios.post(
-      'http://localhost:8000/api/create_marks/',
-      examData
-    );
-    console.log('exam', exam);
-
-    // students.map((student) => {
-    //   const examData = {
-    //     educational_year: educational_year,
-    //     student_id: student.student_id,
-    //     institute_id: institute_id,
-    //     Department: department_id,
-    //     class_id: class_id,
-    //     user_id: 1,
-    //     verification: 1,
-    //     TotalMarks: 0,
-    //     TotalPercentage: 0,
-    //     grad: 0,
-    //     TotalGpa: 0,
-    //     exam_remarks: 0,
-    //     mark_results: 0,
-    //     verify_by: 1,
-    //   };
-    //   //send data to create_marks api to create exam
-    //   // const exam = axios.post(
-    //   //   'http://localhost:8000/api/create_marks/',
-    //   //   examData
-    //   // );
-
-    //   // axios
-    //   //   .post('http://localhost:8000/api/create_marks/', examData)
-    //   //   .then((res) => {
-    //   //     console.log('res', res);
-    //   //     console.log('response');
-    //   //   })
-    //   //   .catch((err) => {
-    //   //     console.log('response123123');
-    //   //     console.log('err', err);
-    //   //   });
-    //   // console.log('testing');
-
-    //   const response = axios.post(
-    //     `http://localhost:8000/api/create_marks/`,
-    //     examData
-    //   );
-    //   const exam = response;
-    //   console.log('exam', exam);
-    //   //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-    //   //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-    //   // console.log('exam', examData);
-    //   const data = {
-    //     subject: subject_id,
-    //     exam_types: 1,
-    //     passing_score: passingScore,
-    //     grad: subjectGrad,
-    //     Gpa: subjectGPA,
-    //     user_id: 1,
-    //     mark: values.score[student.student_id],
-    //   };
-    //   // console.log('data', data);
-    //   // axios.post('http://localhost:8000/api/marks/', data);
-    // });
+    students.map((student) => {
+      const examData = {
+        educational_year: educational_year,
+        student_id: student.student_id,
+        institute_id: institute_id,
+        Department: department,
+        class_id: class_id,
+      };
+      //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
+      //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
+      console.log('exam', examData);
+      const data = {
+        subject: subject_id,
+        exam_types: 1,
+        passing_score: passingScore,
+        grad: subjectGrad,
+        Gpa: subjectGPA,
+        user_id: 1,
+        mark: values.score[student.student_id],
+      };
+      console.log('data', data);
+      // axios.post('http://localhost:8000/api/marks/', data);
+    });
   };
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">{<IntlMessages id="marks.title" />}</h3>
+        <h3 className="mt-5 m-5">
+          {<IntlMessages id="marks.marksDisplayTitle" />}
+        </h3>
         <CardBody>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
@@ -541,22 +482,7 @@ const MarksRegistration = ({ match }) => {
                               <td>{student.name}</td>
                               <td>{student.father_name}</td>
                               <td>{student.student_id}</td>
-
-                              {/* Marks Entry */}
-                              <div class="form-group mx-sm-3 mb-2">
-                                <FormGroup className="form-group">
-                                  <Field
-                                    type="number"
-                                    className="form-control"
-                                    name={`score[${student.student_id}]`}
-                                  />
-                                  {errors.score && touched.score ? (
-                                    <div className="invalid-feedback d-block">
-                                      {errors.score}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
+                              <td>{student.marks}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -601,28 +527,11 @@ const MarksRegistration = ({ match }) => {
                     <Row className=" justify-content-center">
                       <Colxx xxs="9" className="m-5">
                         <Button
-                          className=" m-4 "
+                          className=" m-4"
                           onClick={() => handleClick(true)}
                         >
                           <IntlMessages id="button.Back" />
                         </Button>
-
-                        <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                          <Button
-                            className={`btn-shadow btn-multiple-state `}
-                            size="lg"
-                            type="submit"
-                          >
-                            <span className="spinner d-inline-block">
-                              <span className="bounce1" />
-                              <span className="bounce2" />
-                              <span className="bounce3" />
-                            </span>
-                            <span className="label">
-                              <IntlMessages id="button.SubmitButton" />
-                            </span>
-                          </Button>
-                        </div>
                       </Colxx>
                     </Row>
                   </>
@@ -636,4 +545,4 @@ const MarksRegistration = ({ match }) => {
   );
 };
 
-export default MarksRegistration;
+export default MarksDisplay;

@@ -234,7 +234,7 @@ const ListPageHeading = ({
                   />
                 </div>
 
-                <div className="">
+                <div>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(opt) => {

@@ -168,6 +168,8 @@ module.exports = {
   'menu.student-transfer': 'Student Transfer',
   'menu.Institute-details': 'Institute Details',
   'menu.dorm-details': 'Dorm Details',
+  'menu.marks-display': 'Marks',
+  'menu.marks-display-all-subs': 'Marks of All Subjects',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -770,6 +772,8 @@ module.exports = {
   'marks.ID': 'ID',
   'marks.FatherName': 'FatherName',
   'marks.Marks': 'Marks',
+  'marks.marksDisplayTitle': 'Marks',
+  'marks.studentChar': 'Students Info',
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',
@@ -825,11 +829,12 @@ module.exports = {
   'teacher.topicErr': 'Evaluation Topic  is Required!',
   'teacher.evaluatorLabel': 'Evaluator',
   'teacher.evaluatorErr': 'Evaluator Name Topic  is Required!',
+  'teacher.evaluationTypeLabel': 'Evaluation Type',
   'teacher.evaluationTypeOption_1': 'Goal Oriented',
   'teacher.evaluationTypeOption_2': 'Activity Oriented',
   'teacher.strengthPointsLabel': 'Strength Points',
   'teacher.strengthPointsErr': 'Strength Points  Required!',
-  'teacher.weakNessPointsLabel': 'Weakness Points',
+  'teacher.weaknessPointsLabel': 'Weakness Points',
   'teacher.weaknessPointsErr': 'Weakness Points  Required!',
   'teacher.marksLabel': 'Marks',
   'teacher.marksErr': 'Marks  Required!',
@@ -837,6 +842,7 @@ module.exports = {
   'teacher.evaluationDateErr': 'Evaluation Date is  Required!',
   'teacher.suggestionLabel': 'Suggestions',
   // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
+  'evaluation.evaluationDetails': 'Details',
 
   // HR Evaluation
   'teacher.EvalautionHrTitle': 'Teacher Hr Evaluation',
@@ -896,6 +902,8 @@ module.exports = {
   'institute.totalDepartments': 'Total Departments',
   'institute.Greduated_12': '12th Class Graduated',
   'institute.Greduated_14': '14th Class Graduated',
+
+  // Dorm details page
 
   // Subject
   // // Subject

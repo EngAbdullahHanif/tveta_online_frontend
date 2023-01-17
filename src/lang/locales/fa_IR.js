@@ -177,6 +177,8 @@ module.exports = {
   'menu.institute-upgrade': 'د انستیتوت/ ښونخي/ مکتب ارتقا',
   'menu.student-transfer': 'د شاگرد تبدیلی/ تبدیلی شاگرد',
   'menu.Institute-details': 'مشخصات انستیتوت',
+  'menu.marks-display': 'دیو مضمون نمرې/ نمرات یک مضمون',
+  'menu.marks-display-all-subs': 'د ټولو مضمونو نمرې/ نمرات تمام مضامین',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -780,6 +782,8 @@ module.exports = {
   'marks.FatherName': 'د پلارنوم/نام پدر',
   'marks.ID': 'آیدی',
   'marks.Marks': 'نمرې / نمرات',
+  'marks.marksDisplayTitle': 'نمرې/ نمرات',
+  'marks.studentChar': 'د شاګرد مالومات/ معلومات شاگرد',
 
   // Dorm
   'dorm.RegisterTitle': 'د لیلې ثبت/ ثبت لیلیه',
@@ -862,6 +866,7 @@ module.exports = {
   'teacher.promotion.type2': 'مجازات',
   'teacher.promotion.description': 'توضیحات',
   // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
+  'evaluation.evaluationDetails': 'د ارزیابۍ نور جزیات/ جزیات دیگر',
 
   // Hr Evaluation
   'teacher.EvalautionHrTitle':

@@ -531,6 +531,7 @@ module.exports = {
   'forms.validation-availity': 'نمونه اعتبارسنجی پکیج Reactstrap ',
   'forms.validation-formik': 'اعتبار سنجی Formik',
   'forms.default': 'پیشفرض',
+  'forms.personalInfo': 'خصوصی مالومات/ معلومات شخصی',
   'forms.firstname': 'نام',
   'forms.firstname-message': 'لطفا نام خود را وارد کنید',
   'forms.lastname': 'نام خانوادگی',
@@ -539,6 +540,7 @@ module.exports = {
   'forms.Eng_name': 'انګریزی نوم / نام انگلسی',
   'forms.StdFatherName': 'د پلار نوم/نام پدر',
   'forms.Std_father_Eng_Name': 'د پلار نوم په انګریزي/نام پدر به انگلسی',
+
   'forms.electronic': 'الکترونیکی',
   'forms.paper': 'کاغذی',
   'forms.StdKankorNameErr': 'نوم اړین دی/ نام ضروری است',
@@ -604,6 +606,7 @@ module.exports = {
   'forms.StdGraduationYearLabel': 'د فراغت کال / سال فراغت',
   'forms.StdGraduationYearErr': 'د فراغت کال اړین دی/ سال فراغت ضروری است',
   'student.results': 'پایلې/ نتایج',
+  'student.educationType': 'د زدکړو ‌ډول/ نوع تعلیم',
 
   // ولایات
   'forms.StdSchoolProvinceOptions_1': 'بدخشان',

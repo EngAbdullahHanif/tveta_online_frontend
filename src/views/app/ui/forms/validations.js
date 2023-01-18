@@ -6,7 +6,7 @@ import Breadcrumb from 'containers/navs/Breadcrumb';
 
 // import FormikBasicFieldLevel from 'containers/form-validations/FormikBasicFieldLevel';
 // import FormikBasicFormLevel from 'containers/form-validations/FormikBasicFormLevel';
-import StudentRegistrationBio from '../../../../Student/Registraion‌Bio';
+// import StudentRegistrationBio from '../../../../Student/Registraion‌Bio';
 // import AvailityCustom from 'containers/form-validations/AvailityCustom';
 // import AvailityDefaultValues from 'containers/form-validations/AvailityDefaultValues';
 

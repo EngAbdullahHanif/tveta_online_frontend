@@ -23,7 +23,7 @@ import logo from './../../../../assets/logos/AdminLogo.png';
 import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 
 import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
+import { Colxx, Separator } from 'components/common/CustomBootstrap';
 
 import {
   FormikReactSelect,
@@ -106,79 +106,85 @@ const TeacherProfile = () => {
 
   return (
     <>
+      <Row>
+        <Colxx className="mt-5 m-5" xxs="8">
+          <h3>{<IntlMessages id="teacher.Profile" />}</h3>
+        </Colxx>
+        <Colxx className="mt-4 max">
+          <div className="d-flex align-items-center flex-column">
+            <img src={logo} alt="Logo" width={'30%'} />
+            <p>
+              د تخنیکی او مسلکی زده کړو اداره
+              <br />
+              اداره تعلیمات تخنیکی و مسلکی
+            </p>
+          </div>
+        </Colxx>
+      </Row>
+
+      <Row>
+        <Colxx xxs="1"></Colxx>
+        <Colxx>
+          <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
+        </Colxx>
+      </Row>
+      <Row>
+        <Colxx
+          className=" d-flex justify-content-center"
+          style={{ marginRight: '2%' }}
+        >
+          {' '}
+          <div className="d-inline-block">
+            <Button
+              style={{ backgroundColor: !isNext ? 'blue' : '' }}
+              size="lg"
+              className="m-2"
+              onClick={() => {
+                handleClick(false);
+              }}
+            >
+              <span className="spinner d-inline-block">
+                <span className="bounce1" />
+                <span className="bounce2" />
+                <span className="bounce3" />
+              </span>
+              <span className="label">
+                <IntlMessages id="button.TeacherBackround" />
+              </span>
+            </Button>{' '}
+            <Button
+              style={{ backgroundColor: isNext ? 'blue' : '' }}
+              size="lg"
+              className="m-2"
+              onClick={() => {
+                handleClick(true);
+              }}
+            >
+              <span className="spinner d-inline-block">
+                <span className="bounce1" />
+                <span className="bounce2" />
+                <span className="bounce3" />
+              </span>
+              <span className="label">
+                <IntlMessages id="button.Teacherprofile" />
+              </span>
+            </Button>
+          </div>
+        </Colxx>
+      </Row>
       <Card>
         <CardBody>
-          <Row>
-            <Colxx className="mt-5 m-5" xxs="8">
-              <h3>{<IntlMessages id="teacher.Profile" />}</h3>
-            </Colxx>
-            <Colxx className="mt-4 max">
-              <div className="d-flex align-items-center flex-column">
-                <img src={logo} alt="Logo" width={'30%'} />
-                <p>
-                  د تخنیکی او مسلکی زده کړو اداره
-                  <br />
-                  اداره تعلیمات تخنیکی و مسلکی
-                </p>
-              </div>
-            </Colxx>
-          </Row>
-
-          <Row>
-            <Colxx xxs="1"></Colxx>
-            <Colxx>
-              <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
-            </Colxx>
-          </Row>
-          <Row>
-            <Colxx
-              className=" d-flex justify-content-center"
-              style={{ marginRight: '21%' }}
-            >
-              {' '}
-              <div className="d-inline-block">
-                <Button
-                  style={{ backgroundColor: !isNext ? 'blue' : '' }}
-                  size="lg"
-                  className="m-2"
-                  onClick={() => {
-                    handleClick(false);
-                  }}
-                >
-                  <span className="spinner d-inline-block">
-                    <span className="bounce1" />
-                    <span className="bounce2" />
-                    <span className="bounce3" />
-                  </span>
-                  <span className="label">
-                    <IntlMessages id="button.TeacherBackround" />
-                  </span>
-                </Button>{' '}
-                <Button
-                  style={{ backgroundColor: isNext ? 'blue' : '' }}
-                  size="lg"
-                  className="m-2"
-                  onClick={() => {
-                    handleClick(true);
-                  }}
-                >
-                  <span className="spinner d-inline-block">
-                    <span className="bounce1" />
-                    <span className="bounce2" />
-                    <span className="bounce3" />
-                  </span>
-                  <span className="label">
-                    <IntlMessages id="button.Teacherprofile" />
-                  </span>
-                </Button>
-              </div>
-            </Colxx>
-          </Row>
           {teacher.length > 0 && institute.length > 0 && (
             <>
               {isNext ? (
-                <Row className="justify-content-center border border-primary rounded m-5 ">
-                  <Colxx className=" p-5  border rounded">
+                <Row className="justify-content-center border border-primary  m-5 ">
+                  <Colxx className=" p-5  border ">
+                    <h2
+                      className="bg-primary rounded "
+                      style={{ paddingInline: '10px' }}
+                    >
+                      hsds
+                    </h2>
                     <Label>
                       <IntlMessages id="teacher.NameLabel" />
                     </Label>
@@ -195,6 +201,49 @@ const TeacherProfile = () => {
                       <IntlMessages id="teacher.EmailLabel" />
                     </Label>
                     <h3>{teacher[0].email}</h3>
+
+                    <br />
+                    <br />
+                    <h2
+                      className="bg-primary rounded "
+                      style={{ paddingInline: '10px' }}
+                    >
+                      {' '}
+                      <IntlMessages id="teacher.LevelOfEducationLabel" />
+                    </h2>
+                    <Separator />
+                    <br />
+                    <Row>
+                      <Colxx>
+                        {' '}
+                        <Label>
+                          <IntlMessages id="forms.ProvinceLabel" />
+                        </Label>
+                        <h3>کابل</h3>
+                      </Colxx>
+                      <Colxx>
+                        {' '}
+                        <Label>
+                          <IntlMessages id="forms.DistrictLabel" />
+                        </Label>
+                        <h3>پغمان</h3>
+                      </Colxx>
+                      <Colxx>
+                        {' '}
+                        <Label>
+                          <IntlMessages id="forms.VillageLabel" />
+                        </Label>
+                        <h3>چهلتن</h3>
+                      </Colxx>
+                    </Row>
+                  </Colxx>
+                  <Colxx className="p-5 border">
+                    <h2
+                      className="bg-primary rounded "
+                      style={{ paddingInline: '10px' }}
+                    >
+                      hsds
+                    </h2>
                     <Label>
                       <IntlMessages id="teacher.StatusLabel" />
                     </Label>
@@ -203,8 +252,6 @@ const TeacherProfile = () => {
                     ) : (
                       <h3>غیر فعال</h3>
                     )}
-                  </Colxx>
-                  <Colxx className="p-5 border rounded">
                     <Label>
                       <IntlMessages id="forms.InstituteLabel" />
                     </Label>
@@ -217,6 +264,75 @@ const TeacherProfile = () => {
                       <IntlMessages id="teacher.StepLabel" />
                     </Label>
                     <h3>{teacher[0].step}</h3>
+                    <br />
+                    <br />
+                    <h2
+                      className="bg-primary rounded "
+                      style={{ paddingInline: '10px' }}
+                    >
+                      {' '}
+                      <IntlMessages id="forms.PermanentAddressLabel" />
+                    </h2>
+                    <Separator />
+                    <br />
+                    <Row>
+                      <Colxx>
+                        {' '}
+                        <Label>
+                          <IntlMessages id="forms.ProvinceLabel" />
+                        </Label>
+                        <h3>کابل</h3>
+                      </Colxx>
+                      <Colxx>
+                        {' '}
+                        <Label>
+                          <IntlMessages id="forms.DistrictLabel" />
+                        </Label>
+                        <h3>پغمان</h3>
+                      </Colxx>
+                      <Colxx>
+                        {' '}
+                        <Label>
+                          <IntlMessages id="forms.VillageLabel" />
+                        </Label>
+                        <h3>چهلتن</h3>
+                      </Colxx>
+                    </Row>
+
+                    <br />
+                    <br />
+                    <h2
+                      className="bg-primary rounded "
+                      style={{ paddingInline: '10px' }}
+                    >
+                      {' '}
+                      <IntlMessages id="forms.CurrentAddresslabel" />
+                    </h2>
+                    <Separator />
+                    <br />
+                    <Row>
+                      <Colxx>
+                        {' '}
+                        <Label>
+                          <IntlMessages id="forms.ProvinceLabel" />
+                        </Label>
+                        <h3>کابل</h3>
+                      </Colxx>
+                      <Colxx>
+                        {' '}
+                        <Label>
+                          <IntlMessages id="forms.DistrictLabel" />
+                        </Label>
+                        <h3>پغمان</h3>
+                      </Colxx>
+                      <Colxx>
+                        {' '}
+                        <Label>
+                          <IntlMessages id="forms.VillageLabel" />
+                        </Label>
+                        <h3>چهلتن</h3>
+                      </Colxx>
+                    </Row>
                   </Colxx>
                 </Row>
               ) : (

@@ -594,6 +594,9 @@ module.exports = {
   'forms.StdGraduationYearLabel': 'Graduation Year',
   'forms.StdGraduationYearErr': 'Graduation Year Is Required!',
   'student.results': 'Results',
+  'forms.personalInfo': 'Personal Info',
+
+  'student.educationType': 'Education Type',
 
   // provinces of Afghanistan
   'forms.StdSchoolProvinceOptions_1': 'Badakhshan',

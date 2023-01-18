@@ -287,8 +287,8 @@ const MarksRegistration = ({ match }) => {
     //     user_id: 1,
     //     mark: values.score[student.student_id],
     //   };
-    //   // console.log('data', data);
-    //   // axios.post('http://localhost:8000/api/marks/', data);
+    console.log('data', data);
+    axios.post('http://localhost:8000/api/marks/', data);
     // });
   };
   return (

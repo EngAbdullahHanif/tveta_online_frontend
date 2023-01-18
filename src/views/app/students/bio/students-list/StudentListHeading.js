@@ -223,7 +223,7 @@ const ListPageHeading = ({
                   />
                 </div>
 
-                <div>
+                {/* <div>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(opt) => {
@@ -231,7 +231,7 @@ const ListPageHeading = ({
                     }}
                     placeholder={messages['search.institute.name']}
                   />
-                </div>
+                </div> */}
               </div>
               <Button
                 color="outline-dark"

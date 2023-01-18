@@ -23,10 +23,10 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
               className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`${teacher.id}`} style={{ width: '10%' }}>
+              <NavLink to={`teacher/${teacher.id}`} style={{ width: '10%' }}>
                 <p className="list-item-heading mb-1 truncate">{teacher.id}</p>
               </NavLink>
-              <NavLink to={`${teacher.id}`} style={{ width: '15%' }}>
+              <NavLink to={`teacher/${teacher.id}`} style={{ width: '15%' }}>
                 <p className="list-item-heading mb-1 truncate">
                   {teacher.name}
                 </p>

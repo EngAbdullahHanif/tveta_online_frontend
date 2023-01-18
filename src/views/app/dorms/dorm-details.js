@@ -48,12 +48,15 @@ const DormDetails = (values) => {
           <Card style={{ minHeight: '180px' }}>
             <CardBody className="text-center">
               <b>
-                <p>
+                <p
+                  className="bg-primary rounded"
+                  style={{ paddingInline: '10px' }}
+                >
                   <IntlMessages id="dorm.PublicBuildingOwnerLabel" />
                 </p>
               </b>
-              <Row className="m-2">
-                <Colxx>
+              <Row className="m-2 ">
+                <Colxx className="pt-3">
                   د تخنیکی او مسلکی تعلیماتو اداره/ اداره تعلیمات تخنیکی و مسلکی
                 </Colxx>
               </Row>
@@ -65,12 +68,15 @@ const DormDetails = (values) => {
           <Card style={{ minHeight: '180px' }}>
             <CardBody className="text-center">
               <b>
-                <p>
+                <p
+                  className="bg-primary rounded "
+                  style={{ paddingInline: '10px' }}
+                >
                   <IntlMessages id="dorm.PrivateBuildingTypeLabel" />
                 </p>
               </b>
               <Row className="m-2">
-                <Colxx> کرایی</Colxx>
+                <Colxx className="pt-3"> کرایی</Colxx>
               </Row>
             </CardBody>
           </Card>
@@ -80,12 +86,15 @@ const DormDetails = (values) => {
           <Card style={{ minHeight: '180px' }}>
             <CardBody className="text-center">
               <b>
-                <p>
+                <p
+                  className="bg-primary rounded  "
+                  style={{ paddingInline: '10px' }}
+                >
                   <IntlMessages id="dorm.TotalBuildingNoLabel" />
                 </p>
               </b>
               <Row className="m-2">
-                <Colxx>
+                <Colxx className="pt-3">
                   {' '}
                   <h2>8 </h2>
                 </Colxx>
@@ -98,12 +107,15 @@ const DormDetails = (values) => {
           <Card style={{ minHeight: '180px' }}>
             <CardBody className="text-center">
               <b>
-                <p>
+                <p
+                  className="bg-primary rounded"
+                  style={{ paddingInline: '10px' }}
+                >
                   <IntlMessages id="dorm.TotalRoomsLabel" />
                 </p>
               </b>
               <Row className="m-2">
-                <Colxx>
+                <Colxx className="pt-3">
                   {' '}
                   <h2>48 </h2>
                 </Colxx>
@@ -116,12 +128,15 @@ const DormDetails = (values) => {
           <Card style={{ minHeight: '180px' }}>
             <CardBody className="text-center">
               <b>
-                <p>
+                <p
+                  className="bg-primary rounded"
+                  style={{ paddingInline: '10px' }}
+                >
                   <IntlMessages id="dorm.TotalKitchensLabel" />
                 </p>
               </b>
               <Row className="m-2">
-                <Colxx>
+                <Colxx className="pt-3">
                   {' '}
                   <h2>8 </h2>
                 </Colxx>
@@ -134,14 +149,54 @@ const DormDetails = (values) => {
           <Card style={{ minHeight: '180px' }}>
             <CardBody className="text-center">
               <b>
-                <p>
+                <p
+                  className="bg-primary rounded"
+                  style={{ paddingInline: '10px' }}
+                >
                   <IntlMessages id="dorm.ToiletLabel" />
                 </p>
               </b>
               <Row className="m-2">
-                <Colxx>
+                <Colxx className="pt-3">
                   {' '}
                   <h2>14 </h2>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+        <Colxx xxs="6" sm="4" md="6" className="mb-4">
+          <Card style={{ minHeight: '180px' }}>
+            <CardBody className="text-center">
+              <b>
+                <p
+                  className="bg-primary rounded"
+                  style={{ paddingInline: '10px' }}
+                >
+                  <IntlMessages id="dorm.ToiletLabel" />
+                </p>
+              </b>
+              <Row>
+                <Colxx>
+                  {' '}
+                  <Label>
+                    <IntlMessages id="forms.ProvinceLabel" />
+                  </Label>
+                  <h3>کابل</h3>
+                </Colxx>
+                <Colxx>
+                  {' '}
+                  <Label>
+                    <IntlMessages id="forms.DistrictLabel" />
+                  </Label>
+                  <h3>پغمان</h3>
+                </Colxx>
+                <Colxx>
+                  {' '}
+                  <Label>
+                    <IntlMessages id="forms.VillageLabel" />
+                  </Label>
+                  <h3>چهلتن</h3>
                 </Colxx>
               </Row>
             </CardBody>

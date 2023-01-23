@@ -33,12 +33,10 @@ const StudentTransfer = React.lazy(() =>
   import(/* webpackChunkName: "student-transfer" */ './student-transfer')
 );
 const MarksDisplay = React.lazy(() =>
-  import(/* webpackChunkName: "marks-display" */ './marks-display-onesubject')
+  import(/* webpackChunkName: "marks-display" */ './subject-marks')
 );
 const MarksDisplayAllSubs = React.lazy(() =>
-  import(
-    /* webpackChunkName: "marks-display-allsubs" */ './marks-display-all-subs'
-  )
+  import(/* webpackChunkName: "marks-display-allsubs" */ './class-marks')
 );
 
 const Students = ({ match }) => (

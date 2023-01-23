@@ -31,12 +31,12 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
               style={{ width: '100%' }}
             >
               <div style={{ width: '10%' }}>
-                <NavLink to={`${institute.id}`} className="">
+                <NavLink to={`institute/${institute.id}`} className="">
                   <p className="list-item-heading mb-1">{institute.id}</p>
                 </NavLink>
               </div>
               <div style={{ width: '22%' }}>
-                <NavLink to={`${institute.id}`} className="">
+                <NavLink to={`institute/${institute.id}`} className="">
                   <p className="list-item-heading mb-1 truncate">
                     {institute.name}
                   </p>

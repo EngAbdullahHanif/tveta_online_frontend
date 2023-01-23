@@ -41,7 +41,7 @@ const Institues = ({ match }) => (
         render={(props) => <InstituteUpgrade {...props} />}
       />
       <Route
-        path={`${match.url}/institute-details`}
+        path={`${match.url}/institute/:instituteId`}
         render={(props) => <InstituteProfile {...props} />}
       />
       <Redirect to="/error" />

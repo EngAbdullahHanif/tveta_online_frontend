@@ -213,6 +213,56 @@ const MarksDisplay = ({ match }) => {
     setSection(classArray[2]);
   };
 
+  const tbodies = students.map((student, index) => {
+    const scores = Object.values(student.subject_id);
+    const studentRows = scores.map((score, i) => {
+      const student_name =
+        i === 0 ? (
+          <td rowSpan={scores.length + 1}>{student.student_name}</td>
+        ) : null;
+      const student_father_name =
+        i === 0 ? (
+          <td rowSpan={scores.length + 1}>{student.student_father_name}</td>
+        ) : null;
+      const student_id =
+        i === 0 ? (
+          <td rowSpan={scores.length + 1}>{student.student_id}</td>
+        ) : null;
+      return (
+        <tr key={i}>
+          <td>{index + 1}</td>
+          {student_name}
+          {student_father_name}
+          {student_id}
+          <td>{score.score}</td>
+          {score.grad && <td>{score.grad}</td>}
+          {score.Gpa && <td>{score.Gpa}</td>}
+          {score.exam_type == 1 && <td>first CHANCE</td>}
+          {score.exam_type == 2 && <td>second CHANCE</td>}
+          {/* {score.exam_type == 2 && (
+            <>
+              {score.exam_type == 1 && <td>first CHANCE</td>}
+              {score.exam_type == 2  && <td>second CHANCE</td>}
+            </>
+          )} */}
+        </tr>
+      );
+    });
+    return (
+      <tbody
+        key={index}
+        className={student.name + ' ' + ' border border '}
+        style={{
+          height: '200px',
+          overflowY: 'scroll',
+          overflowX: 'hidden',
+        }}
+      >
+        {studentRows}
+      </tbody>
+    );
+  });
+
   const onSubmit = (values) => {
     console.log('values', values);
     const educational_year = selectedEducationalYear;
@@ -482,30 +532,7 @@ const MarksDisplay = ({ match }) => {
                         overflowX: 'hidden',
                       }}
                     >
-                      <table class="table ">
-                        <tbody
-                          className="border border "
-                          style={{
-                            height: '200px',
-                            overflowY: 'scroll',
-                            overflowX: 'hidden',
-                          }}
-                        >
-                          {students.map((student, index) => (
-                            <tr spanrow="3">
-                              <th scope="row">{index + 1}</th>
-                              <td>{student.student_name}</td>
-                              <td>{student.student_father_name}</td>
-                              <td>{student.student_id}</td>
-                              {student.subject_id.map(
-                                (subject, secondIndex) => (
-                                  <td>{subject.marks}</td>
-                                )
-                              )}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                      <table class="table ">{tbodies}</table>
                     </Row>
                     <Row
                       className="justify-content-center  border border"

@@ -23,9 +23,11 @@ const FormikReactSelect = ({
   className,
   onChange,
   onBlur,
+  onClick,
 }) => {
   const handleChange = (val) => {
     onChange(name, val);
+    console.log('handleCHange');
   };
 
   const handleBlur = () => {
@@ -39,6 +41,7 @@ const FormikReactSelect = ({
       options={options}
       isMulti={isMulti}
       onChange={handleChange}
+      onClick={handleChange}
       onBlur={handleBlur}
       value={value}
     />

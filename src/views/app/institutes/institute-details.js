@@ -166,6 +166,38 @@ const InstituteDetails = (values) => {
             </CardBody>
           </Card>
         </Colxx>
+        <Colxx xxs="6" sm="6" md="2" className="mb-4">
+          <Card>
+            <CardBody className="text-center">
+              <b>
+                <p>
+                  <IntlMessages id="institute.director" />
+                </p>
+              </b>
+              <Row className="d-block">
+                <Colxx>میا جان</Colxx>
+                <br />
+                <br />
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+        <Colxx xxs="6" sm="4" md="2" className="mb-4">
+          <Card>
+            <CardBody className="text-center">
+              <b>
+                <p>
+                  <IntlMessages id="institute.manager" />
+                </p>
+              </b>
+              <Row className="d-block">
+                <Colxx>راز محمد</Colxx>
+                <br />
+                <br />
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
       </Row>
     </>
   );

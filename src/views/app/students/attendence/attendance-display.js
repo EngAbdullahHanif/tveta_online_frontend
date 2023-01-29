@@ -26,17 +26,17 @@ import {
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
 
-// const LevelOfEdcationOptions = [
-//   { value: '1', label: 'اصلی' },
-//   { value: '2', label: 'فرعی' },
-// ];
+const LevelOfEdcationOptions = [
+  { value: '1', label: 'اصلی' },
+  { value: '2', label: 'فرعی' },
+];
 
-// const FieldOptions = [
-//   { value: '14th', label: 'Computer Science' },
-//   { value: 'bachelor', label: 'Agriculture' },
-//   { value: 'master', label: 'BBA' },
-//   { value: 'PHD', label: 'Mechenical Engineering' },
-// ];
+const FieldOptions = [
+  { value: '14th', label: 'Computer Science' },
+  { value: 'bachelor', label: 'Agriculture' },
+  { value: 'master', label: 'BBA' },
+  { value: 'PHD', label: 'Mechenical Engineering' },
+];
 
 const SemesterOptions = [
   { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
@@ -45,34 +45,34 @@ const SemesterOptions = [
   //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
 ];
 
-// const SectionOptions = [
-//   { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-// ];
+const SectionOptions = [
+  { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
+  { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
+  { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
+  { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
+  { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
+];
 
-// const ClassOptions = [
-//   { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-//   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-// ];
+const ClassOptions = [
+  { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
+  { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
+  { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
+  { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
+  { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
+  { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
+];
 
 const StudyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
-// const SubjectOptions = [
-//   { value: '14th', label: 'Computer Science' },
-//   { value: 'bachelor', label: 'Agriculture' },
-//   { value: 'master', label: 'BBA' },
-//   { value: 'PHD', label: 'Mechenical Engineering' },
-// ];
+const SubjectOptions = [
+  { value: '14th', label: 'Computer Science' },
+  { value: 'bachelor', label: 'Agriculture' },
+  { value: 'master', label: 'BBA' },
+  { value: 'PHD', label: 'Mechenical Engineering' },
+];
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -112,7 +112,7 @@ const initialValues = {
   },
 };
 
-const AllSubjectsMarks = ({ match }) => {
+const StudentAttendance = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [inNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -232,10 +232,8 @@ const AllSubjectsMarks = ({ match }) => {
   };
   return (
     <>
-      <Card>
-        <h3 className="mt-5 m-5">
-          {<IntlMessages id="marks.marksDisplayTitle" />}
-        </h3>
+      <Card className="rounded">
+        <h3 className=" m-5 p-5">{<IntlMessages id="menu.attendance" />}</h3>
         <CardBody>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
@@ -351,6 +349,27 @@ const AllSubjectsMarks = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
+                      <FormGroup className="form-group has-float-label mt-5">
+                        <Label>
+                          <IntlMessages id="marks.SubjectLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="subject"
+                          id="subject"
+                          value={values.subject}
+                          options={subjects}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          onClick={setSelectedSubject(values.subject)}
+                          required
+                        />
+                        {errors.subject && touched.subject ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.subject}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
                       <Button
                         onClick={() => handleClick(false)}
                         className="float-right "
@@ -364,7 +383,7 @@ const AllSubjectsMarks = ({ match }) => {
                   <>
                     <Row
                       className="border border bg-primary me-5 p-1 "
-                      style={{ marginInline: '16%' }}
+                      style={{ marginInline: '10%' }}
                     >
                       <Colxx xxs="2">
                         <Label>
@@ -405,7 +424,7 @@ const AllSubjectsMarks = ({ match }) => {
 
                     <Row
                       className="justify-content-center  border border"
-                      style={{ marginInline: '16%' }}
+                      style={{ marginInline: '10%' }}
                     >
                       <table className="table">
                         <thead className="thead-dark ">
@@ -413,7 +432,7 @@ const AllSubjectsMarks = ({ match }) => {
                             <th colspan="4" className="border text-center">
                               <IntlMessages id="marks.studentChar" />
                             </th>
-                            <th colspan="3" className="border text-center">
+                            <th colspan="4" className="border text-center">
                               <IntlMessages id="marks.marksDisplayTitle" />
                             </th>
                           </tr>
@@ -423,7 +442,7 @@ const AllSubjectsMarks = ({ match }) => {
                             <th
                               scope="col"
                               className="border text-center "
-                              style={{ maxWidth: '20px' }}
+                              style={{ maxWidth: '20px ', minWidth: '50px' }}
                             >
                               <IntlMessages id="marks.No" />
                             </th>
@@ -438,13 +457,16 @@ const AllSubjectsMarks = ({ match }) => {
                             </th>
 
                             <th scope="col" className="border text-center">
-                              <IntlMessages id="کمیا" />
+                              <IntlMessages id="forms.StdPresentLabel" />
                             </th>
                             <th scope="col" className="border text-center">
-                              <IntlMessages id="قزیک" />
+                              <IntlMessages id="forms.StdAbsentLabel" />
                             </th>
                             <th scope="col" className="border text-center">
-                              <IntlMessages id="دری" />
+                              <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                            </th>
+                            <th scope="col" className="border text-center">
+                              <IntlMessages id="forms.StdSicknessLabel" />
                             </th>
                           </tr>
                         </thead>
@@ -454,7 +476,7 @@ const AllSubjectsMarks = ({ match }) => {
                     <Row
                       className="justify-content-center  border border"
                       style={{
-                        marginInline: '16%',
+                        marginInline: '10%',
                         height: '30rem',
                         overflowY: 'scroll',
                         overflowX: 'hidden',
@@ -475,7 +497,10 @@ const AllSubjectsMarks = ({ match }) => {
                               <td>{student.name}</td>
                               <td>{student.father_name}</td>
                               <td>{student.student_id}</td>
-                              <td>{student.marks}</td>
+                              <td>Present</td>
+                              <td>Absent</td>
+                              <td>NecessaryWork</td>
+                              <td>IllNess</td>
                             </tr>
                           ))}
                         </tbody>
@@ -484,7 +509,7 @@ const AllSubjectsMarks = ({ match }) => {
                     <Row
                       className="justify-content-center  border border"
                       style={{
-                        marginInline: '16%',
+                        marginInline: '10%',
                       }}
                     >
                       <table class="table ">
@@ -501,7 +526,7 @@ const AllSubjectsMarks = ({ match }) => {
                             <th
                               scope="col"
                               className="border text-center "
-                              style={{ maxWidth: '20px' }}
+                              style={{ maxWidth: '20px ', minWidth: '50px' }}
                             >
                               <IntlMessages id="marks.No" />
                             </th>
@@ -516,13 +541,16 @@ const AllSubjectsMarks = ({ match }) => {
                             </th>
 
                             <th scope="col" className="border text-center">
-                              <IntlMessages id="کمیا" />
+                              <IntlMessages id="forms.StdPresentLabel" />
                             </th>
                             <th scope="col" className="border text-center">
-                              <IntlMessages id="قزیک" />
+                              <IntlMessages id="forms.StdAbsentLabel" />
                             </th>
                             <th scope="col" className="border text-center">
-                              <IntlMessages id="دری" />
+                              <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                            </th>
+                            <th scope="col" className="border text-center">
+                              <IntlMessages id="forms.StdSicknessLabel" />
                             </th>
                           </tr>
                         </tfoot>
@@ -549,4 +577,4 @@ const AllSubjectsMarks = ({ match }) => {
   );
 };
 
-export default AllSubjectsMarks;
+export default StudentAttendance;

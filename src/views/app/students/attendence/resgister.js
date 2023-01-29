@@ -384,7 +384,7 @@ const StudentAttendance = ({ match }) => {
                 ) : (
                   <>
                     <Row
-                      className="border border me-5 p-1 "
+                      className="border border bg-primary me-5 p-1 "
                       style={{ marginInline: '10%' }}
                     >
                       <Colxx xxs="2">

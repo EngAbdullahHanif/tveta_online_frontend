@@ -413,6 +413,7 @@ module.exports = {
   'button.Back': 'Back',
   'button.TeacherBackround': 'Background',
   'button.Teacherprofile': 'profile',
+  'button.back': 'Back',
 
   'button.states-text':
     'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
@@ -428,6 +429,7 @@ module.exports = {
   'button.right': 'Right',
   'button.dropdown': 'Dropdown',
   'button.dropdown-link': 'Dropdown Link',
+  'submit.waitmessage': 'Submitting...',
 
   /* 07.04.Cards */
   'cards.icon-card': 'Icon Card',
@@ -504,6 +506,7 @@ module.exports = {
   'forms.tags': 'Tags',
   'forms.date': 'Date',
   'forms.TazkiraType': 'ID card (Tazkira) Type',
+  'forms.StdTazkiraTypeErr': 'Tazkira Type Required!',
   'forms.top-labels-in-input': 'Top Labels In Input',
   'forms.email-u': 'E-MAIL',
   'forms.password-u': 'PASSWORD',
@@ -559,6 +562,7 @@ module.exports = {
   'forms.CurrentAddresslabel': 'Current Address',
   'forms.ProvinceLabel': 'Province',
   'forms.ProvinceErr': 'Province is Required!',
+
   'forms.DistrictLabel': 'District',
   'forms.DistrictErr': 'District Is Required!',
   'forms.VillageLabel': 'Village/Area',
@@ -666,6 +670,7 @@ module.exports = {
   'forms.StdSicknessErr': 'this field is required!',
   'forms.StdNecessaryWorkLabel': 'Necessary Work',
   'forms.ConfirmButton': 'Confirm',
+  'menu.attendance': 'Attendance',
 
   // Field Registration
   'field.FieldRegisterTitle': 'Field Registeration',
@@ -701,6 +706,7 @@ module.exports = {
   'teacher.EmailLabel': 'Email Address',
   'teacher.EmailErr': 'Email is Required!',
   'teacher.EmailRequiredErr': 'Email is incorrect!',
+
   'teacher.LevelOfEducationLabel': 'Education Level',
   'teacher.LevelOfEducationErr': 'Education Level Required!',
   'teacher.EducationLevelOption_1': '14 years degree',
@@ -714,8 +720,29 @@ module.exports = {
   'teacher.StatusOption_1': 'Active',
   'teacher.StatusOption_2': 'Dismissed',
   'teacher.StatusLabel': 'Status',
-  'teacher.StatusErr': 'Teacher Status is Required!',
+  'teacher.StatusErr': 'Status is Required!',
   'teacher.Profile': 'Teacher profile',
+  'teacher.teachingFieldLabel': 'Teaching field',
+  'teacher.teachingFieldErr': 'Teaching Field Required!',
+  'teacher.jobLocationLabel': 'Job location',
+  'teacher.jobLocationErr': 'Job location Is Required!',
+  'teacher.langOptions_1': 'Pashto',
+  'teacher.langOptions_2': 'Dari',
+  'teacher.langOptions_3': 'English',
+  'teacher.teachingLang': 'Teaching language',
+  'teacher.appointmentTOptions_1': 'formal',
+  'teacher.appointmentTOptions_2': 'Contractual',
+  'teacher.appointmentTypeLabel': 'Appointment Type',
+  'teacher.appointmentTypeErr': 'Appointment Type',
+  'teacher.contractTypeLabel': 'Contract Type',
+  'teacher.contractTypeErr': 'Contract Type is Required!',
+  'teacher.contractTypeOptions_1': 'In the formation',
+  'teacher.contractTypeOptions_2': 'Out of formation',
+  'teacher.ProfessionalRanksLabel': 'Professional Rank',
+  'min.minInputValue': 'Input should be at eleast three character',
+  'max.maxInputValue': 'Input value can not exceed than 50 character',
+  'min.minTazkiraInputValue': 'Input should be at eleast 5 character',
+  'max.maxTazkiraInputValue': 'Input value can not exceed than 17 character',
 
   // Teacher Grade
   'teacher.GradeOption_3': 'Third Grade ',
@@ -749,6 +776,8 @@ module.exports = {
   // Type
   'institute.instTypeOptions_1': 'Public',
   'institute.instTypeOptions_2': 'Private',
+  'institute.director': 'Director',
+  'institute.manager': 'Manager',
 
   // Marks
   'marks.SectionLabel': 'Section',
@@ -905,6 +934,9 @@ module.exports = {
   'institute.totalDepartments': 'Total Departments',
   'institute.Greduated_12': '12th Class Graduated',
   'institute.Greduated_14': '14th Class Graduated',
+
+  // Dashboard
+  'dashboard.provincail': 'Provincail Dashboard',
 
   // Dorm details page
 

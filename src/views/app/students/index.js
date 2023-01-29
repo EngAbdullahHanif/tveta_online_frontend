@@ -40,6 +40,10 @@ const MarksDisplayAllSubs = React.lazy(() =>
     /* webpackChunkName: "marks-display-allsubs" */ './marks-display-all-subs'
   )
 );
+const AttendanceDisplay = React.lazy(() =>
+  import(/* webpackChunkName: "attendance" */ './attendence/attendance-display')
+);
+
 
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -90,6 +94,10 @@ const Students = ({ match }) => (
         render={(props) => <MarksDisplayAllSubs {...props} />}
       />
 
+      <Route
+        path={`${match.url}/attendance`}
+        render={(props) => <AttendanceDisplay {...props} />}
+      />
       {/* <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}

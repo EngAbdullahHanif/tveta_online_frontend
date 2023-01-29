@@ -1085,7 +1085,8 @@ const StudentRegistraion = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <Button className="mt-5 bg-primary">
+
+                    <Button className="mt-2">
                       <IntlMessages id="button.back" />
                     </Button>
                   </div>

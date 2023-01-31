@@ -5,6 +5,7 @@ import axios from 'axios';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import { NotificationManager } from 'components/common/react-notifications';
 
 import * as Yup from 'yup';
 import {
@@ -165,6 +166,9 @@ const DormRegistration = (values) => {
 
   const [data, setData] = useState([]);
   const [student, setStudent] = useState('');
+  const [institute, setInstitute] = useState([]);
+  const [department, setDepartment] = useState([]);
+  const [classs, setClasss] = useState([]); //classs is used because class is a reserved word
   const [dorms, setDorms] = useState([]);
 
   const [isNext, setIsNext] = useState(true);
@@ -189,12 +193,62 @@ const DormRegistration = (values) => {
     setData(event.target.value);
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     //search student by student id in database
     console.log(`${studentAPIUrl}?student_id=${data}`);
     axios.get(`${studentAPIUrl}?student_id=${data}`).then((res) => {
       setStudent(res.data);
     });
+    const instituteResponse = await axios.get(
+      `${studentAPIUrl}student_institutes/?student_id=${data}`
+    );
+    const instituteData = await instituteResponse.data;
+    setInstitute(instituteData);
+
+    const departmentResponse = await axios.get(
+      `${studentAPIUrl}student_Departments/?student_id=${data}`
+    );
+    const departmentData = await departmentResponse.data;
+    setDepartment(departmentData);
+
+    //type =1 means current class or current continued class
+    const classResponse = await axios.get(
+      `${studentAPIUrl}student_class/?student_id=${data}&type=1`
+    );
+    const classData = await classResponse.data;
+    setClasss(classData);
+    console.log('Institute', institute);
+    console.log('deparment', classs);
+  };
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'شاگرد موفقانه لیلی ته رجستر شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          5000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
   };
   const handleRegister = (values) => {
     // const dorm_id = values.dorm.value;
@@ -219,10 +273,12 @@ const DormRegistration = (values) => {
     axios
       .post(`${studentDormsApiUrl}`, data)
       .then((res) => {
+        createNotification('success', 'filled');
         console.log(res);
         console.log(res.data);
       })
       .catch((err) => {
+        createNotification('error', 'filled');
         console.log(err);
       });
   };
@@ -296,9 +352,18 @@ const DormRegistration = (values) => {
                                       xxs=""
                                     >
                                       <Label>
+                                        {/* <IntlMessages id="teacher.NameLabel" /> */}
+                                        د شاگرد ایدی / ایدی شاگرد
+                                      </Label>
+                                      <h3>{student[0].student_id}</h3>
+                                      <Label>
                                         <IntlMessages id="teacher.NameLabel" />
                                       </Label>
-                                      <h3>{student[0].name}</h3>
+                                      <h3>
+                                        {student[0].name +
+                                          '  ' +
+                                          student[0].last_name}
+                                      </h3>
                                       <Label>
                                         <IntlMessages id="teacher.FatherNameLabel" />
                                       </Label>
@@ -306,43 +371,62 @@ const DormRegistration = (values) => {
                                       <Label>
                                         <IntlMessages id="teacher.PhoneNoLabel" />
                                       </Label>
-                                      <h3>077000000000</h3>
+                                      <h3>{student[0].phone_number}</h3>
                                       <Label>
-                                        <IntlMessages id="teacher.EmailLabel" />
+                                        {/* <IntlMessages id="teacher.EmailLabel" /> */}
+                                        دایمی ادرس / ادرس دایمی
                                       </Label>
-                                      <h3>ahamd12@gmail.com</h3>
-
+                                      <h3>
+                                        {student[0].main_province +
+                                          ' - ' +
+                                          student[0].main_district +
+                                          ' - ' +
+                                          student[0].main_village}
+                                      </h3>
                                       <Label>
-                                        <IntlMessages id="forms.InstituteLabel" />
+                                        {/* <IntlMessages id="teacher.EmailLabel" /> */}
+                                        اوسنی ادرس / ادرس فعلی
                                       </Label>
-                                      <h3>نیما</h3>
-                                      <Label>
-                                        <IntlMessages id="marks.ClassLabel" />
-                                      </Label>
-                                      <h3>دیارلسم/ سیزدهم</h3>
+                                      <h3>
+                                        {student[0].main_province +
+                                          ' - ' +
+                                          student[0].main_district +
+                                          ' - ' +
+                                          student[0].main_village}
+                                      </h3>
                                     </Colxx>
-                                    <Colxx className="p-5 border rounded">
-                                      <Label>
-                                        <IntlMessages id="field.SemesterLabel" />
-                                      </Label>
-                                      <h3>دوهم</h3>
-                                      <Label>
-                                        <IntlMessages id="forms.FieldLabel" />
-                                      </Label>
-                                      <h3>برق</h3>
-                                      <Label>
-                                        <IntlMessages id="forms.ProvinceLabel" />
-                                      </Label>
-                                      <h3>کابل</h3>
-                                      <Label>
-                                        <IntlMessages id="forms.DistrictLabel" />
-                                      </Label>
-                                      <h3>اوومه ناحیه / ناحیه هفتم</h3>
-                                      <Label>
-                                        <IntlMessages id="forms.VillageLabel" />
-                                      </Label>
-                                      <h3>تخنیکم</h3>
-                                    </Colxx>
+                                    {institute.length > 0 &&
+                                      classs.length > 0 &&
+                                      department.length > 0 && (
+                                        <Colxx className="p-5 border rounded">
+                                          <Label>
+                                            <IntlMessages id="forms.InstituteLabel" />
+                                          </Label>
+                                          <h3>{institute[0].institute.name}</h3>
+                                          <Label>د انستیوت ادرس</Label>
+                                          <h3>
+                                            {institute[0].institute.province +
+                                              ' - ' +
+                                              institute[0].institute.district +
+                                              ' - ' +
+                                              institute[0].institute.village}
+                                          </h3>
+                                          <Label>
+                                            <IntlMessages id="forms.FieldLabel" />
+                                          </Label>
+                                          <h3>
+                                            {department[0].department_id.name}
+                                          </h3>
+                                          <Label>
+                                            <IntlMessages id="marks.ClassLabel" />
+                                          </Label>
+                                          <h3>{classs[0].class_id.name}</h3>
+                                          <Label>
+                                            <IntlMessages id="field.SemesterLabel" />
+                                          </Label>
+                                          <h3>{classs[0].class_id.semester}</h3>
+                                        </Colxx>
+                                      )}
                                   </Row>
                                   <Row>
                                     <Colxx>
@@ -391,7 +475,8 @@ const DormRegistration = (values) => {
 
                           <FormGroup className="form-group has-float-label ">
                             <Label>
-                              <IntlMessages id="forms.InstituteLabel" />
+                              {/* <IntlMessages id="forms.InstituteLabel" /> */}
+                              لیله
                             </Label>
                             <FormikReactSelect
                               name="dorm"
@@ -411,7 +496,8 @@ const DormRegistration = (values) => {
                           </FormGroup>
                           <FormGroup className="form-group has-float-label">
                             <Label>
-                              <IntlMessages id="dorm.BuildingTypeLabel" />
+                              {/* <IntlMessages id="dorm.BuildingTypeLabel" /> */}
+                              نوع
                             </Label>
                             <FormikReactSelect
                               name="dormType"

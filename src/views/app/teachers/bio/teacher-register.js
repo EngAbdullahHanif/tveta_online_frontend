@@ -27,7 +27,7 @@ import {
 } from 'containers/form-validations/FormikFields';
 
 const servicePath = 'http://localhost:8000';
-const teacherResitgerAPIUrl = `${servicePath}/teachers/`;
+const teacherResitgerAPIUrl = `${servicePath}/teachers/create_teachers/`;
 
 const TazkiraOptions = [
   { value: '1', label: <IntlMessages id="forms.StdTazkiraElectronic" /> },
@@ -316,6 +316,7 @@ const TeacherRegistration = () => {
     }
   };
   const onRegister = (values) => {
+    console.log('values', values);
     //REMOVE USER_ID LATER, IT IS JUST FOR TESTING
     //UNCOMMENT TEACHER_PHOTO LATER, when the frontend updated
     const data = {
@@ -353,7 +354,7 @@ const TeacherRegistration = () => {
       .catch((err) => {
         createNotification('error', 'filled');
         console.log('The Error ', err);
-        console.log('The Error ', err.message);
+        console.log('The Error message', err.message);
         console.log('The Error response ', err.response);
         console.log('The Error response.data ', err.response.data);
         console.log('The Error response.status', err.response.status);
@@ -370,7 +371,7 @@ const TeacherRegistration = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={onRegister}
-            validationSchema={SignupSchema}
+            // validationSchema={SignupSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-bottom">

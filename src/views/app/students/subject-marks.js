@@ -131,6 +131,11 @@ const MarksDisplay = ({ match }) => {
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
 
+  const [classs, setClasss] = useState();
+  const [semester, setSemester] = useState();
+  const [section, setSection] = useState();
+  let secondIndexValue = 0;
+
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
     const updatedData = await response.data.map((item) => ({
@@ -190,13 +195,22 @@ const MarksDisplay = ({ match }) => {
     setIsNext(event);
     axios
       .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+        `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
       )
+
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
       });
+    console.log(
+      `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
+    );
     console.log('students', students);
+    // split selected class to get semester and section
+    const classArray = selectedClass.label.split(' - ');
+    setClasss(classArray[0]);
+    setSemester(classArray[1]);
+    setSection(classArray[2]);
   };
 
   const onSubmit = (values) => {
@@ -230,6 +244,7 @@ const MarksDisplay = ({ match }) => {
       // axios.post('http://localhost:8000/api/marks/', data);
     });
   };
+  console.log('selected class', selectedClass);
   return (
     <>
       <Card>
@@ -399,7 +414,7 @@ const MarksDisplay = ({ match }) => {
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
                         </Label>
-                        <h6>{selectedClass.label}</h6>
+                        <h6>{classs}</h6>
                       </Colxx>
 
                       <Colxx xxs="2">
@@ -413,14 +428,14 @@ const MarksDisplay = ({ match }) => {
                         <Label>
                           <IntlMessages id="marks.SemesterLabel" />
                         </Label>
-                        <h6>{selectedClass.label}</h6>
+                        <h6>{semester}</h6>
                       </Colxx>
 
                       <Colxx xxs="2">
                         <Label>
                           <IntlMessages id="marks.SectionLabel" />
                         </Label>
-                        <h6>{selectedClass.label}</h6>
+                        <h6>{section}</h6>
                       </Colxx>
 
                       <Colxx xxs="2">
@@ -477,12 +492,16 @@ const MarksDisplay = ({ match }) => {
                           }}
                         >
                           {students.map((student, index) => (
-                            <tr>
-                              <th scope="row">{index}</th>
-                              <td>{student.name}</td>
-                              <td>{student.father_name}</td>
+                            <tr spanrow="3">
+                              <th scope="row">{index + 1}</th>
+                              <td>{student.student_name}</td>
+                              <td>{student.student_father_name}</td>
                               <td>{student.student_id}</td>
-                              <td>{student.marks}</td>
+                              {student.subject_id.map(
+                                (subject, secondIndex) => (
+                                  <td>{subject.marks}</td>
+                                )
+                              )}
                             </tr>
                           ))}
                         </tbody>

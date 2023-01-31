@@ -115,7 +115,7 @@ const StudentRegistraion = () => {
     setInstitutes(updatedData);
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
+    const response = await axios.get('http://localhost:8000/institute/field/');
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name,
@@ -144,9 +144,14 @@ const StudentRegistraion = () => {
       father_name: values.StdFatherName,
       Institute: values.Institute.value,
       field_id: values.Field.value,
-      Dept_id: values.Department.value,
+      department_id: values.Department.value,
       score: values.KankorMarks,
-      date: values.StdInteranceDate,
+      educational_year: '2020',
+      provence: 'kabul',
+      district: 'kabul',
+      gender: 1,
+      user_id: 1,
+      // date: values.StdInteranceDate,
       //uncomment this line to send data to the server
       // kankor_id: values.StdKankorId,
       // study_time: values.StudyTime.value,
@@ -156,7 +161,9 @@ const StudentRegistraion = () => {
 
     axios
       .post('http://localhost:8000/api/Create_kankorResults/', data)
-      .then((response) => {})
+      .then((response) => {
+        console.log(response);
+      })
       .catch((error) => {
         console.log(error);
       });

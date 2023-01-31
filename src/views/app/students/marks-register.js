@@ -130,6 +130,7 @@ const MarksRegistration = ({ match }) => {
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
+  const [examId, setExamId] = useState();
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
@@ -196,60 +197,52 @@ const MarksRegistration = ({ match }) => {
         console.log('response.data', response.data);
         setStudents(response.data);
       });
+    console.log(
+      `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+    );
     console.log('students', students);
   };
 
-  const onSubmit = async (values) => {
-    // console.log('values', values);
+  const onSubmit = (values) => {
+    console.log('values', values);
     const educational_year = selectedEducationalYear;
     const institute_id = selectedInstitute.value;
     const department_id = selectedDepartment.value;
     const class_id = selectedClass.value;
     const subject_id = selectedSubject.value;
-    students.map((student) => {
+
+    students.map(async (student, index) => {
+      let exam_id = '';
       const examData = {
         educational_year: educational_year,
         student_id: student.student_id,
         institute_id: institute_id,
         Department: department_id,
         class_id: class_id,
-      };
-      console.log('examData', examData);
-      //send data to create_marks api to create exam
-      // const exam = axios.post(
-      //   'http://localhost:8000/api/create_marks/',
-      //   examData
-      // );
-
-      axios
-        .post('http://localhost:8000/api/create_marks/', examData)
-        .then((res) => {
-          console.log('res', res);
-        })
-        .catch((err) => {
-          console.log('err', err);
-        });
-
-      // const response = axios.post(
-      //   `http://localhost:8000/api/create_marks/`,
-      //   examData
-      // );
-      // const exam = response.data;
-      // console.log('exam', exam);
-      //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-      //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-      // console.log('exam', examData);
-      const data = {
-        subject: subject_id,
-        exam_types: 1,
-        passing_score: passingScore,
-        grad: subjectGrad,
-        Gpa: subjectGPA,
+        semister: 1,
+        teacher_id: 1,
         user_id: 1,
-        mark: values.score[student.student_id],
+        verification: 1,
       };
-      // console.log('data', data);
-      // axios.post('http://localhost:8000/api/marks/', data);
+      const exam = await axios.post(
+        'http://localhost:8000/api/create_marks/',
+        examData
+      );
+      const updatedExam = await exam.data;
+      exam_id = updatedExam;
+
+      console.log('exam_id', exam_id, index);
+
+      const data = {
+        exam_marks_id: exam_id,
+        subject_id: subject_id,
+        exam_types: 1,
+        score: values.score[student.student_id],
+        passing_score: 55,
+        user_id: 1,
+      };
+      console.log('data', data, index);
+      axios.post('http://localhost:8000/api/create_marks_details/', data);
     });
   };
   return (

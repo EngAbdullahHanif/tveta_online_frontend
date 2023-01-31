@@ -420,40 +420,10 @@ const StudentRegistraion = ({ intl }, values) => {
                     Email: '',
                     IdCardPageNo: '',
                     IdCardJoldNo: '',
-                    // gender: [
-                    //   {
-                    //     value: '0',
-                    //     label: (
-                    //       <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                    //     ),
-                    //   },
-                    // ],
-
-                    tazkiraType: [
-                      {
-                        value: '0',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-
-                    province: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    C_Province: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
+                    // gender: [],
+                    tazkiraType: [],
+                    province: [],
+                    C_Province: [],
                     C_District: '',
                     district: '',
                     village: '',
@@ -874,57 +844,14 @@ const StudentRegistraion = ({ intl }, values) => {
                 <Formik
                   innerRef={forms[1]}
                   initialValues={{
-                    status: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    levelOfEducation: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    stdInteranceType: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    studentType: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
+                    status: [],
+                    levelOfEducation: [],
+                    stdInteranceType: [],
+                    studentType: [],
                     stdPreSchool: '',
                     stdGraduationYear: '',
-                    stdSchoolProvince: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-
-                    jobLocation: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
+                    stdSchoolProvince: [],
+                    jobLocation: [],
                   }}
                   onSubmit={() => {}}
                   validationSchema={ValidationStepTwo}

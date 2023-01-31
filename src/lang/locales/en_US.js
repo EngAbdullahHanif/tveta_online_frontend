@@ -649,9 +649,9 @@ module.exports = {
   'forms.InstituteLabel': 'Institute/School',
   'forms.InstituteErr': 'Institute required!',
   'forms.FieldLabel': 'Field',
-  'forms.FieldErr': 'Field Required!',
+  'forms.FieldErr': 'Field  Is Required!',
   'forms.StudyTimeLabel': 'Time',
-  'forms.StudyTimeErr': 'Time!',
+  'forms.StudyTimeErr': 'Study Time Is Required!',
   'forms.StudyTimeOption_1': 'Day Shift',
   'forms.StudyTimeOption_2': 'Night Shift',
   'forms.SubimssionButton': 'Submit',
@@ -739,10 +739,11 @@ module.exports = {
   'teacher.contractTypeOptions_1': 'In the formation',
   'teacher.contractTypeOptions_2': 'Out of formation',
   'teacher.ProfessionalRanksLabel': 'Professional Rank',
-  'min.minInputValue': 'Input should be at eleast three character',
-  'max.maxInputValue': 'Input value can not exceed than 50 character',
-  'min.minTazkiraInputValue': 'Input should be at eleast 5 character',
-  'max.maxTazkiraInputValue': 'Input value can not exceed than 17 character',
+  'min.minInputValue': 'Input should be at eleast three characters',
+  'min.minInputValues': 'Input should be at eleast 10 characters',
+  'max.maxInputValue': 'Input value can not exceed than 50 characters',
+  'min.minTazkiraInputValue': 'Input should be at eleast 5 characters',
+  'max.maxTazkiraInputValue': 'Input value can not exceed than 17 characters',
 
   // Teacher Grade
   'teacher.GradeOption_3': 'Third Grade ',
@@ -783,6 +784,7 @@ module.exports = {
   'marks.SectionLabel': 'Section',
   'marks.SemesterLabel': 'Semester',
   'marks.SubjectLabel': 'Subject',
+  'marks.SubjectErr': 'Subject Is Required!',
   'marks.SemesterOption_1': 'First',
   'marks.SemesterOption_2': 'Second',
   'marks.SemesterOption_3': 'Third',
@@ -793,6 +795,7 @@ module.exports = {
   'marks.SectionOption_4': 'D',
   'marks.SectionOption_5': 'E',
   'marks.ClassLabel': 'Class',
+  'marks.ClassErr': 'Class Is Required!',
   'marks.ClassOption_1': '9th',
   'marks.ClassOption_2': '10th',
   'marks.ClassOption_3': '11th',
@@ -847,12 +850,13 @@ module.exports = {
 
   // Teacher Evaluation
   'teacher.IdLabel': 'Teacher Id',
+  'teacher.IdErr': 'Teacher Id Name Required!',
   'teacher.EvalautionTitle': 'Teacher Evaluation',
   'teacher.EvalautionTitle1': 'Teacher Evaluation By TVETA',
   'teacher.InstituteIdLabel': 'Institute Id',
   // 'teacher.InstituteIdErr': 'Institute Id Required!',
   'teacher.departmentIdLabel': 'Department Id',
-  // 'teacher.departmentIdErr': 'Department Id Required!',
+  'teacher.departmentIdErr': 'Department Id Required!',
   'teacher.classIdLabel': 'Class  Id',
   // 'teacher.classIdErr': 'Class Id Required!',
   'teacher.subjectIdLabel': 'Subject Id',
@@ -862,6 +866,7 @@ module.exports = {
   'teacher.evaluatorLabel': 'Evaluator',
   'teacher.evaluatorErr': 'Evaluator Name Topic  is Required!',
   'teacher.evaluationTypeLabel': 'Evaluation Type',
+  'teacher.evaluationTypeErr': 'Evaluation Type Is Required!',
   'teacher.evaluationTypeOption_1': 'Goal Oriented',
   'teacher.evaluationTypeOption_2': 'Activity Oriented',
   'teacher.strengthPointsLabel': 'Strength Points',
@@ -935,11 +940,20 @@ module.exports = {
   'institute.Greduated_12': '12th Class Graduated',
   'institute.Greduated_14': '14th Class Graduated',
 
-  // Dashboard
+  // Dashboard Provincial
   'dashboard.provincail': 'Provincail Dashboard',
+  'dash.totalStudentsInst': 'Total Institutes Students',
+  'dash.totalStudentsScool': 'Total Schools Students',
+  'dash.totalStudentsDorm': 'Total Dorm Students',
+  'dash.DormStudentType_1': 'Cash Payment',
+  'dash.DormStudentType_2': 'Room And Cash Payment',
+  'dash.totalStatistics': 'Total Statistics',
+  'dash.totalNumberOfInstitute': 'Total Institutes',
+  'dash.totalNumberOfSchool': 'Total Schools',
+  'dash.totalNumberOfDorms': 'Total Dorms',
+  'dash.totalNumberOfTeachers': 'Totol Teachers',
 
   // Dorm details page
-
   // Subject
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',
@@ -1103,4 +1117,7 @@ module.exports = {
   'wizard.prev': 'Back',
   'wizard.registered': 'Your registration completed successfully!',
   'wizard.async': 'Async save for 3 seconds!',
+
+  'forms.educationYearLabel': 'Educational Year',
+  'forms.educationYearErr': 'Eduactional Year Required!',
 };

@@ -14,11 +14,7 @@ import {
 } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from './../../../containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const ValidationSchema = Yup.object().shape({
   stdName: Yup.string()
@@ -27,9 +23,16 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.StdKankorNameErr" />),
 
   stdFatherName: Yup.string()
-    .required(<IntlMessages id="teacher.FatherNameErr" />)
     .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="teacher.FatherNameErr" />),
+
+  department: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.departmentIdErr" />),
 
   institute: Yup.object()
     .shape({
@@ -38,26 +41,33 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
 
-  // StdKankorId: Yup.string().required(
-  //   <IntlMessages id="forms.StdKankorIdErr" />
-  // ),
+  field: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.FieldErr" />),
 
-  // stdFatherName: Yup.string()
-  //   // .min(3 'ستاسو دپلار نوم سم ندی/ نام پدر شما اشتباه است')
-  //   .required(<IntlMessages id="forms.stdFatherNameError" />),
+  stdKankorId: Yup.string().required(
+    <IntlMessages id="forms.StdKankorIdErr" />
+  ),
 
-  // KankorMarks: Yup.number().required(
-  //   <IntlMessages id="forms.KankorMarksErr" />
-  // ),
+  kankorMarks: Yup.string().required(
+    <IntlMessages id="forms.KankorMarksErr" />
+  ),
+  stdInteranceDate: Yup.date().required(
+    <IntlMessages id="forms.KankorMarksErr" />
+  ),
 
-  // Institute: Yup.string().required(<IntlMessages id="forms.InstituteErr" />),
-
-  // Field: Yup.string().required(<IntlMessages id="forms.FieldErr" />),
-
-  // StudyTime: Yup.string().required(<IntlMessages id="forms.StudyTimeErr" />),
+  studyTime: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudyTimeErr" />),
 });
 
-const StudyTimeOptions = [
+const studyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
@@ -77,44 +87,20 @@ const FieldOptions = [
 const StudentRegistraion = () => {
   const initialValues = {
     stdName: '',
+    stdKankorId: '',
+    kankorMarks: '',
     stdFatherName: '',
-    institute: [
-      {
-        value: '',
-        label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-      },
-    ],
-
-    //   StdSchoolProvince: {
-    //     value: '',
-    //     label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-    //   },
-    //   Province: {
-    //     value: '',
-    //     label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-    //   },
-    //   C_Province: {
-    //     value: '',
-    //     label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-    //   },
-    //   Institute: {
-    //     value: '',
-    //     label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-    //   },
-    //   StudyTime: {
-    //     value: '',
-    //     label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-    //   },
-    //   Field: {
-    //     value: '',
-    //     label: <IntlMessages id="forms.EducationLevelDefaultValue" />,
-    //   },
+    stdInteranceDate: '',
+    studyTime: [],
+    department: [],
+    field: [],
+    institute: [],
   };
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
-  const [Institute, setInstitute] = useState('0');
   const [isNext, setIsNext] = useState(true);
+  const [StudyTime, setStudyTIme] = useState('0');
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
@@ -144,11 +130,10 @@ const StudentRegistraion = () => {
   };
 
   const handleClick = (event) => {
-    setIsNext(event);
+    // setIsNext(event);
   };
   const onRegister = (values) => {
-    // setInstitute();
-    console.log('values', values.institute);
+    console.log('values', values);
     // console.log('institue', values.Department.value);
     const data = {
       // name: values.stdName,
@@ -160,7 +145,7 @@ const StudentRegistraion = () => {
       // date: values.StdInteranceDate,
       // uncomment this line to send data to the server
       // kankor_id: values.StdKankorId,
-      // study_time: values.StudyTime.value,
+      // study_time: values.studyTime.value,
     };
     console.log('data', data);
     axios
@@ -177,8 +162,8 @@ const StudentRegistraion = () => {
     fetchDepartments();
   }, []);
 
-  console.log('fields', fields);
-  console.log('institutes', institutes);
+  // console.log('fields', fields);
+  // console.log('institutes', institutes);
 
   return (
     <>
@@ -200,37 +185,37 @@ const StudentRegistraion = () => {
                 setFieldTouched,
                 setFieldValue,
               }) => (
-                <Form className="av-tooltip tooltip-label-bottom">
+                <Form className="av-tooltip tooltip-label-right">
                   <Row>
                     <Colxx xxs="6">
                       {/* Name */}
-                      <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.StdName" />
                         </Label>
                         <Field className="form-control" name="stdName" />
                         {errors.stdName && touched.stdName ? (
-                          <div className="invalid-feedback d-block">
+                          <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.stdName}
                           </div>
                         ) : null}
                       </FormGroup>
 
                       {/*Father Name  */}
-                      <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.StdFatherName" />
                         </Label>
-                        <Field className="form-control" name="StdFatherName" />
+                        <Field className="form-control" name="stdFatherName" />
                         {errors.stdFatherName && touched.stdFatherName ? (
-                          <div className="invalid-feedback d-block">
+                          <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.stdFatherName}
                           </div>
                         ) : null}
                       </FormGroup>
 
                       {/* Institutes */}
-                      <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
                         </Label>
@@ -241,51 +226,52 @@ const StudentRegistraion = () => {
                           options={institutes}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
-                          onClick={setInstitute(values.institute)}
                         />
-                        {errors.institute && !Institute ? (
-                          <div className="invalid-feedback d-block">
+                        {errors.institute && touched.institute ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.institute}
                           </div>
                         ) : null}
                       </FormGroup>
 
-                      {/* Study time */}
-                      <FormGroup className="form-group has-float-label">
+                      {/* Study Time */}
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.StudyTimeLabel" />
                         </Label>
                         <FormikReactSelect
-                          name="StudyTime"
-                          id="StudyTime"
-                          value={values.StudyTime}
-                          options={StudyTimeOptions}
+                          name="studyTime"
+                          id="studyTime"
+                          value={values.studyTime}
+                          placeholder="Select option"
+                          options={studyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.StudyTime && touched.StudyTime ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.StudyTime}
+                        {errors.studyTime && touched.studyTime ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.studyTime}
+                            {console.log(errors.studyTime, 'Kankor Marks')}
                           </div>
                         ) : null}
                       </FormGroup>
 
                       {/* Department */}
-                      <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.studyDepartment" />
                         </Label>
                         <FormikReactSelect
-                          name="Department"
-                          id="Department"
-                          value={values.Department}
+                          name="department"
+                          id="department"
+                          value={values.department}
                           options={departments}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.Department && touched.Department ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.Department}
+                        {errors.department && touched.department ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.department}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -293,68 +279,68 @@ const StudentRegistraion = () => {
 
                     <Colxx xxs="6">
                       {/* Exam Id */}
-                      <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.StdKankorIdLabel" />
                         </Label>
-                        <Field className="form-control" name="StdKankorId" />
-                        {errors.StdKankorId && touched.StdKankorId ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.StdKankorId}
+                        <Field className="form-control" name="stdKankorId" />
+                        {errors.stdKankorId && touched.stdKankorId ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.stdKankorId}
                           </div>
                         ) : null}
                       </FormGroup>
 
                       {/* Kankor Marks */}
-                      <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.KankorMarksLabel" />
                         </Label>
                         <Field
                           className="form-control"
-                          name="KankorMarks"
+                          name="kankorMarks"
                           type="number"
                         />
-                        {errors.KankorMarks && touched.KankorMarks ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.KankorMarks}
+                        {errors.kankorMarks && touched.kankorMarks ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.kankorMarks}
                           </div>
                         ) : null}
                       </FormGroup>
 
                       {/* Field */}
-                      <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.FieldLabel" />
                         </Label>
                         <FormikReactSelect
-                          name="Field"
-                          id="Field"
-                          value={values.Field}
+                          name="field"
+                          id="field"
+                          value={values.field}
                           options={fields}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.Field && touched.Field ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.Field}
+                        {errors.field && touched.field ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.field}
                           </div>
                         ) : null}
                       </FormGroup>
 
                       {/* date */}
-                      <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.RegistrationDateLabel" />
                         </Label>
                         <Field
                           className="form-control"
-                          name="StdInteranceDate"
+                          name="stdInteranceDate"
                           type="date"
                         />
-                        {errors.StdInteranceDate && touched.StdInteranceDate ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.StdInteranceDate}
+                        {errors.stdInteranceDate && touched.stdInteranceDate ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.stdInteranceDate}
                           </div>
                         ) : null}
                       </FormGroup>

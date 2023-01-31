@@ -13,7 +13,7 @@ const localizer = momentLocalizer(moment);
 
 const CalendarCard = () => {
   return (
-    <Card>
+    <Card >
       <CardBody>
         <CardTitle>
           <IntlMessages id="dashboards.calendar" />

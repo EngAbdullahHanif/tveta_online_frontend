@@ -543,40 +543,10 @@ const TeacherRegister = ({ intl }, values) => {
                     Email: '',
                     IdCardPageNo: '',
                     IdCardJoldNo: '',
-                    gender: [
-                      {
-                        value: '0',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    levelOfEducation: [
-                      {
-                        value: '0',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-
-                    tazkiraType: [
-                      {
-                        value: '0',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-
-                    major: [
-                      {
-                        value: '0',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
+                    gender: [],
+                    levelOfEducation: [],
+                    tazkiraType: [],
+                    major: [],
                   }}
                   validateOnMount
                   validationSchema={ValidationStepOne}
@@ -850,84 +820,16 @@ const TeacherRegister = ({ intl }, values) => {
                 <Formik
                   innerRef={forms[1]}
                   initialValues={{
-                    status: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    teachingField: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    grade: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    appointmentType: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    province: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    jobLocation: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    teachingLang: [
-                      {
-                        value: '1',
-                        label: <IntlMessages id="teacher.langOptions_1" />,
-                      },
-                    ],
-                    step: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    contractType: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    C_Province: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
+                    status: [],
+                    teachingField: [],
+                    grade: [],
+                    appointmentType: [],
+                    province: [],
+                    jobLocation: [],
+                    teachingLang: [],
+                    step: [],
+                    contractType: [],
+                    C_Province: [],
                     C_District: '',
                     district: '',
                     village: '',

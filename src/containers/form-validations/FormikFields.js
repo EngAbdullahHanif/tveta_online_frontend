@@ -6,6 +6,7 @@
 import React from 'react';
 import Select from 'react-select';
 import { CustomInput } from 'reactstrap';
+import IntlMessages from 'helpers/IntlMessages';
 
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
@@ -38,10 +39,11 @@ const FormikReactSelect = ({
     <Select
       className={`react-select ${className}`}
       classNamePrefix="react-select"
+      placeholder={<IntlMessages id="forms.EducationLevelDefaultValue" />}
       options={options}
       isMulti={isMulti}
+      initial
       onChange={handleChange}
-      onClick={handleChange}
       onBlur={handleBlur}
       value={value}
     />

@@ -40,332 +40,190 @@ const ProvincailDashboard = (values) => {
 
   return (
     <>
-      <div id="containerr" >
-        <h1 className="mt-5 m-3">
-          {<IntlMessages id="dashboard.provincail" />}
-        </h1>
-
-        <div class="container">
-          <div class="rain">
-            <div class="drop"></div>
-            <div class="waves">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-
-          <div class="rain">
-            <div class="drop"></div>
-            <div class="waves">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-
-          <div class="rain">
-            <div class="drop"></div>
-            <div class="waves">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-
-          <div class="rain">
-            <div class="drop"></div>
-            <div class="waves">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-
-          <div class="rain">
-            <div class="drop"></div>
-            <div class="waves">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-
-          <div class="rain">
-            <div class="drop"></div>
-            <div class="waves">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-
-          <div class="rain">
-            <div class="drop"></div>
-            <div class="waves">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-
-          <div class="rain">
-            <div class="drop"></div>
-            <div class="waves">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-
-          <div class="rain">
-            <div class="drop"></div>
-            <div class="waves">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <div class="splash"></div>
-            <div class="particles">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h1 className="mt-5 m-1">{<IntlMessages id="dashboard.provincail" />}</h1>
       <Separator className="mb-5" />
-      <Row className="mt-3">
-        <Colxx xxs="6" sm="4" md="3" className="mb-4  ">
+
+      <Row>
+        <Colxx xxs="12" sm="4" md="3" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '10%' }} id="divId">
+            <CardBody className="text-center">
+              <CardTitle>
+                <IntlMessages id="dash.totalStatistics" />
+              </CardTitle>
+              <Colxx>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfInstitute" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>5000</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfSchool" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>500</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfDorms" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfTeachers" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>90</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
           <Card style={{ minHeight: '180px' }} id="divId">
             <CardBody className="text-center">
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsInst" />
+              </CardTitle>
+              <Row className="m-2 ">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        <Colxx xxs="12" sm="4" md="3" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '10%' }} id="divId">
+            <CardBody className="text-center">
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsDorm" />
+              </CardTitle>
+
+              <Colxx style={{ marginRight: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>5000</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>500</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.DormStudentType_1" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>3200</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.DormStudentType_2" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>1800</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
+          <Card style={{ minHeight: '180px' }} id="divId">
+            <CardBody className="text-center">
+              <CardTitle>
+                {' '}
+                <IntlMessages id="dash.totalStudentsScool" />
+              </CardTitle>
+
               <b>
                 <p
                   className="bg-primary rounded"
                   style={{ paddingInline: '10px' }}
-                >
-                  <IntlMessages id="dorm.PublicBuildingOwnerLabel" />
-                </p>
+                ></p>
               </b>
               <Row className="m-2 ">
-                <Colxx className="pt-3">
-                  د تخنیکی او مسلکی تعلیماتو اداره/ اداره تعلیمات تخنیکی و مسلکی
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-
-        <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card style={{ minHeight: '180px' }} id="divId">
-            <CardBody className="text-center">
-              <b>
-                <p
-                  className="bg-primary rounded "
-                  style={{ paddingInline: '10px' }}
-                >
-                  <IntlMessages id="dorm.PrivateBuildingTypeLabel" />
-                </p>
-              </b>
-              <Row className="m-2">
-                <Colxx className="pt-3"> کرایی</Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-
-        <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card style={{ minHeight: '180px' }} id="divId">
-            <CardBody className="text-center">
-              <b>
-                <p
-                  className="bg-primary rounded  "
-                  style={{ paddingInline: '10px' }}
-                >
-                  <IntlMessages id="dorm.TotalBuildingNoLabel" />
-                </p>
-              </b>
-              <Row className="m-2">
-                <Colxx className="pt-3">
-                  {' '}
-                  <h2>8 </h2>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-
-        <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card style={{ minHeight: '180px' }} id="divId">
-            <CardBody className="text-center">
-              <b>
-                <p
-                  className="bg-primary rounded"
-                  style={{ paddingInline: '10px' }}
-                >
-                  <IntlMessages id="dorm.TotalRoomsLabel" />
-                </p>
-              </b>
-              <Row className="m-2">
-                <Colxx className="pt-3">
-                  {' '}
-                  <h2>48 </h2>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-
-        <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card style={{ minHeight: '180px' }} id="divId">
-            <CardBody className="text-center">
-              <b>
-                <p
-                  className="bg-primary rounded"
-                  style={{ paddingInline: '10px' }}
-                >
-                  <IntlMessages id="dorm.TotalKitchensLabel" />
-                </p>
-              </b>
-              <Row className="m-2">
-                <Colxx className="pt-3">
-                  {' '}
-                  <h2>8 </h2>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-
-        <Colxx xxs="6" sm="4" md="3" className="mb-4">
-          <Card style={{ minHeight: '180px' }} id="divId">
-            <CardBody className="text-center">
-              <b>
-                <p
-                  className="bg-primary rounded"
-                  style={{ paddingInline: '10px' }}
-                >
-                  <IntlMessages id="dorm.ToiletLabel" />
-                </p>
-              </b>
-              <Row className="m-2">
-                <Colxx className="pt-3">
-                  {' '}
-                  <h2>14 </h2>
-                </Colxx>
-              </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
-        <Colxx xxs="6" sm="4" md="6" className="mb-4">
-          <Card style={{ minHeight: '180px' }} id="divId">
-            <CardBody className="text-center">
-              <b>
-                <p
-                  className="bg-primary rounded"
-                  style={{ paddingInline: '10px' }}
-                >
-                  <IntlMessages id="dorm.ToiletLabel" />
-                </p>
-              </b>
-              <Row>
                 <Colxx>
-                  {' '}
-                  <Label>
-                    <IntlMessages id="forms.ProvinceLabel" />
-                  </Label>
-                  <h3>کابل</h3>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
                 </Colxx>
+
                 <Colxx>
-                  {' '}
-                  <Label>
-                    <IntlMessages id="forms.DistrictLabel" />
-                  </Label>
-                  <h3>پغمان</h3>
-                </Colxx>
-                <Colxx>
-                  {' '}
-                  <Label>
-                    <IntlMessages id="forms.VillageLabel" />
-                  </Label>
-                  <h3>چهلتن</h3>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
                 </Colxx>
               </Row>
             </CardBody>
           </Card>
+        </Colxx>
+
+        <Colxx xl="6" lg="12" className="mb-4">
+          <Calendar />
         </Colxx>
       </Row>
+
       <Row>
-        <Colxx xl="6" lg="12" className="mb-4">
+        <Colxx xl="3" lg="12" className="mb-4">
+          <h3>Institute list</h3>
+          <Calendar />
+        </Colxx>
+        <Colxx xl="3" lg="12" className="mb-4">
+          <h3>Schools list</h3>
+          <Calendar />
+        </Colxx>
+        <Colxx xl="3" lg="12" className="mb-4">
+          <h3>Dorms List</h3>
+          <Calendar />
+        </Colxx>
+        <Colxx xl="3" lg="12" className="mb-4">
+          <h3>Fields List</h3>
           <Calendar />
         </Colxx>
       </Row>

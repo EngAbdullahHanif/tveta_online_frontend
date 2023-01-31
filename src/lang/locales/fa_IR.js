@@ -789,6 +789,7 @@ module.exports = {
   'marks.SectionLabel': 'سکشن',
   'marks.SemesterLabel': 'سمستر',
   'marks.SubjectLabel': 'مضمون',
+  'marks.SubjectErr': 'مضمون اړین دی/ صنف ضروری است',
   'marks.SemesterOption_1': 'لومړی/ اول',
   'marks.SemesterOption_2': 'دوهم /دوم',
   'marks.SemesterOption_3': 'دریم/ سوم',
@@ -799,6 +800,7 @@ module.exports = {
   'marks.SectionOption_4': 'د',
   'marks.SectionOption_5': 'ح',
   'marks.ClassLabel': 'ټولګی/ صنف',
+  'marks.ClassErr': 'ټولګی اړین دی/ صنف ضروری است',
   'marks.ClassOption_1': 'نهم',
   'marks.ClassOption_2': 'لسم/ دهم',
   'marks.ClassOption_3': 'یوولسم/ یازدهم',
@@ -863,11 +865,12 @@ module.exports = {
   'teacher.EvalautionTitle1':
     'د استاد ارزیابي د ټویټا اداری لخوا/ ارزیابی توسط اداره تعلیمات تخنیکی و مسلکی',
   'teacher.IdLabel': 'د استاد آیډی/ آیدی استاد',
+  'teacher.IdErr': 'استاد ایډی اړینه ده/ آیدي استاد ضروری است',
   'teacher.id': 'د استاد آیډی',
   'teacher.InstituteIdLabel': ' د انستیتوت آیډی/ آیدی انستیتوت',
   // 'teacher.InstituteIdErr': 'Institute Id Required!',
   'teacher.departmentIdLabel': 'د ډیپارتمڼت آیډی/ آیدی دیپارتمنت',
-  // 'teacher.departmentIdErr': 'Department Id Required!',
+  'teacher.departmentIdErr': 'دیپارتمنت اړین دی/ دیپارتمنت ضروری است',
   'teacher.classIdLabel': 'دټولګي آیډی/ آیدی صنف',
   // 'teacher.classIdErr': 'Class Id Required!',
   'teacher.subjectIdLabel': ' د مضمون آیډی/ آیدی مضمون',
@@ -877,6 +880,7 @@ module.exports = {
   'teacher.evaluatorLabel': 'ارزونکي نوم/ نام ارزیابی کننده',
   'teacher.evaluatorErr': 'د ارزونکي نوم اړین دی/ نام ارزیابی کننده ضروری است',
   'teacher.evaluationTypeLabel': 'د ارزونې ډول / نوع ارزیابی',
+  'teacher.evaluationTypeErr': 'دارزونې ډول اړین دی/ نوع ارزیابی ضروری است',
   'teacher.evaluationTypeOption_1': 'هدف محور',
   'teacher.evaluationTypeOption_2': 'فعالیت محور',
   'teacher.strengthPointsLabel': 'د قوت ټکي/ نقاط قوت',
@@ -893,7 +897,7 @@ module.exports = {
   'teacher.promotion.type1': 'مکافات',
   'teacher.promotion.type2': 'مجازات',
   'teacher.promotion.description': 'توضیحات',
-  // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
+  // 'teacher.suggestionErr': 'نظریات',
   'evaluation.evaluationDetails': 'د ارزیابۍ نور جزیات/ جزیات دیگر',
 
   // Hr Evaluation
@@ -951,8 +955,8 @@ module.exports = {
   //Institute Details Page
   'institute.detailsTitle': 'نور مالومات/ معلومات بیشتر',
   'institute.totalStudents': 'د شاګردانو تعداد/ تعداد شاگردان',
-  'institute.totalStudentsMale': 'نارینه/ مذکر',
-  'institute.totalStudentsFemale': 'ښّځینه/مونث',
+  'institute.totalStudentsMale': 'نارینه/ ذکور',
+  'institute.totalStudentsFemale': 'ښّځینه/اناث',
   'institute.totalTeachers': 'د استادانو تعداد/ تعداد استادان',
   'institute.totalDepartments': 'ډیپارتمنتونه/ دیپارتمنت ها',
   'institute.Greduated_12': 'دوولسم پاس/ فارغین دوازده',
@@ -961,6 +965,7 @@ module.exports = {
 
   // Validation
   'min.minInputValue': 'حد اقل درې توري اړین دي/ حد اقل سه حرف ضروری است',
+  'min.minInputValues': 'حد اقل لس توري اړین دي/ حد اقل ده حرف ضروری است',
   'max.maxInputValue': 'حد اکثر 50 توري مجاز دي/ حد اکثر 50 حرف مجاز است',
   'min.minTazkiraInputValue': 'حد اقل درې توري اړین دي/ حد اقل 5 حرف ضروری است',
   'max.maxTazkiraInputValue':
@@ -968,6 +973,16 @@ module.exports = {
 
   // Dashboard
   'dashboard.provincail': 'ولایتي دشبورد/ دشبورد ولایتی',
+  'dash.totalStudentsInst': ' د انستیتونو شاګردان/ شاگردان انستیوت ها',
+  'dash.totalStudentsScool': 'د ښونځیو شاګردان/ شاگردان مکاتب',
+  'dash.totalStudentsDorm': 'د لیلیو شاګردان/ شاگردان لیلیه ها',
+  'dash.DormStudentType_1': 'بدل اعاشه',
+  'dash.DormStudentType_2': 'بدیل اعاشه',
+  'dash.totalStatistics': 'مجموعی ارقام/ ارقام مجموعی',
+  'dash.totalNumberOfInstitute': 'انستیتونه /انستیتوت ها',
+  'dash.totalNumberOfSchool': 'مکتبونه/مکاتب',
+  'dash.totalNumberOfDorms': 'لیلیې/ لیلیه ها',
+  'dash.totalNumberOfTeachers': 'استادان',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
@@ -1171,6 +1186,6 @@ module.exports = {
   'dorm.list': 'د لیلی لیست',
   'dorm.register': 'د لیلی ثبت',
 
-  'forms.educationYear': 'تحصیلی کال / سال تحصیلی',
-  educationYear: 'تحصیلی کال ',
+  'forms.educationYearLabel': 'تحصیلی کال / سال تحصیلی',
+  'forms.educationYearErr': ' تحصیلی کال اړین دی / سال تحصیلی ضروری است',
 };

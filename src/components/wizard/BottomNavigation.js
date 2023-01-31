@@ -3,7 +3,9 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
 import { WithWizard } from 'react-albus';
-import { Button } from 'reactstrap';
+import { Row, Button } from 'reactstrap';
+import { Colxx } from 'components/common/CustomBootstrap';
+import IntlMessages from 'helpers/IntlMessages';
 
 const BottomNavigation = ({
   className,
@@ -15,29 +17,44 @@ const BottomNavigation = ({
   return (
     <WithWizard
       render={({ next, previous, step, steps }) => (
-        <div className={`wizard-buttons ${className}`}>
-          <Button
-            color="primary"
-            className={`mr-1 ${steps.indexOf(step) <= 0 ? 'disabled' : ''}`}
-            onClick={() => {
-              onClickPrev(previous, steps, step);
-            }}
-          >
-            {prevLabel}
-          </Button>
-
-          <Button
-            color="primary"
-            className={
-              steps.indexOf(step) >= steps.length - 1 ? 'disabled' : ''
-            }
-            onClick={() => {
-              onClickNext(next, steps, step);
-            }}
-          >
-            {nextLabel}
-          </Button>
-        </div>
+        <Row className={`wizard-buttons ${className}`}>
+          <Colxx>
+            <Button
+              color="primary"
+              style={{ marginRight: '400px' }}
+              className={`mr-1 ${
+                steps.indexOf(step) <= 0 ? 'disabled  m-4' : ' m-4'
+              }`}
+              onClick={() => {
+                onClickPrev(previous, steps, step);
+              }}
+            >
+              <IntlMessages id="button.Back" />
+            </Button>
+          </Colxx>
+          <Colxx>
+            <Button
+            
+              color="primary"
+              style={{ paddingInline: '30px' }}
+              className={
+                steps.indexOf(step) >= steps.length - 1
+                  ? 'disabled float-right m-4'
+                  : ' float-right m-4'
+              }
+              onClick={() => {
+                onClickNext(next, steps, step);
+               
+              }}
+            >
+              {steps.indexOf(step) >= steps.length - 2 ? (
+                <IntlMessages id="button.SubmitButton" />
+              ) : (
+                <IntlMessages id="button.Next" />
+              )}
+            </Button>
+          </Colxx>
+        </Row>
       )}
     />
   );

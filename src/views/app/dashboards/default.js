@@ -1,131 +1,396 @@
-import React from 'react';
-import { injectIntl } from 'react-intl';
-import { Row } from 'reactstrap';
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import Breadcrumb from 'containers/navs/Breadcrumb';
-import IconCardsCarousel from 'containers/dashboards/IconCardsCarousel';
-import RecentOrders from 'containers/dashboards/RecentOrders';
-import Logs from 'containers/dashboards/Logs';
-import Tickets from 'containers/dashboards/Tickets';
-import Calendar from 'containers/dashboards/Calendar';
-import BestSellers from 'containers/dashboards/BestSellers';
-import ProfileStatuses from 'containers/dashboards/ProfileStatuses';
-import GradientCardContainer from 'containers/dashboards/GradientCardContainer';
-import Cakes from 'containers/dashboards/Cakes';
-import GradientWithRadialProgressCard from 'components/cards/GradientWithRadialProgressCard';
-import SortableStaticticsRow from 'containers/dashboards/SortableStaticticsRow';
-import AdvancedSearch from 'containers/dashboards/AdvancedSearch';
-import SmallLineCharts from 'containers/dashboards/SmallLineCharts';
-import SalesChartCard from 'containers/dashboards/SalesChartCard';
-import ProductCategoriesPolarArea from 'containers/dashboards/ProductCategoriesPolarArea';
-import WebsiteVisitsChartCard from 'containers/dashboards/WebsiteVisitsChartCard';
-import ConversionRatesChartCard from 'containers/dashboards/ConversionRatesChartCard';
-import TopRatedItems from 'containers/dashboards/TopRatedItems';
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
 
-const DefaultDashboard = ({ intl, match }) => {
-  const { messages } = intl;
+import * as Yup from 'yup';
+import {
+  Row,
+  Card,
+  CardBody,
+  FormGroup,
+  Label,
+  Button,
+  CardTitle,
+} from 'reactstrap';
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx } from 'components/common/CustomBootstrap';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+
+const ValidationSchema = Yup.object().shape({
+  stdName: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="forms.StdKankorNameErr" />),
+
+  stdFatherName: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="teacher.FatherNameErr" />),
+
+  department: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.departmentIdErr" />),
+
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.InstituteErr" />),
+
+  field: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.FieldErr" />),
+
+  stdKankorId: Yup.string().required(
+    <IntlMessages id="forms.StdKankorIdErr" />
+  ),
+
+  kankorMarks: Yup.string().required(
+    <IntlMessages id="forms.KankorMarksErr" />
+  ),
+  stdInteranceDate: Yup.date().required(
+    <IntlMessages id="forms.KankorMarksErr" />
+  ),
+
+  studyTime: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudyTimeErr" />),
+});
+
+const studyTimeOptions = [
+  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
+  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+];
+
+const InstituteOptions = [
+  { value: '1', label: 'Option1' },
+  { value: '2', label: 'Option2' },
+  { value: '3', label: 'Option3' },
+];
+
+const FieldOptions = [
+  { value: '1', label: 'Option1' },
+  { value: '2', label: 'Option2' },
+  { value: '3', label: 'Option3' },
+];
+
+const StudentRegistraion = () => {
+  const initialValues = {
+    stdName: '',
+    stdKankorId: '',
+    kankorMarks: '',
+    stdFatherName: '',
+    stdInteranceDate: '',
+    studyTime: [],
+    department: [],
+    field: [],
+    institute: [],
+  };
+  const [fields, setFields] = useState([]);
+  const [institutes, setInstitutes] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [isNext, setIsNext] = useState(true);
+  const [StudyTime, setStudyTIme] = useState('0');
+
+  const fetchInstitutes = async () => {
+    const response = await axios.get('http://localhost:8000/institute/');
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setInstitutes(updatedData);
+  };
+  const fetchFields = async () => {
+    const response = await axios.get('http://localhost:8000/institute/filed/');
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setFields(updatedData);
+  };
+  const fetchDepartments = async () => {
+    const response = await axios.get(
+      'http://localhost:8000/institute/department/'
+    );
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setDepartments(updatedData);
+  };
+
+  const handleClick = (event) => {
+    // setIsNext(event);
+  };
+  const onRegister = (values) => {
+    console.log('values', values);
+    // console.log('institue', values.Department.value);
+    const data = {
+      // name: values.stdName,
+      // father_name: values.stdFatherName,
+      // Institute: values.Institute.value,
+      // field_id: values.Field.value,
+      // Dept_id: values.Department.value,
+      // score: values.KankorMarks,
+      // date: values.StdInteranceDate,
+      // uncomment this line to send data to the server
+      // kankor_id: values.StdKankorId,
+      // study_time: values.studyTime.value,
+    };
+    console.log('data', data);
+    axios
+      .post('http://localhost:8000/api/Create_kankorResults/', data)
+      .then((response) => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+    fetchFields();
+    fetchDepartments();
+  }, []);
+
+  // console.log('fields', fields);
+  // console.log('institutes', institutes);
 
   return (
     <>
-      <Row>
-        <Colxx xxs="12">
-          <Breadcrumb heading="menu.default" match={match} />
-          <Separator className="mb-5" />
-        </Colxx>
-      </Row>
-      <Row>
-        <Colxx lg="12" xl="6">
-          <IconCardsCarousel />
-          <Row>
-            <Colxx md="12" className="mb-4">
-              <SalesChartCard />
-            </Colxx>
-          </Row>
-        </Colxx>
-        <Colxx lg="12" xl="6" className="mb-4">
-          <RecentOrders />
-        </Colxx>
-      </Row>
-      <Row>
-        <Colxx lg="4" md="12" className="mb-4">
-          <ProductCategoriesPolarArea chartClass="dashboard-donut-chart" />
-        </Colxx>
-        <Colxx lg="4" md="6" className="mb-4">
-          <Logs />
-        </Colxx>
-        <Colxx lg="4" md="6" className="mb-4">
-          <Tickets />
-        </Colxx>
-      </Row>
-      <Row>
-        <Colxx xl="6" lg="12" className="mb-4">
-          <Calendar />
-        </Colxx>
-        <Colxx xl="6" lg="12" className="mb-4">
-          <BestSellers />
-        </Colxx>
-      </Row>
-      <Row>
-        <Colxx sm="12" lg="4" className="mb-4">
-          <ProfileStatuses />
-        </Colxx>
-        <Colxx md="6" lg="4" className="mb-4">
-          <GradientCardContainer />
-        </Colxx>
-        <Colxx md="6" lg="4" className="mb-4">
-          <Cakes />
-        </Colxx>
-      </Row>
-      <SortableStaticticsRow messages={messages} />
-      <Row>
-        <Colxx sm="12" md="6" className="mb-4">
-          <WebsiteVisitsChartCard />
-        </Colxx>
-        <Colxx sm="12" md="6" className="mb-4">
-          <ConversionRatesChartCard />
-        </Colxx>
-      </Row>
-      <Row>
-        <Colxx lg="12" md="6" xl="4">
-          <Row>
-            <Colxx lg="4" xl="12" className="mb-4">
-              <GradientWithRadialProgressCard
-                icon="iconsminds-clock"
-                title={`5 ${messages['dashboards.files']}`}
-                detail={messages['dashboards.pending-for-print']}
-                percent={(5 * 100) / 12}
-                progressText="5/12"
-              />
-            </Colxx>
-            <Colxx lg="4" xl="12" className="mb-4">
-              <GradientWithRadialProgressCard
-                icon="iconsminds-male"
-                title={`4 ${messages['dashboards.orders']}`}
-                detail={messages['dashboards.on-approval-process']}
-                percent={(4 * 100) / 6}
-                progressText="4/6"
-              />
-            </Colxx>
-            <Colxx lg="4" xl="12" className="mb-4">
-              <GradientWithRadialProgressCard
-                icon="iconsminds-bell"
-                title={`8 ${messages['dashboards.alerts']}`}
-                detail={messages['dashboards.waiting-for-notice']}
-                percent={(8 * 100) / 10}
-                progressText="8/10"
-              />
-            </Colxx>
-          </Row>
-        </Colxx>
-        <Colxx lg="6" md="6" xl="4" sm="12" className="mb-4">
-          <AdvancedSearch messages={messages} />
-        </Colxx>
-        <Colxx lg="6" xl="4" className="mb-4">
-          <SmallLineCharts />
-          <TopRatedItems />
-        </Colxx>
-      </Row>
+      <Card>
+        <h3 className="mt-5 m-5">
+          {<IntlMessages id="forms.Kankorformstitle" />}
+        </h3>
+        <CardBody>
+          {isNext == true ? (
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onRegister}
+              validationSchema={ValidationSchema}
+            >
+              {({
+                errors,
+                touched,
+                values,
+                setFieldTouched,
+                setFieldValue,
+              }) => (
+                <Form className="av-tooltip tooltip-label-right">
+                  <Row>
+                    <Colxx xxs="6">
+                      {/* Name */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.StdName" />
+                        </Label>
+                        <Field className="form-control" name="stdName" />
+                        {errors.stdName && touched.stdName ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.stdName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/*Father Name  */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.StdFatherName" />
+                        </Label>
+                        <Field className="form-control" name="stdFatherName" />
+                        {errors.stdFatherName && touched.stdFatherName ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.stdFatherName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Institutes */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.InstituteLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="institute"
+                          id="institute"
+                          value={values.institute}
+                          options={institutes}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.institute && touched.institute ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.institute}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Study Time */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.StudyTimeLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="studyTime"
+                          id="studyTime"
+                          value={values.studyTime}
+                          placeholder="Select option"
+                          options={studyTimeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.studyTime && touched.studyTime ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.studyTime}
+                            {console.log(errors.studyTime, 'Kankor Marks')}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Department */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.studyDepartment" />
+                        </Label>
+                        <FormikReactSelect
+                          name="department"
+                          id="department"
+                          value={values.department}
+                          options={departments}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.department && touched.department ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.department}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </Colxx>
+
+                    <Colxx xxs="6">
+                      {/* Exam Id */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.StdKankorIdLabel" />
+                        </Label>
+                        <Field className="form-control" name="stdKankorId" />
+                        {errors.stdKankorId && touched.stdKankorId ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.stdKankorId}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Kankor Marks */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.KankorMarksLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="kankorMarks"
+                          type="number"
+                        />
+                        {errors.kankorMarks && touched.kankorMarks ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.kankorMarks}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Field */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.FieldLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="field"
+                          id="field"
+                          value={values.field}
+                          options={fields}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.field && touched.field ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.field}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* date */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.RegistrationDateLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="stdInteranceDate"
+                          type="date"
+                        />
+                        {errors.stdInteranceDate && touched.stdInteranceDate ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.stdInteranceDate}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </Colxx>
+                  </Row>
+                  <Row>
+                    <Colxx>
+                      <Button
+                        color="primary"
+                        className="float-right m-5"
+                        size="lg"
+                        type="submit"
+                        onClick={() => {
+                          onRegister;
+                          handleClick(false);
+                        }}
+                      >
+                        <span className="spinner d-inline-block">
+                          <span className="bounce1" />
+                          <span className="bounce2" />
+                          <span className="bounce3" />
+                        </span>
+                        <span className="label">
+                          <IntlMessages id="forms.SubimssionButton" />
+                        </span>
+                      </Button>
+                    </Colxx>
+                  </Row>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <div className="wizard-basic-step text-center pt-3">
+              <div>
+                <h1 className="mb-2">
+                  <IntlMessages id="wizard.content-thanks" />
+                </h1>
+                <h3>
+                  <IntlMessages id="wizard.registered" />
+                </h3>
+                <Button className="m-5 bg-primary">
+                  <IntlMessages id="button.back" />
+                </Button>
+              </div>
+            </div>
+          )}
+        </CardBody>
+      </Card>
     </>
   );
 };
-export default injectIntl(DefaultDashboard);
+
+export default StudentRegistraion;

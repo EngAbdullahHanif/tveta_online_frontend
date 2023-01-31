@@ -269,13 +269,13 @@ const StudentProfile = () => {
                     <Row>
                       <Colxx style={{ paddingInline: '4%' }}>
                         {' '}
-                        <h2
+                        <h3
                           className="bg-primary rounded "
-                          style={{ paddingInline: '10px' }}
+                          style={{ padding: '1%', paddingInline: '3%' }}
                         >
                           {' '}
                           <IntlMessages id="forms.PermanentAddressLabel" />
-                        </h2>
+                        </h3>
                         <Separator />
                         <br />
                         <Row>
@@ -304,13 +304,13 @@ const StudentProfile = () => {
                       </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
                         {' '}
-                        <h2
+                        <h3
                           className="bg-primary rounded "
-                          style={{ paddingInline: '10px' }}
+                          style={{ padding: '1%', paddingInline: '3%' }}
                         >
                           {' '}
                           <IntlMessages id="forms.CurrentAddresslabel" />
-                        </h2>
+                        </h3>
                         <Separator />
                         <br />
                         <Row>

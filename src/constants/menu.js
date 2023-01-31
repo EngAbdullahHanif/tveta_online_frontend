@@ -93,6 +93,12 @@ const data = [
         to: `${adminRoot}/students/marks-display-allsubs`,
         newWindow: false,
       },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.attendance',
+        to: `${adminRoot}/students/attendance`,
+        newWindow: false,
+      },
     ],
   },
   // {
@@ -327,6 +333,16 @@ const data = [
         label: 'subject.curriculum',
         to: `${adminRoot}/subjects/curriculum`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'provincail Dashboard',
+        to: `${adminRoot}/subjects/provincial-dash`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'Admin dashboard',
+        to: `${adminRoot}/subjects/admin-dashboard`,
+      },
     ],
   },
   {
@@ -390,7 +406,6 @@ const data = [
     ],
   },
 
-  
   {
     id: 'hr-evaluations',
     icon: 'simple-icon-book-open',

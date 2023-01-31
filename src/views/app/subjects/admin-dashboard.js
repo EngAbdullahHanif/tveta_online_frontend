@@ -420,10 +420,40 @@ const StudentRegistraion = ({ intl }, values) => {
                     Email: '',
                     IdCardPageNo: '',
                     IdCardJoldNo: '',
-                    // gender: [],
-                    tazkiraType: [],
-                    province: [],
-                    C_Province: [],
+                    // gender: [
+                    //   {
+                    //     value: '0',
+                    //     label: (
+                    //       <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                    //     ),
+                    //   },
+                    // ],
+
+                    tazkiraType: [
+                      {
+                        value: '0',
+                        label: (
+                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                        ),
+                      },
+                    ],
+
+                    province: [
+                      {
+                        value: '',
+                        label: (
+                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                        ),
+                      },
+                    ],
+                    C_Province: [
+                      {
+                        value: '',
+                        label: (
+                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                        ),
+                      },
+                    ],
                     C_District: '',
                     district: '',
                     village: '',
@@ -844,14 +874,57 @@ const StudentRegistraion = ({ intl }, values) => {
                 <Formik
                   innerRef={forms[1]}
                   initialValues={{
-                    status: [],
-                    levelOfEducation: [],
-                    stdInteranceType: [],
-                    studentType: [],
+                    status: [
+                      {
+                        value: '',
+                        label: (
+                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                        ),
+                      },
+                    ],
+                    levelOfEducation: [
+                      {
+                        value: '',
+                        label: (
+                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                        ),
+                      },
+                    ],
+                    stdInteranceType: [
+                      {
+                        value: '',
+                        label: (
+                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                        ),
+                      },
+                    ],
+                    studentType: [
+                      {
+                        value: '',
+                        label: (
+                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                        ),
+                      },
+                    ],
                     stdPreSchool: '',
                     stdGraduationYear: '',
-                    stdSchoolProvince: [],
-                    jobLocation: [],
+                    stdSchoolProvince: [
+                      {
+                        value: '',
+                        label: (
+                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                        ),
+                      },
+                    ],
+
+                    jobLocation: [
+                      {
+                        value: '',
+                        label: (
+                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
+                        ),
+                      },
+                    ],
                   }}
                   onSubmit={() => {}}
                   validationSchema={ValidationStepTwo}
@@ -1012,7 +1085,8 @@ const StudentRegistraion = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <Button className="mt-5 bg-primary">
+
+                    <Button className="mt-2">
                       <IntlMessages id="button.back" />
                     </Button>
                   </div>

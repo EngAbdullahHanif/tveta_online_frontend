@@ -48,7 +48,6 @@ const options = [
 
 const FormikCustomWithTopLabels = () => {
 
-  console.log(values, "sdfasd")
   const onSubmit = (values, { setSubmitting }) => {
     const payload = {
       ...values,

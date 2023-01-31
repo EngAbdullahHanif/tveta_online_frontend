@@ -151,6 +151,11 @@ const MarksDisplay = ({ match }) => {
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
 
+  const [classs, setClasss] = useState();
+  const [semester, setSemester] = useState();
+  const [section, setSection] = useState();
+  let secondIndexValue = 0;
+
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
     const updatedData = await response.data.map((item) => ({
@@ -210,14 +215,73 @@ const MarksDisplay = ({ match }) => {
     // setIsNext(event);
     axios
       .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+        `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
       )
+
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
       });
+    console.log(
+      `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
+    );
     console.log('students', students);
+    // split selected class to get semester and section
+    const classArray = selectedClass.label.split(' - ');
+    setClasss(classArray[0]);
+    setSemester(classArray[1]);
+    setSection(classArray[2]);
   };
+
+  const tbodies = students.map((student, index) => {
+    const scores = Object.values(student.subject_id);
+    const studentRows = scores.map((score, i) => {
+      const student_name =
+        i === 0 ? (
+          <td rowSpan={scores.length + 1}>{student.student_name}</td>
+        ) : null;
+      const student_father_name =
+        i === 0 ? (
+          <td rowSpan={scores.length + 1}>{student.student_father_name}</td>
+        ) : null;
+      const student_id =
+        i === 0 ? (
+          <td rowSpan={scores.length + 1}>{student.student_id}</td>
+        ) : null;
+      return (
+        <tr key={i}>
+          <td>{index + 1}</td>
+          {student_name}
+          {student_father_name}
+          {student_id}
+          <td>{score.score}</td>
+          {score.grad && <td>{score.grad}</td>}
+          {score.Gpa && <td>{score.Gpa}</td>}
+          {score.exam_type == 1 && <td>first CHANCE</td>}
+          {score.exam_type == 2 && <td>second CHANCE</td>}
+          {/* {score.exam_type == 2 && (
+            <>
+              {score.exam_type == 1 && <td>first CHANCE</td>}
+              {score.exam_type == 2  && <td>second CHANCE</td>}
+            </>
+          )} */}
+        </tr>
+      );
+    });
+    return (
+      <tbody
+        key={index}
+        className={student.name + ' ' + ' border border '}
+        style={{
+          height: '200px',
+          overflowY: 'scroll',
+          overflowX: 'hidden',
+        }}
+      >
+        {studentRows}
+      </tbody>
+    );
+  });
 
   const onSubmit = (values) => {
     console.log('values', values);
@@ -250,6 +314,7 @@ const MarksDisplay = ({ match }) => {
       // axios.post('http://localhost:8000/api/marks/', data);
     });
   };
+  console.log('selected class', selectedClass);
   return (
     <>
       <Card>

@@ -211,39 +211,70 @@ const MarksRegistration = ({ match }) => {
     const class_id = selectedClass.value;
     const subject_id = selectedSubject.value;
 
-    students.map(async (student, index) => {
-      let exam_id = '';
-      const examData = {
-        educational_year: educational_year,
+    // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
+    // values.score[student.student_id]
+    const newStudents = students.map((student, index) => {
+      return {
         student_id: student.student_id,
+        score: values.score[student.student_id],
+      };
+    });
+
+    let data = [
+      {
+        educational_year: educational_year,
         institute_id: institute_id,
         Department: department_id,
         class_id: class_id,
-        semister: 1,
-        teacher_id: 1,
-        user_id: 1,
-        verification: 1,
-      };
-      const exam = await axios.post(
-        'http://localhost:8000/api/create_marks/',
-        examData
-      );
-      const updatedExam = await exam.data;
-      exam_id = updatedExam;
-
-      console.log('exam_id', exam_id, index);
-
-      const data = {
-        exam_marks_id: exam_id,
         subject_id: subject_id,
-        exam_types: 1,
-        score: values.score[student.student_id],
-        passing_score: 55,
-        user_id: 1,
-      };
-      console.log('data', data, index);
-      axios.post('http://localhost:8000/api/create_marks_details/', data);
-    });
+      },
+      ...newStudents,
+    ];
+
+    console.log('data', data);
+
+    axios
+      .post('http://localhost:8000/api/create_marks/', data)
+      .then((res) => {
+        console.log('res', res);
+      })
+      .then((err) => {
+        console.log('err', err);
+      });
+
+    // students.map(async (student, index) => {
+    //   let exam_id = '';
+    //   const examData = {
+    //     educational_year: educational_year,
+    //     student_id: student.student_id,
+    //     institute_id: institute_id,
+    //     Department: department_id,
+    //     class_id: class_id,
+    //     semister: 1,
+    //     teacher_id: 1,
+    //     user_id: 1,
+    //     verification: 1,
+    //   };
+    //   const exam = await axios.post(
+    //     'http://localhost:8000/api/create_marks/',
+    //     examData
+    //   );
+    //   const updatedExam = await exam.data;
+    //   exam_id = updatedExam;
+
+    //   console.log('exam_id', exam_id, index);
+
+    //   const data = {
+    //     exam_marks_id: exam_id,
+    //     subject_id: subject_id,
+    //     exam_types: 1,
+    //     score: values.score[student.student_id],
+    //     passing_score: 55,
+    //     user_id: 1,
+    //   };
+    //   console.log('data', data, index);
+    //   axios.post('http://localhost:8000/api/create_marks_details/', data);
+    // });
   };
   return (
     <>

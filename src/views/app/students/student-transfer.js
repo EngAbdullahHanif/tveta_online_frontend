@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -18,7 +19,6 @@ import {
   CardTitle,
   Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -28,16 +28,25 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import { useEffect } from 'react';
+const servicePath = 'http://localhost:8000';
+const instituteApiUrl = `${servicePath}/institute/`;
+const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
+const studentTranferApiUrl = `${servicePath}/api/student_transfer/`;
 
 const instituteOptions = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
   { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
 ];
-
 const SignupSchema = Yup.object().shape({});
 
 const StudentsTransfer = (values) => {
+  const [studentId, setStudentId] = useState('');
+  const [student, setStudent] = useState('');
+  const [data, setData] = useState(false);
+  const [message, setMessage] = useState('');
+  const [isNext, setIsNext] = useState(true);
+  const [institutes, setInstitutes] = useState();
+
   const initialValues = {
     institute: {
       value: '',
@@ -45,18 +54,67 @@ const StudentsTransfer = (values) => {
     },
   };
 
-  const [data, setData] = useState(1);
-
-  const [isNext, setIsNext] = useState(true);
   const handleClick = (event) => {
     setIsNext(event);
+    setData(true);
   };
 
-  const [message, setMessage] = useState('');
+  const handleSearch = async () => {
+    //search student in the server
+    const response = await axios.get(
+      `${studentSearchApiUrl}?student_id=${studentId}`
+    );
+    const studentResponse = await response.data;
 
-  console.log(message, 'Message');
+    if (studentResponse) {
+      setStudent(studentResponse);
+      setData(true);
+    } else {
+      setMessage('Student not found');
+    }
+  };
   const handleChange = (event) => {
     setMessage(event.target.value);
+  };
+
+  const fetchInstitutes = async () => {
+    const response = await axios.get(instituteApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      id: item.id,
+      name: item.name,
+    }));
+    setInstitutes(updatedData);
+    console.log('updatedData', updatedData);
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+  }, []);
+  const onSubmit = (values) => {
+    console.log('values.institute.value', values.institute.id);
+    //is_transfer = 1 means transfered
+    data = {
+      student_id: studentId,
+      institute_id: values.institute.id,
+      transfer_date: values.transferDate,
+      educational_year: values.educationalYear,
+      language: values.language,
+      is_transfer: 1,
+    };
+    //transfer student
+    axios
+      .post(`${studentTranferApiUrl}`, {
+        data,
+      })
+      .then((response) => {
+        console.log(response, 'response');
+        if (response.status === 201) {
+          console.log('success');
+        }
+      })
+      .catch((error) => {
+        console.log(error, 'error');
+      });
   };
 
   return (
@@ -68,7 +126,7 @@ const StudentsTransfer = (values) => {
         <CardBody>
           <Formik
             initialValues={initialValues}
-            // onSubmit={onRegister}
+            onSubmit={onSubmit}
             validationSchema={SignupSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
@@ -85,6 +143,7 @@ const StudentsTransfer = (values) => {
                           <button
                             class="btn btn-outline-secondary"
                             type="button"
+                            onClick={handleSearch}
                           >
                             <IntlMessages id="search.studentId" />
                           </button>
@@ -95,11 +154,11 @@ const StudentsTransfer = (values) => {
                           placeholder=""
                           aria-label=""
                           aria-describedby="basic-addon1"
-                          onChange={handleChange}
+                          onChange={(e) => setStudentId(e.target.value)}
                         />
                       </div>
                       <Colxx style={{ paddingInline: '3%' }}>
-                        {data == 1 ? (
+                        {data ? (
                           <div className="border rounded">
                             <Label>
                               <h6 className="mt-5 m-5">
@@ -128,50 +187,52 @@ const StudentsTransfer = (values) => {
                                       <Label>
                                         <IntlMessages id="teacher.NameLabel" />
                                       </Label>
-                                      <h3>احمد شبیر</h3>
+                                      <h3>{student.student_name}</h3>
                                       <Label>
                                         <IntlMessages id="teacher.FatherNameLabel" />
                                       </Label>
-                                      <h3>عبدالرحیم</h3>
+                                      <h3>{student.father_name}</h3>
                                       <Label>
                                         <IntlMessages id="teacher.PhoneNoLabel" />
                                       </Label>
-                                      <h3>077000000000</h3>
+                                      <h3>{student.phone_number}</h3>
                                       <Label>
                                         <IntlMessages id="teacher.EmailLabel" />
                                       </Label>
-                                      <h3>ahamd12@gmail.com</h3>
+                                      <h3>{student.email}</h3>
 
                                       <Label>
                                         <IntlMessages id="forms.InstituteLabel" />
                                       </Label>
-                                      <h3>نیما</h3>
+                                      <h3>{student.institute_name}</h3>
+
                                       <Label>
                                         <IntlMessages id="marks.ClassLabel" />
                                       </Label>
                                       <h3>دیارلسم/ سیزدهم</h3>
+                                      <h3>{student.class_name}</h3>
                                     </Colxx>
                                     <Colxx className="p-5 border rounded">
                                       <Label>
                                         <IntlMessages id="field.SemesterLabel" />
                                       </Label>
-                                      <h3>دوهم</h3>
+                                      <h3>{student.semester}</h3>
                                       <Label>
                                         <IntlMessages id="forms.FieldLabel" />
                                       </Label>
-                                      <h3>برق</h3>
+                                      <h3>{student.department_name}</h3>
                                       <Label>
                                         <IntlMessages id="forms.ProvinceLabel" />
                                       </Label>
-                                      <h3>کابل</h3>
+                                      <h3>{student.current_province}</h3>
                                       <Label>
                                         <IntlMessages id="forms.DistrictLabel" />
                                       </Label>
-                                      <h3>اوومه ناحیه / ناحیه هفتم</h3>
+                                      <h3>{student.current_district}</h3>
                                       <Label>
                                         <IntlMessages id="forms.VillageLabel" />
                                       </Label>
-                                      <h3>تخنیکم</h3>
+                                      <h3>{student.current_village}</h3>
                                     </Colxx>
                                   </Row>
                                   <Row>
@@ -231,13 +292,14 @@ const StudentsTransfer = (values) => {
                               <IntlMessages id="forms.InstituteLabel" />
                             </Label>
                             <FormikReactSelect
-                              name="ّinstitute"
-                              id="ّinstitute"
+                              name="institute"
+                              id="institute"
                               value={values.institute}
-                              options={instituteOptions}
+                              options={institutes}
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
                             />
+
                             {errors.institute && touched.institute ? (
                               <div className="invalid-feedback d-block">
                                 {errors.institute}
@@ -252,13 +314,49 @@ const StudentsTransfer = (values) => {
                             </Label>
                             <Field
                               className="form-control"
-                              name="StdInteranceDate"
+                              name="transferDate"
                               type="date"
                             />
-                            {errors.StdInteranceDate &&
-                            touched.StdInteranceDate ? (
+                            {errors.transferDate && touched.transferDate ? (
                               <div className="invalid-feedback d-block">
-                                {errors.StdInteranceDate}
+                                {errors.transferDate}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+
+                          {/* educationalYear */}
+                          <FormGroup className="form-group has-float-label">
+                            <Label>
+                              {/* <IntlMessages id="student.transferDateLabel" /> */}
+                              سال تحصیلی
+                            </Label>
+                            <Field
+                              className="form-control"
+                              name="educationalYear"
+                              type="number"
+                            />
+                            {errors.educationalYear &&
+                            touched.educationalYear ? (
+                              <div className="invalid-feedback d-block">
+                                {errors.educationalYear}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+
+                          {/* date */}
+                          <FormGroup className="form-group has-float-label">
+                            <Label>
+                              {/* <IntlMessages id="student.transferDateLabel" /> */}
+                              زبان تدریسی
+                            </Label>
+                            <Field
+                              className="form-control"
+                              name="language"
+                              type="text"
+                            />
+                            {errors.language && touched.language ? (
+                              <div className="invalid-feedback d-block">
+                                {errors.language}
                               </div>
                             ) : null}
                           </FormGroup>

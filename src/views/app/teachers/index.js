@@ -34,6 +34,10 @@ const TeacherTransfer = React.lazy(() =>
   import(/* webpackChunkName: "teacher-transfer" */ './bio/teacher-transfer')
 );
 
+const Test = React.lazy(() =>
+  import(/* webpackChunkName: "teacher-transfer" */ './test')
+);
+
 const Teachers = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -68,6 +72,10 @@ const Teachers = ({ match }) => (
       <Route
         path={`${match.url}/teacher-transfer`}
         render={(props) => <TeacherTransfer {...props} />}
+      />
+      <Route
+        path={`${match.url}/test`}
+        render={(props) => <Test {...props} />}
       />
 
       <Redirect to="/error" />

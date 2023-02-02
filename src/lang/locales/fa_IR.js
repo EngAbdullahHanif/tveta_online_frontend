@@ -193,7 +193,7 @@ module.exports = {
   'dashboards.product-categories': 'دسته بندی محصولات',
   'dashboards.cakes': 'کیک ها',
   'dashboards.tickets': 'تیکت ها',
-  'dashboards.calendar': 'تقویم',
+  'dashboards.calendar': 'جنتری',
   'dashboards.best-sellers': 'برترین فروشندگان',
   'dashboards.website-visits': 'بازدید سایت',
   'dashboards.unique-visitors': 'برترین بازدیدکنندگان',
@@ -899,7 +899,8 @@ module.exports = {
   'teacher.promotion.description': 'توضیحات',
   // 'teacher.suggestionErr': 'نظریات',
   'evaluation.evaluationDetails': 'د ارزیابۍ نور جزیات/ جزیات دیگر',
-
+  'teacher.EvaluatedMale': 'ارزیابی شوي نارینه/ ارزیابی شده ذکور',
+  'teacher.EvaluatedFemale': 'ارزیابي شوي ښځینه/ ارزیابی شده اناث',
   // Hr Evaluation
   'teacher.EvalautionHrTitle':
     'د استاد ارزونه د بشری منابع لخوا/ ارزیابی استاد توسط منابع بشری',
@@ -922,6 +923,7 @@ module.exports = {
   'button.Teacher-transfer': 'تبدیل',
   'teacher.TransferNewInfoTittle': 'نوی انستیتوت/ انستیتوت جدید',
   'teacher.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
+  'teacher.transferDateErr': 'د تبدیلي نیټه اړینه ده/ تاریخ تبدیلی ضروری است',
   'teacher.fileUploadBttn': 'آپلود',
   'teacher.transferDocuments': 'د تبدیلی اسناد/ اسناد تبدیلي',
 
@@ -983,6 +985,17 @@ module.exports = {
   'dash.totalNumberOfSchool': 'مکتبونه/مکاتب',
   'dash.totalNumberOfDorms': 'لیلیې/ لیلیه ها',
   'dash.totalNumberOfTeachers': 'استادان',
+  'dash.14YearsGreduatedMale': 'څورلسم پاس نارینه/ چهارده پاس ذکور',
+  'dash.14YearsGreduatedFemale': 'څورلسم پاس ښځینه/ چهارده پاس اناث',
+  'dash.bachelorMale': 'لسانس نارینه/ لسانس ذکور',
+  'dash.bachelorFemale': 'لسانس ښځینه/ لسانس اناث',
+  'dash.phdMale': 'ډاکتر نارینه/ داکتر ذکور',
+  'dash.phdFemale': 'ډاکتر ښځینه/ داکتر اناث',
+  'dash.instituteList': 'انستیتونه/ انستیتوها',
+  'dash.schoolsList': 'لیسې/ لیسه ها',
+  'dash.dormsList': 'لیلې/ لیلیه ها',
+  'dash.fieldsList': 'رشتې/ رشته ها',
+  'dash.notifcation': 'اطلاعیی/ اطلاعیه ها',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
@@ -1147,10 +1160,13 @@ module.exports = {
   'wizard.async': 'Async save for 3 seconds!',
 
   'inst.name': 'انستیتوت نوم / نام انستیتوت',
+  'inst.nameErr': 'د انستیتوت نوم اړین دی/ نام انستیتوت ضروری است',
   institute: 'انستیتوت',
   // 'institute.instituteLabel': 'انستیتوت',
   'inst.register.title': 'د انستیتوت ثبت کول / ثبت انستیتوت',
   'inst.type': 'د انستیتوت ډول / نوعیت انستیتوت',
+  'inst.typeErr': 'د انستیتوت ډول اړین دی/ نوع انستیتوت ضروری است',
+  'institute.gender': 'جندر اړین دی/ جنسیت ضروری است',
   'search.institute.name': 'د انستیتوت نوم ',
 
   'subject.name': 'د مضمون نوم / نام مضمون',

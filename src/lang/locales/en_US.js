@@ -709,7 +709,7 @@ module.exports = {
 
   'teacher.LevelOfEducationLabel': 'Education Level',
   'teacher.LevelOfEducationErr': 'Education Level Required!',
-  'teacher.EducationLevelOption_1': '14 years degree',
+  'teacher.EducationLevelOption_1': '14 Years Degree',
   'teacher.EducationLevelOption_2': 'Bachelor',
   'teacher.EducationLevelOption_3': 'Master',
   'teacher.EducationLevelOption_4': 'PHD',
@@ -768,12 +768,15 @@ module.exports = {
 
   // Institute
   'inst.register.title': 'Institute/School Registration',
-  'inst.name': 'Name',
-  'inst.type': 'Type',
+  'inst.name': 'Institute Name',
+  'inst.nameErr': 'Institute Name Required!',
+  'inst.type': 'Institute Type',
+  'inst.typeErr': 'Institute Type Required!',
   // Gender
   'institute.studentgenderOption_1': 'Male',
   'institute.studentgenderOption_2': 'Female',
   'institute.studentgenderOption_3': 'Both',
+  'institute.gender': 'Institute Gender Required!',
   // Type
   'institute.instTypeOptions_1': 'Public',
   'institute.instTypeOptions_2': 'Private',
@@ -880,6 +883,8 @@ module.exports = {
   'teacher.suggestionLabel': 'Suggestions',
   // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
   'evaluation.evaluationDetails': 'Details',
+  'teacher.EvaluatedMale': 'Evaluated Male',
+  'teacher.EvaluatedFemale': 'Evaluated Female',
 
   // HR Evaluation
   'teacher.EvalautionHrTitle': 'Teacher Hr Evaluation',
@@ -901,6 +906,7 @@ module.exports = {
   'button.Teacher-transfer': 'Transfer',
   'teacher.TransferNewInfoTittle': 'New Institute',
   'teacher.transferDateLabel': 'Transfer Date',
+  'teacher.transferDateErr': 'Transfer Date Required!',
   'teacher.fileUploadBttn': 'Upload',
   'teacher.transferDocuments': 'Transfer Documents',
 
@@ -952,6 +958,17 @@ module.exports = {
   'dash.totalNumberOfSchool': 'Total Schools',
   'dash.totalNumberOfDorms': 'Total Dorms',
   'dash.totalNumberOfTeachers': 'Totol Teachers',
+  'dash.14YearsGreduatedMale': '14 Years Degree Male',
+  'dash.14YearsGreduatedFemale': '14 Years Degree Female',
+  'dash.bachelorMale': 'Bachelor Male',
+  'dash.bachelorFemale': 'Bachelor Female',
+  'dash.phdMale': 'PHD Male',
+  'dash.phdFemale': 'PHD Female',
+  'dash.instituteList': 'Institutes',
+  'dash.schoolsList': 'Schools',
+  'dash.dormsList': 'Dorms',
+  'dash.fieldsList': 'Fields',
+  'dash.notifcation': 'Notifications',
 
   // Dorm details page
   // Subject

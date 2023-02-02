@@ -153,48 +153,49 @@ const genderOptions = [
   { value: '3', label: <IntlMessages id="institute.studentgenderOption_3" /> },
 ];
 
-const InstituteRegistgerSchema = Yup.object().shape({
-  instName: Yup.string().required('name is required'),
-  // password: Yup.string().required('کلمه عبور اجباریه!'),
-  // tags: Yup.array()
-  //   .min(3, 'حداقل 3 تا تگ انتخاب کنید')
-  //   .required('حداقل یک تگ اجباریه'),
-  // date: Yup.date().nullable().required('تاریخ اجباریه!'),
+const ValidationSchema = Yup.object().shape({
+  institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
+
   province: Yup.object()
     .shape({
-      label: Yup.string().required(),
       value: Yup.string().required(),
     })
     .nullable()
-    .required('استان اجباریه!'),
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+
+  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+
+  instType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="inst.typeErr" />),
+
+  gender: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="institute.gender" />),
 });
+
+const initialValues = {
+  institute: '',
+  province: [],
+  district: '',
+  village: '',
+  instType: [],
+  gender: [],
+};
 
 const InstituteRegister = () => {
   const [province, setProvince] = useState({});
   const [instType, setInstType] = useState({});
   const [gender, setGender] = useState({});
   const [] = useState('وتاکئ / انتخاب کنید');
-
-  const initialValues = {
-    province: [
-      {
-        value: '',
-        label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-      },
-    ],
-    instType: [
-      {
-        value: '',
-        label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-      },
-    ],
-    gender: [
-      {
-        value: '',
-        label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-      },
-    ],
-  };
 
   const onRegister = (values) => {
     // if (!values.province || values.province.value === '0') {
@@ -206,10 +207,10 @@ const InstituteRegister = () => {
 
     // insert the data to the API with Axios here and redirect to the current page
     const data = {
-      name: values.instName,
+      name: values.institute,
       province: values.province.value,
       district: values.district,
-      village: values.vilage,
+      village: values.village,
       type: values.instType.value,
       // gender: values.gender[0],
     };
@@ -246,32 +247,28 @@ const InstituteRegister = () => {
           <Formik
             validateOnMount
             initialValues={initialValues}
-            validationSchema={InstituteRegistgerSchema}
+            validationSchema={ValidationSchema}
             onSubmit={onRegister}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
-              <Form className="av-tooltip tooltip-label-bottom">
+              <Form className="av-tooltip tooltip-label-right  error-l-200">
                 <Row className="justify-content-center">
                   <Colxx xxs="10">
                     <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="inst.name" />
                       </Label>
-                      <Field
-                        className="form-control"
-                        name="instName"
-                        // validate={validateInstName}
-                      />
-                      {errors.instName && touched.instName && (
-                        <div className="invalid-feedback d-block">
-                          {errors.instName}
+                      <Field className="form-control" name="institute" />
+                      {errors.institute && touched.institute && (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.institute}
                         </div>
                       )}
                     </FormGroup>
 
                     <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="province" />
+                        <IntlMessages id="forms.ProvinceLabel" />
                       </Label>
                       <FormikReactSelect
                         name="province"
@@ -282,36 +279,36 @@ const InstituteRegister = () => {
                         onBlur={setFieldTouched}
                       />
                       {errors.province && touched.province ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.province}
                         </div>
                       ) : null}
                     </FormGroup>
 
-                    <FormGroup className="form-group has-float-label">
+                    <FormGroup className="form-group has-float-label error-l-175">
                       <Label>
-                        <IntlMessages id="district" />
+                        <IntlMessages id="forms.DistrictLabel" />
                       </Label>
                       <Field className="form-control" name="district" />
-                      {errors.district && touched.district && (
-                        <div className="invalid-feedback d-block">
+                      {errors.district && touched.district ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.district}
                         </div>
-                      )}
+                      ) : null}
                     </FormGroup>
 
-                    <FormGroup className="form-group has-float-label">
+                    {/* village permanent */}
+                    <FormGroup className="form-group has-float-label ">
                       <Label>
-                        <IntlMessages id="vilage" />
+                        <IntlMessages id="forms.VillageLabel" />
                       </Label>
-                      <Field className="form-control" name="vilage" />
-                      {errors.vilage && touched.vilage && (
-                        <div className="invalid-feedback d-block">
-                          {errors.vilage}
+                      <Field className="form-control" name="village" />
+                      {errors.village && touched.village ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.village}
                         </div>
-                      )}
+                      ) : null}
                     </FormGroup>
-
                     <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="inst.type" />
@@ -325,7 +322,7 @@ const InstituteRegister = () => {
                         onBlur={setFieldTouched}
                       />
                       {errors.instType && touched.instType ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.instType}
                         </div>
                       ) : null}
@@ -344,14 +341,19 @@ const InstituteRegister = () => {
                         onBlur={setFieldTouched}
                       />
                       {errors.gender && touched.gender ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.gender}
                         </div>
                       ) : null}
                     </FormGroup>
 
                     <div className="d-flex justify-content-between align-items-center float-right">
-                      <Button className="m-4" size="lg" type="submit">
+                      <Button
+                        className="m-4"
+                        size="lg"
+                        type="submit"
+                        color="primary"
+                      >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
                           <span className="bounce2" />

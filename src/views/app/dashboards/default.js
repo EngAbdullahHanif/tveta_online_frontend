@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
+import CustomSelectInput from 'components/common/CustomSelectInput';
+import './../dorms/dorm-register.css';
+import './provincail-dashboard.css';
+import Calendar from 'containers/dashboards/Calendar';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { NavLink } from 'react-router-dom';
+import { adminRoot } from 'constants/defaultValues';
 
 import * as Yup from 'yup';
 import {
@@ -11,386 +17,539 @@ import {
   Label,
   Button,
   CardTitle,
+  Input,
 } from 'reactstrap';
+import Select from 'react-select';
+
 import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
-import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import { comments } from 'data/comments';
+import Rating from 'components/common/Rating';
 
-const ValidationSchema = Yup.object().shape({
-  stdName: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="forms.StdKankorNameErr" />),
+import {
+  FormikReactSelect,
+  FormikTagsInput,
+  FormikDatePicker,
+} from 'containers/form-validations/FormikFields';
+import { useEffect } from 'react';
 
-  stdFatherName: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="teacher.FatherNameErr" />),
-
-  department: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.departmentIdErr" />),
-
-  institute: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.InstituteErr" />),
-
-  field: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.FieldErr" />),
-
-  stdKankorId: Yup.string().required(
-    <IntlMessages id="forms.StdKankorIdErr" />
-  ),
-
-  kankorMarks: Yup.string().required(
-    <IntlMessages id="forms.KankorMarksErr" />
-  ),
-  stdInteranceDate: Yup.date().required(
-    <IntlMessages id="forms.KankorMarksErr" />
-  ),
-
-  studyTime: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StudyTimeErr" />),
-});
-
-const studyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
-
-const InstituteOptions = [
-  { value: '1', label: 'Option1' },
-  { value: '2', label: 'Option2' },
-  { value: '3', label: 'Option3' },
-];
-
-const FieldOptions = [
-  { value: '1', label: 'Option1' },
-  { value: '2', label: 'Option2' },
-  { value: '3', label: 'Option3' },
-];
-
-const StudentRegistraion = () => {
-  const initialValues = {
-    stdName: '',
-    stdKankorId: '',
-    kankorMarks: '',
-    stdFatherName: '',
-    stdInteranceDate: '',
-    studyTime: [],
-    department: [],
-    field: [],
-    institute: [],
-  };
-  const [fields, setFields] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
-  const [departments, setDepartments] = useState([]);
+const ProvincailDashboard = (
+  values,
+  { className = '', displayRate = false }
+) => {
   const [isNext, setIsNext] = useState(true);
-  const [StudyTime, setStudyTIme] = useState('0');
-
-  const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
-  };
-  const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setFields(updatedData);
-  };
-  const fetchDepartments = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/department/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDepartments(updatedData);
-  };
-
   const handleClick = (event) => {
-    // setIsNext(event);
-  };
-  const onRegister = (values) => {
-    console.log('values', values);
-    // console.log('institue', values.Department.value);
-    const data = {
-      // name: values.stdName,
-      // father_name: values.stdFatherName,
-      // Institute: values.Institute.value,
-      // field_id: values.Field.value,
-      // Dept_id: values.Department.value,
-      // score: values.KankorMarks,
-      // date: values.StdInteranceDate,
-      // uncomment this line to send data to the server
-      // kankor_id: values.StdKankorId,
-      // study_time: values.studyTime.value,
-    };
-    console.log('data', data);
-    axios
-      .post('http://localhost:8000/api/Create_kankorResults/', data)
-      .then((response) => {})
-      .catch((error) => {
-        console.log(error);
-      });
+    setIsNext(event);
   };
 
-  useEffect(() => {
-    fetchInstitutes();
-    fetchFields();
-    fetchDepartments();
-  }, []);
-
-  // console.log('fields', fields);
-  // console.log('institutes', institutes);
-
+ 
   return (
     <>
-      <Card>
-        <h3 className="mt-5 m-5">
-          {<IntlMessages id="forms.Kankorformstitle" />}
-        </h3>
-        <CardBody>
-          {isNext == true ? (
-            <Formik
-              initialValues={initialValues}
-              onSubmit={onRegister}
-              validationSchema={ValidationSchema}
-            >
-              {({
-                errors,
-                touched,
-                values,
-                setFieldTouched,
-                setFieldValue,
-              }) => (
-                <Form className="av-tooltip tooltip-label-right">
-                  <Row>
-                    <Colxx xxs="6">
-                      {/* Name */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.StdName" />
-                        </Label>
-                        <Field className="form-control" name="stdName" />
-                        {errors.stdName && touched.stdName ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.stdName}
-                          </div>
-                        ) : null}
-                      </FormGroup>
+      <h1 className="mt-5 m-1">{<IntlMessages id="dashboard.provincail" />}</h1>
+      <Separator className="mb-5" />
 
-                      {/*Father Name  */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.StdFatherName" />
-                        </Label>
-                        <Field className="form-control" name="stdFatherName" />
-                        {errors.stdFatherName && touched.stdFatherName ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.stdFatherName}
-                          </div>
-                        ) : null}
-                      </FormGroup>
+      {/* First Three columns */}
+      <Row>
+        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalNumberOfTeachers" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Colxx>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>90</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>500</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.14YearsGreduatedMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.14YearsGreduatedFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.bachelorMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.bachelorFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.phdMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.phdFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="teacher.EvaluatedMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="teacher.EvaluatedFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
+        </Colxx>
 
-                      {/* Institutes */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.InstituteLabel" />
-                        </Label>
-                        <FormikReactSelect
-                          name="institute"
-                          id="institute"
-                          value={values.institute}
-                          options={institutes}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                        />
-                        {errors.institute && touched.institute ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.institute}
-                          </div>
-                        ) : null}
-                      </FormGroup>
+        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStatistics" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Colxx>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfInstitute" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>5000</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfSchool" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>500</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfDorms" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfTeachers" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>90</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
+          <Card style={{ minHeight: '180px' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsInst" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Row className="m-2 ">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
 
-                      {/* Study Time */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.StudyTimeLabel" />
-                        </Label>
-                        <FormikReactSelect
-                          name="studyTime"
-                          id="studyTime"
-                          value={values.studyTime}
-                          placeholder="Select option"
-                          options={studyTimeOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                        />
-                        {errors.studyTime && touched.studyTime ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.studyTime}
-                            {console.log(errors.studyTime, 'Kankor Marks')}
-                          </div>
-                        ) : null}
-                      </FormGroup>
+        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsDorm" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Colxx style={{ marginRight: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>5000</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>500</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.DormStudentType_1" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>3200</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.DormStudentType_2" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>1800</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
+          <Card style={{ minHeight: '180px' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsScool" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <b>
+                <p
+                  className="bg-primary rounded"
+                  style={{ paddingInline: '10px' }}
+                ></p>
+              </b>
+              <Row className="m-2 ">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
 
-                      {/* Department */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.studyDepartment" />
-                        </Label>
-                        <FormikReactSelect
-                          name="department"
-                          id="department"
-                          value={values.department}
-                          options={departments}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                        />
-                        {errors.department && touched.department ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.department}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-                    </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+      </Row>
 
-                    <Colxx xxs="6">
-                      {/* Exam Id */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.StdKankorIdLabel" />
-                        </Label>
-                        <Field className="form-control" name="stdKankorId" />
-                        {errors.stdKankorId && touched.stdKankorId ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.stdKankorId}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
-                      {/* Kankor Marks */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.KankorMarksLabel" />
-                        </Label>
-                        <Field
-                          className="form-control"
-                          name="kankorMarks"
-                          type="number"
-                        />
-                        {errors.kankorMarks && touched.kankorMarks ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.kankorMarks}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
-                      {/* Field */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.FieldLabel" />
-                        </Label>
-                        <FormikReactSelect
-                          name="field"
-                          id="field"
-                          value={values.field}
-                          options={fields}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                        />
-                        {errors.field && touched.field ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.field}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
-                      {/* date */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.RegistrationDateLabel" />
-                        </Label>
-                        <Field
-                          className="form-control"
-                          name="stdInteranceDate"
-                          type="date"
-                        />
-                        {errors.stdInteranceDate && touched.stdInteranceDate ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.stdInteranceDate}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-                    </Colxx>
-                  </Row>
-                  <Row>
-                    <Colxx>
-                      <Button
-                        color="primary"
-                        className="float-right m-5"
-                        size="lg"
-                        type="submit"
-                        onClick={() => {
-                          onRegister;
-                          handleClick(false);
-                        }}
-                      >
-                        <span className="spinner d-inline-block">
-                          <span className="bounce1" />
-                          <span className="bounce2" />
-                          <span className="bounce3" />
-                        </span>
-                        <span className="label">
-                          <IntlMessages id="forms.SubimssionButton" />
-                        </span>
-                      </Button>
-                    </Colxx>
-                  </Row>
-                </Form>
-              )}
-            </Formik>
-          ) : (
-            <div className="wizard-basic-step text-center pt-3">
-              <div>
-                <h1 className="mb-2">
-                  <IntlMessages id="wizard.content-thanks" />
-                </h1>
-                <h3>
-                  <IntlMessages id="wizard.registered" />
-                </h3>
-                <Button className="m-5 bg-primary">
-                  <IntlMessages id="button.back" />
-                </Button>
+      <Row>
+        {/* Institute List */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.instituteList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
               </div>
-            </div>
-          )}
-        </CardBody>
-      </Card>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Schools list */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.schoolsList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Dorms list */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.dormsList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Fields List */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.fieldsList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Notification */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.notifcation" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  {comments.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="d-flex flex-row mb-3 pb-3 border-bottom"
+                      >
+                        <NavLink to={`${adminRoot}/pages/product/details`}>
+                          <img
+                            src={item.thumb}
+                            alt={item.title}
+                            className="img-thumbnail border-0 rounded-circle list-thumbnail align-self-center xsmall"
+                          />
+                        </NavLink>
+
+                        <div className="pl-3 pr-2">
+                          <NavLink to={`${adminRoot}/pages/product/details`}>
+                            <p className="font-weight-medium mb-0">
+                              {item.title}
+                            </p>
+                            <p className="text-muted mb-0 text-small">
+                              {item.detail}
+                            </p>
+                            {displayRate && (
+                              <div className="form-group mb-1 mt-2">
+                                <Rating
+                                  total={5}
+                                  rating={5}
+                                  interactive={false}
+                                />
+                              </div>
+                            )}
+                          </NavLink>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Calendar />
+        </Colxx>
+      </Row>
     </>
   );
 };
 
-export default StudentRegistraion;
+export default ProvincailDashboard;

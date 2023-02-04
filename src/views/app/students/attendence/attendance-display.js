@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
 // Year  and SHift
+
 import * as Yup from 'yup';
 import {
   Row,
@@ -129,7 +130,7 @@ const initialValues = {
   department: [],
   subject: [],
 };
-const MarksRegistration = ({ match }) => {
+const StudentAttendance = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [inNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -147,7 +148,6 @@ const MarksRegistration = ({ match }) => {
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
-  const [examId, setExamId] = useState();
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
@@ -158,7 +158,7 @@ const MarksRegistration = ({ match }) => {
     setInstitutes(updatedData);
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/field/');
+    const response = await axios.get('http://localhost:8000/institute/filed/');
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name,
@@ -214,9 +214,6 @@ const MarksRegistration = ({ match }) => {
         console.log('response.data', response.data);
         setStudents(response.data);
       });
-    console.log(
-      `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-    );
     console.log('students', students);
   };
 
@@ -224,79 +221,37 @@ const MarksRegistration = ({ match }) => {
     console.log('values', values);
     const educational_year = selectedEducationalYear;
     const institute_id = selectedInstitute.value;
-    const department_id = selectedDepartment.value;
+    const department = selectedDepartment.value;
     const class_id = selectedClass.value;
     const subject_id = selectedSubject.value;
-
-    // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
-    // values.score[student.student_id]
-    const newStudents = students.map((student, index) => {
-      return {
-        student_id: student.student_id,
-        score: values.score[student.student_id],
-      };
-    });
-
-    let data = [
-      {
+    students.map((student) => {
+      const examData = {
         educational_year: educational_year,
+        student_id: student.student_id,
         institute_id: institute_id,
-        Department: department_id,
+        Department: department,
         class_id: class_id,
-        subject_id: subject_id,
-      },
-      ...newStudents,
-    ];
-
-    console.log('data', data);
-
-    axios
-      .post('http://localhost:8000/api/create_marks/', data)
-      .then((res) => {
-        console.log('res', res);
-      })
-      .then((err) => {
-        console.log('err', err);
-      });
-
-    // students.map(async (student, index) => {
-    //   let exam_id = '';
-    //   const examData = {
-    //     educational_year: educational_year,
-    //     student_id: student.student_id,
-    //     institute_id: institute_id,
-    //     Department: department_id,
-    //     class_id: class_id,
-    //     semister: 1,
-    //     teacher_id: 1,
-    //     user_id: 1,
-    //     verification: 1,
-    //   };
-    //   const exam = await axios.post(
-    //     'http://localhost:8000/api/create_marks/',
-    //     examData
-    //   );
-    //   const updatedExam = await exam.data;
-    //   exam_id = updatedExam;
-
-    //   console.log('exam_id', exam_id, index);
-
-    //   const data = {
-    //     exam_marks_id: exam_id,
-    //     subject_id: subject_id,
-    //     exam_types: 1,
-    //     score: values.score[student.student_id],
-    //     passing_score: 55,
-    //     user_id: 1,
-    //   };
-    //   console.log('data', data, index);
-    //   axios.post('http://localhost:8000/api/create_marks_details/', data);
-    // });
+      };
+      //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
+      //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
+      console.log('exam', examData);
+      const data = {
+        subject: subject_id,
+        exam_types: 1,
+        passing_score: passingScore,
+        grad: subjectGrad,
+        Gpa: subjectGPA,
+        user_id: 1,
+        mark: values.score[student.student_id],
+      };
+      console.log('data', data);
+      // axios.post('http://localhost:8000/api/marks/', data);
+    });
   };
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">{<IntlMessages id="marks.title" />}</h3>
+        <h3 className=" m-5 p-5">{<IntlMessages id="menu.attendance" />}</h3>
         <CardBody>
           {inNext ? (
             <Formik
@@ -472,7 +427,7 @@ const MarksRegistration = ({ match }) => {
             <>
               <Row
                 className="border border bg-primary me-5 p-1 "
-                style={{ marginInline: '16%' }}
+                style={{ marginInline: '10%' }}
               >
                 <Colxx xxs="2">
                   <Label>
@@ -509,36 +464,53 @@ const MarksRegistration = ({ match }) => {
                   </Label>
                   <h6>{selectedClass.label}</h6>
                 </Colxx>
-
-                <Colxx xxs="2">
-                  <Label>
-                    <IntlMessages id="marks.SubjectLabel" />
-                  </Label>
-                  <h6>{selectedSubject.label}</h6>
-                </Colxx>
               </Row>
 
               <Row
                 className="justify-content-center  border border"
-                style={{ marginInline: '16%' }}
+                style={{ marginInline: '10%' }}
               >
                 <table className="table">
+                  <thead className="thead-dark ">
+                    <tr>
+                      <th colspan="4" className="border text-center">
+                        <IntlMessages id="marks.studentChar" />
+                      </th>
+                      <th colspan="4" className="border text-center">
+                        <IntlMessages id="marks.marksDisplayTitle" />
+                      </th>
+                    </tr>
+                  </thead>
                   <thead className="thead-dark">
                     <tr>
-                      <th scope="col">
+                      <th
+                        scope="col"
+                        className="border text-center "
+                        style={{ maxWidth: '20px ', minWidth: '50px' }}
+                      >
                         <IntlMessages id="marks.No" />
                       </th>
-                      <th scope="col">
+                      <th scope="col" className="border text-center">
                         <IntlMessages id="marks.FullName" />
                       </th>
-                      <th scope="col">
+                      <th scope="col" className="border text-center">
                         <IntlMessages id="marks.FatherName" />
                       </th>
-                      <th scope="col">
+                      <th scope="col" className="border text-center">
                         <IntlMessages id="marks.ID" />
                       </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.Marks" />
+
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="forms.StdPresentLabel" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="forms.StdAbsentLabel" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="forms.StdSicknessLabel" />
                       </th>
                     </tr>
                   </thead>
@@ -548,7 +520,7 @@ const MarksRegistration = ({ match }) => {
               <Row
                 className="justify-content-center  border border"
                 style={{
-                  marginInline: '16%',
+                  marginInline: '10%',
                   height: '30rem',
                   overflowY: 'scroll',
                   overflowX: 'hidden',
@@ -569,22 +541,10 @@ const MarksRegistration = ({ match }) => {
                         <td>{student.name}</td>
                         <td>{student.father_name}</td>
                         <td>{student.student_id}</td>
-
-                        {/* Marks Entry */}
-                        <div class="form-group mx-sm-3 mb-2">
-                          <FormGroup className="form-group">
-                            <Field
-                              type="number"
-                              className="form-control"
-                              name={`score[${student.student_id}]`}
-                            />
-                            {errors.score && touched.score ? (
-                              <div className="invalid-feedback d-block">
-                                {errors.score}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                        </div>
+                        <td>Present</td>
+                        <td>Absent</td>
+                        <td>NecessaryWork</td>
+                        <td>IllNess</td>
                       </tr>
                     ))}
                   </tbody>
@@ -593,7 +553,7 @@ const MarksRegistration = ({ match }) => {
               <Row
                 className="justify-content-center  border border"
                 style={{
-                  marginInline: '16%',
+                  marginInline: '10%',
                 }}
               >
                 <table class="table ">
@@ -607,20 +567,34 @@ const MarksRegistration = ({ match }) => {
                   </tbody>
                   <tfoot className="thead-dark">
                     <tr>
-                      <th scope="col">
+                      <th
+                        scope="col"
+                        className="border text-center "
+                        style={{ maxWidth: '20px ', minWidth: '50px' }}
+                      >
                         <IntlMessages id="marks.No" />
                       </th>
-                      <th scope="col">
+                      <th scope="col" className="border text-center">
                         <IntlMessages id="marks.FullName" />
                       </th>
-                      <th scope="col">
+                      <th scope="col" className="border text-center">
                         <IntlMessages id="marks.FatherName" />
                       </th>
-                      <th scope="col">
+                      <th scope="col" className="border text-center">
                         <IntlMessages id="marks.ID" />
                       </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.Marks" />
+
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="forms.StdPresentLabel" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="forms.StdAbsentLabel" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="forms.StdSicknessLabel" />
                       </th>
                     </tr>
                   </tfoot>
@@ -628,26 +602,9 @@ const MarksRegistration = ({ match }) => {
               </Row>
               <Row className=" justify-content-center">
                 <Colxx xxs="9" className="m-5">
-                  <Button className=" m-4 " onClick={() => handleClick(true)}>
+                  <Button className=" m-4" onClick={() => handleClick(true)}>
                     <IntlMessages id="button.Back" />
                   </Button>
-
-                  <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                    <Button
-                      className={`btn-shadow btn-multiple-state `}
-                      size="lg"
-                      type="submit"
-                    >
-                      <span className="spinner d-inline-block">
-                        <span className="bounce1" />
-                        <span className="bounce2" />
-                        <span className="bounce3" />
-                      </span>
-                      <span className="label">
-                        <IntlMessages id="button.SubmitButton" />
-                      </span>
-                    </Button>
-                  </div>
                 </Colxx>
               </Row>
             </>
@@ -658,4 +615,4 @@ const MarksRegistration = ({ match }) => {
   );
 };
 
-export default MarksRegistration;
+export default StudentAttendance;

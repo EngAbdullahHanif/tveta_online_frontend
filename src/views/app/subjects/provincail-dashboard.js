@@ -42,7 +42,10 @@ const ProvincailDashboard = (
     setIsNext(event);
   };
 
- 
+  const onRegister = (values) => {
+    console.log(' The Values', values);
+  };
+
   return (
     <>
       <h1 className="mt-5 m-1">{<IntlMessages id="dashboard.provincail" />}</h1>
@@ -488,6 +491,7 @@ const ProvincailDashboard = (
             </CardBody>
           </Card>
         </Colxx>
+  
 
         {/* Notification */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4">

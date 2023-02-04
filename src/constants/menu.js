@@ -359,10 +359,16 @@ const data = [
         label: 'menu.field-register',
         to: `${adminRoot}/fields/register`,
       },
+      // {
+      //   icon: 'simple-icon-logout',
+      //   label: 'class.fields',
+      //   to: `${adminRoot}/fields/fields`,
+      // },
       {
         icon: 'simple-icon-logout',
-        label: 'class.fields',
-        to: `${adminRoot}/fields/fields`,
+        // label: 'class.fields',
+        label: 'department-register',
+        to: `${adminRoot}/fields/department-register`,
       },
     ],
   },
@@ -390,7 +396,6 @@ const data = [
     ],
   },
 
-  
   {
     id: 'hr-evaluations',
     icon: 'simple-icon-book-open',

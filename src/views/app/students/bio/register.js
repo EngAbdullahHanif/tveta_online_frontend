@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
@@ -122,6 +122,10 @@ const StudyTypeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTypeGraduated" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTypeInrolled" /> },
   { value: '3', label: <IntlMessages id="forms.StudyTypeDismissed" /> },
+];
+const shifs = [
+  { value: '1', label: 'rozana' },
+  { value: '2', label: 'shabana' },
 ];
 
 const StdInteranceOptions = [
@@ -280,8 +284,55 @@ const initialValues = {
 const StudentRegistraion = (values) => {
   const [isNext, setIsNext] = useState(false);
   const [IdCard, setIdCard] = useState(null);
+  const [institutes, setInstitutes] = useState([]);
+  const [fields, setFields] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [classes, setClasses] = useState([]);
+
   // console.log('values', values);
 
+  const fetchInstitutes = async () => {
+    const response = await axios.get('http://localhost:8000/institute/');
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setInstitutes(updatedData);
+  };
+  const fetchFields = async () => {
+    const response = await axios.get('http://localhost:8000/institute/field/');
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setFields(updatedData);
+  };
+  const fetchDepartments = async () => {
+    const response = await axios.get(
+      'http://localhost:8000/institute/department/'
+    );
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setDepartments(updatedData);
+  };
+
+  const fetchClasses = async () => {
+    const response = await axios.get('http://localhost:8000/institute/classs/');
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name + ' - ' + item.semester + ' - ' + item.section,
+    }));
+    setClasses(updatedData);
+  };
+
+  useEffect(() => {
+    fetchInstitutes();
+    fetchFields();
+    fetchDepartments();
+    fetchClasses();
+  }, []);
   const handleClick = (event) => {
     setIsNext(event);
   };
@@ -291,11 +342,18 @@ const StudentRegistraion = (values) => {
     // }
     //send data to server
     const data = {
-      std_id: '1',
+      //student model
+      student_id: '1',
+      kankor_id: values.kankorId,
       name: values.StdName,
-      Eng_name: values.StdEngName,
+      english_name: values.StdEngName,
+      lastname: values.lastname,
+      english_last_name: values.englishLastname,
       father_name: values.StdFatherName,
-      Eng_father_name: values.StdFatherEngName,
+      english_father_name: values.StdFatherEngName,
+      phone_number: values.phoneNumber,
+      email: values.email,
+      grand_father_name: values.grandFatherName,
       cover_number: values.StdIdCardCover,
       page_number: values.StdIdCardPageNo,
       registration_number: values.StdTazkiraNo,
@@ -310,25 +368,32 @@ const StudentRegistraion = (values) => {
       fatherـprofession: values.StdFatherDuty,
       fatherـplaceـofـduty: values.StdFatherDutyLocation,
       finished_grade: values.EducationLevel.value,
-      // finished_grade_year: values.StdGraduationYear,
-      finished_grade_year: 2022,
+      finished_grade_year: values.StdGraduationYear,
       school: values.StPreShcool,
       schoolـprovince: values.StdSchoolProvince.value,
-      study_types: 1,
-      // study_types: add study types (فارغ، جاری، منفک)
       student_type: values.StudentType.value,
       internse_type: values.StdInteranceType.value,
-      // std_photo: 'images/1.jpg',
-      // Documents: 'images/2.jpg',
 
-      //add student photo
+      //student_institute model
+      institute_id: values.institute.value,
+      educational_year: values.educationalYear,
+      language: values.language,
+      time: values.shif.value, //shift
 
-      //add more documents
+      //student_department model
+      department_id: values.department.value,
+      batch: values.batch,
+
+      //student_class model
+      class_id: values.classs.value,
+
+      // std_photo: 'images/1.jpg', // student model related
+      // Documents: 'images/2.jpg', // student_institute model related
     };
     console.log('data', data);
 
     axios
-      .post('http://localhost:8000/api/', data)
+      .post('http://localhost:8000/api/student-create/', data)
       .then((res) => {
         console.log('res', res);
       })
@@ -375,6 +440,37 @@ const StudentRegistraion = (values) => {
                         ) : null}
                       </FormGroup>
 
+                      {/* lastname */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="forms.StdName" /> */}
+                          lastname
+                        </Label>
+                        <Field className="form-control" name="lastname" />
+                        {errors.lastname && touched.lastname ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.lastname}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* englishLastname */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="forms.StdName" /> */}
+                          englishLastname
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="englishLastname"
+                        />
+                        {errors.englishLastname && touched.englishLastname ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.englishLastname}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
                       {/* Father Name */}
                       <FormGroup className="form-group has-float-label">
                         <Label>
@@ -384,6 +480,38 @@ const StudentRegistraion = (values) => {
                         {errors.StdFatherName && touched.StdFatherName ? (
                           <div className="invalid-feedback d-block">
                             {errors.StdFatherName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* phoneNumber */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="forms.StdFatherName" /> */}
+                          phoneNumber
+                        </Label>
+                        <Field className="form-control" name="phoneNumber" />
+                        {errors.phoneNumber && touched.phoneNumber ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.phoneNumber}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* email */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="forms.StdFatherName" /> */}
+                          email
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="email"
+                          type="email"
+                        />
+                        {errors.email && touched.email ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.email}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -522,6 +650,23 @@ const StudentRegistraion = (values) => {
 
                     <Colxx xxs="6">
                       <div>
+                        {/* grandFatherName */}
+                        <FormGroup className="form-group has-float-label">
+                          <Label>
+                            {/* <IntlMessages id="forms.Eng_name" /> */}
+                            grandFatherName
+                          </Label>
+                          <Field
+                            className="form-control"
+                            name="grandFatherName"
+                          />
+                          {errors.grandFatherName && touched.grandFatherName ? (
+                            <div className="invalid-feedback d-block">
+                              {errors.grandFatherName}
+                            </div>
+                          ) : null}
+                        </FormGroup>
+
                         {/* Student English Name */}
                         <FormGroup className="form-group has-float-label">
                           <Label>
@@ -719,6 +864,86 @@ const StudentRegistraion = (values) => {
                 ) : (
                   <Row>
                     <Colxx xxs="6">
+                      <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          <IntlMessages id="forms.InstituteLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="institute"
+                          id="institute"
+                          value={values.institute}
+                          options={institutes}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+
+                        {errors.institute && touched.institute ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.institute}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          field
+                        </Label>
+                        <FormikReactSelect
+                          name="field"
+                          id="field"
+                          value={values.field}
+                          options={fields}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.field && touched.field ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.field}
+                          </div>
+                        ) : null}
+                      </FormGroup> */}
+
+                      <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          <IntlMessages id="forms.studyDepartment" />
+                        </Label>
+                        <FormikReactSelect
+                          name="department"
+                          id="department"
+                          value={values.department}
+                          options={departments}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.department && touched.department ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.department}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          <IntlMessages id="marks.ClassLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="classs"
+                          id="classs"
+                          value={values.classs}
+                          options={classes}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.classs && touched.classs ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.classs}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
                       {/* درجه تحصیل*/}
                       <FormGroup className="form-group has-float-label">
                         <Label>
@@ -740,6 +965,65 @@ const StudentRegistraion = (values) => {
                         ) : null}
                       </FormGroup>
 
+                      {/* Kankor ID*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="forms.StPreShcoolLabel" /> */}
+                          kankor id
+                        </Label>
+                        <Field className="form-control" name="kankorId" />
+                        {errors.kankorId && touched.kankorId ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.kankorId}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* educationalYear*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="forms.StPreShcoolLabel" /> */}
+                          educationalYear
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="educationalYear"
+                        />
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.educationalYear}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* language*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="forms.StPreShcoolLabel" /> */}
+                          language
+                        </Label>
+                        <Field className="form-control" name="language" />
+                        {errors.language && touched.language ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.language}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* batch*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="forms.StPreShcoolLabel" /> */}
+                          batch
+                        </Label>
+                        <Field className="form-control" name="batch" />
+                        {errors.batch && touched.batch ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.batch}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
                       {/* Student Maktab*/}
                       <FormGroup className="form-group has-float-label">
                         <Label>
@@ -753,26 +1037,27 @@ const StudentRegistraion = (values) => {
                         ) : null}
                       </FormGroup>
 
-                      {/* Study type */}
-                      {/* <FormGroup className="form-group has-float-label">
+                      {/* shift */}
+                      <FormGroup className="form-group has-float-label">
                         <Label>
-                          <IntlMessages id="forms.StudyTypeLabel" />
+                          {/* <IntlMessages id="forms.StudyTypeLabel" /> */}
+                          shift
                         </Label>
                         <FormikReactSelect
-                          name="StudyType"
-                          id="StudyType"
-                          value={values.StudyType}
-                          options={StudyTypeOptions}
+                          name="shift"
+                          id="shift"
+                          value={values.shift}
+                          options={shifs}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
 
-                        {errors.StudyType && touched.StudyType ? (
+                        {errors.shift && touched.shift ? (
                           <div className="invalid-feedback d-block">
-                            {errors.StudyType}
+                            {errors.shift}
                           </div>
                         ) : null}
-                      </FormGroup> */}
+                      </FormGroup>
 
                       {/* internse type*/}
                       <FormGroup className="form-group has-float-label">

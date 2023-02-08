@@ -1,4 +1,5 @@
 import { ThemeColors } from '../helpers/ThemeColors';
+import IntlMessages from 'helpers/IntlMessages';
 
 const colors = ThemeColors();
 
@@ -22,17 +23,24 @@ export const lineChartData = {
 };
 
 export const polarAreaChartData = {
-  labels: ['فروش', 'سفارشات', 'موجودی'],
+  labels: ['اناث', 'ذکور'],
   datasets: [
     {
-      data: [80, 90, 70],
-      borderWidth: 2,
-      borderColor: [colors.themeColor1, colors.themeColor2, colors.themeColor3],
-      backgroundColor: [
-        colors.themeColor1_10,
-        colors.themeColor2_10,
-        colors.themeColor3_10,
-      ],
+      data: [80, 90],
+      borderWidth: 1,
+      borderColor: [colors.themeColor1, colors.themeColor2],
+      backgroundColor: [colors.themeColor1_10, colors.themeColor2_10],
+    },
+  ],
+};
+export const polarAreaChartData1 = {
+  labels: ['اناث', 'ذکور'],
+  datasets: [
+    {
+      data: [80, 90],
+      borderWidth: 1,
+      borderColor: [colors.themeColor1, colors.themeColor2],
+      backgroundColor: [colors.themeColor1_10, colors.themeColor2_10],
     },
   ],
 };
@@ -155,18 +163,36 @@ export const pieChartData = {
 };
 
 export const doughnutChartData = {
-  labels: ['کیک ها', 'کیک فنجونی ها', 'دسرها'],
+  labels: ['ښځینه', 'نارینه'],
   datasets: [
     {
       label: '',
-      borderColor: [colors.themeColor3, colors.themeColor2, colors.themeColor1],
+      borderColor: [colors.themeColor3, colors.themeColor2],
+      backgroundColor: [colors.themeColor3_10, colors.themeColor2_10],
+      borderWidth: 1,
+      data: [15, 25],
+    },
+  ],
+};
+export const doughnutChartData1 = {
+  labels: ['داکتر', 'ماستر', 'لسانس', '۱۴ پاس'],
+  datasets: [
+    {
+      label: '',
+      borderColor: [
+        colors.themeColor3,
+        colors.themeColor2,
+        colors.themeColor1,
+        colors.themeColor4,
+      ],
       backgroundColor: [
         colors.themeColor3_10,
         colors.themeColor2_10,
         colors.themeColor1_10,
+        colors.themeColor4_10,
       ],
-      borderWidth: 2,
-      data: [15, 25, 20],
+      borderWidth: 3,
+      data: [15, 25, 20, 15],
     },
   ],
 };

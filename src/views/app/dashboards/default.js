@@ -214,6 +214,15 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
+                      <IntlMessages id="dash.totalStudents" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
@@ -295,6 +304,15 @@ const ProvincailDashboard = (
                 ></p>
               </b>
               <Row className="m-2 ">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalStudents" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                </Colxx>
                 <Colxx>
                   <p>
                     <b>

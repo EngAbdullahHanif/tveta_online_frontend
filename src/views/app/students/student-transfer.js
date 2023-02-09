@@ -28,15 +28,22 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
+
 const servicePath = 'http://localhost:8000';
 const instituteApiUrl = `${servicePath}/institute/`;
 const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
-const studentTranferApiUrl = `${servicePath}/api/student_transfer/`;
+const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
 
 const instituteOptions = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
   { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
 ];
+
+const shifs = [
+  { value: '1', label: 'rozana' },
+  { value: '2', label: 'shabana' },
+];
+
 const SignupSchema = Yup.object().shape({});
 
 const StudentsTransfer = (values) => {
@@ -80,8 +87,8 @@ const StudentsTransfer = (values) => {
   const fetchInstitutes = async () => {
     const response = await axios.get(instituteApiUrl);
     const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
+      value: item.id,
+      label: item.name,
     }));
     setInstitutes(updatedData);
     console.log('updatedData', updatedData);
@@ -92,14 +99,15 @@ const StudentsTransfer = (values) => {
   }, []);
   const onSubmit = (values) => {
     console.log('values.institute.value', values.institute.id);
-    //is_transfer = 1 means transfered
+    //is_transfer = 2 means transfered
     data = {
       student_id: studentId,
       institute_id: values.institute.id,
       transfer_date: values.transferDate,
       educational_year: values.educationalYear,
+      time: values.shif.value, //shift
       language: values.language,
-      is_transfer: 1,
+      is_transfer: 2,
     };
     //transfer student
     axios
@@ -307,7 +315,7 @@ const StudentsTransfer = (values) => {
                             ) : null}
                           </FormGroup>
 
-                          {/* date */}
+                          {/* transferDate */}
                           <FormGroup className="form-group has-float-label">
                             <Label>
                               <IntlMessages id="student.transferDateLabel" />
@@ -343,7 +351,7 @@ const StudentsTransfer = (values) => {
                             ) : null}
                           </FormGroup>
 
-                          {/* date */}
+                          {/* language */}
                           <FormGroup className="form-group has-float-label">
                             <Label>
                               {/* <IntlMessages id="student.transferDateLabel" /> */}
@@ -357,6 +365,28 @@ const StudentsTransfer = (values) => {
                             {errors.language && touched.language ? (
                               <div className="invalid-feedback d-block">
                                 {errors.language}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+
+                          {/* shift */}
+                          <FormGroup className="form-group has-float-label">
+                            <Label>
+                              {/* <IntlMessages id="forms.StudyTypeLabel" /> */}
+                              shift
+                            </Label>
+                            <FormikReactSelect
+                              name="shift"
+                              id="shift"
+                              value={values.shift}
+                              options={shifs}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                            />
+
+                            {errors.shift && touched.shift ? (
+                              <div className="invalid-feedback d-block">
+                                {errors.shift}
                               </div>
                             ) : null}
                           </FormGroup>

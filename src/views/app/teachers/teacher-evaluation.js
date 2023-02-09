@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-
 import * as Yup from 'yup';
+import axios from 'axios';
+
 import {
   Row,
   Card,
@@ -23,6 +24,15 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
+
+const servicePath = 'http://localhost:8000';
+const teachersApiUrl = `${servicePath}/teachers/`;
+const institutesApiUrl = `${servicePath}/institute/`;
+const departmentsApiUrl = `${servicePath}/institute/department/`;
+const classesApiUrl = `${servicePath}/institute/classs/`;
+const subjectApiUrl = `${servicePath}/institute/subject/`;
+const fieldsApiUrl = `${servicePath}/institute/field/`;
+const evaluationApiUrl = `${servicePath}/teachers/evaluation-create/`;
 
 const evaluationTypeOptions = [
   { value: '1', label: <IntlMessages id="teacher.evaluationTypeOption_1" /> },
@@ -96,25 +106,114 @@ const ValidationSchema = Yup.object().shape({
   // ),
 });
 
+const initialValues = {
+  id: [],
+  department: [],
+  subject: [],
+  evaluator: '',
+  strengthPoints: '',
+  marks: '',
+  evaluationDate: '',
+  institute: [],
+  classs: [],
+  topic: '',
+  evaluationType: [],
+  weaknessPoints: '',
+  suggestion: '',
+};
+
 const TeacherEvaluation = () => {
-  const initialValues = {
-    id: [],
-    department: [],
-    subject: [],
-    evaluator: '',
-    strengthPoints: '',
-    marks: '',
-    evaluationDate: '',
-    institute: [],
-    classs: [],
-    topic: '',
-    evaluationType: [],
-    weaknessPoints: '',
-    suggestion: '',
+  const [teachers, setTeachers] = useState([]);
+  const [institutes, setInstitutes] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [strengthPoints, setStrengthPoints] = useState([]);
+  const [weaknessPoints, setWeaknessPoints] = useState([]);
+  const [suggestion, setSuggestion] = useState([]);
+
+  const fetchTeachers = async () => {
+    const response = await axios.get(teachersApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setTeachers(updatedData);
   };
 
-  const onSubmit = () => {
-    console.log('onSubmit is called');
+  const fetchInstitutes = async () => {
+    const response = await axios.get(institutesApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setInstitutes(updatedData);
+  };
+
+  const fetchDepartments = async () => {
+    const response = await axios.get(departmentsApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setDepartments(updatedData);
+  };
+
+  const fetchClasses = async () => {
+    const response = await axios.get(classesApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name + ' - ' + item.semester + ' - ' + item.section,
+    }));
+    setClasses(updatedData);
+  };
+  const fetchSubjects = async () => {
+    const response = await axios.get(subjectApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setSubjects(updatedData);
+  };
+
+  useEffect(() => {
+    fetchTeachers();
+    fetchInstitutes();
+    fetchDepartments();
+    fetchClasses();
+    fetchSubjects();
+  }, []);
+
+  const onSubmit = (values) => {
+    console.log(values);
+
+    const data = {
+      teacher_id: values.teacher.value,
+      institute_id: values.institute.value,
+      department_id: values.department.value,
+      class_id: values.classs.value,
+      subject_id: values.subject.value,
+      topic: values.topic,
+      evaluator_name: values.evaluator,
+      evaluation_type: values.evaluationType.value,
+      strong_points: strengthPoints,
+      weak_points: weaknessPoints,
+      suggestions: suggestion,
+      score: values.marks,
+      evaluation_date: values.evaluationDate,
+      user_id: 1,
+    };
+
+    console.log('data', data);
+
+    axios
+      .post(evaluationApiUrl, data)
+      .then((response) => {
+        console.log('response', response);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   };
 
   return (
@@ -127,29 +226,30 @@ const TeacherEvaluation = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
-            validationSchema={ValidationSchema}
+            // validationSchema={ValidationSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-right error-l-150 ">
                 <Row className="justify-content-center">
                   <Colxx xxs="5">
-                    {/* Teacher Id */}
-                    <FormGroup className="form-group has-float-label">
+                    {/* teacher Name*/}
+                    <FormGroup className="form-group has-float-label ">
                       <Label>
-                        <IntlMessages id="teacher.IdLabel" />
+                        {/* <IntlMessages id="forms.teacherLabel" /> */}
+                        Teacher Name
                       </Label>
+
                       <FormikReactSelect
-                        name="id"
-                        id="id"
-                        value={values.id}
-                        options={evaluationTypeOptions}
+                        name="teacher"
+                        id="teacher"
+                        value={values.teacher}
+                        options={teachers}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                        required
                       />
-                      {errors.id && touched.id ? (
+                      {errors.teacher && touched.teacher ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.id}
+                          {errors.teacher}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -164,7 +264,7 @@ const TeacherEvaluation = () => {
                         name="department"
                         id="department"
                         value={values.department}
-                        options={evaluationTypeOptions}
+                        options={departments}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
@@ -185,7 +285,7 @@ const TeacherEvaluation = () => {
                         name="subject"
                         id="subject"
                         value={values.subject}
-                        options={evaluationTypeOptions}
+                        options={subjects}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
@@ -218,6 +318,7 @@ const TeacherEvaluation = () => {
                       <textarea
                         className="form-control"
                         name="strengthPoints"
+                        onChange={(e) => setStrengthPoints(e.target.value)}
                       />
                       {errors.strengthPoints && touched.strengthPoints ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
@@ -260,15 +361,17 @@ const TeacherEvaluation = () => {
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="5">
+                    {/* Institute Name*/}
                     <FormGroup className="form-group has-float-label ">
                       <Label>
                         <IntlMessages id="forms.InstituteLabel" />
                       </Label>
+
                       <FormikReactSelect
                         name="institute"
                         id="institute"
                         value={values.institute}
-                        options={evaluationTypeOptions}
+                        options={institutes}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
@@ -278,7 +381,6 @@ const TeacherEvaluation = () => {
                         </div>
                       ) : null}
                     </FormGroup>
-
                     {/*  Class Id  */}
                     <FormGroup className="form-group has-float-label ">
                       <Label>
@@ -288,7 +390,7 @@ const TeacherEvaluation = () => {
                         name="classs"
                         id="classs"
                         value={values.classs}
-                        options={evaluationTypeOptions}
+                        options={classes}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
@@ -342,6 +444,7 @@ const TeacherEvaluation = () => {
                       <textarea
                         className="form-control"
                         name="weaknessPoints"
+                        onChange={(e) => setWeaknessPoints(e.target.value)}
                       />
                       {errors.weaknessPoints && touched.weaknessPoints ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
@@ -358,6 +461,7 @@ const TeacherEvaluation = () => {
                       <textarea
                         className="form-control"
                         name="suggestion"
+                        onChange={(e) => setSuggestion(e.target.value)}
                         rows={4}
                       />
                       {errors.suggestion && touched.suggestion ? (

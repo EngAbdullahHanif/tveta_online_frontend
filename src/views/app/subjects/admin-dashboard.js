@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import './provincail-dashboard.css';
 import Calendar from 'containers/dashboards/Calendar';
@@ -49,13 +48,6 @@ import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import { comments } from 'data/comments';
 import Rating from 'components/common/Rating';
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-import { useEffect } from 'react';
-
 const ProvincailDashboard = (
   values,
   { className = '', displayRate = false }
@@ -76,7 +68,6 @@ const ProvincailDashboard = (
       <h1 className="mt-5 m-1">{<IntlMessages id="dashboard.national" />}</h1>
       <Separator className="mb-5" />
 
-      {/* First Three columns */}
       <Row>
         {/* Teachers */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
@@ -2099,7 +2090,7 @@ const ProvincailDashboard = (
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Calendar />
         </Colxx>
-        
+
         {/* Total statistics */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
           <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">

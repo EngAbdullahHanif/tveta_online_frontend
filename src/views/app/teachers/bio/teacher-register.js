@@ -549,7 +549,7 @@ const TeacherRegister = ({ intl }, values) => {
                     major: [],
                   }}
                   validateOnMount
-                  validationSchema={ValidationStepOne}
+                  // validationSchema={ValidationStepOne}
                   onSubmit={() => {}}
                 >
                   {({

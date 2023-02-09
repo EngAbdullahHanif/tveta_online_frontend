@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
@@ -21,7 +21,9 @@ import {
 } from '../../../containers/form-validations/FormikFields';
 
 const servicePath = 'http://localhost:8000';
-const fieldRegisterationApiUrl = `${servicePath}/institute/field-create/`;
+const fieldsApiUrl = `${servicePath}/institute/field/`;
+const departmentRegisterationApiUrl = `${servicePath}/institute/department-create/`;
+
 const SignupSchema = Yup.object().shape({
   FieldId: Yup.string().required(<IntlMessages id="field.FieldIdErr" />),
 
@@ -34,27 +36,34 @@ const SignupSchema = Yup.object().shape({
   ),
 });
 
-const sectorOptions = [
-  { value: '1', label: 'economic' },
-  { value: '2', label: 'technology' },
-  { value: '3', label: 'agriculture' },
-];
+const InstituteFieldDepartmentRegister = () => {
+  const [fields, setFields] = useState([]);
 
-const FieldRegister = () => {
+  const fetchFields = async () => {
+    const response = await axios.get(fieldsApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setFields(updatedData);
+  };
+
+  useEffect(() => {
+    fetchFields();
+  }, []);
   const onSubmit = (values) => {
     console.log('values', values);
 
     //remove the user_id after authentication is done
     const data = {
-      fieldCode: values.fieldCode,
-      name: values.fieldName,
-      english_name: values.fieldEnglishName,
-      sector: values.sector.value,
+      filed: values.field.value,
+      name: values.departmentName,
+      english_name: values.departmentEnglishName,
       user_id: 1,
     };
 
     axios
-      .post(fieldRegisterationApiUrl, data)
+      .post(departmentRegisterationApiUrl, data)
       .then((res) => {
         console.log('success');
       })
@@ -67,7 +76,8 @@ const FieldRegister = () => {
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {<IntlMessages id="field.FieldRegisterTitle" />}
+          {/* {<IntlMessages id="field.FieldRegisterTitle" />} */}
+          Institute Field Department Register
         </h3>
         <CardBody>
           <Formik
@@ -88,73 +98,53 @@ const FieldRegister = () => {
             }) => (
               <Form className="av-tooltip tooltip-label-bottom">
                 <Row className="justify-content-center">
-                  <Colxx xxs="10">
-                    {/* Field ID */}
+                  <Colxx xxs="6">
+                    {/* field*/}
                     <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="field.FieldIdLabel" />
-                      </Label>
-
-                      <Field className="form-control" name="fieldCode" />
-                      {errors.fieldCode && touched.fieldCode ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.fieldCode}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {/* Field Name */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="field.FieldNameLabel" />
-                      </Label>
-
-                      <Field className="form-control" name="fieldName" />
-                      {errors.fieldName && touched.fieldName ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.fieldName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {/* Field Name In English */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="field.FieldEngNameLabel" />
-                      </Label>
-                      <Field className="form-control" name="fieldEnglishName" />
-                      {errors.fieldEnglishName && touched.fieldEnglishName ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.fieldEnglishName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {/* sector*/}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        {/* <IntlMessages id="forms.sector" /> */}
-                        sector
+                        {/* <IntlMessages id="forms.field" /> */}
+                        field
                       </Label>
                       <FormikReactSelect
-                        name="sector"
-                        id="sector"
-                        value={values.sector}
-                        options={sectorOptions}
+                        name="field"
+                        id="field"
+                        value={values.field}
+                        options={fields}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
-                      {errors.sector && touched.sector ? (
+                      {errors.field && touched.field ? (
                         <div className="invalid-feedback d-block">
-                          {errors.sector}
+                          {errors.field}
                         </div>
                       ) : null}
                     </FormGroup>
-
-                    <Button className="float-right m-3 ">
-                      {<IntlMessages id="forms.SubimssionButton" />}
-                    </Button>
                   </Colxx>
+                  <Colxx xxs="6">
+                    {/* field*/}
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        {/* <IntlMessages id="forms.field" /> */}
+                        field
+                      </Label>
+                      <FormikReactSelect
+                        name="field"
+                        id="field"
+                        value={values.field}
+                        options={fields}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                      />
+                      {errors.field && touched.field ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.field}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+                  </Colxx>
+                  <Button className="float-right m-3 ">
+                    {<IntlMessages id="forms.SubimssionButton" />}
+                  </Button>
                 </Row>
               </Form>
             )}
@@ -165,4 +155,4 @@ const FieldRegister = () => {
   );
 };
 
-export default FieldRegister;
+export default InstituteFieldDepartmentRegister;

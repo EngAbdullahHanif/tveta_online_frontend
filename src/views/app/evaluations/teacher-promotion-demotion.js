@@ -80,9 +80,11 @@ const initialValues = {
     label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
   },
 };
+
 const TeacherEvaluation = () => {
   const [institutes, setInstitutes] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  var [details, setDetails] = useState('');
 
   const fetchInstitutes = async () => {
     const response = await axios.get(institutesApiUrl);
@@ -136,8 +138,6 @@ const TeacherEvaluation = () => {
         createNotification('error', 'filled');
       });
   };
-
-  var [details, setDetails] = useState('');
 
   return (
     <>

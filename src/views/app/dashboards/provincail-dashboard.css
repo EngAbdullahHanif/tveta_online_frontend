@@ -47,4 +47,5 @@ div h1 {
   border-bottom-left-radius: 50px 40px;
   animation-duration: 10s;
   z-index: 3;
+  /* background-color: rgb(46, 45, 45); */
 }

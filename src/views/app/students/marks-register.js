@@ -131,7 +131,7 @@ const initialValues = {
 };
 const MarksRegistration = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [inNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -213,6 +213,7 @@ const MarksRegistration = ({ match }) => {
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
+        setIsNext(false);
       });
     console.log(
       `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
@@ -298,7 +299,7 @@ const MarksRegistration = ({ match }) => {
       <Card>
         <h3 className="mt-5 m-5">{<IntlMessages id="marks.title" />}</h3>
         <CardBody>
-          {inNext ? (
+          {isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}

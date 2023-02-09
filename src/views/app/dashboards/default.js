@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
@@ -7,6 +7,7 @@ import Calendar from 'containers/dashboards/Calendar';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { NavLink } from 'react-router-dom';
 import { adminRoot } from 'constants/defaultValues';
+import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -31,18 +32,82 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import { useEffect } from 'react';
+
+const servicePath = 'http://localhost:8000';
+const provinceTeachersCountApiUrl = `${servicePath}/teachers/province_teacher_count/`;
+const provinceDormsCountApiUrl = `${servicePath}/api/province_dorm_statistics/`;
+const provinceStuentsCountApiUrl = `${servicePath}/api/province_student_statistics/`;
+const proviceDormslistApiUrl = `${servicePath}/api/each_dorm_students/`;
 
 const ProvincailDashboard = (
   values,
   { className = '', displayRate = false }
 ) => {
   const [isNext, setIsNext] = useState(true);
+  const [provinceTeachersCount, setProvinceTeachersCount] = useState([]);
+  const [provinceDormsCount, setProvinceDormsCount] = useState([]);
+  const [provinceStuentsCount, setProvinceStuentsCount] = useState([]);
+  const [provinceDormsList, setProvinceDormsList] = useState([]);
+
+  function fetchProvinceTeachersCount() {
+    axios
+      .get(provinceTeachersCountApiUrl)
+      .then((res) => {
+        setProvinceTeachersCount(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function fetchProvinceDormsCount() {
+    axios
+      .get(provinceDormsCountApiUrl)
+      .then((res) => {
+        setProvinceDormsCount(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function fetchProvinceInstituteCount() {
+    axios
+      .get(provinceStuentsCountApiUrl)
+      .then((res) => {
+        setProvinceStuentsCount(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function fetchProvinceDormList() {
+    axios
+      .get(proviceDormslistApiUrl)
+      .then((res) => {
+        setProvinceDormsList(res.data);
+        console.log('res.data', res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    fetchProvinceTeachersCount();
+    fetchProvinceDormsCount();
+    fetchProvinceInstituteCount();
+    fetchProvinceDormList();
+  }, []);
+
   const handleClick = (event) => {
     setIsNext(event);
   };
 
- 
   return (
     <>
       <h1 className="mt-5 m-1">{<IntlMessages id="dashboard.provincail" />}</h1>
@@ -63,10 +128,24 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
+                      {/* <IntlMessages id="institute.totalStudentsMale" /> */}
+                      total teachers
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['total_teachers']}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>90</p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['male_teachers']}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -75,7 +154,21 @@ const ProvincailDashboard = (
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>500</p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['female_teachers']}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      {/* <IntlMessages id="dash.14YearsGreduatedMale" /> */}
+                      total teachers 14 years graduated
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['14_teachers']}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -99,11 +192,39 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
+                      {/* <IntlMessages id="dash.bachelorMale" /> */}
+                      total bachelor teachers
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {' '}
+                    {provinceTeachersCount['teachers_16']}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
                       <IntlMessages id="dash.bachelorMale" />
                     </b>
                   </p>
                   <p style={{ marginRight: '10%' }}>13</p>
                 </div>
+
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      {/* <IntlMessages id="dash.bachelorFemale" /> */}
+                      total master teachers
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {' '}
+                    {provinceTeachersCount['master_teachers']}
+                  </p>
+                </div>
+
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
                     <b>
@@ -113,6 +234,20 @@ const ProvincailDashboard = (
                   </p>
                   <p style={{ marginRight: '10%' }}>13</p>
                 </div>
+
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      {/* <IntlMessages id="dash.phdMale" /> */}
+                      total phd teachers
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['phd_teachers']}
+                  </p>
+                </div>
+
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
                     <b>
@@ -135,10 +270,23 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
+                      {/* <IntlMessages id="teacher.EvaluatedMale" /> */}
+                      total evaluated teachers
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['evaluated_teachers']}
+                  </p>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
                       <IntlMessages id="teacher.EvaluatedMale" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>13</p>
+                  <p style={{ marginRight: '10%' }}>45</p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -148,6 +296,20 @@ const ProvincailDashboard = (
                     </b>
                   </p>
                   <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      {/* <IntlMessages id="teacher.EvaluatedFemale" /> */}
+                      not evaluated teachers
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {' '}
+                    {provinceTeachersCount['not_evaluated_teachers']}
+                  </p>
                 </div>
               </Colxx>
             </CardBody>
@@ -170,7 +332,9 @@ const ProvincailDashboard = (
                       <IntlMessages id="dash.totalNumberOfInstitute" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>5000</p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['institute_count']}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -179,7 +343,9 @@ const ProvincailDashboard = (
                       <IntlMessages id="dash.totalNumberOfSchool" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>500</p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['school_count']}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -188,7 +354,9 @@ const ProvincailDashboard = (
                       <IntlMessages id="dash.totalNumberOfDorms" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>13</p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceDormsCount['total_dorms']}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -214,10 +382,11 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
-                      <IntlMessages id="dash.totalStudents" />
+                      {/* <IntlMessages id="institute.totalStudentsMale" /> */}
+                      total institute students
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>{provinceStuentsCount['total_institute_students']}</p>
                 </Colxx>
                 <Colxx>
                   <p>
@@ -226,7 +395,7 @@ const ProvincailDashboard = (
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>{provinceStuentsCount['male_institute_students']}</p>
                 </Colxx>
                 <Colxx>
                   <p>
@@ -235,7 +404,7 @@ const ProvincailDashboard = (
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>{provinceStuentsCount['female_institute_students']}</p>
                 </Colxx>
               </Row>
             </CardBody>
@@ -255,10 +424,24 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
+                      {/* <IntlMessages id="institute.totalStudentsMale" /> */}
+                      total dorm students
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceDormsCount['total_dorm_students']}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>5000</p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceDormsCount['male_dorm_students']}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -267,7 +450,9 @@ const ProvincailDashboard = (
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>500</p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceDormsCount['female_dorm_students']}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -276,7 +461,9 @@ const ProvincailDashboard = (
                       <IntlMessages id="dash.DormStudentType_1" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>3200</p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceDormsCount['badal_eyasha']}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -285,7 +472,9 @@ const ProvincailDashboard = (
                       <IntlMessages id="dash.DormStudentType_2" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>1800</p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceDormsCount['badeel_eyasha']}
+                  </p>
                 </div>
               </Colxx>
             </CardBody>
@@ -308,11 +497,13 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
-                      <IntlMessages id="dash.totalStudents" />
+                      {/* <IntlMessages id="institute.totalStudentsMale" /> */}
+                      total school students
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>{provinceStuentsCount['total_schoole_students']}</p>
                 </Colxx>
+
                 <Colxx>
                   <p>
                     <b>
@@ -320,7 +511,7 @@ const ProvincailDashboard = (
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>{provinceStuentsCount['male_schoole_students']}</p>
                 </Colxx>
 
                 <Colxx>
@@ -330,7 +521,7 @@ const ProvincailDashboard = (
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>{provinceStuentsCount['female_schoole_students']}</p>
                 </Colxx>
               </Row>
             </CardBody>
@@ -445,23 +636,27 @@ const ProvincailDashboard = (
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
+                  <ul>
+                    <span style={{ paddingLeft: '30px' }}> لیله</span>
+                    <span style={{ paddingLeft: '30px' }}>مجموعی</span>
+                    <span style={{ paddingLeft: '30px' }}>زکور</span>
+                    <span style={{ paddingLeft: '30px' }}>اناث</span>
+                  </ul>
                   <ol>
-                    <li>Nima</li>
-                    <li>کثیر الرشتوی بغلان</li>
-                    <li>تکنالوژی بغلان</li>
-                    <li>زراعت بغلان</li>
-                    <li>ورترنری بغلان</li>
-                    <li>تکنالوژی ۰۱ بغلان</li>
-                    <li>زراعت بغلان</li>
-                    <li>نابینایان</li>
-                    <li>Nima</li>
-                    <li>تکنالوژی بغلان</li>
-                    <li>زراعت بغلان</li>
-                    <li>ورترنری بغلان</li>
-                    <li>تکنالوژی ۰۱ بغلان</li>
-                    <li>زراعت بغلان</li>
-                    <li>نابینایان</li>
-                    <li>نابینایان</li>
+                    {provinceDormsList.map((dorm, index) => (
+                      <li key={index}>
+                        <span style={{ paddingLeft: '30px' }}>{dorm.dorm}</span>
+                        <span style={{ paddingLeft: '30px' }}>
+                          {dorm.total_students}
+                        </span>
+                        <span style={{ paddingLeft: '30px' }}>
+                          {dorm.male_students}
+                        </span>
+                        <span style={{ paddingLeft: '30px' }}>
+                          {dorm.female_students}
+                        </span>
+                      </li>
+                    ))}
                   </ol>
                 </PerfectScrollbar>
               </div>

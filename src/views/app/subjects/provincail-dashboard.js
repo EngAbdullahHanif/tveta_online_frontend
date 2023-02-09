@@ -491,7 +491,6 @@ const ProvincailDashboard = (
             </CardBody>
           </Card>
         </Colxx>
-  
 
         {/* Notification */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4">

@@ -704,48 +704,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="section mb-0">
-            <div className="container" id="themes">
-              <div className="row mb-5">
-                <div className="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
-                  <h1>رنگ بندی ها</h1>
-                  <p>
-                    10 تا تم رنگی براتون درست کردیم
-                    <br />
-                    حتی اگه از اینها خوشتون نیومد میتونین یه تم رنگی به دلخواه
-                    خودتون بسازین چون تمام متغیر های رنگ ها با Sass ساخته شدن
-                  </p>
-                </div>
-              </div>
-              {themes.map((t, index) => (
-                <div key={`theme_${index}`} className="row mb-5">
-                  <div className="col-12 text-center mb-3">
-                    <h4 className="text-center">{t.title}</h4>
-                  </div>
-                  <div className="col-12 col-md-6 col-lg-4 offset-lg-2 mb-3">
-                    <div className="depth-2 color-container">
-                      {['left', 'center', 'right'].map((align, i) => (
-                        <div
-                          key={`light_${index}_${i}`}
-                          className={`${t.class}-light-${i + 1} color-${align}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-6 col-lg-4 mb-3">
-                    <div className="depth-2 color-container">
-                      {['left', 'center', 'right'].map((align, i) => (
-                        <div
-                          key={`dark_${index}_${i}`}
-                          className={`${t.class}-dark-${i + 1} color-${align}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <div className="section mb-0">Extra Space</div>
 
           <div className="section background background-no-bottom mb-0 pb-0">
             <div className="container">

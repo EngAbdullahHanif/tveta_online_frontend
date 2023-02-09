@@ -1,1109 +1,2149 @@
-/* eslint-disable no-param-reassign */
-import React, { createRef, useState, Controller, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+import './../dorms/dorm-register.css';
+import './provincail-dashboard.css';
+import Calendar from 'containers/dashboards/Calendar';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { NavLink } from 'react-router-dom';
+import { adminRoot } from 'constants/defaultValues';
+import {
+  DoughnutChart,
+  LineChart,
+  PolarAreaChart,
+  AreaChart,
+  ScatterChart,
+  BarChart,
+  RadarChart,
+  PieChart,
+} from 'components/charts';
+import {
+  lineChartData,
+  polarAreaChartData,
+  polarAreaChartData1,
+  areaChartData,
+  scatterChartData,
+  barChartData,
+  radarChartData,
+  pieChartData,
+  doughnutChartData,
+  doughnutChartData1,
+} from 'data/charts';
 
+import * as Yup from 'yup';
 import {
   Row,
   Card,
   CardBody,
+  Table,
   FormGroup,
   Label,
-  Spinner,
   Button,
   CardTitle,
+  CardSubtitle,
   Input,
 } from 'reactstrap';
-import { Wizard, Steps, Step } from 'react-albus';
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-import { injectIntl } from 'react-intl';
-import { Formik, Form, Field } from 'formik';
+
 import IntlMessages from 'helpers/IntlMessages';
-import BottomNavigation from 'components/wizard/BottomNavigation';
-import { NotificationManager } from 'components/common/react-notifications';
+import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import { comments } from 'data/comments';
+import Rating from 'components/common/Rating';
 
-import axios from 'axios';
-import * as Yup from 'yup';
-
-import { Colxx } from 'components/common/CustomBootstrap';
-
-const tazkiraOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdTazkiraElectronic" /> },
-  { value: '2', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
-];
-
-const EducationLevelOptions = [
-  { value: '9th', label: <IntlMessages id="forms.EducationalLevel_9th" /> },
-  { value: '10th', label: <IntlMessages id="forms.EducationalLevel_10th" /> },
-  { value: '11th', label: <IntlMessages id="forms.EducationalLevel_11th" /> },
-  { value: '12th', label: <IntlMessages id="forms.EducationalLevel_12th" /> },
-  { value: '13th', label: <IntlMessages id="forms.EducationalLevel_13th" /> },
-  { value: '14th', label: <IntlMessages id="forms.EducationalLevel_14th" /> },
-];
-
-const StdInteranceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdInteranceOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdInteranceOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdInteranceOption_3" /> },
-];
-
-const StdSchoolProvinceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
-  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
-  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
-  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
-  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
-  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
-  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
-  {
-    value: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    value: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    value: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    value: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    value: '14',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    value: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    value: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    value: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    value: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    value: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    value: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    value: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    value: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    value: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    value: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    value: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    value: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    value: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    value: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    value: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    value: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    value: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    value: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
-
-const StudentTypeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudentTypeContiniues" /> },
-  { value: '2', label: <IntlMessages id="forms.StudentTypeNonContiniues" /> },
-];
-
-const ValidationStepOne = Yup.object().shape({
-  stdName: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="teacher.NameErr" />),
-
-  stdFatherName: Yup.string()
-    .required(<IntlMessages id="teacher.FatherNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-  stdFatherDuty: Yup.string()
-    .required(<IntlMessages id="forms.StdFatherDutyErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  stdEngName: Yup.string()
-    .required(<IntlMessages id="forms.englishNameError" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  stdFatherEngName: Yup.string()
-    .required(<IntlMessages id="forms.FatherEnglishNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  stdFatherDutyLocation: Yup.string()
-    .required(<IntlMessages id="forms.StdFatherDutyLocationErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-  stdPlaceOfBirth: Yup.string()
-    .required(<IntlMessages id="forms.StdPlaceOfBirthErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  TazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
-  PhoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
-  DoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
-
-  province: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-
-  C_Province: Yup.object()
-    .shape({ value: Yup.string().required() })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-
-  C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-  C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-
-  tazkiraType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
-
-  Email: Yup.string()
-    .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-    .required(<IntlMessages id="teacher.EmailErr" />),
-});
-
-const ValidationStepTwo = Yup.object().shape({
-  levelOfEducation: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
-
-  stdPreSchool: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="forms.StPreShcoolErr" />),
-
-  stdInteranceType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
-
-  stdSchoolProvince: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
-
-  stdGraduationYear: Yup.date().required(
-    <IntlMessages id="forms.StdGraduationYearErr" />
-  ),
-
-  studentType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StudentTypeErr" />),
-});
-
-const StudentRegistraion = ({ intl }, values) => {
-  const [isNext, setIsNext] = useState(false);
-  const [IdCard, setIdCard] = useState(null);
-  // console.log('values', values);
-
+const ProvincailDashboard = (
+  values,
+  { className = '', displayRate = false }
+) => {
+  const [isNext, setIsNext] = useState(true);
   const handleClick = (event) => {
     setIsNext(event);
   };
+
   const onRegister = (values) => {
-    // if (!values) {
-    //   return;
-    // }
-    //send data to server
-    const data = {
-      std_id: '1',
-      name: values.StdName,
-      Eng_name: values.StdEngName,
-      father_name: values.StdFatherName,
-      Eng_father_name: values.StdFatherEngName,
-      cover_number: values.StdIdCardCover,
-      page_number: values.StdIdCardPageNo,
-      registration_number: values.StdTazkiraNo,
-      Sukuk_number: values.StdIdCardSakukNo,
-      main_province: values.Province.value,
-      main_district: values.District,
-      main_village: values.Village,
-      current_province: values.C_Province.value,
-      current_district: values.C_District,
-      current_village: values.C_Village,
-      birth_date: values.StdDoB,
-      fatherـprofession: values.StdFatherDuty,
-      fatherـplaceـofـduty: values.StdFatherDutyLocation,
-      finished_grade: values.EducationLevel.value,
-      // finished_grade_year: values.StdGraduationYear,
-      finished_grade_year: 2022,
-      school: values.StPreShcool,
-      schoolـprovince: values.StdSchoolProvince.value,
-      study_types: 1,
-      // study_types: add study types (فارغ، جاری، منفک)
-      student_type: values.StudentType.value,
-      internse_type: values.StdInteranceType.value,
-      // std_photo: 'images/1.jpg',
-      // Documents: 'images/2.jpg',
-
-      //add student photo
-
-      //add more documents
-    };
-    console.log('data', data);
-
-    axios
-      .post('http://localhost:8000/api/', data)
-      .then((res) => {
-        console.log('res', res);
-      })
-      .catch((err) => {
-        console.log('err', err);
-      });
+    console.log(' The Values', values);
   };
 
-  const forms = [createRef(null), createRef(null), createRef(null)];
-  const [bottomNavHidden, setBottomNavHidden] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [fields, setFields] = useState({});
-  const [LevelOfEducation, setLevelOfEducation] = useState('0');
-  const [TazkiraType, setTazkiraType] = useState('0');
-  const [Province, setProvince] = useState('0');
-  const [CurrentProvince, setCurrentProvince] = useState('0');
-  const [StdInteranceType, setStdInteranceType] = useState('0');
-  const [StdSchoolProvince, setStdSchoolProvince] = useState('0');
-  const [StudentType, setStudentType] = useState('0');
+  const [loaded, setLoaded] = useState(false);
 
-  const onClickNext = (goToNext, steps, step, values) => {
-    if (steps.length - 1 <= steps.indexOf(step)) {
-      return;
-    }
-    const formIndex = steps.indexOf(step);
-    const form = forms[formIndex].current;
-
-    if (step.id === 'step1') {
-      setTazkiraType(form.values.tazkiraType.value);
-      setProvince(form.values.province.value);
-      setCurrentProvince(form.values.C_Province.value);
-    }
-    if (step.id === 'step2') {
-      setStdInteranceType(form.values.stdInteranceType.value);
-      setLevelOfEducation(form.values.levelOfEducation.value);
-      setStdSchoolProvince(form.values.stdSchoolProvince.value);
-      setStudentType(form.values.studentType.value);
-    }
-    console.log(step.id, 'stepoId');
-    console.log('First Step (Form) Values', form.values);
-    form.submitForm().then(() => {
-      if (!form.isDirty && form.isValid) {
-        const newFields = { ...fields, ...form.values };
-        setFields(newFields);
-        if (steps.length - 2 <= steps.indexOf(step)) {
-          setBottomNavHidden(true);
-          setLoading(true);
-          console.log(newFields, 'Final Values');
-          setTimeout(() => {
-            setLoading(false);
-          }, 0);
-        }
-        goToNext();
-        step.isDone = true;
-      }
-    });
-  };
-  const onClickPrev = (goToPrev, steps, step) => {
-    if (steps.indexOf(step) <= 0) {
-      return;
-    }
-    goToPrev();
-  };
-
-  const { messages } = intl;
   return (
-    <Card>
-      <h3 className="mt-5 m-5">
-        <h3 className="mt-5 m-5">{<IntlMessages id="forms.title" />}</h3>
-      </h3>
-      <CardBody className="wizard wizard-default">
-        <Wizard>
-          <Steps>
-            <Step
-              id="step1"
-              name={messages['wizard.step-name-1']}
-              desc={messages['wizard.step-desc-1']}
-            >
-              <div className="wizard-basic-step">
-                <Formik
-                  innerRef={forms[0]}
-                  initialValues={{
-                    stdName: '',
-                    stdFatherName: '',
-                    stdFatherDuty: '',
-                    stdEngName: '',
-                    stdFatherEngName: '',
-                    stdFatherDutyLocation: '',
-                    stdPlaceOfBirth: '',
-                    DoB: '',
-                    TazkiraNo: '',
-                    PhoneNo: '',
-                    Email: '',
-                    IdCardPageNo: '',
-                    IdCardJoldNo: '',
-                    // gender: [
-                    //   {
-                    //     value: '0',
-                    //     label: (
-                    //       <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                    //     ),
-                    //   },
-                    // ],
+    <>
+      <h1 className="mt-5 m-1">{<IntlMessages id="dashboard.national" />}</h1>
+      <Separator className="mb-5" />
 
-                    tazkiraType: [
-                      {
-                        value: '0',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-
-                    province: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    C_Province: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    C_District: '',
-                    district: '',
-                    village: '',
-                    C_Village: '',
-                  }}
-                  validateOnMount
-                  validationSchema={ValidationStepOne}
-                  onSubmit={() => {}}
-                >
-                  {({
-                    errors,
-                    touched,
-                    values,
-                    onBlur,
-                    handleChange,
-                    handleBlur,
-                    setFieldTouched,
-                    setFieldValue,
-                    isSubmitting,
-                  }) => (
-                    <Form className="av-tooltip tooltip-label-right">
-                      <Row>
-                        <Colxx xxs="6">
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="forms.StdName" />
-                            </Label>
-                            <Field className="form-control" name="stdName" />
-                            {errors.stdName && touched.stdName ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.stdName}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                          {/* Father Name */}
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="forms.StdFatherName" />
-                            </Label>
-                            <Field
-                              className="form-control"
-                              name="stdFatherName"
-                            />
-                            {errors.stdFatherName && touched.stdFatherName ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.stdFatherName}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-
-                          {/* Father Duty */}
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="forms.StdFatherDutyLabel" />
-                            </Label>
-                            <Field
-                              className="form-control"
-                              name="stdFatherDuty"
-                            />
-                            {errors.stdFatherDuty && touched.stdFatherDuty ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.stdFatherDuty}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label className="d-block">
-                              <IntlMessages id="teacher.DoBLabel" />
-                            </Label>
-                            <FormikDatePicker
-                              name="DoB"
-                              type="date"
-                              value={values.DoB}
-                              onChange={setFieldValue}
-                              onBlur={setFieldTouched}
-                            />
-                            {errors.DoB && touched.DoB ? (
-                              <div className="invalid-feedback d-block  bg-danger text-white">
-                                {errors.DoB}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                          {/* Tazkira Type */}
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="forms.TazkiraType" />
-                            </Label>
-
-                            <FormikReactSelect
-                              name="tazkiraType"
-                              id="tazkiraType"
-                              value={values.tazkiraType}
-                              options={tazkiraOptions}
-                              onChange={setFieldValue}
-                              onBlur={setFieldTouched}
-                            />
-                            {errors.tazkiraType && !TazkiraType ? (
-                              <div className="invalid-feedback d-block   bg-danger text-white">
-                                {errors.tazkiraType}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                          {values.tazkiraType.value === '2' ? (
-                            <div>
-                              {/* Safha */}
-                              <div>
-                                <FormGroup className="form-group has-float-label error-l-175">
-                                  <Label>
-                                    <IntlMessages id="teacher.IdCardPageNoLabel" />
-                                  </Label>
-                                  <Field
-                                    className="form-control"
-                                    name="IdCardPageNo"
-                                    type="number"
-                                  />
-                                  {errors.IdCardPageNo &&
-                                  touched.IdCardPageNo ? (
-                                    <div className="invalid-feedback d-block  bg-danger text-white">
-                                      {errors.IdCardPageNo}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
-                            </div>
-                          ) : (
-                            <div></div>
-                          )}
-                          {/* Contact No */}
-                          <FormGroup className="form-group has-float-label error-l-175 ">
-                            <Label>
-                              <IntlMessages id="teacher.PhoneNoLabel" />
-                            </Label>
-                            <Field
-                              className="form-control"
-                              name="PhoneNo"
-                              type="number"
-                            />
-                            {errors.PhoneNo && touched.PhoneNo ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.PhoneNo}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                        </Colxx>
-                        <Colxx xxs="6">
-                          {/* Student English Name */}
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="forms.Eng_name" />
-                            </Label>
-                            <Field className="form-control" name="stdEngName" />
-                            {errors.stdEngName && touched.stdEngName ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.stdEngName}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                          {/*Students Father English Name */}
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="forms.Std_father_Eng_Name" />
-                            </Label>
-                            <Field
-                              className="form-control"
-                              name="stdFatherEngName"
-                            />
-                            {errors.stdFatherEngName &&
-                            touched.stdFatherEngName ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.stdFatherEngName}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                          {/* Father duty place */}
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="forms.StdFatherDutyLocationLabel" />
-                            </Label>
-                            <Field
-                              className="form-control"
-                              name="stdFatherDutyLocation"
-                            />
-                            {errors.stdFatherDutyLocation &&
-                            touched.stdFatherDutyLocation ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.stdFatherDutyLocation}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                          {/* Place of birth */}
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="forms.PlaceOfBirthLabel" />
-                            </Label>
-                            <Field
-                              className="form-control"
-                              name="stdPlaceOfBirth"
-                            />
-                            {errors.stdPlaceOfBirth &&
-                            touched.stdPlaceOfBirth ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.stdPlaceOfBirth}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-
-                          {/* Tazkira Number */}
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="teacher.TazkiraNoLabel" />
-                            </Label>
-                            <Field
-                              className="form-control"
-                              name="TazkiraNo"
-                              type="number"
-                            />
-                            {errors.TazkiraNo && touched.TazkiraNo ? (
-                              <div className="invalid-feedback d-block  bg-danger text-white">
-                                {errors.TazkiraNo}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-
-                          {/* Gender */}
-                          {/* <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="gender.gender" />
-                            </Label>
-                            <FormikReactSelect
-                              name="gender"
-                              id="gender"
-                              value={values.gender}
-                              options={genderOptions}
-                              onChange={setFieldValue}
-                              onBlur={setFieldTouched}
-                            />
-                            {!Gender && errors.gender ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.gender}
-                              </div>
-                            ) : null}
-                          </FormGroup> */}
-
-                          {values.tazkiraType.value === '2' ? (
-                            <div>
-                              {/* Jold Number */}
-                              <div>
-                                <FormGroup className="form-group has-float-label error-l-175">
-                                  <Label>
-                                    <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                  </Label>
-                                  <Field
-                                    className="form-control"
-                                    name="IdCardJoldNo"
-                                    type="number"
-                                  />
-                                  {errors.IdCardJoldNo &&
-                                  touched.IdCardJoldNo ? (
-                                    <div className="invalid-feedback d-block  bg-danger text-white">
-                                      {errors.IdCardJoldNo}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
-                            </div>
-                          ) : (
-                            <div></div>
-                          )}
-                          {/* Email Address */}
-                          <FormGroup className="form-group has-float-label error-l-175">
-                            <Label>
-                              <IntlMessages id="teacher.EmailLabel" />
-                            </Label>
-                            <Field
-                              className="form-control"
-                              name="Email"
-                              type="Email"
-                            />
-                            {errors.Email && touched.Email ? (
-                              <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.Email}
-                              </div>
-                            ) : null}
-                          </FormGroup>
-                        </Colxx>
-                      </Row>
-                      <Row>
-                        <Colxx xxs="6">
-                          <div className="square  p-3">
-                            <h6 className=" mb-4">
-                              {
-                                <IntlMessages id="forms.PermanentAddressLabel" />
-                              }
-                            </h6>
-
-                            {/* province permanent*/}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="forms.ProvinceLabel" />
-                              </Label>
-                              <FormikReactSelect
-                                name="province"
-                                id="province"
-                                value={values.province}
-                                options={StdSchoolProvinceOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                              />
-                              {errors.province && !Province ? (
-                                <div className="invalid-feedback d-block   bg-danger text-white">
-                                  {errors.province}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* District  permanent*/}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="forms.DistrictLabel" />
-                              </Label>
-                              <Field className="form-control" name="district" />
-                              {errors.district && touched.district ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.district}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* village permanent */}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="forms.VillageLabel" />
-                              </Label>
-                              <Field className="form-control" name="village" />
-                              {errors.village && touched.village ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.village}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-                          </div>
-                        </Colxx>
-
-                        <Colxx xxs="6">
-                          <div className="square p-3 ">
-                            <h6 className=" mb-4">
-                              {' '}
-                              {<IntlMessages id="forms.CurrentAddresslabel" />}
-                            </h6>
-
-                            {/* Current Address */}
-                            {/* province Current */}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="forms.ProvinceLabel" />
-                              </Label>
-                              <FormikReactSelect
-                                name="C_Province"
-                                id="C_Province"
-                                value={values.C_Province}
-                                options={StdSchoolProvinceOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                              />
-                              {errors.C_Province && !CurrentProvince ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.C_Province}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* District */}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="forms.DistrictLabel" />
-                              </Label>
-                              <Field
-                                className="form-control"
-                                name="C_District"
-                              />
-                              {errors.C_District && touched.C_District ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.C_District}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* village */}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="forms.VillageLabel" />
-                              </Label>
-                              <Field
-                                className="form-control"
-                                name="C_Village"
-                              />
-                              {errors.C_Village && touched.C_Village ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.C_Village}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-                          </div>
-                        </Colxx>
-                      </Row>
-                    </Form>
-                  )}
-                </Formik>
-              </div>
-            </Step>
-
-            <Step
-              id="step2"
-              name={messages['wizard.step-name-2']}
-              desc={messages['wizard.step-desc-2']}
-            >
-              <div className="wizard-basic-step">
-                <Formik
-                  innerRef={forms[1]}
-                  initialValues={{
-                    status: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    levelOfEducation: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    stdInteranceType: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    studentType: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                    stdPreSchool: '',
-                    stdGraduationYear: '',
-                    stdSchoolProvince: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-
-                    jobLocation: [
-                      {
-                        value: '',
-                        label: (
-                          <IntlMessages id="forms.TazkiraTypeDefaultValue" />
-                        ),
-                      },
-                    ],
-                  }}
-                  onSubmit={() => {}}
-                  validationSchema={ValidationStepTwo}
-                  validateOnMount
-                >
-                  {({
-                    errors,
-                    touched,
-                    values,
-                    setFieldTouched,
-                    setFieldValue,
-                  }) => (
-                    <Form className="av-tooltip tooltip-label-right">
-                      <>
-                        <Row>
-                          <Colxx xxs="6">
-                            <div className="p-3">
-                              {' '}
-                              {/* Education */}
-                              <FormGroup className="form-group has-float-label error-l-175">
-                                <Label>
-                                  <IntlMessages id="teacher.LevelOfEducationLabel" />
-                                </Label>
-                                <FormikReactSelect
-                                  name="levelOfEducation"
-                                  id="levelOfEducation"
-                                  value={values.levelOfEducation}
-                                  options={EducationLevelOptions}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                  required
-                                />
-                                {errors.levelOfEducation &&
-                                !LevelOfEducation ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.levelOfEducation}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                              {/* Student Maktab*/}
-                              <FormGroup className="form-group has-float-label error-l-175">
-                                <Label>
-                                  <IntlMessages id="forms.StPreShcoolLabel" />
-                                </Label>
-                                <Field
-                                  className="form-control"
-                                  name="stdPreSchool"
-                                />
-                                {errors.stdPreSchool && touched.stdPreSchool ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.stdPreSchool}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                              {/* internse type*/}
-                              <FormGroup className="form-group has-float-label error-l-175">
-                                <Label>
-                                  <IntlMessages id="forms.StdInteranceTypeLabel" />
-                                </Label>
-                                <FormikReactSelect
-                                  name="stdInteranceType"
-                                  id="stdInteranceType"
-                                  value={values.stdInteranceType}
-                                  options={StdInteranceOptions}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                />
-
-                                {errors.stdInteranceType &&
-                                !StdInteranceType ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.stdInteranceType}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                          </Colxx>
-                          <Colxx xxs="6">
-                            <div className="square p-3 ">
-                              <FormGroup className="form-group has-float-label error-l-175">
-                                <Label>
-                                  <IntlMessages id="forms.StdGraduationYearLabel" />
-                                </Label>
-                                <Field
-                                  className="form-control"
-                                  name="stdGraduationYear"
-                                  type="date"
-                                />
-                                {errors.stdGraduationYear &&
-                                touched.stdGraduationYear ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.stdGraduationYear}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                              {/*School province*/}
-                              <FormGroup className="form-group has-float-label error-l-175">
-                                <Label>
-                                  <IntlMessages id="forms.StdSchoolProvinceLabel" />
-                                </Label>
-                                <FormikReactSelect
-                                  name="stdSchoolProvince"
-                                  id="stdSchoolProvince"
-                                  value={values.stdSchoolProvince}
-                                  options={StdSchoolProvinceOptions}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                />
-                                {errors.stdSchoolProvince &&
-                                !StdSchoolProvince ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.stdSchoolProvince}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                              {/*Student Type*/}
-                              <FormGroup className="form-group has-float-label error-l-175">
-                                <Label>
-                                  <IntlMessages id="forms.StudentTypeLabel" />
-                                </Label>
-                                <FormikReactSelect
-                                  name="studentType"
-                                  id="studentType"
-                                  value={values.studentType}
-                                  options={StudentTypeOptions}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                />
-                                {errors.studentType && !StudentType ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.studentType}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                          </Colxx>
-                        </Row>
-                      </>
-                    </Form>
-                  )}
-                </Formik>
-              </div>
-            </Step>
-            <Step id="step3" hideTopNav>
-              <div className="wizard-basic-step text-center pt-3">
-                {loading ? (
-                  <div>
-                    <Spinner color="primary" className="mb-1" />
+      <Row>
+        {/* Teachers */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+          <Card style={{ minHeight: '530px', marginBottom: '7% ' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalNumberOfTeachers" />
+              </CardTitle>
+              <Separator />
+              <br />
+              {loaded ? (
+                <Colxx>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>
-                      <IntlMessages id="submit.waitmessage" />
+                      <b>
+                        {' '}
+                        <IntlMessages id="institute.totalStudentsMale" />
+                      </b>
                     </p>
+                    <p style={{ marginRight: '10%' }}>90</p>
                   </div>
-                ) : (
-                  <div>
-                    <h1 className="mb-2">
-                      <IntlMessages id="wizard.content-thanks" />
-                    </h1>
-                    <h3>
-                      <IntlMessages id="wizard.registered" />
-                    </h3>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>
+                      <b>
+                        {' '}
+                        <IntlMessages id="institute.totalStudentsFemale" />
+                      </b>
+                    </p>
+                    <p style={{ marginRight: '10%' }}>500</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>
+                      <b>
+                        {' '}
+                        <IntlMessages id="dash.14YearsGreduatedMale" />
+                      </b>
+                    </p>
+                    <p style={{ marginRight: '10%' }}>13</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>
+                      <b>
+                        {' '}
+                        <IntlMessages id="dash.14YearsGreduatedFemale" />
+                      </b>
+                    </p>
+                    <p style={{ marginRight: '10%' }}>13</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>
+                      <b>
+                        {' '}
+                        <IntlMessages id="dash.bachelorMale" />
+                      </b>
+                    </p>
+                    <p style={{ marginRight: '10%' }}>13</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>
+                      <b>
+                        {' '}
+                        <IntlMessages id="dash.bachelorFemale" />
+                      </b>
+                    </p>
+                    <p style={{ marginRight: '10%' }}>13</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>
+                      <b>
+                        {' '}
+                        <IntlMessages id="dash.phdMale" />
+                      </b>
+                    </p>
+                    <p style={{ marginRight: '10%' }}>13</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>
+                      <b>
+                        {' '}
+                        <IntlMessages id="dash.phdFemale" />
+                      </b>
+                    </p>
+                    <p style={{ marginRight: '10%' }}>13</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>
+                      <b>
+                        {' '}
+                        <IntlMessages id="teacher.EvaluatedMale" />
+                      </b>
+                    </p>
+                    <p style={{ marginRight: '10%' }}>13</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>
+                      <b>
+                        {' '}
+                        <IntlMessages id="teacher.EvaluatedFemale" />
+                      </b>
+                    </p>
+                    <p style={{ marginRight: '10%' }}>13</p>
+                  </div>
+                  <br />
+                  <br />
+                </Colxx>
+              ) : (
+                <Row className="p-5 m-5">
+                  <Colxx className="d-flex justify-content-center">
+                    <CardTitle>
+                      {' '}
+                      <IntlMessages id="dash.loading" />
+                    </CardTitle>
+                  </Colxx>
+                </Row>
+              )}
+            </CardBody>
+          </Card>
+        </Colxx>
 
-                    <Button className="mt-2">
-                      <IntlMessages id="button.back" />
-                    </Button>
+        {/* Teachers chart */}
+        <Colxx xxs="8" sm="4" md="8">
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="charts.Teachers.chart" />
+              </CardTitle>
+              <Row>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="dash.teacherGender" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <DoughnutChart data={doughnutChartData} />
                   </div>
-                )}
+                </Colxx>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="forms.EducationLevelLabel" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <DoughnutChart data={doughnutChartData1} />
+                  </div>
+                </Colxx>
+              </Row>
+            </CardBody>
+            <br />
+            <br />
+            <br />
+          </Card>
+        </Colxx>
+
+        {/* Students */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4 ">
+          <Card style={{ minHeight: '180px' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsInst" />
+              </CardTitle>
+              <Separator />
+              <Row className="mt-3 mb-2 m-1">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalStudents" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                  <br />
+                </Colxx>
+              </Row>
+
+              <CardTitle>
+                <IntlMessages id="dash.specialEducationStudents" />
+              </CardTitle>
+              <Separator />
+              <Row className="mt-3 mb-2 m-1">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalStudents" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+              </Row>
+
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsScool" />
+              </CardTitle>
+              <Separator />
+
+              <Row className="mt-3 mb-2 m-1">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalStudents" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                  <br />
+                </Colxx>
+              </Row>
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsDorm" />
+              </CardTitle>
+              <Separator />
+              <Row className="mt-3 mb-2 m-1">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.DormStudentType_1" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.DormStudentType_2" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+              </Row>
+            </CardBody>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </Card>
+        </Colxx>
+
+        {/* Students chart */}
+        <Colxx xxs="8" sm="4" md="8">
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="charts.studentChart" />
+              </CardTitle>
+              <Row>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="charts.ّInstituteStudentGenderChart" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <PolarAreaChart shadow data={polarAreaChartData} />
+                  </div>
+                </Colxx>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="dash.totalStudentsDorm" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <PolarAreaChart shadow data={polarAreaChartData} />
+                  </div>
+                </Colxx>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="charts.schoolStudentGenderChart" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <PolarAreaChart data={polarAreaChartData1} />
+                  </div>
+                </Colxx>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="charts.schoolStudentGenderChart" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <PolarAreaChart data={polarAreaChartData1} />
+                  </div>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+      </Row>
+
+      <Row>
+        {/* ّInstitute School and special eduaction statistic list. */}
+        <Colxx xxs="6">
+          <Card className="mb-4">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.institutesSchoolsandSpecialEducationStatistics" />
+              </CardTitle>
+
+              <Table striped>
+                <thead>
+                  <tr>
+                    <th>
+                      {' '}
+                      <IntlMessages id="marks.No" />{' '}
+                    </th>
+                    <th>
+                      {' '}
+                      <IntlMessages id="inst.type" />
+                    </th>
+                    <th>
+                      {' '}
+                      <IntlMessages id="menu.instituteT" />
+                    </th>
+                    <th>
+                      {' '}
+                      <IntlMessages id="menu.SchoolsT" />
+                    </th>
+                    <th>
+                      {' '}
+                      <IntlMessages id="dash.specialEducationS" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.instituteComplex" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.instituteShahri" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.instituteRural" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.instituteColdArea" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.instituteWarmArea" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">8</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.institutePublic" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.institutePrivate" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Based On sector */}
+        <Colxx xxs="6">
+          <Card className="mb-4">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.institutesSchoolsBasedOnSector" />
+              </CardTitle>
+
+              <Table striped>
+                <thead>
+                  <tr>
+                    <th>
+                      {' '}
+                      <IntlMessages id="marks.No" />{' '}
+                    </th>
+                    <th>
+                      {' '}
+                      <IntlMessages id="dash.sector" />
+                    </th>
+                    <th>
+                      {' '}
+                      <IntlMessages id="menu.instituteT" />
+                    </th>
+                    <th>
+                      {' '}
+                      <IntlMessages id="menu.SchoolsT" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.sectorType_1" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.sectorType_2" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.sectorType_3" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.sectorType_4" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.sectorType_5" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.sectorType_6" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.sectorType_7" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">8</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.sectorType_8" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.sectorType_9" />
+                    </td>
+                    <td>58</td>
+                    <td>58</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Based On Field */}
+        <Colxx xxs="12" sm="4" md="8" className="mb-4">
+          <Card className={className} style={{ minHeight: '900px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.insituteField" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '900px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>
+                          {' '}
+                          <IntlMessages id="marks.No" />{' '}
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="menu.field" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="menu.instituteT" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="menu.SchoolsT" />
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_1" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_2" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_3" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">4</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_4" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">5</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_5" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">6</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_6" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">7</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_7" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">8</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_8" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">9</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_9" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">10</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_10" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">11</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_11" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">12</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_12" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">13</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_13" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">14</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_14" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">15</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_15" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">16</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_16" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">17</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_17" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">18</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_18" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">19</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_19" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">20</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_20" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">21</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_21" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">22</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_22" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">23</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_23" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">24</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_24" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">25</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_25" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">26</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_26" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">27</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_27" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">28</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_28" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">29</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_29" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">30</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_30" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">31</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_31" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">32</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_32" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">33</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_33" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">34</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_34" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">35</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_35" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">36</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_36" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">37</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_37" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">38</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_38" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">39</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_39" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">40</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_40" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">41</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_41" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">42</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_42" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">43</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_43" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">44</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_44" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">45</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_45" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">46</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_46" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">47</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_47" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">48</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_48" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">49</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_49" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">50</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_50" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">51</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_51" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">52</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_52" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">53</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_53" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">54</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_54" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">55</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_55" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">56</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_56" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">57</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_57" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">58</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_58" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">59</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_59" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">60</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_60" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">61</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_61" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">62</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_62" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">63</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_63" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">64</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_64" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                    </tbody>
+                    <thead>
+                      <tr>
+                        <th>
+                          {' '}
+                          <IntlMessages id="marks.No" />{' '}
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="menu.field" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="menu.instituteT" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="menu.SchoolsT" />
+                        </th>
+                      </tr>
+                    </thead>
+                  </Table>
+                </PerfectScrollbar>
               </div>
-            </Step>
-          </Steps>
-          <BottomNavigation
-            onClickNext={onClickNext}
-            onClickPrev={onClickPrev}
-            className={` m-5  ${bottomNavHidden && 'invisible'}`}
-            prevLabel={messages['wizard.prev']}
-            nextLabel={messages['wizard.next']}
-          />
-        </Wizard>
-      </CardBody>
-    </Card>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Institute List */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '900px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.instituteList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '900px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Based On Based on Provinces */}
+        <Colxx xxs="12" sm="4" md="12" className="mb-4">
+          <Card className={className} style={{ minHeight: '900px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.statisticsBasedOnProvinces" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '900px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <Table>
+                    <thead className="thead-dark ">
+                      <tr>
+                        <th colspan="6" className="border text-center"></th>
+                        <th colspan="2" className="border text-center">
+                          <IntlMessages id="menu.teacher" />
+                        </th>
+                        <th colspan="2" className="border text-center">
+                          <IntlMessages id="dash.students" />
+                        </th>
+                      </tr>
+                    </thead>
+                    <thead>
+                      <tr>
+                        <th>
+                          {' '}
+                          <IntlMessages id="marks.No" />{' '}
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="forms.ProvinceLabel" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="dash.institute" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="dash.school" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="dash.Special Education" />
+                        </th>
+
+                        <th>
+                          {' '}
+                          <IntlMessages id="dash.field-1" />
+                        </th>
+
+                        <th>
+                          {' '}
+                          <IntlMessages id="dash.male" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="dash.female" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="dash.male" />
+                        </th>
+                        <th>
+                          {' '}
+                          <IntlMessages id="dash.female" />
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">4</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">5</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">6</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">7</th>
+                        <td>Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">8</th>
+                        <td>Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">9</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">10</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">11</th>
+                        <td>Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">12</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">13</th>
+                        <td>Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">14</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">15</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">16</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">17</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">18</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">19</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">20</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">21</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">22</th>
+                        <td> Kabul</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">23</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_23" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">24</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_24" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">25</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_25" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">26</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_26" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">27</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_27" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">28</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_28" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">29</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_29" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">30</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_30" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">31</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_31" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">32</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_32" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">33</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_33" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">34</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_34" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                      <tr>
+                        <th scope="row">35</th>
+                        <td>
+                          {' '}
+                          <IntlMessages id="dash.field_35" />
+                        </td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                        <td>58</td>
+                      </tr>{' '}
+                    </tbody>
+                  </Table>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Schools list */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '700px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.schoolsList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '600px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Dorms list */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '700px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.dormsList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Fields List */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '700px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.fieldsList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '600px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        {/* Notification */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.notifcation" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  {comments.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="d-flex flex-row mb-3 pb-3 border-bottom"
+                      >
+                        <NavLink to={`${adminRoot}/pages/product/details`}>
+                          <img
+                            src={item.thumb}
+                            alt={item.title}
+                            className="img-thumbnail border-0 rounded-circle list-thumbnail align-self-center xsmall"
+                          />
+                        </NavLink>
+
+                        <div className="pl-3 pr-2">
+                          <NavLink to={`${adminRoot}/pages/product/details`}>
+                            <p className="font-weight-medium mb-0">
+                              {item.title}
+                            </p>
+                            <p className="text-muted mb-0 text-small">
+                              {item.detail}
+                            </p>
+                            {displayRate && (
+                              <div className="form-group mb-1 mt-2">
+                                <Rating
+                                  total={5}
+                                  rating={5}
+                                  interactive={false}
+                                />
+                              </div>
+                            )}
+                          </NavLink>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Calendar />
+        </Colxx>
+
+        {/* Total statistics */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStatistics" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Colxx>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfInstitute" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>5000</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfSchool" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>500</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfDorms" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfTeachers" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>90</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
+        </Colxx>
+      </Row>
+    </>
   );
 };
-export default injectIntl(StudentRegistraion);
+
+export default ProvincailDashboard;

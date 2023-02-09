@@ -15,6 +15,7 @@ import { injectIntl } from 'react-intl';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
+import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
 // import Breadcrumb from '../navs/Breadcrumb';
@@ -50,11 +51,15 @@ const ListPageHeading = ({
   onProvinceSearchKey,
   onResetClick,
   reset,
+  institutes,
+  onInstituteSelect,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   const { messages } = intl;
-
+  const [selectedInstitute, setSelectedInstitute] = useState('');
+  console.log('selectedInstitute12', selectedInstitute);
+  onInstituteSelect(selectedInstitute);
   return (
     <Row>
       <Colxx xxs="12">
@@ -157,73 +162,83 @@ const ListPageHeading = ({
               </a>
             </span>
             <div className="d-block d-md-inline-block pt-1">
-              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                <DropdownToggle caret color="outline-dark" size="xs">
-                  <IntlMessages id="filter" />
-                  {selectedGenderOption.label}
-                </DropdownToggle>
-                <DropdownMenu>
-                  {genderOptions.map((order, index) => {
-                    return (
-                      <DropdownItem
-                        key={index}
-                        onClick={() => changeGenderBy(order.column)}
-                      >
-                        {order.label}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                <DropdownToggle caret color="outline-dark" size="xs">
-                  <IntlMessages id="filter" />
-                  {selectedProvinceOption.label}
-                </DropdownToggle>
-                <DropdownMenu
-                  style={{
-                    height: '200px',
-                    overflowY: 'scroll',
-                    overflowX: 'hidden',
-                  }}
-                >
-                  {provinces.map((order, index) => {
-                    return (
-                      <DropdownItem
-                        key={index}
-                        onClick={() => changeProvinceBy(order.column)}
-                      >
-                        {order.label}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                <input
-                  type="text"
-                  name="district"
-                  id="district"
-                  placeholder={messages['search.district']}
-                  onKeyPress={(e) => onDistrictSearchKey(e)}
-                />
-              </div>
-              <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                <input
-                  type="text"
-                  name="keyword"
-                  id="search"
-                  placeholder={messages['search.id']}
-                  onKeyPress={(e) => onIdSearchKey(e)}
-                />
-              </div>
+              <div className="row">
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectedGenderOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {genderOptions.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeGenderBy(order.column)}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectedProvinceOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {provinces.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeProvinceBy(order.column)}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  <input
+                    type="text"
+                    name="district"
+                    id="district"
+                    placeholder={messages['search.district']}
+                    onKeyPress={(e) => onDistrictSearchKey(e)}
+                  />
+                </div>
+                {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  <input
+                    type="text"
+                    name="keyword"
+                    id="search"
+                    placeholder={messages['search.id']}
+                    onKeyPress={(e) => onIdSearchKey(e)}
+                  />
+                </div> */}
+                <div className="">
+                  <ReactAutoSugegst
+                    data={institutes}
+                    select={(opt) => {
+                      setSelectedInstitute(opt);
+                    }}
+                    placeholder={messages['dorm.search.name']}
+                  />
+                </div>
 
-              {/* <Row>
+                {/* <Row>
                 <Colxx xs="12" sm="12" className="mb-4">
                   <ReactAutoSugegst data={institutes} />
                 </Colxx>
               </Row> */}
-
+              </div>
               <Button
                 color="outline-dark"
                 size="xs"
@@ -232,7 +247,8 @@ const ListPageHeading = ({
                   changeGenderBy('all');
                   changeProvinceBy('all');
                   document.getElementById('district').value = '';
-                  document.getElementById('search').value = '';
+                  // document.getElementById('search').value = '';
+                  setSelectedInstitute('');
                   onResetClick(!reset);
                 }}
               >

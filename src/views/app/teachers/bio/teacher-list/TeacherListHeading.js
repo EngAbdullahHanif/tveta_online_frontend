@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
@@ -67,7 +66,6 @@ const ListPageHeading = ({
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
 
   const [selectedInstitute, setSelectedInstitute] = useState('');
-  console.log('selectedInstitute', selectedInstitute);
   onInstituteSelect(selectedInstitute);
   const { messages } = intl;
 
@@ -174,75 +172,78 @@ const ListPageHeading = ({
             </span>
 
             <div className="d-block d-md-inline-block pt-1">
-              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                <DropdownToggle caret color="outline-dark" size="xs">
-                  <IntlMessages id="filter" />
-                  {selectedGenderOption.label}
-                </DropdownToggle>
-                <DropdownMenu>
-                  {genderOptions.map((order, index) => {
-                    return (
-                      <DropdownItem
-                        key={index}
-                        onClick={() => changeGenderBy(order.column)}
-                      >
-                        {order.label}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                <DropdownToggle caret color="outline-dark" size="xs">
-                  <IntlMessages id="filter" />
-                  {selectedProvinceOption.label}
-                </DropdownToggle>
-                <DropdownMenu
-                  style={{
-                    height: '200px',
-                    overflowY: 'scroll',
-                    overflowX: 'hidden',
-                  }}
-                >
-                  {provinces.map((order, index) => {
-                    return (
-                      <DropdownItem
-                        key={index}
-                        onClick={() => changeProvinceBy(order.column)}
-                      >
-                        {order.label}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                <input
-                  type="text"
-                  name="district"
-                  id="district"
-                  placeholder={messages['search.district']}
-                  onKeyPress={(e) => onDistrictSearchKey(e)}
-                />
-              </div>
-              <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                <input
-                  type="text"
-                  name="keyword"
-                  id="search"
-                  placeholder={messages['search.id']}
-                  onKeyPress={(e) => onIdSearchKey(e)}
-                />
-              </div>
+              <div className="row">
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectedGenderOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {genderOptions.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeGenderBy(order.column)}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectedProvinceOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {provinces.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeProvinceBy(order.column)}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  <input
+                    type="text"
+                    name="district"
+                    id="district"
+                    placeholder={messages['search.district']}
+                    onKeyPress={(e) => onDistrictSearchKey(e)}
+                  />
+                </div>
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  <input
+                    type="text"
+                    name="keyword"
+                    id="search"
+                    placeholder={messages['search.id']}
+                    onKeyPress={(e) => onIdSearchKey(e)}
+                  />
+                </div>
 
-              <Row>
-                <Colxx xs="12" sm="12" className="mb-4">
+                <div>
                   <ReactAutoSugegst
                     data={institutes}
-                    // onSelect={(e) => setSelectedInstitute(e)}
+                    select={(opt) => {
+                      setSelectedInstitute(opt);
+                    }}
+                    placeholder={messages['search.institute.name']}
                   />
-                </Colxx>
-              </Row>
+                </div>
+              </div>
 
               <Button
                 color="outline-dark"
@@ -253,6 +254,7 @@ const ListPageHeading = ({
                   changeProvinceBy('all');
                   document.getElementById('district').value = '';
                   document.getElementById('search').value = '';
+                  setSelectedInstitute('');
                   onResetClick(!reset);
                 }}
               >

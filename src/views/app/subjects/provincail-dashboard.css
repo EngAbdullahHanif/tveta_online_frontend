@@ -1,0 +1,51 @@
+/* @keyframes example {
+  0% {
+    color: rgb(253, 231, 231);
+    right: 10%;
+  }
+  25% {
+    color: rgb(252, 197, 200);
+    right: 25%;
+  }
+  50% {
+    color: rgb(250, 153, 153);
+    right: 50%;
+  }
+  75% {
+    color: rgb(248, 157, 185);
+    right: 60%;
+  }
+  100% {
+    color: rgb(255, 209, 209);
+    right: 70%;
+  }
+  from {
+    color: rgb(250, 209, 209);
+  }
+  to {
+    color: rgb(252, 132, 152);
+  }
+}
+
+div h1 {
+  width: 25%;
+  height: 100px;
+  animation: mymove 5s infinite;
+  position: relative;
+  animation-name: example;
+  animation-duration: 10s;
+
+  animation-iteration-count: infinite;
+} */
+
+#divId:hover {
+  transform: scale(
+    1.1
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  transition: transform 1s; /* Animation */
+  border-top-right-radius: 50px 40px;
+  border-bottom-left-radius: 50px 40px;
+  animation-duration: 10s;
+  z-index: 3;
+  background-color: rgb(46, 45, 45);
+}

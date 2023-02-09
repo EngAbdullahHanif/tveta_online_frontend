@@ -35,7 +35,7 @@ const ViewUnauthorized = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ './views/unauthorized')
 );
 
-import StudentRegistrationBio from './Student/Registraion‌Bio';
+// import StudentRegistrationBio from './Student/Registraion‌Bio';
 
 const App = ({ locale }) => {
   const direction = getDirection();

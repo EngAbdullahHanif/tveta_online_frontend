@@ -28,6 +28,11 @@ const data = [
         label: 'menu.teacher-evaluation',
         to: `${adminRoot}/teachers/teacher-evalaution`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.teacher-transfer',
+        to: `${adminRoot}/teachers/teacher-transfer`,
+      },
     ],
   },
   {
@@ -69,6 +74,30 @@ const data = [
         icon: 'simple-icon-user',
         label: 'menu.student-profile',
         to: `${adminRoot}/students/student-profile`,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.student-transfer',
+        to: `${adminRoot}/students/student-transfer`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.marks-display',
+        to: `${adminRoot}/students/marks-display`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.marks-display-all-subs',
+        to: `${adminRoot}/students/marks-display-allsubs`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.attendance',
+        to: `${adminRoot}/students/attendance`,
+        newWindow: false,
       },
     ],
   },
@@ -243,6 +272,16 @@ const data = [
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.institute-upgrade',
+        to: `${adminRoot}/institutes/institute-upgrade`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.Institute-details',
+        to: `${adminRoot}/institutes/institute-details`,
+      },
     ],
   },
   {
@@ -266,6 +305,16 @@ const data = [
         label: 'menu.student-register-in-dorm',
         to: `${adminRoot}/dorms/student-register`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.dorm-students',
+        to: `${adminRoot}/dorms/students`,
+      },
+      {
+        icon: 'simple-icon-check',
+        label: 'menu.dorm-details',
+        to: `${adminRoot}/dorms/details`,
+      },
     ],
   },
   {
@@ -278,6 +327,21 @@ const data = [
         icon: 'simple-icon-plus',
         label: 'subject.register',
         to: `${adminRoot}/subjects/register`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'subject.curriculum',
+        to: `${adminRoot}/subjects/curriculum`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'provincail Dashboard',
+        to: `${adminRoot}/subjects/provincial-dash`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'Admin dashboard',
+        to: `${adminRoot}/subjects/admin-dashboard`,
       },
     ],
   },
@@ -334,8 +398,14 @@ const data = [
         label: 'menu.teacher-promotion-demotion',
         to: `${adminRoot}/evaluations/promotion-demotion`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'جزیات ارزیابی',
+        to: `${adminRoot}/evaluations/evaluation-details`,
+      },
     ],
   },
+
   {
     id: 'hr-evaluations',
     icon: 'simple-icon-book-open',

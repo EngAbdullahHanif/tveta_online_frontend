@@ -26,42 +26,54 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
               {/* send this to localhost/students/:id */}
 
-              <NavLink to={`${student.student_id}`} className="">
-                <p className="list-item-heading mb-1 truncate">
+              <NavLink to={`student/${student.student_id}`} className="">
+                <p className="list-item-heading mb-1 truncate ">
                   <span className="mr-5">{student.student_id}</span>
                   {student.name}
                 </p>
               </NavLink>
-              <p className="mb-1 text-small">{student.father_name}</p>
+              <p className="mb-1 text-small w-10 w-sm-100">
+                {student.father_name}
+              </p>
 
               {/* UN COMMINT IT WHEN THE API IS COMPLETED */}
               {/* <p className="mb-1 text-small">{student.class}</p>
               <p className="mb-1 text-small">{student.department}</p>
               <p className="mb-1 text-small">{student.institute}</p> */}
 
-              <p className="mb-1 text-small">{student.current_province}</p>
-              <p className="mb-1 text-small">{student.internse_type}</p>
+              <p className="mb-1 text-small w-10 w-sm-100">
+                {student.current_province}
+              </p>
+              {/* <p className="mb-1 text-small">{student.internse_type}</p> */}
               {student.internse_type === 1 ? (
-                <p className="mb-1 text-small">حکمی</p>
+                <p className="mb-1 text-small w-10 w-sm-100">حکمی</p>
               ) : student.internse_type === 2 ? (
-                <p className="mb-1 text-small">کانکور اختصاصی</p>
+                <p className="mb-1 text-small w-10 w-sm-100">کانکور اختصاصی</p>
               ) : (
-                <p className="mb-1 text-small">کانکور تحصیلات عالی</p>
+                <p className="mb-1 text-small w-10 w-sm-100">
+                  کانکور تحصیلات عالی
+                </p>
               )}
 
-              {student.study_types === '1' ? (
-                <div className="mb-1 text-small">
+              {student.graduat_14_types === '1' ? (
+                <div className="mb-1 text-small ">
                   <Badge color="success" pill>
                     فارغ التحصیل
                   </Badge>
                 </div>
-              ) : student.study_types == '3' ? (
+              ) : student.graduat_14_types == '3' ? (
                 <div className="mb-1 text-small">
                   <Badge color="danger" pill>
                     منفک
                   </Badge>
                 </div>
-              ) : null}
+              ) : (
+                <div className="mb-1 text-small">
+                  <Badge color="warning" pill>
+                    جاری
+                  </Badge>
+                </div>
+              )}
             </div>
             {/* <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
               <CustomInput

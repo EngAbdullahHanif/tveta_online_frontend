@@ -163,6 +163,13 @@ module.exports = {
   'menu.student-register-in-dorm': 'Student Registration',
   'menu.teacher-HR-evaluation': 'HR Evaluation',
   'menu.teacher-promotion-demotion': 'Promotion/Demotion',
+  'menu.teacher-transfer': 'Teacher Transfer',
+  'menu.institute-upgrade': 'Institute/School Upgrade',
+  'menu.student-transfer': 'Student Transfer',
+  'menu.Institute-details': 'Institute Details',
+  'menu.dorm-details': 'Dorm Details',
+  'menu.marks-display': 'Marks',
+  'menu.marks-display-all-subs': 'Marks of All Subjects',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -406,6 +413,7 @@ module.exports = {
   'button.Back': 'Back',
   'button.TeacherBackround': 'Background',
   'button.Teacherprofile': 'profile',
+  'button.back': 'Back',
 
   'button.states-text':
     'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
@@ -421,6 +429,7 @@ module.exports = {
   'button.right': 'Right',
   'button.dropdown': 'Dropdown',
   'button.dropdown-link': 'Dropdown Link',
+  'submit.waitmessage': 'Submitting...',
 
   /* 07.04.Cards */
   'cards.icon-card': 'Icon Card',
@@ -497,6 +506,7 @@ module.exports = {
   'forms.tags': 'Tags',
   'forms.date': 'Date',
   'forms.TazkiraType': 'ID card (Tazkira) Type',
+  'forms.StdTazkiraTypeErr': 'Tazkira Type Required!',
   'forms.top-labels-in-input': 'Top Labels In Input',
   'forms.email-u': 'E-MAIL',
   'forms.password-u': 'PASSWORD',
@@ -552,6 +562,7 @@ module.exports = {
   'forms.CurrentAddresslabel': 'Current Address',
   'forms.ProvinceLabel': 'Province',
   'forms.ProvinceErr': 'Province is Required!',
+
   'forms.DistrictLabel': 'District',
   'forms.DistrictErr': 'District Is Required!',
   'forms.VillageLabel': 'Village/Area',
@@ -587,6 +598,9 @@ module.exports = {
   'forms.StdGraduationYearLabel': 'Graduation Year',
   'forms.StdGraduationYearErr': 'Graduation Year Is Required!',
   'student.results': 'Results',
+  'forms.personalInfo': 'Personal Info',
+
+  'student.educationType': 'Education Type',
 
   // provinces of Afghanistan
   'forms.StdSchoolProvinceOptions_1': 'Badakhshan',
@@ -635,9 +649,9 @@ module.exports = {
   'forms.InstituteLabel': 'Institute/School',
   'forms.InstituteErr': 'Institute required!',
   'forms.FieldLabel': 'Field',
-  'forms.FieldErr': 'Field Required!',
+  'forms.FieldErr': 'Field  Is Required!',
   'forms.StudyTimeLabel': 'Time',
-  'forms.StudyTimeErr': 'Time!',
+  'forms.StudyTimeErr': 'Study Time Is Required!',
   'forms.StudyTimeOption_1': 'Day Shift',
   'forms.StudyTimeOption_2': 'Night Shift',
   'forms.SubimssionButton': 'Submit',
@@ -656,6 +670,7 @@ module.exports = {
   'forms.StdSicknessErr': 'this field is required!',
   'forms.StdNecessaryWorkLabel': 'Necessary Work',
   'forms.ConfirmButton': 'Confirm',
+  'menu.attendance': 'Attendance',
 
   // Field Registration
   'field.FieldRegisterTitle': 'Field Registeration',
@@ -671,7 +686,6 @@ module.exports = {
   'field.FieldIdErr': 'Field Id Required!',
 
   // Teacher Registration section
-
   'teacher.RegisterTitle': 'Teacher Registration',
   'teacher.NameLabel': 'Name',
   'teacher.NameErr': 'Teacher Name Required!',
@@ -692,9 +706,10 @@ module.exports = {
   'teacher.EmailLabel': 'Email Address',
   'teacher.EmailErr': 'Email is Required!',
   'teacher.EmailRequiredErr': 'Email is incorrect!',
+
   'teacher.LevelOfEducationLabel': 'Education Level',
   'teacher.LevelOfEducationErr': 'Education Level Required!',
-  'teacher.EducationLevelOption_1': '14 years degree',
+  'teacher.EducationLevelOption_1': '14 Years Degree',
   'teacher.EducationLevelOption_2': 'Bachelor',
   'teacher.EducationLevelOption_3': 'Master',
   'teacher.EducationLevelOption_4': 'PHD',
@@ -705,8 +720,30 @@ module.exports = {
   'teacher.StatusOption_1': 'Active',
   'teacher.StatusOption_2': 'Dismissed',
   'teacher.StatusLabel': 'Status',
-  'teacher.StatusErr': 'Teacher Status is Required!',
+  'teacher.StatusErr': 'Status is Required!',
   'teacher.Profile': 'Teacher profile',
+  'teacher.teachingFieldLabel': 'Teaching field',
+  'teacher.teachingFieldErr': 'Teaching Field Required!',
+  'teacher.jobLocationLabel': 'Job location',
+  'teacher.jobLocationErr': 'Job location Is Required!',
+  'teacher.langOptions_1': 'Pashto',
+  'teacher.langOptions_2': 'Dari',
+  'teacher.langOptions_3': 'English',
+  'teacher.teachingLang': 'Teaching language',
+  'teacher.appointmentTOptions_1': 'formal',
+  'teacher.appointmentTOptions_2': 'Contractual',
+  'teacher.appointmentTypeLabel': 'Appointment Type',
+  'teacher.appointmentTypeErr': 'Appointment Type',
+  'teacher.contractTypeLabel': 'Contract Type',
+  'teacher.contractTypeErr': 'Contract Type is Required!',
+  'teacher.contractTypeOptions_1': 'In the formation',
+  'teacher.contractTypeOptions_2': 'Out of formation',
+  'teacher.ProfessionalRanksLabel': 'Professional Rank',
+  'min.minInputValue': 'Input should be at eleast three characters',
+  'min.minInputValues': 'Input should be at eleast 10 characters',
+  'max.maxInputValue': 'Input value can not exceed than 50 characters',
+  'min.minTazkiraInputValue': 'Input should be at eleast 5 characters',
+  'max.maxTazkiraInputValue': 'Input value can not exceed than 17 characters',
 
   // Teacher Grade
   'teacher.GradeOption_3': 'Third Grade ',
@@ -731,20 +768,26 @@ module.exports = {
 
   // Institute
   'inst.register.title': 'Institute/School Registration',
-  'inst.name': 'Name',
-  'inst.type': 'Type',
+  'inst.name': 'Institute Name',
+  'inst.nameErr': 'Institute Name Required!',
+  'inst.type': 'Institute Type',
+  'inst.typeErr': 'Institute Type Required!',
   // Gender
   'institute.studentgenderOption_1': 'Male',
   'institute.studentgenderOption_2': 'Female',
   'institute.studentgenderOption_3': 'Both',
+  'institute.gender': 'Institute Gender Required!',
   // Type
   'institute.instTypeOptions_1': 'Public',
   'institute.instTypeOptions_2': 'Private',
+  'institute.director': 'Director',
+  'institute.manager': 'Manager',
 
   // Marks
   'marks.SectionLabel': 'Section',
   'marks.SemesterLabel': 'Semester',
   'marks.SubjectLabel': 'Subject',
+  'marks.SubjectErr': 'Subject Is Required!',
   'marks.SemesterOption_1': 'First',
   'marks.SemesterOption_2': 'Second',
   'marks.SemesterOption_3': 'Third',
@@ -755,6 +798,7 @@ module.exports = {
   'marks.SectionOption_4': 'D',
   'marks.SectionOption_5': 'E',
   'marks.ClassLabel': 'Class',
+  'marks.ClassErr': 'Class Is Required!',
   'marks.ClassOption_1': '9th',
   'marks.ClassOption_2': '10th',
   'marks.ClassOption_3': '11th',
@@ -766,6 +810,8 @@ module.exports = {
   'marks.ID': 'ID',
   'marks.FatherName': 'FatherName',
   'marks.Marks': 'Marks',
+  'marks.marksDisplayTitle': 'Marks',
+  'marks.studentChar': 'Students Info',
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',
@@ -807,11 +853,13 @@ module.exports = {
 
   // Teacher Evaluation
   'teacher.IdLabel': 'Teacher Id',
+  'teacher.IdErr': 'Teacher Id Name Required!',
   'teacher.EvalautionTitle': 'Teacher Evaluation',
+  'teacher.EvalautionTitle1': 'Teacher Evaluation By TVETA',
   'teacher.InstituteIdLabel': 'Institute Id',
   // 'teacher.InstituteIdErr': 'Institute Id Required!',
   'teacher.departmentIdLabel': 'Department Id',
-  // 'teacher.departmentIdErr': 'Department Id Required!',
+  'teacher.departmentIdErr': 'Department Id Required!',
   'teacher.classIdLabel': 'Class  Id',
   // 'teacher.classIdErr': 'Class Id Required!',
   'teacher.subjectIdLabel': 'Subject Id',
@@ -820,11 +868,13 @@ module.exports = {
   'teacher.topicErr': 'Evaluation Topic  is Required!',
   'teacher.evaluatorLabel': 'Evaluator',
   'teacher.evaluatorErr': 'Evaluator Name Topic  is Required!',
+  'teacher.evaluationTypeLabel': 'Evaluation Type',
+  'teacher.evaluationTypeErr': 'Evaluation Type Is Required!',
   'teacher.evaluationTypeOption_1': 'Goal Oriented',
   'teacher.evaluationTypeOption_2': 'Activity Oriented',
   'teacher.strengthPointsLabel': 'Strength Points',
   'teacher.strengthPointsErr': 'Strength Points  Required!',
-  'teacher.weakNessPointsLabel': 'Weakness Points',
+  'teacher.weaknessPointsLabel': 'Weakness Points',
   'teacher.weaknessPointsErr': 'Weakness Points  Required!',
   'teacher.marksLabel': 'Marks',
   'teacher.marksErr': 'Marks  Required!',
@@ -832,9 +882,13 @@ module.exports = {
   'teacher.evaluationDateErr': 'Evaluation Date is  Required!',
   'teacher.suggestionLabel': 'Suggestions',
   // 'teacher.suggestionErr': 'Evaluations Date is  Required!',
+  'evaluation.evaluationDetails': 'Details',
+  'teacher.EvaluatedMale': 'Evaluated Male',
+  'teacher.EvaluatedFemale': 'Evaluated Female',
 
   // HR Evaluation
   'teacher.EvalautionHrTitle': 'Teacher Hr Evaluation',
+  'teacher.EvalautionHrTitle1': 'HR Evaluation',
   'teacher.curretGradeLabel': 'Current Grade',
   'teacher.currentStepLabel': 'Current Step',
   'teacher.newGradeLabel': 'New Grade',
@@ -845,7 +899,78 @@ module.exports = {
   'teacher.promotionLabel': 'Teacher Promotion',
   'teacher.demotionLabel': 'Demotion',
 
+  // Teacher Transfer
+  'teacher.Transfer': 'Teacher Transfer',
+  'treacher.TansferTitle': 'Teacher Transfer',
+  'search.teacherIdSearchLabel': 'Please Enter The Teacher Id',
+  'button.Teacher-transfer': 'Transfer',
+  'teacher.TransferNewInfoTittle': 'New Institute',
+  'teacher.transferDateLabel': 'Transfer Date',
+  'teacher.transferDateErr': 'Transfer Date Required!',
+  'teacher.fileUploadBttn': 'Upload',
+  'teacher.transferDocuments': 'Transfer Documents',
 
+  // Institute Upgrade
+  'institute.UpgradeTitle': 'Institute/School Upgrade',
+  'search.instituteIdSearchLabel': 'Please Enter The Institute Id',
+  'button.institute-upgrade': 'Upgrade',
+  'forms.upgradingOptionsLabel': 'Upgrade',
+  'institute.upgradingOptions_1': 'Institute',
+  'institute.upgradingOptions_2': 'Special Educations',
+  'institute.upgradingOptions_3': 'Private Institute',
+  'institute.newNameLabel': 'New Name',
+  'institute.upgradeDateLabel': 'Upgrading Date',
+  'institute.upgradingDocuments': 'Upgrading Documents',
+
+  // Student Transfer
+  'student.buttonTransfer': 'Transfer',
+  'student.transferTitle': 'Transfer',
+  'student.transferDateLabel': 'Transfer Date',
+  'student.transferDocuments': 'Upgrading Documents',
+
+  // Curriculum
+  'subject.curriculum': 'Curriculum',
+  'curriculum.curriculumTittle': 'Curriculum',
+  'curriculum.departmentIdLabel': 'Department Id',
+  'curriculum.subjectdLabel': 'Subject',
+  'curriculum.classLabel': 'Class',
+  'curriculum.eduactionalYearLabel': 'Educational Year',
+
+  //Institute Details Page
+  'institute.detailsTitle': 'More Details',
+  'institute.totalStudents': 'Total Students',
+  'institute.totalStudentsMale': 'Male',
+  'institute.totalStudentsFemale': 'Female',
+  'institute.totalTeachers': 'Total Teachers',
+  'institute.totalDepartments': 'Total Departments',
+  'institute.Greduated_12': '12th Class Graduated',
+  'institute.Greduated_14': '14th Class Graduated',
+
+  // Dashboard Provincial
+  'dashboard.provincail': 'Provincail Dashboard',
+  'dash.totalStudentsInst': 'Total Institutes Students',
+  'dash.totalStudentsScool': 'Total Schools Students',
+  'dash.totalStudentsDorm': 'Total Dorm Students',
+  'dash.DormStudentType_1': 'Cash Payment',
+  'dash.DormStudentType_2': 'Room And Cash Payment',
+  'dash.totalStatistics': 'Total Statistics',
+  'dash.totalNumberOfInstitute': 'Total Institutes',
+  'dash.totalNumberOfSchool': 'Total Schools',
+  'dash.totalNumberOfDorms': 'Total Dorms',
+  'dash.totalNumberOfTeachers': 'Totol Teachers',
+  'dash.14YearsGreduatedMale': '14 Years Degree Male',
+  'dash.14YearsGreduatedFemale': '14 Years Degree Female',
+  'dash.bachelorMale': 'Bachelor Male',
+  'dash.bachelorFemale': 'Bachelor Female',
+  'dash.phdMale': 'PHD Male',
+  'dash.phdFemale': 'PHD Female',
+  'dash.instituteList': 'Institutes',
+  'dash.schoolsList': 'Schools',
+  'dash.dormsList': 'Dorms',
+  'dash.fieldsList': 'Fields',
+  'dash.notifcation': 'Notifications',
+
+  // Dorm details page
   // Subject
   // // Subject
   //   'forms.SubjectTitle': 'Subject Registration',
@@ -1009,4 +1134,7 @@ module.exports = {
   'wizard.prev': 'Back',
   'wizard.registered': 'Your registration completed successfully!',
   'wizard.async': 'Async save for 3 seconds!',
+
+  'forms.educationYearLabel': 'Educational Year',
+  'forms.educationYearErr': 'Eduactional Year Required!',
 };

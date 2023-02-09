@@ -24,7 +24,7 @@ import logo from './../../../../assets/logos/AdminLogo.png';
 import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 
 import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
+import { Colxx, Separator } from 'components/common/CustomBootstrap';
 
 import {
   FormikReactSelect,
@@ -42,32 +42,43 @@ const StudentProfile = () => {
   const [student, setStudent] = useState([]);
   const [institute, setInstitute] = useState([]);
   const [classs, setClasss] = useState([]); //classs is used because class is a reserved word
+  const [dorm, setDorm] = useState([]);
   const [marks, setMarks] = useState([]);
 
   //load data of student from database
   useEffect(() => {
     async function fetchStudent() {
-      const response = await axios.get(`${studentApiUrl}?std_id=${studentId}`);
+      const response = await axios.get(
+        `${studentApiUrl}?student_id=${studentId}`
+      );
       const data = await response.data;
       setStudent(data);
 
       const instituteResponse = await axios.get(
-        `${studentApiUrl}stdInstitutes/?student_id=${studentId}`
+        `${studentApiUrl}student_institutes/?student_id=${studentId}`
       );
       const instituteData = await instituteResponse.data;
       setInstitute(instituteData);
 
-      //type =1 means current class or continued class
+      //type =1 means current class or current continued class
       const classResponse = await axios.get(
-        `${studentApiUrl}stdClass/?student_id=${studentId}&type=1`
+        `${studentApiUrl}student_class/?student_id=${studentId}&type=1`
       );
       const classData = await classResponse.data;
       setClasss(classData);
 
-      const marksResponse = await axios.get(
-        `${studentApiUrl}stdmarks_Results/?student_id=${studentId}`
+      const dormResponse = await axios.get(
+        `${studentApiUrl}student_dorms/?student_id=${studentId}`
       );
+      const dormData = await dormResponse.data;
+      setDorm(dormData);
+
+      const marksResponse = await axios.get(
+        `${studentApiUrl}TranscriptData/?student_id=${studentId}`
+      );
+      console.log(`${studentApiUrl}TranscriptData/?student_id=${studentId}`);
       const marksData = await marksResponse.data;
+      console.log('marksData', marksData);
       setMarks(marksData);
     }
     fetchStudent();
@@ -88,243 +99,459 @@ const StudentProfile = () => {
 
   return (
     <>
-      <Card>
-        <CardBody>
-          <Row className="position-static">
-            <Colxx className="mt-5 m-5" xxs="8">
-              <h3>{<IntlMessages id="student.Profile" />}</h3>
-            </Colxx>
-            <Colxx className="mt-4 " style={{ paddingRight: '10%' }}>
-              <div className=" align-items-center flex-column ">
-                <img src={logo} alt="Logo" width={'50%'} />
-                <p>
-                  د تخنیکی او مسلکی زده کړو اداره
-                  <br />
-                  اداره تعلیمات تخنیکی و مسلکی
-                </p>
-              </div>
-            </Colxx>
-          </Row>
+      <Row className="position-static">
+        <Colxx className="mt-5 m-5" xxs="8">
+          <h3>{<IntlMessages id="student.Profile" />}</h3>
+        </Colxx>
+        <Colxx className="mt-4 " style={{ paddingRight: '10%' }}>
+          <div className=" align-items-center flex-column ">
+            <img src={logo} alt="Logo" width={'50%'} />
+            <p>
+              د تخنیکی او مسلکی زده کړو اداره
+              <br />
+              اداره تعلیمات تخنیکی و مسلکی
+            </p>
+          </div>
+        </Colxx>
+      </Row>
 
-          <Row>
-            <Colxx xxs="1"></Colxx>
-            <Colxx>
-              <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
-            </Colxx>
-          </Row>
-          <Row>
-            <Colxx
-              className=" d-flex justify-content-center "
-              style={{ marginRight: '21%' }}
+      <Row>
+        <Colxx xxs="1"></Colxx>
+        <Colxx>
+          <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
+        </Colxx>
+      </Row>
+      <Row>
+        <Colxx
+          className=" d-flex justify-content-center "
+          style={{ marginBottom: '2%' }}
+        >
+          {' '}
+          <div className="d-inline-block">
+            <Button
+              style={{ backgroundColor: isNext ? 'blue' : '' }}
+              size="lg"
+              className="m-2"
+              onClick={() => {
+                handleClick(true);
+              }}
             >
-              {' '}
-              <div className="d-inline-block">
-                <Button
-                  style={{ backgroundColor: isNext ? 'blue' : '' }}
-                  size="lg"
-                  className="m-2"
-                  onClick={() => {
-                    handleClick(true);
-                  }}
-                >
-                  <span className="spinner d-inline-block">
-                    <span className="bounce1" />
-                    <span className="bounce2" />
-                    <span className="bounce3" />
-                  </span>
-                  <span className="label">
-                    <IntlMessages id="button.Teacherprofile" />
-                  </span>
-                </Button>
-                <Button
-                  style={{ backgroundColor: !isNext ? 'blue' : '' }}
-                  size="lg"
-                  className="m-2"
-                  onClick={() => {
-                    handleClick(false);
-                  }}
-                >
-                  <span className="spinner d-inline-block">
-                    <span className="bounce1" />
-                    <span className="bounce2" />
-                    <span className="bounce3" />
-                  </span>
-                  <span className="label">
-                    <IntlMessages id="student.results" />
-                  </span>
-                </Button>{' '}
-              </div>
-            </Colxx>
-          </Row>
-          {/* if student is loaded show it, if not show empty  */}
-          {student.length > 0 && institute.length > 0 && classs.length > 0 && (
-            <>
-              {isNext ? (
-                <div>
-                  <Row className="justify-content-center border border-primary rounded m-5">
-                    <Colxx className=" p-5  border rounded" xxs="">
-                      <Label>
-                        <IntlMessages id="teacher.NameLabel" />
-                      </Label>
-                      <h3>{student[0].name}</h3>
-                      <Label>
-                        <IntlMessages id="teacher.FatherNameLabel" />
-                      </Label>
-                      <h3>{student[0].father_name}</h3>
-                      <Label>
-                        <IntlMessages id="teacher.PhoneNoLabel" />
-                      </Label>
-                      <h3>077000000000</h3>
-                      <Label>
-                        <IntlMessages id="teacher.EmailLabel" />
-                      </Label>
-                      <h3>ahamd12@gmail.com</h3>
+              <span className="spinner d-inline-block">
+                <span className="bounce1" />
+                <span className="bounce2" />
+                <span className="bounce3" />
+              </span>
+              <span className="label">
+                <IntlMessages id="button.Teacherprofile" />
+              </span>
+            </Button>
+            <Button
+              style={{ backgroundColor: !isNext ? 'blue' : '' }}
+              size="lg"
+              className="m-2"
+              onClick={() => {
+                handleClick(false);
+              }}
+            >
+              <span className="spinner d-inline-block">
+                <span className="bounce1" />
+                <span className="bounce2" />
+                <span className="bounce3" />
+              </span>
+              <span className="label">
+                <IntlMessages id="student.results" />
+              </span>
+            </Button>{' '}
+          </div>
+        </Colxx>
+      </Row>
 
-                      <Label>
-                        <IntlMessages id="forms.InstituteLabel" />
-                      </Label>
-                      <h3>{institute[0].institute.name}</h3>
-                      <Label>
-                        <IntlMessages id="marks.ClassLabel" />
-                      </Label>
-                      <h3>{classs[0].class_id.name}</h3>
-                    </Colxx>
-                    <Colxx className="p-5 border rounded">
-                      <Label>
-                        <IntlMessages id="field.SemesterLabel" />
-                      </Label>
-                      <h3>{classs[0].class_id.semester}</h3>
-                      <Label>
-                        <IntlMessages id="field.SectionLabel" />
-                      </Label>
-                      <h3>{classs[0].class_id.section}</h3>
-                    </Colxx>
-                  </Row>
-                </div>
-              ) : (
+      {/* if student is loaded show it, if not show empty  */}
+      {student.length > 0 && institute.length > 0 && classs.length > 0 && (
+        <>
+          {isNext ? (
+            <>
+              <Card className="rounded m-4">
+                <CardBody>
+                  <div>
+                    <Row>
+                      <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                        {' '}
+                        <h2
+                          className="bg-primary "
+                          style={{
+                            padding: '8px',
+                            paddingInline: '30px',
+                            borderRadius: '10px',
+                          }}
+                        >
+                          {' '}
+                          <IntlMessages id="forms.personalInfo" />
+                        </h2>
+                      </Colxx>
+                    </Row>
+                    <Row className="justify-content-center   rounded ">
+                      <Colxx style={{ paddingInline: '4%' }} xxs="">
+                        <Label>
+                          <IntlMessages id="teacher.NameLabel" />
+                        </Label>
+                        <h3>
+                          {student[0].name + '  "' + student[0].last_name + '"'}
+                        </h3>
+                        <Label>
+                          <IntlMessages id="forms.Eng_name" />
+                        </Label>
+                        <h3>
+                          {student[0].english_name +
+                            ' ' +
+                            student[0].english_last_name}{' '}
+                        </h3>
+                        <Label>
+                          <IntlMessages id="teacher.FatherNameLabel" />
+                        </Label>
+                        <h3>{student[0].father_name}</h3>
+
+                        <Label>
+                          <IntlMessages id="forms.Std_father_Eng_Name" />
+                        </Label>
+                        <h3>{student[0].english_father_name}</h3>
+
+                        <Label>
+                          <IntlMessages id="teacher.PhoneNoLabel" />
+                        </Label>
+                        <h3>{student[0].phone_number}</h3>
+                        <Label>
+                          <IntlMessages id="teacher.EmailLabel" />
+                        </Label>
+                        <h3>{student[0].email}</h3>
+                        <Label>
+                          <IntlMessages id="forms.StdTazkiraNoLabel" />
+                        </Label>
+                        <h3>{student[0].registration_number}</h3>
+                        <br />
+                        <br />
+                      </Colxx>
+                      <Colxx style={{ paddingInline: '4%' }}>
+                        {/* if person has paper-based ID card, not electronic */}
+                        {student[0].cover_number && (
+                          <>
+                            <Label>
+                              <IntlMessages id="forms.StdIdCardCoverLabel" />
+                            </Label>
+                            <h3>{student[0].cover_number}</h3>
+                            <Label>
+                              <IntlMessages id="forms.StdIdCardPageNoLabel" />
+                            </Label>
+                            <h3>{student[0].page_number}</h3>
+                          </>
+                        )}
+                        <Label>
+                          <IntlMessages id="forms.StdDoBLabel" />
+                        </Label>
+                        <h3>{student[0].birth_date}</h3>
+                        <Label>
+                          <IntlMessages id="forms.PlaceOfBirthLabel" />
+                        </Label>
+                        <h3>کابل</h3>
+                        <Label>
+                          <IntlMessages id="forms.StdFatherDutyLabel" />
+                        </Label>
+                        <h3>{student[0].fatherـprofession}</h3>
+                        <Label>
+                          <IntlMessages id="forms.StdFatherDutyLocationLabel" />
+                        </Label>
+                        <h3>{student[0].fatherـplaceـofـduty}</h3>
+
+                        <br />
+                        <br />
+                      </Colxx>
+                    </Row>
+                    <Row>
+                      <Colxx style={{ paddingInline: '4%' }}>
+                        {' '}
+                        <h3
+                          className="bg-primary rounded "
+                          style={{ padding: '1%', paddingInline: '3%' }}
+                        >
+                          {' '}
+                          <IntlMessages id="forms.PermanentAddressLabel" />
+                        </h3>
+                        <Separator />
+                        <br />
+                        <Row>
+                          <Colxx>
+                            {' '}
+                            <Label>
+                              <IntlMessages id="forms.ProvinceLabel" />
+                            </Label>
+                            <h3>{student[0].main_province}</h3>
+                          </Colxx>
+                          <Colxx>
+                            {' '}
+                            <Label>
+                              <IntlMessages id="forms.DistrictLabel" />
+                            </Label>
+                            <h3>{student[0].main_district}</h3>
+                          </Colxx>
+                          <Colxx>
+                            {' '}
+                            <Label>
+                              <IntlMessages id="forms.VillageLabel" />
+                            </Label>
+                            <h3>{student[0].main_village}</h3>
+                          </Colxx>
+                        </Row>
+                      </Colxx>
+                      <Colxx style={{ paddingInline: '4%' }}>
+                        {' '}
+                        <h3
+                          className="bg-primary rounded "
+                          style={{ padding: '1%', paddingInline: '3%' }}
+                        >
+                          {' '}
+                          <IntlMessages id="forms.CurrentAddresslabel" />
+                        </h3>
+                        <Separator />
+                        <br />
+                        <Row>
+                          <Colxx>
+                            {' '}
+                            <Label>
+                              <IntlMessages id="forms.ProvinceLabel" />
+                            </Label>
+                            <h3>{student[0].current_province}</h3>
+                          </Colxx>
+                          <Colxx>
+                            {' '}
+                            <Label>
+                              <IntlMessages id="forms.DistrictLabel" />
+                            </Label>
+                            <h3>{student[0].current_district}</h3>
+                          </Colxx>
+                          <Colxx>
+                            {' '}
+                            <Label>
+                              <IntlMessages id="forms.VillageLabel" />
+                            </Label>
+                            <h3>{student[0].current_village}</h3>
+                          </Colxx>
+                        </Row>
+                      </Colxx>
+                    </Row>
+                  </div>
+                </CardBody>
+              </Card>
+
+              <Card className="rounded m-4 mt-5">
+                <CardBody>
+                  <div>
+                    <Row>
+                      <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                        {' '}
+                        <h2
+                          className="bg-primary "
+                          style={{
+                            padding: '8px',
+                            paddingInline: '30px',
+                            borderRadius: '10px',
+                          }}
+                        >
+                          {' '}
+                          <IntlMessages id="teacher.LevelOfEducationLabel" />
+                        </h2>
+                      </Colxx>
+                    </Row>
+                    <Row className="justify-content-center   rounded ">
+                      <Colxx style={{ paddingInline: '4%' }} xxs="">
+                        <Label>
+                          <IntlMessages id="forms.EducationLevelLabel" />
+                        </Label>
+                        <h3>{student[0].finished_grade}</h3>
+                        <Label>
+                          <IntlMessages id="forms.StdGraduationYearLabel" />
+                        </Label>
+                        <h3>{student[0].finished_grade_year}</h3>
+                        <Label>
+                          <IntlMessages id="forms.StPreShcoolLabel" />
+                        </Label>
+                        <h3>{student[0].school}</h3>
+
+                        <Label>
+                          <IntlMessages id="forms.StdSchoolProvinceLabel" />
+                        </Label>
+                        <h3>{student[0].schoolـprovince}</h3>
+
+                        <Label>
+                          <IntlMessages id="forms.StdInteranceTypeLabel" />
+                        </Label>
+                        {student[0].internse_type === '1' ? (
+                          <h3>حکمی</h3>
+                        ) : student[0].internse_type === '2' ? (
+                          <h3>کانکور اختصاصی</h3>
+                        ) : (
+                          <h3>کانکور عمومی</h3>
+                        )}
+                        <Label>
+                          <IntlMessages id="student.educationType" />
+                        </Label>
+                        {student[0].education_type === '1' ? (
+                          <h3>پیوسته</h3>
+                        ) : (
+                          <h3>غیر پیوسته</h3>
+                        )}
+                        <br />
+                        <br />
+                      </Colxx>
+                      <Colxx style={{ paddingInline: '4%' }}>
+                        <Label>
+                          <IntlMessages id="menu.institutes" />
+                        </Label>
+                        <h3>{institute[0].institute.name}</h3>
+                        <Label>
+                          <IntlMessages id="field.SemesterLabel" />
+                        </Label>
+                        <h3>{classs[0].class_id.semester}</h3>
+                        <Label>
+                          <IntlMessages id="curriculum.classLabel" />
+                        </Label>
+                        <h3>{classs[0].class_id.name}</h3>
+                        <Label>
+                          <IntlMessages id="field.SectionLabel" />
+                        </Label>
+                        <h3>{classs[0].class_id.section}</h3>
+                        {dorm[0] && (
+                          <>
+                            <Label>
+                              <IntlMessages id="menu.dorms" />
+                            </Label>
+                            <h3>{dorm[0].dorm_id.name}</h3>
+                            <Label>نوعیت</Label>
+
+                            {dorm[0].dorm_type == 1 ? (
+                              <h3> بدل عاشه</h3>
+                            ) : (
+                              <h3> بدیل عاشه</h3>
+                            )}
+                          </>
+                        )}
+
+                        <br />
+                        <br />
+                      </Colxx>
+                    </Row>
+                  </div>
+                </CardBody>
+              </Card>
+            </>
+          ) : (
+            <>
+              {marks.length > 0 && (
                 <>
-                  {marks.length > 0 && (
-                    <>
-                      {/* for loop in the length of marks */}
-                      {marks.map((mark, index) => (
-                        <div className="p-2">
-                          <FormGroup className="form-group has-float-label m-5">
-                            <Label>سمستر ریکارد</Label>
-                            <Row
-                              className="border border-primary  p-2 d-block"
+                  {marks.map((mark, index) => (
+                    <Row
+                      className="rounded d-block"
+                      style={{
+                        padding: '20px',
+                        paddingInline: '3%',
+
+                        minHeight: '200px',
+                      }}
+                    >
+                      <Colxx>
+                        <Card className="mb-4">
+                          <CardBody>
+                            <div
                               style={{
-                                borderRadius: '5px',
-                                minHeight: '200px',
+                                padding: '10px',
+                                display: 'inline-flex',
+                                width: '50%',
                               }}
                             >
                               <Colxx>
-                                <Card className="mb-4">
-                                  <CardBody>
-                                    <div
-                                      style={{
-                                        display: 'inline-flex',
-                                        width: '50%',
-                                      }}
-                                    >
-                                      <Colxx>
-                                        <span>
-                                          <IntlMessages id="forms.StdIdLabel" />
-                                          <h6>{student[0].student_id}</h6>
-                                        </span>
-                                      </Colxx>
-                                      <Colxx>
-                                        <span>
-                                          <IntlMessages id="marks.ClassLabel" />
-                                          <h6>{mark.class_id.name}</h6>
-                                        </span>
-                                      </Colxx>
-                                      <Colxx>
-                                        <span>
-                                          <IntlMessages id="field.SemesterLabel" />
-                                          <h6>{mark.class_id.semester}</h6>
-                                        </span>
-                                      </Colxx>
-                                    </div>
-                                    <Table bordered>
-                                      <thead>
-                                        <tr>
-                                          <th>#</th>
-                                          <th>
-                                            <IntlMessages id="marks.SubjectLabel" />
-                                          </th>
-                                          <th>
-                                            {' '}
-                                            <IntlMessages id="forms.SubjectCreditLabel" />
-                                          </th>
-                                          <th>
-                                            {' '}
-                                            <IntlMessages id="subject.type" />
-                                          </th>
-                                          <th>
-                                            {' '}
-                                            <IntlMessages id="marks.Marks" />
-                                          </th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr>
-                                          <th scope="row">1</th>
-                                          <td>کمپیوتر</td>
+                                <span>
+                                  <IntlMessages id="forms.StdIdLabel" />
+                                  <h6>{mark.student_id}</h6>
+                                </span>
+                              </Colxx>
+                              <Colxx>
+                                <span>
+                                  <IntlMessages id="marks.ClassLabel" />
+                                  <h6>{mark.class_name}</h6>
+                                </span>
+                              </Colxx>
+                              <Colxx>
+                                <span>
+                                  <IntlMessages id="field.SemesterLabel" />
+                                  <h6>{mark.semester}</h6>
+                                </span>
+                              </Colxx>
+                            </div>
+                            <Table bordered>
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>
+                                    <IntlMessages id="marks.SubjectLabel" />
+                                  </th>
+                                  <th>
+                                    {' '}
+                                    <IntlMessages id="forms.SubjectCreditLabel" />
+                                  </th>
+                                  <th>
+                                    {' '}
+                                    <IntlMessages id="subject.type" />
+                                  </th>
+                                  <th>
+                                    {' '}
+                                    <IntlMessages id="marks.Marks" />
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {mark.children.map((child, index) => (
+                                  <>
+                                    <tr>
+                                      <th scope="row">{index + 1}</th>
+                                      <td>{child.subject_name}</td>
 
-                                          <td>3</td>
-                                          <td>اصلی</td>
-                                          <td>85</td>
-                                        </tr>
-                                        <tr>
-                                          <th scope="row">2</th>
-                                          <td>کمپیوتر</td>
+                                      <td>{child.subject_credit}</td>
 
-                                          <td>3</td>
-                                          <td>اصلی</td>
-                                          <td>85</td>
-                                        </tr>
-                                        <tr>
-                                          <th scope="row">3</th>
-                                          <td>کمپیوتر</td>
+                                      <td>{child.subject_type}</td>
 
-                                          <td>3</td>
-                                          <td>اصلی</td>
-                                          <td>85</td>
-                                        </tr>
-                                      </tbody>
-                                    </Table>
-                                    <Row>
-                                      {' '}
-                                      <Colxx xxs="3">
-                                        {' '}
-                                        <span>
-                                          فیصدی سمستر
-                                          <h5>{mark.TotalPercentage}</h5>
-                                        </span>
-                                      </Colxx>
-                                      <Colxx xxs="3">
-                                        {' '}
-                                        <span>
-                                          GPA
-                                          <h5>{mark.TotalGpa}</h5>
-                                        </span>
-                                      </Colxx>
-                                    </Row>
-                                  </CardBody>
-                                </Card>
+                                      <td>{child.score}</td>
+                                    </tr>
+                                  </>
+                                ))}
+                              </tbody>
+                            </Table>
+                            <Row>
+                              {' '}
+                              <Colxx xxs="3">
+                                {' '}
+                                <span>
+                                  فیصدی سمستر
+                                  <h5>{mark.TotalPercentage}</h5>
+                                </span>
+                              </Colxx>
+                              <Colxx xxs="3">
+                                {' '}
+                                <span>
+                                  GPA
+                                  <h5>{mark.TotalGpa}</h5>
+                                </span>
                               </Colxx>
                             </Row>
-                          </FormGroup>
-                        </div>
-                      ))}
-                    </>
-                  )}
+                          </CardBody>
+                        </Card>
+                      </Colxx>
+                    </Row>
+                  ))}
                 </>
               )}
             </>
           )}
-        </CardBody>
-      </Card>
+        </>
+      )}
     </>
   );
 };

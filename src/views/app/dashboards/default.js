@@ -1,131 +1,555 @@
-import React from 'react';
-import { injectIntl } from 'react-intl';
-import { Row } from 'reactstrap';
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import Breadcrumb from 'containers/navs/Breadcrumb';
-import IconCardsCarousel from 'containers/dashboards/IconCardsCarousel';
-import RecentOrders from 'containers/dashboards/RecentOrders';
-import Logs from 'containers/dashboards/Logs';
-import Tickets from 'containers/dashboards/Tickets';
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+import CustomSelectInput from 'components/common/CustomSelectInput';
+import './../dorms/dorm-register.css';
+import './provincail-dashboard.css';
 import Calendar from 'containers/dashboards/Calendar';
-import BestSellers from 'containers/dashboards/BestSellers';
-import ProfileStatuses from 'containers/dashboards/ProfileStatuses';
-import GradientCardContainer from 'containers/dashboards/GradientCardContainer';
-import Cakes from 'containers/dashboards/Cakes';
-import GradientWithRadialProgressCard from 'components/cards/GradientWithRadialProgressCard';
-import SortableStaticticsRow from 'containers/dashboards/SortableStaticticsRow';
-import AdvancedSearch from 'containers/dashboards/AdvancedSearch';
-import SmallLineCharts from 'containers/dashboards/SmallLineCharts';
-import SalesChartCard from 'containers/dashboards/SalesChartCard';
-import ProductCategoriesPolarArea from 'containers/dashboards/ProductCategoriesPolarArea';
-import WebsiteVisitsChartCard from 'containers/dashboards/WebsiteVisitsChartCard';
-import ConversionRatesChartCard from 'containers/dashboards/ConversionRatesChartCard';
-import TopRatedItems from 'containers/dashboards/TopRatedItems';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { NavLink } from 'react-router-dom';
+import { adminRoot } from 'constants/defaultValues';
 
-const DefaultDashboard = ({ intl, match }) => {
-  const { messages } = intl;
+import * as Yup from 'yup';
+import {
+  Row,
+  Card,
+  CardBody,
+  FormGroup,
+  Label,
+  Button,
+  CardTitle,
+  Input,
+} from 'reactstrap';
+import Select from 'react-select';
 
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import { comments } from 'data/comments';
+import Rating from 'components/common/Rating';
+
+import {
+  FormikReactSelect,
+  FormikTagsInput,
+  FormikDatePicker,
+} from 'containers/form-validations/FormikFields';
+import { useEffect } from 'react';
+
+const ProvincailDashboard = (
+  values,
+  { className = '', displayRate = false }
+) => {
+  const [isNext, setIsNext] = useState(true);
+  const handleClick = (event) => {
+    setIsNext(event);
+  };
+
+ 
   return (
     <>
+      <h1 className="mt-5 m-1">{<IntlMessages id="dashboard.provincail" />}</h1>
+      <Separator className="mb-5" />
+
+      {/* First Three columns */}
       <Row>
-        <Colxx xxs="12">
-          <Breadcrumb heading="menu.default" match={match} />
-          <Separator className="mb-5" />
+        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalNumberOfTeachers" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Colxx>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>90</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>500</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.14YearsGreduatedMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.14YearsGreduatedFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.bachelorMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.bachelorFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.phdMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.phdFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="teacher.EvaluatedMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="teacher.EvaluatedFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStatistics" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Colxx>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfInstitute" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>5000</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfSchool" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>500</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfDorms" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>13</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfTeachers" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>90</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
+          <Card style={{ minHeight: '180px' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsInst" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Row className="m-2 ">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+        </Colxx>
+
+        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsDorm" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Colxx style={{ marginRight: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>5000</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>500</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.DormStudentType_1" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>3200</p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.DormStudentType_2" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>1800</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
+          <Card style={{ minHeight: '180px' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsScool" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <b>
+                <p
+                  className="bg-primary rounded"
+                  style={{ paddingInline: '10px' }}
+                ></p>
+              </b>
+              <Row className="m-2 ">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
         </Colxx>
       </Row>
+
       <Row>
-        <Colxx lg="12" xl="6">
-          <IconCardsCarousel />
-          <Row>
-            <Colxx md="12" className="mb-4">
-              <SalesChartCard />
-            </Colxx>
-          </Row>
+        {/* Institute List */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.instituteList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
         </Colxx>
-        <Colxx lg="12" xl="6" className="mb-4">
-          <RecentOrders />
+
+        {/* Schools list */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.schoolsList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
         </Colxx>
-      </Row>
-      <Row>
-        <Colxx lg="4" md="12" className="mb-4">
-          <ProductCategoriesPolarArea chartClass="dashboard-donut-chart" />
+
+        {/* Dorms list */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.dormsList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
         </Colxx>
-        <Colxx lg="4" md="6" className="mb-4">
-          <Logs />
+
+        {/* Fields List */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.fieldsList" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  <ol>
+                    <li>Nima</li>
+                    <li>کثیر الرشتوی بغلان</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>Nima</li>
+                    <li>تکنالوژی بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>ورترنری بغلان</li>
+                    <li>تکنالوژی ۰۱ بغلان</li>
+                    <li>زراعت بغلان</li>
+                    <li>نابینایان</li>
+                    <li>نابینایان</li>
+                  </ol>
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
         </Colxx>
-        <Colxx lg="4" md="6" className="mb-4">
-          <Tickets />
+
+        {/* Notification */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+          <Card className={className} style={{ minHeight: '600px' }}>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.notifcation" />
+              </CardTitle>
+              <div
+                className="dashboard-list-with-user"
+                style={{ minHeight: '500px' }}
+              >
+                <PerfectScrollbar
+                  options={{ suppressScrollX: true, wheelPropagation: false }}
+                >
+                  {comments.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="d-flex flex-row mb-3 pb-3 border-bottom"
+                      >
+                        <NavLink to={`${adminRoot}/pages/product/details`}>
+                          <img
+                            src={item.thumb}
+                            alt={item.title}
+                            className="img-thumbnail border-0 rounded-circle list-thumbnail align-self-center xsmall"
+                          />
+                        </NavLink>
+
+                        <div className="pl-3 pr-2">
+                          <NavLink to={`${adminRoot}/pages/product/details`}>
+                            <p className="font-weight-medium mb-0">
+                              {item.title}
+                            </p>
+                            <p className="text-muted mb-0 text-small">
+                              {item.detail}
+                            </p>
+                            {displayRate && (
+                              <div className="form-group mb-1 mt-2">
+                                <Rating
+                                  total={5}
+                                  rating={5}
+                                  interactive={false}
+                                />
+                              </div>
+                            )}
+                          </NavLink>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </PerfectScrollbar>
+              </div>
+            </CardBody>
+          </Card>
         </Colxx>
-      </Row>
-      <Row>
-        <Colxx xl="6" lg="12" className="mb-4">
+        <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Calendar />
-        </Colxx>
-        <Colxx xl="6" lg="12" className="mb-4">
-          <BestSellers />
-        </Colxx>
-      </Row>
-      <Row>
-        <Colxx sm="12" lg="4" className="mb-4">
-          <ProfileStatuses />
-        </Colxx>
-        <Colxx md="6" lg="4" className="mb-4">
-          <GradientCardContainer />
-        </Colxx>
-        <Colxx md="6" lg="4" className="mb-4">
-          <Cakes />
-        </Colxx>
-      </Row>
-      <SortableStaticticsRow messages={messages} />
-      <Row>
-        <Colxx sm="12" md="6" className="mb-4">
-          <WebsiteVisitsChartCard />
-        </Colxx>
-        <Colxx sm="12" md="6" className="mb-4">
-          <ConversionRatesChartCard />
-        </Colxx>
-      </Row>
-      <Row>
-        <Colxx lg="12" md="6" xl="4">
-          <Row>
-            <Colxx lg="4" xl="12" className="mb-4">
-              <GradientWithRadialProgressCard
-                icon="iconsminds-clock"
-                title={`5 ${messages['dashboards.files']}`}
-                detail={messages['dashboards.pending-for-print']}
-                percent={(5 * 100) / 12}
-                progressText="5/12"
-              />
-            </Colxx>
-            <Colxx lg="4" xl="12" className="mb-4">
-              <GradientWithRadialProgressCard
-                icon="iconsminds-male"
-                title={`4 ${messages['dashboards.orders']}`}
-                detail={messages['dashboards.on-approval-process']}
-                percent={(4 * 100) / 6}
-                progressText="4/6"
-              />
-            </Colxx>
-            <Colxx lg="4" xl="12" className="mb-4">
-              <GradientWithRadialProgressCard
-                icon="iconsminds-bell"
-                title={`8 ${messages['dashboards.alerts']}`}
-                detail={messages['dashboards.waiting-for-notice']}
-                percent={(8 * 100) / 10}
-                progressText="8/10"
-              />
-            </Colxx>
-          </Row>
-        </Colxx>
-        <Colxx lg="6" md="6" xl="4" sm="12" className="mb-4">
-          <AdvancedSearch messages={messages} />
-        </Colxx>
-        <Colxx lg="6" xl="4" className="mb-4">
-          <SmallLineCharts />
-          <TopRatedItems />
         </Colxx>
       </Row>
     </>
   );
 };
-export default injectIntl(DefaultDashboard);
+
+export default ProvincailDashboard;

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
+
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import { NotificationManager } from 'components/common/react-notifications';
 
 import * as Yup from 'yup';
 import {
@@ -144,6 +147,15 @@ const SignupSchema = Yup.object().shape({
   Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 });
 
+const servicePath = 'http://localhost:8000';
+const studentAPIUrl = `${servicePath}/api/`;
+const dormsApiUrl = `${servicePath}/institute/dorms/`;
+const studentDormsApiUrl = `${servicePath}/api/student_dorms_create/`;
+const dormTypeOptions = [
+  { value: '1', label: 'بدل عاشه' },
+  { value: '2', label: 'بدیل عاشه' },
+];
+
 const DormRegistration = (values) => {
   const initialValues = {
     Province: {
@@ -152,18 +164,123 @@ const DormRegistration = (values) => {
     },
   };
 
-  const [data, setData] = useState(2);
+  const [data, setData] = useState([]);
+  const [student, setStudent] = useState('');
+  const [institute, setInstitute] = useState([]);
+  const [department, setDepartment] = useState([]);
+  const [classs, setClasss] = useState([]); //classs is used because class is a reserved word
+  const [dorms, setDorms] = useState([]);
 
   const [isNext, setIsNext] = useState(true);
+  const fetchDorms = async () => {
+    const response = await axios.get(dormsApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setDorms(updatedData);
+  };
+
+  useEffect(() => {
+    fetchDorms();
+  }, []);
+
   const handleClick = (event) => {
     setIsNext(event);
   };
 
-  const [message, setMessage] = useState('');
-
-  console.log(message, 'Message');
   const handleChange = (event) => {
-    setMessage(event.target.value);
+    setData(event.target.value);
+  };
+
+  const handleSearch = async () => {
+    //search student by student id in database
+    console.log(`${studentAPIUrl}?student_id=${data}`);
+    axios.get(`${studentAPIUrl}?student_id=${data}`).then((res) => {
+      setStudent(res.data);
+    });
+    const instituteResponse = await axios.get(
+      `${studentAPIUrl}student_institutes/?student_id=${data}`
+    );
+    const instituteData = await instituteResponse.data;
+    setInstitute(instituteData);
+
+    const departmentResponse = await axios.get(
+      `${studentAPIUrl}student_Departments/?student_id=${data}`
+    );
+    const departmentData = await departmentResponse.data;
+    setDepartment(departmentData);
+
+    //type =1 means current class or current continued class
+    const classResponse = await axios.get(
+      `${studentAPIUrl}student_class/?student_id=${data}&type=1`
+    );
+    const classData = await classResponse.data;
+    setClasss(classData);
+    console.log('Institute', institute);
+    console.log('deparment', classs);
+  };
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'شاگرد موفقانه لیلی ته رجستر شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          5000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
+  const handleRegister = (values) => {
+    // const dorm_id = values.dorm.value;
+    // const student_id = student[0].student_id;
+    // const dorm_type = values.dormType.value;
+    // const educational_year = values.educationalYear;
+    // console.log(dorm_id);
+    // console.log(student_id);
+    // console.log(dorm_type);
+    // console.log(educational_year);
+
+    //REMOVE USER FROM HERE LATTER, IT'S JUST FOR TESTING PURPOSE
+    const data = {
+      dorm_id: values.dorm.value,
+      student_id: student[0].student_id,
+      dorm_type: values.dormType.value,
+      educational_year: values.educationalYear,
+      user_id: 1,
+    };
+
+    console.log(data);
+    axios
+      .post(`${studentDormsApiUrl}`, data)
+      .then((res) => {
+        createNotification('success', 'filled');
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        createNotification('error', 'filled');
+        console.log(err);
+      });
   };
 
   return (
@@ -175,8 +292,8 @@ const DormRegistration = (values) => {
         <CardBody>
           <Formik
             initialValues={initialValues}
-            // onSubmit={onRegister}
-            validationSchema={SignupSchema}
+            onSubmit={handleRegister}
+            // validationSchema={SignupSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-bottom">
@@ -192,6 +309,7 @@ const DormRegistration = (values) => {
                           <button
                             class="btn btn-outline-secondary"
                             type="button"
+                            onClick={handleSearch}
                           >
                             <IntlMessages id="search.studentId" />
                           </button>
@@ -207,7 +325,7 @@ const DormRegistration = (values) => {
                       </div>
 
                       <Colxx style={{ paddingInline: '3%' }}>
-                        {data == 1 ? (
+                        {student.length > 0 ? (
                           <div className="border rounded">
                             <Label>
                               <h6 className="mt-5 m-5">
@@ -234,53 +352,81 @@ const DormRegistration = (values) => {
                                       xxs=""
                                     >
                                       <Label>
+                                        {/* <IntlMessages id="teacher.NameLabel" /> */}
+                                        د شاگرد ایدی / ایدی شاگرد
+                                      </Label>
+                                      <h3>{student[0].student_id}</h3>
+                                      <Label>
                                         <IntlMessages id="teacher.NameLabel" />
                                       </Label>
-                                      <h3>احمد شبیر</h3>
+                                      <h3>
+                                        {student[0].name +
+                                          '  ' +
+                                          student[0].last_name}
+                                      </h3>
                                       <Label>
                                         <IntlMessages id="teacher.FatherNameLabel" />
                                       </Label>
-                                      <h3>عبدالرحیم</h3>
+                                      <h3>{student[0].father_name}</h3>
                                       <Label>
                                         <IntlMessages id="teacher.PhoneNoLabel" />
                                       </Label>
-                                      <h3>077000000000</h3>
+                                      <h3>{student[0].phone_number}</h3>
                                       <Label>
-                                        <IntlMessages id="teacher.EmailLabel" />
+                                        {/* <IntlMessages id="teacher.EmailLabel" /> */}
+                                        دایمی ادرس / ادرس دایمی
                                       </Label>
-                                      <h3>ahamd12@gmail.com</h3>
-
+                                      <h3>
+                                        {student[0].main_province +
+                                          ' - ' +
+                                          student[0].main_district +
+                                          ' - ' +
+                                          student[0].main_village}
+                                      </h3>
                                       <Label>
-                                        <IntlMessages id="forms.InstituteLabel" />
+                                        {/* <IntlMessages id="teacher.EmailLabel" /> */}
+                                        اوسنی ادرس / ادرس فعلی
                                       </Label>
-                                      <h3>نیما</h3>
-                                      <Label>
-                                        <IntlMessages id="marks.ClassLabel" />
-                                      </Label>
-                                      <h3>دیارلسم/ سیزدهم</h3>
+                                      <h3>
+                                        {student[0].main_province +
+                                          ' - ' +
+                                          student[0].main_district +
+                                          ' - ' +
+                                          student[0].main_village}
+                                      </h3>
                                     </Colxx>
-                                    <Colxx className="p-5 border rounded">
-                                      <Label>
-                                        <IntlMessages id="field.SemesterLabel" />
-                                      </Label>
-                                      <h3>دوهم</h3>
-                                      <Label>
-                                        <IntlMessages id="forms.FieldLabel" />
-                                      </Label>
-                                      <h3>برق</h3>
-                                      <Label>
-                                        <IntlMessages id="forms.ProvinceLabel" />
-                                      </Label>
-                                      <h3>کابل</h3>
-                                      <Label>
-                                        <IntlMessages id="forms.DistrictLabel" />
-                                      </Label>
-                                      <h3>اوومه ناحیه / ناحیه هفتم</h3>
-                                      <Label>
-                                        <IntlMessages id="forms.VillageLabel" />
-                                      </Label>
-                                      <h3>تخنیکم</h3>
-                                    </Colxx>
+                                    {institute.length > 0 &&
+                                      classs.length > 0 &&
+                                      department.length > 0 && (
+                                        <Colxx className="p-5 border rounded">
+                                          <Label>
+                                            <IntlMessages id="forms.InstituteLabel" />
+                                          </Label>
+                                          <h3>{institute[0].institute.name}</h3>
+                                          <Label>د انستیوت ادرس</Label>
+                                          <h3>
+                                            {institute[0].institute.province +
+                                              ' - ' +
+                                              institute[0].institute.district +
+                                              ' - ' +
+                                              institute[0].institute.village}
+                                          </h3>
+                                          <Label>
+                                            <IntlMessages id="forms.FieldLabel" />
+                                          </Label>
+                                          <h3>
+                                            {department[0].department_id.name}
+                                          </h3>
+                                          <Label>
+                                            <IntlMessages id="marks.ClassLabel" />
+                                          </Label>
+                                          <h3>{classs[0].class_id.name}</h3>
+                                          <Label>
+                                            <IntlMessages id="field.SemesterLabel" />
+                                          </Label>
+                                          <h3>{classs[0].class_id.semester}</h3>
+                                        </Colxx>
+                                      )}
                                   </Row>
                                   <Row>
                                     <Colxx>
@@ -300,11 +446,7 @@ const DormRegistration = (values) => {
                             </Row>
                           </div>
                         ) : (
-                          <div
-                            className={
-                              message == '' ? 'd-none' : 'border rounded'
-                            }
-                          >
+                          <div>
                             <Label>
                               <h6 className="mt-5 m-5">
                                 {<IntlMessages id="dorm.SearchResult" />}
@@ -331,48 +473,61 @@ const DormRegistration = (values) => {
                             {<IntlMessages id="forms.StudentResidentsPlace" />}
                           </h6>
 
-                          {/* province permanent*/}
                           <FormGroup className="form-group has-float-label ">
                             <Label>
-                              <IntlMessages id="forms.ProvinceLabel" />
+                              {/* <IntlMessages id="forms.InstituteLabel" /> */}
+                              لیله
                             </Label>
                             <FormikReactSelect
-                              name="Province"
-                              id="Province"
-                              value={values.Province}
-                              options={StdSchoolProvinceOptions}
+                              name="dorm"
+                              id="dorm"
+                              value={values.dorm}
+                              options={dorms}
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
+                              required
                             />
-                            {errors.Province && touched.Province ? (
+
+                            {errors.dorm && touched.dorm ? (
                               <div className="invalid-feedback d-block">
-                                {errors.Province}
+                                {errors.dorm}
                               </div>
                             ) : null}
                           </FormGroup>
-
-                          {/* District  permanent*/}
                           <FormGroup className="form-group has-float-label">
                             <Label>
-                              <IntlMessages id="forms.DistrictLabel" />
+                              {/* <IntlMessages id="dorm.BuildingTypeLabel" /> */}
+                              نوع
                             </Label>
-                            <Field className="form-control" name="District" />
-                            {errors.District && touched.District ? (
+                            <FormikReactSelect
+                              name="dormType"
+                              id="dormType"
+                              value={values.dormType}
+                              options={dormTypeOptions}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                              required
+                            />
+                            {errors.dormType && touched.dormType ? (
                               <div className="invalid-feedback d-block">
-                                {errors.District}
+                                {errors.dormType}
                               </div>
                             ) : null}
                           </FormGroup>
-
-                          {/* village permanent */}
                           <FormGroup className="form-group has-float-label">
                             <Label>
-                              <IntlMessages id="forms.VillageLabel" />
+                              <IntlMessages id="forms.educationYear" />
                             </Label>
-                            <Field className="form-control" name="Village" />
-                            {errors.Village && touched.Village ? (
+                            <Field
+                              type="number"
+                              className="form-control"
+                              name="educationalYear"
+                              required
+                            />
+                            {errors.educationalYear &&
+                            touched.educationalYear ? (
                               <div className="invalid-feedback d-block">
-                                {errors.Village}
+                                {errors.educationalYear}
                               </div>
                             ) : null}
                           </FormGroup>

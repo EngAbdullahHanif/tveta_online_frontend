@@ -23,6 +23,8 @@ const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const teacherApiUrl = `${servicePath}/teachers/`;
+const instituteApiUrl = `${servicePath}/institute/`;
+const teacherInstituteApiUrl = `${servicePath}/teachers/institute/`;
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -214,6 +216,7 @@ const ThumbListPages = ({ match }) => {
   const [rest, setRest] = useState(0);
   const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
+  const [instituteTeachers, setInstituteTeachers] = useState([]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -221,8 +224,18 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     console.log('institute', institute);
+    console.log('current page', currentPage);
     async function fetchData() {
-      if (
+      if (institute !== '') {
+        const res = await axios.get(
+          `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
+        );
+        console.log('res', res.data);
+        setInstituteTeachers(res.data);
+        setItems(res.data);
+        setTotalItemCount(res.data.count);
+        setIsLoaded(true);
+      } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'
       ) {
@@ -232,16 +245,19 @@ const ThumbListPages = ({ match }) => {
           setRest(false);
         }
         axios
-          .get(`${teacherApiUrl}?id=${teacherId}&current_district=${district}`)
+          .get(
+            `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+          )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_district=${district}`
+              `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
             );
 
             setItems(data);
+            setTotalPage(data.total_pages);
             setSelectedItems([]);
             setTotalItemCount(data.totalItem);
             setIsLoaded(true);
@@ -249,14 +265,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedProvinceOption.column === 'all') {
         axios
           .get(
-            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}`
+            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}`
+              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
             );
 
             setItems(data);
@@ -267,14 +283,14 @@ const ThumbListPages = ({ match }) => {
       } else if (selectedGenderOption.column === 'all') {
         axios
           .get(
-            `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+              `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
             );
 
             setItems(data);
@@ -286,14 +302,14 @@ const ThumbListPages = ({ match }) => {
         axios
           // get data from localhost:8000/teachers
           .get(
-            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
             console.log(
-              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
             );
             setItems(data);
 
@@ -314,10 +330,11 @@ const ThumbListPages = ({ match }) => {
     province,
     district,
     rest,
+    institute,
   ]);
 
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
+    const response = await axios.get(instituteApiUrl);
     const updatedData = await response.data.map((item) => ({
       id: item.id,
       name: item.name,
@@ -457,18 +474,100 @@ const ThumbListPages = ({ match }) => {
           institutes={institutes}
           onInstituteSelect={setInstitute}
         />
-
-        <ListPageListing
-          items={items}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
+        <table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark"
+            style={{ maxHeight: '55px' }}
+          >
+            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+              <th
+                style={{
+                  width: '11%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="marks.No" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdName" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdFatherName" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="forms.ProvinceLabel" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.PhoneNoLabel" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.MajorLabel" />
+              </th>
+              <th
+                style={{
+                  width: '10%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.GradeLabel" />
+              </th>
+            </tr>
+          </thead>
+          <ListPageListing
+            items={items}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
+        </table>
       </div>
     </>
   );

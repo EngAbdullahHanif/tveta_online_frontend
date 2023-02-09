@@ -11,9 +11,15 @@ const RegisterKankor = React.lazy(() =>
 
 const StudentList = React.lazy(() =>
   import(
-    /* webpackChunkName: "student-list" */ './bio/student-list/StudentListMain'
+    /* webpackChunkName: "student-list" */ './bio/students-list/StudentListMain'
   )
 );
+const KankorStudentList = React.lazy(() =>
+  import(
+    /* webpackChunkName: "kankor-student-list" */ './bio/kankor-students-list/KankorStudentListMain'
+  )
+);
+
 const MarksRegistration = React.lazy(() =>
   import(/* webpackChunkName: "marks-register" */ './marks-register')
 );
@@ -22,6 +28,21 @@ const AttendanceRegistration = React.lazy(() =>
 );
 const StudentProfile = React.lazy(() =>
   import(/* webpackChunkName: "student-profile" */ './bio/student-profile')
+);
+const StudentTransfer = React.lazy(() =>
+  import(/* webpackChunkName: "student-transfer" */ './student-transfer')
+);
+const MarksDisplay = React.lazy(() =>
+  import(/* webpackChunkName: "marks-display" */ './subject-marks')
+);
+const MarksDisplayAllSubs = React.lazy(() =>
+  import(/* webpackChunkName: "marks-display-allsubs" */ './class-marks')
+);
+const AttendanceDisplay = React.lazy(() =>
+  import(/* webpackChunkName: "attendance" */ './attendence/attendance-display')
+);
+const StudentsRender = React.lazy(() =>
+  import(/* webpackChunkName: "students-render" */ './student-render')
 );
 
 const Students = ({ match }) => (
@@ -37,9 +58,13 @@ const Students = ({ match }) => (
         path={`${match.url}/register-kankor`}
         render={(props) => <RegisterKankor {...props} />}
       />
-      <Route  
+      <Route
         path={`${match.url}/students`}
         render={(props) => <StudentList {...props} />}
+      />
+      <Route
+        path={`${match.url}/kankor-students`}
+        render={(props) => <KankorStudentList {...props} />}
       />
 
       <Route
@@ -51,10 +76,33 @@ const Students = ({ match }) => (
         render={(props) => <AttendanceRegistration {...props} />}
       />
       <Route
-        path={`${match.url}/:studentId`}
+        path={`${match.url}/student/:studentId`}
         render={(props) => <StudentProfile {...props} />}
       />
+      <Route
+        path={`${match.url}/student-transfer`}
+        render={(props) => <StudentTransfer {...props} />}
+      />
 
+      <Route
+        path={`${match.url}/marks-display`}
+        render={(props) => <MarksDisplay {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/marks-display-allsubs`}
+        render={(props) => <MarksDisplayAllSubs {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/attendance`}
+        render={(props) => <AttendanceDisplay {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/test`}
+        render={(props) => <StudentsRender {...props} />}
+      />
       {/* <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}

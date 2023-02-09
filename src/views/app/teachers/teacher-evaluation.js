@@ -29,59 +29,92 @@ const evaluationTypeOptions = [
   { value: '2', label: <IntlMessages id="teacher.evaluationTypeOption_2" /> },
 ];
 
-const SignupSchema = Yup.object().shape({
-  // Name: Yup.string().required(<IntlMessages id="teacher.NameErr" />),
+const ValidationSchema = Yup.object().shape({
+  id: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.IdErr" />),
 
-  // InstituteId: Yup.string().required(
-  //   <IntlMessages id="teacher.InstituteIdErr" />
-  // ),
+  department: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.departmentIdErr" />),
 
-  // departmentId: Yup.string().required(
-  //   <IntlMessages id="teacher.departmentIdErr" />
-  // ),
+  subject: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.SubjectErr" />),
 
-  // ClassId: Yup.string().required(<IntlMessages id="teacher.ClassIdErr" />),
+  evaluator: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="teacher.evaluatorErr" />),
 
-  // subjectId: Yup.string().required(<IntlMessages id="teacher.subjectIdErr" />),
+  strengthPoints: Yup.string()
+    .min(10, <IntlMessages id="min.minInputValues" />)
+    .required(<IntlMessages id="teacher.strengthPointsErr" />),
+
+  marks: Yup.string().required(<IntlMessages id="teacher.marksErr" />),
+  evaluationDate: Yup.string().required(
+    <IntlMessages id="teacher.evaluationDateErr" />
+  ),
+
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.InstituteErr" />),
+
+  classs: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.ClassErr" />),
 
   topic: Yup.string().required(<IntlMessages id="teacher.topicErr" />),
 
-  evaluator: Yup.string().required(<IntlMessages id="teacher.evaluatorErr" />),
-  marks: Yup.string().required(<IntlMessages id="teacher.marksErr" />),
-
-  strengthPoints: Yup.string().required(
-    <IntlMessages id="teacher.strengthPointsErr" />
-  ),
+  evaluationType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.evaluationTypeErr" />),
 
   weaknessPoints: Yup.string().required(
     <IntlMessages id="teacher.weaknessPointsErr" />
   ),
+  // suggestion: Yup.string().required(
+  //   <IntlMessages id="teacher.suggestionErr" />
+  // ),
 });
 
 const TeacherEvaluation = () => {
-
-  
   const initialValues = {
-    evaluationType: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    Id: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    departmentId: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    InstituteId: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    classId: {
-      value: '',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
+    id: [],
+    department: [],
+    subject: [],
+    evaluator: '',
+    strengthPoints: '',
+    marks: '',
+    evaluationDate: '',
+    institute: [],
+    classs: [],
+    topic: '',
+    evaluationType: [],
+    weaknessPoints: '',
+    suggestion: '',
+  };
+
+  const onSubmit = () => {
+    console.log('onSubmit is called');
   };
 
   return (
@@ -93,11 +126,11 @@ const TeacherEvaluation = () => {
         <CardBody>
           <Formik
             initialValues={initialValues}
-            // onSubmit={onRegister}
-            validationSchema={SignupSchema}
+            onSubmit={onSubmit}
+            validationSchema={ValidationSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
-              <Form className="av-tooltip tooltip-label-bottom">
+              <Form className="av-tooltip tooltip-label-right error-l-150 ">
                 <Row className="justify-content-center">
                   <Colxx xxs="5">
                     {/* Teacher Id */}
@@ -106,59 +139,60 @@ const TeacherEvaluation = () => {
                         <IntlMessages id="teacher.IdLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="Id"
-                        id="Id"
-                        value={values.Id}
+                        name="id"
+                        id="id"
+                        value={values.id}
                         options={evaluationTypeOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
                       />
-                      {errors.Id && touched.Id ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.Id}
+                      {errors.id && touched.id ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.id}
                         </div>
                       ) : null}
                     </FormGroup>
 
                     {/* Departement Id */}
-                    <FormGroup className="form-group has-float-label">
+
+                    <FormGroup className="form-group has-float-label ">
                       <Label>
-                        <IntlMessages id="teacher.departmentIdLabel" />
+                        <IntlMessages id="forms.studyDepartment" />
                       </Label>
                       <FormikReactSelect
-                        name="departmentId"
-                        id="departmentId"
-                        value={values.departmentId}
+                        name="department"
+                        id="department"
+                        value={values.department}
                         options={evaluationTypeOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
                       />
-                      {errors.departmentId && touched.departmentId ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.departmentId}
+                      {errors.department && touched.department ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.department}
                         </div>
                       ) : null}
                     </FormGroup>
 
                     {/* Subject Id */}
-                    <FormGroup className="form-group has-float-label">
+                    <FormGroup className="form-group has-float-label ">
                       <Label>
-                        <IntlMessages id="teacher.subjectIdLabel" />
+                        <IntlMessages id="marks.SubjectLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="subjectId"
-                        id="subjectId"
-                        value={values.departmentId}
+                        name="subject"
+                        id="subject"
+                        value={values.subject}
                         options={evaluationTypeOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
                       />
-                      {errors.subjectId && touched.subjectId ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.subjectId}
+                      {errors.subject && touched.subject ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.subject}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -170,11 +204,12 @@ const TeacherEvaluation = () => {
                       </Label>
                       <Field className="form-control" name="evaluator" />
                       {errors.evaluator && touched.evaluator ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.evaluator}
                         </div>
                       ) : null}
                     </FormGroup>
+
                     {/* Strength Points */}
                     <FormGroup className="form-group has-float-label">
                       <Label>
@@ -185,7 +220,7 @@ const TeacherEvaluation = () => {
                         name="strengthPoints"
                       />
                       {errors.strengthPoints && touched.strengthPoints ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.strengthPoints}
                         </div>
                       ) : null}
@@ -201,7 +236,7 @@ const TeacherEvaluation = () => {
                         type="number"
                       />
                       {errors.marks && touched.marks ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.marks}
                         </div>
                       ) : null}
@@ -218,50 +253,49 @@ const TeacherEvaluation = () => {
                         type="date"
                       />
                       {errors.evaluationDate && touched.evaluationDate ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.evaluationDate}
                         </div>
                       ) : null}
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="5">
-                    <FormGroup className="form-group has-float-label">
+                    <FormGroup className="form-group has-float-label ">
                       <Label>
-                        <IntlMessages id="teacher.InstituteIdLabel" />
+                        <IntlMessages id="forms.InstituteLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="InstituteId"
-                        id="InstituteId"
-                        value={values.InstituteId}
+                        name="institute"
+                        id="institute"
+                        value={values.institute}
                         options={evaluationTypeOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                        required
                       />
-                      {errors.InstituteId && touched.InstituteId ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.InstituteId}
+                      {errors.institute && touched.institute ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.institute}
                         </div>
                       ) : null}
                     </FormGroup>
 
                     {/*  Class Id  */}
-                    <FormGroup className="form-group has-float-label">
+                    <FormGroup className="form-group has-float-label ">
                       <Label>
-                        <IntlMessages id="teacher.classIdLabel" />
+                        <IntlMessages id="marks.ClassLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="classId"
-                        id="classId"
-                        value={values.classId}
+                        name="classs"
+                        id="classs"
+                        value={values.classs}
                         options={evaluationTypeOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
                       />
-                      {errors.classId && touched.classId ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.classId}
+                      {errors.classs && touched.classs ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.classs}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -273,7 +307,7 @@ const TeacherEvaluation = () => {
                       </Label>
                       <Field className="form-control" name="topic" />
                       {errors.topic && touched.topic ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.topic}
                         </div>
                       ) : null}
@@ -294,7 +328,7 @@ const TeacherEvaluation = () => {
                         required
                       />
                       {errors.evaluationType && touched.evaluationType ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.evaluationType}
                         </div>
                       ) : null}
@@ -310,7 +344,7 @@ const TeacherEvaluation = () => {
                         name="weaknessPoints"
                       />
                       {errors.weaknessPoints && touched.weaknessPoints ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.weaknessPoints}
                         </div>
                       ) : null}
@@ -323,37 +357,39 @@ const TeacherEvaluation = () => {
                       </Label>
                       <textarea
                         className="form-control"
-                        name="weaknessPoints"
+                        name="suggestion"
                         rows={4}
                       />
                       {errors.suggestion && touched.suggestion ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.suggestion}
                         </div>
                       ) : null}
                     </FormGroup>
-
-                    <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                      <Button
-                        className={`btn-shadow btn-multiple-state `}
-                        size="lg"
-                        type="submit"
-                      >
-                        <span className="spinner d-inline-block">
-                          <span className="bounce1" />
-                          <span className="bounce2" />
-                          <span className="bounce3" />
-                        </span>
-                        <span className="label">
-                          <IntlMessages id="button.SubmitButton" />
-                        </span>
-                      </Button>
-                    </div>
                   </Colxx>
                 </Row>
 
                 <Row>
-                  <Colxx xxs="6"></Colxx>
+                  <Colxx>
+                    <Button
+                      color="primary"
+                      className="float-right m-5"
+                      size="lg"
+                      type="submit"
+                      onClick={() => {
+                        onSubmit;
+                      }}
+                    >
+                      <span className="spinner d-inline-block">
+                        <span className="bounce1" />
+                        <span className="bounce2" />
+                        <span className="bounce3" />
+                      </span>
+                      <span className="label">
+                        <IntlMessages id="button.SubmitButton" />
+                      </span>
+                    </Button>
+                  </Colxx>
                 </Row>
               </Form>
             )}

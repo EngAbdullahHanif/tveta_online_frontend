@@ -4,7 +4,7 @@ import ReactAutoSuggest from 'components/common/ReactAutoSuggest';
 import cakes from 'data/cakes';
 
 const data = cakes.map((item) => {
-  return { name: item.title };
+  return { name: item.name };
 });
 
 const ReactAutoSugegstExample = ({ intl }) => {

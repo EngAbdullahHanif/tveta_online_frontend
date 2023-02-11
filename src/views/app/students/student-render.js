@@ -19,9 +19,13 @@ const studentList = [
 const StudentTest = ({ match }) => {
   const [student, setStudent] = useState([]);
 
-  useEffect(() => {
+  const fetchStudents = () => {
     setStudent(studentList)
-  }, [] 
+  }
+
+  useEffect(() => {
+    fetchStudents();
+  }, [studentList] 
 );
 
 

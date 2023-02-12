@@ -991,8 +991,6 @@ module.exports = {
   'dash.14YearsGreduatedFemale': 'څورلسم پاس ښځینه/ چهارده پاس اناث',
   'dash.bachelorMale': 'لسانس نارینه/ لسانس ذکور',
   'dash.bachelorFemale': 'لسانس ښځینه/ لسانس اناث',
-  'dash.phdMale': 'ډاکتر نارینه/ داکتر ذکور',
-  'dash.phdFemale': 'ډاکتر ښځینه/ داکتر اناث',
   'dash.instituteList': 'انستیتونه/ انستیتوها',
   'dash.schoolsList': 'لیسې/ لیسه ها',
   'dash.dormsList': 'لیلې/ لیلیه ها',
@@ -1118,6 +1116,23 @@ module.exports = {
   'dash.female': 'اناث',
   'dash.loading': 'درحال بارگیری...',
   'dash.teacherGender': 'جنسیت',
+  'dash.totalNo': 'تعداد',
+  'dash.teacherStatistics': 'د استاد مجموعی ارقام / ارقام مجموعی استاد',
+
+  'dash.14YearsGreduatedTotal': 'مجموع 14 پاس',
+  'dash.bachelorTotal': 'مجموع لسانس',
+  'dash.masterTotal': 'مجموع ماستر',
+  'dash.masterMale': 'ماستر نارینه/ ماستر ذکور',
+  'dash.masterFemale': 'ماستر ښځینه/ ماستر اناث',
+  'dash.phdTotal': 'مجموع داکتر',
+  'dash.phdMale': 'نارینه ډاکتر/ داکتر ذکور',
+  'dash.phdFemale': 'ښځینه ډاکتر/ داکتر اناث',
+  'dash.TeacherEvaluatedTotal':
+    'مجموع د ارزیابی شوي استادانو/ مجموع استادان ارزیابی شده',
+  'dash.TeacherNotEvaluatedTotal':
+    'د نه ارزیابی شوی استادانو مجموع/ مجموع استادان ارزیابی ناشده',
+  'dash.teacherEvaluationStatistics':
+    'د استاد د ارزیابی ارقام/ ارقام ارزیابی استاد',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',

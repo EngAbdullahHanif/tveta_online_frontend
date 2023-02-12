@@ -963,8 +963,6 @@ module.exports = {
   'dash.14YearsGreduatedFemale': '14 Years Degree Female',
   'dash.bachelorMale': 'Bachelor Male',
   'dash.bachelorFemale': 'Bachelor Female',
-  'dash.phdMale': 'PHD Male',
-  'dash.phdFemale': 'PHD Female',
   'dash.instituteList': 'Institutes',
   'dash.schoolsList': 'Schools',
   'dash.dormsList': 'Dorms',
@@ -1083,7 +1081,20 @@ module.exports = {
   'dash.Special Education': 'Special Education',
   'dash.loading': 'Loading...',
   'dash.teacherGender': 'Gender',
-  
+  'dash.totalNo': 'Total',
+  'dash.teacherStatistics': 'Teachers statistics',
+
+  'dash.14YearsGreduatedTotal': 'Total 14th years Greduated',
+  'dash.bachelorTotal': 'Total Bachelors',
+  'dash.masterTotal': 'Total Masters',
+  'dash.masterMale': 'Male Masters',
+  'dash.masterFemale': 'Female Masters',
+  'dash.phdTotal': 'Total PHDs',
+  'dash.phdMale': 'Male PHDs',
+  'dash.phdFemale': 'Female PHDs',
+  'dash.TeacherEvaluatedTotal': 'Evalauted Teachers',
+  'dash.TeacherNotEvaluatedTotal': 'Not Evaluated Teachers',
+  'dash.teacherEvaluationStatistics': 'Teacher Evaluation Statistics',
 
   // Dorm details page
   // Subject

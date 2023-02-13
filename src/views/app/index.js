@@ -48,6 +48,8 @@ const Dorms = React.lazy(() =>
   import(/* webpackChunkName: "dorms" */ './dorms')
 );
 
+
+
 const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
 const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
 const BlankPage = React.lazy(() =>
@@ -133,6 +135,7 @@ const App = ({ match }) => {
               path={`${match.url}/blank-page`}
               render={(props) => <BlankPage {...props} />}
             />
+
             <Redirect to="/error" />
           </Switch>
         </Suspense>

@@ -18,6 +18,7 @@ const data = [
         label: 'menu.teacher-registration',
         to: `${adminRoot}/teachers/register`,
       },
+  
       {
         icon: 'iconsminds-student-male',
         label: 'menu.teacher-profile',
@@ -33,6 +34,11 @@ const data = [
         label: 'menu.teacher-transfer',
         to: `${adminRoot}/teachers/teacher-transfer`,
       },
+      {
+        icon: 'iconsminds-add-user',
+        label: 'worker.registration',
+        to: `${adminRoot}/teachers/worker`,
+      }
     ],
   },
   {

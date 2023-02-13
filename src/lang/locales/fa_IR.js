@@ -181,6 +181,23 @@ module.exports = {
   'menu.marks-display': 'دیو مضمون نمرې/ نمرات یک مضمون',
   'menu.marks-display-all-subs': 'د ټولو مضمونو نمرې/ نمرات تمام مضامین',
 
+  /* HR Evaluation */
+
+'forms.teacherName': 'د استاد نوم/ نام استاد',
+'forms.instituteName': 'د انستیتوت نوم/ نام انستیتوت',
+'forms.currentGrade': 'پخوانی درجه/درجه سابقه',
+'forms.newGrade': 'نوی درجه/درجه نو',
+'forms.currentStep':" پخوانی قدم/قدم سابفه",
+'forms.newStep': "نوی قدم/قدم نو",
+'forms.evaluationMarks': "نمره",
+'forms.evaluationDate': "نیته / تاریخ",
+
+// worker 
+'worker.registration' : 'ثبت کارمند / د کارمند ثبت',
+
+
+ 
+
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
   'dashboards.completed-orders': 'کامل شده',

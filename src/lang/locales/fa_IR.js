@@ -90,6 +90,7 @@ module.exports = {
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.instituteT': 'انستیتوتونه/ انستیتوتها',
+  
 
   'menu.institute_list': 'لست انستیتوت/لیسه',
   'menu.institute_register': 'ثبت انستیتوت/لیسه',

@@ -1095,6 +1095,10 @@ module.exports = {
   'dash.TeacherEvaluatedTotal': 'Evalauted Teachers',
   'dash.TeacherNotEvaluatedTotal': 'Not Evaluated Teachers',
   'dash.teacherEvaluationStatistics': 'Teacher Evaluation Statistics',
+  'menu.student_register': 'Student Register',
+  'menu.student_register_kankor': 'Students Kankor Register',
+  'menu.student_list': 'Students List',
+  'menu.student-marks-register': 'Marks Registration',
 
   // Dorm details page
   // Subject

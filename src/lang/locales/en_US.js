@@ -171,6 +171,8 @@ module.exports = {
   'menu.dorm-details': 'Dorm Details',
   'menu.marks-display': 'Marks',
   'menu.marks-display-all-subs': 'Marks of All Subjects',
+  'menu.student-dismissal': 'Student Dismissal',
+  'menu.dorm-student-dismissal': ' Dorm Student Dismissal',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -1099,6 +1101,21 @@ module.exports = {
   'menu.student_register_kankor': 'Students Kankor Register',
   'menu.student_list': 'Students List',
   'menu.student-marks-register': 'Marks Registration',
+
+  // Student Dismissal
+  'student.dismissalTitleFromInstitute':
+    'Student Dismissal From Institute/ School',
+  'search.studentIdsearchErr': 'Please Enter Student Id',
+  'min.invalidId': 'Invalid Id',
+  'max.invalidId': 'Invalid Id',
+  'student.dismissalDateLabel': 'Dismissal Date',
+  'student.dissmissalDateErr': 'Dismissal Date Is Required!',
+  'student.dissmissalDocuments': 'Dismissal Documents',
+  'student.dissmissalDocumentErr': 'Dismissal Document Is Required!',
+  'student.buttonDismissal': 'Dismiss',
+
+  // Student Dismissal from dorm
+  'student.dismissalFromDormTitle': 'Dismissal from Dorm',
 
   // Dorm details page
   // Subject

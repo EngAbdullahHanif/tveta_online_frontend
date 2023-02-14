@@ -99,6 +99,12 @@ const data = [
         to: `${adminRoot}/students/attendance`,
         newWindow: false,
       },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.student-dismissal',
+        to: `${adminRoot}/students/dismissal`,
+        newWindow: false,
+      },
     ],
   },
   // {
@@ -314,6 +320,11 @@ const data = [
         icon: 'simple-icon-check',
         label: 'menu.dorm-details',
         to: `${adminRoot}/dorms/details`,
+      },
+      {
+        icon: 'simple-icon-check',
+        label: 'menu.dorm-student-dismissal',
+        to: `${adminRoot}/dorms/student-dismissal`,
       },
     ],
   },

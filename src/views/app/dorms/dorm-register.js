@@ -175,42 +175,35 @@ const StdSchoolProvinceOptions = [
 ];
 
 const SignupSchema = Yup.object().shape({
-  Name: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
+  name1: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
 
-  Capicity: Yup.string().required(<IntlMessages id="dorm.CapicityErr" />),
+  capicity: Yup.string().required(<IntlMessages id="dorm.CapicityErr" />),
+  buildingType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-  TotalBuildingNo: Yup.string().required(
+  totalBuildingNo: Yup.string().required(
     <IntlMessages id="dorm.TotalBuildingNoErr" />
   ),
-  TotalRooms: Yup.string().required(<IntlMessages id="dorm.TotalRoomsErr" />),
-  TotalKitchens: Yup.string().required(
+  totalRooms: Yup.string().required(<IntlMessages id="dorm.TotalRoomsErr" />),
+  totalKitchens: Yup.string().required(
     <IntlMessages id="dorm.TotalKitchensErr" />
   ),
-  Toilet: Yup.string().required(<IntlMessages id="dorm.ToiletErr" />),
+  toilet: Yup.string().required(<IntlMessages id="dorm.ToiletErr" />),
 });
 
 const DormRegistration = (values) => {
   const initialValues = {
-    Gender: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    BuildingType: {
-      value: '1',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    PublicBuildingOwner: {
-      value: '1',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    PrivateBuildingType: {
-      value: '1',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    Province: {
-      value: '',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
+    nmae1: '',
+    capicity: '',
+    gender: [],
+    buildingType: [],
+    publicBuildingOwner: [],
+    privateBuildingType: [],
+    province: [],
   };
 
   const [dormTypeOption, setDormTypeOption] = useState('');
@@ -239,17 +232,17 @@ const DormRegistration = (values) => {
 
     const data = {
       name: values.Name,
-      provence: values.Province.value,
-      district: values.District,
-      gender_type: values.Gender.value,
-      dorm_type: values.BuildingType.value,
+      provence: values.province.value,
+      district: values.district,
+      gender_type: values.gender.value,
+      dorm_type: values.buildingType.value,
       dorm_type_option: dormTypeOption,
-      building_qty: values.TotalBuildingNo,
-      rooms_qty: values.TotalRooms,
-      kitchen_qty: values.TotalKitchens,
-      toilet_qty: values.Toilet,
-      dorm_quota: values.Quota,
-      dorm_capacity: values.Capicity,
+      building_qty: valuestotalBuildingNo,
+      rooms_qty: values.totalRooms,
+      kitchen_qty: values.totalKitchens,
+      toilet_qty: values.toilet,
+      dorm_quota: values.quota,
+      dorm_capacity: values.capicity,
       user_id: 1,
     };
 
@@ -314,21 +307,22 @@ const DormRegistration = (values) => {
                         <IntlMessages id="dorm.BuildingTypeLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="BuildingType"
-                        id="BuildingType"
-                        value={values.BuildingType}
+                        name="buildingType"
+                        id="buildingType"
+                        value={values.buildingType}
                         options={BuildingTypeOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
                       />
-                      {errors.BuildingType && touched.BuildingType ? (
+                      {errors.buildingType && touched.buildingType ? (
                         <div className="invalid-feedback d-block">
-                          {errors.BuildingType}
+                          {errors.buildingType}
                         </div>
                       ) : null}
                     </FormGroup>
-                    {values.BuildingType.value == '1' ? (
+
+                    {values.buildingType.value == '1' ? (
                       <div>
                         {/* DormOwner */}
                         <FormGroup className="form-group has-float-label">
@@ -360,18 +354,18 @@ const DormRegistration = (values) => {
                             <IntlMessages id="dorm.PrivateBuildingTypeLabel" />
                           </Label>
                           <FormikReactSelect
-                            name="PrivateBuildingType"
-                            id="PrivateBuildingType"
-                            value={values.PrivateBuildingType}
+                            name="privateBuildingType"
+                            id="privateBuildingType"
+                            value={values.privateBuildingType}
                             onChange={setFieldValue}
                             onBlur={setFieldTouched}
                             options={PrivateBuildingTypeOptions}
                             required
                           />
-                          {errors.PrivateBuildingType &&
-                          touched.PrivateBuildingType ? (
+                          {errors.privateBuildingType &&
+                          touched.privateBuildingType ? (
                             <div className="invalid-feedback d-block">
-                              {errors.PrivateBuildingType}
+                              {errors.privateBuildingType}
                             </div>
                           ) : null}
                         </FormGroup>
@@ -385,12 +379,12 @@ const DormRegistration = (values) => {
                       </Label>
                       <Field
                         className="form-control"
-                        name="TotalKitchens"
+                        name="totalKitchens"
                         type="number"
                       />
-                      {errors.TotalKitchens && touched.TotalKitchens ? (
+                      {errors.totalKitchens && touched.totalKitchens ? (
                         <div className="invalid-feedback d-block">
-                          {errors.TotalKitchens}
+                          {errors.totalKitchens}
                         </div>
                       ) : null}
                     </FormGroup>

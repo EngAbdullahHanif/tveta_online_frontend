@@ -45,12 +45,14 @@ const AttendanceDisplay = React.lazy(() =>
 const Reports = React.lazy(() =>
   import(/* webpackChunkName: "reports" */ './reports')
 );
+const Dismissal = React.lazy(() =>
+  import(/* webpackChunkName: "dismissal" */ './student-dismissal')
+);
 
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/register`} />
-
       <Route
         path={`${match.url}/register`}
         render={(props) => <Register {...props} />}
@@ -67,7 +69,6 @@ const Students = ({ match }) => (
         path={`${match.url}/kankor-students`}
         render={(props) => <KankorStudentList {...props} />}
       />
-
       <Route
         path={`${match.url}/marks-register`}
         render={(props) => <MarksRegistration {...props} />}
@@ -84,25 +85,25 @@ const Students = ({ match }) => (
         path={`${match.url}/student-transfer`}
         render={(props) => <StudentTransfer {...props} />}
       />
-
       <Route
         path={`${match.url}/marks-display`}
         render={(props) => <MarksDisplay {...props} />}
       />
-
       <Route
         path={`${match.url}/marks-display-allsubs`}
         render={(props) => <MarksDisplayAllSubs {...props} />}
       />
-
       <Route
         path={`${match.url}/attendance`}
         render={(props) => <AttendanceDisplay {...props} />}
       />
-
       <Route
         path={`${match.url}/reports`}
         render={(props) => <Reports {...props} />}
+      />
+      <Route
+        path={`${match.url}/dismissal`}
+        render={(props) => <Dismissal {...props} />}
       />
       {/* <ProtectedRoute
         path={`${match.url}/default`}

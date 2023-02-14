@@ -90,7 +90,8 @@ module.exports = {
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.instituteT': 'انستیتوتونه/ انستیتوتها',
-  
+  'menu.student-dismissal': 'منفکی',
+  'menu.dorm-student-dismissal': 'منفکی',
 
   'menu.institute_list': 'لست انستیتوت/لیسه',
   'menu.institute_register': 'ثبت انستیتوت/لیسه',
@@ -1134,6 +1135,24 @@ module.exports = {
     'د نه ارزیابی شوی استادانو مجموع/ مجموع استادان ارزیابی ناشده',
   'dash.teacherEvaluationStatistics':
     'د استاد د ارزیابی ارقام/ ارقام ارزیابی استاد',
+
+  // Student Dismissal
+  'student.dismissalTitleFromInstitute':
+    ' له انستیتوت/لیسې نه د شاګرد منفکی// منفکی شاگرد از انستیتوت/لسیه',
+  'student.dismissalDateLabel': 'د منفکۍ تاریخ/ تاریخ منفکی',
+  'search.studentIdsearchErr':
+    'د شاګرد ایډی د ننه کړئ/ لطفا ایدی شاگرد را وارد نماید',
+  'min.invalidId': 'ستاسو ايډی سم ندی/ایدی شما درست نیست',
+  'max.invalidId': 'ستاسو ايډی سم ندی/ایدی شما درست نیست',
+  'student.dissmissalDocuments': 'د منفکۍ اسناد/ اسناد منفکی',
+  'student.dissmissalDateErr': 'د منفکي تاریخ اړین دی/ تاریخ منفکی ضروری است',
+  'student.dissmissalDocumentErr':
+    'د منفکي اسناد اړین دی/ اسناد منفکی ضروری است',
+  'student.buttonDismissal': 'منفک',
+
+  // Student Dismissal from dorm
+  'student.dismissalFromDormTitle':
+    'د شاګرد منفکی له لیلې/ منفکی شاګرد از لیلیه',
 
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',

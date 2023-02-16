@@ -101,6 +101,7 @@ const StudentRegistraion = () => {
   const [departments, setDepartments] = useState([]);
   const [isNext, setIsNext] = useState(true);
   const [StudyTime, setStudyTIme] = useState('0');
+  
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');

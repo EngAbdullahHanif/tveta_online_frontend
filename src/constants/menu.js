@@ -38,6 +38,11 @@ const data = [
         icon: 'iconsminds-add-user',
         label: 'worker.registration',
         to: `${adminRoot}/teachers/worker`,
+      },
+      {
+        icon: 'iconsminds-students',
+        label: 'workerDisplayList',
+        to: `${adminRoot}/teachers/workerList`,
       }
     ],
   },

@@ -194,6 +194,41 @@ module.exports = {
 
 // worker 
 'worker.registration' : 'ثبت کارمند / د کارمند ثبت',
+'workerProvince': "ولایت",
+'workerAppointedType': 'نوعیت استخدام',
+'workerQualification': 'سطح تحصیل',
+'workerField': "رشته",
+'workerTazkera': "شماره تذکره",
+'workerGender': 'جنسیت',
+'workerDateOfBirth': 'تاریخ تولد',
+'workerPosition': 'عنوان وظیفه',
+'workerStep': 'قدم',
+'workerId': 'کد',
+'workerGrade': 'بست کارمند',
+'workerTashkeilGrade': 'بست تشکیل',
+'workerGradeType': 'نوعیت بست',
+'workerAppointedDate': 'تاریخ استخدام',
+'workerStartDate': 'تاریخ اشغال به وظیفه',
+'workerRegistrationTitle': 'ثبت کارمندان / د کارمندانو ثبت',
+'workerName': 'نام/ نوم',
+'appointedTypeErr': 'نوعیت استخدام لازم است',
+'workerQualificationErr': 'سطح تحصیل لازم است',
+'workerProvinceErr': 'نام ولایت لازم است',
+'workerFieldErr': 'رشته لازم است',
+'workerGenderErr': 'نوعیت جنسیت لازم است',
+'workerTazkeraErr': 'شماره تذکره لازم است',
+'workerDOB': 'تاریخ تولد لازم است',
+'workerPositionErr': 'عنوان وظیفه لازم است',
+'workerStepErr': 'قدم لازم است',
+'workerIdErr': 'کدم لازم است',
+'workerGradeErr': 'بست لازم است',
+'workerTashkilGradeErr': 'بست تشکیل لازم است',
+'workerGradeTypeErr': 'نوعیت بست لازم است',
+'workerAppointedDateErr': 'تاریخ استخدام لازم است',
+'workerStartDateErr': 'تاریخ اشغال به وظیفه لازم است',
+'workerDisplayList': 'لست کارمندان',
+
+
 
 
  

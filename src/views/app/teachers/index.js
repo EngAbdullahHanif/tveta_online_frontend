@@ -38,7 +38,10 @@ const Test = React.lazy(() =>
   import(/* webpackChunkName: "teacher-transfer" */ './test')
 );
 const Worker = React.lazy(() =>
-  import(/* webpackChunkName: "worker" */ './worker.js')
+  import(/* webpackChunkName: "worker" */ './worker')
+);
+const WorkerList = React.lazy(() =>
+  import(/* webpackChunkName: "worker" */ './worker-list/workerListMain')
 );
 
 const Teachers = ({ match }) => (
@@ -83,7 +86,11 @@ const Teachers = ({ match }) => (
       <Route
       path={`${match.url}/worker`}
       render={(props) => <Worker {...props} />}
-            />
+      />
+      <Route
+      path={`${match.url}/workerList`}
+      render={(props) => <WorkerList {...props} />}
+      />
       <Redirect to="/error" />
     </Switch>
   </Suspense>

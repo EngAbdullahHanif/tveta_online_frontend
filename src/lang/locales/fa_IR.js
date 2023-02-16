@@ -1154,6 +1154,20 @@ module.exports = {
   'student.dismissalFromDormTitle':
     'د شاګرد منفکی له لیلې/ منفکی شاګرد از لیلیه',
 
+  // Student Rergister
+  'menu.student-reregister': 'بیاځلی ثبت/ ثبت دوباره',
+  'student.currentStatus': 'اوسنی حالت/ حالت فعلی',
+  'student.buttonReregister': 'بیاځلی ثبت/ ثبت دوباره',
+  'student.reregister':
+    ' د شاګرد بیاځلی ثبتول په سیستم کې/ ثبت دوباره شاگرد در سیستم',
+  'student.reregisterDateLabel': 'د بیاځلی ثبت نیټه/ تاریخ ثبت دوباره',
+  'student.reregisterDocuments': 'د بیاځلي ثبت اسناد/ اسناد ثبت دوباره',
+  'forms.newIstituteLabel': 'نوی انستیتوت/لیسه// انستیتوت/لیسه جدید',
+  'forms.newDepartmentLabel': ' نوی دیپارتمنت/ دیپارتمنت جدید',
+  'forms.newClassLabel': 'نوی ټولګی/ صنف جدید',
+  'forms.newFieldLabel': 'نوې رشته/ رشته جدید',
+  'forms.classErr': 'نوی ټولګی اړین دی/ صنف جدید ضروری است',
+
   // Subject
   // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
   // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',

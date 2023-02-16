@@ -1117,6 +1117,19 @@ module.exports = {
   // Student Dismissal from dorm
   'student.dismissalFromDormTitle': 'Dismissal from Dorm',
 
+  // Reregister
+  'menu.student-reregister': 'Reregister',
+  'student.currentStatus': 'Current Status',
+  'student.buttonReregister': 'Reregister',
+  'student.reregister': 'Student Reregister',
+  'student.reregisterDateLabel': 'Reregistration Date',
+  'student.reregisterDocuments': 'Reregistration Document',
+  'forms.newIstituteLabel': 'New Institute/School',
+  'forms.newDepartmentLabel': 'New Department',
+  'forms.newClassLabel': 'New Class',
+  'forms.newFieldLabel': 'New Field',
+  'forms.classErr': 'New Class Required!',
+
   // Dorm details page
   // Subject
   // // Subject

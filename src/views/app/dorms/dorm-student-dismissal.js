@@ -44,8 +44,6 @@ const shifs = [
   { value: '2', label: 'shabana' },
 ];
 
-const SignupSchema = Yup.object().shape({});
-
 const StudentsDismissal = (values) => {
   const [studentId, setStudentId] = useState('');
   const [student, setStudent] = useState('');
@@ -59,7 +57,9 @@ const StudentsDismissal = (values) => {
       .min(4, <IntlMessages id="min.invalidId" />)
       .max(10, <IntlMessages id="max.invalidId" />)
       .required(<IntlMessages id="search.studentIdsearchErr" />),
+  });
 
+  const dismissalSchema = Yup.object().shape({
     dismissalDate: Yup.string().required(
       <IntlMessages id="student.dissmissalDateErr" />
     ),
@@ -317,7 +317,7 @@ const StudentsDismissal = (values) => {
               <Formik
                 initialValues={initialValues}
                 //   onSubmit={searhResult}
-                validationSchema={SearchResultSchema}
+                validationSchema={dismissalSchema}
               >
                 {({
                   errors,

@@ -105,6 +105,12 @@ const data = [
         to: `${adminRoot}/students/dismissal`,
         newWindow: false,
       },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.student-reregister',
+        to: `${adminRoot}/students/reregister`,
+        newWindow: false,
+      },
     ],
   },
   // {

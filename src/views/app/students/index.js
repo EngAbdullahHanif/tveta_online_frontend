@@ -49,6 +49,10 @@ const Dismissal = React.lazy(() =>
   import(/* webpackChunkName: "dismissal" */ './student-dismissal')
 );
 
+const Reregister = React.lazy(() =>
+  import(/* webpackChunkName: "reregister" */ './reregister')
+);
+
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -104,6 +108,10 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/dismissal`}
         render={(props) => <Dismissal {...props} />}
+      />
+      <Route
+        path={`${match.url}/reregister`}
+        render={(props) => <Reregister {...props} />}
       />
       {/* <ProtectedRoute
         path={`${match.url}/default`}

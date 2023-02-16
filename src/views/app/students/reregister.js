@@ -28,6 +28,7 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
+import Institues from '../institutes';
 
 const servicePath = 'http://localhost:8000';
 const instituteApiUrl = `${servicePath}/institute/`;
@@ -39,12 +40,12 @@ const instituteOptions = [
   { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
 ];
 
-const shifs = [
+const options = [
   { value: '1', label: 'rozana' },
   { value: '2', label: 'shabana' },
 ];
 
-const StudentsDismissal = (values) => {
+const StudentsRergister = (values) => {
   const [studentId, setStudentId] = useState('');
   const [student, setStudent] = useState('');
   const [data, setData] = useState(false);
@@ -60,9 +61,45 @@ const StudentsDismissal = (values) => {
   });
 
   const dismissalSchema = Yup.object().shape({
+    newDepartment: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="teacher.departmentIdErr" />),
+
+    newInstitute: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.InstituteErr" />),
+
+    newField: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.FieldErr" />),
+
+    studyTime: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StudyTimeErr" />),
+
+    newClass: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.classErr" />),
+
     dismissalDate: Yup.string().required(
       <IntlMessages id="student.dissmissalDateErr" />
     ),
+
     dismissalDocument: Yup.string().required(
       <IntlMessages id="student.dissmissalDocumentErr" />
     ),
@@ -72,6 +109,11 @@ const StudentsDismissal = (values) => {
     searchfield: '',
     dismissalDate: '',
     dismissalDocument: '',
+    newDepartment: [],
+    newClass: [],
+    newInstitute: [],
+    newField: [],
+    studyTime: [],
   };
 
   const handleClick = (event) => {
@@ -90,9 +132,7 @@ const StudentsDismissal = (values) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
-          {<IntlMessages id="student.dismissalTitleFromInstitute" />}
-        </h3>
+        <h3 className="mt-5 m-5">{<IntlMessages id="student.reregister" />}</h3>
         <CardBody>
           {isNext ? (
             <>
@@ -228,6 +268,10 @@ const StudentsDismissal = (values) => {
                                     <IntlMessages id="forms.VillageLabel" />
                                   </Label>
                                   <h3>{student.current_village}</h3>
+                                  <Label>
+                                    <IntlMessages id="student.currentStatus" />
+                                  </Label>
+                                  <h3 className="text-danger">منفک</h3>
                                 </Colxx>
                               </Row>
                               <Row>
@@ -263,7 +307,7 @@ const StudentsDismissal = (values) => {
                                       <span className="bounce3" />
                                     </span>
                                     <span className="label">
-                                      <IntlMessages id="student.buttonDismissal" />
+                                      <IntlMessages id="student.buttonReregister" />
                                     </span>
                                   </Button>
                                 </Colxx>
@@ -328,15 +372,116 @@ const StudentsDismissal = (values) => {
                 }) => (
                   <Form
                     className="av-tooltip tooltip-label-right error-l-150 "
-                    style={{ height: '500px' }}
+                    style={{ height: '700px' }}
                   >
                     <Row className="mb-4 justify-content-center">
                       <Colxx xxs="8">
                         <div className=" p-3">
+                          {/* Institutes */}
+                          <FormGroup className="form-group has-float-label error-l-175">
+                            <Label>
+                              <IntlMessages id="forms.newIstituteLabel" />
+                            </Label>
+                            <FormikReactSelect
+                              name="newInstitute"
+                              id="newInstitute"
+                              value={values.newInstitute}
+                              options={options}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                            />
+                            {errors.newInstitute && touched.newInstitute ? (
+                              <div className="invalid-feedback d-block bg-danger text-white">
+                                {errors.newInstitute}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+
+                          {/* Department */}
+                          <FormGroup className="form-group has-float-label error-l-175">
+                            <Label>
+                              <IntlMessages id="forms.newDepartmentLabel" />
+                            </Label>
+                            <FormikReactSelect
+                              name="newDepartment"
+                              id="newDepartment"
+                              value={values.newDepartment}
+                              options={options}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                            />
+                            {errors.newDepartment && touched.newDepartment ? (
+                              <div className="invalid-feedback d-block bg-danger text-white">
+                                {errors.newDepartment}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+
+                          {/* Field */}
+                          <FormGroup className="form-group has-float-label error-l-175">
+                            <Label>
+                              <IntlMessages id="forms.newFieldLabel" />
+                            </Label>
+                            <FormikReactSelect
+                              name="newField"
+                              id="newField"
+                              value={values.newField}
+                              options={options}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                            />
+                            {errors.newField && touched.newField ? (
+                              <div className="invalid-feedback d-block bg-danger text-white">
+                                {errors.newField}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+
+                          {/*New Class */}
+                          <FormGroup className="form-group has-float-label error-l-175">
+                            <Label>
+                              <IntlMessages id="forms.newClassLabel" />
+                            </Label>
+                            <FormikReactSelect
+                              name="newClass"
+                              id="newClass"
+                              value={values.newClass}
+                              options={options}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                            />
+                            {errors.newClass && touched.newClass ? (
+                              <div className="invalid-feedback d-block bg-danger text-white">
+                                {errors.newClass}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+
+                          {/* Study Time */}
+                          <FormGroup className="form-group has-float-label error-l-175">
+                            <Label>
+                              <IntlMessages id="forms.StudyTimeLabel" />
+                            </Label>
+                            <FormikReactSelect
+                              name="studyTime"
+                              id="studyTime"
+                              value={values.studyTime}
+                              placeholder="Select option"
+                              options={options}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                            />
+                            {errors.studyTime && touched.studyTime ? (
+                              <div className="invalid-feedback d-block bg-danger text-white">
+                                {errors.studyTime}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+
                           {/* Dismissal Date */}
                           <FormGroup className="form-group has-float-label">
                             <Label>
-                              <IntlMessages id="student.dismissalDateLabel" />
+                              <IntlMessages id="student.reregisterDateLabel" />
                             </Label>
                             <Field
                               className="form-control"
@@ -352,7 +497,7 @@ const StudentsDismissal = (values) => {
 
                           <FormGroup>
                             <Label>
-                              <IntlMessages id="student.dissmissalDocuments" />
+                              <IntlMessages id="student.reregisterDocuments" />
                             </Label>
                             <InputGroup className="mb-3">
                               <InputGroupAddon addonType="prepend">
@@ -422,4 +567,4 @@ const StudentsDismissal = (values) => {
   );
 };
 
-export default StudentsDismissal;
+export default StudentsRergister;

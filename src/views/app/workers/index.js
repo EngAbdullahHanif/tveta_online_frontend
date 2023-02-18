@@ -24,11 +24,11 @@ const Teachers = ({ match }) => (
       render={(props) => <Worker {...props} />}
       />
       <Route
-      path={`${match.url}/workerList`}
+      path={`${match.url}/worker-List`}
       render={(props) => <WorkerList {...props} />}
       />
        <Route
-        path={`${match.url}/worker/:workerId`}
+        path={`${match.url}/:workerId`}
         render={(props) => <WorkerProfile {...props} />}
       />
       <Redirect to="/error" />

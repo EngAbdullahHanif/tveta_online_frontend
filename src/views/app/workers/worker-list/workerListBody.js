@@ -24,10 +24,10 @@ const WorkerListBody = ({ worker, isSelect, collect, onCheckItem }) => {
               className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`worker/${worker.workerId}`} style={{ width: '10%' }}>
+              <NavLink to={`workers/${worker.workerId}`} style={{ width: '10%' }}>
                 <p className="list-item-heading mb-1 truncate">{worker.workerId}</p>
               </NavLink>
-              <NavLink to={`teacher/${worker.workerId}`} style={{ width: '15%' }}>
+              <NavLink to={`workers/${worker.workerId}`} style={{ width: '15%' }}>
                 <p className="list-item-heading mb-1 truncate">
                  {worker.workerName}
                 </p>

@@ -227,7 +227,9 @@ module.exports = {
 'workerAppointedDateErr': 'تاریخ استخدام لازم است',
 'workerStartDateErr': 'تاریخ اشغال به وظیفه لازم است',
 'workerDisplayList': 'لست کارمندان',
-
+'workerPostion': 'عنوان وظیفه',
+'workerStepAndWorkerGrade': 'بست او قدم',
+'workerProfile': 'د کارمند پروفایل / پروفایل کارمند',
 
 
 

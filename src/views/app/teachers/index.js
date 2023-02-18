@@ -37,12 +37,18 @@ const TeacherTransfer = React.lazy(() =>
 const Test = React.lazy(() =>
   import(/* webpackChunkName: "teacher-transfer" */ './test')
 );
-const Worker = React.lazy(() =>
-  import(/* webpackChunkName: "worker" */ './worker')
-);
-const WorkerList = React.lazy(() =>
-  import(/* webpackChunkName: "worker" */ './worker-list/workerListMain')
-);
+// const Worker = React.lazy(() =>
+//   import(/* webpackChunkName: "worker" */ '../workers/worker')
+// );
+// const WorkerList = React.lazy(() =>
+//   import(/* webpackChunkName: "worker" */ '../workers/worker-list/workerListMain')
+// );
+
+// // This used to create a sub memu of the sidebar.
+// const WorkerProfile = React.lazy(() =>
+//   import(/* webpackChunkName: "profile" */ '../workers/worker-list/worker-profile')
+// );
+
 
 const Teachers = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -83,7 +89,7 @@ const Teachers = ({ match }) => (
         path={`${match.url}/test`}
         render={(props) => <Test {...props} />}
       />
-      <Route
+      {/* <Route
       path={`${match.url}/worker`}
       render={(props) => <Worker {...props} />}
       />
@@ -91,6 +97,10 @@ const Teachers = ({ match }) => (
       path={`${match.url}/workerList`}
       render={(props) => <WorkerList {...props} />}
       />
+       <Route
+        path={`${match.url}/worker/:workerId`}
+        render={(props) => <WorkerProfile {...props} />}
+      /> */}
       <Redirect to="/error" />
     </Switch>
   </Suspense>

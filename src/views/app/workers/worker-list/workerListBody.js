@@ -5,12 +5,13 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
+const WorkerListBody = ({ worker, isSelect, collect, onCheckItem }) => {
+  console.log('inside body', worker)
   return (
-    <Colxx xxs="12" key={teacher.id} className="mt-2">
-      <ContextMenuTrigger id="menu_id" data={teacher.id} collect={collect}>
+    <Colxx xxs="12" key={worker.workerId} className="mt-2">
+      <ContextMenuTrigger id="menu_id" data={worker.workerId} collect={collect}>
         <Card
-          onClick={(event) => onCheckItem(event, teacher.id)}
+          onClick={(event) => onCheckItem(event, worker.workerId)}
           className={classnames('d-flex flex-row', {
             active: isSelect,
           })}
@@ -23,39 +24,39 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
               className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`teacher/${teacher.id}`} style={{ width: '10%' }}>
-                <p className="list-item-heading mb-1 truncate">{teacher.id}</p>
+              <NavLink to={`worker/${worker.workerId}`} style={{ width: '10%' }}>
+                <p className="list-item-heading mb-1 truncate">{worker.workerId}</p>
               </NavLink>
-              <NavLink to={`teacher/${teacher.id}`} style={{ width: '15%' }}>
+              <NavLink to={`teacher/${worker.workerId}`} style={{ width: '15%' }}>
                 <p className="list-item-heading mb-1 truncate">
-                  {teacher.name}
+                 {worker.workerName}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {teacher.father_name}
+              {worker.workerProvince}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {teacher.current_province}
+                {worker.workerPosition}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {teacher.phone_number}
+                {worker.workerGradeType}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {teacher.major}
+                {`${worker.workerStep}-${worker.workerGrade}`}
               </p>
-              <p
+              {/* <p
                 className="mb-1 text-small"
                 style={{ width: '14%', textAlign: 'right' }}
               >
@@ -67,7 +68,7 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
                     منفک
                   </Badge>
                 </div>
-              )}
+              )} */}
             </div>
             {/* <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
               <CustomInput
@@ -87,4 +88,4 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
 };
 
 /* React.memo detail : https://reactjs.org/docs/react-api.html#reactpurecomponent  */
-export default React.memo(TeacherListBody);
+export default React.memo(WorkerListBody);

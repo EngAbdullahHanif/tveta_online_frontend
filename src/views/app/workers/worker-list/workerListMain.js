@@ -5,9 +5,12 @@ import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
+//import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
 
-import ListPageListing from 'views/app/teachers/bio/teacher-list/TeacherListCatagory';
+//import ListPageHeadings from './workerListHeading'
+import ListPageHeading from 'views/app/workers/worker-list/workerListHeading'
+
+import ListPageListing from 'views/app/workers/worker-list/workerListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 const getIndex = (value, arr, prop) => {
@@ -47,6 +50,45 @@ const categories = [
   { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
+
+// Hard Coded Data
+const roughData = [{
+  workerId: '1',
+  workerName: 'Noman Ahmadi',
+  workerProvince: 'Nangarhar',
+  workerPosition: 'Software Enginner',
+  workerGradeType: 'Mamor',
+  workerStep: '5',
+  workerGrade: '3'
+},
+{
+  workerId: '2',
+  workerName: 'Noman Ahmadi',
+  workerProvince: 'Nangarhar',
+  workerPosition: 'Software Enginner',
+  workerGradeType: 'Mamor',
+  workerStep: '5',
+  workerGrade: '3'
+},
+{
+  workerId: '3',
+  workerName: 'Noman Ahmadi',
+  workerProvince: 'Nangarhar',
+  workerPosition: 'Software Enginner',
+  workerGradeType: 'Mamor',
+  workerStep: '5',
+  workerGrade: '3'
+},
+{
+  workerId: '4',
+  workerName: 'Noman Ahmadi',
+  workerProvince: 'Nangarhar',
+  workerPosition: 'Software Enginner',
+  workerGradeType: 'Mamor',
+  workerStep: '6',
+  workerGrade: '3'
+}
+]
 
 const Provinces = [
   {
@@ -191,6 +233,7 @@ const Provinces = [
   },
 ];
 const ThumbListPages = ({ match }) => {
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -424,7 +467,7 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د استاد لست/ لست استادان"
+          heading="د کارمندانو لست/ لست کارمندان"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -473,11 +516,12 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
+          roughDate = {roughData}
         />
         <table className="table">
           <thead
             className="pl-2 d-flex flex-grow-1  table-dark"
-            style={{ maxHeight: '55px' }}
+            style={{ maxHeight: '55px', marginRight: 2 }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
               <th
@@ -488,7 +532,7 @@ const ThumbListPages = ({ match }) => {
                   borderStyle: 'hidden',
                 }}
               >
-                <IntlMessages id="marks.No" />
+                <IntlMessages id="workerId" />
               </th>
               <th
                 style={{
@@ -498,7 +542,7 @@ const ThumbListPages = ({ match }) => {
                   borderStyle: 'hidden',
                 }}
               >
-                <IntlMessages id="forms.StdName" />
+                <IntlMessages id="workerName" />
               </th>
               <th
                 style={{
@@ -508,7 +552,7 @@ const ThumbListPages = ({ match }) => {
                   borderStyle: 'hidden',
                 }}
               >
-                <IntlMessages id="forms.StdFatherName" />
+                <IntlMessages id="workerProvince" />
               </th>
               <th
                 style={{
@@ -519,7 +563,7 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 {' '}
-                <IntlMessages id="forms.ProvinceLabel" />
+                <IntlMessages id="workerPostion" />
               </th>
               <th
                 style={{
@@ -530,7 +574,7 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 {' '}
-                <IntlMessages id="teacher.PhoneNoLabel" />
+                <IntlMessages id="workerGradeType" />
               </th>
               <th
                 style={{
@@ -541,21 +585,12 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 {' '}
-                <IntlMessages id="teacher.MajorLabel" />
+                <IntlMessages id="workerStepAndWorkerGrade" />
               </th>
-              <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="teacher.GradeLabel" />
-              </th>
+            
             </tr>
           </thead>
+          
           <ListPageListing
             items={items}
             displayMode={displayMode}
@@ -566,7 +601,9 @@ const ThumbListPages = ({ match }) => {
             onContextMenuClick={onContextMenuClick}
             onContextMenu={onContextMenu}
             onChangePage={setCurrentPage}
+            roughData={roughData}
           />
+        
         </table>
       </div>
     </>

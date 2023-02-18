@@ -25,6 +25,11 @@ const data = [
         to: `${adminRoot}/teachers/profile`,
       },
       {
+        icon: 'iconsminds-student-male',
+        label: 'menu.teacher-profile',
+        to: `${adminRoot}/worker/profile`,
+      },
+      {
         icon: 'simple-icon-plus',
         label: 'menu.teacher-evaluation',
         to: `${adminRoot}/teachers/teacher-evalaution`,
@@ -57,6 +62,74 @@ const data = [
         icon: 'simple-icon-user-follow',
         label: 'menu.student_register',
         to: `${adminRoot}/students/register`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.student_register_kankor',
+        to: `${adminRoot}/students/register-kankor`,
+        // roles: [UserRole.Admin],
+      },
+      {
+        icon: 'iconsminds-students',
+        label: 'menu.student_list',
+        to: `${adminRoot}/students/students`,
+        // roles: [UserRole.Admin],
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.student-marks-register',
+        to: `${adminRoot}/students/marks-register`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'menu.attendance-registration',
+        to: `${adminRoot}/students/attendance-register`,
+      },
+      {
+        icon: 'simple-icon-user',
+        label: 'menu.student-profile',
+        to: `${adminRoot}/students/student-profile`,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.student-transfer',
+        to: `${adminRoot}/students/student-transfer`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.marks-display',
+        to: `${adminRoot}/students/marks-display`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        label: 'menu.marks-display-all-subs',
+        to: `${adminRoot}/students/marks-display-allsubs`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.attendance',
+        to: `${adminRoot}/students/attendance`,
+        newWindow: false,
+      },
+    ],
+  },
+  {
+    id: 'workers',
+    icon: 'simple-icon-user',
+    // label: 'menu.students',
+    label: 'workers',
+    to: `${adminRoot}/workers`,
+    // roles: [UserRole.Admin, UserRole.Editor],
+    subs: [
+      {
+        icon: 'simple-icon-user-follow',
+        // label: 'menu.student_register',
+        label: 'worker register',
+        to: `${adminRoot}/workers/worker`,
         newWindow: false,
       },
       {

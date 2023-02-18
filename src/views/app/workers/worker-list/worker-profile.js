@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useParams } from 'react-router-dom';
-import CustomSelectInput from 'components/common/CustomSelectInput';
+//import CustomSelectInput from 'components/common/CustomSelectInput';
+import CustomSelectInput from '../../../../components/common/CustomSelectInput';
 import axios from 'axios';
 
 import * as Yup from 'yup';
@@ -19,8 +20,9 @@ import {
   Input,
 } from 'reactstrap';
 import Select from 'react-select';
-import logo from './../../../../assets/logos/AdminLogo.png';
-import profilePhoto from './../../../../assets/img/profiles/22.jpg';
+//import logo from './../../../../assets/logos/AdminLogo.png';
+import logo from '../../../../assets/logos/AdminLogo.png'
+import profilePhoto from '../../../../assets/img/profiles/2.jpg';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
@@ -45,7 +47,15 @@ const TeacherProfile = () => {
   const [teacherEvaluation, setTeacherEvaluation] = useState([]);
   const [teacherHREvaluation, setTeacherHREvaluation] = useState([]);
   const [teacherTransfer, setTeacherTransfer] = useState([]);
-  
+  const workerProfile = {
+    workerId : '1',
+    workerName: 'Noman Ahmadi',
+    workerProvince: 'Nangarhar',
+    workerStep: '3',
+    workerGrade: '4',
+    workerGradeType: 'Mamor',
+    workerPosition: 'Software Engineer'
+  }
 
   useEffect(() => {
     async function fetchTeacher() {
@@ -89,10 +99,10 @@ const TeacherProfile = () => {
     fetchTeacherTransfer();
   }, []);
 
-  console.log('teacher', teacher);
-  console.log('teacherEvaluation', teacherEvaluation);
-  console.log('teacherHREvaluation', teacherHREvaluation);
-  console.log('teacherTransfer', teacherTransfer);
+  // console.log('teacher', teacher);
+  // console.log('teacherEvaluation', teacherEvaluation);
+  // console.log('teacherHREvaluation', teacherHREvaluation);
+  // console.log('teacherTransfer', teacherTransfer);
 
 
   const handleClick = (event) => {
@@ -110,7 +120,7 @@ const TeacherProfile = () => {
     <>
       <Row>
         <Colxx className="mt-5 m-5" xxs="8">
-          <h3>{<IntlMessages id="teacher.Profile" />}</h3>
+          <h3>{<IntlMessages id="workerProfile" />}</h3>
         </Colxx>
         <Colxx className="mt-4 max">
           <div className="d-flex align-items-center flex-column">
@@ -130,7 +140,7 @@ const TeacherProfile = () => {
           <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
         </Colxx>
       </Row>
-      <Row>
+      {/* <Row>
         <Colxx
           className=" d-flex justify-content-center"
           style={{ marginRight: '2%' }}
@@ -173,7 +183,7 @@ const TeacherProfile = () => {
             </Button>
           </div>
         </Colxx>
-      </Row>
+      </Row> */}
 
       {teacher.length > 0 && institute.length > 0 && (
         <>

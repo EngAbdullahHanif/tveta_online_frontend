@@ -23,7 +23,8 @@ import {
 } from 'reactstrap';
 
 import { injectIntl } from 'react-intl';
-import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
+//import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
+import {FormikReactSelect} from '../../../../containers/form-validations/FormikFields'
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
@@ -61,6 +62,7 @@ const ListPageHeading = ({
   reset,
   institutes,
   onInstituteSelect,
+  
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);

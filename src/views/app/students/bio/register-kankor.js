@@ -226,7 +226,7 @@ const StudentRegistraion = () => {
           {<IntlMessages id="forms.Kankorformstitle" />}
         </h3>
         <CardBody>
-          {isNext == true ? (
+          {isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onRegister}

@@ -821,6 +821,7 @@ module.exports = {
   'dorm.': 'Dorm Name',
   'dorm.NameErr': 'Dorm Name Required!',
   'dorm.Gender': ' Gender',
+  'dorm.genderErr': ' Drom Gender Is Required!',
   'dorm.GenderOptions_1': ' Male',
   'dorm.GenderOptions_2': ' Female',
   'dorm.GenderOptions_3': 'Both',
@@ -936,8 +937,11 @@ module.exports = {
   'curriculum.curriculumTittle': 'Curriculum',
   'curriculum.departmentIdLabel': 'Department Id',
   'curriculum.subjectdLabel': 'Subject',
+  'curriculum.subjectdErr': 'Subject Is Required!',
+  'curriculum.classErr': 'Class Is Required!',
   'curriculum.classLabel': 'Class',
   'curriculum.eduactionalYearLabel': 'Educational Year',
+  'curriculum.eduactionalYearErr': 'Educational Year Is Required!',
 
   //Institute Details Page
   'institute.detailsTitle': 'More Details',
@@ -1130,16 +1134,16 @@ module.exports = {
   'forms.newFieldLabel': 'New Field',
   'forms.classErr': 'New Class Required!',
 
-  // Dorm details page
   // Subject
-  // // Subject
-  //   'forms.SubjectTitle': 'Subject Registration',
-  //   'forms.SubjectNameLabel': 'Name',
-  //   'forms.SubjectNameErr': 'Name is Required!',
+  'subject.NameErr': 'Subject Name Required!',
+  'subject.englishNameErr': 'Subject English Name Required!',
+  'subject.codeErr': 'Subject Code Required!',
   'forms.SubjectCreditLabel': 'Credit',
   'subject.type': ' Subject Type',
+  'subject.creditErr': 'Credit is Required!',
+  'subject.typeErr': ' Subject Type Is Required!',
+  'subject.systemType': ' Subject System Type Is Required!',
 
-  //   'forms.SubjectCreditErr': 'Credit is Required!',
   //   'forms.SubjectTypeLabel': 'Type',
   //   'forms.SubjectTypeErr': 'Subject Type is Required!',
 

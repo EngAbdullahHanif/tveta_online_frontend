@@ -36,42 +36,56 @@ const systemOption = [
   { value: '3', label: 'نیما' },
 ];
 
-// const InstituteRegistgerSchema = Yup.object().shape({
-//   email: Yup.string()
-//     .email('ایمیل که وارد کردی نامعتبره')
-//     .required('پست الکترونیک اجباریه!'),
-//   password: Yup.string().required('کلمه عبور اجباریه!'),
-//   tags: Yup.array()
-//     .min(3, 'حداقل 3 تا تگ انتخاب کنید')
-//     .required('حداقل یک تگ اجباریه'),
-//   date: Yup.date().nullable().required('تاریخ اجباریه!'),
-//   state: Yup.object()
-//     .shape({
-//       label: Yup.string().required(),
-//       value: Yup.string().required(),
-//     })
-//     .nullable()
-//     .required('استان اجباریه!'),
-// });
+const SignupSchema = Yup.object().shape({
+  name1: Yup.string().required(<IntlMessages id="subject.NameErr" />),
+  englishName: Yup.string().required(
+    <IntlMessages id="subject.englishNameErr" />
+  ),
+  code: Yup.string().required(<IntlMessages id="subject.codeErr" />),
+  credit: Yup.string().required(<IntlMessages id="subject.creditErr" />),
+
+  type: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="subject.typeErr" />),
+
+  systemType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="subject.systemType" />),
+});
+
+const initialValues = {
+  name1: '',
+  englishName: '',
+  code: '',
+  credit: '',
+  type: [],
+  systemType: [],
+};
 
 const SubjectRegister = () => {
   const [subjectType, setSubjectType] = useState({});
   const [systemType, setSystemType] = useState({});
+  const [isNext, setIsNext] = useState(true);
 
-  const initialValues = {
-    subjectType: { value: '0', label: 'وتاکئ / انتخاب کنید' },
-    systemType: { value: '0', label: 'وتاکئ / انتخاب کنید' },
+  const handleClick = (event) => {
+    // HANIF BROTHER DONT FORGET TO DISPLAY THE SUCCESS MESSAGE AFTER SUBMISSION
+    // setIsNext(event);
   };
-
   const onRegister = (values) => {
     console.log('values', values);
 
     const data = {
-      name: values.subjectName,
+      name: values.name1,
       english_name: values.englishName,
-      code: values.subjectCode,
-      credits: values.credits,
-      type: values.subjectType.value,
+      code: values.code,
+      credits: values.credit,
+      type: values.type.value,
       system_type: values.systemType.value,
     };
     console.log('data', data);
@@ -99,137 +113,165 @@ const SubjectRegister = () => {
           {<IntlMessages id="subject.register.title" />}
         </h3>
         <CardBody>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onRegister}
-            // validationSchema={InstituteRegistgerSchema}
-          >
-            {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
-              <Form className="av-tooltip tooltip-label-bottom">
-                <FormGroup className="form-group has-float-label">
-                  <Label>
-                    <IntlMessages id="subject.name" />
-                  </Label>
-                  <Field
-                    className="form-control"
-                    name="subjectName"
-                    // validate={validatesubjectName}
-                  />
-                  {errors.subjectName && touched.subjectName && (
-                    <div className="invalid-feedback d-block">
-                      {errors.subjectName}
-                    </div>
-                  )}
-                </FormGroup>
+          {isNext ? (
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onRegister}
+              validationSchema={SignupSchema}
+            >
+              {({
+                errors,
+                touched,
+                values,
+                setFieldTouched,
+                setFieldValue,
+              }) => (
+                <Form className="av-tooltip tooltip-label-right error-l-175">
+                  <Row className="justify-content-center">
+                    <Colxx xxs="10">
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="subject.name" />
+                        </Label>
+                        <Field className="form-control" name="name1" />
+                        {errors.name1 && touched.name1 && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.name1}
+                          </div>
+                        )}
+                      </FormGroup>
 
-                <FormGroup className="form-group has-float-label">
-                  <Label>
-                    <IntlMessages id="subject.english_name" />
-                  </Label>
-                  <Field
-                    className="form-control"
-                    name="englishName"
-                    // validate={validateenglishName}
-                  />
-                  {errors.englishName && touched.englishName && (
-                    <div className="invalid-feedback d-block">
-                      {errors.englishName}
-                    </div>
-                  )}
-                </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="subject.english_name" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="englishName"
+                          // validate={validateenglishName}
+                        />
+                        {errors.englishName && touched.englishName && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.englishName}
+                          </div>
+                        )}
+                      </FormGroup>
 
-                <FormGroup className="form-group has-float-label">
-                  <Label>
-                    <IntlMessages id="subject.code" />
-                  </Label>
-                  <Field
-                    type="number"
-                    className="form-control"
-                    name="subjectCode"
-                    // validate={validatesubjectCode}
-                  />
-                  {errors.subjectCode && touched.subjectCode && (
-                    <div className="invalid-feedback d-block">
-                      {errors.subjectCode}
-                    </div>
-                  )}
-                </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="subject.code" />
+                        </Label>
+                        <Field
+                          type="number"
+                          className="form-control"
+                          name="code"
+                          // validate={validatesubjectCode}
+                        />
+                        {errors.code && touched.code && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.code}
+                          </div>
+                        )}
+                      </FormGroup>
 
-                <FormGroup className="form-group has-float-label">
-                  <Label>
-                    <IntlMessages id="subject.credits" />
-                  </Label>
-                  <Field
-                    type="number"
-                    className="form-control"
-                    name="credits"
-                    // validate={validatecredits}
-                  />
-                  {errors.credits && touched.credits && (
-                    <div className="invalid-feedback d-block">
-                      {errors.credits}
-                    </div>
-                  )}
-                </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="subject.credits" />
+                        </Label>
+                        <Field
+                          type="number"
+                          className="form-control"
+                          name="credit"
+                          // validate={validatecredits}
+                        />
+                        {errors.credit && touched.credit && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.credit}
+                          </div>
+                        )}
+                      </FormGroup>
 
-                <FormGroup className="form-group has-float-label">
-                  <Label>
-                    <IntlMessages id="subject.type" />
-                  </Label>
-                  <FormikReactSelect
-                    name="subjectType"
-                    id="subjectType"
-                    value={values.subjectType}
-                    options={subjectOptions}
-                    onChange={setFieldValue}
-                    onBlur={setFieldTouched}
-                  />
-                  {errors.subjectType && touched.subjectType ? (
-                    <div className="invalid-feedback d-block">
-                      {errors.subjectType}
-                    </div>
-                  ) : null}
-                </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="subject.type" />
+                        </Label>
+                        <FormikReactSelect
+                          name="type"
+                          id="type"
+                          value={values.type}
+                          options={subjectOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.type && touched.type ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.type}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                <FormGroup className="form-group has-float-label">
-                  <Label>
-                    <IntlMessages id="subject.system_type" />
-                  </Label>
-                  <FormikReactSelect
-                    name="systemType"
-                    id="systemType"
-                    value={values.systemType}
-                    options={systemOption}
-                    onChange={setFieldValue}
-                    onBlur={setFieldTouched}
-                  />
-                  {errors.systemType && touched.systemType ? (
-                    <div className="invalid-feedback d-block">
-                      {errors.systemType}
-                    </div>
-                  ) : null}
-                </FormGroup>
-
-                <div className="d-flex justify-content-between align-items-center">
-                  <Button
-                    color="primary"
-                    className={`btn-shadow btn-multiple-state`}
-                    size="lg"
-                    type="submit"
-                  >
-                    <span className="spinner d-inline-block">
-                      <span className="bounce1" />
-                      <span className="bounce2" />
-                      <span className="bounce3" />
-                    </span>
-                    <span className="label">
-                      <IntlMessages id="subject.register" />
-                    </span>
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="subject.system_type" />
+                        </Label>
+                        <FormikReactSelect
+                          name="systemType"
+                          id="systemType"
+                          value={values.systemType}
+                          options={systemOption}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.systemType && touched.systemType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.systemType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </Colxx>
+                  </Row>
+                  <Row>
+                    {' '}
+                    <Colxx style={{ marginLeft: '5%', marginBottom: '5%' }}>
+                      <Button
+                        className="float-right m-5 "
+                        size="lg"
+                        type="submit"
+                        color="primary"
+                        onClick={() => {
+                          onRegister;
+                          handleClick(false);
+                        }}
+                      >
+                        <span className="spinner d-inline-block">
+                          <span className="bounce1" />
+                          <span className="bounce2" />
+                          <span className="bounce3" />
+                        </span>
+                        <span className="label">
+                          <IntlMessages id="forms.SubimssionButton" />
+                        </span>
+                      </Button>
+                    </Colxx>
+                  </Row>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <div className="wizard-basic-step text-center pt-3">
+              <div>
+                <h1 className="mb-2">
+                  <IntlMessages id="wizard.content-thanks" />
+                </h1>
+                <h3>
+                  <IntlMessages id="wizard.registered" />
+                </h3>
+                <Button className="m-5 bg-primary">
+                  <IntlMessages id="button.back" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardBody>
       </Card>
     </>

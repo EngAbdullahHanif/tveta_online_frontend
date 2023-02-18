@@ -824,6 +824,7 @@ module.exports = {
   'dorm.NameLabel': 'د لیلې نوم/ نام لیلیه',
   'dorm.NameErr': 'د لیلی نوم اړین دی/ نام لیلیه ضروری است',
   'dorm.Gender': 'د لیلې جندر/ جندر لیلیه',
+  'dorm.genderErr': 'د لیلی جندر اړین دی/ جنسیت لیلیه ضروری است',
   'dorm.GenderOptions_1': 'نارینه/ ذکور',
   'dorm.GenderOptions_2': 'ښځینه/ اناث',
   'dorm.GenderOptions_3': '‌دواړه/ مختلط',
@@ -954,9 +955,14 @@ module.exports = {
   'subject.curriculum': 'د نصاب ثبت / ثبت نصاب',
   'curriculum.curriculumTittle': 'د نصاب ثبت/ ثبت نصاب',
   'curriculum.departmentIdLabel': 'دیپارتمنت',
+
   'curriculum.subjectdLabel': 'مضمون',
+  'curriculum.subjectdErr': 'مضمون اړین دی/ مضمون ضروری است',
+
   'curriculum.classLabel': 'ټولګی/ صنف',
+  'curriculum.classErr': 'ټولګی اړین دی/ صنف ضروری است',
   'curriculum.eduactionalYearLabel': 'تعلیمی کال/سال تعلیمی',
+  'curriculum.eduactionalYearErr': 'ټعلیمی کال اړین دی / سال تعلیمی ضروری است',
 
   //Institute Details Page
   'institute.detailsTitle': 'نور مالومات/ معلومات بیشتر',
@@ -1169,9 +1175,14 @@ module.exports = {
   'forms.classErr': 'نوی ټولګی اړین دی/ صنف جدید ضروری است',
 
   // Subject
-  // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
-  // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',
-  // 'forms.SubjectNameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است!',
+  'subject.NameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است',
+  'subject.englishNameErr':
+    'د مضمون انگلسی نوم اړین دی/ نام انگلسی مضمون ضروری است',
+  'subject.codeErr': 'د مضمون کوډ اړین دی/ کود مضمون ضروری است',
+  'subject.creditErr': 'د مضمون کریدت اړین دی / کریدیت مضمون ضروری است',
+  'subject.typeErr': 'د مضمون ډول اړین دی / نام مضمون ضروری است',
+  'subject.systemType': 'د مضمون سیستم اړین دی/ سیستم مضمون ضروری است',
+
   'forms.SubjectCreditLabel': 'کریدت',
   // 'forms.SubjectCreditErr': 'د مضمون کریدت اړین دی/ کریدت مضمون ضروری است',
   // 'forms.SubjectTypeLabel': 'ډول/ نوع',

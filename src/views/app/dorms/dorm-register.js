@@ -188,22 +188,46 @@ const SignupSchema = Yup.object().shape({
   totalBuildingNo: Yup.string().required(
     <IntlMessages id="dorm.TotalBuildingNoErr" />
   ),
+
+  province: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+  gender: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="dorm.genderErr" />),
+
   totalRooms: Yup.string().required(<IntlMessages id="dorm.TotalRoomsErr" />),
+  quota: Yup.string().required(<IntlMessages id="dorm.QuotaErr" />),
+
   totalKitchens: Yup.string().required(
     <IntlMessages id="dorm.TotalKitchensErr" />
   ),
   toilet: Yup.string().required(<IntlMessages id="dorm.ToiletErr" />),
+  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
 });
 
 const DormRegistration = (values) => {
   const initialValues = {
-    nmae1: '',
+    name1: '',
     capicity: '',
+    totalKitchens: '',
     gender: [],
     buildingType: [],
     publicBuildingOwner: [],
     privateBuildingType: [],
     province: [],
+    quota: '',
+    totalRooms: '',
+    totalBuildingNo: '',
+    toilet: '',
+    district: '',
   };
 
   const [dormTypeOption, setDormTypeOption] = useState('');
@@ -269,7 +293,7 @@ const DormRegistration = (values) => {
             validationSchema={SignupSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
-              <Form className="av-tooltip tooltip-label-bottom">
+              <Form className="av-tooltip tooltip-label-right error-l-175">
                 <Row className="justify-content-center inlineBlock">
                   <Colxx xxs="">
                     {/* Dorm Name */}
@@ -277,13 +301,14 @@ const DormRegistration = (values) => {
                       <Label>
                         <IntlMessages id="dorm.NameLabel" />
                       </Label>
-                      <Field className="form-control" name="Name" />
-                      {errors.Name && touched.Name ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.Name}
+                      <Field className="form-control" name="name1" />
+                      {errors.name1 && touched.name1 ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.name1}
                         </div>
                       ) : null}
                     </FormGroup>
+
                     {/* Dorm Capicity */}
                     <FormGroup className="form-group has-float-label">
                       <Label>
@@ -291,12 +316,12 @@ const DormRegistration = (values) => {
                       </Label>
                       <Field
                         className="form-control"
-                        name="Capicity"
+                        name="capicity"
                         type="number"
                       />
-                      {errors.Capicity && touched.Capicity ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.Capicity}
+                      {errors.capicity && touched.capicity ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.capicity}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -316,7 +341,7 @@ const DormRegistration = (values) => {
                         required
                       />
                       {errors.buildingType && touched.buildingType ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.buildingType}
                         </div>
                       ) : null}
@@ -340,7 +365,7 @@ const DormRegistration = (values) => {
                           />
                           {errors.PublicBuildingOwner &&
                           touched.PublicBuildingOwner ? (
-                            <div className="invalid-feedback d-block">
+                            <div className="invalid-feedback d-block bg-danger text-white">
                               {errors.PublicBuildingOwner}
                             </div>
                           ) : null}
@@ -364,7 +389,7 @@ const DormRegistration = (values) => {
                           />
                           {errors.privateBuildingType &&
                           touched.privateBuildingType ? (
-                            <div className="invalid-feedback d-block">
+                            <div className="invalid-feedback d-block bg-danger text-white">
                               {errors.privateBuildingType}
                             </div>
                           ) : null}
@@ -383,7 +408,7 @@ const DormRegistration = (values) => {
                         type="number"
                       />
                       {errors.totalKitchens && touched.totalKitchens ? (
-                        <div className="invalid-feedback d-block">
+                        <div className="invalid-feedback d-block bg-danger text-white">
                           {errors.totalKitchens}
                         </div>
                       ) : null}
@@ -395,16 +420,16 @@ const DormRegistration = (values) => {
                         <IntlMessages id="forms.ProvinceLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="Province"
-                        id="Province"
-                        value={values.Province}
+                        name="province"
+                        id="province"
+                        value={values.province}
                         options={StdSchoolProvinceOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
-                      {errors.Province && touched.Province ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.Province}
+                      {errors.province && touched.province ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.province}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -417,17 +442,17 @@ const DormRegistration = (values) => {
                         <IntlMessages id="dorm.Gender" />
                       </Label>
                       <FormikReactSelect
-                        name="Gender"
-                        id="Gender"
-                        value={values.Gender}
+                        name="gender"
+                        id="gender"
+                        value={values.gender}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         options={GenderOptions}
                         required
                       />
-                      {errors.Gender && touched.Gender ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.Gender}
+                      {errors.gender && touched.gender ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.gender}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -439,12 +464,12 @@ const DormRegistration = (values) => {
                       </Label>
                       <Field
                         className="form-control"
-                        name="Quota"
+                        name="quota"
                         type="number"
                       />
-                      {errors.Quota && touched.Quota ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.Quota}
+                      {errors.quota && touched.quota ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.quota}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -456,12 +481,12 @@ const DormRegistration = (values) => {
                       </Label>
                       <Field
                         className="form-control"
-                        name="TotalBuildingNo"
+                        name="totalBuildingNo"
                         type="number"
                       />
-                      {errors.TotalBuildingNo && touched.TotalBuildingNo ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.TotalBuildingNo}
+                      {errors.totalBuildingNo && touched.totalBuildingNo ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.totalBuildingNo}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -473,12 +498,12 @@ const DormRegistration = (values) => {
                       </Label>
                       <Field
                         className="form-control"
-                        name="TotalRooms"
+                        name="totalRooms"
                         type="number"
                       />
-                      {errors.TotalRooms && touched.TotalRooms ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.TotalRooms}
+                      {errors.totalRooms && touched.totalRooms ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.totalRooms}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -490,30 +515,47 @@ const DormRegistration = (values) => {
                       </Label>
                       <Field
                         className="form-control"
-                        name="Toilet"
+                        name="toilet"
                         type="number"
                       />
-                      {errors.Toilet && touched.Toilet ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.Toilet}
+                      {errors.toilet && touched.toilet ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.toilet}
                         </div>
                       ) : null}
                     </FormGroup>
+
                     {/* District  permanent*/}
                     <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="forms.DistrictLabel" />
                       </Label>
-                      <Field className="form-control" name="District" />
-                      {errors.District && touched.District ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.District}
+                      <Field className="form-control" name="district" />
+                      {errors.district && touched.district ? (
+                        <div className="invalid-feedback d-block bg-danger text-white">
+                          {errors.district}
                         </div>
                       ) : null}
                     </FormGroup>
-
-                    <Button className="float-right m-4 ">
-                      <IntlMessages id="forms.SubimssionButton" />
+                  </Colxx>
+                </Row>
+                <Row>
+                  {' '}
+                  <Colxx style={{ marginLeft: '5%', marginBottom: '8%' }}>
+                    <Button
+                      className="float-right m-5 "
+                      size="lg"
+                      type="submit"
+                      color="primary"
+                    >
+                      <span className="spinner d-inline-block">
+                        <span className="bounce1" />
+                        <span className="bounce2" />
+                        <span className="bounce3" />
+                      </span>
+                      <span className="label">
+                        <IntlMessages id="forms.SubimssionButton" />
+                      </span>
                     </Button>
                   </Colxx>
                 </Row>

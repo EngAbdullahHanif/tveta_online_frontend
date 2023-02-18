@@ -106,23 +106,39 @@ const ValidationSchema = Yup.object().shape({
   // ),
 });
 
-const initialValues = {
-  id: [],
-  department: [],
-  subject: [],
-  evaluator: '',
-  strengthPoints: '',
-  marks: '',
-  evaluationDate: '',
-  institute: [],
-  classs: [],
-  topic: '',
-  evaluationType: [],
-  weaknessPoints: '',
-  suggestion: '',
-};
-
 const TeacherEvaluation = () => {
+  const TestData = {
+    Id: 'Hamid',
+    Department: 'CS',
+    Subject: 'ICT',
+    Evalovator: 'Ahmad',
+    StrengthPoints:
+      'He Is hard working and patient while researching about the a topic',
+    Marks: '59',
+    EvaluationDate: '2022-08-12',
+    Insititute: 'Nima',
+    Class: '12th-A',
+    EvaluationTopic: 'BioEconomy',
+    EvluationType: 'Goal Oriented',
+    WeaknessPoint: 'Lack of Preparation',
+    Suggestions: 'Preparation time should be improved!',
+  };
+
+  const [initialId, setInitialId] = useState(
+    TestData.Id ? [{ label: TestData.Id, value: TestData.Id }] : []
+  );
+
+  const [initialDepartment, setInitialDepartment] = useState(
+    TestData.Department
+      ? [{ label: TestData.Department, value: TestData.Department }]
+      : []
+  );
+
+  const [initialSubject, setInitialSubject] = useState(
+    TestData.Department
+      ? [{ label: TestData.Subject, value: TestData.Subject }]
+      : []
+  );
   const [teachers, setTeachers] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -184,6 +200,22 @@ const TeacherEvaluation = () => {
     fetchSubjects();
   }, []);
 
+  const initialValues = {
+    id: initialId,
+    department: initialDepartment,
+    subject: initialSubject,
+    evaluator: '',
+    strengthPoints: '',
+    marks: '',
+    evaluationDate: '',
+    institute: [],
+    classs: [],
+    topic: '',
+    evaluationType: [],
+    weaknessPoints: '',
+    suggestion: '',
+  };
+
   const onSubmit = (values) => {
     console.log(values);
 
@@ -226,7 +258,7 @@ const TeacherEvaluation = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
-            // validationSchema={ValidationSchema}
+            validationSchema={ValidationSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-right error-l-150 ">
@@ -235,21 +267,20 @@ const TeacherEvaluation = () => {
                     {/* teacher Name*/}
                     <FormGroup className="form-group has-float-label ">
                       <Label>
-                        {/* <IntlMessages id="forms.teacherLabel" /> */}
-                        Teacher Name
+                        <IntlMessages id="teacher.IdLabel" />
                       </Label>
 
                       <FormikReactSelect
-                        name="teacher"
-                        id="teacher"
-                        value={values.teacher}
+                        name="id"
+                        id="id"
+                        value={values.id}
                         options={teachers}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
-                      {errors.teacher && touched.teacher ? (
+                      {errors.id && touched.id ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.teacher}
+                          {errors.id}
                         </div>
                       ) : null}
                     </FormGroup>

@@ -22,7 +22,7 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
           >
             <div
               className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
-              style={{ width: '100%' }}
+              style={{ width: '100%', marginTop: 8 }}
             >
               <NavLink to={`subjects/${subject.subjectCode}`} style={{ width: '16%' }}>
                 <p className="list-item-heading mb-1 truncate">{subject.subjectCode}</p>

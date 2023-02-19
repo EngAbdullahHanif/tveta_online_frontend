@@ -59,7 +59,7 @@ const TeacherProfile = () => {
     workerAppointedDate: '1401/3/6',
     workerStartDate: '1401/5/1',
     workerDateOfBirth: "1401/1/2",
-    workerQualification: 'Bachelore',
+    workerQualification: 'لسانس',
     workerField: 'سافتویز انجینری',
     workerGender: 'مرد',
     workerTazkera: '34534545',

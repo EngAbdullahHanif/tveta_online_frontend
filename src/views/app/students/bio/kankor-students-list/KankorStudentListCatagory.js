@@ -28,24 +28,25 @@ const ListPageListing = ({
   onContextMenuClick,
   onContextMenu,
   onChangePage,
+  roughData
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
 
   return (
     <>
       <Row>
-        {items.length === 0 ? (
+        {roughData.length === 0 ? (
           <div className="no-result">
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((student) => {
+        {roughData.map((student) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
-                key={student.id}
+                key={student.kankorId}
                 student={student}
-                isSelect={selectedItems.includes(student.id)}
+                isSelect={selectedItems.includes(student.kankorId)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -54,9 +55,9 @@ const ListPageListing = ({
           if (displayMode === 'thumblist') {
             return (
               <KankorStudentListBody
-                key={student.id}
+                key={student.kankorId}
                 student={student}
-                isSelect={selectedItems.includes(student.id)}
+                isSelect={selectedItems.includes(student.kankorId)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -64,9 +65,9 @@ const ListPageListing = ({
           }
           return (
             <DataListView
-              key={student.id}
+              key={student.kankorId}
               student={student}
-              isSelect={selectedItems.includes(student.id)}
+              isSelect={selectedItems.includes(student.kankorId)}
               onCheckItem={onCheckItem}
               collect={collect}
             />

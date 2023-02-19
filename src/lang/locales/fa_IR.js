@@ -87,6 +87,19 @@ module.exports = {
   'menu.student_list': 'لست شاگرد',
   'menu.student_register_kankor': ' ثبت شاگرد کانکور',
   'menu.forgot-password': 'فراموشی رمز',
+  'kankorStudentId': 'کانکور ایډی',
+  'studentTimings': 'وخت',
+  'department': 'دیپارتمنت',
+  'studentMarks': 'نمرات کانکور',
+  'studentField': 'رشته',
+  'studentRegtrationDate': 'تاریخ ثبت نام',
+  'studentFatherName': 'نام پدر',
+
+
+
+
+
+
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.institute_list': 'لست انستیتوت/لیسه',

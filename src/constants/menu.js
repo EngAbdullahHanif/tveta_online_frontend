@@ -39,16 +39,6 @@ const data = [
         label: 'menu.teacher-transfer',
         to: `${adminRoot}/teachers/teacher-transfer`,
       },
-      {
-        icon: 'iconsminds-add-user',
-        label: 'worker.registration',
-        to: `${adminRoot}/teachers/worker`,
-      },
-      {
-        icon: 'iconsminds-students',
-        label: 'workerDisplayList',
-        to: `${adminRoot}/teachers/workerList`,
-      }
     ],
   },
   {
@@ -113,6 +103,12 @@ const data = [
         icon: 'simple-icon-calculator',
         label: 'menu.attendance',
         to: `${adminRoot}/students/attendance`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'Kankor Student List',
+        to: `${adminRoot}/students/kankor-students`,
         newWindow: false,
       },
     ],

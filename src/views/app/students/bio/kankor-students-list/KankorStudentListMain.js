@@ -196,6 +196,52 @@ const ThumbListPages = ({ match }) => {
     label: 'Product Name',
   });
 
+  const roughData = [{
+    kankorStudentName: '  نعمان احمدی',
+    kankorStudentFatherName:  "محمد",
+    institute: 'تکنالوژی',
+    timeing: 'سهار',
+    department: 'معلومات تکنالوژی',
+    kankorId: '2412',
+    kankorMarks: '89',
+    field: 'گرافکس',
+    registrationDate: '1401/3/6'
+  },
+  {
+    kankorStudentName: ' شاکر',
+    kankorStudentFatherName: ' محمد',
+    institute: 'تکنالوژی',
+    timeing: 'سهار',
+    department: 'معلومات تکنالوژی',
+    kankorId: '456',
+    kankorMarks: '89',
+    field: 'گرافکس',
+    registrationDate: '1401/3/6'
+  },
+  {
+    kankorStudentName: ' علی',
+    kankorStudentFatherName: ' محمد',
+    institute: 'تکنالوژی',
+    timeing: 'سهار',
+    department: 'معلومات تکنالوژی',
+    kankorId: '78',
+    kankorMarks: '89',
+    field: 'گرافکس',
+    registrationDate: '1401/3/6'
+  },
+  {
+    kankorStudentName: ' احمدی',
+    kankorStudentFatherName: ' محمد',
+    institute: 'تکنالوژی',
+    timeing: 'سهار',
+    department: 'معلومات تکنالوژی',
+    kankorId: '3454',
+    kankorMarks: '89',
+    field: 'گرافکس',
+    registrationDate: '1401/3/6'
+  }
+]
+
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
@@ -454,7 +500,7 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د شاگرد لست/لست شاگردان"
+          heading="د کانکور د شاگردانو لست/لست شاگردان کانکوریان"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -522,8 +568,114 @@ const ThumbListPages = ({ match }) => {
           }}
         />
 
-        <ListPageListing
+<table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark"
+            style={{ maxHeight: '55px', marginRight: 2 }}
+          >
+            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+              <th
+                style={{
+                  width: '11%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="kankorStudentId" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="workerName" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="studentFatherName" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="institute" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="studentTimings" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="department" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="studentMarks" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="studentField" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="studentRegtrationDate" />
+              </th>
+            
+            </tr>
+          </thead>
+          
+          <ListPageListing
           items={items}
+          roughData= {roughData}
           displayMode={displayMode}
           selectedItems={selectedItems}
           onCheckItem={onCheckItem}
@@ -533,6 +685,10 @@ const ThumbListPages = ({ match }) => {
           onContextMenu={onContextMenu}
           onChangePage={setCurrentPage}
         />
+        
+        </table>
+
+       
       </div>
     </>
   );

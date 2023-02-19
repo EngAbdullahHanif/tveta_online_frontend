@@ -437,6 +437,11 @@ const data = [
         label: 'Admin dashboard',
         to: `${adminRoot}/subjects/admin-dashboard`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'subject-list',
+        to: `${adminRoot}/subjects/subject-list`,
+      },
     ],
   },
   {

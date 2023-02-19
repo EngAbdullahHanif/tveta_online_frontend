@@ -1243,7 +1243,7 @@ module.exports = {
   'subject.system_type': 'د مضمون سیسټم ډول / نوعیت سیستم مضمون',
   'subject.code': 'د مضمون کوډ / کد مضمون',
   'subject.register.title': 'د مضمون ثبت کول / ثبت مضمون',
-  'subject.register': 'مضمون ثبت کول / ثبت مضمون',
+  "subject.system.type": 'د مضمون د سیستم ډول',
 
   'class.name': 'د صنف نوم / نام صنف',
   'class.semester': 'د صنف سمستر / سمستر صنف',

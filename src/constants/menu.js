@@ -484,6 +484,21 @@ const data = [
         label: 'class.fields',
         to: `${adminRoot}/fields/fields`,
       },
+      {
+        icon: 'simple-icon-logout',
+        label: 'field-list',
+        to: `${adminRoot}/fields/field-list`,
+      },
+      {
+        icon: 'simple-icon-logout',
+        label: 'department-registration',
+        to: `${adminRoot}/fields/department-registration`,
+      },
+      {
+        icon: 'simple-icon-logout',
+        label: 'department-list',
+        to: `${adminRoot}/fields/department-list`,
+      },
     ],
   },
   {

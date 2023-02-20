@@ -95,6 +95,17 @@ module.exports = {
   'studentRegtrationDate': 'تاریخ ثبت نام',
   'studentFatherName': 'نام پدر',
 
+  // department
+
+  'departmentRegistration': "ثبت دیپارتمنت/ د دیپارتمنت ثبت",
+  'departmentField': 'رشته ها/رشتی',
+  'departmentName': 'نام دیپارتمنت',
+  'departmentEnglishName': 'نام انگلیسی دیپارتمنت',
+  'departmentFieldErr': 'نام رشته لازم است',
+  'departmentNameErr': 'نام دیپارتمنت لازم است',
+  'departmentEnglishNameErr': 'نام انگلیسی دیپارتمنت لازم است',
+  'departmentId': 'ایدا دیپارتمنت',
+
 
 
 
@@ -767,6 +778,9 @@ module.exports = {
   'field.SubjectsErr': 'مضمونونه اړین دي/ درج مضامین ضروری است',
   'field.FieldIdLabel': 'د رشتی آیدی/ ایدی رشته',
   'field.FieldIdErr': 'د رشتې ایدی اړین دی/ ایدی رشته ضروری است',
+  'fieldTitle': 'نام رشته',
+  'fieldId': 'ایدی رشته',
+  'fieldEnglishTitle': 'نام انگلیسی رشته',
 
   // Teacher Registration section
   'teacher.RegisterTitle': 'د استادانو ثبتول/ ثبت اساتید',

@@ -442,6 +442,11 @@ const data = [
         label: 'subject-list',
         to: `${adminRoot}/subjects/subject-list`,
       },
+      {
+        icon: 'simple-icon-plus',
+        label: 'curriculum-list',
+        to: `${adminRoot}/subjects/curriculum-list`,
+      },
     ],
   },
   {

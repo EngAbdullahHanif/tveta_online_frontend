@@ -1020,6 +1020,7 @@ module.exports = {
   'curriculum.subjectdLabel': 'مضمون',
   'curriculum.classLabel': 'ټولګی/ صنف',
   'curriculum.eduactionalYearLabel': 'تعلیمی کال/سال تعلیمی',
+  'curriculumId': 'ایدی',
 
   //Institute Details Page
   'institute.detailsTitle': 'نور مالومات/ معلومات بیشتر',

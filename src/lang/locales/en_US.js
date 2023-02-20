@@ -173,6 +173,7 @@ module.exports = {
   'menu.marks-display-all-subs': 'Marks of All Subjects',
   'menu.student-dismissal': 'Student Dismissal',
   'menu.dorm-student-dismissal': ' Dorm Student Dismissal',
+  'menu.single-student-marksUpdate': 'Student Marks Update',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -1179,11 +1180,15 @@ module.exports = {
   'subject.typeErr': ' Subject Type Is Required!',
   'subject.systemType': ' Subject System Type Is Required!',
 
-  //   'forms.SubjectTypeLabel': 'Type',
-  //   'forms.SubjectTypeErr': 'Subject Type is Required!',
+  // Marks Update
+  'marks.singleStudentMarksUpdate': ' Marks Update',
+  'marks.studentId': 'Student Id',
+  'marks.studentIdErr': 'Student Id Is Required!',
+  'marks.chance': 'Chance',
+  'marks.chanceErr': 'Chance Selection is Mandatory',
 
-  //   'forms.TypeOption_1': 'Core',
-  //   'forms.TypeOption_2': 'Sup',
+  'forms.chanceOne': 'First Chance',
+  'forms.chanceTwo': 'Second Chance',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Custom Inputs',

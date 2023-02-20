@@ -111,6 +111,12 @@ const data = [
         to: `${adminRoot}/students/reregister`,
         newWindow: false,
       },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.single-student-marksUpdate',
+        to: `${adminRoot}/students/marks-update`,
+        newWindow: false,
+      },
     ],
   },
   // {

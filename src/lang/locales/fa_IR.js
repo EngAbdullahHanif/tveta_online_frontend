@@ -184,6 +184,7 @@ module.exports = {
   'menu.Institute-details': 'مشخصات انستیتوت',
   'menu.marks-display': 'دیو مضمون نمرې/ نمرات یک مضمون',
   'menu.marks-display-all-subs': 'د ټولو مضمونو نمرې/ نمرات تمام مضامین',
+  'menu.single-student-marksUpdate': 'د شاگرد د نمرو اپدیت/ اپدیت نمرات شاگرد',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -1218,14 +1219,16 @@ module.exports = {
   'subject.creditErr': 'د مضمون کریدت اړین دی / کریدیت مضمون ضروری است',
   'subject.typeErr': 'د مضمون ډول اړین دی / نام مضمون ضروری است',
   'subject.systemType': 'د مضمون سیستم اړین دی/ سیستم مضمون ضروری است',
-
   'forms.SubjectCreditLabel': 'کریدت',
-  // 'forms.SubjectCreditErr': 'د مضمون کریدت اړین دی/ کریدت مضمون ضروری است',
-  // 'forms.SubjectTypeLabel': 'ډول/ نوع',
-  // 'forms.SubjectTypeErr': 'د مضمون ډول اړین دی / نوع مضمون ضروری است',
 
-  //   'forms.TypeOption_1': 'اصلی',
-  // 'forms.TypeOption_2': 'فرعی',
+  // Marks Update
+  'marks.singleStudentMarksUpdate': 'د نمراتو اپدیت/ تغییر نمرات',
+  'marks.studentId': 'د شاګرد ایډي/ ایدی شاگرد',
+  'marks.studentIdErr': 'د شاګرد ایډي ضروری دی/ ایدی شاگرد ضروری است',
+  'marks.chance': 'چانس',
+  'marks.chanceErr': 'د چانس ټاکل اړین دی/ انتخاب چانس ضروری است',
+  'forms.chanceOne': 'لومړی چانس/ چانس اول',
+  'forms.chanceTwo': 'دوهم چانس/ چانس دوم',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Inputs سفارشی',

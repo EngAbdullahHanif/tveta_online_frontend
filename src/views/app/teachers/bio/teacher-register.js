@@ -242,7 +242,6 @@ const StdSchoolProvinceOptions = [
 const genderOptions = [
   { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
   { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
-  { value: '3', label: <IntlMessages id="dorm.GenderOptions_3" /> },
 ];
 
 const TeacherRegister = ({ intl }, values) => {
@@ -401,7 +400,7 @@ const TeacherRegister = ({ intl }, values) => {
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="teacher.NameErr" />)
+          .required(<IntlMessages id="forms.genderErr" />)
       : '',
 
     grandFatherName: Yup.string()

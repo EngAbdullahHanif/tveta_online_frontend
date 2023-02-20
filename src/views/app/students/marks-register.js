@@ -30,6 +30,7 @@ const LevelOfEdcationOptions = [
   { value: '2', label: 'فرعی' },
 ];
 
+
 const FieldOptions = [
   { value: '14th', label: 'Computer Science' },
   { value: 'bachelor', label: 'Agriculture' },
@@ -356,6 +357,7 @@ const MarksRegistration = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
+
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />

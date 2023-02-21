@@ -45,6 +45,7 @@ const TeacherProfile = () => {
   const [teacherEvaluation, setTeacherEvaluation] = useState([]);
   const [teacherHREvaluation, setTeacherHREvaluation] = useState([]);
   const [teacherTransfer, setTeacherTransfer] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false)
   
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const TeacherProfile = () => {
       const response = await axios.get(`${teacherApiUrl}?id=${teacherId}`);
       const data = response.data;
       setTeacher(data);
-
+      setIsLoaded(true)
       const instituteResponse = await axios.get(
         `${teacherApiUrl}institute/?teacher_id=${teacherId}`
       );

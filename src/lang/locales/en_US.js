@@ -174,6 +174,7 @@ module.exports = {
   'menu.student-dismissal': 'Student Dismissal',
   'menu.dorm-student-dismissal': ' Dorm Student Dismissal',
   'menu.single-student-marksUpdate': 'Student Marks Update',
+  'menu.attendance-Update': 'Attendance Update',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -1186,9 +1187,17 @@ module.exports = {
   'marks.studentIdErr': 'Student Id Is Required!',
   'marks.chance': 'Chance',
   'marks.chanceErr': 'Chance Selection is Mandatory',
-
   'forms.chanceOne': 'First Chance',
   'forms.chanceTwo': 'Second Chance',
+
+  // Attendance Update
+  'attendance.updateTitle': 'Student Attendance Update',
+
+  // Class Register
+  'class.name': 'Class Name',
+  'class.nameErr': 'Class Name Is Required!',
+  'class.semesterLabel': 'Semester',
+  'class.semesterErr': 'Semester Is Required!',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Custom Inputs',

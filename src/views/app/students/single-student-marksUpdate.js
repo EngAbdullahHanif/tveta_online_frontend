@@ -150,7 +150,7 @@ const initialValues = {
   studentId: [],
   chance: [],
 };
-const MarksRegistration = ({ match }) => {
+const MarksUpdate = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -226,7 +226,7 @@ const MarksRegistration = ({ match }) => {
   }, []);
 
   const handleClick = (event) => {
-    setIsNext(event);
+    // setIsNext(event);
     axios
       .get(
         `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
@@ -681,4 +681,4 @@ const MarksRegistration = ({ match }) => {
   );
 };
 
-export default MarksRegistration;
+export default MarksUpdate;

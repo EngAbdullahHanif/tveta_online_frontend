@@ -185,6 +185,7 @@ module.exports = {
   'menu.marks-display': 'دیو مضمون نمرې/ نمرات یک مضمون',
   'menu.marks-display-all-subs': 'د ټولو مضمونو نمرې/ نمرات تمام مضامین',
   'menu.single-student-marksUpdate': 'د شاگرد د نمرو اپدیت/ اپدیت نمرات شاگرد',
+  'menu.attendance-Update': 'د حاضرۍ تغیر/ تغیر حاضری',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -1229,6 +1230,15 @@ module.exports = {
   'marks.chanceErr': 'د چانس ټاکل اړین دی/ انتخاب چانس ضروری است',
   'forms.chanceOne': 'لومړی چانس/ چانس اول',
   'forms.chanceTwo': 'دوهم چانس/ چانس دوم',
+
+  // Attendance Update
+  'attendance.updateTitle': 'د شاګرد د حاضرۍ تغییر/ تغیر حاضری شاگرد',
+
+  // Class Registratiion
+  'class.nameLabel': 'د صنف نوم/ نام صنف',
+  'class.nameErr': 'د صنف نوم اړین دی/ نام صنف ضروری است',
+  'class.semesterLabel': 'سمستر',
+  'class.semesterErr': 'سمستر اړین دی/ سمستر ضروری است',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Inputs سفارشی',

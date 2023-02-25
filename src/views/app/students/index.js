@@ -55,7 +55,10 @@ const Reregister = React.lazy(() =>
 const SingleStudentMarksUpdate = React.lazy(() =>
   import(/* webpackChunkName: "marks-update" */ './single-student-marksUpdate')
 );
-;
+
+const AttendanceUpdate = React.lazy(() =>
+  import(/* webpackChunkName: "attendance-update" */ './attendance-update')
+);
 
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -121,13 +124,17 @@ const Students = ({ match }) => (
         path={`${match.url}/marks-update`}
         render={(props) => <SingleStudentMarksUpdate {...props} />}
       />
+      <Route
+        path={`${match.url}/attendance-update`}
+        render={(props) => <AttendanceUpdate {...props} />}
+      />
+
       {/* <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}
         roles={[UserRole.Admin]}
       />
        */}
-
       <Redirect to="/error" />
     </Switch>
   </Suspense>

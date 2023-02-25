@@ -156,46 +156,92 @@ const genderOptions = [
 const ValidationSchema = Yup.object().shape({
   institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
 
-  province: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  province: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
+    : null,
 
   district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
 
   village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 
-  instType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="inst.typeErr" />),
+  instType: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="inst.typeErr" />)
+    : null,
 
-  gender: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="institute.gender" />),
+  gender: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="institute.gender" />)
+    : null,
 });
 
-const initialValues = {
-  institute: '',
-  province: [],
-  district: '',
-  village: '',
-  instType: [],
-  gender: [],
-};
-
+const updateMode = true;
 const InstituteRegister = () => {
+  const TestData = {
+    InstituteName: 'Nima',
+    Province: 'Kabul-1',
+    District: 'Paghman',
+    Village: 'Chehltan',
+    InstType: 'private',
+    Gender: 'Complex',
+  };
+
+  const [initialInstituteName, setInitialInstituteName] = useState(
+    TestData.InstituteName ? TestData.InstituteName : ''
+  );
+
+  const [initialProvince, setInitialProvince] = useState(
+    TestData.Province
+      ? [
+          {
+            label: TestData.Province,
+            value: TestData.Province,
+          },
+        ]
+      : []
+  );
+  const [initialDistrict, setInitialDistrict] = useState(
+    TestData.District ? TestData.District : ''
+  );
+  const [initialInstType, setInitialInstType] = useState(
+    TestData.InstType
+      ? [
+          {
+            label: TestData.InstType,
+            value: TestData.InstType,
+          },
+        ]
+      : []
+  );
+  const [initialVillage, setInitialVillage] = useState(
+    TestData.Village ? TestData.Village : ''
+  );
+
+  const [initialGender, setInitialGender] = useState(
+    TestData.Gender ? [{ label: TestData.Gender, value: TestData.Gender }] : []
+  );
+
+  const [isNext, setIsNext] = useState(true);
   const [province, setProvince] = useState({});
   const [instType, setInstType] = useState({});
   const [gender, setGender] = useState({});
   const [] = useState('وتاکئ / انتخاب کنید');
+  const handleClick = (event) => {
+    // setIsNext(event);
+  };
 
   const onRegister = (values) => {
     // if (!values.province || values.province.value === '0') {
@@ -244,131 +290,166 @@ const InstituteRegister = () => {
           {<IntlMessages id="inst.register.title" />}
         </h3>
         <CardBody>
-          <Formik
-            validateOnMount
-            initialValues={initialValues}
-            validationSchema={ValidationSchema}
-            onSubmit={onRegister}
-          >
-            {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
-              <Form className="av-tooltip tooltip-label-right  error-l-200">
-                <Row className="justify-content-center">
-                  <Colxx xxs="10">
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="inst.name" />
-                      </Label>
-                      <Field className="form-control" name="institute" />
-                      {errors.institute && touched.institute && (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.institute}
-                        </div>
-                      )}
-                    </FormGroup>
+          {isNext ? (
+            <Formik
+              validateOnMount
+              initialValues={{
+                institute: initialInstituteName,
+                province: initialProvince,
+                district: initialDistrict,
+                village: initialVillage,
+                instType: initialInstType,
+                gender: initialGender,
+              }}
+              validationSchema={ValidationSchema}
+              onSubmit={onRegister}
+            >
+              {({
+                errors,
+                touched,
+                values,
+                setFieldTouched,
+                setFieldValue,
+              }) => (
+                <Form className="av-tooltip tooltip-label-right  error-l-200">
+                  <Row className="justify-content-center">
+                    <Colxx xxs="10">
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="inst.name" />
+                        </Label>
+                        <Field className="form-control" name="institute" />
+                        {errors.institute && touched.institute && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.institute}
+                          </div>
+                        )}
+                      </FormGroup>
 
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="forms.ProvinceLabel" />
-                      </Label>
-                      <FormikReactSelect
-                        name="province"
-                        id="province"
-                        value={values.province}
-                        options={ProvinceOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                      />
-                      {errors.province && touched.province ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.province}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="forms.ProvinceLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="province"
+                          id="province"
+                          value={values.province}
+                          options={ProvinceOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.province && touched.province ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.province}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="forms.DistrictLabel" />
-                      </Label>
-                      <Field className="form-control" name="district" />
-                      {errors.district && touched.district ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.district}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.DistrictLabel" />
+                        </Label>
+                        <Field className="form-control" name="district" />
+                        {errors.district && touched.district ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.district}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* village permanent */}
-                    <FormGroup className="form-group has-float-label ">
-                      <Label>
-                        <IntlMessages id="forms.VillageLabel" />
-                      </Label>
-                      <Field className="form-control" name="village" />
-                      {errors.village && touched.village ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.village}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="inst.type" />
-                      </Label>
-                      <FormikReactSelect
-                        name="instType"
-                        id="instType"
-                        value={values.instType}
-                        options={instTypeOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                      />
-                      {errors.instType && touched.instType ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.instType}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* village permanent */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          <IntlMessages id="forms.VillageLabel" />
+                        </Label>
+                        <Field className="form-control" name="village" />
+                        {errors.village && touched.village ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.village}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="inst.type" />
+                        </Label>
+                        <FormikReactSelect
+                          name="instType"
+                          id="instType"
+                          value={values.instType}
+                          options={instTypeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.instType && touched.instType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.instType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="gender" />
-                      </Label>
-                      <FormikReactSelect
-                        name="gender"
-                        id="gender"
-                        value={values.gender}
-                        options={genderOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                      />
-                      {errors.gender && touched.gender ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.gender}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="gender" />
+                        </Label>
+                        <FormikReactSelect
+                          name="gender"
+                          id="gender"
+                          value={values.gender}
+                          options={genderOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.gender && touched.gender ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.gender}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <div className="d-flex justify-content-between align-items-center float-right">
-                      <Button
-                        className="m-4"
-                        size="lg"
-                        type="submit"
-                        color="primary"
-                      >
-                        <span className="spinner d-inline-block">
-                          <span className="bounce1" />
-                          <span className="bounce2" />
-                          <span className="bounce3" />
-                        </span>
-                        <span className="label">
-                          <IntlMessages id="forms.SubimssionButton" />
-                        </span>
-                      </Button>
-                    </div>
-                  </Colxx>
-                </Row>
-              </Form>
-            )}
-          </Formik>
+                      <div className="d-flex justify-content-between align-items-center float-right mb-5 mt-3">
+                        <Button
+                          className="m-4"
+                          size="lg"
+                          type="submit"
+                          color="primary"
+                          onClick={() => {
+                            handleClick(false);
+                          }}
+                        >
+                          <span className="spinner d-inline-block ">
+                            <span className="bounce1" />
+                            <span className="bounce2" />
+                            <span className="bounce3" />
+                          </span>
+                          <span className="label">
+                            <IntlMessages id="forms.SubimssionButton" />
+                          </span>
+                        </Button>
+                      </div>
+                    </Colxx>
+                  </Row>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <div
+              className="wizard-basic-step text-center pt-3 "
+              style={{ minHeight: '400px' }}
+            >
+              <div>
+                <h1 className="mb-2">
+                  <IntlMessages id="wizard.content-thanks" />
+                </h1>
+                <h3>
+                  <IntlMessages id="wizard.registered" />
+                </h3>
+                <Button className="m-5 bg-primary">
+                  <IntlMessages id="button.back" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardBody>
       </Card>
     </>

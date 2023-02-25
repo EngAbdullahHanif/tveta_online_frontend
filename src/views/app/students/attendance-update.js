@@ -66,6 +66,11 @@ const StudyTimeOptions = [
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
+const chanceOptions = [
+  { value: '1', label: <IntlMessages id="forms.chanceOne" /> },
+  { value: '2', label: <IntlMessages id="forms.chanceTwo" /> },
+];
+
 const SubjectOptions = [
   { value: '14th', label: 'Computer Science' },
   { value: 'bachelor', label: 'Agriculture' },
@@ -119,6 +124,20 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="marks.SubjectErr" />),
+
+  studentId: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.studentIdErr" />),
+
+  chance: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.chanceErr" />),
 });
 
 const initialValues = {
@@ -128,8 +147,10 @@ const initialValues = {
   classs: [],
   department: [],
   subject: [],
+  studentId: [],
+  chance: [],
 };
-const MarksRegistration = ({ match }) => {
+const AttendanceUpdate = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -205,7 +226,7 @@ const MarksRegistration = ({ match }) => {
   }, []);
 
   const handleClick = (event) => {
-    setIsNext(event);
+    // setIsNext(event);
     axios
       .get(
         `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
@@ -297,7 +318,9 @@ const MarksRegistration = ({ match }) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">{<IntlMessages id="marks.title" />}</h3>
+        <h3 className="mt-5 m-5">
+          {<IntlMessages id="attendance.updateTitle" />}
+        </h3>
         <CardBody>
           {isNext ? (
             <Formik
@@ -377,6 +400,26 @@ const MarksRegistration = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
+
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
+                        <Label>
+                          <IntlMessages id="marks.studentId" />
+                        </Label>
+                        <FormikReactSelect
+                          name="studentId"
+                          id="studentId"
+                          value={values.studentId}
+                          options={StudyTimeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          onClick={setSelectedStudyTime(values.studentId)}
+                        />
+                        {errors.studentId && touched.studentId ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.studentId}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                     </Colxx>
 
                     <Colxx xxs="6">
@@ -444,6 +487,7 @@ const MarksRegistration = ({ match }) => {
                       </FormGroup>
                     </Colxx>
                   </Row>
+
                   <Row>
                     <Colxx>
                       <Button
@@ -548,23 +592,14 @@ const MarksRegistration = ({ match }) => {
               </Row>
 
               <Row
-                className="justify-content-center  border border"
+                className="justify-content-center "
                 style={{
                   marginInline: '16%',
-                  height: '30rem',
-                  overflowY: 'scroll',
                   overflowX: 'hidden',
                 }}
               >
                 <table class="table ">
-                  <tbody
-                    className="border border "
-                    style={{
-                      height: '200px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
-                  >
+                  <tbody>
                     {students.map((student, index) => (
                       <tr>
                         <th scope="row">{index}</th>
@@ -592,42 +627,7 @@ const MarksRegistration = ({ match }) => {
                   </tbody>
                 </table>
               </Row>
-              <Row
-                className="justify-content-center  border border"
-                style={{
-                  marginInline: '16%',
-                }}
-              >
-                <table class="table ">
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                  <tfoot className="thead-dark">
-                    <tr>
-                      <th scope="col">
-                        <IntlMessages id="marks.No" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.FullName" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.FatherName" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.ID" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.Marks" />
-                      </th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </Row>
+
               <Row className=" justify-content-center">
                 <Colxx xxs="9" className="m-5">
                   <Button className=" m-4 " onClick={() => handleClick(true)}>
@@ -660,4 +660,4 @@ const MarksRegistration = ({ match }) => {
   );
 };
 
-export default MarksRegistration;
+export default AttendanceUpdate;

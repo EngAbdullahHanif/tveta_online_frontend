@@ -36,26 +36,32 @@ const systemOption = [
   { value: '3', label: 'نیما' },
 ];
 
-// const InstituteRegistgerSchema = Yup.object().shape({
-//   email: Yup.string()
-//     .email('ایمیل که وارد کردی نامعتبره')
-//     .required('پست الکترونیک اجباریه!'),
-//   password: Yup.string().required('کلمه عبور اجباریه!'),
-//   tags: Yup.array()
-//     .min(3, 'حداقل 3 تا تگ انتخاب کنید')
-//     .required('حداقل یک تگ اجباریه'),
-//   date: Yup.date().nullable().required('تاریخ اجباریه!'),
-//   state: Yup.object()
-//     .shape({
-//       label: Yup.string().required(),
-//       value: Yup.string().required(),
-//     })
-//     .nullable()
-//     .required('استان اجباریه!'),
-// });
+const ValidationSchema = Yup.object().shape({
+  className: Yup.string().required(<IntlMessages id="class.nameErr" />),
+  semester: Yup.string().required(<IntlMessages id="class.semesterErr" />),
+});
 
+const updateMode = true;
 const SubjcetRegister = () => {
-  const initialValues = {};
+  const TestData = {
+    ClassName: '13th',
+    Semester: '1',
+  };
+  const [initialClassName, setInitialClassName] = useState(
+    TestData.ClassName ? TestData.ClassName : ''
+  );
+  const [initialSemester, setInitialSemester] = useState(
+    TestData.Semester ? TestData.Semester : ''
+  );
+  const [isNext, setIsNext] = useState(true);
+  const handleClick = (event) => {
+    // setIsNext(event);
+  };
+
+  const initialValues = {
+    className: initialClassName,
+    semester: initialSemester,
+  };
   const onRegister = (values) => {
     console.log(values);
     const data = {
@@ -88,66 +94,95 @@ const SubjcetRegister = () => {
           {<IntlMessages id="class.register.title" />}
         </h3>
         <CardBody>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onRegister}
-            // validationSchema={InstituteRegistgerSchema}
-          >
-            {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
-              <Form className="av-tooltip tooltip-label-bottom">
-                <FormGroup className="form-group has-float-label">
-                  <Label>
-                    <IntlMessages id="class.name" />
-                  </Label>
-                  <Field
-                    className="form-control"
-                    name="className"
-                    // validate={validateclassName}
-                  />
-                  {errors.className && touched.className && (
-                    <div className="invalid-feedback d-block">
-                      {errors.className}
-                    </div>
-                  )}
-                </FormGroup>
+          {isNext ? (
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onRegister}
+              validationSchema={ValidationSchema}
+            >
+              {({
+                errors,
+                touched,
+                values,
+                setFieldTouched,
+                setFieldValue,
+              }) => (
+                <Form className="av-tooltip tooltip-label-right error-l-100">
+                  <Row className="justify-content-center">
+                    <Colxx xxs="10">
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="class.nameLabel" />
+                        </Label>
+                        <Field className="form-control" name="className" />
+                        {errors.className && touched.className && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.className}
+                          </div>
+                        )}
+                      </FormGroup>
 
-                <FormGroup className="form-group has-float-label">
-                  <Label>
-                    <IntlMessages id="class.semester" />
-                  </Label>
-                  <Field
-                    className="form-control"
-                    name="semester"
-                    type="number"
-                    // validate={validatesemester}
-                  />
-                  {errors.semester && touched.semester && (
-                    <div className="invalid-feedback d-block">
-                      {errors.semester}
-                    </div>
-                  )}
-                </FormGroup>
-
-                <div className="d-flex justify-content-between align-items-center">
-                  <Button
-                    color="primary"
-                    className={`btn-shadow btn-multiple-state`}
-                    size="lg"
-                    type="submit"
-                  >
-                    <span className="spinner d-inline-block">
-                      <span className="bounce1" />
-                      <span className="bounce2" />
-                      <span className="bounce3" />
-                    </span>
-                    <span className="label">
-                      <IntlMessages id="class.register" />
-                    </span>
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="class.semesterLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="semester"
+                          type="number"
+                        />
+                        {errors.semester && touched.semester && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.semester}
+                          </div>
+                        )}
+                      </FormGroup>
+                    </Colxx>
+                  </Row>
+                  <Row>
+                    {' '}
+                    <Colxx style={{ marginLeft: '5%', marginBottom: '8%' }}>
+                      <Button
+                        className="float-right m-5 "
+                        size="lg"
+                        type="submit"
+                        color="primary"
+                        onClick={() => {
+                          handleClick(false);
+                        }}
+                      >
+                        <span className="spinner d-inline-block">
+                          <span className="bounce1" />
+                          <span className="bounce2" />
+                          <span className="bounce3" />
+                        </span>
+                        <span className="label">
+                          <IntlMessages id="forms.SubimssionButton" />
+                        </span>
+                      </Button>
+                    </Colxx>
+                  </Row>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <div
+              className="wizard-basic-step text-center pt-3 "
+              style={{ minHeight: '400px' }}
+            >
+              <div>
+                <h1 className="mb-2">
+                  <IntlMessages id="wizard.content-thanks" />
+                </h1>
+                <h3>
+                  <IntlMessages id="wizard.registered" />
+                </h3>
+                <Button className="m-5 bg-primary">
+                  <IntlMessages id="button.back" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardBody>
       </Card>
     </>

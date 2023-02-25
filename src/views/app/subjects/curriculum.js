@@ -38,48 +38,106 @@ const Options = [
 ];
 
 const SignupSchema = Yup.object().shape({
-  departmentId: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.departmentIdErr" />),
+  departmentId: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="teacher.departmentIdErr" />)
+    : null,
 
-  subject: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="curriculum.subjectdErr" />),
+  subject: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="curriculum.subjectdErr" />)
+    : null,
 
-  class: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="curriculum.classErr" />),
+  class: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="curriculum.classErr" />)
+    : null,
 
-  educationalYear: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="curriculum.eduactionalYearErr" />),
+  educationalYear: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="curriculum.eduactionalYearErr" />)
+    : null,
 });
 
+const updateMode = true;
 const Curriculum = (values) => {
+  const TestData = {
+    Department: 'harticulture',
+    Subject: 'Botany',
+    Class: '1th-A',
+    EducationalYear: '1401',
+  };
+
+  const [initialDepartment, setInitialDepartment] = useState(
+    TestData.Department
+      ? [
+          {
+            label: TestData.Department,
+            value: TestData.Department,
+          },
+        ]
+      : []
+  );
+
+  const [initialSubject, setInitialSubject] = useState(
+    TestData.Subject
+      ? [
+          {
+            label: TestData.Subject,
+            value: TestData.Subject,
+          },
+        ]
+      : []
+  );
+
+  const [initialClass, setInitialClass] = useState(
+    TestData.Class
+      ? [
+          {
+            label: TestData.Class,
+            value: TestData.Class,
+          },
+        ]
+      : []
+  );
+  const [initialEducationalYear, setInitialEducationalYear] = useState(
+    TestData.EducationalYear
+      ? [
+          {
+            label: TestData.EducationalYear,
+            value: TestData.EducationalYear,
+          },
+        ]
+      : []
+  );
+
   const initialValues = {
-    departmentId: [],
-    subject: [],
-    class: [],
-    educationalYear: [],
+    departmentId: initialDepartment,
+    subject: initialSubject,
+    class: initialClass,
+    educationalYear: initialEducationalYear,
   };
 
   const [isNext, setIsNext] = useState(true);
-
   const handleClick = (event) => {
     // HANIF BROTHER DONT FORGET TO DISPLAY THE SUCCESS MESSAGE AFTER SUBMISSION
-    // setIsNext(event);
+    setIsNext(event);
   };
 
   const onRegister = (values) => {
@@ -222,7 +280,10 @@ const Curriculum = (values) => {
               )}
             </Formik>
           ) : (
-            <div className="wizard-basic-step text-center pt-3">
+            <div
+              className="wizard-basic-step text-center pt-3 "
+              style={{ minHeight: '400px' }}
+            >
               <div>
                 <h1 className="mb-2">
                   <IntlMessages id="wizard.content-thanks" />

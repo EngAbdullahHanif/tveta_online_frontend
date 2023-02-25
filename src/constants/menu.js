@@ -117,6 +117,12 @@ const data = [
         to: `${adminRoot}/students/marks-update`,
         newWindow: false,
       },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.attendance-Update',
+        to: `${adminRoot}/students/attendance-update`,
+        newWindow: false,
+      },
     ],
   },
   // {

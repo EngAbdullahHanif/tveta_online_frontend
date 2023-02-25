@@ -178,30 +178,36 @@ const SignupSchema = Yup.object().shape({
   name1: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
 
   capicity: Yup.string().required(<IntlMessages id="dorm.CapicityErr" />),
-  buildingType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  buildingType: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
+    : null,
 
   totalBuildingNo: Yup.string().required(
     <IntlMessages id="dorm.TotalBuildingNoErr" />
   ),
 
-  province: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  province: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
+    : null,
 
-  gender: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="dorm.genderErr" />),
+  gender: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="dorm.genderErr" />)
+    : null,
 
   totalRooms: Yup.string().required(<IntlMessages id="dorm.TotalRoomsErr" />),
   quota: Yup.string().required(<IntlMessages id="dorm.QuotaErr" />),
@@ -213,24 +219,118 @@ const SignupSchema = Yup.object().shape({
   district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
 });
 
+const updateMode = true;
 const DormRegistration = (values) => {
+  const TestData = {
+    Name1: 'Number-01',
+    Capicity: '25',
+    TotalKitchens: '2',
+    Gender: '2',
+    BuildingType: 'Private',
+    PublicBuildingOwner: 'Tveta',
+    PrivateBuildingType: 'Donated',
+    Province: 'Baghlan',
+    Quota: '120',
+    TotalRooms: '40',
+    TotalBuildingNo: '8',
+    Toilet: '18',
+    District: 'Doshi',
+  };
+
+  const [initialName1, setInitialName1] = useState(
+    TestData.Name1 ? TestData.Name1 : ''
+  );
+  const [initialCapicity, setInitialCapicity] = useState(
+    TestData.Capicity ? TestData.Capicity : ''
+  );
+
+  const [initialTotalKitchens, setInitialTotalKitchens] = useState(
+    TestData.TotalKitchens ? TestData.TotalKitchens : ''
+  );
+
+  const [initialProvince, setInitialProvince] = useState(
+    TestData.Province
+      ? [
+          {
+            label: TestData.Province,
+            value: TestData.Province,
+          },
+        ]
+      : []
+  );
+
+  const [initialGender, setInitialGender] = useState(
+    TestData.Gender ? [{ label: TestData.Gender, value: TestData.Gender }] : []
+  );
+
+  const [initialBuildingType, setInitialBuildingType] = useState(
+    TestData.BuildingType
+      ? [{ label: TestData.BuildingType, value: TestData.BuildingType }]
+      : []
+  );
+
+  const [initialPublicBuildingOwner, setInitialPublicBuildingOwner] = useState(
+    TestData.PublicBuildingOwner
+      ? [
+          {
+            label: TestData.PublicBuildingOwner,
+            value: TestData.PublicBuildingOwner,
+          },
+        ]
+      : []
+  );
+
+  const [initialPrivateBuildingType, setInitialPrivateBuildingType] = useState(
+    TestData.PrivateBuildingType
+      ? [
+          {
+            label: TestData.PrivateBuildingType,
+            value: TestData.PrivateBuildingType,
+          },
+        ]
+      : []
+  );
+
+  const [initialQuota, setInitialQuota] = useState(
+    TestData.Quota ? TestData.Quota : ''
+  );
+
+  const [initialTotalRooms, setInitialTotalRooms] = useState(
+    TestData.TotalRooms ? TestData.TotalRooms : ''
+  );
+
+  const [initialTotalBuildingNo, setInitialTotalBuildingNo] = useState(
+    TestData.TotalBuildingNo ? TestData.TotalBuildingNo : ''
+  );
+
+  const [initialToilet, setInitialToilet] = useState(
+    TestData.Toilet ? TestData.Toilet : ''
+  );
+  const [initialDistrict, setInitialDistrict] = useState(
+    TestData.District ? TestData.District : ''
+  );
+
   const initialValues = {
-    name1: '',
-    capicity: '',
-    totalKitchens: '',
-    gender: [],
-    buildingType: [],
-    publicBuildingOwner: [],
-    privateBuildingType: [],
-    province: [],
-    quota: '',
-    totalRooms: '',
-    totalBuildingNo: '',
-    toilet: '',
-    district: '',
+    name1: initialName1,
+    capicity: initialCapicity,
+    totalKitchens: initialTotalKitchens,
+    gender: initialGender,
+    buildingType: initialBuildingType,
+    publicBuildingOwner: initialPublicBuildingOwner,
+    privateBuildingType: initialPrivateBuildingType,
+    province: initialProvince,
+    quota: initialQuota,
+    totalRooms: initialTotalRooms,
+    totalBuildingNo: initialTotalBuildingNo,
+    toilet: initialToilet,
+    district: initialDistrict,
   };
 
   const [dormTypeOption, setDormTypeOption] = useState('');
+  const [isNext, setIsNext] = useState(true);
+  const handleClick = (event) => {
+    // setIsNext(event);
+  };
 
   const onRegister = (values) => {
     console.log(' The Values', values);
@@ -287,281 +387,309 @@ const DormRegistration = (values) => {
       <Card>
         <h3 className="mt-5 m-5">{<IntlMessages id="dorm.RegisterTitle" />}</h3>
         <CardBody>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onRegister}
-            validationSchema={SignupSchema}
-          >
-            {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
-              <Form className="av-tooltip tooltip-label-right error-l-175">
-                <Row className="justify-content-center inlineBlock">
-                  <Colxx xxs="">
-                    {/* Dorm Name */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="dorm.NameLabel" />
-                      </Label>
-                      <Field className="form-control" name="name1" />
-                      {errors.name1 && touched.name1 ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.name1}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+          {isNext ? (
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onRegister}
+              validationSchema={SignupSchema}
+            >
+              {({
+                errors,
+                touched,
+                values,
+                setFieldTouched,
+                setFieldValue,
+              }) => (
+                <Form className="av-tooltip tooltip-label-right error-l-100">
+                  <Row className="justify-content-center inlineBlock">
+                    <Colxx xxs="">
+                      {/* Dorm Name */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="dorm.NameLabel" />
+                        </Label>
+                        <Field className="form-control" name="name1" />
+                        {errors.name1 && touched.name1 ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.name1}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Dorm Capicity */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="dorm.CapicityLabel" />
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="capicity"
-                        type="number"
-                      />
-                      {errors.capicity && touched.capicity ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.capicity}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* Dorm Capicity */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="dorm.CapicityLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="capicity"
+                          type="number"
+                        />
+                        {errors.capicity && touched.capicity ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.capicity}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Building Type */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="dorm.BuildingTypeLabel" />
-                      </Label>
-                      <FormikReactSelect
-                        name="buildingType"
-                        id="buildingType"
-                        value={values.buildingType}
-                        options={BuildingTypeOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.buildingType && touched.buildingType ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.buildingType}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* Building Type */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="dorm.BuildingTypeLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="buildingType"
+                          id="buildingType"
+                          value={values.buildingType}
+                          options={BuildingTypeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.buildingType && touched.buildingType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.buildingType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {values.buildingType.value == '1' ? (
-                      <div>
-                        {/* DormOwner */}
-                        <FormGroup className="form-group has-float-label">
-                          <Label>
-                            <IntlMessages id="dorm.PublicBuildingOwnerLabel" />
-                          </Label>
-                          <FormikReactSelect
-                            name="PublicBuildingOwner"
-                            id="PublicBuildingOwner"
-                            value={values.PublicBuildingOwner}
-                            onChange={setFieldValue}
-                            onBlur={setFieldTouched}
-                            options={PublicBuildingOwnerOptions}
-                            required
-                          />
-                          {errors.PublicBuildingOwner &&
-                          touched.PublicBuildingOwner ? (
-                            <div className="invalid-feedback d-block bg-danger text-white">
-                              {errors.PublicBuildingOwner}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                      </div>
-                    ) : (
-                      <div>
-                        {/* Private Building Students */}
-                        <FormGroup className="form-group has-float-label">
-                          <Label>
-                            <IntlMessages id="dorm.PrivateBuildingTypeLabel" />
-                          </Label>
-                          <FormikReactSelect
-                            name="privateBuildingType"
-                            id="privateBuildingType"
-                            value={values.privateBuildingType}
-                            onChange={setFieldValue}
-                            onBlur={setFieldTouched}
-                            options={PrivateBuildingTypeOptions}
-                            required
-                          />
-                          {errors.privateBuildingType &&
-                          touched.privateBuildingType ? (
-                            <div className="invalid-feedback d-block bg-danger text-white">
-                              {errors.privateBuildingType}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                      </div>
-                    )}
-
-                    {/* Total Number of Kitchen*/}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="dorm.TotalKitchensLabel" />
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="totalKitchens"
-                        type="number"
-                      />
-                      {errors.totalKitchens && touched.totalKitchens ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.totalKitchens}
+                      {values.buildingType.value == '1' ? (
+                        <div>
+                          {/* DormOwner */}
+                          <FormGroup className="form-group has-float-label">
+                            <Label>
+                              <IntlMessages id="dorm.PublicBuildingOwnerLabel" />
+                            </Label>
+                            <FormikReactSelect
+                              name="PublicBuildingOwner"
+                              id="PublicBuildingOwner"
+                              value={values.PublicBuildingOwner}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                              options={PublicBuildingOwnerOptions}
+                              required
+                            />
+                            {errors.PublicBuildingOwner &&
+                            touched.PublicBuildingOwner ? (
+                              <div className="invalid-feedback d-block bg-danger text-white">
+                                {errors.PublicBuildingOwner}
+                              </div>
+                            ) : null}
+                          </FormGroup>
                         </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {/* province permanent*/}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="forms.ProvinceLabel" />
-                      </Label>
-                      <FormikReactSelect
-                        name="province"
-                        id="province"
-                        value={values.province}
-                        options={StdSchoolProvinceOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                      />
-                      {errors.province && touched.province ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.province}
+                      ) : (
+                        <div>
+                          {/* Private Building Students */}
+                          <FormGroup className="form-group has-float-label">
+                            <Label>
+                              <IntlMessages id="dorm.PrivateBuildingTypeLabel" />
+                            </Label>
+                            <FormikReactSelect
+                              name="privateBuildingType"
+                              id="privateBuildingType"
+                              value={values.privateBuildingType}
+                              onChange={setFieldValue}
+                              onBlur={setFieldTouched}
+                              options={PrivateBuildingTypeOptions}
+                              required
+                            />
+                            {errors.privateBuildingType &&
+                            touched.privateBuildingType ? (
+                              <div className="invalid-feedback d-block bg-danger text-white">
+                                {errors.privateBuildingType}
+                              </div>
+                            ) : null}
+                          </FormGroup>
                         </div>
-                      ) : null}
-                    </FormGroup>
-                  </Colxx>
+                      )}
 
-                  <Colxx xxs="">
-                    {/* Dorm Gender*/}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="dorm.Gender" />
-                      </Label>
-                      <FormikReactSelect
-                        name="gender"
-                        id="gender"
-                        value={values.gender}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        options={GenderOptions}
-                        required
-                      />
-                      {errors.gender && touched.gender ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.gender}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* Total Number of Kitchen*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="dorm.TotalKitchensLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="totalKitchens"
+                          type="number"
+                        />
+                        {errors.totalKitchens && touched.totalKitchens ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.totalKitchens}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Dorm Quota(Sahmiya) */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="dorm.QuotaLabel" />
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="quota"
-                        type="number"
-                      />
-                      {errors.quota && touched.quota ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.quota}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* province permanent*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="forms.ProvinceLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="province"
+                          id="province"
+                          value={values.province}
+                          options={StdSchoolProvinceOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.province && touched.province ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.province}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </Colxx>
 
-                    {/* Total Number of Buildings*/}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="dorm.TotalBuildingNoLabel" />
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="totalBuildingNo"
-                        type="number"
-                      />
-                      {errors.totalBuildingNo && touched.totalBuildingNo ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.totalBuildingNo}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                    <Colxx xxs="">
+                      {/* Dorm Gender*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="dorm.Gender" />
+                        </Label>
+                        <FormikReactSelect
+                          name="gender"
+                          id="gender"
+                          value={values.gender}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          options={GenderOptions}
+                          required
+                        />
+                        {errors.gender && touched.gender ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.gender}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Total Number of Rooms*/}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="dorm.TotalRoomsLabel" />
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="totalRooms"
-                        type="number"
-                      />
-                      {errors.totalRooms && touched.totalRooms ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.totalRooms}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* Dorm Quota(Sahmiya) */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="dorm.QuotaLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="quota"
+                          type="number"
+                        />
+                        {errors.quota && touched.quota ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.quota}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Total Number of Toilet*/}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="dorm.ToiletLabel" />
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="toilet"
-                        type="number"
-                      />
-                      {errors.toilet && touched.toilet ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.toilet}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* Total Number of Buildings*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="dorm.TotalBuildingNoLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="totalBuildingNo"
+                          type="number"
+                        />
+                        {errors.totalBuildingNo && touched.totalBuildingNo ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.totalBuildingNo}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* District  permanent*/}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="forms.DistrictLabel" />
-                      </Label>
-                      <Field className="form-control" name="district" />
-                      {errors.district && touched.district ? (
-                        <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.district}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                  </Colxx>
-                </Row>
-                <Row>
-                  {' '}
-                  <Colxx style={{ marginLeft: '5%', marginBottom: '8%' }}>
-                    <Button
-                      className="float-right m-5 "
-                      size="lg"
-                      type="submit"
-                      color="primary"
-                    >
-                      <span className="spinner d-inline-block">
-                        <span className="bounce1" />
-                        <span className="bounce2" />
-                        <span className="bounce3" />
-                      </span>
-                      <span className="label">
-                        <IntlMessages id="forms.SubimssionButton" />
-                      </span>
-                    </Button>
-                  </Colxx>
-                </Row>
-              </Form>
-            )}
-          </Formik>
+                      {/* Total Number of Rooms*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="dorm.TotalRoomsLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="totalRooms"
+                          type="number"
+                        />
+                        {errors.totalRooms && touched.totalRooms ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.totalRooms}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Total Number of Toilet*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="dorm.ToiletLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="toilet"
+                          type="number"
+                        />
+                        {errors.toilet && touched.toilet ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.toilet}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* District  permanent*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="forms.DistrictLabel" />
+                        </Label>
+                        <Field className="form-control" name="district" />
+                        {errors.district && touched.district ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.district}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </Colxx>
+                  </Row>
+                  <Row>
+                    {' '}
+                    <Colxx style={{ marginLeft: '5%', marginBottom: '8%' }}>
+                      <Button
+                        className="float-right m-5 "
+                        size="lg"
+                        type="submit"
+                        color="primary"
+                        onClick={() => {
+                          handleClick(false);
+                        }}
+                      >
+                        <span className="spinner d-inline-block">
+                          <span className="bounce1" />
+                          <span className="bounce2" />
+                          <span className="bounce3" />
+                        </span>
+                        <span className="label">
+                          <IntlMessages id="forms.SubimssionButton" />
+                        </span>
+                      </Button>
+                    </Colxx>
+                  </Row>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <div
+              className="wizard-basic-step text-center pt-3 "
+              style={{ minHeight: '400px' }}
+            >
+              <div>
+                <h1 className="mb-2">
+                  <IntlMessages id="wizard.content-thanks" />
+                </h1>
+                <h3>
+                  <IntlMessages id="wizard.registered" />
+                </h3>
+                <Button className="m-5 bg-primary">
+                  <IntlMessages id="button.back" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardBody>
       </Card>
     </>

@@ -28,40 +28,37 @@ const ListPageListing = ({
   onContextMenuClick,
   onContextMenu,
   onChangePage,
-  roughData
+ 
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
-  console.log('inside Catagory', roughData)
-
   return (
     <>
       <Row>
-        {roughData.length === 0 ? (
+        {items.length === 0 ? (
           <div className="no-result">
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {roughData.map((department) => {
+        {items.map((department) => {
           
           if (displayMode === 'imagelist') {
-            console.log('inside map ImageList', department)
             return (
               <ImageListView
-                key={department.departmentId}
+                key={department.id}
                 department={department}
-                isSelect={selectedItems.includes(department.departmentId)}
+                isSelect={selectedItems.includes(department.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
             );
           }
           if (displayMode === 'thumblist') {
-            console.log('inside map thumblist', department)
+            
             return (
               <DepartmentListBody
-                key={department.departmentId}
+                key={department.id}
                 department={department}
-                isSelect={selectedItems.includes(department.departmentId)}
+                isSelect={selectedItems.includes(department.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -71,9 +68,9 @@ const ListPageListing = ({
           return (
             
             <DataListView
-              key={department.departmentId}
+              key={department.id}
               department={department}
-              isSelect={selectedItems.includes(department.departmentId)}
+              isSelect={selectedItems.includes(department.id)}
               onCheckItem={onCheckItem}
               collect={collect}
             />

@@ -28,40 +28,40 @@ const ListPageListing = ({
   onContextMenuClick,
   onContextMenu,
   onChangePage,
-  roughData
+
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
-  console.log('inside Catagory', roughData)
+
 
   return (
     <>
       <Row>
-        {roughData.length === 0 ? (
+        {items.length === 0 ? (
           <div className="no-result">
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {roughData.map((field) => {
+        {items.map((field) => {
           
           if (displayMode === 'imagelist') {
-            console.log('inside map ImageList', field)
+           
             return (
               <ImageListView
-                key={field.fieldId}
+                key={field.id}
                 field={field}
-                isSelect={selectedItems.includes(field.fieldId)}
+                isSelect={selectedItems.includes(field.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
             );
           }
           if (displayMode === 'thumblist') {
-            console.log('inside map thumblist', field)
+            
             return (
               <FieldListBody
-                key={field.fieldId}
+                key={field.id}
                 field={field}
-                isSelect={selectedItems.includes(field.fieldId)}
+                isSelect={selectedItems.includes(field.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -71,9 +71,9 @@ const ListPageListing = ({
           return (
             
             <DataListView
-              key={field.fieldId}
+              key={field.id}
               field={field}
-              isSelect={selectedItems.includes(field.fieldId)}
+              isSelect={selectedItems.includes(field.id)}
               onCheckItem={onCheckItem}
               collect={collect}
             />

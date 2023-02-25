@@ -8,10 +8,10 @@ import { Colxx } from 'components/common/CustomBootstrap';
 const FieldListBody = ({ field, isSelect, collect, onCheckItem }) => {
   console.log('inside body', field)
   return (
-    <Colxx xxs="12" key={field.fieldId} className="mt-2">
-      <ContextMenuTrigger id="menu_id" data={field.fieldId} collect={collect}>
+    <Colxx xxs="12" key={field.id} className="mt-2">
+      <ContextMenuTrigger id="menu_id" data={field.id} collect={collect}>
         <Card
-          onClick={(event) => onCheckItem(event, field.fieldId)}
+          onClick={(event) => onCheckItem(event, field.id)}
           className={classnames('d-flex flex-row', {
             active: isSelect,
           })}
@@ -24,21 +24,27 @@ const FieldListBody = ({ field, isSelect, collect, onCheckItem }) => {
               className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`fields/${field.fieldId}`} style={{ width: '30%' }}>
-                <p className="list-item-heading mb-1 truncate">{field.fieldId}</p>
+              <NavLink to={`fields/${field.id}`} style={{ width: '25%' }}>
+                <p className="list-item-heading mb-1 truncate">{field.id}</p>
               </NavLink>
              
               <p
                 className="mb-1 text-small"
-                style={{ width: '31%', textAlign: 'right' }}
+                style={{ width: '26%', textAlign: 'right' }}
               >
-              {field.fieldTitle}
+              {field.name}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '25%', textAlign: 'right' }}
+              >
+                {field.english_name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {field.fieldEnglishTitle}
+                {field.sector}
               </p>
              
             </div>

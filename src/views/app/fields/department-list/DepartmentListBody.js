@@ -8,10 +8,10 @@ import { Colxx } from 'components/common/CustomBootstrap';
 const DepartmentListBody = ({ department, isSelect, collect, onCheckItem }) => {
   console.log('inside body', department)
   return (
-    <Colxx xxs="12" key={department.departmentId} className="mt-2">
-      <ContextMenuTrigger id="menu_id" data={department.departmentId} collect={collect}>
+    <Colxx xxs="12" key={department.id} className="mt-2">
+      <ContextMenuTrigger id="menu_id" data={department.id} collect={collect}>
         <Card
-          onClick={(event) => onCheckItem(event, department.departmentId)}
+          onClick={(event) => onCheckItem(event, department.id)}
           className={classnames('d-flex flex-row', {
             active: isSelect,
           })}
@@ -24,27 +24,27 @@ const DepartmentListBody = ({ department, isSelect, collect, onCheckItem }) => {
               className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`departments/${department.departmentId}`} style={{ width: '25%' }}>
-                <p className="list-item-heading mb-1 truncate">{department.departmentId}</p>
+              <NavLink to={`departments/${department.id}`} style={{ width: '25%' }}>
+                <p className="list-item-heading mb-1 truncate">{department.id}</p>
               </NavLink>
              
               <p
                 className="mb-1 text-small"
                 style={{ width: '26%', textAlign: 'right' }}
               >
-              {department.departmentField}
+              {department.filed.name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '25%', textAlign: 'right' }}
               >
-                {department.departmentName}
+                {department.name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {department.departmentEnglishName}
+                {department.english_name}
               </p>
              
             </div>

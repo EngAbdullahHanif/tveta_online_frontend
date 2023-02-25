@@ -44,6 +44,7 @@ const StudentProfile = () => {
   const [classs, setClasss] = useState([]); //classs is used because class is a reserved word
   const [dorm, setDorm] = useState([]);
   const [marks, setMarks] = useState([]);
+  cosnt [isLoaded, setIsLoaded] = useState(true);
   
 
   //load data of student from database

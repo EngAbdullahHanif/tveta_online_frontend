@@ -6,6 +6,7 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
+  
   return (
     <Colxx xxs="12" key={student.kankorId} className="mt-2">
       <ContextMenuTrigger id="menu_id" data={student.kankorId} collect={collect}>
@@ -23,55 +24,55 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
               className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`students/${student.kankorId}`} style={{ width: '10%' }}>
-                <p className="list-item-heading mb-1 truncate">{student.kankorId}</p>
+              <NavLink to={`students/${student.id}`} style={{ width: '10%' }}>
+                <p className="list-item-heading mb-1 truncate">{student.id}</p>
               </NavLink>
-              <NavLink to={`students/${student.kankorId}`} style={{ width: '15%' }}>
+              <NavLink to={`students/${student.id}`} style={{ width: '15%' }}>
                 <p className="list-item-heading mb-1 truncate" style={{marginLeft: 5}}>
-                 {student.kankorStudentName}
+                 {student.name}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right'}}
               >
-              {student.kankorStudentFatherName}
+              {student.father_name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {student.institute}
+                {student.Institute.name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {student.timeing}
+                {student.score}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {student.department}
+                {student.department_id.name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {student.kankorMarks}
+                {student.score}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {student.field}
+                {student.field_id.name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {student.registrationDate}
+                {student.created_date}
               </p>
               {/* <p
                 className="mb-1 text-small"

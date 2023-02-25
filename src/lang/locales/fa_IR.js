@@ -186,6 +186,7 @@ module.exports = {
   'menu.validations': 'اعتبار سنجی ها',
   'menu.wizard': 'ویزارد',
   'menu.field': 'رشته ها / رشتې',
+  'fieldSector':'سکتور',
   'menu.teacher-registration': 'د استاد ثبت/ ثبت استاد',
   'menu.field-register': 'د رشتی ثبت/ ثبت رشته',
   'menu.student-marks-register': 'نومرې/ نمرات',

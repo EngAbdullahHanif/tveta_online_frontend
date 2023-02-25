@@ -3,11 +3,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
-// import { servicePath } from 'constants/defaultValues';
-
-//import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
-
-//import ListPageHeadings from './workerListHeading'
 import ListPageHeading from './FieldListHeading'
 
 import ListPageListing from './FieldListCatagory';
@@ -25,7 +20,7 @@ const getIndex = (value, arr, prop) => {
 const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
-const teacherApiUrl = `${servicePath}/teachers/`;
+const FieldApiUrl = `${servicePath}/institute/field/`;
 const instituteApiUrl = `${servicePath}/institute/`;
 const teacherInstituteApiUrl = `${servicePath}/teachers/institute/`;
 
@@ -51,28 +46,7 @@ const categories = [
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
 
-// Hard Coded Data
-const roughData = [{
-fieldId: '1',
-fieldTitle: 'طب',
-fieldEnglishTitle: 'Medical'
-},
-{
-  fieldId: '2',
-  fieldTitle: 'انجنری',
-  fieldEnglishTitle: 'Engineering'
-},
-{
-  fieldId: '3',
-  fieldTitle: 'کمپِیوتر ساینس',
-  fieldEnglishTitle: 'computer science'
-},
-{
-  fieldId: '4',
-  fieldTitle: 'اقتصاد',
-  fieldEnglishTitle: 'BBA'
-}
-]
+
 
 const Provinces = [
   {
@@ -216,6 +190,8 @@ const Provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
+
+
 const ThumbListPages = ({ match }) => {
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -250,114 +226,38 @@ const ThumbListPages = ({ match }) => {
   }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
 
   useEffect(() => {
-    console.log('institute', institute);
-    console.log('current page', currentPage);
-    async function fetchData() {
-      if (institute !== '') {
-        const res = await axios.get(
-          `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
-        );
-        console.log('res', res.data);
-        setInstituteTeachers(res.data);
-        setItems(res.data);
-        setTotalItemCount(res.data.count);
-        setIsLoaded(true);
-      } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setTeacherId('');
-          setRest(false);
-        }
-        axios
+    async function fetchData() {    
+      console.log('insdie useEffect')
+        await axios
           .get(
-            `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+            FieldApiUrl
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
-
-            setItems(data);
-            setTotalPage(data.total_pages);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
-
             setItems(data);
             setSelectedItems([]);
             setTotalItemCount(data.totalItem);
             setIsLoaded(true);
           });
-      } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
-
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else {
-        axios
-          // get data from localhost:8000/teachers
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
-            setItems(data);
-
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      }
+      
     }
-
     fetchData();
+    
   }, [
     selectedPageSize,
     currentPage,
+   //selectedOrderOption,
+    //search,
     selectedGenderOption,
     selectedProvinceOption,
-    teacherId,
+   // studentId,
     province,
     district,
     rest,
     institute,
+    //educationYear,
   ]);
 
   const fetchInstitutes = async () => {
@@ -500,7 +400,7 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
-          roughDate = {roughData}
+          
         />
         <table className="table">
           <thead
@@ -510,7 +410,7 @@ const ThumbListPages = ({ match }) => {
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
               <th
                 style={{
-                  width: '30%',
+                  width: '25%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -520,7 +420,7 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '30%',
+                  width: '25%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -530,7 +430,7 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '30%',
+                  width: '25%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -538,7 +438,16 @@ const ThumbListPages = ({ match }) => {
               >
                 <IntlMessages id="fieldEnglishTitle" />
               </th>
-  
+              <th
+                style={{
+                  width: '25%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="fieldSector" />
+              </th>
             
             </tr>
           </thead>
@@ -553,7 +462,6 @@ const ThumbListPages = ({ match }) => {
             onContextMenuClick={onContextMenuClick}
             onContextMenu={onContextMenu}
             onChangePage={setCurrentPage}
-            roughData={roughData}
           />
         
         </table>

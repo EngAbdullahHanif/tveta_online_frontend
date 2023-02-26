@@ -59,6 +59,7 @@ const DormRegistration = (values) => {
   const [data, setData] = useState(1);
 
   const [isNext, setIsNext] = useState(true);
+  
   const handleClick = (event) => {
     setIsNext(event);
   };

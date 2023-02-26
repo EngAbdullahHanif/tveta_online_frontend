@@ -71,7 +71,8 @@ const TeacherProfile = () => {
 
   // here we are fetching data for the displaying the list
   useEffect(()=> {
-    const timeOut = setTimeout(SetRoughData, 3000);
+   // const timeOut = setTimeout(SetRoughData, 3000);
+   SetRoughData();
   },[]);
 
   function SetRoughData() {

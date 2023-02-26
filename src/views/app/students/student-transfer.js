@@ -46,6 +46,7 @@ const StudentsTransfer = (values) => {
   const [message, setMessage] = useState('');
   const [isNext, setIsNext] = useState(true);
   const [institutes, setInstitutes] = useState();
+  const [isLoad, SetIsLoad] = useState();
 
   const initialValues = {
     institute: {

@@ -6,7 +6,7 @@ const data = [
     icon: 'iconsminds-student-male',
     label: 'menu.teacher',
     to: `${adminRoot}/teacher`,
-
+ 
     subs: [
       {
         icon: 'iconsminds-students',

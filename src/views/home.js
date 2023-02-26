@@ -71,7 +71,7 @@ const slideSettings = {
   gap: 30,
   perView: 4,
   hideNav: true,
-  autoplay: true,
+  // autoplay: true,
 
   peek: { before: 10, after: 10 },
   breakpoints: {
@@ -146,7 +146,7 @@ const features = [
       `,
   },
   {
-    title: 'دستاورد ها',
+    title: ' لاسته راوړنې',
     img: '/assets/img/landing-page/features/extra-responsive.png',
     detail: `دیدار مولوی محمد یعقوب مجاهد سرپرست وزارت دفاع از مرکز نوآوری اداره تعلیمات تخنیکی و مسلکی افغانستان و موتر ساخته شده در این مرکز !!
     <br/>
@@ -250,10 +250,10 @@ const Home = () => {
           onClick={(event) => event.stopPropagation()}
         >
           <a
-            className="logo-mobile c-pointer"
-            href="#scroll"
+            className="  c-pointer"
             onClick={(event) => scrollTo(event, 'home')}
           >
+            <img src={logo} alt="Logo" />
             <span />
           </a>
           <ul className="navbar-nav">
@@ -261,64 +261,51 @@ const Home = () => {
               <a
                 className="c-pointer"
                 href="#scroll"
-                onClick={(event) => scrollTo(event, 'features')}
+                onClick={(event) => scrollTo(event, 'home')}
               >
-                ویژگی ها
+                ادراه ما
               </a>
             </li>
             <li className="nav-item">
               <a
                 className="c-pointer"
                 href="#scroll"
-                onClick={(event) => scrollTo(event, 'layouts')}
+                onClick={(event) => scrollTo(event, 'goals')}
               >
-                طرح بندی
+                اهداف
               </a>
             </li>
             <li className="nav-item">
               <a
                 className="c-pointer"
                 href="#scroll"
-                onClick={(event) => scrollTo(event, 'components')}
+                onClick={(event) => scrollTo(event, 'achivements')}
               >
-                کامپوننت ها
+                دستاورد ها
               </a>
             </li>
             <li className="nav-item">
               <a
                 className="c-pointer"
                 href="#scroll"
-                onClick={(event) => scrollTo(event, 'apps')}
+                onClick={(event) => scrollTo(event, 'developers')}
               >
-                برنامه ها
+                برنامه نویس ها
               </a>
             </li>
             <li className="nav-item">
               <a
                 className="c-pointer"
                 href="#scroll"
-                onClick={(event) => scrollTo(event, 'themes')}
+                onClick={(event) => scrollTo(event, 'contact')}
               >
-                تم های قالب
-              </a>
-            </li>
-            <li className="nav-item">
-              <div className="separator" />
-            </li>
-            <li className="nav-item text-center">
-              <a
-                className="btn btn-outline-primary btn-sm mobile-menu-cta"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={buyUrl}
-              >
-                خرید قالب
+                تماس با ما
               </a>
             </li>
           </ul>
         </div>
 
-        <div className="main-container">
+        <div className="main-container ">
           <Headroom className="landing-page-nav">
             <nav>
               <div className="container d-flex align-items-center justify-content-between">
@@ -343,7 +330,7 @@ const Home = () => {
                     <a
                       className="c-pointer"
                       href="#scroll"
-                      onClick={(event) => scrollTo(event, 'features1')}
+                      onClick={(event) => scrollTo(event, 'goals')}
                     >
                       اهداف
                     </a>
@@ -352,7 +339,7 @@ const Home = () => {
                     <a
                       className="c-pointer"
                       href="#scroll"
-                      onClick={(event) => scrollTo(event, 'features')}
+                      onClick={(event) => scrollTo(event, 'achivements')}
                     >
                       دستاورد ها
                     </a>
@@ -390,7 +377,7 @@ const Home = () => {
             </nav>
           </Headroom>
           <div className="content-container">
-            <div className="section home" ref={refSectionHome} id="hom">
+            <div className="section home pb-5" ref={refSectionHome} id="hom">
               <div className="container">
                 <div className="row home-row" ref={refRowHome}>
                   <div
@@ -491,12 +478,8 @@ const Home = () => {
               </div>
             </div>
 
-            {/* <NavLink to="/app/dashboards/default">
-                      <IndividualIntervalsExample />
-                    </NavLink> */}
-
             <div className="section">
-              <div className="container" id="features">
+              <div className="container" id="goals">
                 {features.map((feature, i) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <div key={`feature_${i}`}>
@@ -536,7 +519,7 @@ const Home = () => {
                       </div>
                     )}
                     {i % 2 === 1 && (
-                      <div className="row feature-row pt-5">
+                      <div className="row feature-row pt-5" id="achivements">
                         <div className="col-12 col-md-6 col-lg-6 order-2 order-md-1 ">
                           <ScrollAnimation
                             animateIn="fadeInRight"
@@ -572,116 +555,224 @@ const Home = () => {
                 ))}
               </div>
             </div>
-
-            <section id="developers">
-              <h1 className="section-heading ">Developers</h1>
-              <div class="developers-wrapper">
-                <div class="developers-member">
-                  <img src={Photo55} class="developers-member-img" />
-                  <h4 class="developers-member-name  text-left">
-                    Samiullah Rahimi <span>(Designer)</span>
-                  </h4>
-                  <ul class="developers-member-skills">
-                    <li>MERN Stack Developer</li>
-                  </ul>
-                  <a href="#" class="projects-btn bg-primary">
-                    portfolio
-                  </a>
-                  <div class="story-btn bg-primary" title="About developer">
-                    <div className="p-2">Read More </div>
-                  </div>
-                  <div class="story ">
-                    <h4 class="story-heading">About Me</h4>
-                    <p class="story-paragraph">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Reprehenderit obcaecati blanditiis aspernatur ab doloribus
-                      optio nesciunt adipisci fugiat quia veritatis doloremque
-                      tempore ipsum quidem veritatis temporibus magni. Sunt,
-                      exercitationem?
+            <ScrollAnimation
+              animateIn="fadeInUp"
+              animateOnce={true}
+              duration={2}
+            >
+              <section id="developers">
+                <Row className="text-center justify-content-center">
+                  <Colxx xxs="8">
+                    {' '}
+                    <h2>برنامه نویس ها</h2>
+                    <p>
+                      شناخت و پذیرش تعلیمات تخنیکی و مسلکی و نقش آن در رشد و
+                      توسعه اقتصاد ملی نخستین گام ضروری برای بازگشایی دروازه
+                      توسعه اقتصاد ملی شناخت و پذیرش تعلیمات تخنیکی و مسلکی و
+                      نقش آن در رشد و توسعه اقتصاد ملی نخستین گام ضروری برای
+                      بازگشایی دروازه توسعه اقتصاد ملی
                     </p>
-                  </div>
-                </div>
-                <div class="developers-member">
-                  <img src={Photo55} class="developers-member-img" />
-                  <h4 class="developers-member-name  text-left">
-                    Samiullah Rahimi <span>(Designer)</span>
-                  </h4>
-                  <ul class="developers-member-skills">
-                    <li>MERN Stack Developer</li>
-                  </ul>
-                  <a href="#" class="projects-btn bg-primary">
-                    portfolio
-                  </a>
-                  <div class="story-btn bg-primary" title="About developer">
-                    <div className="p-2">Read More </div>
-                  </div>
-                  <div class="story ">
-                    <h4 class="story-heading">About Me</h4>
-                    <p class="story-paragraph">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Reprehenderit obcaecati blanditiis aspernatur ab doloribus
-                      optio nesciunt adipisci fugiat quia veritatis doloremque
-                      tempore ipsum quidem veritatis temporibus magni. Sunt,
-                      exercitationem?
-                    </p>
-                  </div>
-                </div>
-                <div class="developers-member">
-                  <img src={Photo55} class="developers-member-img" />
-                  <h4 class="developers-member-name  text-left">
-                    Bob Brown <span>(Designer)</span>
-                  </h4>
-                  <ul class="developers-member-skills text-left">
-                    <li>HTML5</li>
-                    <li>CSS3</li>
-                    <li>Inkscape</li>
-                  </ul>
-                  <a href="#" class="projects-btn bg-primary">
-                    portfolio
-                  </a>
-                  <div class="story-btn bg-primary" title="About developer">
-                    <div className="p-2">Read More </div>
-                  </div>
-                  <div class="story">
-                    <h4 class="story-heading">About Me</h4>
-                    <p class="story-paragraph">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Reprehenderit obcaecati blanditiis aspernatur ab doloribus
-                      optio nesciunt adipisci fugiat quia veritatis doloremque
-                      tempore ipsum sunt atque exercitationem perspiciatis,
-                      beatae aliquam
-                    </p>
-                  </div>
-                </div>
-                <div class="developers-member ">
-                  <img src={Photo55} class="developers-member-img" />
-                  <h4 class="developers-member-name text-left">
-                    John Doe <span>(Developer)</span>
-                  </h4>
-                  <ul class="developers-member-skills">
-                    <li>JavaScript</li>
-                    <li>ReactJS</li>
-                    <li>NodeJS</li>
-                  </ul>
-                  <a href="#" class="projects-btn bg-primary">
-                    portfolio
-                  </a>
-                  <div class="story-btn bg-primary" title="About developer">
-                    <div className="p-2">Read More </div>
-                  </div>
-                  <div class="story">
-                    <h4 class="story-heading">About Me</h4>
-                    <p class="story-paragraph">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Reprehenderit obcaecati blanditiis aspernatur ab doloribus
-                      optio nesciunt adipisci fugiat quia veritatis doloremque
-                      tempore ipsum sunt atque exercitationem perspiciatis,
-                      beatae aliquam
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
+                  </Colxx>
+                </Row>
+                <Row className="justify-content-center m-4 d-flex-block ">
+                  {/* Sharif Ahmad */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Sharif Ahmad Rasikh
+                          <span>
+                            <br />
+                            Project Manager
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Abdullah Hanif */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Abdullah Hanif
+                          <span>
+                            <br />
+                            FullStack Developer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Samiullah Rahimi */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Samiullah Rahimi
+                          <span>
+                            <br />
+                            Frontend Developer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Mansoor AhmadZai */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Mansoor Ahmadzai
+                          <span>
+                            <br />
+                            Backend Developer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Noman Ahmadi */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Noman Ahmadi
+                          <span>
+                            <br />
+                            Frontend Developer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                </Row>
+              </section>
+            </ScrollAnimation>
             <div className="section footer mb-0 " ref={refSectionFooter}>
               <div className="container">
                 <div className="row footer-row ">
@@ -696,114 +787,167 @@ const Home = () => {
                   </div>
 
                   <div className="col-12  text-center">
-                    <a
-                      className="c-pointer "
-                      href="#scroll"
-                      onClick={(event) => scrollTo(event, 'home')}
+                    <ScrollAnimation
+                      animateIn="fadeInDown"
+                      animateOnce={true}
+                      duration={2}
                     >
-                      <img src={logo} alt="Logo" />
-                    </a>
+                      <a
+                        className="c-pointer "
+                        href="#scroll"
+                        onClick={(event) => scrollTo(event, 'home')}
+                      >
+                        <img src={logo} alt="Logo" />
+                      </a>
+                    </ScrollAnimation>
                   </div>
                 </div>
               </div>
 
-              <div className="container copyright " id="contact">
-                <div className="row" id="con">
-                  <div class="container1"></div>
+              {/* <div className="row" id="con"> */}
+              <Row
+                className="justify-cntent-center "
+                style={{ paddingInline: '10%' }}
+                id="contact"
+              >
+                <Colxx
+                  xxs="12"
+                  xs="12"
+                  sm="12"
+                  md="5"
+                  lg="4"
+                  style={{
+                    marginBottom: '3%',
+                  }}
+                >
+                  <ScrollAnimation
+                    animateIn="fadeInRight"
+                    animateOnce={true}
+                    duration={2}
+                  >
+                    <div class=" mb-5 " style={{ opacity: 0.8 }}>
+                      <form>
+                        <input
+                          type="text"
+                          id="fname"
+                          name="firstname"
+                          placeholder="Your name.."
+                          style={{ borderRadius: '10px' }}
+                        />
 
-                  <div class="column mb-5">
-                    <form>
-                      <input
-                        type="text"
-                        id="fname"
-                        name="firstname"
-                        placeholder="Your name.."
-                        style={{ opacity: 0.6 }}
-                      />
+                        <input
+                          type="text"
+                          id="lname"
+                          name="email"
+                          placeholder="email Address"
+                          style={{ borderRadius: '10px' }}
+                        />
+                        <textarea
+                          id="subject"
+                          name="subject"
+                          placeholder="your message"
+                          style={{ borderRadius: '10px' }}
+                          rows={3}
+                        ></textarea>
+                        <input
+                          type="submit"
+                          value="Submit"
+                          className="bg-primary text-center btn-btn"
+                        />
+                      </form>
+                    </div>
+                  </ScrollAnimation>
+                </Colxx>
 
-                      <input
-                        type="text"
-                        id="lname"
-                        name="email"
-                        placeholder="email Address"
-                      />
-                      <textarea
-                        id="subject"
-                        name="subject"
-                        placeholder="your message"
-                        rows={3}
-                        // style={{ height: '170px' }}
-                      ></textarea>
-                      <input
-                        type="submit"
-                        value="Submit"
-                        className="bg-primary"
-                      />
-                    </form>
-                  </div>
-
-                  <div className=" p-5 ">
-                    <h3 className="text-white">پل ارتباطی </h3>
-                    {contact.map((d) => (
-                      <div className="contact-container">
-                        <div>
-                          <b style={{ paddingLeft: '5px ' }}>
+                <Colxx
+                  xxs="12"
+                  xs="12"
+                  sm="12"
+                  md="5"
+                  lg="4"
+                  style={{
+                    marginBottom: '3%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                  }}
+                >
+                  <div className="pl-2 m-4">
+                    <ScrollAnimation
+                      animateIn="fadeInLeft"
+                      animateOnce={true}
+                      duration={2}
+                    >
+                      <h3 className="text-white">پل ارتباطی </h3>
+                      {contact.map((d) => (
+                        <div className="contact-container">
+                          <div>
+                            <b style={{ paddingLeft: '5px ' }}>
+                              {' '}
+                              <i className={`${d.icon} `} />
+                            </b>{' '}
+                          </div>
+                          <div>
                             {' '}
-                            <i className={`${d.icon} `} />
-                          </b>{' '}
+                            <p
+                              style={{ fontSize: '15px' }}
+                              className="text-white"
+                            >
+                              {d.detail}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          {' '}
-                          <p style={{ fontSize: '15px', opacity: 0.75 }}>
-                            {d.detail}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </ScrollAnimation>
                   </div>
 
-                  <div className=" p-5 ">
-                    <br />
-
-                    {contact1.map((d) => (
-                      <div className="contact-container pt-1">
-                        <div>
-                          <b style={{ paddingLeft: '5px ' }}>
+                  <div style={{ paddingTop: '66px' }}>
+                    <ScrollAnimation
+                      animateIn="fadeInLeft"
+                      animateOnce={true}
+                      duration={2}
+                    >
+                      {contact1.map((d) => (
+                        <div className="contact-container ">
+                          <div>
+                            <b style={{ paddingLeft: '5px ' }}>
+                              {' '}
+                              <i className={`${d.icon} `} />
+                            </b>{' '}
+                          </div>
+                          <div>
                             {' '}
-                            <i className={`${d.icon} `} />
-                          </b>{' '}
+                            <p
+                              style={{ fontSize: '15px' }}
+                              className="text-white"
+                            >
+                              {d.detail}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          {' '}
-                          <p style={{ fontSize: '15px', opacity: 0.75 }}>
-                            {d.detail}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </ScrollAnimation>
                   </div>
+                </Colxx>
+              </Row>
 
-                  <div className="col-12  pb-4" style={{ paddingInline: '4%' }}>
-                    <Row>
-                      <Colxx xxs="12" sm="3">
-                        <p className="mb-0 text-muted">
-                          د تخنیکی او مسلکی زده کړو اداره
-                        </p>
-                      </Colxx>
-                      <Colxx>
-                        <p className=" mb-0 text-muted ">
-                          اداره تعلیمات تخنیکی و مسلکی
-                        </p>
-                      </Colxx>
-                      <Colxx className="col-sm-6 d-none d-sm-block">
-                        <p className="mb-0 text-muted">
-                          Technical and Vocational Education and Training
-                          Authority
-                        </p>
-                      </Colxx>
-                    </Row>
-                  </div>
-                </div>
+              <div className="col-12  pb-4" style={{ paddingInline: '10%' }}>
+                <Row>
+                  <Colxx xxs="12" sm="3">
+                    <p className="mb-0 text-muted">
+                      د تخنیکی او مسلکی زده کړو اداره
+                    </p>
+                  </Colxx>
+                  <Colxx>
+                    <p className=" mb-0 text-muted ">
+                      اداره تعلیمات تخنیکی و مسلکی
+                    </p>
+                  </Colxx>
+                  <Colxx className="col-sm-6 d-none d-sm-block">
+                    <p className="mb-0 text-muted">
+                      Technical and Vocational Education and Training Authority
+                    </p>
+                  </Colxx>
+                </Row>
               </div>
             </div>
           </div>

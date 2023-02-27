@@ -9,7 +9,7 @@ const Curriculum = React.lazy(() =>
   import(/* webpackChunkName: "curriculum" */ './curriculum')
 );
 const ProvincialDashboard = React.lazy(() =>
-  import(/* webpackChunkName: "provincial-dash" */ './provincail-dashboard')
+  import(/* webpackChunkName: "provincial-dash" */ './draftFileJustForTest')
 );
 const AdminDashboard = React.lazy(() =>
   import(/* webpackChunkName: "admin-dashboard" */ './admin-dashboard')

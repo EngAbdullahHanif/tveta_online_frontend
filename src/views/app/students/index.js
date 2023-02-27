@@ -42,12 +42,28 @@ const AttendanceDisplay = React.lazy(() =>
   import(/* webpackChunkName: "attendance" */ './attendence/attendance-display')
 );
 
+const Reports = React.lazy(() =>
+  import(/* webpackChunkName: "reports" */ './reports')
+);
+const Dismissal = React.lazy(() =>
+  import(/* webpackChunkName: "dismissal" */ './student-dismissal')
+);
+
+const Reregister = React.lazy(() =>
+  import(/* webpackChunkName: "reregister" */ './reregister')
+);
+const SingleStudentMarksUpdate = React.lazy(() =>
+  import(/* webpackChunkName: "marks-update" */ './single-student-marksUpdate')
+);
+
+const AttendanceUpdate = React.lazy(() =>
+  import(/* webpackChunkName: "attendance-update" */ './attendance-update')
+);
 
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/register`} />
-
       <Route
         path={`${match.url}/register`}
         render={(props) => <Register {...props} />}
@@ -64,7 +80,6 @@ const Students = ({ match }) => (
         path={`${match.url}/kankor-students`}
         render={(props) => <KankorStudentList {...props} />}
       />
-
       <Route
         path={`${match.url}/marks-register`}
         render={(props) => <MarksRegistration {...props} />}
@@ -81,28 +96,45 @@ const Students = ({ match }) => (
         path={`${match.url}/student-transfer`}
         render={(props) => <StudentTransfer {...props} />}
       />
-
       <Route
         path={`${match.url}/marks-display`}
         render={(props) => <MarksDisplay {...props} />}
       />
-
       <Route
         path={`${match.url}/marks-display-allsubs`}
         render={(props) => <MarksDisplayAllSubs {...props} />}
       />
-
       <Route
         path={`${match.url}/attendance`}
         render={(props) => <AttendanceDisplay {...props} />}
       />
+      <Route
+        path={`${match.url}/reports`}
+        render={(props) => <Reports {...props} />}
+      />
+      <Route
+        path={`${match.url}/dismissal`}
+        render={(props) => <Dismissal {...props} />}
+      />
+      <Route
+        path={`${match.url}/reregister`}
+        render={(props) => <Reregister {...props} />}
+      />
+      <Route
+        path={`${match.url}/marks-update`}
+        render={(props) => <SingleStudentMarksUpdate {...props} />}
+      />
+      <Route
+        path={`${match.url}/attendance-update`}
+        render={(props) => <AttendanceUpdate {...props} />}
+      />
+
       {/* <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}
         roles={[UserRole.Admin]}
       />
        */}
-
       <Redirect to="/error" />
     </Switch>
   </Suspense>

@@ -242,127 +242,293 @@ const StdSchoolProvinceOptions = [
 const genderOptions = [
   { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
   { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
-  { value: '3', label: <IntlMessages id="dorm.GenderOptions_3" /> },
 ];
 
-const ValidationStepOne = Yup.object().shape({
-  Name: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="teacher.NameErr" />),
-
-  FatherName: Yup.string()
-    .required(<IntlMessages id="teacher.FatherNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  gender: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.NameErr" />),
-
-  GrandFatherName: Yup.string()
-    .required(<IntlMessages id="teacher.GrandFatherNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  TazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
-  PhoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
-  DoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
-
-  levelOfEducation: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
-
-  major: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
-
-  tazkiraType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
-
-  Email: Yup.string()
-    .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-    .required(<IntlMessages id="teacher.EmailErr" />),
-});
-
-const ValidationStepTwo = Yup.object().shape({
-  status: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.StatusErr" />),
-
-  teachingField: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.teachingFieldErr" />),
-
-  grade: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.GradeErr" />),
-  appointmentType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.appointmentTypeErr" />),
-
-  province: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-
-  jobLocation: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.jobLocationErr" />),
-
-  step: Yup.object()
-    .shape({ value: Yup.string().required() })
-    .nullable()
-    .required(<IntlMessages id="teacher.StepErr" />),
-
-  contractType: Yup.object()
-    .shape({ value: Yup.string().required() })
-    .nullable()
-    .required(<IntlMessages id="teacher.contractTypeErr" />),
-
-  C_Province: Yup.object()
-    .shape({ value: Yup.string().required() })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-
-  C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-  C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-});
-
 const TeacherRegister = ({ intl }, values) => {
+  const TestData = {
+    Name: 'Hamid',
+    FatherName: 'Samir AHmad',
+    Gender: 'Male',
+    GrandFatherName: 'Mohammad Ali',
+    TazkiraNo: '23423523',
+    PhoneNo: '089098098',
+    DoB: '2022-08-12',
+    LevelOfEducation: 'Bachelor',
+    Major: 'Electric',
+    TazkiraType: '111الکترونیک',
+    Email: 'sami@gmail.com',
+    IdcardPageNo: '24',
+    IdCardJoldNo: '2214',
+    Status: 'Active',
+    Grade: 'Fifth',
+    TeachingField: 'BBA',
+    AppointmentType: 'Formal',
+    Province: 'initialProvinces',
+    JobLocation: 'initialJobLocation',
+    TeachingLang: 'initialTeachingLang',
+    Step: 'initialStep',
+    ContractType: 'initialContractType',
+    C_Province: 'Kabul',
+    C_District: 'initialCurrentDistrict',
+    District: 'initialProvince',
+    Village: 'initialVillage',
+    C_Village: 'initialCurrentVillage',
+  };
+
+  const [intialName, setInitialName] = useState(
+    TestData.Name ? TestData.Name : ''
+  );
+  const [intialFatherName, setInitialFatherName] = useState(
+    TestData.FatherName ? TestData.FatherName : ''
+  );
+  const [initialGender, setInitialGender] = useState(
+    TestData.Gender ? [{ label: TestData.Gender, value: TestData.Gender }] : []
+  );
+  const [initialGrandFatherName, setInitialGrandFatherName] = useState(
+    TestData.GrandFatherName ? TestData.GrandFatherName : ''
+  );
+  const [initialTazkiraNo, setInitialTazkiraNo] = useState(
+    TestData.TazkiraNo ? TestData.TazkiraNo : ''
+  );
+  const [initialPhoneNo, setInitialPhoneNo] = useState(
+    TestData.PhoneNo ? TestData.PhoneNo : ''
+  );
+  const [initialDoB, setInitialDoB] = useState(
+    TestData.DoB ? TestData.DoB : ''
+  );
+  const [initialLevelOfEducation, setInitialLevelOfEducation] = useState(
+    TestData.LevelOfEducation
+      ? [{ label: TestData.LevelOfEducation, value: TestData.LevelOfEducation }]
+      : []
+  );
+  const [initialMajor, setInitialMajor] = useState(
+    TestData.Major ? [{ label: TestData.Major, value: TestData.Major }] : []
+  );
+  const [initialEmail, setInitialEmail] = useState(
+    TestData.Email ? TestData.Email : ''
+  );
+
+  const [initialIdcardPageNo, setInitialIdcardPageNo] = useState(
+    TestData.IdcardPageNo ? TestData.IdcardPageNo : ''
+  );
+
+  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState(
+    TestData.IdCardJoldNo ? TestData.IdCardJoldNo : ''
+  );
+  const [initialTazkiraType, setInitialTazkiraType] = useState(
+    TestData.TazkiraType
+      ? [{ label: TestData.TazkiraType, value: TestData.TazkiraType }]
+      : []
+  );
+
+  const [initialStatus, setinitialStatus] = useState(
+    TestData.Status ? [{ label: TestData.Status, value: TestData.Status }] : []
+  );
+  const [initialGrade, setIntialGrade] = useState(
+    TestData.Grade ? [{ label: TestData.Grade, value: TestData.Grade }] : []
+  );
+  const [initialTeachingField, setInitialTeachingField] = useState(
+    TestData.TeachingField
+      ? [{ label: TestData.TeachingField, value: TestData.TeachingField }]
+      : []
+  );
+  const [initialAppointmentType, setInitialAppointmentType] = useState(
+    TestData.AppointmentType
+      ? [{ label: TestData.AppointmentType, value: TestData.AppointmentType }]
+      : []
+  );
+
+  const [initialProvince, setInitialProvince] = useState(
+    TestData.Province
+      ? [{ label: TestData.Province, value: TestData.Province }]
+      : []
+  );
+  const [initialJobLocation, setInitialJobLocation] = useState(
+    TestData.JobLocation ? TestData.JobLocation : ''
+  );
+
+  const [initialTeachingLang, setInitialTeachingLang] = useState(
+    TestData.TeachingLang
+      ? [{ label: TestData.TeachingLang, value: TestData.TeachingLang }]
+      : []
+  );
+
+  const [initialStep, setInitialStep] = useState(
+    TestData.Step ? [{ label: TestData.Step, value: TestData.Step }] : []
+  );
+
+  const [initialContractType, setInitialContractType] = useState(
+    TestData.ContractType
+      ? [{ label: TestData.ContractType, value: TestData.ContractType }]
+      : []
+  );
+  const [initialCurrentProvince, setInitialCurrentProvince] = useState(
+    TestData.C_Province
+      ? [{ label: TestData.C_Province, value: TestData.C_Province }]
+      : []
+  );
+
+  const [initialCurrentDistrict, setInitialCurrentDistrict] = useState(
+    TestData.C_District ? TestData.C_District : ''
+  );
+  const [initialCurrentVillage, setInitialCurrentVillage] = useState(
+    TestData.C_Village ? TestData.C_Village : ''
+  );
+  const [initialDistrict, setInitialDistrict] = useState(
+    TestData.District ? TestData.District : ''
+  );
+  const [initialVillage, setInitialVillage] = useState(
+    TestData.Village ? TestData.Village : ''
+  );
+
+  // Updating Mode is through
+  const UpdatingMode = false;
+  const ValidationStepOne = Yup.object().shape({
+    name1: Yup.string()
+      .min(3, <IntlMessages id="min.minInputValue" />)
+      .max(50, <IntlMessages id="max.maxInputValue" />)
+      .required(<IntlMessages id="teacher.NameErr" />),
+
+    fatherName: Yup.string()
+      .required(<IntlMessages id="teacher.FatherNameErr" />)
+      .min(3, <IntlMessages id="min.minInputValue" />)
+      .max(50, <IntlMessages id="max.maxInputValue" />),
+
+    gender: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="forms.genderErr" />)
+      : '',
+
+    grandFatherName: Yup.string()
+      .required(<IntlMessages id="teacher.GrandFatherNameErr" />)
+      .min(3, <IntlMessages id="min.minInputValue" />)
+      .max(50, <IntlMessages id="max.maxInputValue" />),
+
+    tazkiraNo: Yup.string().required(
+      <IntlMessages id="teacher.TazkiraNoErr" />
+    ),
+    phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
+    DoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
+
+    levelOfEducation: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.LevelOfEducationErr" />)
+      : '',
+
+    major: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.LevelOfEducationErr" />)
+      : '',
+
+    tazkiraType: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="forms.StdTazkiraTypeErr" />)
+      : '',
+
+    email: Yup.string()
+      .email(<IntlMessages id="teacher.EmailRequiredErr" />)
+      .required(<IntlMessages id="teacher.EmailErr" />),
+  });
+
+  const ValidationStepTwo = Yup.object().shape({
+    status: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.StatusErr" />)
+      : '',
+
+    teachingField: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.teachingFieldErr" />)
+      : '',
+
+    grade: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.GradeErr" />)
+      : '',
+
+    appointmentType: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.appointmentTypeErr" />)
+      : '',
+
+    province: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
+      : '',
+
+    jobLocation: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.jobLocationErr" />)
+      : '',
+
+    step: UpdatingMode
+      ? Yup.object()
+          .shape({ value: Yup.string().required() })
+          .nullable()
+          .required(<IntlMessages id="teacher.StepErr" />)
+      : '',
+
+    contractType: UpdatingMode
+      ? Yup.object()
+          .shape({ value: Yup.string().required() })
+          .nullable()
+          .required(<IntlMessages id="teacher.contractTypeErr" />)
+      : '',
+
+    C_Province: UpdatingMode
+      ? Yup.object()
+          .shape({ value: Yup.string().required() })
+          .nullable()
+          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
+      : '',
+
+    C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+
+    district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+    village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+    C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+  });
+
   const createNotification = (type, className) => {
     const cName = className || '';
     switch (type) {
@@ -397,26 +563,26 @@ const TeacherRegister = ({ intl }, values) => {
   //   //REMOVE USER_ID LATER, IT IS JUST FOR TESTING
   //   //UNCOMMENT TEACHER_PHOTO LATER, when the frontend updated
   //   const data = {
-  //     name: values.Name,
-  //     father_name: values.FatherName,
-  //     grand_father_name: values.GrandFatherName,
-  //     cover_number: values.IdCardJoldNo,
-  //     registration_number: values.TazkiraNo,
+  //     name: values.name1,
+  //     father_name: values.fatherName,
+  //     grand_father_name: values.grandFatherName,
+  //     cover_number: values.idCardJoldNo,
+  //     registration_number: values.tazkiraNo,
   //     gender: values.gender.value,
-  //     main_province: values.Province.value,
-  //     main_district: values.District,
-  //     main_village: values.Village,
+  //     main_province: values.province.value,
+  //     main_district: values.district,
+  //     main_village: values.village,
   //     current_province: values.C_Province.value,
   //     current_district: values.C_District,
   //     current_village: values.C_Village,
   //     education_degree: values.levelOfEducation.value,
   //     major: values.major.value,
   //     phone_number: values.PhoneNo,
-  //     email: values.Email,
+  //     email: values.email,
   //     birth_date: values.DoB,
-  //     status_type: values.Status.value,
-  //     grade: values.Grade.value,
-  //     step: values.Step.value,
+  //     status_type: values.status.value,
+  //     grade: values.grade.value,
+  //     step: values.step.value,
   //     user_id: 1,
   //     // teacher_photo: values.TeacherPhoto,
   //   };
@@ -534,19 +700,21 @@ const TeacherRegister = ({ intl }, values) => {
                 <Formik
                   innerRef={forms[0]}
                   initialValues={{
-                    Name: '',
-                    FatherName: '',
-                    GrandFatherName: '',
-                    DoB: '',
-                    TazkiraNo: '',
-                    PhoneNo: '',
-                    Email: '',
-                    IdCardPageNo: '',
-                    IdCardJoldNo: '',
-                    gender: [],
-                    levelOfEducation: [],
-                    tazkiraType: [],
-                    major: [],
+                    name1: intialName,
+                    fatherName: intialFatherName,
+                    grandFatherName: initialGrandFatherName,
+                    DoB: initialDoB,
+                    tazkiraNo: initialTazkiraNo,
+                    phoneNo: initialPhoneNo,
+                    email: initialEmail,
+                    idCardPageNo: initialIdcardPageNo,
+                    idCardJoldNo: initialIdCardJoldNo,
+                    // idCardJoldNo: 'initialIdCardJoldNo',
+                    gender: initialGender,
+                    levelOfEducation: initialLevelOfEducation,
+                    tazkiraType: initialTazkiraType,
+                    // tazkiraType: [],
+                    major: initialMajor,
                   }}
                   validateOnMount
                   validationSchema={ValidationStepOne}
@@ -570,10 +738,10 @@ const TeacherRegister = ({ intl }, values) => {
                             <Label>
                               <IntlMessages id="teacher.NameLabel" />
                             </Label>
-                            <Field className="form-control" name="Name" />
-                            {errors.Name && touched.Name ? (
+                            <Field className="form-control" name="name1" />
+                            {errors.name1 && touched.name1 ? (
                               <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.Name}
+                                {errors.name1}
                               </div>
                             ) : null}
                           </FormGroup>
@@ -582,10 +750,10 @@ const TeacherRegister = ({ intl }, values) => {
                             <Label>
                               <IntlMessages id="teacher.FatherNameLabel" />
                             </Label>
-                            <Field className="form-control" name="FatherName" />
-                            {errors.FatherName && touched.FatherName ? (
+                            <Field className="form-control" name="fatherName" />
+                            {errors.fatherName && touched.fatherName ? (
                               <div className="invalid-feedback d-block  bg-danger text-white">
-                                {errors.FatherName}
+                                {errors.fatherName}
                               </div>
                             ) : null}
                           </FormGroup>
@@ -619,13 +787,13 @@ const TeacherRegister = ({ intl }, values) => {
                                   </Label>
                                   <Field
                                     className="form-control"
-                                    name="IdCardPageNo"
+                                    name="idCardPageNo"
                                     type="number"
                                   />
-                                  {errors.IdCardPageNo &&
-                                  touched.IdCardPageNo ? (
+                                  {errors.idCardPageNo &&
+                                  touched.idCardPageNo ? (
                                     <div className="invalid-feedback d-block  bg-danger text-white">
-                                      {errors.IdCardPageNo}
+                                      {errors.idCardPageNo}
                                     </div>
                                   ) : null}
                                 </FormGroup>
@@ -641,32 +809,33 @@ const TeacherRegister = ({ intl }, values) => {
                             </Label>
                             <Field
                               className="form-control"
-                              name="PhoneNo"
+                              name="phoneNo"
                               type="number"
                             />
-                            {errors.PhoneNo && touched.PhoneNo ? (
+                            {errors.phoneNo && touched.phoneNo ? (
                               <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.PhoneNo}
+                                {errors.phoneNo}
                               </div>
                             ) : null}
                           </FormGroup>
+
+                          {/* date */}
                           <FormGroup className="form-group has-float-label error-l-175">
-                            <Label className="d-block">
+                            <Label>
                               <IntlMessages id="teacher.DoBLabel" />
                             </Label>
-                            <FormikDatePicker
+                            <Field
+                              className="form-control"
                               name="DoB"
                               type="date"
-                              value={values.DoB}
-                              onChange={setFieldValue}
-                              onBlur={setFieldTouched}
                             />
                             {errors.DoB && touched.DoB ? (
-                              <div className="invalid-feedback d-block  bg-danger text-white">
+                              <div className="invalid-feedback d-block bg-danger text-white">
                                 {errors.DoB}
                               </div>
                             ) : null}
                           </FormGroup>
+
                           {/* Major */}
                           <FormGroup className="form-group has-float-label error-l-175">
                             <Label>
@@ -696,12 +865,12 @@ const TeacherRegister = ({ intl }, values) => {
                             </Label>
                             <Field
                               className="form-control"
-                              name="GrandFatherName"
+                              name="grandFatherName"
                             />
-                            {errors.GrandFatherName &&
-                            touched.GrandFatherName ? (
+                            {errors.grandFatherName &&
+                            touched.grandFatherName ? (
                               <div className="invalid-feedback d-block  bg-danger text-white">
-                                {errors.GrandFatherName}
+                                {errors.grandFatherName}
                               </div>
                             ) : null}
                           </FormGroup>
@@ -733,12 +902,12 @@ const TeacherRegister = ({ intl }, values) => {
                             </Label>
                             <Field
                               className="form-control"
-                              name="TazkiraNo"
+                              name="tazkiraNo"
                               type="number"
                             />
-                            {errors.TazkiraNo && touched.TazkiraNo ? (
+                            {errors.tazkiraNo && touched.tazkiraNo ? (
                               <div className="invalid-feedback d-block  bg-danger text-white">
-                                {errors.TazkiraNo}
+                                {errors.tazkiraNo}
                               </div>
                             ) : null}
                           </FormGroup>
@@ -752,13 +921,13 @@ const TeacherRegister = ({ intl }, values) => {
                                   </Label>
                                   <Field
                                     className="form-control"
-                                    name="IdCardJoldNo"
+                                    name="idCardJoldNo"
                                     type="number"
                                   />
-                                  {errors.IdCardJoldNo &&
-                                  touched.IdCardJoldNo ? (
+                                  {errors.idCardJoldNo &&
+                                  touched.idCardJoldNo ? (
                                     <div className="invalid-feedback d-block  bg-danger text-white">
-                                      {errors.IdCardJoldNo}
+                                      {errors.idCardJoldNo}
                                     </div>
                                   ) : null}
                                 </FormGroup>
@@ -774,12 +943,12 @@ const TeacherRegister = ({ intl }, values) => {
                             </Label>
                             <Field
                               className="form-control"
-                              name="Email"
-                              type="Email"
+                              name="email"
+                              type="email"
                             />
-                            {errors.Email && touched.Email ? (
+                            {errors.email && touched.email ? (
                               <div className="invalid-feedback d-block bg-danger text-white">
-                                {errors.Email}
+                                {errors.email}
                               </div>
                             ) : null}
                           </FormGroup>
@@ -820,20 +989,20 @@ const TeacherRegister = ({ intl }, values) => {
                 <Formik
                   innerRef={forms[1]}
                   initialValues={{
-                    status: [],
-                    teachingField: [],
-                    grade: [],
-                    appointmentType: [],
-                    province: [],
-                    jobLocation: [],
-                    teachingLang: [],
-                    step: [],
-                    contractType: [],
-                    C_Province: [],
-                    C_District: '',
-                    district: '',
-                    village: '',
-                    C_Village: '',
+                    status: initialStatus,
+                    teachingField: initialTeachingField,
+                    grade: initialGrade,
+                    appointmentType: initialAppointmentType,
+                    province: initialProvince,
+                    jobLocation: initialJobLocation,
+                    teachingLang: initialTeachingLang,
+                    step: initialStep,
+                    contractType: initialContractType,
+                    C_Province: initialCurrentProvince,
+                    C_District: initialCurrentDistrict,
+                    district: initialDistrict,
+                    village: initialVillage,
+                    C_Village: initialCurrentVillage,
                   }}
                   onSubmit={() => {}}
                   validationSchema={ValidationStepTwo}

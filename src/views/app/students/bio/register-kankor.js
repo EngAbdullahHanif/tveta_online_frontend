@@ -16,57 +16,6 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
-const ValidationSchema = Yup.object().shape({
-  stdName: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="forms.StdKankorNameErr" />),
-
-  stdFatherName: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="teacher.FatherNameErr" />),
-
-  department: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.departmentIdErr" />),
-
-  institute: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.InstituteErr" />),
-
-  field: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.FieldErr" />),
-
-  stdKankorId: Yup.string().required(
-    <IntlMessages id="forms.StdKankorIdErr" />
-  ),
-
-  kankorMarks: Yup.string().required(
-    <IntlMessages id="forms.KankorMarksErr" />
-  ),
-  stdInteranceDate: Yup.date().required(
-    <IntlMessages id="forms.KankorMarksErr" />
-  ),
-
-  studyTime: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StudyTimeErr" />),
-});
-
 const studyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
@@ -85,16 +34,112 @@ const FieldOptions = [
 ];
 
 const StudentRegistraion = () => {
+  const UpdatingMode = false;
+  const ValidationSchema = Yup.object().shape({
+    name1: Yup.string()
+      .min(3, <IntlMessages id="min.minInputValue" />)
+      .max(50, <IntlMessages id="max.maxInputValue" />)
+      .required(<IntlMessages id="forms.StdKankorNameErr" />),
+
+    fatherName: Yup.string()
+      .min(3, <IntlMessages id="min.minInputValue" />)
+      .max(50, <IntlMessages id="max.maxInputValue" />)
+      .required(<IntlMessages id="teacher.FatherNameErr" />),
+
+    interanceDate: Yup.string().required(
+      <IntlMessages id="forms.KankorMarksErr" />
+    ),
+
+    kankorId: Yup.string().required(<IntlMessages id="forms.StdKankorIdErr" />),
+
+    kankorMarks: Yup.string().required(
+      <IntlMessages id="forms.KankorMarksErr" />
+    ),
+
+    department: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.departmentIdErr" />)
+      : null,
+
+    institute: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="forms.InstituteErr" />)
+      : null,
+
+    field: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="forms.FieldErr" />)
+      : null,
+
+    studyTime: UpdatingMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="forms.StudyTimeErr" />)
+      : null,
+  });
+
+  // Temporaray varaibles
+  const testName = 'Ahmad';
+  const testKankorId = '232423';
+  const testFatherName = 'Rashid';
+  const testInteranceDate = '23-243-4323';
+  const testStudyTime = 'Morning';
+  const testDepartment = 'Engineering';
+  const testFieldfield = 'CS';
+  const testInstitute = 'Nima';
+  const testKankorMarks = '87';
+
+  const [intialName, setInitialName] = useState(testName ? 'Ahmad' : '');
+  const [initailKankorId, setInitailKankorId] = useState(
+    testKankorId ? '213f-12' : ''
+  );
+  const [initialFatherName, setInitialFatherName] = useState(
+    testFatherName ? 'Rashid' : ''
+  );
+  const [initailInteranceDate, setInitailInteranceDate] = useState(
+    testInteranceDate ? '2022-08-12' : ''
+  );
+  const [initialKankorMarks, setInitialKankorMarks] = useState(
+    testKankorMarks ? '87' : ''
+  );
+  const [initailDepartment, setInitailDepartment] = useState(
+    testFieldfield ? [{ label: testFieldfield, value: testFieldfield }] : []
+  );
+  const [initialField, setInitialField] = useState(
+    testDepartment ? [{ label: testDepartment, value: testDepartment }] : []
+  );
+  const [initialstudyTime, setInitialstudyTime] = useState(
+    testStudyTime ? [{ label: testStudyTime, value: testStudyTime }] : []
+  );
+
+  const [initialInstitute, setInitialInstitute] = useState(
+    testInstitute ? [{ label: testInstitute, value: testInstitute }] : []
+  );
   const initialValues = {
-    stdName: '',
-    stdKankorId: '',
-    kankorMarks: '',
-    stdFatherName: '',
-    stdInteranceDate: '',
-    studyTime: [],
-    department: [],
-    field: [],
-    institute: [],
+    name1: intialName,
+    kankorId: initailKankorId,
+    fatherName: initialFatherName,
+    kankorMarks: initialKankorMarks,
+    interanceDate: initailInteranceDate,
+    studyTime: initialstudyTime,
+    department: initailDepartment,
+    field: initialField,
+    institute: initialInstitute,
   };
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
@@ -117,6 +162,7 @@ const StudentRegistraion = () => {
       value: item.id,
       label: item.name,
     }));
+
     setFields(updatedData);
   };
   const fetchDepartments = async () => {
@@ -133,16 +179,17 @@ const StudentRegistraion = () => {
   const handleClick = (event) => {
     // setIsNext(event);
   };
+
   const onRegister = (values) => {
     console.log('values', values);
-    // console.log('institue', values.Department.value);
+
     const data = {
-      name: values.StdName,
-      father_name: values.StdFatherName,
-      Institute: values.Institute.value,
-      field_id: values.Field.value,
-      department_id: values.Department.value,
-      score: values.KankorMarks,
+      name: values.name1,
+      father_name: values.fatherName,
+      Institute: values.institute[0].value,
+      field_id: values.field[0].value,
+      department_id: values.department[0].value,
+      score: values.kankorMarks,
       educational_year: '2020',
       provence: 'kabul',
       district: 'kabul',
@@ -180,7 +227,7 @@ const StudentRegistraion = () => {
           {<IntlMessages id="forms.Kankorformstitle" />}
         </h3>
         <CardBody>
-          {isNext == true ? (
+          {isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onRegister}
@@ -201,10 +248,10 @@ const StudentRegistraion = () => {
                         <Label>
                           <IntlMessages id="forms.StdName" />
                         </Label>
-                        <Field className="form-control" name="stdName" />
-                        {errors.stdName && touched.stdName ? (
+                        <Field className="form-control" name="name1" />
+                        {errors.name1 && touched.name1 ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.stdName}
+                            {errors.name1}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -214,10 +261,10 @@ const StudentRegistraion = () => {
                         <Label>
                           <IntlMessages id="forms.StdFatherName" />
                         </Label>
-                        <Field className="form-control" name="stdFatherName" />
-                        {errors.stdFatherName && touched.stdFatherName ? (
+                        <Field className="form-control" name="fatherName" />
+                        {errors.fatherName && touched.fatherName ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.stdFatherName}
+                            {errors.fatherName}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -259,7 +306,6 @@ const StudentRegistraion = () => {
                         {errors.studyTime && touched.studyTime ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.studyTime}
-                            {console.log(errors.studyTime, 'Kankor Marks')}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -291,10 +337,10 @@ const StudentRegistraion = () => {
                         <Label>
                           <IntlMessages id="forms.StdKankorIdLabel" />
                         </Label>
-                        <Field className="form-control" name="stdKankorId" />
-                        {errors.stdKankorId && touched.stdKankorId ? (
+                        <Field className="form-control" name="kankorId" />
+                        {errors.kankorId && touched.kankorId ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.stdKankorId}
+                            {errors.kankorId}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -343,12 +389,12 @@ const StudentRegistraion = () => {
                         </Label>
                         <Field
                           className="form-control"
-                          name="stdInteranceDate"
+                          name="interanceDate"
                           type="date"
                         />
-                        {errors.stdInteranceDate && touched.stdInteranceDate ? (
+                        {errors.interanceDate && touched.interanceDate ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.stdInteranceDate}
+                            {errors.interanceDate}
                           </div>
                         ) : null}
                       </FormGroup>

@@ -134,7 +134,7 @@ const initialValues = {
 };
 const MarksDisplay = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [inNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -212,7 +212,7 @@ const MarksDisplay = ({ match }) => {
   }, []);
 
   const handleClick = (event) => {
-    // setIsNext(event);
+    setIsNext(event);
     axios
       .get(
         `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
@@ -221,6 +221,7 @@ const MarksDisplay = ({ match }) => {
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
+        setIsNext(false);
       });
     console.log(
       `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
@@ -322,7 +323,7 @@ const MarksDisplay = ({ match }) => {
           {<IntlMessages id="marks.marksDisplayTitle" />}
         </h3>
         <CardBody>
-          {inNext ? (
+          {isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}
@@ -508,30 +509,29 @@ const MarksDisplay = ({ match }) => {
 
                 <Colxx xxs="2">
                   <Label>
-                    <IntlMessages id="marks.ClassLabel" />
-                  </Label>
-                  <h6>{selectedClass.label}</h6>
-                </Colxx>
-
-                <Colxx xxs="2">
-                  <Label>
                     <IntlMessages id="forms.StudyTimeLabel" />
                   </Label>
                   <h6>{selecedStudyTime.label}</h6>
+                </Colxx>
+                <Colxx xxs="2">
+                  <Label>
+                    <IntlMessages id="marks.ClassLabel" />
+                  </Label>
+                  <h6>{classs}</h6>
                 </Colxx>
 
                 <Colxx xxs="2">
                   <Label>
                     <IntlMessages id="marks.SemesterLabel" />
                   </Label>
-                  <h6>{selectedClass.label}</h6>
+                  <h6>{semester}</h6>
                 </Colxx>
 
                 <Colxx xxs="2">
                   <Label>
                     <IntlMessages id="marks.SectionLabel" />
                   </Label>
-                  <h6>{selectedClass.label}</h6>
+                  <h6>{section}</h6>
                 </Colxx>
 
                 <Colxx xxs="2">
@@ -579,7 +579,7 @@ const MarksDisplay = ({ match }) => {
                 }}
               >
                 <table class="table ">
-                  <tbody
+                  {/* <tbody
                     className="border border "
                     style={{
                       height: '200px',
@@ -596,7 +596,8 @@ const MarksDisplay = ({ match }) => {
                         <td>{student.marks}</td>
                       </tr>
                     ))}
-                  </tbody>
+                  </tbody> */}
+                  {tbodies}
                 </table>
               </Row>
               <Row

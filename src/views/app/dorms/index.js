@@ -25,6 +25,10 @@ const DormProfile = React.lazy(() =>
   import(/* webpackChunkName: "details" */ './dorm-profile')
 );
 
+const DormStudentDismissal = React.lazy(() =>
+  import(/* webpackChunkName: "student-dismissal" */ './dorm-student-dismissal')
+);
+
 const Dorms = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -48,6 +52,10 @@ const Dorms = ({ match }) => (
       <Route
         path={`${match.url}/dorm/:dormId`}
         render={(props) => <DormProfile {...props} />}
+      />
+      <Route
+        path={`${match.url}/student-dismissal`}
+        render={(props) => <DormStudentDismissal {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

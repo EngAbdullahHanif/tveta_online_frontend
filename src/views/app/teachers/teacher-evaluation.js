@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-
 import * as Yup from 'yup';
+import axios from 'axios';
+
 import {
   Row,
   Card,
@@ -24,32 +25,47 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
+const servicePath = 'http://localhost:8000';
+const teachersApiUrl = `${servicePath}/teachers/`;
+const institutesApiUrl = `${servicePath}/institute/`;
+const departmentsApiUrl = `${servicePath}/institute/department/`;
+const classesApiUrl = `${servicePath}/institute/classs/`;
+const subjectApiUrl = `${servicePath}/institute/subject/`;
+const fieldsApiUrl = `${servicePath}/institute/field/`;
+const evaluationApiUrl = `${servicePath}/teachers/evaluation-create/`;
+
 const evaluationTypeOptions = [
   { value: '1', label: <IntlMessages id="teacher.evaluationTypeOption_1" /> },
   { value: '2', label: <IntlMessages id="teacher.evaluationTypeOption_2" /> },
 ];
 
 const ValidationSchema = Yup.object().shape({
-  id: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.IdErr" />),
+  id: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="teacher.IdErr" />)
+    : null,
 
-  department: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.departmentIdErr" />),
+  department: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="teacher.departmentIdErr" />)
+    : null,
 
-  subject: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.SubjectErr" />),
+  subject: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="marks.SubjectErr" />)
+    : null,
 
   evaluator: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
@@ -65,56 +81,219 @@ const ValidationSchema = Yup.object().shape({
     <IntlMessages id="teacher.evaluationDateErr" />
   ),
 
-  institute: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.InstituteErr" />),
+  institute: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="forms.InstituteErr" />)
+    : null,
 
-  classs: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.ClassErr" />),
+  classs: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="marks.ClassErr" />)
+    : null,
 
   topic: Yup.string().required(<IntlMessages id="teacher.topicErr" />),
 
-  evaluationType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.evaluationTypeErr" />),
+  evaluationType: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="teacher.evaluationTypeErr" />)
+    : null,
 
   weaknessPoints: Yup.string().required(
     <IntlMessages id="teacher.weaknessPointsErr" />
   ),
-  // suggestion: Yup.string().required(
-  //   <IntlMessages id="teacher.suggestionErr" />
-  // ),
 });
 
+const updatingMode = true;
 const TeacherEvaluation = () => {
-  const initialValues = {
-    id: [],
-    department: [],
-    subject: [],
-    evaluator: '',
-    strengthPoints: '',
-    marks: '',
-    evaluationDate: '',
-    institute: [],
-    classs: [],
-    topic: '',
-    evaluationType: [],
-    weaknessPoints: '',
-    suggestion: '',
+  const TestData = {
+    Id: 'Hamid',
+    Department: 'CS',
+    Subject: 'ICT',
+    Evalovator: 'Ahmad',
+    StrengthPoints:
+      'He Is hard working and patient while researching about the a topic',
+    Marks: '59',
+    EvaluationDate: '2022-08-12',
+    Insititute: 'Nima',
+    Class: '12th-A',
+    Topic: 'BioEconomy',
+    EvluationType: 'Goal Oriented',
+    WeaknessPoint: 'Lack of Preparation',
+    Suggestions: 'Preparation time should be improved!',
   };
 
-  const onSubmit = () => {
-    console.log('onSubmit is called');
+  const [initialId, setInitialId] = useState(
+    TestData.Id ? [{ label: TestData.Id, value: TestData.Id }] : []
+  );
+
+  const [initialDepartment, setInitialDepartment] = useState(
+    TestData.Department
+      ? [{ label: TestData.Department, value: TestData.Department }]
+      : []
+  );
+
+  const [initialSubject, setInitialSubject] = useState(
+    TestData.Department
+      ? [{ label: TestData.Subject, value: TestData.Subject }]
+      : []
+  );
+
+  const [initialEvaluator, setInitialEvaluator] = useState(
+    TestData.Evalovator ? TestData.Evalovator : ''
+  );
+  const [initialMarks, setInitialMarks] = useState(
+    TestData.Marks ? TestData.Marks : ''
+  );
+  const [initialStrengthPoints, setInitialStrengthPoints] = useState(
+    TestData.StrengthPoints ? TestData.StrengthPoints : ''
+  );
+  const [initialEvaluationDate, setInitialEvaluationDate] = useState(
+    TestData.EvaluationDate ? TestData.EvaluationDate : ''
+  );
+  const [initialInsititute, setInitialInsititute] = useState(
+    TestData.Insititute
+      ? [{ label: TestData.Insititute, value: TestData.Insititute }]
+      : []
+  );
+
+  const [initialClass, setInitialClass] = useState(
+    TestData.Class ? [{ label: TestData.Class, value: TestData.Class }] : []
+  );
+  const [initialTopic, setInitialTopic] = useState(
+    TestData.Topic ? TestData.Topic : ''
+  );
+  const [initialEvluationType, setInitialEvluationType] = useState(
+    TestData.EvluationType
+      ? [{ label: TestData.EvluationType, value: TestData.EvluationType }]
+      : []
+  );
+
+  const [initialSuggestions, setInitialSuggestions] = useState(
+    TestData.Suggestions ? TestData.Suggestions : ''
+  );
+
+  const [initialWeaknessPoint, setInitialWeaknessPoint] = useState(
+    TestData.WeaknessPoint ? TestData.WeaknessPoint : ''
+  );
+  const [teachers, setTeachers] = useState([]);
+  const [institutes, setInstitutes] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [strengthPoints, setStrengthPoints] = useState([]);
+  const [weaknessPoints, setWeaknessPoints] = useState([]);
+  const [suggestion, setSuggestion] = useState([]);
+
+  const fetchTeachers = async () => {
+    const response = await axios.get(teachersApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setTeachers(updatedData);
+  };
+
+  const fetchInstitutes = async () => {
+    const response = await axios.get(institutesApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setInstitutes(updatedData);
+  };
+
+  const fetchDepartments = async () => {
+    const response = await axios.get(departmentsApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setDepartments(updatedData);
+  };
+
+  const fetchClasses = async () => {
+    const response = await axios.get(classesApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name + ' - ' + item.semester + ' - ' + item.section,
+    }));
+    setClasses(updatedData);
+  };
+  const fetchSubjects = async () => {
+    const response = await axios.get(subjectApiUrl);
+    const updatedData = await response.data.map((item) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    setSubjects(updatedData);
+  };
+
+  useEffect(() => {
+    fetchTeachers();
+    fetchInstitutes();
+    fetchDepartments();
+    fetchClasses();
+    fetchSubjects();
+  }, []);
+
+  const initialValues = {
+    id: initialId,
+    department: initialDepartment,
+    subject: initialSubject,
+    evaluator: initialEvaluator,
+    strengthPoints: initialStrengthPoints,
+    marks: initialMarks,
+    evaluationDate: initialEvaluationDate,
+    institute: initialInsititute,
+    class: initialClass,
+    topic: initialTopic,
+    evaluationType: initialEvluationType,
+    weaknessPoints: initialWeaknessPoint,
+    suggestion: initialSuggestions,
+  };
+
+  const onSubmit = (values) => {
+    console.log(values);
+
+    const data = {
+      teacher_id: values.teacher.value,
+      institute_id: values.institute.value,
+      department_id: values.department.value,
+      class_id: values.class.value,
+      subject_id: values.subject.value,
+      topic: values.topic,
+      evaluator_name: values.evaluator,
+      evaluation_type: values.evaluationType.value,
+      strong_points: strengthPoints,
+      weak_points: weaknessPoints,
+      suggestions: suggestion,
+      score: values.marks,
+      evaluation_date: values.evaluationDate,
+      user_id: 1,
+    };
+
+    console.log('data', data);
+
+    axios
+      .post(evaluationApiUrl, data)
+      .then((response) => {
+        console.log('response', response);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   };
 
   return (
@@ -133,19 +312,19 @@ const TeacherEvaluation = () => {
               <Form className="av-tooltip tooltip-label-right error-l-150 ">
                 <Row className="justify-content-center">
                   <Colxx xxs="5">
-                    {/* Teacher Id */}
-                    <FormGroup className="form-group has-float-label">
+                    {/* teacher Name*/}
+                    <FormGroup className="form-group has-float-label ">
                       <Label>
                         <IntlMessages id="teacher.IdLabel" />
                       </Label>
+
                       <FormikReactSelect
                         name="id"
                         id="id"
                         value={values.id}
-                        options={evaluationTypeOptions}
+                        options={teachers}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                        required
                       />
                       {errors.id && touched.id ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
@@ -164,7 +343,7 @@ const TeacherEvaluation = () => {
                         name="department"
                         id="department"
                         value={values.department}
-                        options={evaluationTypeOptions}
+                        options={departments}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
@@ -185,7 +364,7 @@ const TeacherEvaluation = () => {
                         name="subject"
                         id="subject"
                         value={values.subject}
-                        options={evaluationTypeOptions}
+                        options={subjects}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
@@ -215,9 +394,10 @@ const TeacherEvaluation = () => {
                       <Label>
                         <IntlMessages id="teacher.strengthPointsLabel" />
                       </Label>
-                      <textarea
+                      <Field
                         className="form-control"
                         name="strengthPoints"
+                        as="textarea"
                       />
                       {errors.strengthPoints && touched.strengthPoints ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
@@ -225,6 +405,7 @@ const TeacherEvaluation = () => {
                         </div>
                       ) : null}
                     </FormGroup>
+
                     {/* Achieved Marks */}
                     <FormGroup className="form-group has-float-label">
                       <Label>
@@ -260,15 +441,17 @@ const TeacherEvaluation = () => {
                     </FormGroup>
                   </Colxx>
                   <Colxx xxs="5">
+                    {/* Institute Name*/}
                     <FormGroup className="form-group has-float-label ">
                       <Label>
                         <IntlMessages id="forms.InstituteLabel" />
                       </Label>
+
                       <FormikReactSelect
                         name="institute"
                         id="institute"
                         value={values.institute}
-                        options={evaluationTypeOptions}
+                        options={institutes}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
@@ -278,24 +461,23 @@ const TeacherEvaluation = () => {
                         </div>
                       ) : null}
                     </FormGroup>
-
                     {/*  Class Id  */}
                     <FormGroup className="form-group has-float-label ">
                       <Label>
                         <IntlMessages id="marks.ClassLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="classs"
-                        id="classs"
-                        value={values.classs}
-                        options={evaluationTypeOptions}
+                        name="class"
+                        id="class"
+                        value={values.class}
+                        options={classes}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
                       />
-                      {errors.classs && touched.classs ? (
+                      {errors.class && touched.class ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.classs}
+                          {errors.class}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -339,9 +521,10 @@ const TeacherEvaluation = () => {
                       <Label>
                         <IntlMessages id="teacher.weaknessPointsLabel" />
                       </Label>
-                      <textarea
+                      <Field
                         className="form-control"
                         name="weaknessPoints"
+                        as="textarea"
                       />
                       {errors.weaknessPoints && touched.weaknessPoints ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
@@ -355,9 +538,10 @@ const TeacherEvaluation = () => {
                       <Label>
                         <IntlMessages id="teacher.suggestionLabel" />
                       </Label>
-                      <textarea
+                      <Field
                         className="form-control"
                         name="suggestion"
+                        as="textarea"
                         rows={4}
                       />
                       {errors.suggestion && touched.suggestion ? (

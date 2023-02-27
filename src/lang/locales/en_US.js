@@ -171,6 +171,10 @@ module.exports = {
   'menu.dorm-details': 'Dorm Details',
   'menu.marks-display': 'Marks',
   'menu.marks-display-all-subs': 'Marks of All Subjects',
+  'menu.student-dismissal': 'Student Dismissal',
+  'menu.dorm-student-dismissal': ' Dorm Student Dismissal',
+  'menu.single-student-marksUpdate': 'Student Marks Update',
+  'menu.attendance-Update': 'Attendance Update',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -530,11 +534,19 @@ module.exports = {
   'forms.firstname-message': 'Please enter your first name!',
   'forms.lastname': 'Last name',
   'forms.lastname-message': 'Please enter your last name!',
+
+  // Student Register
+  'forms.studentRegisterTitle': 'Student Registration',
   'forms.StdName': 'Name',
   'forms.Eng_name': 'English name',
   'forms.StdFatherName': 'Father Name',
-
+  'forms.lastName': 'LastName',
+  'forms.lastNameEng': 'LastName In English',
+  'forms.lastNameEngErr': 'LastName In English Is Required!',
+  'forms.lastNameErr': 'LastName Is Required!',
   'forms.Std_father_Eng_Name': 'Father English Name',
+  'forms.grandFatherName': 'GrandFather Name',
+  'forms.grandFatherNameErr': 'GrandFather Name Is Required!',
   'forms.electronic': 'Electronic',
   'forms.paper': 'Paper',
   'forms.StdKankorNameErr': 'Name is required!',
@@ -552,6 +564,7 @@ module.exports = {
   'forms.StdTazkiraNoLabel': 'Id Card (Tazkira) Number',
   'forms.StdTazkiraNoErr': 'Tazkira Number is Required!',
   'forms.StdTazkiraElectronic': 'Electronic',
+  'forms.genderErr': 'Gender Is Required!',
   'forms.StdTazkiraPaper': 'Paper',
   'forms.StdIdCardPageNoLabel': 'Id Card (Tazkira) Page Number',
   'forms.StdIdCardPageNoErr': 'Tazkira Page Number Required!',
@@ -563,7 +576,6 @@ module.exports = {
   'forms.CurrentAddresslabel': 'Current Address',
   'forms.ProvinceLabel': 'Province',
   'forms.ProvinceErr': 'Province is Required!',
-
   'forms.DistrictLabel': 'District',
   'forms.DistrictErr': 'District Is Required!',
   'forms.VillageLabel': 'Village/Area',
@@ -600,8 +612,35 @@ module.exports = {
   'forms.StdGraduationYearErr': 'Graduation Year Is Required!',
   'student.results': 'Results',
   'forms.personalInfo': 'Personal Info',
-
   'student.educationType': 'Education Type',
+  'forms.educationalYearOption_1': '1402',
+  'forms.educationalYearOption_2': '1403',
+  'forms.educationalYearOption_3': '1404',
+  'forms.educationalYearOption_4': '1405',
+  'forms.educationalYearOption_5': '1406',
+  'forms.educationalYearOption_6': '1407',
+  'forms.educationalYearOption_7': '1408',
+  'forms.educationalYearOption_8': '1409',
+  'forms.educationalYearOption_9': '1410',
+  'forms.educationalYearOption_10': '1411',
+  'forms.educationalYearOption_11': '1413',
+  'forms.educationalYearOption_12': '1414',
+  'forms.educationalYearOption_13': '1415',
+  'forms.educationalYearOption_14': '1416',
+  'forms.educationalYearOption_15': '1417',
+  'forms.educationalYearOption_16': '1418',
+  'forms.educationalYearOption_17': '1419',
+  'forms.educationalYearOption_18': '1420',
+  'forms.kankorId': 'Kankor Id',
+  'forms.kankorIdErr': 'Kankor Id Is Required!',
+  'forms.mediumOfInstructionOption_1': 'Pashto',
+  'forms.mediumOfInstructionOption_2': 'Dari',
+  'forms.mediumOfInstructionOption_3': 'English',
+  'forms.mediumOfInstructionOption_4': 'Other',
+  'forms.mediumOfInstruction': 'Medium of Instruction',
+  'forms.mediumOfInstructionErr': 'Medium of Instruction Is Required!',
+  'forms.batch': 'Batch',
+  'forms.batchErr': 'Batch Is Required!',
 
   // provinces of Afghanistan
   'forms.StdSchoolProvinceOptions_1': 'Badakhshan',
@@ -819,6 +858,7 @@ module.exports = {
   'dorm.': 'Dorm Name',
   'dorm.NameErr': 'Dorm Name Required!',
   'dorm.Gender': ' Gender',
+  'dorm.genderErr': ' Drom Gender Is Required!',
   'dorm.GenderOptions_1': ' Male',
   'dorm.GenderOptions_2': ' Female',
   'dorm.GenderOptions_3': 'Both',
@@ -934,8 +974,11 @@ module.exports = {
   'curriculum.curriculumTittle': 'Curriculum',
   'curriculum.departmentIdLabel': 'Department Id',
   'curriculum.subjectdLabel': 'Subject',
+  'curriculum.subjectdErr': 'Subject Is Required!',
+  'curriculum.classErr': 'Class Is Required!',
   'curriculum.classLabel': 'Class',
   'curriculum.eduactionalYearLabel': 'Educational Year',
+  'curriculum.eduactionalYearErr': 'Educational Year Is Required!',
 
   //Institute Details Page
   'institute.detailsTitle': 'More Details',
@@ -963,8 +1006,6 @@ module.exports = {
   'dash.14YearsGreduatedFemale': '14 Years Degree Female',
   'dash.bachelorMale': 'Bachelor Male',
   'dash.bachelorFemale': 'Bachelor Female',
-  'dash.phdMale': 'PHD Male',
-  'dash.phdFemale': 'PHD Female',
   'dash.instituteList': 'Institutes',
   'dash.schoolsList': 'Schools',
   'dash.dormsList': 'Dorms',
@@ -1083,23 +1124,80 @@ module.exports = {
   'dash.Special Education': 'Special Education',
   'dash.loading': 'Loading...',
   'dash.teacherGender': 'Gender',
-  
+  'dash.totalNo': 'Total',
+  'dash.teacherStatistics': 'Teachers statistics',
 
-  // Dorm details page
+  'dash.14YearsGreduatedTotal': 'Total 14th years Greduated',
+  'dash.bachelorTotal': 'Total Bachelors',
+  'dash.masterTotal': 'Total Masters',
+  'dash.masterMale': 'Male Masters',
+  'dash.masterFemale': 'Female Masters',
+  'dash.phdTotal': 'Total PHDs',
+  'dash.phdMale': 'Male PHDs',
+  'dash.phdFemale': 'Female PHDs',
+  'dash.TeacherEvaluatedTotal': 'Evalauted Teachers',
+  'dash.TeacherNotEvaluatedTotal': 'Not Evaluated Teachers',
+  'dash.teacherEvaluationStatistics': 'Teacher Evaluation Statistics',
+  'menu.student_register': 'Student Register',
+  'menu.student_register_kankor': 'Students Kankor Register',
+  'menu.student_list': 'Students List',
+  'menu.student-marks-register': 'Marks Registration',
+
+  // Student Dismissal
+  'student.dismissalTitleFromInstitute':
+    'Student Dismissal From Institute/ School',
+  'search.studentIdsearchErr': 'Please Enter Student Id',
+  'min.invalidId': 'Invalid Id',
+  'max.invalidId': 'Invalid Id',
+  'student.dismissalDateLabel': 'Dismissal Date',
+  'student.dissmissalDateErr': 'Dismissal Date Is Required!',
+  'student.dissmissalDocuments': 'Dismissal Documents',
+  'student.dissmissalDocumentErr': 'Dismissal Document Is Required!',
+  'student.buttonDismissal': 'Dismiss',
+
+  // Student Dismissal from dorm
+  'student.dismissalFromDormTitle': 'Dismissal from Dorm',
+
+  // Reregister
+  'menu.student-reregister': 'Reregister',
+  'student.currentStatus': 'Current Status',
+  'student.buttonReregister': 'Reregister',
+  'student.reregister': 'Student Reregister',
+  'student.reregisterDateLabel': 'Reregistration Date',
+  'student.reregisterDocuments': 'Reregistration Document',
+  'forms.newIstituteLabel': 'New Institute/School',
+  'forms.newDepartmentLabel': 'New Department',
+  'forms.newClassLabel': 'New Class',
+  'forms.newFieldLabel': 'New Field',
+  'forms.classErr': 'New Class Required!',
+
   // Subject
-  // // Subject
-  //   'forms.SubjectTitle': 'Subject Registration',
-  //   'forms.SubjectNameLabel': 'Name',
-  //   'forms.SubjectNameErr': 'Name is Required!',
+  'subject.NameErr': 'Subject Name Required!',
+  'subject.englishNameErr': 'Subject English Name Required!',
+  'subject.codeErr': 'Subject Code Required!',
   'forms.SubjectCreditLabel': 'Credit',
   'subject.type': ' Subject Type',
+  'subject.creditErr': 'Credit is Required!',
+  'subject.typeErr': ' Subject Type Is Required!',
+  'subject.systemType': ' Subject System Type Is Required!',
 
-  //   'forms.SubjectCreditErr': 'Credit is Required!',
-  //   'forms.SubjectTypeLabel': 'Type',
-  //   'forms.SubjectTypeErr': 'Subject Type is Required!',
+  // Marks Update
+  'marks.singleStudentMarksUpdate': ' Marks Update',
+  'marks.studentId': 'Student Id',
+  'marks.studentIdErr': 'Student Id Is Required!',
+  'marks.chance': 'Chance',
+  'marks.chanceErr': 'Chance Selection is Mandatory',
+  'forms.chanceOne': 'First Chance',
+  'forms.chanceTwo': 'Second Chance',
 
-  //   'forms.TypeOption_1': 'Core',
-  //   'forms.TypeOption_2': 'Sup',
+  // Attendance Update
+  'attendance.updateTitle': 'Student Attendance Update',
+
+  // Class Register
+  'class.name': 'Class Name',
+  'class.nameErr': 'Class Name Is Required!',
+  'class.semesterLabel': 'Semester',
+  'class.semesterErr': 'Semester Is Required!',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Custom Inputs',
@@ -1247,7 +1345,7 @@ module.exports = {
   'wizard.content-thanks': 'Thank You!',
   'wizard.next': 'Next',
   'wizard.prev': 'Back',
-  'wizard.registered': 'Your registration completed successfully!',
+  'wizard.registered': 'Data Saved successfully!',
   'wizard.async': 'Async save for 3 seconds!',
 
   'forms.educationYearLabel': 'Educational Year',

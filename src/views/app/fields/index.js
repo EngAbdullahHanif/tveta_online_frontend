@@ -14,6 +14,15 @@ const InstituteFieldDepartmentRegister = React.lazy(() =>
     /* webpackChunkName: "institute-field-department-register" */ './institute-field-department-register'
   )
 );
+const FieldList = React.lazy(() =>
+  import(/* webpackChunkName: "subject-register" */ './field-list/FieldListMain')
+);
+const DepartmentRegistration = React.lazy(() =>
+  import(/* webpackChunkName: "subject-register" */ './DepartmentRegstration')
+);
+const DepartmentList = React.lazy(() =>
+  import(/* webpackChunkName: "subject-register" */ './department-list/DepartmentListMain')
+);
 
 const Fields = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -24,6 +33,19 @@ const Fields = ({ match }) => (
         render={(props) => <FieldRegister {...props} />}
       />
       <Route
+        path={`${match.url}/field-list`}
+        render={(props) => <FieldList {...props} />}
+      />
+       <Route
+        path={`${match.url}/department-registration`}
+        render={(props) => <DepartmentRegistration {...props} />}
+      />
+       <Route
+        path={`${match.url}/department-list`}
+        render={(props) => <DepartmentList {...props} />}
+/>
+       <Route
+
         path={`${match.url}/department-register`}
         render={(props) => <DepartmentRegister {...props} />}
       />

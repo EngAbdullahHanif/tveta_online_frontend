@@ -8,6 +8,7 @@ import ListPageHeading from 'views/app/students/bio/kankor-students-list/KankorS
 
 import ListPageListing from 'views/app/students/bio/kankor-students-list/KankorStudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
+import { department } from 'lang/locales/fa_IR';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -19,10 +20,9 @@ const getIndex = (value, arr, prop) => {
 };
 
 const servicePath = 'http://localhost:8000';
-const apiUrl = `${servicePath}/cakes/paging`;
-const studentApiUrl = `${servicePath}/api/kankorResults/`;
-const studentInstituteApiUrl = `${servicePath}/api/student_institutes/`;
+const kankorStudentApiUrl = `${servicePath}/api/kankorResults/`;
 const instituteApiUrl = `${servicePath}/institute/`;
+
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -196,6 +196,52 @@ const ThumbListPages = ({ match }) => {
     label: 'Product Name',
   });
 
+  const roughData = [{
+    kankorStudentName: '  نعمان احمدی',
+    kankorStudentFatherName:  "محمد",
+    institute: 'تکنالوژی',
+    timeing: 'سهار',
+    department: 'معلومات تکنالوژی',
+    kankorId: '2412',
+    kankorMarks: '89',
+    field: 'گرافکس',
+    registrationDate: '1401/3/6'
+  },
+  {
+    kankorStudentName: ' شاکر',
+    kankorStudentFatherName: ' محمد',
+    institute: 'تکنالوژی',
+    timeing: 'سهار',
+    department: 'معلومات تکنالوژی',
+    kankorId: '456',
+    kankorMarks: '89',
+    field: 'گرافکس',
+    registrationDate: '1401/3/6'
+  },
+  {
+    kankorStudentName: ' علی',
+    kankorStudentFatherName: ' محمد',
+    institute: 'تکنالوژی',
+    timeing: 'سهار',
+    department: 'معلومات تکنالوژی',
+    kankorId: '78',
+    kankorMarks: '89',
+    field: 'گرافکس',
+    registrationDate: '1401/3/6'
+  },
+  {
+    kankorStudentName: ' احمدی',
+    kankorStudentFatherName: ' محمد',
+    institute: 'تکنالوژی',
+    timeing: 'سهار',
+    department: 'معلومات تکنالوژی',
+    kankorId: '3454',
+    kankorMarks: '89',
+    field: 'گرافکس',
+    registrationDate: '1401/3/6'
+  }
+]
+
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
@@ -230,121 +276,24 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     console.log('studentId', studentId);
-    async function fetchData() {
-      console.log('institute', institute);
-      console.log('province', province);
-      console.log('district', district);
-      console.log('studentId', studentId);
-      console.log('selectedGenderOption', selectedGenderOption);
-
-      // if (educationYear !== '') {
-      //   const res = await axios.get(
-      //     `${studentApiUrl}?&educational_year=${educationYear}`
-      //   );
-      //   setItems(res.data);
-      //   setTotalItemCount(res.data.totalItem);
-      //   setIsLoaded(true);
-      // } else
-      if (institute !== '') {
-        const res = await axios.get(
-          `${studentApiUrl}?Institute=${institute.id}&educational_year=${educationYear}&province=${province}&district=${district}&student_id=${studentId}`
-        );
-        setItems(res.data);
-        setTotalItemCount(res.data.totalItem);
-        setIsLoaded(true);
-      } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setEducationYear('');
-          setStudentId('');
-          setRest(false);
-        }
-        axios
+    async function fetchData() {    
+        await axios
           .get(
-            `${studentApiUrl}?educational_year=${educationYear}&id=${studentId}&district=${district}`
-          )
-          .then((res) => {
-            console.log('res.data', res.data);
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${studentApiUrl}?educational_year=${educationYear}&id=${studentId}&district=${district}`
-            );
-
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${studentApiUrl}?id=${studentId}&gender=${selectedGenderOption.column}&district=${district}&educational_year=${educationYear}`
+            `${kankorStudentApiUrl}`
           )
           .then((res) => {
             return res.data;
           })
           .then((data) => {
-            console.log(
-              `${studentApiUrl}?id=${studentId}&gender=${selectedGenderOption.column}&district=${district}&educational_year=${educationYear}`
-            );
-
             setItems(data);
             setSelectedItems([]);
             setTotalItemCount(data.totalItem);
             setIsLoaded(true);
           });
-      } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${studentApiUrl}?id=${studentId}&province=${selectedProvinceOption.column}&district=${district}&educational_year=${educationYear}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${studentApiUrl}?id=${studentId}&province=${selectedProvinceOption.column}&district=${district}&educational_year=${educationYear}`
-            );
-
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (educationYear !== '') {
-        const res = await axios.get(
-          `${studentApiUrl}?&educational_year=${educationYear}`
-        );
-        setItems(res.data);
-        setTotalItemCount(res.data.totalItem);
-        setIsLoaded(true);
-      } else {
-        axios
-          // get data from localhost:8000/api/student
-          .get(
-            `${studentApiUrl}?id=${studentId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}&educational_year=${educationYear}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${studentApiUrl}?id=${studentId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}&educational_year=${educationYear}`
-            );
-            setItems(data);
-
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      }
+      
     }
     fetchData();
+    //console.log('items', items)
   }, [
     selectedPageSize,
     currentPage,
@@ -359,6 +308,7 @@ const ThumbListPages = ({ match }) => {
     institute,
     educationYear,
   ]);
+ // console.log('items', items)
 
   const fetchInstitutes = async () => {
     const response = await axios.get(instituteApiUrl);
@@ -454,7 +404,7 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د شاگرد لست/لست شاگردان"
+          heading="د کانکور د شاگردانو لست/لست شاگردان کانکوریان"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -522,8 +472,114 @@ const ThumbListPages = ({ match }) => {
           }}
         />
 
-        <ListPageListing
+<table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark"
+            style={{ maxHeight: '55px', marginRight: 2 }}
+          >
+            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+              <th
+                style={{
+                  width: '11%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="kankorStudentId" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="workerName" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="studentFatherName" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="institute" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="studentTimings" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="department" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="studentMarks" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="studentField" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="studentRegtrationDate" />
+              </th>
+            
+            </tr>
+          </thead>
+          
+          <ListPageListing
           items={items}
+          roughData= {roughData}
           displayMode={displayMode}
           selectedItems={selectedItems}
           onCheckItem={onCheckItem}
@@ -533,6 +589,10 @@ const ThumbListPages = ({ match }) => {
           onContextMenu={onContextMenu}
           onChangePage={setCurrentPage}
         />
+        
+        </table>
+
+       
       </div>
     </>
   );

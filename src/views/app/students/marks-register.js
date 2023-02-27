@@ -356,6 +356,7 @@ const MarksRegistration = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
+
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />

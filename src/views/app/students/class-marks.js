@@ -67,7 +67,6 @@ const StudyTimeOptions = [
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
-
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
   { column: 'category', label: 'Category' },
@@ -393,9 +392,10 @@ const AllSubjectsMarks = ({ match }) => {
             </Formik>
           ) : (
             <>
+              {/* Result of Search */}
               <Row
                 className="border border bg-primary me-5 p-1 "
-                style={{ marginInline: '16%' }}
+                style={{ marginInline: '2%' }}
               >
                 <Colxx xxs="2">
                   <Label>
@@ -435,27 +435,28 @@ const AllSubjectsMarks = ({ match }) => {
               </Row>
 
               <Row
-                className="justify-content-center  border border"
-                style={{ marginInline: '16%' }}
+                style={{
+                  marginInline: '2%',
+                  maxWidth: '97%',
+                  maxHeight: '900px',
+                  overflowX: 'auto',
+                  overflowY: 'auto',
+                }}
               >
-                <table className="table">
-                  <thead className="thead-dark ">
+                <table className="table" striped>
+                  <thead className="thead-dark " style={{ marginInline: '2%' }}>
                     <tr>
                       <th colspan="4" className="border text-center">
                         <IntlMessages id="marks.studentChar" />
                       </th>
-                      <th colspan="3" className="border text-center">
+                      <th colspan="15" className="border text-center">
                         <IntlMessages id="marks.marksDisplayTitle" />
                       </th>
                     </tr>
                   </thead>
-                  <thead className="thead-dark">
+                  <thead className="thead-dark" style={{ marginInline: '5%' }}>
                     <tr>
-                      <th
-                        scope="col"
-                        className="border text-center "
-                        style={{ maxWidth: '20px' }}
-                      >
+                      <th scope="col" className="border text-center ">
                         <IntlMessages id="marks.No" />
                       </th>
                       <th scope="col" className="border text-center">
@@ -467,7 +468,6 @@ const AllSubjectsMarks = ({ match }) => {
                       <th scope="col" className="border text-center">
                         <IntlMessages id="marks.ID" />
                       </th>
-
                       <th scope="col" className="border text-center">
                         <IntlMessages id="کمیا" />
                       </th>
@@ -477,21 +477,45 @@ const AllSubjectsMarks = ({ match }) => {
                       <th scope="col" className="border text-center">
                         <IntlMessages id="دری" />
                       </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="کمیا" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="قزیک" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="دری" />
+                      </th>{' '}
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="کمیا" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="قزیک" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="دری" />
+                      </th>{' '}
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="کمیا" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="قزیک" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="دری" />
+                      </th>{' '}
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="کمیا" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="قزیک" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="دری" />
+                      </th>{' '}
                     </tr>
                   </thead>
-                </table>
-              </Row>
 
-              <Row
-                className="justify-content-center  border border"
-                style={{
-                  marginInline: '16%',
-                  height: '30rem',
-                  overflowY: 'scroll',
-                  overflowX: 'hidden',
-                }}
-              >
-                <table class="table ">
                   <tbody
                     className="border border "
                     style={{
@@ -500,33 +524,54 @@ const AllSubjectsMarks = ({ match }) => {
                       overflowX: 'hidden',
                     }}
                   >
-                    {students.map((student, index) => (
+                    <tr>
+                      <td>1</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
+                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
+                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
+                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
+                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
+                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
+                      <td>hdsfsda18</td>
+                    </tr>
+                    <tr>
+                      <td>2</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
+                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
+                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
+                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
+                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
+                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
+                      <td>hdsfsda18</td>
+                    </tr>{' '}
+                    <tr>
+                      <td>3</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
+                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
+                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
+                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
+                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
+                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
+                      <td>hdsfsda18</td>
+                    </tr>{' '}
+                    <tr>
+                      <td>4</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
+                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
+                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
+                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
+                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
+                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
+                      <td>hdsfsda18</td>
+                    </tr>
+                    {/* {students.map((student, index) => (
                       <tr>
                         <th scope="row">{index}</th>
                         <td>{student.name}</td>
                         <td>{student.father_name}</td>
                         <td>{student.student_id}</td>
                         <td>{student.marks}</td>
+              
                       </tr>
-                    ))}
+                    ))} */}
                   </tbody>
-                </table>
-              </Row>
-              <Row
-                className="justify-content-center  border border"
-                style={{
-                  marginInline: '16%',
-                }}
-              >
-                <table class="table ">
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
+
                   <tfoot className="thead-dark">
                     <tr>
                       <th
@@ -545,7 +590,42 @@ const AllSubjectsMarks = ({ match }) => {
                       <th scope="col" className="border text-center">
                         <IntlMessages id="marks.ID" />
                       </th>
-
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="کمیا" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="قزیک" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="دری" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="کمیا" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="قزیک" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="دری" />
+                      </th>{' '}
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="کمیا" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="قزیک" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="دری" />
+                      </th>{' '}
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="کمیا" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="قزیک" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="دری" />
+                      </th>{' '}
                       <th scope="col" className="border text-center">
                         <IntlMessages id="کمیا" />
                       </th>

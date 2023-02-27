@@ -6,11 +6,11 @@ const data = [
     icon: 'iconsminds-student-male',
     label: 'menu.teacher',
     to: `${adminRoot}/teacher`,
-
+ 
     subs: [
       {
         icon: 'iconsminds-students',
-        label: 'menu.teacher_list',
+        label: 'teacher list',
         to: `${adminRoot}/teachers/teachers`,
       },
       {
@@ -18,18 +18,20 @@ const data = [
         label: 'menu.teacher-registration',
         to: `${adminRoot}/teachers/register`,
       },
+  
       {
-        icon: 'iconsminds-student-male',
+        icon: 'iconsminds-profile',
         label: 'menu.teacher-profile',
         to: `${adminRoot}/teachers/profile`,
       },
+   
       {
-        icon: 'simple-icon-plus',
+        icon: 'iconsminds-add',
         label: 'menu.teacher-evaluation',
         to: `${adminRoot}/teachers/teacher-evalaution`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'iconsminds-add',
         label: 'menu.teacher-transfer',
         to: `${adminRoot}/teachers/teacher-transfer`,
       },
@@ -99,163 +101,118 @@ const data = [
         to: `${adminRoot}/students/attendance`,
         newWindow: false,
       },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'Kankor Student List',
+        to: `${adminRoot}/students/kankor-students`,
+        newWindow: false,
+      },
     ],
   },
-  // {
-  //   id: 'students',
-  //   icon: 'simple-icon-user',
-  //   label: 'menu.students',
-  //   to: `${adminRoot}/students`,
-  //   subs: [
-  //     {
-  //       id: 'stdInfo_Entry',
-  //       label: 'menu.info_Entry',
-  //       to: '/students',
-  //       subs: [
-  //         {
-  //           icon: 'simple-icon-user-follow',
-  //           label: 'menu.student_egistrtion',
-  //           to: `${adminRoot}/students/kankor-result`,
-  //           newWindow: false,
-  //         },
-  //         {
-  //           icon: 'simple-icon-user-following',
-  //           label: 'menu.login',
-  //           to: '/user/login',
-  //         },
-  //         {
-  //           icon: 'simple-icon-user-follow',
-  //           label: 'menu.register',
-  //           to: '/user/register',
-  //           newWindow: true,
-  //         },
-  //         {
-  //           icon: 'simple-icon-user-following',
-  //           label: 'menu.forgot-password',
-  //           to: '/user/forgot-password',
-  //           newWindow: true,
-  //         },
-  //         {
-  //           icon: 'simple-icon-user-unfollow',
-  //           label: 'menu.reset-password',
-  //           to: '/user/reset-password',
-  //           newWindow: true,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: 'pages-product',
-  //       label: 'menu.product',
-  //       to: `${adminRoot}/pages/product`,
-  //       subs: [
-  //         {
-  //           icon: 'simple-icon-credit-card',
-  //           label: 'menu.data-list',
-  //           to: `${adminRoot}/pages/product/data-list`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-list',
-  //           label: 'menu.thumb-list',
-  //           to: `${adminRoot}/pages/product/thumb-list`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-grid',
-  //           label: 'menu.image-list',
-  //           to: `${adminRoot}/pages/product/image-list`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-picture',
-  //           label: 'menu.details',
-  //           to: `${adminRoot}/pages/product/details`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-book-open',
-  //           label: 'menu.details-alt',
-  //           to: `${adminRoot}/pages/product/details-alt`,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: 'pages-profile',
-  //       label: 'menu.profile',
-  //       to: `${adminRoot}/pages/profile`,
-  //       subs: [
-  //         {
-  //           icon: 'simple-icon-share',
-  //           label: 'menu.social',
-  //           to: `${adminRoot}/pages/profile/social`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-link',
-  //           label: 'menu.portfolio',
-  //           to: `${adminRoot}/pages/profile/portfolio`,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: 'pages-blog',
-  //       label: 'menu.blog',
-  //       to: `${adminRoot}/pages/blog`,
-  //       subs: [
-  //         {
-  //           icon: 'simple-icon-share',
-  //           label: 'menu.blog-list',
-  //           to: `${adminRoot}/pages/blog/blog-list`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-link',
-  //           label: 'menu.blog-detail',
-  //           to: `${adminRoot}/pages/blog/blog-detail`,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: 'pages-miscellaneous',
-  //       label: 'menu.miscellaneous',
-  //       to: `${adminRoot}/pages/miscellaneous`,
-  //       subs: [
-  //         {
-  //           icon: 'simple-icon-question',
-  //           label: 'menu.faq',
-  //           to: `${adminRoot}/pages/miscellaneous/faq`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-graduation',
-  //           label: 'menu.knowledge-base',
-  //           to: `${adminRoot}/pages/miscellaneous/knowledge-base`,
-  //         },
-
-  //         {
-  //           icon: 'simple-icon-diamond',
-  //           label: 'menu.prices',
-  //           to: `${adminRoot}/pages/miscellaneous/prices`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-magnifier',
-  //           label: 'menu.search',
-  //           to: `${adminRoot}/pages/miscellaneous/search`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-envelope-open',
-  //           label: 'menu.mailing',
-  //           to: `${adminRoot}/pages/miscellaneous/mailing`,
-  //         },
-  //         {
-  //           icon: 'simple-icon-bag',
-  //           label: 'menu.invoice',
-  //           to: `${adminRoot}/pages/miscellaneous/invoice`,
-  //         },
-
-  //         {
-  //           icon: 'simple-icon-exclamation',
-  //           label: 'menu.error',
-  //           to: '/error',
-  //           newWindow: true,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
+  {
+    id: 'workers',
+    icon: 'simple-icon-user',
+    // label: 'menu.students',
+    label: 'workers',
+    to: `${adminRoot}/workers`,
+    // roles: [UserRole.Admin, UserRole.Editor],
+    subs: [
+      {
+        icon: 'simple-icon-user-follow',
+        // label: 'menu.student_register',
+        label: 'worker register',
+        to: `${adminRoot}/workers/worker`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        // label: 'menu.student_register',
+        label: 'worker list',
+        to: `${adminRoot}/workers/worker-list`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-user-follow',
+        // label: 'menu.student_register',
+        label: 'worker Profile',
+        to: `${adminRoot}/workers/workerId`,
+        newWindow: false,
+      },
+      // {
+      //   icon: 'simple-icon-user-follow',
+      //   label: 'menu.student_register_kankor',
+      //   to: `${adminRoot}/students/register-kankor`,
+      //   // roles: [UserRole.Admin],
+      // },
+      // {
+      //   icon: 'iconsminds-students',
+      //   label: 'menu.student_list',
+      //   to: `${adminRoot}/students/students`,
+      //   // roles: [UserRole.Admin],
+      // },
+      // {
+      //   icon: 'simple-icon-plus',
+      //   label: 'menu.student-marks-register',
+      //   to: `${adminRoot}/students/marks-register`,
+      // },
+      // {
+      //   icon: 'simple-icon-plus',
+      //   label: 'menu.attendance-registration',
+      //   to: `${adminRoot}/students/attendance-register`,
+      // },
+      // {
+      //   icon: 'simple-icon-user',
+      //   label: 'menu.student-profile',
+      //   to: `${adminRoot}/students/student-profile`,
+      // },
+      // {
+      //   icon: 'simple-icon-user-follow',
+      //   label: 'menu.student-transfer',
+      //   to: `${adminRoot}/students/student-transfer`,
+      //   newWindow: false,
+      // },
+      // {
+      //   icon: 'simple-icon-user-follow',
+      //   label: 'menu.marks-display',
+      //   to: `${adminRoot}/students/marks-display`,
+      //   newWindow: false,
+      // },
+      // {
+      //   icon: 'simple-icon-user-follow',
+      //   label: 'menu.marks-display-all-subs',
+      //   to: `${adminRoot}/students/marks-display-allsubs`,
+      //   newWindow: false,
+      // },
+      // {
+      //   icon: 'simple-icon-calculator',
+      //   label: 'menu.attendance',
+      //   to: `${adminRoot}/students/attendance`,
+      //   newWindow: false,
+      // },
+      //   label: 'menu.student-dismissal',
+      //   to: `${adminRoot}/students/dismissal`,
+      //   newWindow: false,
+      // },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.student-reregister',
+        to: `${adminRoot}/students/reregister`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.single-student-marksUpdate',
+        to: `${adminRoot}/students/marks-update`,
+        newWindow: false,
+      },
+      {
+        icon: 'simple-icon-calculator',
+        label: 'menu.attendance-Update',
+        to: `${adminRoot}/students/attendance-update`,
+        newWindow: false,
+      },
+    ],
+  },
   {
     id: 'institute',
     icon: 'iconsminds-home',
@@ -315,6 +272,11 @@ const data = [
         label: 'menu.dorm-details',
         to: `${adminRoot}/dorms/details`,
       },
+      {
+        icon: 'simple-icon-check',
+        label: 'menu.dorm-student-dismissal',
+        to: `${adminRoot}/dorms/student-dismissal`,
+      },
     ],
   },
   {
@@ -342,6 +304,16 @@ const data = [
         icon: 'simple-icon-plus',
         label: 'Admin dashboard',
         to: `${adminRoot}/subjects/admin-dashboard`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'subject-list',
+        to: `${adminRoot}/subjects/subject-list`,
+      },
+      {
+        icon: 'simple-icon-plus',
+        label: 'curriculum-list',
+        to: `${adminRoot}/subjects/curriculum-list`,
       },
     ],
   },
@@ -385,6 +357,21 @@ const data = [
         // label: 'class.fields',
         label: 'department-register',
         to: `${adminRoot}/fields/department-register`,
+      },
+      {
+        icon: 'simple-icon-logout',
+        label: 'field-list',
+        to: `${adminRoot}/fields/field-list`,
+      },
+      {
+        icon: 'simple-icon-logout',
+        label: 'department-registration',
+        to: `${adminRoot}/fields/department-registration`,
+      },
+      {
+        icon: 'simple-icon-logout',
+        label: 'department-list',
+        to: `${adminRoot}/fields/department-list`,
       },
     ],
   },

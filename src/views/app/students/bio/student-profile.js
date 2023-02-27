@@ -44,6 +44,8 @@ const StudentProfile = () => {
   const [classs, setClasss] = useState([]); //classs is used because class is a reserved word
   const [dorm, setDorm] = useState([]);
   const [marks, setMarks] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  
 
   //load data of student from database
   useEffect(() => {
@@ -53,7 +55,7 @@ const StudentProfile = () => {
       );
       const data = await response.data;
       setStudent(data);
-
+        setIsLoaded(true);
       const instituteResponse = await axios.get(
         `${studentApiUrl}student_institutes/?student_id=${studentId}`
       );
@@ -114,57 +116,62 @@ const StudentProfile = () => {
           </div>
         </Colxx>
       </Row>
-
-      <Row>
-        <Colxx xxs="1"></Colxx>
-        <Colxx>
-          <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
-        </Colxx>
-      </Row>
-      <Row>
-        <Colxx
-          className=" d-flex justify-content-center "
-          style={{ marginBottom: '2%' }}
-        >
-          {' '}
-          <div className="d-inline-block">
-            <Button
-              style={{ backgroundColor: isNext ? 'blue' : '' }}
-              size="lg"
-              className="m-2"
-              onClick={() => {
-                handleClick(true);
-              }}
+        {!isLoaded ? ( <div className="loading" />)
+         : 
+        (<div>
+          <Row>
+            <Colxx xxs="1"></Colxx>
+            <Colxx>
+              <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
+            </Colxx>
+          </Row>
+          <Row>
+            <Colxx
+              className=" d-flex justify-content-center "
+              style={{ marginBottom: '2%' }}
             >
-              <span className="spinner d-inline-block">
-                <span className="bounce1" />
-                <span className="bounce2" />
-                <span className="bounce3" />
-              </span>
-              <span className="label">
-                <IntlMessages id="button.Teacherprofile" />
-              </span>
-            </Button>
-            <Button
-              style={{ backgroundColor: !isNext ? 'blue' : '' }}
-              size="lg"
-              className="m-2"
-              onClick={() => {
-                handleClick(false);
-              }}
-            >
-              <span className="spinner d-inline-block">
-                <span className="bounce1" />
-                <span className="bounce2" />
-                <span className="bounce3" />
-              </span>
-              <span className="label">
-                <IntlMessages id="student.results" />
-              </span>
-            </Button>{' '}
+              {' '}
+              <div className="d-inline-block">
+                <Button
+                  style={{ backgroundColor: isNext ? 'blue' : '' }}
+                  size="lg"
+                  className="m-2"
+                  onClick={() => {
+                    handleClick(true);
+                  }}
+                >
+                  <span className="spinner d-inline-block">
+                    <span className="bounce1" />
+                    <span className="bounce2" />
+                    <span className="bounce3" />
+                  </span>
+                  <span className="label">
+                    <IntlMessages id="button.Teacherprofile" />
+                  </span>
+                </Button>
+                <Button
+                  style={{ backgroundColor: !isNext ? 'blue' : '' }}
+                  size="lg"
+                  className="m-2"
+                  onClick={() => {
+                    handleClick(false);
+                  }}
+                >
+                  <span className="spinner d-inline-block">
+                    <span className="bounce1" />
+                    <span className="bounce2" />
+                    <span className="bounce3" />
+                  </span>
+                  <span className="label">
+                    <IntlMessages id="student.results" />
+                  </span>
+                </Button>{' '}
+              </div>
+            </Colxx>
+          </Row>
           </div>
-        </Colxx>
-      </Row>
+        )
+        }
 
       {/* if student is loaded show it, if not show empty  */}
       {student.length > 0 && institute.length > 0 && classs.length > 0 && (

@@ -269,7 +269,7 @@ const StudentAttendance = ({ match }) => {
                 setFieldTouched,
                 setFieldValue,
               }) => (
-                <Form className="av-tooltip tooltip-label-right ">
+                <Form className="av-tooltip tooltip-label-right  ">
                   <Row className="m-5">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}

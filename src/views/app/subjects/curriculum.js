@@ -38,42 +38,105 @@ const Options = [
 ];
 
 const SignupSchema = Yup.object().shape({
-  Name: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
+  departmentId: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="teacher.departmentIdErr" />)
+    : null,
 
-  Capicity: Yup.string().required(<IntlMessages id="dorm.CapicityErr" />),
+  subject: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="curriculum.subjectdErr" />)
+    : null,
 
-  TotalBuildingNo: Yup.string().required(
-    <IntlMessages id="dorm.TotalBuildingNoErr" />
-  ),
-  TotalRooms: Yup.string().required(<IntlMessages id="dorm.TotalRoomsErr" />),
-  TotalKitchens: Yup.string().required(
-    <IntlMessages id="dorm.TotalKitchensErr" />
-  ),
-  Toilet: Yup.string().required(<IntlMessages id="dorm.ToiletErr" />),
+  class: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="curriculum.classErr" />)
+    : null,
+
+  educationalYear: updateMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="curriculum.eduactionalYearErr" />)
+    : null,
 });
 
+const updateMode = true;
 const Curriculum = (values) => {
+  const TestData = {
+    Department: 'harticulture',
+    Subject: 'Botany',
+    Class: '1th-A',
+    EducationalYear: '1401',
+  };
+
+  const [initialDepartment, setInitialDepartment] = useState(
+    TestData.Department
+      ? [
+          {
+            label: TestData.Department,
+            value: TestData.Department,
+          },
+        ]
+      : []
+  );
+
+  const [initialSubject, setInitialSubject] = useState(
+    TestData.Subject
+      ? [
+          {
+            label: TestData.Subject,
+            value: TestData.Subject,
+          },
+        ]
+      : []
+  );
+
+  const [initialClass, setInitialClass] = useState(
+    TestData.Class
+      ? [
+          {
+            label: TestData.Class,
+            value: TestData.Class,
+          },
+        ]
+      : []
+  );
+  const [initialEducationalYear, setInitialEducationalYear] = useState(
+    TestData.EducationalYear
+      ? [
+          {
+            label: TestData.EducationalYear,
+            value: TestData.EducationalYear,
+          },
+        ]
+      : []
+  );
+
   const initialValues = {
-    departmentId: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    subject: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    class: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
-    educationalYear: {
-      value: '0',
-      label: <IntlMessages id="forms.TazkiraTypeDefaultValue" />,
-    },
+    departmentId: initialDepartment,
+    subject: initialSubject,
+    class: initialClass,
+    educationalYear: initialEducationalYear,
   };
 
   const [isNext, setIsNext] = useState(true);
   const handleClick = (event) => {
+    // HANIF BROTHER DONT FORGET TO DISPLAY THE SUCCESS MESSAGE AFTER SUBMISSION
     setIsNext(event);
   };
 
@@ -88,106 +151,152 @@ const Curriculum = (values) => {
           {<IntlMessages id="curriculum.curriculumTittle" />}
         </h3>
         <CardBody>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onRegister}
-            validationSchema={SignupSchema}
-          >
-            {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
-              <Form className="av-tooltip tooltip-label-bottom">
-                <Row className="justify-content-center inlineBlock">
-                  <Colxx xxs="11">
-                    {/* Department Id */}
-                    <FormGroup className="form-group has-float-label ">
-                      <Label>
-                        <IntlMessages id="curriculum.departmentIdLabel" />
-                      </Label>
-                      <FormikReactSelect
-                        name="departmentId"
-                        id="departmentId"
-                        value={values.departmentId}
-                        options={Options}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.departmentId && touched.departmentId ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.departmentId}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+          {isNext ? (
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onRegister}
+              validationSchema={SignupSchema}
+            >
+              {({
+                errors,
+                touched,
+                values,
+                setFieldTouched,
+                setFieldValue,
+              }) => (
+                <Form className="av-tooltip tooltip-label-right error-l-175">
+                  <Row className="justify-content-center inlineBlock">
+                    <Colxx xxs="11">
+                      {/* Department Id */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          <IntlMessages id="curriculum.departmentIdLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="departmentId"
+                          id="departmentId"
+                          value={values.departmentId}
+                          options={Options}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.departmentId && touched.departmentId ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.departmentId}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Subject */}
-                    <FormGroup className="form-group has-float-label ">
-                      <Label>
-                        <IntlMessages id="curriculum.subjectdLabel" />
-                      </Label>
-                      <FormikReactSelect
-                        name="subject"
-                        id="subject"
-                        value={values.subject}
-                        options={Options}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.subject && touched.subject ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.subject}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* Subject */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          <IntlMessages id="curriculum.subjectdLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="subject"
+                          id="subject"
+                          value={values.subject}
+                          options={Options}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.subject && touched.subject ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.subject}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Class */}
-                    <FormGroup className="form-group has-float-label ">
-                      <Label>
-                        <IntlMessages id="curriculum.classLabel" />
-                      </Label>
-                      <FormikReactSelect
-                        name="class"
-                        id="class"
-                        value={values.class}
-                        options={Options}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.class && touched.class ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.class}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* Class */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          <IntlMessages id="curriculum.classLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="class"
+                          id="class"
+                          value={values.class}
+                          options={Options}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.class && touched.class ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.class}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Eduactional Year*/}
-                    <FormGroup className="form-group has-float-label ">
-                      <Label>
-                        <IntlMessages id="curriculum.eduactionalYearLabel" />
-                      </Label>
-                      <FormikReactSelect
-                        name="educationalYear"
-                        id="educationalYear"
-                        value={values.educationalYear}
-                        options={Options}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.educationalYear && touched.educationalYear ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.educationalYear}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    <Button className="float-right m-4 ">
-                      <IntlMessages id="forms.SubimssionButton" />
-                    </Button>
-                  </Colxx>
-                </Row>
-              </Form>
-            )}
-          </Formik>
+                      {/* Eduactional Year*/}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label>
+                          <IntlMessages id="curriculum.eduactionalYearLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="educationalYear"
+                          id="educationalYear"
+                          value={values.educationalYear}
+                          options={Options}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.educationalYear}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </Colxx>
+                  </Row>
+                  <Row>
+                    {' '}
+                    <Colxx style={{ marginLeft: '5%', marginBottom: '5%' }}>
+                      <Button
+                        className="float-right m-5 "
+                        size="lg"
+                        type="submit"
+                        color="primary"
+                        onClick={() => {
+                          onRegister;
+                          handleClick(false);
+                        }}
+                      >
+                        <span className="spinner d-inline-block">
+                          <span className="bounce1" />
+                          <span className="bounce2" />
+                          <span className="bounce3" />
+                        </span>
+                        <span className="label">
+                          <IntlMessages id="forms.SubimssionButton" />
+                        </span>
+                      </Button>
+                    </Colxx>
+                  </Row>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <div
+              className="wizard-basic-step text-center pt-3 "
+              style={{ minHeight: '400px' }}
+            >
+              <div>
+                <h1 className="mb-2">
+                  <IntlMessages id="wizard.content-thanks" />
+                </h1>
+                <h3>
+                  <IntlMessages id="wizard.registered" />
+                </h3>
+                <Button className="m-5 bg-primary">
+                  <IntlMessages id="button.back" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardBody>
       </Card>
     </>

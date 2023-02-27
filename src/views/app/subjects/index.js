@@ -9,10 +9,16 @@ const Curriculum = React.lazy(() =>
   import(/* webpackChunkName: "curriculum" */ './curriculum')
 );
 const ProvincialDashboard = React.lazy(() =>
-  import(/* webpackChunkName: "provincial-dash" */ './provincail-dashboard')
+  import(/* webpackChunkName: "provincial-dash" */ './draftFileJustForTest')
 );
 const AdminDashboard = React.lazy(() =>
   import(/* webpackChunkName: "admin-dashboard" */ './admin-dashboard')
+);
+const SubjectList = React.lazy(() =>
+  import(/* webpackChunkName: "admin-dashboard" */ './subject-list/SubjectListMain')
+);
+const CurriculumList = React.lazy(() =>
+  import(/* webpackChunkName: "admin-dashboard" */ './curriculum-list/CurriculumListMain')
 );
 
 const Subjects = ({ match }) => (
@@ -35,6 +41,14 @@ const Subjects = ({ match }) => (
       <Route
         path={`${match.url}/admin-dashboard`}
         render={(props) => <AdminDashboard {...props} />}
+      />
+        <Route
+        path={`${match.url}/subject-list`}
+        render={(props) => <SubjectList {...props} />}
+      />
+         <Route
+        path={`${match.url}/curriculum-list`}
+        render={(props) => <CurriculumList {...props} />}
       />
 
       <Redirect to="/error" />

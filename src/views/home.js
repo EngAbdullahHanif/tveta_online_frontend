@@ -9,19 +9,70 @@ import GlideComponent from 'components/carousel/GlideComponent';
 import { buyUrl, adminRoot } from 'constants/defaultValues';
 import logo from '../assets/img/logo2.png';
 import CarPhoto from '../assets/img/blog/car.png';
-import CarPhoto1 from '../assets/img/blog/car1.png';
+import CarPhotoWithoutBackground from '../assets/img/blog/132.png';
 import CarPhoto2 from '../assets/img/blog/car2.png';
 import CarPhoto3 from '../assets/img/blog/45.png';
+import Shahamat from '../assets/img/blog/9090.JPG';
+import Photo55 from '../assets/img/blog/55.jpeg';
 import CarPhoto22 from '../assets/img/blog/Car22.png';
-
-import { Row } from 'reactstrap';
+import CarPhoto12 from '../assets/img/blog/12.png';
+import CarPhoto15 from '../assets/img/blog/15.png';
+import CarPhoto13 from '../assets/img/blog/13.png';
+import CarPhoto14 from '../assets/img/blog/14.png';
+import Carousel from 'react-grid-carousel';
+import IndividualIntervalsExample from './carousel';
+import DemoCarousel from './../views/app/subjects/draftFileJustForTest';
+import ScrollAnimation from 'react-animate-on-scroll';
+import './carousel.css';
+import {
+  Row,
+  Card,
+  CardBody,
+  CardImg,
+  CardSubtitle,
+  CardText,
+  Button,
+} from 'reactstrap';
 import { Colxx } from 'components/common/CustomBootstrap';
+
+const contact = [
+  {
+    icon: 'simple-icon-phone',
+    detail: '020656465425',
+  },
+  {
+    icon: 'iconsminds-mail',
+    detail: 'tvetaonline@gov.af',
+  },
+  {
+    icon: 'simple-icon-social-facebook',
+    detail: 'tvetaonline@gov.af',
+  },
+];
+const contact1 = [
+  {
+    icon: 'simple-icon-social-twitter',
+    detail: 'tvetaonline@gov.af',
+  },
+  {
+    icon: 'simple-icon-social-youtube',
+    detail: 'www.tveta.youtube.com',
+  },
+  {
+    icon: 'iconsminds-location-2',
+    detail: 'کارته چهار ، کابل ، افغانستان',
+  },
+];
 
 const slideSettings = {
   type: 'carousel',
+  // autoplayInterval: 30000000, // set the autoplayTimeout here
+  // autoPlaySpeed: 40000000,
   gap: 30,
   perView: 4,
   hideNav: true,
+  // autoplay: true,
+
   peek: { before: 10, after: 10 },
   breakpoints: {
     600: { perView: 1 },
@@ -80,24 +131,22 @@ const slideItems = [
   },
 ];
 
+const icons = { icon1: 'simple-icon-location-pin' };
+
 const features = [
   {
-    title: 'دیدرا معین سیاسی وزارت خارجه از معینیت تعلیمات تخنیکی و مسلکی',
-    img: { CarPhoto3 },
+    title: 'اهداف اداره',
+    img: '../assets/img/blog/9090.JPG',
     detail: `معین سیاسی وزارت امور خارجه در دیدار از مرکز نوآوری اداره تعلیمات تخنیکی و مسلکی گفت: افغان‌ها قهرمان همه‌ی عرصه‌ها استند. آنان ثابت ساختند که مستحق پیروزی در هر میدان هستند.
       <br/>
       <br/>
      شیرمحمد عباس ستانکزی، معین سیاسی وزارت امور خارجه گفت «این موتر مورد تبصره جهانی قرار گرفته‌است. و این یک افتخار بزرگ به همه افغان‌ها است.»
       <br/>
-  <br/>
-  آقای ستانکزی از تلاش‌های مولوی غلام حیدر شهامت، سرپرست اداره تعلیمات تخنیکی و مسلکی و سازندگان این موتر تقدیر نمود.
-      <br/>
-      <br/>
-شیخ عبدالباقی حقانی، رئیس اداره ملی امتحانات در دیدار از موتر ساخته‌شده در اداره تعلیمات تخنیکی و مسلکی گفت: «یک‌کشور بعد از اشغال نیازمند دو کار اساسی (آزادی و آبادی) است. بناً شکی وجود ندارد که ما افغان‌ها، این وطن را می‌سازیم.»
+
       `,
   },
   {
-    title: 'دیدار وزیر دفاع کشور از اداره تعلیمات تخنیکی و مسلکی',
+    title: ' لاسته راوړنې',
     img: '/assets/img/landing-page/features/extra-responsive.png',
     detail: `دیدار مولوی محمد یعقوب مجاهد سرپرست وزارت دفاع از مرکز نوآوری اداره تعلیمات تخنیکی و مسلکی افغانستان و موتر ساخته شده در این مرکز !!
     <br/>
@@ -109,130 +158,6 @@ const features = [
     دیدار مولوی محمد یعقوب مجاهد سرپرست وزارت دفاع از مرکز نوآوری اداره تعلیمات تخنیکی و مسلکی افغانستان و موتر ساخته شده در این مرکز !!
     `,
   },
-  {
-    title: 'درباره چارت ها بخونین',
-    img: '/assets/img/landing-page/features/superfine-charts.png',
-    detail: `یه باور عمومی داریم که میگه استفاده از چارت ها باعث میشه که داده ها و اطلاعاتو راحت تر مجسم کنیم
-    <br/>
-    نمیگم نمودارها بد هستن..! اصلا.. اونها خیلی هم عالی هستن
-    <br/>
-    ولی به نظر من نموداری خوبه که استفاده ازش راحت باشه، هم برای برنامه نویس هم کاربری که قراره اونو ببینه
-    <br/>
-    باید رنگهاش به قالب بیاد و هماهنگ باشه
-    <br/>
-    نمودار باید ریسپانسیو باشه یا تمام قابلیت هاش قابل تنظیم باشه
-    <br/>
-    میدونی چرا اینا رو میگم؟! چون ما همشو توی گوگو داریم 😎
-    <br/>
-    <br/>
-    ما فقط از یک پکیج برای ایجاد نمودارها استفاده کردیم و هم سعی کردیم ساده باشند و هم با تمام رنگ بندی های قالب هماهنگ باشه
-    <br/>
-    میتونین همین الان رنگ تم رو عوض کنین و نمودارها رو در رنگهای دیگه هم ببینید
-    `,
-  },
-  {
-    title: 'طرح بندی حتی برای کسب و کار',
-    img: '/assets/img/landing-page/features/layouts-for-the-job.png',
-    detail: `
-    توی داستان گوگو، یکی از چیزهایی که ما براش در نظر گرفتیم پرسونای کاربرهامون بود. عیعنی ما دوست داشتیم که بتونیم مخاطبانی که هدف ما هستند بیشتر باشه
-    <br/>
-    مثلا یک نفر یک قالب مینویسه با موضوع فروشگاهی، خب مشخصه مخاطبانی که هدفش هستند کسانی هستند که تصمیم دارند فروشگاه بسازن
-    <br/>
-    ماهم توی فرآیند ساخت این قالب افرادی رو درنظر گرفتیم که تصمیم دارن از این قالب برای مدیریت کسب و کار خودشون استفاده کنن
-    <br/>
-    تمام لایوت ها رو طوری درنظر گرفتیم که حتی کاربران با دانش فنی پایین هم بتونن به فهم و درک خوبی از کارکرد قالب برسند
-    <br/>
-    حتی برای بیزینس های مختلف، طرح های مختلفی قراردادیم.`,
-  },
-  {
-    title: 'منوی هوشمند',
-    img: '/assets/img/landing-page/features/smart-menu.png',
-    detail: `
-    انصافا بیاین قبول کنیم که توی پنل های مدیریت، دیگه استفاده از منوهای آکاردئونی یه چیز قدیمی و تکراری شده
-    <br/>
-    بیاین ببینین ما چه کررررررردیم تو گوگو
-    <br/>
-    به جای این تکراری بازی ها و اسکی رفتن ها، ما دوتا پنل ایجاد کردیم و صفحات رو بر اساس اون دسته بندی کردیم
-    <br/>
-    اسمشو <strong>منوی هوشمند</strong> گذاشتم؛ چونکه:
-    <br/>
-    <br/>
-    <ul>
-    <li>1. خودتون میتونین تنظیم کنین که کدوم پنلش توی چه سایزی باز یا بسته باشه</li>
-    <li> 2. خود منو تشخیص میده توی این سایز ریسپانسیوی که قرار داره، کدوم پنلش رو مخفی کنه یا کدوم رو نمایش بده</li>
-    </ul>
-    `,
-  },
-];
-
-const layouts = [
-  {
-    title: 'منو پیش فرض',
-    img: '/assets/img/landing-page/layouts/menu-default.jpg',
-  },
-  {
-    title: 'زیرمنو مخفی',
-    img: '/assets/img/landing-page/layouts/menu-subhidden.jpg',
-  },
-  {
-    title: 'منو مخفی',
-    img: '/assets/img/landing-page/layouts/menu-hidden.jpg',
-  },
-  { title: 'لیست عکس', img: '/assets/img/landing-page/layouts/image-list.jpg' },
-  {
-    title: 'لیست Thumb',
-    img: '/assets/img/landing-page/layouts/thumb-list.jpg',
-  },
-  { title: 'دیتا لیست', img: '/assets/img/landing-page/layouts/data-list.jpg' },
-  { title: 'جزئیات', img: '/assets/img/landing-page/layouts/details.jpg' },
-  {
-    title: 'احراز هویت',
-    img: '/assets/img/landing-page/layouts/authentication.jpg',
-  },
-  {
-    title: 'نتایج جستجو',
-    img: '/assets/img/landing-page/layouts/search-result.jpg',
-  },
-  {
-    title: 'اپلیکیشن SPA',
-    img: '/assets/img/landing-page/layouts/spa.jpg',
-  },
-  {
-    title: 'دیتا لیست با منو مخفی',
-    img: '/assets/img/landing-page/layouts/data-list-app-menu-hidden.jpg',
-  },
-  { title: 'تب ها', img: '/assets/img/landing-page/layouts/tabs.jpg' },
-];
-
-const applications = [
-  {
-    title: 'نظرسنجی',
-    path: `${adminRoot}/applications/survey`,
-    img: '/assets/img/landing-page/applications/survey.jpg',
-  },
-  {
-    title: 'چت',
-    path: `${adminRoot}/applications/chat`,
-    img: '/assets/img/landing-page/applications/chat.jpg',
-  },
-  {
-    title: 'وظایف - Todo',
-    path: `${adminRoot}/applications/todo`,
-    img: '/assets/img/landing-page/applications/todo.jpg',
-  },
-];
-
-const themes = [
-  { title: 'Navy Blue', class: 'bluenavy' },
-  { title: 'Olympic Blue', class: 'blueolympic' },
-  { title: 'Yale Blue', class: 'blueyale' },
-  { title: 'Moss Green', class: 'greenmoss' },
-  { title: 'Lime Green', class: 'greenlime' },
-  { title: 'Carrot Orange', class: 'carrotorange' },
-  { title: 'Ruby Red', class: 'rubyred' },
-  { title: 'Monster Purple', class: 'monsterpurple' },
-  { title: 'Steel Grey', class: 'steelgrey' },
-  { title: 'Granola Yellow', class: 'granolayellow' },
 ];
 
 const Home = () => {
@@ -284,7 +209,7 @@ const Home = () => {
     event.preventDefault();
     scroller.scrollTo(target, {
       duration: 500,
-      delay: 0,
+      delay: 40,
       smooth: 'easeInOutQuart',
       offset: -100,
     });
@@ -295,496 +220,743 @@ const Home = () => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  return (
-    <div
-      className={classnames('landing-page', {
-        'show-mobile-menu': showMobileMenu,
-      })}
-    >
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-      <div className="mobile-menu" onClick={(event) => event.stopPropagation()}>
-        <a
-          className="logo-mobile c-pointer"
-          href="#scroll"
-          onClick={(event) => scrollTo(event, 'home')}
-        >
-          <span />
-        </a>
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <a
-              className="c-pointer"
-              href="#scroll"
-              onClick={(event) => scrollTo(event, 'features')}
-            >
-              ویژگی ها
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="c-pointer"
-              href="#scroll"
-              onClick={(event) => scrollTo(event, 'layouts')}
-            >
-              طرح بندی
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="c-pointer"
-              href="#scroll"
-              onClick={(event) => scrollTo(event, 'components')}
-            >
-              کامپوننت ها
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="c-pointer"
-              href="#scroll"
-              onClick={(event) => scrollTo(event, 'apps')}
-            >
-              برنامه ها
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="c-pointer"
-              href="#scroll"
-              onClick={(event) => scrollTo(event, 'themes')}
-            >
-              تم های قالب
-            </a>
-          </li>
-          <li className="nav-item">
-            <div className="separator" />
-          </li>
-          <li className="nav-item text-center">
-            <a
-              className="btn btn-outline-primary btn-sm mobile-menu-cta"
-              target="_blank"
-              rel="noopener noreferrer"
-              href={buyUrl}
-            >
-              خرید قالب
-            </a>
-          </li>
-        </ul>
-      </div>
+  useEffect(() => {
+    const handleClick = (event) => {
+      const btn = event.currentTarget;
+      btn.classList.toggle('change');
+      btn.nextElementSibling.classList.toggle('change');
+    };
 
-      <div className="main-container">
-        <Headroom className="landing-page-nav">
-          <nav>
-            <div className="container d-flex align-items-center justify-content-between">
+    document.querySelectorAll('.story-btn').forEach((btn) => {
+      btn.addEventListener('click', handleClick);
+    });
+
+    return () => {
+      document.querySelectorAll('.story-btn').forEach((btn) => {
+        btn.removeEventListener('click', handleClick);
+      });
+    };
+  }, []);
+
+  return (
+    <>
+      <div
+        className={classnames('landing-page', {
+          'show-mobile-menu': showMobileMenu,
+        })}
+      >
+        <div
+          className="mobile-menu"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <a
+            className="  c-pointer"
+            onClick={(event) => scrollTo(event, 'home')}
+          >
+            <img src={logo} alt="Logo" />
+            <span />
+          </a>
+          <ul className="navbar-nav">
+            <li className="nav-item">
               <a
-                className=" pull-left c-pointer"
+                className="c-pointer"
                 href="#scroll"
                 onClick={(event) => scrollTo(event, 'home')}
               >
-                <img src={logo} alt="Logo" />
+                ادراه ما
               </a>
-              <ul className="navbar-nav d-none d-lg-flex flex-row">
-                <li className="nav-item">
-                  <a
-                    className="c-pointer"
-                    href="#scroll"
-                    onClick={(event) => scrollTo(event, 'features')}
-                  >
-                    ادراه ما
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="c-pointer"
-                    href="#scroll"
-                    onClick={(event) => scrollTo(event, 'layouts')}
-                  >
-                    فعالیت ها
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="c-pointer"
-                    href="#scroll"
-                    onClick={(event) => scrollTo(event, 'components')}
-                  >
-                    معلومات دیگر
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="c-pointer"
-                    href="#scroll"
-                    onClick={(event) => scrollTo(event, 'apps')}
-                  >
-                    برنامه ها
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="c-pointer"
-                    href="#scroll"
-                    onClick={(event) => scrollTo(event, 'themes')}
-                  >
-                    تماس با ما
-                  </a>
-                </li>
-                {/* <li className="nav-item pl-4">
-                  <a
-                    className="btn btn-outline-semi-light btn-sm pr-4 pl-4"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={buyUrl}
-                  >
-                    خرید قالب
-                  </a>
-                </li> */}
-              </ul>
-              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-              <span
-                className="mobile-menu-button"
-                onClick={(event) => {
-                  setShowMobileMenu(!showMobileMenu);
-                  event.stopPropagation();
-                }}
+            </li>
+            <li className="nav-item">
+              <a
+                className="c-pointer"
+                href="#scroll"
+                onClick={(event) => scrollTo(event, 'goals')}
               >
-                <i className="simple-icon-menu" />
-              </span>
-            </div>
-          </nav>
-        </Headroom>
-        <div className="content-container" id="home">
-          <div className="section home" ref={refSectionHome}>
-            <div className="container">
-              <div className="row home-row" ref={refRowHome}>
-                <div className="col-12 d-block d-md-none">
-                  <NavLink to="/">
-                    <img className="mobile-hero" src={CarPhoto} />
-                  </NavLink>
-                </div>
+                اهداف
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                className="c-pointer"
+                href="#scroll"
+                onClick={(event) => scrollTo(event, 'achivements')}
+              >
+                دستاورد ها
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                className="c-pointer"
+                href="#scroll"
+                onClick={(event) => scrollTo(event, 'developers')}
+              >
+                برنامه نویس ها
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                className="c-pointer"
+                href="#scroll"
+                onClick={(event) => scrollTo(event, 'contact')}
+              >
+                تماس با ما
+              </a>
+            </li>
+          </ul>
+        </div>
 
-                <div className="col-12 col-xl-4 col-lg-5 col-md-6">
-                  <div className="home-text">
-                    <div className="display-1 text-bold">
-                      {' '}
-                      موتر ساخته شده در مرکز نو آوری اداره تعلیمات تخنیکی و
-                      مسلکی افغانستان
-                    </div>
-                    <p className="white mb-5">
-                      دکورنیو چارو وزارت عالي رتبه مسولینو له 2022 ماډل موټر
-                      لیدنه وکړه!
-                      <br />
-                      <br />
-                      د تخنيکي او مسلکي زده کړو ادارې سرپرست مولوي غلام حيدر
-                      شهامت سره مل دکورنیو چارو وزارت ددفتر عمومي رئیس مولوي زين
-                      الله عابد او دمقام یاور مولوی صاحب ثاقب له نوي جوړ شوي
-                      موټر ليدنه وکړه.
-                      <br />
-                    </p>
-                    {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                    <a
-                      className="btn btn-light btn-xl mr-2 mb-2"
-                      href={adminRoot}
-                      target="_blank"
-                    >
-                      ننوتل/ورود <i className="simple-icon-arrow-right" />
-                    </a>
-                  </div>
-                </div>
-                <div className="col-12 col-xl-7 offset-xl-1 col-lg-7 col-md-6  d-none d-md-block">
-                  {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                  <a href={adminRoot} target="_blank">
-                    <img alt="hero" src={CarPhoto} />
-                  </a>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-12 p-0">
-                  <div className="home-carousel">
-                    <GlideComponent settings={slideSettings}>
-                      {slideItems.map((f, index) => (
-                        // eslint-disable-next-line react/no-array-index-key
-                        <div key={`slide_${index}`} className="card">
-                          <div className="card-body text-center">
-                            <div>
-                              <i className={`${f.icon} large-icon`} />
-                              <h5 className="mb-3 font-weight-semibold">
-                                {f.title}
-                              </h5>
-                            </div>
-                            <div>
-                              <p className="detail-text">{f.detail}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </GlideComponent>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
+        <div className="main-container ">
+          <Headroom className="landing-page-nav">
+            <nav>
+              <div className="container d-flex align-items-center justify-content-between">
                 <a
-                  className="btn btn-circle btn-outline-semi-light hero-circle-button"
+                  className=" pull-left c-pointer"
                   href="#scroll"
-                  onClick={(event) => scrollTo(event, 'features')}
+                  onClick={(event) => scrollTo(event, 'home')}
                 >
-                  <i className="simple-icon-arrow-down" />
+                  <img src={logo} alt="Logo" />
                 </a>
-              </div>
-            </div>
-          </div>
+                <ul className="navbar-nav d-none d-lg-flex flex-row">
+                  <li className="nav-item">
+                    <a
+                      className="c-pointer"
+                      href="#scroll"
+                      onClick={(event) => scrollTo(event, 'home')}
+                    >
+                      ادراه ما
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="c-pointer"
+                      href="#scroll"
+                      onClick={(event) => scrollTo(event, 'goals')}
+                    >
+                      اهداف
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="c-pointer"
+                      href="#scroll"
+                      onClick={(event) => scrollTo(event, 'achivements')}
+                    >
+                      دستاورد ها
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="c-pointer"
+                      href="#scroll"
+                      onClick={(event) => scrollTo(event, 'developers')}
+                    >
+                      برنامه نویس ها
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="c-pointer"
+                      href="#scroll"
+                      onClick={(event) => scrollTo(event, 'contact')}
+                    >
+                      تماس با ما
+                    </a>
+                  </li>
+                </ul>
 
-          <div className="section">
-            <div className="container" id="features">
-              <div className="row">
-                <div className="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
-                  <h1>جلسه اصلاحی برگزار شد</h1>
-                  <p>
-                    ما قبل از اینکه این قالب رو بنویسیم، به این فکر کردیم کجلسه
-                    هفته‌وار اصلاحی اداره تعلیمات تخنیکی و مسلکی <be /> با
-                    سخنرانی مولوی سید احمد، امام جماعت و اشتراک کارمندان این
-                    اداره برگزار شد.
-                    <br />
-                    مولوی سیداحمد در سخنرانی خود درباره امانت‌داری و وفا به‌عهد
-                    صحبت کرد و کارمندان را به رعایت امانت توصیه نمود.
-                  </p>
-                </div>
+                <span
+                  className="mobile-menu-button"
+                  onClick={(event) => {
+                    setShowMobileMenu(!showMobileMenu);
+                    event.stopPropagation();
+                  }}
+                >
+                  <i className="simple-icon-menu" />
+                </span>
               </div>
-              {features.map((feature, i) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <div key={`feature_${i}`}>
-                  {i % 2 === 0 && (
-                    <div className="row feature-row">
-                      <div className="col-12 col-md-6 col-lg-5 d-flex align-items-center">
-                        <div className="feature-text-container">
-                          <h2>{feature.title}</h2>
-                          <div
-                            dangerouslySetInnerHTML={{ __html: feature.detail }}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-12 col-md-6 col-lg-6 offset-lg-1 offset-md-0 position-relative">
-                        <img
-                          alt={feature.title}
-                          src={CarPhoto1}
-                          className="feature-image-right feature-image-charts position-relative"
-                        />
-                      </div>
-                    </div>
-                  )}
-                  {i % 2 === 1 && (
-                    <div className="row feature-row">
-                      <div className="col-12 col-md-6 col-lg-6 order-2 order-md-1">
-                        <img
-                          alt={feature.title}
-                          src={feature.img}
-                          className="feature-image-left feature-image-charts"
-                        />
-                      </div>
-                      <div className="col-12 col-md-6 offset-md-0 col-lg-5 offset-lg-1 d-flex align-items-center order-1 order-md-2">
-                        <div className="feature-text-container">
-                          <h2>{feature.title}</h2>
-                          <div
-                            dangerouslySetInnerHTML={{ __html: feature.detail }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="section background">
-            <div className="container" id="layouts">
-              <div className="row">
-                <div className="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
-                  <h1>دیدار وزیر دفاع کشور از اداره</h1>
-                  <p>
-                    دیدار مولوی محمد یعقوب مجاهد سرپرست وزارت دفاع از مرکز
-                    نوآوری اداره تعلیمات تخنیکی و مسلکی افغانستان و موتر ساخته
-                    شده در این مرکز !!
-                  </p>
-                </div>
-              </div>
-
-              <div className="row pt-5">
-                {layouts.map((l, index) => (
+            </nav>
+          </Headroom>
+          <div className="content-container">
+            <div className="section home " ref={refSectionHome} id="hom">
+              <div className="container">
+                <div className="row home-row" ref={refRowHome}>
                   <div
-                    key={`layout_${index}`}
-                    className="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 mb-5"
+                    className="col-s-12 col-12 d-block d-md-none   "
+                    style={{ fontSize: '62.5 %' }}
                   >
                     <img
-                      className="img-fluid border-radius depth-2 mb-3 semi-rounded"
-                      alt={l.title}
-                      src={CarPhoto22}
+                      src={CarPhoto12}
+                      alt="slide 2"
+                      style={{
+                        borderRadius: '15px',
+                        maxWidth: '100%',
+                        margin: '5%',
+                        opacity: 0.8,
+                      }}
                     />
-                    <h4 className="text-center">{l.title}</h4>
+                  </div>
+
+                  <div className="col-12 col-xl-5 col-lg-5 col-md-6">
+                    <ScrollAnimation
+                      animateIn="fadeInRight"
+                      animateOnce={true}
+                      duration={2}
+                    >
+                      <div className="home-text">
+                        <div className="display-1 text-bold ">
+                          {' '}
+                          دتخنیکي او مسلکي زده کړو اداره
+                        </div>
+                        <p className="white mb-5 text-justify">
+                          شناخت و پذیرش تعلیمات تخنیکی و مسلکی و نقش آن در رشد و
+                          توسعه اقتصاد ملی نخستین گام ضروری برای بازگشایی دروازه
+                          توسعه اقتصاد ملی نخستین گام ضروری برای بازگشایی دروازه
+                          توسعه اقتصاد ملی نخستین گام ضروری برای بازگشایی دروازه
+                        </p>
+
+                        <a
+                          className="btn btn-light btn-xl mr-2 mb-2 mt-5"
+                          href={adminRoot}
+                          target="_blank"
+                        >
+                          ننوتل/ورود <i className="simple-icon-arrow-right" />
+                        </a>
+                      </div>
+                    </ScrollAnimation>
+                  </div>
+
+                  <div className="col-12 col-xl-6  col-lg-7 col-md-6 col-s-12  d-none d-md-block rounded">
+                    <ScrollAnimation
+                      animateIn="fadeInLeft"
+                      animateOnce={true}
+                      offset={50}
+                      duration={2}
+                    >
+                      {/* <NavLink to="/app/dashboards/default">
+                      <IndividualIntervalsExample />
+                    </NavLink> */}
+
+                      <img
+                        src={CarPhoto12}
+                        alt="slide 2"
+                        style={{
+                          borderRadius: '15px',
+                          maxWidth: '100%',
+                          margin: '0% 10% 10%',
+                          opacity: 0.8,
+                        }}
+                      />
+                    </ScrollAnimation>
+                  </div>
+                </div>
+                {/* <ControlledCarousel /> */}
+                <div className="row ">
+                  <div className="col-s-12 col-12  d-md-block">
+                    <div className="home-carousel rounded ">
+                      <GlideComponent settings={slideSettings}>
+                        {slideItems.map((f, index) => (
+                          // eslint-disable-next-line react/no-array-index-key
+
+                          <div key={`slide_${index}`} className="card ">
+                            <div className="card-body text-center">
+                              <div>
+                                <i className={`${f.icon} large-icon`} />
+                                <h5 className="font-weight-semibold">
+                                  {f.title}
+                                </h5>
+                              </div>
+                              <div>
+                                <p className="detail-text">{f.detail}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </GlideComponent>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="section">
+              <div className="container" id="goals">
+                {features.map((feature, i) => (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <div key={`feature_${i}`}>
+                    {i % 2 === 0 && (
+                      <div className="row feature-row">
+                        <div className="col-12 col-md-6 col-lg-5 d-flex align-items-center">
+                          <ScrollAnimation
+                            animateIn="fadeInRight"
+                            animateOnce={true}
+                            duration={2}
+                          >
+                            <div className="feature-text-container">
+                              <h2>{feature.title}</h2>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: feature.detail,
+                                }}
+                              />
+                            </div>
+                          </ScrollAnimation>
+                        </div>
+                        <div className="col-12 col-md-6 col-lg-6 offset-lg-1 offset-md-0 position-relative">
+                          <ScrollAnimation
+                            animateIn="fadeInLeft"
+                            animateOnce={true}
+                            offset={50}
+                            duration={2}
+                          >
+                            <img
+                              alt={feature.title}
+                              src={Shahamat}
+                              style={{ maxWidth: '100%' }}
+                              className="feature-image-right feature-image-charts position-relative rounded"
+                            />
+                          </ScrollAnimation>
+                        </div>
+                      </div>
+                    )}
+                    {i % 2 === 1 && (
+                      <div className="row feature-row pt-5" id="achivements">
+                        <div className="col-12 col-md-6 col-lg-6 order-2 order-md-1 ">
+                          <ScrollAnimation
+                            animateIn="fadeInRight"
+                            animateOnce={true}
+                            duration={2}
+                          >
+                            <img
+                              alt={feature.title}
+                              src={CarPhotoWithoutBackground}
+                              className="feature-image-left feature-image-charts "
+                            />
+                          </ScrollAnimation>
+                        </div>
+                        <div className="col-12 col-md-6 offset-md-0 col-lg-5 offset-lg-1 d-flex align-items-center order-1 order-md-2">
+                          <div className="feature-text-container ">
+                            <ScrollAnimation
+                              animateIn="fadeInLeft"
+                              animateOnce={true}
+                              duration={2}
+                            >
+                              <h2>{feature.title}</h2>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: feature.detail,
+                                }}
+                              />
+                            </ScrollAnimation>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-
-          <div className="section mb-0">
-            <div className="container" id="components">
-              <div className="row mb-5">
-                <div className="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
-                  <h1>کامپوننت های قالب</h1>
-                  <p>
-                    سعی کردیم توی درست کردن اجزا، از حداقل ابزار استفاده کنیم
-                    چراکه کم حجم بودن قالب یکی از مولفه های مهم برای هر برنامه
-                    نویسه
-                    <br />
-                    میتونم به جرعت بگم که تمام کامپوننت های ما با بوتسترپ 4
-                    همخوانی دارند
-                    <br />
-                  </p>
-                </div>
-              </div>
-            </div>
-            <img
-              className="components-image mb-5 pb-5"
-              alt="Components"
-              src={CarPhoto3}
-            />
-          </div>
-
-          <div className="section background">
-            <div className="container" id="apps">
-              <div className="row">
-                <div className="col-12 offset-0 col-lg-8 offset-lg-2 text-center mb-4">
-                  <h1>برنامه های آماده</h1>
-                  <p className="section-text">
-                    با استفاده از کامپوننت هایی که توی این قالب هستند، سه تا
-                    برنامه ی آماده براتون درست کردیم که بنظرم حتی اگه بخواین یه
-                    چیزی مشابه اینها بسازین خیلی توی زمان شما صرفه جویی میکنه
-                  </p>
-                </div>
-              </div>
-              <div className="row screenshots">
-                <div className="col-12 text-center mb-4">
-                  <Nav tabs className="justify-content-center">
-                    {applications.map((app, index) => (
-                      <NavItem key={`app_nav_${index}`}>
-                        <a
-                          href="#tab"
-                          className={classnames({
-                            'nav-link': true,
-                            active: activeTab === index,
-                          })}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            toggle(index);
-                          }}
-                        >
-                          {app.title}
-                        </a>
-                      </NavItem>
-                    ))}
-                  </Nav>
-                  <TabContent activeTab={activeTab}>
-                    {applications.map((app, index) => (
-                      <TabPane key={`app_tab_${index}`} tabId={index}>
-                        <NavLink to={app.path}>
-                          <img
-                            alt={app.title}
-                            src={CarPhoto2}
-                            className="app-image"
-                          />
-                        </NavLink>
-                      </TabPane>
-                    ))}
-                  </TabContent>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="section mb-0">Extra Space</div>
-
-          <div className="section background background-no-bottom mb-0 pb-0">
-            <div className="container">
-              <div className="row">
-                <div className="col-12 offset-0 col-lg-8 offset-lg-2 text-center">
-                  <h1>!تاحالا از تعریفام خوشت اومد؟</h1>
-                  <p>
-                    اگه دوست داری این قالب رو قانونی از ما تهیه کن تا هم به
-                    توسعه تیم کمک کرده باشی و هم باعث بشی انگیزه ای برای ما بشه
-                    تا محصولات با کیفیت عالی براتون تهیه کنیم
-                  </p>
-                </div>
-                {/* <div className="col-12 offset-0 col-lg-6 offset-lg-3 newsletter-input-container">
-                  <div className="text-center mb-3">
-                    <a
-                      className="btn btn-secondary btn-xl"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={buyUrl}
+            <ScrollAnimation
+              animateIn="fadeInUp"
+              animateOnce={true}
+              duration={2}
+            >
+              <section id="developers">
+                <Row className="text-center justify-content-center">
+                  <Colxx xxs="8">
+                    {' '}
+                    <h2>برنامه نویس ها</h2>
+                    <p>
+                      شناخت و پذیرش تعلیمات تخنیکی و مسلکی و نقش آن در رشد و
+                      توسعه اقتصاد ملی نخستین گام ضروری برای بازگشایی دروازه
+                      توسعه اقتصاد ملی شناخت و پذیرش تعلیمات تخنیکی و مسلکی و
+                      نقش آن در رشد و توسعه اقتصاد ملی نخستین گام ضروری برای
+                      بازگشایی دروازه توسعه اقتصاد ملی
+                    </p>
+                  </Colxx>
+                </Row>
+                <Row className="justify-content-center m-4 d-flex-block ">
+                  {/* Sharif Ahmad */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
                     >
-                      خرید قالب
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Sharif Ahmad Rasikh
+                          <span>
+                            <br />
+                            Project Manager
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Abdullah Hanif */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Abdullah Hanif
+                          <span>
+                            <br />
+                            FullStack Developer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Samiullah Rahimi */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Samiullah Rahimi
+                          <span>
+                            <br />
+                            Frontend Developer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Mansoor AhmadZai */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Mansoor Ahmadzai
+                          <span>
+                            <br />
+                            Backend Developer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Noman Ahmadi */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={Photo55}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Noman Ahmadi
+                          <span>
+                            <br />
+                            Frontend Developer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a href="#" class="fa fa-facebook" id="fa"></a>
+                          <a href="#" class="fa fa-twitter"></a>
+                          <a href="#" class="fa fa-linkedin"></a>
+                          <a href="#" class="fa fa-youtube"></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                </Row>
+              </section>
+            </ScrollAnimation>
+            <div className="section footer mb-0 " ref={refSectionFooter}>
+              <div className="container">
+                <div className="row footer-row ">
+                  <div className="col-12 text-right">
+                    <a
+                      className="btn btn-circle btn-outline-semi-light footer-circle-button c-pointer "
+                      href="#scroll"
+                      onClick={(event) => scrollTo(event, 'home')}
+                    >
+                      <i className="simple-icon-arrow-up" />
                     </a>
                   </div>
-                </div> */}
-              </div>
-            </div>
-          </div>
 
-          <div className="section footer mb-0" ref={refSectionFooter}>
-            <div className="container">
-              <div className="row footer-row">
-                <div className="col-12 text-right">
-                  <a
-                    className="btn btn-circle btn-outline-semi-light footer-circle-button c-pointer"
-                    href="#scroll"
-                    onClick={(event) => scrollTo(event, 'home')}
-                  >
-                    <i className="simple-icon-arrow-up" />
-                  </a>
-                </div>
-                <div className="col-12 text-center footer-content">
-                  <a
-                    className="c-pointer"
-                    href="#scroll"
-                    onClick={(event) => scrollTo(event, 'home')}
-                  >
-                    <img src={logo} alt="Logo" />
-                  </a>
+                  <div className="col-12  text-center">
+                    <ScrollAnimation
+                      animateIn="fadeInDown"
+                      animateOnce={true}
+                      duration={2}
+                    >
+                      <a
+                        className="c-pointer "
+                        href="#scroll"
+                        onClick={(event) => scrollTo(event, 'home')}
+                      >
+                        <img src={logo} alt="Logo" />
+                      </a>
+                    </ScrollAnimation>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="container copyright pt-5 pb-5">
-              <div className="row">
-                <div className="col-12" />
-                <div className="col-12 text-center">
-                  <Row>
-                    <Colxx xxs="12" sm="3">
-                      <p className="mb-0 text-muted">
-                        د تخنیکی او مسلکی زده کړو اداره
-                      </p>
-                    </Colxx>
-                    <Colxx>
-                      <p className=" mb-0 text-muted ">
-                        اداره تعلیمات تخنیکی و مسلکی
-                      </p>
-                    </Colxx>
-                    <Colxx className="col-sm-6 d-none d-sm-block">
-                      <p className="mb-0 text-muted">
-                        Technical and Vocational Education and Training
-                        Authority
-                      </p>
-                    </Colxx>
-                  </Row>
-                </div>
+
+              {/* <div className="row" id="con"> */}
+              <Row
+                className="justify-cntent-center "
+                style={{ paddingInline: '10%' }}
+                id="contact"
+              >
+                <Colxx
+                  xxs="12"
+                  xs="12"
+                  sm="12"
+                  md="5"
+                  lg="4"
+                  style={{
+                    marginBottom: '3%',
+                  }}
+                >
+                  <ScrollAnimation
+                    animateIn="fadeInRight"
+                    animateOnce={true}
+                    duration={2}
+                  >
+                    <div class=" mb-5 " style={{ opacity: 0.8 }}>
+                      <form>
+                        <input
+                          type="text"
+                          id="fname"
+                          name="firstname"
+                          placeholder="Your name.."
+                          style={{ borderRadius: '10px' }}
+                        />
+
+                        <input
+                          type="text"
+                          id="lname"
+                          name="email"
+                          placeholder="email Address"
+                          style={{ borderRadius: '10px' }}
+                        />
+                        <textarea
+                          id="subject"
+                          name="subject"
+                          placeholder="your message"
+                          style={{ borderRadius: '10px' }}
+                          rows={3}
+                        ></textarea>
+                        <input
+                          type="submit"
+                          value="Submit"
+                          className="bg-primary text-center btn-btn"
+                        />
+                      </form>
+                    </div>
+                  </ScrollAnimation>
+                </Colxx>
+
+                <Colxx
+                  xxs="12"
+                  xs="12"
+                  sm="12"
+                  md="5"
+                  lg="4"
+                  style={{
+                    marginBottom: '3%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                  }}
+                >
+                  <div className="pl-2 m-4">
+                    <ScrollAnimation
+                      animateIn="fadeInLeft"
+                      animateOnce={true}
+                      duration={2}
+                    >
+                      <h3 className="text-white">پل ارتباطی </h3>
+                      {contact.map((d) => (
+                        <div className="contact-container">
+                          <div>
+                            <b style={{ paddingLeft: '5px ' }}>
+                              {' '}
+                              <i className={`${d.icon} `} />
+                            </b>{' '}
+                          </div>
+                          <div>
+                            {' '}
+                            <p
+                              style={{ fontSize: '15px' }}
+                              className="text-white"
+                            >
+                              {d.detail}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </ScrollAnimation>
+                  </div>
+
+                  <div style={{ paddingTop: '66px' }}>
+                    <ScrollAnimation
+                      animateIn="fadeInLeft"
+                      animateOnce={true}
+                      duration={2}
+                    >
+                      {contact1.map((d) => (
+                        <div className="contact-container ">
+                          <div>
+                            <b style={{ paddingLeft: '5px ' }}>
+                              {' '}
+                              <i className={`${d.icon} `} />
+                            </b>{' '}
+                          </div>
+                          <div>
+                            {' '}
+                            <p
+                              style={{ fontSize: '15px' }}
+                              className="text-white"
+                            >
+                              {d.detail}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </ScrollAnimation>
+                  </div>
+                </Colxx>
+              </Row>
+
+              <div className="col-12  pb-4" style={{ paddingInline: '10%' }}>
+                <Row>
+                  <Colxx xxs="12" sm="3">
+                    <p className="mb-0 text-muted">
+                      د تخنیکی او مسلکی زده کړو اداره
+                    </p>
+                  </Colxx>
+                  <Colxx>
+                    <p className=" mb-0 text-muted ">
+                      اداره تعلیمات تخنیکی و مسلکی
+                    </p>
+                  </Colxx>
+                  <Colxx className="col-sm-6 d-none d-sm-block">
+                    <p className="mb-0 text-muted">
+                      Technical and Vocational Education and Training Authority
+                    </p>
+                  </Colxx>
+                </Row>
               </div>
             </div>
           </div>
         </div>
+        <div className="text-center p-3">
+          © Copyright 2035 TVETA-Online - All Rights Reserved
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

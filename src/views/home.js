@@ -377,7 +377,7 @@ const Home = () => {
             </nav>
           </Headroom>
           <div className="content-container">
-            <div className="section home pb-5" ref={refSectionHome} id="hom">
+            <div className="section home " ref={refSectionHome} id="hom">
               <div className="container">
                 <div className="row home-row" ref={refRowHome}>
                   <div

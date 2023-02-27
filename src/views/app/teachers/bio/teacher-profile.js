@@ -90,10 +90,6 @@ const TeacherProfile = () => {
     fetchTeacherTransfer();
   }, []);
 
-  console.log('teacher', teacher);
-  console.log('teacherEvaluation', teacherEvaluation);
-  console.log('teacherHREvaluation', teacherHREvaluation);
-  console.log('teacherTransfer', teacherTransfer);
 
 
   const handleClick = (event) => {
@@ -125,13 +121,13 @@ const TeacherProfile = () => {
         </Colxx>
       </Row>
 
-      <Row>
+      {/* <Row>
         <Colxx xxs="1"></Colxx>
         <Colxx>
           <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
         </Colxx>
-      </Row>
-      <Row>
+      </Row> */}
+      {/* <Row>
         <Colxx
           className=" d-flex justify-content-center"
           style={{ marginRight: '2%' }}
@@ -174,7 +170,7 @@ const TeacherProfile = () => {
             </Button>
           </div>
         </Colxx>
-      </Row>
+      </Row> */}
 
       {teacher.length > 0 && institute.length > 0 && (
         <>

@@ -45,6 +45,7 @@ const AttendanceDisplay = React.lazy(() =>
 const Reports = React.lazy(() =>
   import(/* webpackChunkName: "reports" */ './reports')
 );
+const Test = React.lazy(() => import(/* webpackChunkName: "test" */ './test'));
 const Dismissal = React.lazy(() =>
   import(/* webpackChunkName: "dismissal" */ './student-dismissal')
 );
@@ -112,6 +113,11 @@ const Students = ({ match }) => (
         path={`${match.url}/reports`}
         render={(props) => <Reports {...props} />}
       />
+
+      <Route
+        path={`${match.url}/test`}
+        render={(props) => <Test {...props} />}
+        />
       <Route
         path={`${match.url}/dismissal`}
         render={(props) => <Dismissal {...props} />}

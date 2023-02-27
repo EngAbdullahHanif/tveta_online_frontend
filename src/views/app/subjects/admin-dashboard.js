@@ -61,7 +61,7 @@ const ProvincailDashboard = (
     console.log(' The Values', values);
   };
 
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
 
   return (
     <>

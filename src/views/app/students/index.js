@@ -45,7 +45,7 @@ const AttendanceDisplay = React.lazy(() =>
 const Reports = React.lazy(() =>
   import(/* webpackChunkName: "reports" */ './reports')
 );
-
+const Test = React.lazy(() => import(/* webpackChunkName: "test" */ './test'));
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -104,6 +104,12 @@ const Students = ({ match }) => (
         path={`${match.url}/reports`}
         render={(props) => <Reports {...props} />}
       />
+
+      <Route
+        path={`${match.url}/test`}
+        render={(props) => <Test {...props} />}
+      />
+
       {/* <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}

@@ -30,6 +30,7 @@ const ListPageListing = ({
   onChangePage,
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
+ 
 
   return (
     <>

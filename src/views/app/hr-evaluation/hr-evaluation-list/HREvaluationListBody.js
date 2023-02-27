@@ -27,22 +27,23 @@ const EvaluationListBody = ({
               className="list-thumbnail responsive border-0 card-img-left"
             />
           </NavLink> */}
-          <div className="pl-2 d-flex flex-grow-1 min-width-zero">
+          <div className="pl-2 d-flex flex-grow-1 min-width-zero" >
             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
               <NavLink to={`${hrEvaluation.id}`} className="">
-                <p className="list-item-heading mb-1 truncate">
-                  <span className="mr-5">{hrEvaluation.id}</span>
+                <p className="list-item-heading mb-1 truncate" style={{margin: 0}}>
+                  <span className="mr-5" style={{margin: 0}}>{hrEvaluation.id}</span>
                   {hrEvaluation.teacher_id.name}
                 </p>
               </NavLink>
-              <p className="mb-1 text-small">
+              <p className="mb-1 text-small" style={{margin: 0}}>
                 {hrEvaluation.institute_id.name}
               </p>
-              <p className="mb-1 text-small">{hrEvaluation.score}</p>
-              <p className="mb-1 text-small">{hrEvaluation.current_grade}</p>
-              <p className="mb-1 text-small">{hrEvaluation.new_grade}</p>
-              <p className="mb-1 text-small">{hrEvaluation.current_step}</p>
-              <p className="mb-1 text-small">{hrEvaluation.new_step}</p>
+              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.score}</p>
+              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.current_grade}</p>
+              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.new_grade}</p>
+              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.current_step}</p>
+              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.new_step}</p>
+              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.new_step}</p>
             </div>
           </div>
         </Card>

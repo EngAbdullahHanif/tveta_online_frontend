@@ -14,6 +14,12 @@ const ProvincialDashboard = React.lazy(() =>
 const AdminDashboard = React.lazy(() =>
   import(/* webpackChunkName: "admin-dashboard" */ './admin-dashboard')
 );
+const SubjectList = React.lazy(() =>
+  import(/* webpackChunkName: "admin-dashboard" */ './subject-list/SubjectListMain')
+);
+const CurriculumList = React.lazy(() =>
+  import(/* webpackChunkName: "admin-dashboard" */ './curriculum-list/CurriculumListMain')
+);
 
 const Subjects = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -35,6 +41,14 @@ const Subjects = ({ match }) => (
       <Route
         path={`${match.url}/admin-dashboard`}
         render={(props) => <AdminDashboard {...props} />}
+      />
+        <Route
+        path={`${match.url}/subject-list`}
+        render={(props) => <SubjectList {...props} />}
+      />
+         <Route
+        path={`${match.url}/curriculum-list`}
+        render={(props) => <CurriculumList {...props} />}
       />
 
       <Redirect to="/error" />

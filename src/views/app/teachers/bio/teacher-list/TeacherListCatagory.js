@@ -40,6 +40,7 @@ const ListPageListing = ({
           </div>
         ) : null}
         {items.map((teacher) => {
+          console.log(teacher, 'showing items here')
           if (displayMode === 'imagelist') {
             return (
               <ImageListView

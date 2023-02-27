@@ -3,7 +3,8 @@ import { injectIntl } from 'react-intl';
 import Search from './search';
 
 const ReactAutoSugegstExample = ({ intl, data, select, placeholder }) => {
-  var result = data.map((a) => a.name);
+  //var result = data.map((a) => a.name);
+  var result = ''
   const [selectedOption, setSelectedOption] = useState({});
 
   //find the selected institute from result array

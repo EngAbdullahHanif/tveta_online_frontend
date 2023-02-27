@@ -90,6 +90,8 @@ module.exports = {
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.instituteT': 'انستیتوتونه/ انستیتوتها',
+  'menu.student-dismissal': 'منفکی',
+  'menu.dorm-student-dismissal': 'منفکی',
 
   'menu.institute_list': 'لست انستیتوت/لیسه',
   'menu.institute_register': 'ثبت انستیتوت/لیسه',
@@ -182,6 +184,8 @@ module.exports = {
   'menu.Institute-details': 'مشخصات انستیتوت',
   'menu.marks-display': 'دیو مضمون نمرې/ نمرات یک مضمون',
   'menu.marks-display-all-subs': 'د ټولو مضمونو نمرې/ نمرات تمام مضامین',
+  'menu.single-student-marksUpdate': 'د شاگرد د نمرو اپدیت/ اپدیت نمرات شاگرد',
+  'menu.attendance-Update': 'د حاضرۍ تغیر/ تغیر حاضری',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -541,11 +545,20 @@ module.exports = {
   'forms.firstname-message': 'لطفا نام خود را وارد کنید',
   'forms.lastname': 'نام خانوادگی',
   'forms.lastname-message': 'لطفا نام خانوادگی خود را وارد کنید',
+
+  // Student Register
+  'forms.studentRegisterTitle': 'د شاګرد ثبت/ ثبت شاگرد',
   'forms.StdName': 'نوم/نام',
   'forms.Eng_name': 'انګریزی نوم / نام انگلسی',
   'forms.StdFatherName': 'د پلار نوم/نام پدر',
+  'forms.lastName': 'تخلص',
+  'forms.lastNameEng': 'تخلص په انګریزي ژبه/ تخلص به انگلسی',
+  'forms.lastNameErr': 'تخلص اړین دی/ تخلص ضروری است',
+  'forms.lastNameEngErr': 'انګریزي تخلص اړین دی/ تخلص انگلسی ضروری است',
   'forms.Std_father_Eng_Name': 'د پلار نوم په انګریزي/نام پدر به انگلسی',
-
+  'forms.grandFatherName': 'د نیکه نوم/ نام پدرکلان',
+  'forms.grandFatherNameErr': 'د نیکه نوم اړین دی / نام پدرکلان ضروری است',
+  'forms.genderErr': 'جندر اړین دی/ جنسیت ضروری است',
   'forms.electronic': 'الکترونیکی',
   'forms.paper': 'کاغذی',
   'forms.StdKankorNameErr': 'نوم اړین دی/ نام ضروری است',
@@ -585,7 +598,6 @@ module.exports = {
   'forms.VillageErr': 'قریه اړین ده/ قریه ضروری است',
   'forms.PlaceOfBirthLabel': 'د زیږیدو ځای /مکان تولد',
   'forms.StdPlaceOfBirthErr': 'د زیږیدو ځای اړین دی /مکان تولد ضروری است',
-
   // Second page of student biography
   'forms.EducationalLevel_9th': 'نهم صنف / صنف نهم',
   'forms.EducationalLevel_10th': 'لسم ټولګی/ صنف دهم',
@@ -615,6 +627,34 @@ module.exports = {
   'forms.StdGraduationYearErr': 'د فراغت کال اړین دی/ سال فراغت ضروری است',
   'student.results': 'پایلې/ نتایج',
   'student.educationType': 'د زدکړو ‌ډول/ نوع تعلیم',
+  'forms.educationalYearOption_1': '1402',
+  'forms.educationalYearOption_2': '1403',
+  'forms.educationalYearOption_3': '1404',
+  'forms.educationalYearOption_4': '1405',
+  'forms.educationalYearOption_5': '1406',
+  'forms.educationalYearOption_6': '1407',
+  'forms.educationalYearOption_7': '1408',
+  'forms.educationalYearOption_8': '1409',
+  'forms.educationalYearOption_9': '1410',
+  'forms.educationalYearOption_10': '1411',
+  'forms.educationalYearOption_11': '1413',
+  'forms.educationalYearOption_12': '1414',
+  'forms.educationalYearOption_13': '1415',
+  'forms.educationalYearOption_14': '1416',
+  'forms.educationalYearOption_15': '1417',
+  'forms.educationalYearOption_16': '1418',
+  'forms.educationalYearOption_17': '1419',
+  'forms.educationalYearOption_18': '1420',
+  'forms.kankorId': 'د کانکور ایډی/ ایدی کانکور',
+  'forms.kankorIdErr': 'د کانکور ایډی اړین دی/ ایدی کانکور ضروری است',
+  'forms.mediumOfInstruction': 'د تدریس ژبه / زبان تدریسی',
+  'forms.mediumOfInstructionOption_1': 'پشتو',
+  'forms.mediumOfInstructionOption_2': 'دری',
+  'forms.mediumOfInstructionOption_3': 'English',
+  'forms.mediumOfInstructionOption_4': 'بل/دیگر',
+  'forms.mediumOfInstructionErr': 'تدریسی ژبه اړینه ده/ زبان تدریسی ضروری است',
+  'forms.batch': 'دوره',
+  'forms.batchErr': 'دوره اړینه ده/ دوره ضروری است',
 
   // ولایات
   'forms.StdSchoolProvinceOptions_1': 'بدخشان',
@@ -822,6 +862,7 @@ module.exports = {
   'dorm.NameLabel': 'د لیلې نوم/ نام لیلیه',
   'dorm.NameErr': 'د لیلی نوم اړین دی/ نام لیلیه ضروری است',
   'dorm.Gender': 'د لیلې جندر/ جندر لیلیه',
+  'dorm.genderErr': 'د لیلی جندر اړین دی/ جنسیت لیلیه ضروری است',
   'dorm.GenderOptions_1': 'نارینه/ ذکور',
   'dorm.GenderOptions_2': 'ښځینه/ اناث',
   'dorm.GenderOptions_3': '‌دواړه/ مختلط',
@@ -952,9 +993,14 @@ module.exports = {
   'subject.curriculum': 'د نصاب ثبت / ثبت نصاب',
   'curriculum.curriculumTittle': 'د نصاب ثبت/ ثبت نصاب',
   'curriculum.departmentIdLabel': 'دیپارتمنت',
+
   'curriculum.subjectdLabel': 'مضمون',
+  'curriculum.subjectdErr': 'مضمون اړین دی/ مضمون ضروری است',
+
   'curriculum.classLabel': 'ټولګی/ صنف',
+  'curriculum.classErr': 'ټولګی اړین دی/ صنف ضروری است',
   'curriculum.eduactionalYearLabel': 'تعلیمی کال/سال تعلیمی',
+  'curriculum.eduactionalYearErr': 'ټعلیمی کال اړین دی / سال تعلیمی ضروری است',
 
   //Institute Details Page
   'institute.detailsTitle': 'نور مالومات/ معلومات بیشتر',
@@ -991,8 +1037,6 @@ module.exports = {
   'dash.14YearsGreduatedFemale': 'څورلسم پاس ښځینه/ چهارده پاس اناث',
   'dash.bachelorMale': 'لسانس نارینه/ لسانس ذکور',
   'dash.bachelorFemale': 'لسانس ښځینه/ لسانس اناث',
-  'dash.phdMale': 'ډاکتر نارینه/ داکتر ذکور',
-  'dash.phdFemale': 'ډاکتر ښځینه/ داکتر اناث',
   'dash.instituteList': 'انستیتونه/ انستیتوها',
   'dash.schoolsList': 'لیسې/ لیسه ها',
   'dash.dormsList': 'لیلې/ لیلیه ها',
@@ -1118,18 +1162,83 @@ module.exports = {
   'dash.female': 'اناث',
   'dash.loading': 'درحال بارگیری...',
   'dash.teacherGender': 'جنسیت',
+  'dash.totalNo': 'تعداد',
+  'dash.teacherStatistics': 'د استاد مجموعی ارقام / ارقام مجموعی استاد',
+
+  'dash.14YearsGreduatedTotal': 'مجموع 14 پاس',
+  'dash.bachelorTotal': 'مجموع لسانس',
+  'dash.masterTotal': 'مجموع ماستر',
+  'dash.masterMale': 'ماستر نارینه/ ماستر ذکور',
+  'dash.masterFemale': 'ماستر ښځینه/ ماستر اناث',
+  'dash.phdTotal': 'مجموع داکتر',
+  'dash.phdMale': 'نارینه ډاکتر/ داکتر ذکور',
+  'dash.phdFemale': 'ښځینه ډاکتر/ داکتر اناث',
+  'dash.TeacherEvaluatedTotal':
+    'مجموع د ارزیابی شوي استادانو/ مجموع استادان ارزیابی شده',
+  'dash.TeacherNotEvaluatedTotal':
+    'د نه ارزیابی شوی استادانو مجموع/ مجموع استادان ارزیابی ناشده',
+  'dash.teacherEvaluationStatistics':
+    'د استاد د ارزیابی ارقام/ ارقام ارزیابی استاد',
+
+  // Student Dismissal
+  'student.dismissalTitleFromInstitute':
+    ' له انستیتوت/لیسې نه د شاګرد منفکی// منفکی شاگرد از انستیتوت/لسیه',
+  'student.dismissalDateLabel': 'د منفکۍ تاریخ/ تاریخ منفکی',
+  'search.studentIdsearchErr':
+    'د شاګرد ایډی د ننه کړئ/ لطفا ایدی شاگرد را وارد نماید',
+  'min.invalidId': 'ستاسو ايډی سم ندی/ایدی شما درست نیست',
+  'max.invalidId': 'ستاسو ايډی سم ندی/ایدی شما درست نیست',
+  'student.dissmissalDocuments': 'د منفکۍ اسناد/ اسناد منفکی',
+  'student.dissmissalDateErr': 'د منفکي تاریخ اړین دی/ تاریخ منفکی ضروری است',
+  'student.dissmissalDocumentErr':
+    'د منفکي اسناد اړین دی/ اسناد منفکی ضروری است',
+  'student.buttonDismissal': 'منفک',
+
+  // Student Dismissal from dorm
+  'student.dismissalFromDormTitle':
+    'د شاګرد منفکی له لیلې/ منفکی شاګرد از لیلیه',
+
+  // Student Rergister
+  'menu.student-reregister': 'بیاځلی ثبت/ ثبت دوباره',
+  'student.currentStatus': 'اوسنی حالت/ حالت فعلی',
+  'student.buttonReregister': 'بیاځلی ثبت/ ثبت دوباره',
+  'student.reregister':
+    ' د شاګرد بیاځلی ثبتول په سیستم کې/ ثبت دوباره شاگرد در سیستم',
+  'student.reregisterDateLabel': 'د بیاځلی ثبت نیټه/ تاریخ ثبت دوباره',
+  'student.reregisterDocuments': 'د بیاځلي ثبت اسناد/ اسناد ثبت دوباره',
+  'forms.newIstituteLabel': 'نوی انستیتوت/لیسه// انستیتوت/لیسه جدید',
+  'forms.newDepartmentLabel': ' نوی دیپارتمنت/ دیپارتمنت جدید',
+  'forms.newClassLabel': 'نوی ټولګی/ صنف جدید',
+  'forms.newFieldLabel': 'نوې رشته/ رشته جدید',
+  'forms.classErr': 'نوی ټولګی اړین دی/ صنف جدید ضروری است',
 
   // Subject
-  // 'forms.SubjectTitle': 'دمضمون ثبت/درج مضمون',
-  // 'forms.SubjectNameLabel': 'نام مضمون / د مضمون نوم',
-  // 'forms.SubjectNameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است!',
+  'subject.NameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است',
+  'subject.englishNameErr':
+    'د مضمون انگلسی نوم اړین دی/ نام انگلسی مضمون ضروری است',
+  'subject.codeErr': 'د مضمون کوډ اړین دی/ کود مضمون ضروری است',
+  'subject.creditErr': 'د مضمون کریدت اړین دی / کریدیت مضمون ضروری است',
+  'subject.typeErr': 'د مضمون ډول اړین دی / نام مضمون ضروری است',
+  'subject.systemType': 'د مضمون سیستم اړین دی/ سیستم مضمون ضروری است',
   'forms.SubjectCreditLabel': 'کریدت',
-  // 'forms.SubjectCreditErr': 'د مضمون کریدت اړین دی/ کریدت مضمون ضروری است',
-  // 'forms.SubjectTypeLabel': 'ډول/ نوع',
-  // 'forms.SubjectTypeErr': 'د مضمون ډول اړین دی / نوع مضمون ضروری است',
 
-  //   'forms.TypeOption_1': 'اصلی',
-  // 'forms.TypeOption_2': 'فرعی',
+  // Marks Update
+  'marks.singleStudentMarksUpdate': 'د نمراتو اپدیت/ تغییر نمرات',
+  'marks.studentId': 'د شاګرد ایډي/ ایدی شاگرد',
+  'marks.studentIdErr': 'د شاګرد ایډي ضروری دی/ ایدی شاگرد ضروری است',
+  'marks.chance': 'چانس',
+  'marks.chanceErr': 'د چانس ټاکل اړین دی/ انتخاب چانس ضروری است',
+  'forms.chanceOne': 'لومړی چانس/ چانس اول',
+  'forms.chanceTwo': 'دوهم چانس/ چانس دوم',
+
+  // Attendance Update
+  'attendance.updateTitle': 'د شاګرد د حاضرۍ تغییر/ تغیر حاضری شاگرد',
+
+  // Class Registratiion
+  'class.nameLabel': 'د صنف نوم/ نام صنف',
+  'class.nameErr': 'د صنف نوم اړین دی/ نام صنف ضروری است',
+  'class.semesterLabel': 'سمستر',
+  'class.semesterErr': 'سمستر اړین دی/ سمستر ضروری است',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Inputs سفارشی',
@@ -1277,8 +1386,7 @@ module.exports = {
   'wizard.content-thanks': 'مننه/ تشکر',
   'wizard.next': 'بعدی',
   'wizard.prev': 'قبلی',
-  'wizard.registered':
-    'ستاسو ‌دیتا په بریالیتوب سره ثبت   شوه/ ثبت نام شما با موفقیت انجام شد',
+  'wizard.registered': 'دیتا په بریالیتوب سره ثبت شوه/ دیتا موفقانه ثبت شد',
   'wizard.async': 'Async save for 3 seconds!',
 
   'inst.name': 'انستیتوت نوم / نام انستیتوت',

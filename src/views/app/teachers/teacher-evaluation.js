@@ -40,26 +40,32 @@ const evaluationTypeOptions = [
 ];
 
 const ValidationSchema = Yup.object().shape({
-  id: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.IdErr" />),
+  id: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="teacher.IdErr" />)
+    : null,
 
-  department: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.departmentIdErr" />),
+  department: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="teacher.departmentIdErr" />)
+    : null,
 
-  subject: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.SubjectErr" />),
+  subject: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="marks.SubjectErr" />)
+    : null,
 
   evaluator: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
@@ -75,54 +81,112 @@ const ValidationSchema = Yup.object().shape({
     <IntlMessages id="teacher.evaluationDateErr" />
   ),
 
-  institute: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.InstituteErr" />),
+  institute: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="forms.InstituteErr" />)
+    : null,
 
-  classs: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.ClassErr" />),
+  classs: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="marks.ClassErr" />)
+    : null,
 
   topic: Yup.string().required(<IntlMessages id="teacher.topicErr" />),
 
-  evaluationType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.evaluationTypeErr" />),
+  evaluationType: updatingMode
+    ? Yup.object()
+        .shape({
+          value: Yup.string().required(),
+        })
+        .nullable()
+        .required(<IntlMessages id="teacher.evaluationTypeErr" />)
+    : null,
 
   weaknessPoints: Yup.string().required(
     <IntlMessages id="teacher.weaknessPointsErr" />
   ),
-  // suggestion: Yup.string().required(
-  //   <IntlMessages id="teacher.suggestionErr" />
-  // ),
 });
 
-const initialValues = {
-  id: [],
-  department: [],
-  subject: [],
-  evaluator: '',
-  strengthPoints: '',
-  marks: '',
-  evaluationDate: '',
-  institute: [],
-  classs: [],
-  topic: '',
-  evaluationType: [],
-  weaknessPoints: '',
-  suggestion: '',
-};
-
+const updatingMode = true;
 const TeacherEvaluation = () => {
+  const TestData = {
+    Id: 'Hamid',
+    Department: 'CS',
+    Subject: 'ICT',
+    Evalovator: 'Ahmad',
+    StrengthPoints:
+      'He Is hard working and patient while researching about the a topic',
+    Marks: '59',
+    EvaluationDate: '2022-08-12',
+    Insititute: 'Nima',
+    Class: '12th-A',
+    Topic: 'BioEconomy',
+    EvluationType: 'Goal Oriented',
+    WeaknessPoint: 'Lack of Preparation',
+    Suggestions: 'Preparation time should be improved!',
+  };
+
+  const [initialId, setInitialId] = useState(
+    TestData.Id ? [{ label: TestData.Id, value: TestData.Id }] : []
+  );
+
+  const [initialDepartment, setInitialDepartment] = useState(
+    TestData.Department
+      ? [{ label: TestData.Department, value: TestData.Department }]
+      : []
+  );
+
+  const [initialSubject, setInitialSubject] = useState(
+    TestData.Department
+      ? [{ label: TestData.Subject, value: TestData.Subject }]
+      : []
+  );
+
+  const [initialEvaluator, setInitialEvaluator] = useState(
+    TestData.Evalovator ? TestData.Evalovator : ''
+  );
+  const [initialMarks, setInitialMarks] = useState(
+    TestData.Marks ? TestData.Marks : ''
+  );
+  const [initialStrengthPoints, setInitialStrengthPoints] = useState(
+    TestData.StrengthPoints ? TestData.StrengthPoints : ''
+  );
+  const [initialEvaluationDate, setInitialEvaluationDate] = useState(
+    TestData.EvaluationDate ? TestData.EvaluationDate : ''
+  );
+  const [initialInsititute, setInitialInsititute] = useState(
+    TestData.Insititute
+      ? [{ label: TestData.Insititute, value: TestData.Insititute }]
+      : []
+  );
+
+  const [initialClass, setInitialClass] = useState(
+    TestData.Class ? [{ label: TestData.Class, value: TestData.Class }] : []
+  );
+  const [initialTopic, setInitialTopic] = useState(
+    TestData.Topic ? TestData.Topic : ''
+  );
+  const [initialEvluationType, setInitialEvluationType] = useState(
+    TestData.EvluationType
+      ? [{ label: TestData.EvluationType, value: TestData.EvluationType }]
+      : []
+  );
+
+  const [initialSuggestions, setInitialSuggestions] = useState(
+    TestData.Suggestions ? TestData.Suggestions : ''
+  );
+
+  const [initialWeaknessPoint, setInitialWeaknessPoint] = useState(
+    TestData.WeaknessPoint ? TestData.WeaknessPoint : ''
+  );
   const [teachers, setTeachers] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -184,6 +248,22 @@ const TeacherEvaluation = () => {
     fetchSubjects();
   }, []);
 
+  const initialValues = {
+    id: initialId,
+    department: initialDepartment,
+    subject: initialSubject,
+    evaluator: initialEvaluator,
+    strengthPoints: initialStrengthPoints,
+    marks: initialMarks,
+    evaluationDate: initialEvaluationDate,
+    institute: initialInsititute,
+    class: initialClass,
+    topic: initialTopic,
+    evaluationType: initialEvluationType,
+    weaknessPoints: initialWeaknessPoint,
+    suggestion: initialSuggestions,
+  };
+
   const onSubmit = (values) => {
     console.log(values);
 
@@ -191,7 +271,7 @@ const TeacherEvaluation = () => {
       teacher_id: values.teacher.value,
       institute_id: values.institute.value,
       department_id: values.department.value,
-      class_id: values.classs.value,
+      class_id: values.class.value,
       subject_id: values.subject.value,
       topic: values.topic,
       evaluator_name: values.evaluator,
@@ -226,7 +306,7 @@ const TeacherEvaluation = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
-            // validationSchema={ValidationSchema}
+            validationSchema={ValidationSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-right error-l-150 ">
@@ -235,21 +315,20 @@ const TeacherEvaluation = () => {
                     {/* teacher Name*/}
                     <FormGroup className="form-group has-float-label ">
                       <Label>
-                        {/* <IntlMessages id="forms.teacherLabel" /> */}
-                        Teacher Name
+                        <IntlMessages id="teacher.IdLabel" />
                       </Label>
 
                       <FormikReactSelect
-                        name="teacher"
-                        id="teacher"
-                        value={values.teacher}
+                        name="id"
+                        id="id"
+                        value={values.id}
                         options={teachers}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
-                      {errors.teacher && touched.teacher ? (
+                      {errors.id && touched.id ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.teacher}
+                          {errors.id}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -315,10 +394,10 @@ const TeacherEvaluation = () => {
                       <Label>
                         <IntlMessages id="teacher.strengthPointsLabel" />
                       </Label>
-                      <textarea
+                      <Field
                         className="form-control"
                         name="strengthPoints"
-                        onChange={(e) => setStrengthPoints(e.target.value)}
+                        as="textarea"
                       />
                       {errors.strengthPoints && touched.strengthPoints ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
@@ -326,6 +405,7 @@ const TeacherEvaluation = () => {
                         </div>
                       ) : null}
                     </FormGroup>
+
                     {/* Achieved Marks */}
                     <FormGroup className="form-group has-float-label">
                       <Label>
@@ -387,17 +467,17 @@ const TeacherEvaluation = () => {
                         <IntlMessages id="marks.ClassLabel" />
                       </Label>
                       <FormikReactSelect
-                        name="classs"
-                        id="classs"
-                        value={values.classs}
+                        name="class"
+                        id="class"
+                        value={values.class}
                         options={classes}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                         required
                       />
-                      {errors.classs && touched.classs ? (
+                      {errors.class && touched.class ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
-                          {errors.classs}
+                          {errors.class}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -441,10 +521,10 @@ const TeacherEvaluation = () => {
                       <Label>
                         <IntlMessages id="teacher.weaknessPointsLabel" />
                       </Label>
-                      <textarea
+                      <Field
                         className="form-control"
                         name="weaknessPoints"
-                        onChange={(e) => setWeaknessPoints(e.target.value)}
+                        as="textarea"
                       />
                       {errors.weaknessPoints && touched.weaknessPoints ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
@@ -458,10 +538,10 @@ const TeacherEvaluation = () => {
                       <Label>
                         <IntlMessages id="teacher.suggestionLabel" />
                       </Label>
-                      <textarea
+                      <Field
                         className="form-control"
                         name="suggestion"
-                        onChange={(e) => setSuggestion(e.target.value)}
+                        as="textarea"
                         rows={4}
                       />
                       {errors.suggestion && touched.suggestion ? (

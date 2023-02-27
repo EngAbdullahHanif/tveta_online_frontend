@@ -17,13 +17,17 @@ function GlideComponent(props) {
     resizeTimeOut = setTimeout(() => {
       glideCarousel.update();
       resizeTimeOut = -1;
-    }, 500);
+    }, 500000);
   };
 
   const initGlide = () => {
     glideCarousel = new Glide(carousel, {
       ...props.settings,
       direction: getDirection().direction,
+
+      // autoplay: true, // add this option to enable autoplay
+      autoplayInterval: 3000000,
+      
     });
     glideCarousel.mount();
     glideCarousel.on('resize', onResize);
@@ -31,7 +35,7 @@ function GlideComponent(props) {
       const event = document.createEvent('HTMLEvents');
       event.initEvent('resize', false, false);
       window.dispatchEvent(event);
-    }, 500);
+    }, 500000);
   };
 
   const destroyGlide = () => {
@@ -68,7 +72,7 @@ function GlideComponent(props) {
   };
 
   return (
-    <div>
+    <div id="slide">
       {/* eslint-disable-next-line no-return-assign */}
       <div className="glide" ref={(node) => (carousel = node)}>
         <div data-glide-el="track" className="glide__track">

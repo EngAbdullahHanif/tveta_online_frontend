@@ -1,0 +1,495 @@
+/* Card img :hover {
+  width: 500px;
+} */
+.contact-container {
+  display: flex;
+  flex-direction: row;
+}
+#name1:hover {
+  color: rgb(26, 26, 249);
+  font-size: 15px;
+}
+#con {
+  display: flex;
+  flex-direction: row;
+}
+#firstdiv {
+  width: 50%;
+  background-color: yellow;
+}
+#seconddiv {
+  width: 50%;
+  background-color: rgba(150, 150, 15, 0.1);
+}
+slide {
+  position: relative;
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 15s; /* Safari 4.0 - 8.0 */
+  -webkit-animation-delay: 5s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 15s;
+  animation-delay: 5s;
+  animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes example {
+  0% {
+    left: 0px;
+    top: 0px;
+  }
+  25% {
+    left: 200px;
+    top: 0px;
+  }
+  50% {
+    left: 400px;
+    top: 0px;
+  }
+  75% {
+    left: 600px;
+    top: px;
+  }
+  100% {
+    left: 800px;
+    top: 0px;
+  }
+}
+
+/* Standard syntax */
+@keyframes example {
+  0% {
+    left: 0px;
+    top: 0px;
+  }
+  25% {
+    left: 200px;
+    top: 0px;
+  }
+  50% {
+    left: 400px;
+    top: 0px;
+  }
+  75% {
+    left: 600px;
+    top: 0px;
+  }
+  100% {
+    left: 800px;
+    top: 0px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Style inputs */
+input[type='text'],
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 0.5px solid #363636;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  resize: vertical;
+  background-color: rgb(32, 29, 29);
+}
+
+input[type='submit'] {
+  background-color: #04aa6d;
+  color: white;
+  padding: 7px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+input[type='submit']:hover {
+  background-color: #45a049;
+}
+
+/* Style the container/contact section */
+.container1 {
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* Create two columns that float next to eachother */
+.column {
+  float: left;
+  width: 30%;
+  margin-top: 6px;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column,
+  input[type='submit'] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+/* New code just for developers part now */
+.developers {
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+/* Standard syntax */
+@keyframes example {
+  0% {
+    margin-bottom: 50px;
+  }
+  25% {
+    margin-bottom: 30px;
+    transition: ease-in-out 0.3s;
+  }
+  50% {
+    margin-bottom: 15px;
+  }
+  75% {
+  }
+  100% {
+    margin-bottom: 0px;
+  }
+}
+
+#home {
+  background-image: url('../assets/img/blog/car1.png');
+  background-repeat: no-repeat;
+  background-size: 3000px 1000px;
+  object-fit: cover;
+}
+
+.landing-page-nav div li:hover {
+  transform: rotate(-10deg);
+  box-shadow: 0 2rem 4rem #000;
+}
+
+/* Developers Section */
+.section-3 {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#developers h1 {
+  margin-right: auto;
+  margin-left: auto;
+  margin-right: 30%;
+  margin-left: 30%;
+}
+.developers-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.developers-member {
+  min-width: 280px;
+  max-width: 280px;
+  min-height: 450px;
+  max-height: 450px;
+  background-color: #171716;
+  padding: 1rem 1rem 2rem 1rem;
+  box-shadow: 1rem 1rem 2rem #332a2a, -1rem -1rem 2rem #1e1b1b;
+  position: relative;
+  opacity: 0.9;
+  transition: opacity 0.5s;
+  margin: 1%;
+  border-radius: 10px;
+}
+
+.developers-member:hover {
+  opacity: 1;
+}
+
+/* .developers-member:first-child {
+  align-self: flex-start;
+} */
+
+/* .developers-member:last-child {
+  align-self: flex-end;
+} */
+
+.developers-member-img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.developers-member-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #75356e;
+}
+
+.developers-member-name span {
+  font-size: 15px;
+}
+
+.developers-member-skills {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 0;
+}
+
+.developers-member-skills li {
+  font-size: 15px;
+  color: #505050;
+
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style-type: none;
+  outline: none;
+  font-weight: 400;
+}
+
+.projects-btn {
+  /* background-color: #fab34a; */
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5rem;
+  /* font-size: 1.5rem; */
+  letter-spacing: 0.2rem;
+}
+
+.story-btn {
+  width: 3rem;
+  height: 3rem;
+  /* background-color: #311c1c; */
+  position: absolute;
+  text-align: center;
+  top: -1rem;
+  right: -1rem;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 50;
+  transition: transform 0.5s;
+  padding-left: 5px;
+}
+
+.change.story-btn {
+  transform: rotate(390deg);
+}
+
+.story {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(237, 81, 81, 0.9);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  transform: scale(0);
+  transform-origin: top right;
+  border-radius: 200px;
+  transition: all 0.5s;
+}
+
+.change.story {
+  transform: scale(1);
+  border-radius: 0;
+}
+
+.story-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+.story-paragraph {
+  font-size: 1.8rem;
+  color: #fff8f8 !important;
+  text-align: justify;
+  text-indent: 2rem;
+}
+/* End of Section 3 */
+
+#developers {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .section-3 {
+    height: auto;
+  }
+
+  .developers-wrapper {
+    flex-wrap: wrap;
+  }
+  .developers-member {
+    margin: 2rem 1rem;
+  }
+}
+@media (max-width: 550px) {
+  .feature-text-container {
+    margin: 3rem 0;
+  }
+}
+
+@media (max-width: 1000px) {
+  .containerr-div {
+    display: block;
+  }
+}
+/* End of Responsive */
+
+/* Draft */
+
+@media only screen and (min-width: 300px) {
+  /* For tablets: */
+  .col-s-1 {
+    width: 8.33%;
+  }
+  .col-s-2 {
+    width: 16.66%;
+  }
+  .col-s-3 {
+    width: 25%;
+  }
+  .col-s-4 {
+    width: 33.33%;
+  }
+  .col-s-5 {
+    width: 41.66%;
+  }
+  .col-s-6 {
+    width: 50%;
+  }
+  .col-s-7 {
+    width: 58.33%;
+  }
+  .col-s-8 {
+    width: 66.66%;
+  }
+  .col-s-9 {
+    width: 75%;
+  }
+  .col-s-10 {
+    width: 83.33%;
+  }
+  .col-s-11 {
+    width: 91.66%;
+  }
+  .col-s-12 {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+
+  .col-1 {
+    width: 8.33%;
+  }
+  .col-2 {
+    width: 16.66%;
+  }
+  .col-3 {
+    width: 25%;
+  }
+  .col-4 {
+    width: 33.33%;
+  }
+  .col-5 {
+    width: 41.66%;
+  }
+  .col-6 {
+    width: 50%;
+  }
+  .col-7 {
+    width: 58.33%;
+  }
+  .col-8 {
+    width: 66.66%;
+  }
+  .col-9 {
+    width: 75%;
+  }
+  .col-10 {
+    width: 83.33%;
+  }
+  .col-11 {
+    width: 91.66%;
+  }
+  .col-12 {
+    width: 100%;
+  }
+}
+
+.carHovar :hover {
+  width: 120%;
+}
+
+.fa {
+  padding: 5px;
+  font-size: 12px;
+  width: 30px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+  border-radius: 50%;
+}
+.fa:hover {
+  opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3b5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55acee;
+  color: white;
+}
+
+.fa-google {
+  background: #dd4b39;
+  color: white;
+}
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+
+.fa-instagram {
+  background: #125688;
+  color: white;
+}
+
+.btn-btn {
+  border-radius: 10px;
+  opacity: 0.8;
+}
+.btn-btn:hover {
+  opacity: 1;
+}

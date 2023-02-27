@@ -14,13 +14,37 @@ import {
   Row,
   Card,
   CardBody,
+  Table,
   FormGroup,
   Label,
   Button,
   CardTitle,
+  CardSubtitle,
   Input,
 } from 'reactstrap';
 import Select from 'react-select';
+import {
+  DoughnutChart,
+  LineChart,
+  PolarAreaChart,
+  AreaChart,
+  ScatterChart,
+  BarChart,
+  RadarChart,
+  PieChart,
+} from 'components/charts';
+import {
+  lineChartData,
+  polarAreaChartData,
+  polarAreaChartData1,
+  areaChartData,
+  scatterChartData,
+  barChartData,
+  radarChartData,
+  pieChartData,
+  doughnutChartData,
+  doughnutChartData1,
+} from 'data/charts';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
@@ -78,7 +102,7 @@ const ProvincailDashboard = (
       .get(provinceStuentsCountApiUrl)
       .then((res) => {
         setProvinceStuentsCount(res.data);
-        console.log(res.data);
+        console.log('Data01', res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -115,7 +139,8 @@ const ProvincailDashboard = (
 
       {/* First Three columns */}
       <Row>
-        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+        {/* Teacher */}
+        {/* <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
           <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
             <CardBody>
               <CardTitle>
@@ -128,7 +153,6 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
-                      {/* <IntlMessages id="institute.totalStudentsMale" /> */}
                       total teachers
                     </b>
                   </p>
@@ -148,6 +172,7 @@ const ProvincailDashboard = (
                   </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
+                 
                   <p>
                     <b>
                       {' '}
@@ -162,7 +187,7 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
-                      {/* <IntlMessages id="dash.14YearsGreduatedMale" /> */}
+                
                       total teachers 14 years graduated
                     </b>
                   </p>
@@ -192,7 +217,7 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
-                      {/* <IntlMessages id="dash.bachelorMale" /> */}
+                   
                       total bachelor teachers
                     </b>
                   </p>
@@ -215,7 +240,6 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
-                      {/* <IntlMessages id="dash.bachelorFemale" /> */}
                       total master teachers
                     </b>
                   </p>
@@ -239,7 +263,6 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
-                      {/* <IntlMessages id="dash.phdMale" /> */}
                       total phd teachers
                     </b>
                   </p>
@@ -270,7 +293,6 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
-                      {/* <IntlMessages id="teacher.EvaluatedMale" /> */}
                       total evaluated teachers
                     </b>
                   </p>
@@ -302,7 +324,6 @@ const ProvincailDashboard = (
                   <p>
                     <b>
                       {' '}
-                      {/* <IntlMessages id="teacher.EvaluatedFemale" /> */}
                       not evaluated teachers
                     </b>
                   </p>
@@ -314,79 +335,272 @@ const ProvincailDashboard = (
               </Colxx>
             </CardBody>
           </Card>
-        </Colxx>
+        </Colxx> */}
 
-        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
-          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+        {/* Teacher Statistics */}
+        <Colxx xxs="4">
+          <Card className="mb-4">
             <CardBody>
               <CardTitle>
-                <IntlMessages id="dash.totalStatistics" />
+                <IntlMessages id="dash.teacherStatistics" />
               </CardTitle>
-              <Separator />
-              <br />
-              <Colxx>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <p>
-                    <b>
+
+              <Table striped>
+                <thead>
+                  <tr>
+                    <th>
                       {' '}
-                      <IntlMessages id="dash.totalNumberOfInstitute" />
-                    </b>
-                  </p>
-                  <p style={{ marginRight: '10%' }}>
-                    {provinceTeachersCount['institute_count']}
-                  </p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <p>
-                    <b>
-                      {' '}
-                      <IntlMessages id="dash.totalNumberOfSchool" />
-                    </b>
-                  </p>
-                  <p style={{ marginRight: '10%' }}>
-                    {provinceTeachersCount['school_count']}
-                  </p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <p>
-                    <b>
-                      {' '}
-                      <IntlMessages id="dash.totalNumberOfDorms" />
-                    </b>
-                  </p>
-                  <p style={{ marginRight: '10%' }}>
-                    {provinceDormsCount['total_dorms']}
-                  </p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <p>
-                    <b>
+                      <IntlMessages id="marks.No" />{' '}
+                    </th>
+                    <th>
                       {' '}
                       <IntlMessages id="dash.totalNumberOfTeachers" />
-                    </b>
-                  </p>
-                  <p style={{ marginRight: '10%' }}>90</p>
-                </div>
-              </Colxx>
+                    </th>
+                    <th>
+                      {' '}
+                      <IntlMessages id="dash.totalNo" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.totalStudents" />
+                    </td>
+                    <td> {provinceTeachersCount['total_teachers']}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </td>
+                    <td> {provinceTeachersCount['male_teachers']}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </td>
+                    <td>{provinceTeachersCount['female_teachers']}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.14YearsGreduatedTotal" />
+                    </td>
+                    <td> {provinceTeachersCount['14_teachers']}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>
+                      <IntlMessages id="dash.14YearsGreduatedMale" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.14YearsGreduatedFemale" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.bachelorTotal" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.bachelorMale" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">8</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.bachelorFemale" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.masterTotal" />
+                    </td>
+                    <td> {provinceTeachersCount['master_teachers']}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.masterMale" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.masterFemale" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.phdTotal" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.phdMale" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>
+                      {' '}
+                      <IntlMessages id="dash.phdFemale" />
+                    </td>
+                    <td>58</td>
+                  </tr>
+                </tbody>
+              </Table>
             </CardBody>
           </Card>
+        </Colxx>
+
+        {/* Teacher Chart */}
+        <Colxx xxs="12" sm="4" md="8">
+          <Card>
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="charts.Teachers.chart" />
+              </CardTitle>
+              <Row>
+                <Colxx xxs="12" lg="5" className="">
+                  <CardSubtitle>
+                    <IntlMessages id="dash.teacherGender" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <DoughnutChart data={doughnutChartData} />
+                  </div>
+                </Colxx>
+                <Colxx xxs="12" lg="7" className="">
+                  <CardSubtitle>
+                    <IntlMessages id="forms.EducationLevelLabel" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <DoughnutChart data={doughnutChartData1} />
+                  </div>
+                </Colxx>
+              </Row>
+            </CardBody>
+          </Card>
+          <br />
+          <br />
+          {/* Teacher Evaluation Statistics */}
+          <Colxx xxs="13">
+            <Card className="">
+              <CardBody>
+                <CardTitle>
+                  <IntlMessages id="dash.teacherEvaluationStatistics" />
+                </CardTitle>
+
+                <Table striped>
+                  <thead>
+                    <tr>
+                      <th>
+                        {' '}
+                        <IntlMessages id="marks.No" />{' '}
+                      </th>
+                      <th>
+                        {' '}
+                        <IntlMessages id="dash.totalNumberOfTeachers" />
+                      </th>
+                      <th>
+                        {' '}
+                        <IntlMessages id="dash.totalNo" />
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>
+                        {' '}
+                        <IntlMessages id="dash.TeacherEvaluatedTotal" />
+                      </td>
+                      <td>۵۵</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>
+                        {' '}
+                        <IntlMessages id="dash.TeacherNotEvaluatedTotal" />
+                      </td>
+                      <td> ۱۰۰۰</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>
+                        {' '}
+                        <IntlMessages id="teacher.EvaluatedMale" />
+                      </td>
+                      <td>w23</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">4</th>
+                      <td>
+                        {' '}
+                        <IntlMessages id="teacher.EvaluatedFemale" />
+                      </td>
+                      <td>23423</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </CardBody>
+            </Card>
+          </Colxx>
+        </Colxx>
+
+        {/* Students */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4 ">
           <Card style={{ minHeight: '180px' }} id="divId">
             <CardBody>
               <CardTitle>
                 <IntlMessages id="dash.totalStudentsInst" />
               </CardTitle>
               <Separator />
-              <br />
-              <Row className="m-2 ">
+              <Row className="mt-3 mb-2 m-1">
                 <Colxx>
                   <p>
                     <b>
                       {' '}
-                      {/* <IntlMessages id="institute.totalStudentsMale" /> */}
-                      total institute students
+                      <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>{provinceStuentsCount['total_institute_students']}</p>
+                  <p>‌10000</p>
+                  <br />
                 </Colxx>
                 <Colxx>
                   <p>
@@ -395,7 +609,8 @@ const ProvincailDashboard = (
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>{provinceStuentsCount['male_institute_students']}</p>
+                  <p>5000</p>
+                  <br />
                 </Colxx>
                 <Colxx>
                   <p>
@@ -404,132 +619,184 @@ const ProvincailDashboard = (
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>{provinceStuentsCount['female_institute_students']}</p>
+                  <p>5000</p>
+                  <br />
                 </Colxx>
               </Row>
-            </CardBody>
-          </Card>
-        </Colxx>
 
-        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
-          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
-            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.specialEducationStudents" />
+              </CardTitle>
+              <Separator />
+              <Row className="mt-3 mb-2 m-1">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalStudents" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+              </Row>
+
+              <CardTitle>
+                <IntlMessages id="dash.totalStudentsScool" />
+              </CardTitle>
+              <Separator />
+
+              <Row className="mt-3 mb-2 m-1">
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalStudents" />
+                    </b>
+                  </p>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsMale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                </Colxx>
+                <Colxx>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    </b>
+                  </p>
+                  <p>5000</p>
+                  <br />
+                </Colxx>
+              </Row>
               <CardTitle>
                 <IntlMessages id="dash.totalStudentsDorm" />
               </CardTitle>
               <Separator />
-              <br />
-              <Colxx style={{ marginRight: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <p>
-                    <b>
-                      {' '}
-                      {/* <IntlMessages id="institute.totalStudentsMale" /> */}
-                      total dorm students
-                    </b>
-                  </p>
-                  <p style={{ marginRight: '10%' }}>
-                    {provinceDormsCount['total_dorm_students']}
-                  </p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <Row className="mt-3 mb-2 m-1">
+                <Colxx>
                   <p>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>
-                    {provinceDormsCount['male_dorm_students']}
-                  </p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>‌10000</p>
+                </Colxx>
+                <Colxx>
                   <p>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>
-                    {provinceDormsCount['female_dorm_students']}
-                  </p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
                   <p>
                     <b>
                       {' '}
                       <IntlMessages id="dash.DormStudentType_1" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>
-                    {provinceDormsCount['badal_eyasha']}
-                  </p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+                <Colxx>
                   <p>
                     <b>
                       {' '}
                       <IntlMessages id="dash.DormStudentType_2" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>
-                    {provinceDormsCount['badeel_eyasha']}
-                  </p>
-                </div>
-              </Colxx>
+                  <p>‌10000</p>
+                  <br />
+                </Colxx>
+              </Row>
             </CardBody>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </Card>
-          <Card style={{ minHeight: '180px' }} id="divId">
+        </Colxx>
+
+        {/* Students chart */}
+        <Colxx xxs="8" sm="4" md="8">
+          <Card>
             <CardBody>
               <CardTitle>
-                <IntlMessages id="dash.totalStudentsScool" />
+                <IntlMessages id="charts.studentChart" />
               </CardTitle>
-              <Separator />
-              <br />
-              <b>
-                <p
-                  className="bg-primary rounded"
-                  style={{ paddingInline: '10px' }}
-                ></p>
-              </b>
-              <Row className="m-2 ">
-                <Colxx>
-                  <p>
-                    <b>
-                      {' '}
-                      {/* <IntlMessages id="institute.totalStudentsMale" /> */}
-                      total school students
-                    </b>
-                  </p>
-                  <p>{provinceStuentsCount['total_schoole_students']}</p>
+              <Row>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="charts.ّInstituteStudentGenderChart" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <PolarAreaChart shadow data={polarAreaChartData} />
+                  </div>
                 </Colxx>
-
-                <Colxx>
-                  <p>
-                    <b>
-                      {' '}
-                      <IntlMessages id="institute.totalStudentsMale" />
-                    </b>
-                  </p>
-                  <p>{provinceStuentsCount['male_schoole_students']}</p>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="dash.totalStudentsDorm" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <PolarAreaChart shadow data={polarAreaChartData} />
+                  </div>
                 </Colxx>
-
-                <Colxx>
-                  <p>
-                    <b>
-                      {' '}
-                      <IntlMessages id="institute.totalStudentsFemale" />
-                    </b>
-                  </p>
-                  <p>{provinceStuentsCount['female_schoole_students']}</p>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="charts.schoolStudentGenderChart" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <PolarAreaChart data={polarAreaChartData1} />
+                  </div>
+                </Colxx>
+                <Colxx xxs="12" lg="6" className="mb-5">
+                  <CardSubtitle>
+                    <IntlMessages id="charts.schoolStudentGenderChart" />
+                  </CardSubtitle>
+                  <div className="chart-container">
+                    <PolarAreaChart data={polarAreaChartData1} />
+                  </div>
                 </Colxx>
               </Row>
             </CardBody>
           </Card>
         </Colxx>
-      </Row>
 
-      <Row>
         {/* Institute List */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '600px' }}>
@@ -757,8 +1024,66 @@ const ProvincailDashboard = (
             </CardBody>
           </Card>
         </Colxx>
+        {/* Calender */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Calendar />
+        </Colxx>
+
+        {/* Total Statistics */}
+        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+            <CardBody>
+              <CardTitle>
+                <IntlMessages id="dash.totalStatistics" />
+              </CardTitle>
+              <Separator />
+              <br />
+              <Colxx>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfInstitute" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['institute_count']}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfSchool" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceTeachersCount['school_count']}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfDorms" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>
+                    {provinceDormsCount['total_dorms']}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <p>
+                    <b>
+                      {' '}
+                      <IntlMessages id="dash.totalNumberOfTeachers" />
+                    </b>
+                  </p>
+                  <p style={{ marginRight: '10%' }}>90</p>
+                </div>
+              </Colxx>
+            </CardBody>
+          </Card>
         </Colxx>
       </Row>
     </>

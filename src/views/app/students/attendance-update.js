@@ -3,7 +3,6 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
 // Year  and SHift
-
 import * as Yup from 'yup';
 import {
   Row,
@@ -26,17 +25,17 @@ import {
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
 
-// const LevelOfEdcationOptions = [
-//   { value: '1', label: 'اصلی' },
-//   { value: '2', label: 'فرعی' },
-// ];
+const LevelOfEdcationOptions = [
+  { value: '1', label: 'اصلی' },
+  { value: '2', label: 'فرعی' },
+];
 
-// const FieldOptions = [
-//   { value: '14th', label: 'Computer Science' },
-//   { value: 'bachelor', label: 'Agriculture' },
-//   { value: 'master', label: 'BBA' },
-//   { value: 'PHD', label: 'Mechenical Engineering' },
-// ];
+const FieldOptions = [
+  { value: '14th', label: 'Computer Science' },
+  { value: 'bachelor', label: 'Agriculture' },
+  { value: 'master', label: 'BBA' },
+  { value: 'PHD', label: 'Mechenical Engineering' },
+];
 
 const SemesterOptions = [
   { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
@@ -45,26 +44,38 @@ const SemesterOptions = [
   //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
 ];
 
-// const SectionOptions = [
-//   { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-// ];
+const SectionOptions = [
+  { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
+  { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
+  { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
+  { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
+  { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
+];
 
-// const ClassOptions = [
-//   { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-//   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-// ];
+const ClassOptions = [
+  { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
+  { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
+  { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
+  { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
+  { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
+  { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
+];
 
 const StudyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+];
+
+const chanceOptions = [
+  { value: '1', label: <IntlMessages id="forms.chanceOne" /> },
+  { value: '2', label: <IntlMessages id="forms.chanceTwo" /> },
+];
+
+const SubjectOptions = [
+  { value: '14th', label: 'Computer Science' },
+  { value: 'bachelor', label: 'Agriculture' },
+  { value: 'master', label: 'BBA' },
+  { value: 'PHD', label: 'Mechenical Engineering' },
 ];
 
 const orderOptions = [
@@ -106,6 +117,27 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="teacher.departmentIdErr" />),
+
+  subject: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.SubjectErr" />),
+
+  studentId: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.studentIdErr" />),
+
+  chance: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.chanceErr" />),
 });
 
 const initialValues = {
@@ -114,11 +146,13 @@ const initialValues = {
   studyTime: [],
   classs: [],
   department: [],
+  subject: [],
+  studentId: [],
+  chance: [],
 };
-
-const AllSubjectsMarks = ({ match }) => {
+const AttendanceUpdate = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [inNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -134,6 +168,7 @@ const AllSubjectsMarks = ({ match }) => {
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
+  const [examId, setExamId] = useState();
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
@@ -144,7 +179,7 @@ const AllSubjectsMarks = ({ match }) => {
     setInstitutes(updatedData);
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
+    const response = await axios.get('http://localhost:8000/institute/field/');
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name,
@@ -191,7 +226,7 @@ const AllSubjectsMarks = ({ match }) => {
   }, []);
 
   const handleClick = (event) => {
-    setIsNext(event);
+    // setIsNext(event);
     axios
       .get(
         `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
@@ -199,7 +234,11 @@ const AllSubjectsMarks = ({ match }) => {
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
+        setIsNext(false);
       });
+    console.log(
+      `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+    );
     console.log('students', students);
   };
 
@@ -207,41 +246,83 @@ const AllSubjectsMarks = ({ match }) => {
     console.log('values', values);
     const educational_year = selectedEducationalYear;
     const institute_id = selectedInstitute.value;
-    const department = selectedDepartment.value;
+    const department_id = selectedDepartment.value;
     const class_id = selectedClass.value;
     const subject_id = selectedSubject.value;
-    students.map((student) => {
-      const examData = {
-        educational_year: educational_year,
+
+    // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
+    // values.score[student.student_id]
+    const newStudents = students.map((student, index) => {
+      return {
         student_id: student.student_id,
-        institute_id: institute_id,
-        Department: department,
-        class_id: class_id,
+        score: values.score[student.student_id],
       };
-      //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-      //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-      console.log('exam', examData);
-      const data = {
-        subject: subject_id,
-        exam_types: 1,
-        passing_score: passingScore,
-        grad: subjectGrad,
-        Gpa: subjectGPA,
-        user_id: 1,
-        mark: values.score[student.student_id],
-      };
-      console.log('data', data);
-      // axios.post('http://localhost:8000/api/marks/', data);
     });
+
+    let data = [
+      {
+        educational_year: educational_year,
+        institute_id: institute_id,
+        Department: department_id,
+        class_id: class_id,
+        subject_id: subject_id,
+      },
+      ...newStudents,
+    ];
+
+    console.log('data', data);
+
+    axios
+      .post('http://localhost:8000/api/create_marks/', data)
+      .then((res) => {
+        console.log('res', res);
+      })
+      .then((err) => {
+        console.log('err', err);
+      });
+
+    // students.map(async (student, index) => {
+    //   let exam_id = '';
+    //   const examData = {
+    //     educational_year: educational_year,
+    //     student_id: student.student_id,
+    //     institute_id: institute_id,
+    //     Department: department_id,
+    //     class_id: class_id,
+    //     semister: 1,
+    //     teacher_id: 1,
+    //     user_id: 1,
+    //     verification: 1,
+    //   };
+    //   const exam = await axios.post(
+    //     'http://localhost:8000/api/create_marks/',
+    //     examData
+    //   );
+    //   const updatedExam = await exam.data;
+    //   exam_id = updatedExam;
+
+    //   console.log('exam_id', exam_id, index);
+
+    //   const data = {
+    //     exam_marks_id: exam_id,
+    //     subject_id: subject_id,
+    //     exam_types: 1,
+    //     score: values.score[student.student_id],
+    //     passing_score: 55,
+    //     user_id: 1,
+    //   };
+    //   console.log('data', data, index);
+    //   axios.post('http://localhost:8000/api/create_marks_details/', data);
+    // });
   };
   return (
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {<IntlMessages id="marks.marksDisplayTitle" />}
+          {<IntlMessages id="attendance.updateTitle" />}
         </h3>
         <CardBody>
-          {inNext ? (
+          {isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}
@@ -298,6 +379,7 @@ const AllSubjectsMarks = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
+
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
@@ -315,6 +397,26 @@ const AllSubjectsMarks = ({ match }) => {
                         {errors.educationlaYear && touched.educationlaYear ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.educationlaYear}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
+                        <Label>
+                          <IntlMessages id="marks.studentId" />
+                        </Label>
+                        <FormikReactSelect
+                          name="studentId"
+                          id="studentId"
+                          value={values.studentId}
+                          options={StudyTimeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          onClick={setSelectedStudyTime(values.studentId)}
+                        />
+                        {errors.studentId && touched.studentId ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.studentId}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -362,8 +464,30 @@ const AllSubjectsMarks = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
+
+                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                        <Label>
+                          <IntlMessages id="marks.SubjectLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="subject"
+                          id="subject"
+                          value={values.subject}
+                          options={subjects}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          onClick={setSelectedSubject(values.subject)}
+                          required
+                        />
+                        {errors.subject && touched.subject ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.subject}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                     </Colxx>
                   </Row>
+
                   <Row>
                     <Colxx>
                       <Button
@@ -392,10 +516,9 @@ const AllSubjectsMarks = ({ match }) => {
             </Formik>
           ) : (
             <>
-              {/* Result of Search */}
               <Row
                 className="border border bg-primary me-5 p-1 "
-                style={{ marginInline: '2%' }}
+                style={{ marginInline: '16%' }}
               >
                 <Colxx xxs="2">
                   <Label>
@@ -432,218 +555,101 @@ const AllSubjectsMarks = ({ match }) => {
                   </Label>
                   <h6>{selectedClass.label}</h6>
                 </Colxx>
+
+                <Colxx xxs="2">
+                  <Label>
+                    <IntlMessages id="marks.SubjectLabel" />
+                  </Label>
+                  <h6>{selectedSubject.label}</h6>
+                </Colxx>
               </Row>
 
               <Row
-                style={{
-                  marginInline: '2%',
-                  maxWidth: '97%',
-                  maxHeight: '900px',
-                  overflowX: 'auto',
-                  overflowY: 'auto',
-                }}
+                className="justify-content-center  border border"
+                style={{ marginInline: '16%' }}
               >
-                <table className="table" striped>
-                  <thead className="thead-dark " style={{ marginInline: '2%' }}>
+                <table className="table">
+                  <thead className="thead-dark">
                     <tr>
-                      <th colspan="4" className="border text-center">
-                        <IntlMessages id="marks.studentChar" />
-                      </th>
-                      <th colspan="15" className="border text-center">
-                        <IntlMessages id="marks.marksDisplayTitle" />
-                      </th>
-                    </tr>
-                  </thead>
-                  <thead className="thead-dark" style={{ marginInline: '5%' }}>
-                    <tr>
-                      <th scope="col" className="border text-center ">
+                      <th scope="col">
                         <IntlMessages id="marks.No" />
                       </th>
-                      <th scope="col" className="border text-center">
+                      <th scope="col">
                         <IntlMessages id="marks.FullName" />
                       </th>
-                      <th scope="col" className="border text-center">
+                      <th scope="col">
                         <IntlMessages id="marks.FatherName" />
                       </th>
-                      <th scope="col" className="border text-center">
+                      <th scope="col">
                         <IntlMessages id="marks.ID" />
                       </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
+                      <th scope="col">
+                        <IntlMessages id="marks.Marks" />
                       </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
                     </tr>
                   </thead>
+                </table>
+              </Row>
 
-                  <tbody
-                    className="border border "
-                    style={{
-                      height: '200px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
-                  >
-                    <tr>
-                      <td>1</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
-                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
-                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
-                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
-                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
-                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
-                      <td>hdsfsda18</td>
-                    </tr>
-                    <tr>
-                      <td>2</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
-                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
-                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
-                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
-                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
-                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
-                      <td>hdsfsda18</td>
-                    </tr>{' '}
-                    <tr>
-                      <td>3</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
-                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
-                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
-                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
-                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
-                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
-                      <td>hdsfsda18</td>
-                    </tr>{' '}
-                    <tr>
-                      <td>4</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
-                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
-                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
-                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
-                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
-                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
-                      <td>hdsfsda18</td>
-                    </tr>
-                    {/* {students.map((student, index) => (
+              <Row
+                className="justify-content-center "
+                style={{
+                  marginInline: '16%',
+                  overflowX: 'hidden',
+                }}
+              >
+                <table class="table ">
+                  <tbody>
+                    {students.map((student, index) => (
                       <tr>
                         <th scope="row">{index}</th>
                         <td>{student.name}</td>
                         <td>{student.father_name}</td>
                         <td>{student.student_id}</td>
-                        <td>{student.marks}</td>
-              
-                      </tr>
-                    ))} */}
-                  </tbody>
 
-                  <tfoot className="thead-dark">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="border text-center "
-                        style={{ maxWidth: '20px' }}
-                      >
-                        <IntlMessages id="marks.No" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FullName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FatherName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.ID" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>
-                    </tr>
-                  </tfoot>
+                        {/* Marks Entry */}
+                        <div class="form-group mx-sm-3 mb-2">
+                          <FormGroup className="form-group">
+                            <Field
+                              type="number"
+                              className="form-control"
+                              name={`score[${student.student_id}]`}
+                            />
+                            {errors.score && touched.score ? (
+                              <div className="invalid-feedback d-block">
+                                {errors.score}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+                        </div>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
               </Row>
+
               <Row className=" justify-content-center">
                 <Colxx xxs="9" className="m-5">
-                  <Button className=" m-4" onClick={() => handleClick(true)}>
+                  <Button className=" m-4 " onClick={() => handleClick(true)}>
                     <IntlMessages id="button.Back" />
                   </Button>
+
+                  <div className="d-flex justify-content-between align-items-center m-4 float-right">
+                    <Button
+                      className={`btn-shadow btn-multiple-state `}
+                      size="lg"
+                      type="submit"
+                    >
+                      <span className="spinner d-inline-block">
+                        <span className="bounce1" />
+                        <span className="bounce2" />
+                        <span className="bounce3" />
+                      </span>
+                      <span className="label">
+                        <IntlMessages id="button.SubmitButton" />
+                      </span>
+                    </Button>
+                  </div>
                 </Colxx>
               </Row>
             </>
@@ -654,4 +660,4 @@ const AllSubjectsMarks = ({ match }) => {
   );
 };
 
-export default AllSubjectsMarks;
+export default AttendanceUpdate;

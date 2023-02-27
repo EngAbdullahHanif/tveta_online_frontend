@@ -33,6 +33,8 @@ import {
   RadarChart,
   PieChart,
 } from 'components/charts';
+import CustomePieChart from 'components/charts/custom-pie-chart';
+import CustomeBarChart from 'components/charts/custom-bar-chart';
 import {
   lineChartData,
   polarAreaChartData,
@@ -63,10 +65,7 @@ const provinceDormsCountApiUrl = `${servicePath}/api/province_dorm_statistics/`;
 const provinceStuentsCountApiUrl = `${servicePath}/api/province_student_statistics/`;
 const proviceDormslistApiUrl = `${servicePath}/api/each_dorm_students/`;
 
-const ProvincailDashboard = (
-  values,
-  { className = '', displayRate = false }
-) => {
+const Provincail = (values, { className = '', displayRate = false }) => {
   const [isNext, setIsNext] = useState(true);
   const [provinceTeachersCount, setProvinceTeachersCount] = useState([]);
   const [provinceDormsCount, setProvinceDormsCount] = useState([]);
@@ -497,24 +496,37 @@ const ProvincailDashboard = (
                 <IntlMessages id="charts.Teachers.chart" />
               </CardTitle>
               <Row>
-                <Colxx xxs="12" lg="5" className="">
+                <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle>
                     <IntlMessages id="dash.teacherGender" />
                   </CardSubtitle>
-                  <div className="chart-container">
-                    <DoughnutChart data={doughnutChartData} />
-                  </div>
+
+                  <CustomePieChart
+                    data={[90, 50]}
+                    labels={['ذکور', 'اناث']}
+                    backgroundColor={['#FF6384', '#36A2EB']}
+                  />
                 </Colxx>
-                <Colxx xxs="12" lg="7" className="">
+                <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle>
                     <IntlMessages id="forms.EducationLevelLabel" />
                   </CardSubtitle>
-                  <div className="chart-container">
-                    <DoughnutChart data={doughnutChartData1} />
-                  </div>
+                  <CustomeBarChart
+                    data={[30, 20, 40, 50]}
+                    labels={['چهارده پاس', 'لیسانس', 'ماستر', 'دوکتور']}
+                    backgroundColor={[
+                      '#FF6384',
+                      '#36A2EB',
+                      '#FFCE56',
+                      '#FF6333',
+                    ]}
+                  />
                 </Colxx>
               </Row>
             </CardBody>
+            <br />
+            <br />
+            <br />
           </Card>
           <br />
           <br />
@@ -764,33 +776,42 @@ const ProvincailDashboard = (
                   <CardSubtitle>
                     <IntlMessages id="charts.ّInstituteStudentGenderChart" />
                   </CardSubtitle>
-                  <div className="chart-container">
-                    <PolarAreaChart shadow data={polarAreaChartData} />
-                  </div>
+
+                  <CustomePieChart
+                    data={[876, 552]}
+                    labels={['ذکور', 'اناث']}
+                    backgroundColor={['#FF6384', '#36A2EB']}
+                  />
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle>
                     <IntlMessages id="dash.totalStudentsDorm" />
                   </CardSubtitle>
-                  <div className="chart-container">
-                    <PolarAreaChart shadow data={polarAreaChartData} />
-                  </div>
+                  <CustomePieChart
+                    data={[467, 789]}
+                    labels={['ذکور', 'اناث']}
+                    backgroundColor={['#FFCE56', '#FF6333']}
+                  />
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle>
                     <IntlMessages id="charts.schoolStudentGenderChart" />
                   </CardSubtitle>
-                  <div className="chart-container">
-                    <PolarAreaChart data={polarAreaChartData1} />
-                  </div>
+                  <CustomePieChart
+                    data={[534, 876]}
+                    labels={['ذکور', 'اناث']}
+                    backgroundColor={['#f062ba', '#34eb77']}
+                  />
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle>
                     <IntlMessages id="charts.schoolStudentGenderChart" />
                   </CardSubtitle>
-                  <div className="chart-container">
-                    <PolarAreaChart data={polarAreaChartData1} />
-                  </div>
+                  <CustomePieChart
+                    data={[376, 267]}
+                    labels={['ذکور', 'اناث']}
+                    backgroundColor={['#f0e80c', '#FF6333']}
+                  />
                 </Colxx>
               </Row>
             </CardBody>
@@ -1090,4 +1111,4 @@ const ProvincailDashboard = (
   );
 };
 
-export default ProvincailDashboard;
+export default Provincail;

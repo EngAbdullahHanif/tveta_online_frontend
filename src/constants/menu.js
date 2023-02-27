@@ -138,79 +138,7 @@ const data = [
         to: `${adminRoot}/workers/workerId`,
         newWindow: false,
       },
-      // {
-      //   icon: 'simple-icon-user-follow',
-      //   label: 'menu.student_register_kankor',
-      //   to: `${adminRoot}/students/register-kankor`,
-      //   // roles: [UserRole.Admin],
-      // },
-      // {
-      //   icon: 'iconsminds-students',
-      //   label: 'menu.student_list',
-      //   to: `${adminRoot}/students/students`,
-      //   // roles: [UserRole.Admin],
-      // },
-      // {
-      //   icon: 'simple-icon-plus',
-      //   label: 'menu.student-marks-register',
-      //   to: `${adminRoot}/students/marks-register`,
-      // },
-      // {
-      //   icon: 'simple-icon-plus',
-      //   label: 'menu.attendance-registration',
-      //   to: `${adminRoot}/students/attendance-register`,
-      // },
-      // {
-      //   icon: 'simple-icon-user',
-      //   label: 'menu.student-profile',
-      //   to: `${adminRoot}/students/student-profile`,
-      // },
-      // {
-      //   icon: 'simple-icon-user-follow',
-      //   label: 'menu.student-transfer',
-      //   to: `${adminRoot}/students/student-transfer`,
-      //   newWindow: false,
-      // },
-      // {
-      //   icon: 'simple-icon-user-follow',
-      //   label: 'menu.marks-display',
-      //   to: `${adminRoot}/students/marks-display`,
-      //   newWindow: false,
-      // },
-      // {
-      //   icon: 'simple-icon-user-follow',
-      //   label: 'menu.marks-display-all-subs',
-      //   to: `${adminRoot}/students/marks-display-allsubs`,
-      //   newWindow: false,
-      // },
-      // {
-      //   icon: 'simple-icon-calculator',
-      //   label: 'menu.attendance',
-      //   to: `${adminRoot}/students/attendance`,
-      //   newWindow: false,
-      // },
-      //   label: 'menu.student-dismissal',
-      //   to: `${adminRoot}/students/dismissal`,
-      //   newWindow: false,
-      // },
-      {
-        icon: 'simple-icon-calculator',
-        label: 'menu.student-reregister',
-        to: `${adminRoot}/students/reregister`,
-        newWindow: false,
-      },
-      {
-        icon: 'simple-icon-calculator',
-        label: 'menu.single-student-marksUpdate',
-        to: `${adminRoot}/students/marks-update`,
-        newWindow: false,
-      },
-      {
-        icon: 'simple-icon-calculator',
-        label: 'menu.attendance-Update',
-        to: `${adminRoot}/students/attendance-update`,
-        newWindow: false,
-      },
+     
     ],
   },
   {
@@ -369,8 +297,21 @@ const data = [
         label: 'department-list',
         to: `${adminRoot}/fields/department-list`,
       },
+      {
+        icon: 'simple-icon-logout',
+        label: 'department-register',
+        to: `${adminRoot}/fields/department-register`,
+      },
+      
+      {
+        icon: 'simple-icon-logout',
+        label: 'department-list',
+        to: `${adminRoot}/fields/department-list`,
+      },
     ],
   },
+
+ 
   {
     id: 'evaluations',
     icon: 'simple-icon-book-open',

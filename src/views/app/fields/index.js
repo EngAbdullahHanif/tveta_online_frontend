@@ -17,9 +17,7 @@ const InstituteFieldDepartmentRegister = React.lazy(() =>
 const FieldList = React.lazy(() =>
   import(/* webpackChunkName: "subject-register" */ './field-list/FieldListMain')
 );
-const DepartmentRegistration = React.lazy(() =>
-  import(/* webpackChunkName: "subject-register" */ './DepartmentRegstration')
-);
+
 const DepartmentList = React.lazy(() =>
   import(/* webpackChunkName: "subject-register" */ './department-list/DepartmentListMain')
 );
@@ -36,10 +34,7 @@ const Fields = ({ match }) => (
         path={`${match.url}/field-list`}
         render={(props) => <FieldList {...props} />}
       />
-       <Route
-        path={`${match.url}/department-registration`}
-        render={(props) => <DepartmentRegistration {...props} />}
-      />
+     
        <Route
         path={`${match.url}/department-list`}
         render={(props) => <DepartmentList {...props} />}

@@ -363,11 +363,7 @@ const data = [
         label: 'field-list',
         to: `${adminRoot}/fields/field-list`,
       },
-      {
-        icon: 'simple-icon-logout',
-        label: 'department-registration',
-        to: `${adminRoot}/fields/department-registration`,
-      },
+   
       {
         icon: 'simple-icon-logout',
         label: 'department-list',

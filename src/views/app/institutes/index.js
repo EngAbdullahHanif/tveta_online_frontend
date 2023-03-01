@@ -28,7 +28,12 @@ const Institues = ({ match }) => (
       />
 
       <Route
+      exact
         path={`${match.url}/register`}
+        render={(props) => <InstituteRegister {...props} />}
+      />
+      <Route
+        path={`${match.url}/register/:instituteId`}
         render={(props) => <InstituteRegister {...props} />}
       />
       <Route

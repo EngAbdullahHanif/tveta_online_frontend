@@ -27,7 +27,7 @@ const data = [
       },
    
       {
-        icon: 'GO.GoChecklist',
+        icon: 'MD.MdAddBox',
         label: 'menu.teacher-evaluation',
         to: `${adminRoot}/teachers/teacher-evalaution`,
       },
@@ -64,12 +64,12 @@ const data = [
         // roles: [UserRole.Admin],
       },
       {
-        icon: 'MD.MdOutlineCreditScore',
+        icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
         to: `${adminRoot}/students/marks-register`,
       },
       {
-        icon: 'IM.ImUserCheck',
+        icon: 'MD.MdAddBox',
         label: 'menu.attendance-registration',
         to: `${adminRoot}/students/attendance-register`,
       },
@@ -85,19 +85,19 @@ const data = [
         newWindow: false,
       },
       {
-        icon: 'MD.MdOutlineCreditScore',
+        icon: 'MD.MdAddBox',
         label: 'menu.marks-display',
         to: `${adminRoot}/students/marks-display`,
         newWindow: false,
       },
       {
-        icon: 'MD.MdOutlineCreditScore',
+        icon: 'MD.MdAddBox',
         label: 'menu.marks-display-all-subs',
         to: `${adminRoot}/students/marks-display-allsubs`,
         newWindow: false,
       },
       {
-        icon: 'IM.ImUserCheck',
+        icon: 'MD.MdAddBox',
         label: 'menu.attendance',
         to: `${adminRoot}/students/attendance`,
         newWindow: false,
@@ -146,12 +146,12 @@ const data = [
     to: `${adminRoot}/institutes`,
     subs: [
       {
-        icon: 'FA.FaHouseUser',
+        icon: 'FA.FaList',
         label: 'menu.institute_list',
         to: `${adminRoot}/institutes/institutes`,
       },
       {
-        icon: 'MD.MdOutlineHouseSiding',
+        icon: 'MD.MdAddBox',
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
       },
@@ -174,12 +174,12 @@ const data = [
     to: `${adminRoot}/dorms`,
     subs: [
       {
-        icon: 'RI.RiHotelFill',
+        icon: 'FA.FaList',
         label: 'dorm.list',
         to: `${adminRoot}/dorms/dorms`,
       },
       {
-        icon: 'MD.MdOutlineHouseSiding',
+        icon: 'MD.MdAddBox',
         label: 'dorm.register',
         to: `${adminRoot}/dorms/register`,
       },
@@ -212,12 +212,12 @@ const data = [
     to: `${adminRoot}/subjects`,
     subs: [
       {
-        icon: 'BI.BiBookAdd',
+        icon: 'MD.MdAddBox',
         label: 'subject.register',
         to: `${adminRoot}/subjects/register`,
       },
       {
-        icon: 'MD.MdTopic',
+        icon: 'MD.MdAddBox',
         label: 'subject.curriculum',
         to: `${adminRoot}/subjects/curriculum`,
       },
@@ -232,12 +232,12 @@ const data = [
         to: `${adminRoot}/subjects/admin-dashboard`,
       },
       {
-        icon: 'IM.ImBooks',
+        icon: 'FA.FaList',
         label: 'subject-list',
         to: `${adminRoot}/subjects/subject-list`,
       },
       {
-        icon: 'CG.CgNotes',
+        icon: 'FA.FaList',
         label: 'curriculum-list',
         to: `${adminRoot}/subjects/curriculum-list`,
       },
@@ -250,12 +250,12 @@ const data = [
     to: `${adminRoot}/classes`,
     subs: [
       {
-        icon: 'GI.GiTeacher',
+        icon: 'MD.MdAddBox',
         label: 'class.list',
         to: `${adminRoot}/classes/classes`,
       },
       {
-        icon: 'MD.MdOutlineAddBusiness',
+        icon: 'FA.FaList',
         label: 'class.register',
         to: `${adminRoot}/classes/register`,
       },
@@ -269,24 +269,24 @@ const data = [
     to: `${adminRoot}/fields`,
     subs: [
       {
-        icon: 'GR.GrChapterAdd',
+        icon: 'MD.MdAddBox',
         label: 'menu.field-register',
         to: `${adminRoot}/fields/register`,
       },
     
       {
-        icon: 'GR.GrChapterAdd',
+        icon: 'MD.MdAddBox',
         label: 'department-register',
         to: `${adminRoot}/fields/department-register`,
       },
       {
-        icon: 'GR.GrList',
+        icon: 'FA.FaList',
         label: 'field-list',
         to: `${adminRoot}/fields/field-list`,
       },
    
       {
-        icon: 'GR.GrList',
+        icon: 'FA.FaList',
         label: 'department-list',
         to: `${adminRoot}/fields/department-list`,
       },
@@ -301,12 +301,12 @@ const data = [
     to: `${adminRoot}/evaluations`,
     subs: [
       {
-        icon: 'MD.MdChecklist',
+        icon: 'FA.FaList',
         label: 'evaluation.list',
         to: `${adminRoot}/evaluations/evaluations`,
       },
       {
-        icon: 'TB.TbArrowsDownUp',
+        icon: 'MD.MdAddBox',
         label: 'menu.teacher-promotion-demotion',
         to: `${adminRoot}/evaluations/promotion-demotion`,
       },
@@ -325,12 +325,12 @@ const data = [
     to: `${adminRoot}/hr-evaluations`,
     subs: [
       {
-        icon: 'MD.MdChecklist',
+        icon: 'FA.FaList',
         label: 'evaluation.list',
         to: `${adminRoot}/hr-evaluations/hr-evaluations`,
       },
       {
-        icon: 'TB.TbChecklist',
+        icon: 'MD.MdAddBox',
         label: 'menu.teacher-HR-evaluation',
         to: `${adminRoot}/hr-evaluations/teacher-hr-evaluation`,
       },

@@ -33,7 +33,7 @@ const FieldOptions = [
   { value: '3', label: 'Option3' },
 ];
 
-const StudentRegistraion = () => {
+const StudentRegistraion = ({ history }) => {
   const UpdatingMode = false;
   const ValidationSchema = Yup.object().shape({
     name1: Yup.string()
@@ -146,7 +146,6 @@ const StudentRegistraion = () => {
   const [departments, setDepartments] = useState([]);
   const [isNext, setIsNext] = useState(true);
   const [StudyTime, setStudyTIme] = useState('0');
-  
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
@@ -177,7 +176,13 @@ const StudentRegistraion = () => {
   };
 
   const handleClick = (event) => {
-    // setIsNext(event);
+    setIsNext(event);
+  };
+
+  const handleReload = () => {
+    // window.location.reload();
+    console.log('history', history.location.pathname);
+    // history.push('/app/teacher/teacher-list');
   };
 
   const onRegister = (values) => {
@@ -435,7 +440,7 @@ const StudentRegistraion = () => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button className="m-5 bg-primary" onClick={handleReload}>
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

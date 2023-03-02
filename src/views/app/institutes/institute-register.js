@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 import * as Yup from 'yup';
 import {
@@ -152,86 +153,95 @@ const genderOptions = [
   { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
   { value: '3', label: <IntlMessages id="institute.studentgenderOption_3" /> },
 ];
+const servicePath = 'http://localhost:8000';
+const instituteApiUrl = `${servicePath}/institute`;
 
-const ValidationSchema = Yup.object().shape({
-  institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
-
-  province: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-    : null,
-
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-
-  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-
-  instType: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="inst.typeErr" />)
-    : null,
-
-  gender: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="institute.gender" />)
-    : null,
-});
-
-const updateMode = true;
 const InstituteRegister = () => {
-  const TestData = {
-    InstituteName: 'Nima',
-    Province: 'Kabul-1',
-    District: 'Paghman',
-    Village: 'Chehltan',
-    InstType: 'private',
-    Gender: 'Complex',
-  };
+  const [updateMode, setUpdateMode] = useState(false);
+  // const updateMode = true;
+  const { instituteId } = useParams();
+  const [institute, setInstitute] = useState([]);
+
+  if (instituteId) {
+    useEffect(() => {
+      async function fetchInstitute() {
+        const response = await axios.get(`${instituteApiUrl}/${instituteId}`);
+        setInstitute(response.data);
+      }
+      fetchInstitute();
+      setUpdateMode(true);
+    }, []);
+  }
+
+  const ValidationSchema = Yup.object().shape({
+    institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
+
+    province: updateMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
+      : null,
+
+    district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+
+    village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+
+    instType: updateMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="inst.typeErr" />)
+      : null,
+
+    gender: updateMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="institute.gender" />)
+      : null,
+  });
 
   const [initialInstituteName, setInitialInstituteName] = useState(
-    TestData.InstituteName ? TestData.InstituteName : ''
+    institute.name ? institute.name : ''
   );
-
   const [initialProvince, setInitialProvince] = useState(
-    TestData.Province
+    institute.Province
       ? [
           {
-            label: TestData.Province,
-            value: TestData.Province,
+            label: institute.Province,
+            value: institute.Province,
           },
         ]
       : []
   );
   const [initialDistrict, setInitialDistrict] = useState(
-    TestData.District ? TestData.District : ''
+    institute.District ? institute.District : ''
   );
   const [initialInstType, setInitialInstType] = useState(
-    TestData.InstType
+    institute.InstType
       ? [
           {
-            label: TestData.InstType,
-            value: TestData.InstType,
+            label: institute.InstType,
+            value: institute.InstType,
           },
         ]
       : []
   );
   const [initialVillage, setInitialVillage] = useState(
-    TestData.Village ? TestData.Village : ''
+    institute.Village ? institute.Village : ''
   );
 
   const [initialGender, setInitialGender] = useState(
-    TestData.Gender ? [{ label: TestData.Gender, value: TestData.Gender }] : []
+    institute.Gender
+      ? [{ label: institute.Gender, value: institute.Gender }]
+      : []
   );
 
   const [isNext, setIsNext] = useState(true);

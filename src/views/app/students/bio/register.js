@@ -23,11 +23,16 @@ import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
+import { useParams } from 'react-router-dom';
 
 import axios from 'axios';
 import * as Yup from 'yup';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
+
+const servicePath = 'http://localhost:8000';
+const studentApi = `${servicePath}/api`;
+// http://localhost:8000/api/?student_id=1232
 
 const tazkiraOptions = [
   { value: '1', label: <IntlMessages id="forms.StdTazkiraElectronic" /> },
@@ -430,6 +435,66 @@ const ValidationStepThree = Yup.object().shape({
 
 const updateMode = true;
 const StudentRegistration = ({ intl }, values) => {
+  const { studentId } = useParams();
+  console.log('studentID', studentId);
+
+  if (studentId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        const { data } = await axios.get(
+          `${studentApi}/?student_id=${studentId}`
+        );
+        console.log(data[0].name, 'object of the data');
+        setInitialname1(data[0].name);
+        setInitialLastName(data[0].last_name);
+        setInitialFatherName(data[0].father_name);
+        setInitialGrandFatherName(data[0].grand_father_name);
+        setInitialFatherDuty(data[0].fatherـprofession);
+        setInitialLastNameEng(data[0].english_last_name);
+        setInitialGender(data[0].gender);
+        setInitialEnglishName(data[0].english_name);
+        setInitialPhoneNo(data[0].phone_number);
+        setInitialDoB(data[0].birth_date);
+        setInitialFatherDutyLocation(data[0].fatherـplaceـofـduty);
+        setInitialTazkiraType(data[0].internse_type);
+        setInitialFatherEngName(data[0].english_father_name);
+        setInitialPlaceOfBirth(data[0].main_province);
+        setInitialTazkiraNo(data[0].sukuk_number);
+        setInitialEmail(data[0].email);
+        setInitialIdCardPageNo(data[0].page_number);
+        setInitialIdCardJoldNo(data[0].cover_number);
+        setInitialLevelOfEducation(data[0].finished_grade);
+        setInitialPreSchool(data[0].school);
+        setInitialGraduationYear(data[0].finished_grade_year);
+        setInitialSchoolProvince(data[0].schoolـprovince);
+        setInitialProvince(data[0].main_province);
+        setInitialC_Province(data[0].current_province);
+        setInitialDistrict(data[0].main_district);
+        setInitialVillage(data[0].main_village);
+        setInitialC_District(data[0].current_district);
+        setInitialC_Village(data[0].current_village);
+        setInitialInstitute(data[0].school);
+        setInitialEducationalYear(data[0].finished_grade_year);
+        setInitialKankorId(data[0].kankor_id);
+        setInitialClass(data[0].graduat_12_types);
+        setInitialInteranceType(data[0].internse_type);
+        setInitialDepartment(data[0].kankor_id);
+        setInitialBatch(data[0].kankor_id);
+        setInitialMediumOfInstruction(data[0].kankor_id);
+        setInitialStudyTime(data[0].kankor_id);
+        setInitialStudentType(data[0].student_type);
+
+        // const instGender = genderOptions.map((instGender) => {
+        //   if (instGender.value === data.gender) {
+        //     setInitialGender(instGender);
+        //   }
+        // });
+      }
+      fetchStudent();
+      //setUpdateMode(true);
+    }, []);
+  }
+
   const TestData = {
     name1: 'Hamid',
     LastName: 'Ahmad',
@@ -473,231 +538,48 @@ const StudentRegistration = ({ intl }, values) => {
     StudentType: 'morning',
   };
 
-  const [initialname1, setInitialname1] = useState(
-    TestData.name1 ? TestData.name1 : ''
-  );
-  const [initialLastName, setInitialLastName] = useState(
-    TestData.LastName ? TestData.LastName : ''
-  );
-  const [initialFatherName, setInitialFatherName] = useState(
-    TestData.FatherName ? TestData.FatherName : ''
-  );
-  const [initialGrandFatherName, setInitialGrandFatherName] = useState(
-    TestData.GrandFatherName ? TestData.GrandFatherName : ''
-  );
-  const [initialFatherDuty, setInitialFatherDuty] = useState(
-    TestData.FatherDuty ? TestData.FatherDuty : ''
-  );
-  const [initialLastNameEng, setInitialLastNameEng] = useState(
-    TestData.LastNameEng ? TestData.LastNameEng : ''
-  );
-  const [initialGender, setInitialGender] = useState(
-    TestData.Gender ? [{ label: TestData.Gender, value: TestData.Gender }] : []
-  );
+  const [initialname1, setInitialname1] = useState('');
+  const [initialLastName, setInitialLastName] = useState('');
+  const [initialFatherName, setInitialFatherName] = useState('');
 
-  const [initialEnglishName, setInitialEnglishName] = useState(
-    TestData.EnglishName ? TestData.EnglishName : ''
-  );
-
-  const [initialPhoneNo, setInitialPhoneNo] = useState(
-    TestData.PhoneNo ? TestData.PhoneNo : ''
-  );
-  const [initialDoB, setInitialDoB] = useState(
-    TestData.DoB ? TestData.DoB : ''
-  );
-
-  const [initialFatherDutyLocation, setInitialFatherDutyLocation] = useState(
-    TestData.FatherDutyLocation ? TestData.FatherDutyLocation : ''
-  );
-
-  const [initialTazkiraType, setInitialTazkiraType] = useState(
-    TestData.TazkiraType
-      ? [{ label: TestData.TazkiraType, value: TestData.TazkiraType }]
-      : []
-  );
-
-  const [initialFatherEngName, setInitialFatherEngName] = useState(
-    TestData.FatherEngName ? TestData.FatherEngName : ''
-  );
-
-  const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState(
-    TestData.PlaceOfBirth ? TestData.PlaceOfBirth : ''
-  );
-
-  const [initialTazkiraNo, setInitialTazkiraNo] = useState(
-    TestData.TazkiraNo ? TestData.TazkiraNo : ''
-  );
-
-  const [initialEmail, setInitialEmail] = useState(
-    TestData.Email ? TestData.Email : ''
-  );
-
-  const [initialIdCardPageNo, setInitialIdCardPageNo] = useState(
-    TestData.IdCardPageNo ? TestData.IdCardPageNo : ''
-  );
-  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState(
-    TestData.IdCardJoldNo ? TestData.IdCardJoldNo : ''
-  );
-
-  const [initialLevelOfEducation, setInitialLevelOfEducation] = useState(
-    TestData.LevelOfEducation
-      ? [
-          {
-            label: TestData.LevelOfEducation,
-            value: TestData.LevelOfEducation,
-          },
-        ]
-      : []
-  );
-  const [initialPreSchool, setInitialPreSchool] = useState(
-    TestData.PreSchool ? TestData.PreSchool : ''
-  );
-
-  const [initialGraduationYear, setInitialGraduationYear] = useState(
-    TestData.GraduationYear ? TestData.GraduationYear : ''
-  );
-
-  const [initialSchoolProvince, setInitialSchoolProvince] = useState(
-    TestData.SchoolProvince
-      ? [
-          {
-            label: TestData.SchoolProvince,
-            value: TestData.SchoolProvince,
-          },
-        ]
-      : []
-  );
-  const [initialProvince, setInitialProvince] = useState(
-    TestData.Province
-      ? [
-          {
-            label: TestData.Province,
-            value: TestData.Province,
-          },
-        ]
-      : []
-  );
-  const [initialC_Province, setInitialC_Province] = useState(
-    TestData.C_Province
-      ? [
-          {
-            label: TestData.C_Province,
-            value: TestData.C_Province,
-          },
-        ]
-      : []
-  );
-
-  const [initialDistrict, setInitialDistrict] = useState(
-    TestData.District ? TestData.District : ''
-  );
-
-  const [initialVillage, setInitialVillage] = useState(
-    TestData.Village ? TestData.Village : ''
-  );
-
-  const [initialC_District, setInitialC_District] = useState(
-    TestData.C_District ? TestData.C_District : ''
-  );
-
-  const [initialC_Village, setInitialC_Village] = useState(
-    TestData.C_Village ? TestData.C_Village : ''
-  );
-  const [initialInstitute, setInitialInstitute] = useState(
-    TestData.Institute
-      ? [
-          {
-            label: TestData.Institute,
-            value: TestData.Institute,
-          },
-        ]
-      : []
-  );
-
-  const [initialClass, setInitialClass] = useState(
-    TestData.Class
-      ? [
-          {
-            label: TestData.Class,
-            value: TestData.Class,
-          },
-        ]
-      : []
-  );
-  const [initialEducationalYear, setInitialEducationalYear] = useState(
-    TestData.EducationalYear
-      ? [
-          {
-            label: TestData.EducationalYear,
-            value: TestData.EducationalYear,
-          },
-        ]
-      : []
-  );
-  const [initialKankorId, setInitialKankorId] = useState(
-    TestData.KankorId ? TestData.KankorId : ''
-  );
-
-  const [initialInteranceType, setInitialInteranceType] = useState(
-    TestData.InteranceType
-      ? [
-          {
-            label: TestData.InteranceType,
-            value: TestData.InteranceType,
-          },
-        ]
-      : []
-  );
-  const [initialDepartment, setInitialDepartment] = useState(
-    TestData.Department
-      ? [
-          {
-            label: TestData.Department,
-            value: TestData.Department,
-          },
-        ]
-      : []
-  );
-  const [initialBatch, setInitialBatch] = useState(
-    TestData.Batch
-      ? [
-          {
-            label: TestData.Batch,
-            value: TestData.Batch,
-          },
-        ]
-      : []
-  );
+  const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
+  const [initialFatherDuty, setInitialFatherDuty] = useState('');
+  const [initialLastNameEng, setInitialLastNameEng] = useState();
+  const [initialGender, setInitialGender] = useState('');
+  const [initialEnglishName, setInitialEnglishName] = useState('');
+  const [initialPhoneNo, setInitialPhoneNo] = useState();
+  const [initialDoB, setInitialDoB] = useState();
+  const [initialFatherDutyLocation, setInitialFatherDutyLocation] =
+    useState('');
+  const [initialTazkiraType, setInitialTazkiraType] = useState([]);
+  const [initialFatherEngName, setInitialFatherEngName] = useState('');
+  const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState('');
+  const [initialTazkiraNo, setInitialTazkiraNo] = useState('');
+  const [initialEmail, setInitialEmail] = useState('');
+  const [initialIdCardPageNo, setInitialIdCardPageNo] = useState('');
+  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('');
+  const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
+  const [initialPreSchool, setInitialPreSchool] = useState('');
+  const [initialGraduationYear, setInitialGraduationYear] = useState('');
+  const [initialSchoolProvince, setInitialSchoolProvince] = useState([]);
+  const [initialProvince, setInitialProvince] = useState([]);
+  const [initialC_Province, setInitialC_Province] = useState([]);
+  const [initialDistrict, setInitialDistrict] = useState();
+  const [initialVillage, setInitialVillage] = useState();
+  const [initialC_District, setInitialC_District] = useState('');
+  const [initialC_Village, setInitialC_Village] = useState('');
+  const [initialInstitute, setInitialInstitute] = useState([]);
+  const [initialClass, setInitialClass] = useState([]);
+  const [initialEducationalYear, setInitialEducationalYear] = useState([]);
+  const [initialKankorId, setInitialKankorId] = useState('');
+  const [initialInteranceType, setInitialInteranceType] = useState([]);
+  const [initialDepartment, setInitialDepartment] = useState([]);
+  const [initialBatch, setInitialBatch] = useState([]);
   const [initialMediumOfInstruction, setInitialMediumOfInstruction] = useState(
-    TestData.MediumOfInstruction
-      ? [
-          {
-            label: TestData.MediumOfInstruction,
-            value: TestData.MediumOfInstruction,
-          },
-        ]
-      : []
+    []
   );
-  const [initialStudyTime, setInitialStudyTime] = useState(
-    TestData.StudyTime
-      ? [
-          {
-            label: TestData.StudyTime,
-            value: TestData.StudyTime,
-          },
-        ]
-      : []
-  );
-  const [initialStudentType, setInitialStudentType] = useState(
-    TestData.StudentType
-      ? [
-          {
-            label: TestData.StudentType,
-            value: TestData.StudentType,
-          },
-        ]
-      : []
-  );
+  const [initialStudyTime, setInitialStudyTime] = useState([]);
+  const [initialStudentType, setInitialStudentType] = useState([]);
 
   const [isNext, setIsNext] = useState(false);
   const handleClick = (event) => {
@@ -817,8 +699,8 @@ const StudentRegistration = ({ intl }, values) => {
     }
     goToPrev();
   };
-
   const { messages } = intl;
+
   return (
     <Card>
       <h3 className="mt-5 m-5">
@@ -835,6 +717,7 @@ const StudentRegistration = ({ intl }, values) => {
               <div className="wizard-basic-step">
                 <Formik
                   innerRef={forms[0]}
+                  enableReinitialize={true}
                   initialValues={{
                     name1: initialname1,
                     fatherName: initialFatherName,

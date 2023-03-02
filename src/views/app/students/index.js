@@ -65,7 +65,12 @@ const Students = ({ match }) => (
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/register`} />
       <Route
+        exact
         path={`${match.url}/register`}
+        render={(props) => <Register {...props} />}
+      />
+      <Route
+        path={`${match.url}/register/:studentId`}
         render={(props) => <Register {...props} />}
       />
       <Route

@@ -2,8 +2,11 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 // import { ProtectedRoute, UserRole } from 'helpers/authHelper';
 
-const DashboardDefault = React.lazy(() =>
-  import(/* webpackChunkName: "dashboard-default" */ './default')
+const Admin = React.lazy(() =>
+  import(/* webpackChunkName: "dashboard-default" */ './admin')
+);
+const Provincial = React.lazy(() =>
+  import(/* webpackChunkName: "dashboard-provincial" */ './provincial')
 );
 const ContentDefault = React.lazy(() =>
   import(/* webpackChunkName: "dashboard-content" */ './content')
@@ -18,10 +21,10 @@ const EcommerceDefault = React.lazy(() =>
 const Dashboards = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
-      <Redirect exact from={`${match.url}/`} to={`${match.url}/default`} />
+      <Redirect exact from={`${match.url}/`} to={`${match.url}/admin`} />
       <Route
-        path={`${match.url}/default`}
-        render={(props) => <DashboardDefault {...props} />}
+        path={`${match.url}/admin`}
+        render={(props) => <Admin {...props} />}
       />
       <Route
         path={`${match.url}/content`}
@@ -34,6 +37,10 @@ const Dashboards = ({ match }) => (
       <Route
         path={`${match.url}/analytics`}
         render={(props) => <AnalyticsDefault {...props} />}
+      />
+      <Route
+        path={`${match.url}/provincial`}
+        render={(props) => <Provincial {...props} />}
       />
       {/* 
       <ProtectedRoute

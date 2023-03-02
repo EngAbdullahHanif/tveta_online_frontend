@@ -21,20 +21,18 @@ const validatePassword = (value) => {
 };
 
 const validateEmail = (value) => {
-  let error;
-  if (!value) {
-    error = 'لطفا پست الکترونیکی خودتو وارد کن';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = 'ایمیل که وارد کردی نامعتبره';
-  }
-  return error;
+  // let error;
+  // if (!value) {
+  //   error = 'لطفا پست الکترونیکی خودتو وارد کن';
+  // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+  //   error = 'ایمیل که وارد کردی نامعتبره';
+  // }
+  // return error;
 };
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  console.log('loading', loading);
-  console.log('loginUserAction', loginUserAction);
-  console.log('history', history);
   const [email] = useState('demo@gogo.com');
+  console.log('history', history);
   const [password] = useState('gogo123');
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
+import './list.css';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -476,13 +477,13 @@ const ThumbListPages = ({ match }) => {
         />
         <table className="table">
           <thead
+            style={{ maxHeight: '55px ' }}
             className="pl-2 d-flex flex-grow-1  table-dark"
-            style={{ maxHeight: '55px' }}
           >
-            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+            <tr className="card-body align-self-center d-flex flex-lg-row align-items-lg-center">
               <th
                 style={{
-                  width: '11%',
+                  width: '10%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -491,30 +492,27 @@ const ThumbListPages = ({ match }) => {
                 <IntlMessages id="marks.No" />
               </th>
               <th
+                className="header-responsiveness"
                 style={{
-                  width: '14%',
                   paddingInline: '0%',
-                  textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
                 <IntlMessages id="forms.StdName" />
               </th>
               <th
+                className="header-responsiveness"
                 style={{
-                  width: '15%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >
                 <IntlMessages id="forms.StdFatherName" />
               </th>
               <th
+                className="header-responsiveness1"
                 style={{
-                  width: '15%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >
@@ -522,32 +520,28 @@ const ThumbListPages = ({ match }) => {
                 <IntlMessages id="forms.ProvinceLabel" />
               </th>
               <th
+                className="header-responsiveness2"
                 style={{
-                  width: '14%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >
                 {' '}
-                <IntlMessages id="teacher.PhoneNoLabel" />
+                <IntlMessages id="teacher-list.PhoneNoLabel" />
               </th>
               <th
+                className="header-responsiveness3"
                 style={{
-                  width: '15%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >
-                {' '}
-                <IntlMessages id="teacher.MajorLabel" />
+                <IntlMessages id="teacher-list.MajorLabel" />
               </th>
               <th
+                className="header-responsiveness4"
                 style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >

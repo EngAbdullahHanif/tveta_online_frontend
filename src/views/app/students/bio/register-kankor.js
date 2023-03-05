@@ -176,7 +176,7 @@ const StudentRegistraion = () => {
   };
 
   const handleClick = (event) => {
-    // setIsNext(event);
+    setIsNext(event);
   };
 
   const onRegister = (values) => {
@@ -204,6 +204,7 @@ const StudentRegistraion = () => {
       .post('http://localhost:8000/api/Create_kankorResults/', data)
       .then((response) => {
         console.log(response);
+        setIsNext(false);
       })
       .catch((error) => {
         console.log(error);
@@ -230,7 +231,7 @@ const StudentRegistraion = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={onRegister}
-              validationSchema={ValidationSchema}
+              // validationSchema={ValidationSchema}
             >
               {({
                 errors,
@@ -434,7 +435,10 @@ const StudentRegistraion = () => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => window.location.reload()}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>
@@ -447,3 +451,6 @@ const StudentRegistraion = () => {
 };
 
 export default StudentRegistraion;
+
+
+

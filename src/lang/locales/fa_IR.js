@@ -760,6 +760,7 @@ module.exports = {
   'teacher.IdCardJoldNoLabel': 'جلد',
   'teacher.IdCardJoldNoErr': 'دجلد شمیره اړینه ده/ نمبر جلد ضروری است',
   'teacher.PhoneNoLabel': 'د تلفن شمیره/ نمبر تلفن',
+  'teacher-list.PhoneNoLabel': 'تلفن',
   'teacher.PhoneNoErr': 'د تلفن شمیره اړینه ده/ نمبر تلفن ضروری است',
   'teacher.EmailLabel': 'برښنالیک/ ایمیل آدرس',
   'teacher.EmailErr': 'برښنا لیک اړین دی/ ایمیل ادرس ضروری است',
@@ -771,6 +772,7 @@ module.exports = {
   'teacher.EducationLevelOption_3': 'ماستر',
   'teacher.EducationLevelOption_4': 'داکتر',
   'teacher.MajorLabel': 'تحصیلی رشته/ رشته تحصیلی',
+  'teacher-list.MajorLabel': 'رشته ',
   'teacher.MajorErr': 'تحصیلی رشته اړینه ده/ رشته تحصیلی ضروری است',
   'teacher.DoBLabel': 'زیږیدنې نیټه/ تاریخ تولد',
   'teacher.DoBErr': 'د زیږیدنې نیټه اړینه ده/ تاریخ تولد ضروری است',
@@ -856,6 +858,10 @@ module.exports = {
   'marks.Marks': 'نمرې / نمرات',
   'marks.marksDisplayTitle': 'نمرې/ نمرات',
   'marks.studentChar': 'د شاګرد مالومات/ معلومات شاگرد',
+  'marks.gpa': 'جی پی ای',
+  'marks.grade': 'درجه',
+  'marks.type': 'چانس',
+  'marks.result': 'نتیجه',
 
   // Dorm
   'dorm.RegisterTitle': 'د لیلې ثبت/ ثبت لیلیه',
@@ -1164,7 +1170,6 @@ module.exports = {
   'dash.teacherGender': 'جنسیت',
   'dash.totalNo': 'تعداد',
   'dash.teacherStatistics': 'د استاد مجموعی ارقام / ارقام مجموعی استاد',
-
   'dash.14YearsGreduatedTotal': 'مجموع 14 پاس',
   'dash.bachelorTotal': 'مجموع لسانس',
   'dash.masterTotal': 'مجموع ماستر',
@@ -1239,6 +1244,11 @@ module.exports = {
   'class.nameErr': 'د صنف نوم اړین دی/ نام صنف ضروری است',
   'class.semesterLabel': 'سمستر',
   'class.semesterErr': 'سمستر اړین دی/ سمستر ضروری است',
+
+  // Deletion flash message model
+  'modal.deletion-message-title': 'تایید',
+  'modal.deletion-message-details':
+    'ایا تاسې ډاډه یاست چې دا ریکارډ ډلیت کړئ/ آیا مطمین هستید که این ریکارد دلیت شود',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Inputs سفارشی',

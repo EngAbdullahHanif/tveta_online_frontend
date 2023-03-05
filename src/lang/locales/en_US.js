@@ -742,6 +742,7 @@ module.exports = {
   'teacher.IdCardJoldNoLabel': 'Folder (Jold)',
   'teacher.IdCardJoldNoErr': 'Id Card Jold is required!',
   'teacher.PhoneNoLabel': 'Contact No',
+  'teacher-list.PhoneNoLabel': 'Phone No',
   'teacher.PhoneNoErr': 'Contact number is Required!',
   'teacher.EmailLabel': 'Email Address',
   'teacher.EmailErr': 'Email is Required!',
@@ -852,6 +853,11 @@ module.exports = {
   'marks.Marks': 'Marks',
   'marks.marksDisplayTitle': 'Marks',
   'marks.studentChar': 'Students Info',
+  'marks.gpa': 'GPA',
+  'marks.grade': 'Grade',
+  'marks.type': 'Chance',
+  'marks.result': 'Passed',
+  
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',
@@ -1198,6 +1204,11 @@ module.exports = {
   'class.nameErr': 'Class Name Is Required!',
   'class.semesterLabel': 'Semester',
   'class.semesterErr': 'Semester Is Required!',
+  'teacher-list.MajorLabel': 'field',
+
+  // Deletion flash message title
+  'modal.deletion-message-title': 'Confirm',
+  'modal.deletion-message-details': 'Are you Sure to Delete the Record',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Custom Inputs',

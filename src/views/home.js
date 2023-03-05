@@ -220,24 +220,6 @@ const Home = () => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  useEffect(() => {
-    const handleClick = (event) => {
-      const btn = event.currentTarget;
-      btn.classList.toggle('change');
-      btn.nextElementSibling.classList.toggle('change');
-    };
-
-    document.querySelectorAll('.story-btn').forEach((btn) => {
-      btn.addEventListener('click', handleClick);
-    });
-
-    return () => {
-      document.querySelectorAll('.story-btn').forEach((btn) => {
-        btn.removeEventListener('click', handleClick);
-      });
-    };
-  }, []);
-
   return (
     <>
       <div

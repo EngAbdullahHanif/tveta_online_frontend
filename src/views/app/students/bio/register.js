@@ -35,17 +35,17 @@ const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
 
 const tazkiraOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdTazkiraElectronic" /> },
-  { value: '2', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
+  { value: '1', label: 'الکترونیکی' },
+  { value: '2', label: 'کاغذی' },
 ];
 
 const EducationLevelOptions = [
-  { value: '9th', label: <IntlMessages id="forms.EducationalLevel_9th" /> },
-  { value: '10th', label: <IntlMessages id="forms.EducationalLevel_10th" /> },
-  { value: '11th', label: <IntlMessages id="forms.EducationalLevel_11th" /> },
-  { value: '12th', label: <IntlMessages id="forms.EducationalLevel_12th" /> },
-  { value: '13th', label: <IntlMessages id="forms.EducationalLevel_13th" /> },
-  { value: '14th', label: <IntlMessages id="forms.EducationalLevel_14th" /> },
+  { value: '9th', label: 'نهم صنف / صنف نهم' },
+  { value: '10th', label: 'لسم ټولګی/ صنف دهم' },
+  { value: '11th', label: 'یوولسم ټولګی / صنف یازدهم' },
+  { value: '12th', label: 'دولسم ټولګی/ صنف دوازدهم' },
+  { value: '13th', label: 'دیارلسم ټولګی صنف سیزدهم' },
+  { value: '14th', label: 'kjlkjk' },
 ];
 
 const StdInteranceOptions = [
@@ -100,10 +100,25 @@ const educationYears = [
 ];
 
 const genderOptions = [
-  { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
-  { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
+  { value: '1', label: 'نارینه/مذکر' },
+  { value: '2', label: 'ښڅینه/مونث' },
 ];
 
+const studentProvince = [
+  {
+    value: 1,
+    label: 'Nanagarhar',
+  },
+  {
+    value: 2,
+    label: 'Kabul',
+  },
+  ,
+  {
+    value: 3,
+    label: 'kjlkjkjlkj',
+  },
+];
 const StdSchoolProvinceOptions = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
   { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
@@ -223,6 +238,10 @@ const StudentTypeOptions = [
 
 const ValidationStepOne = Yup.object().shape({
   name1: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="teacher.NameErr" />),
+  idCardJoldNo: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="teacher.NameErr" />),
@@ -444,31 +463,66 @@ const StudentRegistration = ({ intl }, values) => {
         const { data } = await axios.get(
           `${studentApi}/?student_id=${studentId}`
         );
-        console.log(data[0].name, 'object of the data');
+        //  console.log(data[0].name, 'object of the data');
         setInitialname1(data[0].name);
         setInitialLastName(data[0].last_name);
         setInitialFatherName(data[0].father_name);
         setInitialGrandFatherName(data[0].grand_father_name);
         setInitialFatherDuty(data[0].fatherـprofession);
         setInitialLastNameEng(data[0].english_last_name);
-        setInitialGender(data[0].gender);
+
+        const instGender = genderOptions.map((studentGender) => {
+          if (studentGender.value === data[0].gender) {
+            setInitialGender(studentGender);
+          }
+        });
+
         setInitialEnglishName(data[0].english_name);
         setInitialPhoneNo(data[0].phone_number);
         setInitialDoB(data[0].birth_date);
         setInitialFatherDutyLocation(data[0].fatherـplaceـofـduty);
-        setInitialTazkiraType(data[0].internse_type);
+        if (data[0].sukuk_number) setInitialTazkiraType(tazkiraOptions[1]);
+        else setInitialTazkiraType(tazkiraOptions[0]);
+
         setInitialFatherEngName(data[0].english_father_name);
         setInitialPlaceOfBirth(data[0].main_province);
         setInitialTazkiraNo(data[0].sukuk_number);
         setInitialEmail(data[0].email);
         setInitialIdCardPageNo(data[0].page_number);
         setInitialIdCardJoldNo(data[0].cover_number);
-        setInitialLevelOfEducation(data[0].finished_grade);
+
         setInitialPreSchool(data[0].school);
         setInitialGraduationYear(data[0].finished_grade_year);
-        setInitialSchoolProvince(data[0].schoolـprovince);
-        setInitialProvince(data[0].main_province);
-        setInitialC_Province(data[0].current_province);
+        setInitialLevelOfEducation(EducationLevelOptions[1]);
+
+        // const studentFinishGrade = EducationLevelOptions.map(
+        //   (finishedGrade) => {
+        //     if (EducationLevelOptions.label === data[0].finished_grade) {
+        //       setInitialLevelOfEducation(EducationLevelOptions[1]);
+        //     }
+        //   }
+        // );
+
+        const studentMainProvincee = studentProvince.map((studentProvince) => {
+          if (studentProvince.label === data[0].main_province) {
+            setInitialProvince(studentProvince);
+          }
+        });
+
+        const studentCurrentProvince = studentProvince.map(
+          (studentProvince) => {
+            if (studentProvince.label === data[0].current_province) {
+              setInitialC_Province(studentProvince);
+            }
+          }
+        );
+
+        const studentSchoolProvince = studentProvince.map((studentProvince) => {
+          if (studentProvince.label === data[0].schoolـprovince) {
+            setInitialSchoolProvince(studentProvince);
+          }
+        });
+
         setInitialDistrict(data[0].main_district);
         setInitialVillage(data[0].main_village);
         setInitialC_District(data[0].current_district);
@@ -483,12 +537,6 @@ const StudentRegistration = ({ intl }, values) => {
         setInitialMediumOfInstruction(data[0].kankor_id);
         setInitialStudyTime(data[0].kankor_id);
         setInitialStudentType(data[0].student_type);
-
-        // const instGender = genderOptions.map((instGender) => {
-        //   if (instGender.value === data.gender) {
-        //     setInitialGender(instGender);
-        //   }
-        // });
       }
       fetchStudent();
       //setUpdateMode(true);
@@ -557,7 +605,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialTazkiraNo, setInitialTazkiraNo] = useState('');
   const [initialEmail, setInitialEmail] = useState('');
   const [initialIdCardPageNo, setInitialIdCardPageNo] = useState('');
-  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('');
+  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('456');
   const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
   const [initialPreSchool, setInitialPreSchool] = useState('');
   const [initialGraduationYear, setInitialGraduationYear] = useState('');
@@ -618,7 +666,7 @@ const StudentRegistration = ({ intl }, values) => {
       // study_types: add study types (فارغ، جاری، منفک)
       student_type: values.studentType.value,
       internse_type: values.interanceType.value,
-      // std_photo: 'images/1.jpg',
+      // std_photo: values,
       // Documents: 'images/2.jpg',
 
       //add student photo
@@ -641,7 +689,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({});
-  const [LevelOfEducation, setLevelOfEducation] = useState('0');
+  const [LevelOfEducation, setLevelOfEducation] = useState('');
   const [TazkiraType, setTazkiraType] = useState('0');
   const [Province, setProvince] = useState('0');
   const [CurrentProvince, setCurrentProvince] = useState('0');
@@ -1037,31 +1085,32 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {values.tazkiraType.value === '2' ? (
-                              <div>
-                                {/* Jold Number */}
-                                <div>
-                                  <FormGroup className="form-group has-float-label error-l-100">
-                                    <Label>
-                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                    </Label>
-                                    <Field
-                                      className="form-control"
-                                      name="IdCardJoldNo"
-                                      type="number"
-                                    />
-                                    {errors.idCardJoldNo &&
-                                    touched.idCardJoldNo ? (
-                                      <div className="invalid-feedback d-block  bg-danger text-white">
-                                        {errors.idCardJoldNo}
-                                      </div>
-                                    ) : null}
-                                  </FormGroup>
-                                </div>
-                              </div>
+                            {/* {values.tazkiraType.value === '' ? (
+
                             ) : (
                               <div></div>
-                            )}
+                            )} */}
+                            <div>
+                              {/* Jold Number */}
+                              <div>
+                                <FormGroup className="form-group has-float-label error-l-100">
+                                  <Label>
+                                    <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                                  </Label>
+                                  <Field
+                                    className="form-control"
+                                    name="idCardJoldNo"
+                                    type="string"
+                                  />
+                                  {errors.idCardJoldNo &&
+                                  touched.idCardJoldNo ? (
+                                    <div className="invalid-feedback d-block  bg-danger text-white">
+                                      {errors.idCardJoldNo}
+                                    </div>
+                                  ) : null}
+                                </FormGroup>
+                              </div>
+                            </div>
                             {/* Email Address */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
+import { useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import {
   Row,
@@ -16,15 +17,17 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
+const servicePath = 'http://localhost:8000';
+const KankorstudentAPI = `${servicePath}/api/kankorResults`;
+//http://localhost:8000/api/kankorResults/?id=1
+
 const studyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
-
 const InstituteOptions = [
-  { value: '1', label: 'Option1' },
-  { value: '2', label: 'Option2' },
-  { value: '3', label: 'Option3' },
+  { value: 1, label: 'Tech Afg' },
+  { value: 2, label: 'IT' },
 ];
 
 const FieldOptions = [
@@ -46,7 +49,7 @@ const StudentRegistraion = ({ history }) => {
       .max(50, <IntlMessages id="max.maxInputValue" />)
       .required(<IntlMessages id="teacher.FatherNameErr" />),
 
-    interanceDate: Yup.string().required(
+    interanceDate: Yup.date().required(
       <IntlMessages id="forms.KankorMarksErr" />
     ),
 
@@ -93,43 +96,64 @@ const StudentRegistraion = ({ history }) => {
       : null,
   });
 
+  const { kankorStudentId } = useParams();
+  //console.log(kankorStudentId);
+  if (kankorStudentId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        const { data } = await axios.get(
+          `${KankorstudentAPI}/?id=${kankorStudentId}`
+        );
+        console.log(data[0].id, 'kaknor student data');
+        setInitialName(data[0].name);
+        setInitailKankorId(data[0].user_id);
+        setInitialFatherName(data[0].father_name);
+        setInitailInteranceDate('04/23/1995');
+        setInitailDepartment([
+          {
+            value: data[0].department_id.id,
+            label: data[0].department_id.name,
+          },
+        ]);
+        setInitialField([
+          {
+            value: data[0].field_id.id,
+            label: data[0].field_id.name,
+          },
+        ]);
+        setInitialKankorMarks(data[0].score);
+        setInitialstudyTime([{ value: 1, label: 'سهار' }]);
+        setInitialInstitute([
+          { value: data[0].Institute.id, label: data[0].Institute.name },
+        ]);
+      }
+      fetchStudent();
+      //setUpdateMode(true);
+    }, []);
+  }
+
   // Temporaray varaibles
   const testName = 'Ahmad';
   const testKankorId = '232423';
   const testFatherName = 'Rashid';
-  const testInteranceDate = '23-243-4323';
+  const testInteranceDate = '01/01/1990';
   const testStudyTime = 'Morning';
   const testDepartment = 'Engineering';
   const testFieldfield = 'CS';
   const testInstitute = 'Nima';
   const testKankorMarks = '87';
 
-  const [intialName, setInitialName] = useState(testName ? 'Ahmad' : '');
-  const [initailKankorId, setInitailKankorId] = useState(
-    testKankorId ? '213f-12' : ''
-  );
-  const [initialFatherName, setInitialFatherName] = useState(
-    testFatherName ? 'Rashid' : ''
-  );
-  const [initailInteranceDate, setInitailInteranceDate] = useState(
-    testInteranceDate ? '2022-08-12' : ''
-  );
-  const [initialKankorMarks, setInitialKankorMarks] = useState(
-    testKankorMarks ? '87' : ''
-  );
-  const [initailDepartment, setInitailDepartment] = useState(
-    testFieldfield ? [{ label: testFieldfield, value: testFieldfield }] : []
-  );
-  const [initialField, setInitialField] = useState(
-    testDepartment ? [{ label: testDepartment, value: testDepartment }] : []
-  );
-  const [initialstudyTime, setInitialstudyTime] = useState(
-    testStudyTime ? [{ label: testStudyTime, value: testStudyTime }] : []
-  );
+  const [intialName, setInitialName] = useState('');
+  const [initailKankorId, setInitailKankorId] = useState('');
+  const [initialFatherName, setInitialFatherName] = useState('');
+  const [initailInteranceDate, setInitailInteranceDate] =
+    useState('05/04/1990');
+  const [initialKankorMarks, setInitialKankorMarks] = useState('');
+  const [initailDepartment, setInitailDepartment] = useState([]);
+  const [initialField, setInitialField] = useState([]);
+  const [initialstudyTime, setInitialstudyTime] = useState('');
+  const [initialInstitute, setInitialInstitute] = useState([]);
 
-  const [initialInstitute, setInitialInstitute] = useState(
-    testInstitute ? [{ label: testInstitute, value: testInstitute }] : []
-  );
   const initialValues = {
     name1: intialName,
     kankorId: initailKankorId,
@@ -222,9 +246,6 @@ const StudentRegistraion = ({ history }) => {
     fetchDepartments();
   }, []);
 
-  // console.log('fields', fields);
-  // console.log('institutes', institutes);
-
   return (
     <>
       <Card>
@@ -234,6 +255,7 @@ const StudentRegistraion = ({ history }) => {
         <CardBody>
           {isNext ? (
             <Formik
+              enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onRegister}
               validationSchema={ValidationSchema}

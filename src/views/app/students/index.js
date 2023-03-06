@@ -75,7 +75,12 @@ const Students = ({ match }) => (
         render={(props) => <Register {...props} />}
       />
       <Route
+        exact
         path={`${match.url}/register-kankor`}
+        render={(props) => <RegisterKankor {...props} />}
+      />
+      <Route
+        path={`${match.url}/register-kankor/:kankorStudentId`}
         render={(props) => <RegisterKankor {...props} />}
       />
       <Route
@@ -122,7 +127,7 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/test`}
         render={(props) => <Test {...props} />}
-        />
+      />
       <Route
         path={`${match.url}/dismissal`}
         render={(props) => <Dismissal {...props} />}

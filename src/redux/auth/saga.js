@@ -2,6 +2,11 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { auth } from 'helpers/Firebase';
 import { adminRoot, currentUser } from 'constants/defaultValues';
 import { setCurrentUser } from 'helpers/Utils';
+// import { browserHistory } from 'react-router';
+import { push } from 'react-router-redux';
+
+import axios from 'axios';
+
 import {
   LOGIN_USER,
   REGISTER_USER,
@@ -23,33 +28,96 @@ import {
 
 export function* watchLoginUser() {
   // eslint-disable-next-line no-use-before-define
-  yield takeEvery(LOGIN_USER, loginWithEmailPassword);
+  yield takeEvery(LOGIN_USER, loginWithEmailPasswordAsync);
 }
 
-const loginWithEmailPasswordAsync = async (email, password) =>
-  // eslint-disable-next-line no-return-await
-  await auth
-    .signInWithEmailAndPassword(email, password)
-    .then((user) => user)
-    .catch((error) => error);
-
-function* loginWithEmailPassword({ payload }) {
-  const { email, password } = payload.user;
-  const { history } = payload;
+async function getUserDetails() {
   try {
-    const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
-    if (!loginUser.message) {
-      const item = { uid: loginUser.user.uid, ...currentUser };
-      setCurrentUser(item);
-      yield put(loginUserSuccess(item));
-      history.push(adminRoot);
-    } else {
-      yield put(loginUserError(loginUser.message));
-    }
+    const accessToken = localStorage.getItem('access_token');
+    return await axios
+      .get('http://localhost:8000/api/user/user-profile/', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        console.log('response', response.data);
+        return response.data;
+      });
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+function loginWithEmailPassword(username, password) {
+  return (
+    axios
+      // .post('http://localhost:8000/api/token/', { username, password })
+      .post('http://localhost:8000/api/user/login/', { username, password })
+      .then((response) => {
+        console.log('response', response.data.token);
+        return response.data.token;
+      })
+      .catch((error) => {
+        console.log('error of response', error);
+        throw error.response.data;
+      })
+  );
+}
+
+export function* loginWithEmailPasswordAsync(action) {
+  const { email, password } = action.payload.user;
+  try {
+    const tokens = yield call(loginWithEmailPassword, email, password);
+    localStorage.setItem('access_token', tokens.access);
+    localStorage.setItem('refresh_token', tokens.refresh);
+    const user = yield call(getUserDetails); // call the API to get user details
+    console.log('user:  ', user);
+    setCurrentUser(user); // set the current user details
+    yield put(loginUserSuccess(tokens));
+
+    // yield browserHistory.push('/');
+    yield put(push('/'));
+    // history.push('/');
+    console.log('after the push');
+    // yield call(history.push, adminRoot);
   } catch (error) {
     yield put(loginUserError(error));
   }
 }
+
+// function loginWithEmailPassword(email, password) {
+//   const username = email.payload.user.email;
+//   password = email.payload.user.password;
+
+//   console.log('email', email.payload.user.email);
+//   console.log('password', email.payload.user.password);
+
+//   return axios
+//     .post('http://localhost:8000/api/token/', { username, password })
+//     .then((response) => {
+//       response.data;
+//       console.log('response', response);
+//     })
+//     .catch((error) => {
+//       console.log('error of response', error);
+//       throw error.response.data;
+//     });
+// }
+
+// export function* loginWithEmailPasswordAsync(action) {
+//   console.log('action', action);
+//   const { email, password } = action.payload;
+//   try {
+//     const tokens = yield call(loginWithEmailPassword, email, password);
+//     localStorage.setItem('access_token', tokens.access);
+//     localStorage.setItem('refresh_token', tokens.refresh);
+//     console.log('success');
+//     yield put(loginUserSuccess(tokens));
+//   } catch (error) {
+//     console.log('error lskjdflsald');
+//     yield put(loginUserError(error));
+//   }
+// }
 
 export function* watchRegisterUser() {
   // eslint-disable-next-line no-use-before-define

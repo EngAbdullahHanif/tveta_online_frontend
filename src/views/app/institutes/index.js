@@ -28,7 +28,7 @@ const Institues = ({ match }) => (
       />
 
       <Route
-      exact
+        exact
         path={`${match.url}/register`}
         render={(props) => <InstituteRegister {...props} />}
       />

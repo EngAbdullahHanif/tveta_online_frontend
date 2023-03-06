@@ -34,7 +34,7 @@ export const currentUser = {
   title: 'سمیع الله رحیمی',
   img: '/assets/img/profiles/l-1.jpg',
   date: 'آخرین بازدید امروز 15:24',
-  role: UserRole.Admin,
+  role: [UserRole.Admin, UserRole.Editor],
 };
 
 export const adminRoot = '/app';

@@ -1,4 +1,4 @@
-import { getCurrentUser } from 'helpers/Utils';
+import { getCurrentUser, setCurrentUser } from 'helpers/Utils';
 import { isAuthGuardActive, currentUser } from 'constants/defaultValues';
 import {
   LOGIN_USER,
@@ -17,7 +17,10 @@ import {
 } from '../actions';
 
 const INIT_STATE = {
-  currentUser: isAuthGuardActive ? currentUser : getCurrentUser(),
+  // currentUser: isAuthGuardActive
+  //   ? setCurrentUser
+  //   : getCurrentUser(),
+  currentUser: getCurrentUser(),
   forgotUserMail: '',
   newPassword: '',
   resetPasswordCode: '',
@@ -43,6 +46,7 @@ export default (state = INIT_STATE, action) => {
         currentUser: null,
         error: action.payload.message,
       };
+
     case FORGOT_PASSWORD:
       return { ...state, loading: true, error: '' };
     case FORGOT_PASSWORD_SUCCESS:

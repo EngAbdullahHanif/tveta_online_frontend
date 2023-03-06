@@ -9,6 +9,7 @@ import {
   Input,
   Button,
 } from 'reactstrap';
+
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from 'redux/actions';
@@ -16,6 +17,10 @@ import { registerUser } from 'redux/actions';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { adminRoot } from 'constants/defaultValues';
+import axios from 'axios';
+
+const servicePath = 'http://localhost:8000';
+const registerAPI = `${servicePath}/api/register`;
 
 const Register = ({ history }) => {
   const [email] = useState('demo@gogo.com');
@@ -27,6 +32,22 @@ const Register = ({ history }) => {
       history.push(adminRoot);
     }
     // call registerUserAction()
+
+    const user = {
+      name,
+      email,
+      password,
+    };
+    axios
+      .post(registerAPI, user)
+
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .then((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -37,11 +58,10 @@ const Register = ({ history }) => {
             <p className="text-white h2">جادوی کاره مارو توی جزئیاتش ببین</p>
             <p className="white mb-0">
               اطلاعاتت رو وارد کن و به همین سرعت ثبت نام کن <br />
-              اگه هم تو سایت حساب کاربری داری از {' '}
+              اگه هم تو سایت حساب کاربری داری از{' '}
               <NavLink to="/user/login" className="white">
-              اینجا
-              </NavLink>
-              {' '}
+                اینجا
+              </NavLink>{' '}
               وارد شو
             </p>
           </div>

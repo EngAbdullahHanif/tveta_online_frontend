@@ -27,7 +27,7 @@ const ApplicationMenu = ({ children }) => {
       );
     };
   }, [isOpen]);
-
+ 
   return (
     <div ref={containerRef} className={`app-menu ${isOpen ? 'shown' : ''}`}>
       {children}

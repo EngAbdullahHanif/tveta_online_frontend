@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
+
 import ListPageHeading from './FieldListHeading'
 
 import ListPageListing from './FieldListCatagory';
@@ -417,6 +418,7 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 <IntlMessages id="fieldId" />
+                
               </th>
               <th
                 style={{

@@ -234,7 +234,7 @@ const ThumbListPages = ({ match }) => {
         setInstituteTeachers(res.data);
         setItems(res.data);
         setTotalItemCount(res.data.count);
-        setIsLoaded(true);
+        //setIsLoaded(true);
       } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'

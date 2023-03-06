@@ -23,24 +23,29 @@ import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
+import { useParams } from 'react-router-dom';
 
 import axios from 'axios';
 import * as Yup from 'yup';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 
+const servicePath = 'http://localhost:8000';
+const studentApi = `${servicePath}/api`;
+// http://localhost:8000/api/?student_id=1232
+
 const tazkiraOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdTazkiraElectronic" /> },
-  { value: '2', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
+  { value: '1', label: 'الکترونیکی' },
+  { value: '2', label: 'کاغذی' },
 ];
 
 const EducationLevelOptions = [
-  { value: '9th', label: <IntlMessages id="forms.EducationalLevel_9th" /> },
-  { value: '10th', label: <IntlMessages id="forms.EducationalLevel_10th" /> },
-  { value: '11th', label: <IntlMessages id="forms.EducationalLevel_11th" /> },
-  { value: '12th', label: <IntlMessages id="forms.EducationalLevel_12th" /> },
-  { value: '13th', label: <IntlMessages id="forms.EducationalLevel_13th" /> },
-  { value: '14th', label: <IntlMessages id="forms.EducationalLevel_14th" /> },
+  { value: '9th', label: 'نهم صنف / صنف نهم' },
+  { value: '10th', label: 'لسم ټولګی/ صنف دهم' },
+  { value: '11th', label: 'یوولسم ټولګی / صنف یازدهم' },
+  { value: '12th', label: 'دولسم ټولګی/ صنف دوازدهم' },
+  { value: '13th', label: 'دیارلسم ټولګی صنف سیزدهم' },
+  { value: '14th', label: 'kjlkjk' },
 ];
 
 const StdInteranceOptions = [
@@ -95,10 +100,25 @@ const educationYears = [
 ];
 
 const genderOptions = [
-  { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
-  { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
+  { value: '1', label: 'نارینه/مذکر' },
+  { value: '2', label: 'ښڅینه/مونث' },
 ];
 
+const studentProvince = [
+  {
+    value: 1,
+    label: 'Nanagarhar',
+  },
+  {
+    value: 2,
+    label: 'Kabul',
+  },
+  ,
+  {
+    value: 3,
+    label: 'kjlkjkjlkj',
+  },
+];
 const StdSchoolProvinceOptions = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
   { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
@@ -218,6 +238,10 @@ const StudentTypeOptions = [
 
 const ValidationStepOne = Yup.object().shape({
   name1: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="teacher.NameErr" />),
+  idCardJoldNo: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="teacher.NameErr" />),
@@ -430,6 +454,95 @@ const ValidationStepThree = Yup.object().shape({
 
 const updateMode = true;
 const StudentRegistration = ({ intl }, values) => {
+  const { studentId } = useParams();
+  console.log('studentID', studentId);
+
+  if (studentId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        const { data } = await axios.get(
+          `${studentApi}/?student_id=${studentId}`
+        );
+        //  console.log(data[0].name, 'object of the data');
+        setInitialname1(data[0].name);
+        setInitialLastName(data[0].last_name);
+        setInitialFatherName(data[0].father_name);
+        setInitialGrandFatherName(data[0].grand_father_name);
+        setInitialFatherDuty(data[0].fatherـprofession);
+        setInitialLastNameEng(data[0].english_last_name);
+
+        const instGender = genderOptions.map((studentGender) => {
+          if (studentGender.value === data[0].gender) {
+            setInitialGender(studentGender);
+          }
+        });
+
+        setInitialEnglishName(data[0].english_name);
+        setInitialPhoneNo(data[0].phone_number);
+        setInitialDoB(data[0].birth_date);
+        setInitialFatherDutyLocation(data[0].fatherـplaceـofـduty);
+        if (data[0].sukuk_number) setInitialTazkiraType(tazkiraOptions[1]);
+        else setInitialTazkiraType(tazkiraOptions[0]);
+
+        setInitialFatherEngName(data[0].english_father_name);
+        setInitialPlaceOfBirth(data[0].main_province);
+        setInitialTazkiraNo(data[0].sukuk_number);
+        setInitialEmail(data[0].email);
+        setInitialIdCardPageNo(data[0].page_number);
+        setInitialIdCardJoldNo(data[0].cover_number);
+
+        setInitialPreSchool(data[0].school);
+        setInitialGraduationYear(data[0].finished_grade_year);
+        setInitialLevelOfEducation(EducationLevelOptions[1]);
+
+        // const studentFinishGrade = EducationLevelOptions.map(
+        //   (finishedGrade) => {
+        //     if (EducationLevelOptions.label === data[0].finished_grade) {
+        //       setInitialLevelOfEducation(EducationLevelOptions[1]);
+        //     }
+        //   }
+        // );
+
+        const studentMainProvincee = studentProvince.map((studentProvince) => {
+          if (studentProvince.label === data[0].main_province) {
+            setInitialProvince(studentProvince);
+          }
+        });
+
+        const studentCurrentProvince = studentProvince.map(
+          (studentProvince) => {
+            if (studentProvince.label === data[0].current_province) {
+              setInitialC_Province(studentProvince);
+            }
+          }
+        );
+
+        const studentSchoolProvince = studentProvince.map((studentProvince) => {
+          if (studentProvince.label === data[0].schoolـprovince) {
+            setInitialSchoolProvince(studentProvince);
+          }
+        });
+
+        setInitialDistrict(data[0].main_district);
+        setInitialVillage(data[0].main_village);
+        setInitialC_District(data[0].current_district);
+        setInitialC_Village(data[0].current_village);
+        setInitialInstitute(data[0].school);
+        setInitialEducationalYear(data[0].finished_grade_year);
+        setInitialKankorId(data[0].kankor_id);
+        setInitialClass(data[0].graduat_12_types);
+        setInitialInteranceType(data[0].internse_type);
+        setInitialDepartment(data[0].kankor_id);
+        setInitialBatch(data[0].kankor_id);
+        setInitialMediumOfInstruction(data[0].kankor_id);
+        setInitialStudyTime(data[0].kankor_id);
+        setInitialStudentType(data[0].student_type);
+      }
+      fetchStudent();
+      //setUpdateMode(true);
+    }, []);
+  }
+
   const TestData = {
     name1: 'Hamid',
     LastName: 'Ahmad',
@@ -473,231 +586,48 @@ const StudentRegistration = ({ intl }, values) => {
     StudentType: 'morning',
   };
 
-  const [initialname1, setInitialname1] = useState(
-    TestData.name1 ? TestData.name1 : ''
-  );
-  const [initialLastName, setInitialLastName] = useState(
-    TestData.LastName ? TestData.LastName : ''
-  );
-  const [initialFatherName, setInitialFatherName] = useState(
-    TestData.FatherName ? TestData.FatherName : ''
-  );
-  const [initialGrandFatherName, setInitialGrandFatherName] = useState(
-    TestData.GrandFatherName ? TestData.GrandFatherName : ''
-  );
-  const [initialFatherDuty, setInitialFatherDuty] = useState(
-    TestData.FatherDuty ? TestData.FatherDuty : ''
-  );
-  const [initialLastNameEng, setInitialLastNameEng] = useState(
-    TestData.LastNameEng ? TestData.LastNameEng : ''
-  );
-  const [initialGender, setInitialGender] = useState(
-    TestData.Gender ? [{ label: TestData.Gender, value: TestData.Gender }] : []
-  );
+  const [initialname1, setInitialname1] = useState('');
+  const [initialLastName, setInitialLastName] = useState('');
+  const [initialFatherName, setInitialFatherName] = useState('');
 
-  const [initialEnglishName, setInitialEnglishName] = useState(
-    TestData.EnglishName ? TestData.EnglishName : ''
-  );
-
-  const [initialPhoneNo, setInitialPhoneNo] = useState(
-    TestData.PhoneNo ? TestData.PhoneNo : ''
-  );
-  const [initialDoB, setInitialDoB] = useState(
-    TestData.DoB ? TestData.DoB : ''
-  );
-
-  const [initialFatherDutyLocation, setInitialFatherDutyLocation] = useState(
-    TestData.FatherDutyLocation ? TestData.FatherDutyLocation : ''
-  );
-
-  const [initialTazkiraType, setInitialTazkiraType] = useState(
-    TestData.TazkiraType
-      ? [{ label: TestData.TazkiraType, value: TestData.TazkiraType }]
-      : []
-  );
-
-  const [initialFatherEngName, setInitialFatherEngName] = useState(
-    TestData.FatherEngName ? TestData.FatherEngName : ''
-  );
-
-  const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState(
-    TestData.PlaceOfBirth ? TestData.PlaceOfBirth : ''
-  );
-
-  const [initialTazkiraNo, setInitialTazkiraNo] = useState(
-    TestData.TazkiraNo ? TestData.TazkiraNo : ''
-  );
-
-  const [initialEmail, setInitialEmail] = useState(
-    TestData.Email ? TestData.Email : ''
-  );
-
-  const [initialIdCardPageNo, setInitialIdCardPageNo] = useState(
-    TestData.IdCardPageNo ? TestData.IdCardPageNo : ''
-  );
-  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState(
-    TestData.IdCardJoldNo ? TestData.IdCardJoldNo : ''
-  );
-
-  const [initialLevelOfEducation, setInitialLevelOfEducation] = useState(
-    TestData.LevelOfEducation
-      ? [
-          {
-            label: TestData.LevelOfEducation,
-            value: TestData.LevelOfEducation,
-          },
-        ]
-      : []
-  );
-  const [initialPreSchool, setInitialPreSchool] = useState(
-    TestData.PreSchool ? TestData.PreSchool : ''
-  );
-
-  const [initialGraduationYear, setInitialGraduationYear] = useState(
-    TestData.GraduationYear ? TestData.GraduationYear : ''
-  );
-
-  const [initialSchoolProvince, setInitialSchoolProvince] = useState(
-    TestData.SchoolProvince
-      ? [
-          {
-            label: TestData.SchoolProvince,
-            value: TestData.SchoolProvince,
-          },
-        ]
-      : []
-  );
-  const [initialProvince, setInitialProvince] = useState(
-    TestData.Province
-      ? [
-          {
-            label: TestData.Province,
-            value: TestData.Province,
-          },
-        ]
-      : []
-  );
-  const [initialC_Province, setInitialC_Province] = useState(
-    TestData.C_Province
-      ? [
-          {
-            label: TestData.C_Province,
-            value: TestData.C_Province,
-          },
-        ]
-      : []
-  );
-
-  const [initialDistrict, setInitialDistrict] = useState(
-    TestData.District ? TestData.District : ''
-  );
-
-  const [initialVillage, setInitialVillage] = useState(
-    TestData.Village ? TestData.Village : ''
-  );
-
-  const [initialC_District, setInitialC_District] = useState(
-    TestData.C_District ? TestData.C_District : ''
-  );
-
-  const [initialC_Village, setInitialC_Village] = useState(
-    TestData.C_Village ? TestData.C_Village : ''
-  );
-  const [initialInstitute, setInitialInstitute] = useState(
-    TestData.Institute
-      ? [
-          {
-            label: TestData.Institute,
-            value: TestData.Institute,
-          },
-        ]
-      : []
-  );
-
-  const [initialClass, setInitialClass] = useState(
-    TestData.Class
-      ? [
-          {
-            label: TestData.Class,
-            value: TestData.Class,
-          },
-        ]
-      : []
-  );
-  const [initialEducationalYear, setInitialEducationalYear] = useState(
-    TestData.EducationalYear
-      ? [
-          {
-            label: TestData.EducationalYear,
-            value: TestData.EducationalYear,
-          },
-        ]
-      : []
-  );
-  const [initialKankorId, setInitialKankorId] = useState(
-    TestData.KankorId ? TestData.KankorId : ''
-  );
-
-  const [initialInteranceType, setInitialInteranceType] = useState(
-    TestData.InteranceType
-      ? [
-          {
-            label: TestData.InteranceType,
-            value: TestData.InteranceType,
-          },
-        ]
-      : []
-  );
-  const [initialDepartment, setInitialDepartment] = useState(
-    TestData.Department
-      ? [
-          {
-            label: TestData.Department,
-            value: TestData.Department,
-          },
-        ]
-      : []
-  );
-  const [initialBatch, setInitialBatch] = useState(
-    TestData.Batch
-      ? [
-          {
-            label: TestData.Batch,
-            value: TestData.Batch,
-          },
-        ]
-      : []
-  );
+  const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
+  const [initialFatherDuty, setInitialFatherDuty] = useState('');
+  const [initialLastNameEng, setInitialLastNameEng] = useState();
+  const [initialGender, setInitialGender] = useState('');
+  const [initialEnglishName, setInitialEnglishName] = useState('');
+  const [initialPhoneNo, setInitialPhoneNo] = useState();
+  const [initialDoB, setInitialDoB] = useState();
+  const [initialFatherDutyLocation, setInitialFatherDutyLocation] =
+    useState('');
+  const [initialTazkiraType, setInitialTazkiraType] = useState([]);
+  const [initialFatherEngName, setInitialFatherEngName] = useState('');
+  const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState('');
+  const [initialTazkiraNo, setInitialTazkiraNo] = useState('');
+  const [initialEmail, setInitialEmail] = useState('');
+  const [initialIdCardPageNo, setInitialIdCardPageNo] = useState('');
+  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('456');
+  const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
+  const [initialPreSchool, setInitialPreSchool] = useState('');
+  const [initialGraduationYear, setInitialGraduationYear] = useState('');
+  const [initialSchoolProvince, setInitialSchoolProvince] = useState([]);
+  const [initialProvince, setInitialProvince] = useState([]);
+  const [initialC_Province, setInitialC_Province] = useState([]);
+  const [initialDistrict, setInitialDistrict] = useState();
+  const [initialVillage, setInitialVillage] = useState();
+  const [initialC_District, setInitialC_District] = useState('');
+  const [initialC_Village, setInitialC_Village] = useState('');
+  const [initialInstitute, setInitialInstitute] = useState([]);
+  const [initialClass, setInitialClass] = useState([]);
+  const [initialEducationalYear, setInitialEducationalYear] = useState([]);
+  const [initialKankorId, setInitialKankorId] = useState('');
+  const [initialInteranceType, setInitialInteranceType] = useState([]);
+  const [initialDepartment, setInitialDepartment] = useState([]);
+  const [initialBatch, setInitialBatch] = useState([]);
   const [initialMediumOfInstruction, setInitialMediumOfInstruction] = useState(
-    TestData.MediumOfInstruction
-      ? [
-          {
-            label: TestData.MediumOfInstruction,
-            value: TestData.MediumOfInstruction,
-          },
-        ]
-      : []
+    []
   );
-  const [initialStudyTime, setInitialStudyTime] = useState(
-    TestData.StudyTime
-      ? [
-          {
-            label: TestData.StudyTime,
-            value: TestData.StudyTime,
-          },
-        ]
-      : []
-  );
-  const [initialStudentType, setInitialStudentType] = useState(
-    TestData.StudentType
-      ? [
-          {
-            label: TestData.StudentType,
-            value: TestData.StudentType,
-          },
-        ]
-      : []
-  );
+  const [initialStudyTime, setInitialStudyTime] = useState([]);
+  const [initialStudentType, setInitialStudentType] = useState([]);
 
   const [isNext, setIsNext] = useState(false);
   const handleClick = (event) => {
@@ -736,7 +666,7 @@ const StudentRegistration = ({ intl }, values) => {
       // study_types: add study types (فارغ، جاری، منفک)
       student_type: values.studentType.value,
       internse_type: values.interanceType.value,
-      // std_photo: 'images/1.jpg',
+      // std_photo: values,
       // Documents: 'images/2.jpg',
 
       //add student photo
@@ -759,7 +689,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({});
-  const [LevelOfEducation, setLevelOfEducation] = useState('0');
+  const [LevelOfEducation, setLevelOfEducation] = useState('');
   const [TazkiraType, setTazkiraType] = useState('0');
   const [Province, setProvince] = useState('0');
   const [CurrentProvince, setCurrentProvince] = useState('0');
@@ -817,8 +747,8 @@ const StudentRegistration = ({ intl }, values) => {
     }
     goToPrev();
   };
-
   const { messages } = intl;
+
   return (
     <Card>
       <h3 className="mt-5 m-5">
@@ -835,6 +765,7 @@ const StudentRegistration = ({ intl }, values) => {
               <div className="wizard-basic-step">
                 <Formik
                   innerRef={forms[0]}
+                  enableReinitialize={true}
                   initialValues={{
                     name1: initialname1,
                     fatherName: initialFatherName,
@@ -1154,31 +1085,32 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {values.tazkiraType.value === '2' ? (
-                              <div>
-                                {/* Jold Number */}
-                                <div>
-                                  <FormGroup className="form-group has-float-label error-l-100">
-                                    <Label>
-                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                    </Label>
-                                    <Field
-                                      className="form-control"
-                                      name="IdCardJoldNo"
-                                      type="number"
-                                    />
-                                    {errors.idCardJoldNo &&
-                                    touched.idCardJoldNo ? (
-                                      <div className="invalid-feedback d-block  bg-danger text-white">
-                                        {errors.idCardJoldNo}
-                                      </div>
-                                    ) : null}
-                                  </FormGroup>
-                                </div>
-                              </div>
+                            {/* {values.tazkiraType.value === '' ? (
+
                             ) : (
                               <div></div>
-                            )}
+                            )} */}
+                            <div>
+                              {/* Jold Number */}
+                              <div>
+                                <FormGroup className="form-group has-float-label error-l-100">
+                                  <Label>
+                                    <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                                  </Label>
+                                  <Field
+                                    className="form-control"
+                                    name="idCardJoldNo"
+                                    type="string"
+                                  />
+                                  {errors.idCardJoldNo &&
+                                  touched.idCardJoldNo ? (
+                                    <div className="invalid-feedback d-block  bg-danger text-white">
+                                      {errors.idCardJoldNo}
+                                    </div>
+                                  ) : null}
+                                </FormGroup>
+                              </div>
+                            </div>
                             {/* Email Address */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>

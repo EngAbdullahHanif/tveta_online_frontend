@@ -23,7 +23,6 @@ const servicePath = 'http://localhost:8000';
 const kankorStudentApiUrl = `${servicePath}/api/kankorResults/`;
 const instituteApiUrl = `${servicePath}/institute/`;
 
-
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
   { column: 'category', label: 'Category' },
@@ -196,51 +195,52 @@ const ThumbListPages = ({ match }) => {
     label: 'Product Name',
   });
 
-  const roughData = [{
-    kankorStudentName: '  نعمان احمدی',
-    kankorStudentFatherName:  "محمد",
-    institute: 'تکنالوژی',
-    timeing: 'سهار',
-    department: 'معلومات تکنالوژی',
-    kankorId: '2412',
-    kankorMarks: '89',
-    field: 'گرافکس',
-    registrationDate: '1401/3/6'
-  },
-  {
-    kankorStudentName: ' شاکر',
-    kankorStudentFatherName: ' محمد',
-    institute: 'تکنالوژی',
-    timeing: 'سهار',
-    department: 'معلومات تکنالوژی',
-    kankorId: '456',
-    kankorMarks: '89',
-    field: 'گرافکس',
-    registrationDate: '1401/3/6'
-  },
-  {
-    kankorStudentName: ' علی',
-    kankorStudentFatherName: ' محمد',
-    institute: 'تکنالوژی',
-    timeing: 'سهار',
-    department: 'معلومات تکنالوژی',
-    kankorId: '78',
-    kankorMarks: '89',
-    field: 'گرافکس',
-    registrationDate: '1401/3/6'
-  },
-  {
-    kankorStudentName: ' احمدی',
-    kankorStudentFatherName: ' محمد',
-    institute: 'تکنالوژی',
-    timeing: 'سهار',
-    department: 'معلومات تکنالوژی',
-    kankorId: '3454',
-    kankorMarks: '89',
-    field: 'گرافکس',
-    registrationDate: '1401/3/6'
-  }
-]
+  const roughData = [
+    {
+      kankorStudentName: '  نعمان احمدی',
+      kankorStudentFatherName: 'محمد',
+      institute: 'تکنالوژی',
+      timeing: 'سهار',
+      department: 'معلومات تکنالوژی',
+      kankorId: '2412',
+      kankorMarks: '89',
+      field: 'گرافکس',
+      registrationDate: '1401/3/6',
+    },
+    {
+      kankorStudentName: ' شاکر',
+      kankorStudentFatherName: ' محمد',
+      institute: 'تکنالوژی',
+      timeing: 'سهار',
+      department: 'معلومات تکنالوژی',
+      kankorId: '456',
+      kankorMarks: '89',
+      field: 'گرافکس',
+      registrationDate: '1401/3/6',
+    },
+    {
+      kankorStudentName: ' علی',
+      kankorStudentFatherName: ' محمد',
+      institute: 'تکنالوژی',
+      timeing: 'سهار',
+      department: 'معلومات تکنالوژی',
+      kankorId: '78',
+      kankorMarks: '89',
+      field: 'گرافکس',
+      registrationDate: '1401/3/6',
+    },
+    {
+      kankorStudentName: ' احمدی',
+      kankorStudentFatherName: ' محمد',
+      institute: 'تکنالوژی',
+      timeing: 'سهار',
+      department: 'معلومات تکنالوژی',
+      kankorId: '3454',
+      kankorMarks: '89',
+      field: 'گرافکس',
+      registrationDate: '1401/3/6',
+    },
+  ];
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
@@ -276,21 +276,18 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     console.log('studentId', studentId);
-    async function fetchData() {    
-        await axios
-          .get(
-            `${kankorStudentApiUrl}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      
+    async function fetchData() {
+      await axios
+        .get(`${kankorStudentApiUrl}`)
+        .then((res) => {
+          return res.data;
+        })
+        .then((data) => {
+          setItems(data);
+          setSelectedItems([]);
+          setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        });
     }
     fetchData();
     //console.log('items', items)
@@ -308,7 +305,7 @@ const ThumbListPages = ({ match }) => {
     institute,
     educationYear,
   ]);
- // console.log('items', items)
+  // console.log('items', items)
 
   const fetchInstitutes = async () => {
     const response = await axios.get(instituteApiUrl);
@@ -472,7 +469,7 @@ const ThumbListPages = ({ match }) => {
           }}
         />
 
-<table className="table">
+        <table className="table">
           <thead
             className="pl-2 d-flex flex-grow-1  table-dark"
             style={{ maxHeight: '55px', marginRight: 2 }}
@@ -573,26 +570,22 @@ const ThumbListPages = ({ match }) => {
                 {' '}
                 <IntlMessages id="studentRegtrationDate" />
               </th>
-            
             </tr>
           </thead>
-          
-          <ListPageListing
-          items={items}
-          roughData= {roughData}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
-        
-        </table>
 
-       
+          <ListPageListing
+            items={items}
+            roughData={roughData}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
+        </table>
       </div>
     </>
   );

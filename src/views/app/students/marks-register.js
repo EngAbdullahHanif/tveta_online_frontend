@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -24,6 +25,10 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
+
+const servicePath = 'http://localhost:8000';
+const studentApi = `${servicePath}/api`;
+// http://localhost:8000/api/?student_id=1232
 
 const LevelOfEdcationOptions = [
   { value: '1', label: 'اصلی' },
@@ -148,6 +153,28 @@ const MarksRegistration = ({ match }) => {
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
   const [examId, setExamId] = useState();
+
+  const { markId } = useParams();
+  console.log('marks-id', markId);
+
+  if (markId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        const { data } = await axios.get(
+          `${studentMarkId}/?student_id=${markId}`
+        );
+        console.log(data, 'object of the data');
+
+        // const instGender = genderOptions.map((studentGender) => {
+        //   if (studentGender.value === data[0].gender) {
+        //     setInitialGender(studentGender);
+        //   }
+        // });
+      }
+      fetchStudent();
+      //setUpdateMode(true);
+    }, []);
+  }
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');

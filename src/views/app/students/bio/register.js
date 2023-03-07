@@ -605,7 +605,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialTazkiraNo, setInitialTazkiraNo] = useState('');
   const [initialEmail, setInitialEmail] = useState('');
   const [initialIdCardPageNo, setInitialIdCardPageNo] = useState('');
-  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('456');
+  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('');
   const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
   const [initialPreSchool, setInitialPreSchool] = useState('');
   const [initialGraduationYear, setInitialGraduationYear] = useState('');

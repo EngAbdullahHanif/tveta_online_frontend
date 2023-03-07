@@ -38,7 +38,6 @@ const Test = React.lazy(() =>
   import(/* webpackChunkName: "teacher-transfer" */ './test')
 );
 
-
 const Teachers = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -50,7 +49,12 @@ const Teachers = ({ match }) => (
 
       {/* Teacher register sub menu is created */}
       <Route
+        exact
         path={`${match.url}/register`}
+        render={(props) => <TeacherRegister {...props} />}
+      />
+      <Route
+        path={`${match.url}/register/:teacherId`}
         render={(props) => <TeacherRegister {...props} />}
       />
       <Route

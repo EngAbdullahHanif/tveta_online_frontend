@@ -92,7 +92,12 @@ const Students = ({ match }) => (
         render={(props) => <KankorStudentList {...props} />}
       />
       <Route
+        exact
         path={`${match.url}/marks-register`}
+        render={(props) => <MarksRegistration {...props} />}
+      />
+      <Route
+        path={`${match.url}/marks-register/:id`}
         render={(props) => <MarksRegistration {...props} />}
       />
       <Route

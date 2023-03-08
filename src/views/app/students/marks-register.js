@@ -130,8 +130,9 @@ const initialValues = {
   subject: [],
 };
 const MarksRegistration = ({ match }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [isNext, setIsNext] = useState(true);
+
+  const [isSubmitted, setIsSubmitted] = useState(true);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -466,7 +467,7 @@ const MarksRegistration = ({ match }) => {
             </Formik>
           ) : (
             <>
-              {isNext ? (
+              {isSubmitted ? (
                 <>
                   <Row
                     className="border border bg-primary me-5 p-1 "
@@ -630,18 +631,12 @@ const MarksRegistration = ({ match }) => {
 
                       <div className="d-flex justify-content-between align-items-center m-4 float-right">
                         <Button
-                          className={`btn-shadow btn-multiple-state `}
                           size="lg"
                           type="submit"
+                          color="primary"
+                          onClick={() => setIsSubmitted(false)}
                         >
-                          <span className="spinner d-inline-block">
-                            <span className="bounce1" />
-                            <span className="bounce2" />
-                            <span className="bounce3" />
-                          </span>
-                          <span className="label">
-                            <IntlMessages id="button.SubmitButton" />
-                          </span>
+                          <IntlMessages id="button.SubmitButton" />
                         </Button>
                       </div>
                     </Colxx>
@@ -658,9 +653,13 @@ const MarksRegistration = ({ match }) => {
                     </h3>
                     <Button
                       className="m-5 bg-primary"
-                      onClick={() => window.location.reload()}
+                      // onClick={() => window.location.reload()}
+                      onClick={() => {
+                        setIsNext(true);
+                        setIsSubmitted(true);
+                      }}
                     >
-                      <IntlMessages id="button.back" />
+                      <IntlMessages id="button.Back" />
                     </Button>
                   </div>
                 </div>

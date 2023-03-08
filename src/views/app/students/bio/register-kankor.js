@@ -179,12 +179,6 @@ const StudentRegistraion = ({ history }) => {
     setIsNext(event);
   };
 
-  const handleReload = () => {
-    // window.location.reload();
-    console.log('history', history.location.pathname);
-    // history.push('/app/teacher/teacher-list');
-  };
-
   const onRegister = (values) => {
     console.log('values', values);
 
@@ -210,6 +204,7 @@ const StudentRegistraion = ({ history }) => {
       .post('http://localhost:8000/api/Create_kankorResults/', data)
       .then((response) => {
         console.log(response);
+        setIsNext(false);
       })
       .catch((error) => {
         console.log(error);
@@ -236,7 +231,7 @@ const StudentRegistraion = ({ history }) => {
             <Formik
               initialValues={initialValues}
               onSubmit={onRegister}
-              validationSchema={ValidationSchema}
+              // validationSchema={ValidationSchema}
             >
               {({
                 errors,
@@ -440,7 +435,10 @@ const StudentRegistraion = ({ history }) => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary" onClick={handleReload}>
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => window.location.reload()}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

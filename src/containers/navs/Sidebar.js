@@ -7,6 +7,8 @@ import { NavLink, withRouter } from 'react-router-dom';
 import classnames from 'classnames';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
+import DisplayIcons from './DisplayIcons';
+
 import IntlMessages from 'helpers/IntlMessages';
 
 import {
@@ -17,6 +19,7 @@ import {
 } from 'redux/actions';
 
 import menuItems from 'constants/menu';
+import { subjectListBody } from 'views/app/subjects/subject-list/SubjectListBody';
 
 class Sidebar extends Component {
   constructor(props) {
@@ -353,6 +356,7 @@ class Sidebar extends Component {
   render() {
     const { selectedParentMenu, viewingParentMenu, collapsedMenus } =
       this.state;
+
     return (
       <div className="sidebar">
         <div className="main-menu">
@@ -363,6 +367,7 @@ class Sidebar extends Component {
               <Nav vertical className="list-unstyled">
                 {menuItems &&
                   this.filteredList(menuItems).map((item) => {
+                    const iconn = `< ${item.icon} />`;
                     return (
                       <NavItem
                         key={item.id}
@@ -388,7 +393,9 @@ class Sidebar extends Component {
                             onClick={(e) => this.openSubMenu(e, item)}
                             data-flag={item.id}
                           >
-                            <i className={item.icon} />{' '}
+                            {/* Main Menu icons here */}
+                            {/* <i className={item.icon } /> */}
+                            <DisplayIcons icon={item.icon} size="2.5rem" />{' '}
                             <IntlMessages id={item.label} />
                           </NavLink>
                         )}
@@ -511,7 +518,14 @@ class Sidebar extends Component {
                                 </>
                               ) : (
                                 <NavLink to={sub.to}>
-                                  <i className={sub.icon} />{' '}
+                                  {/* sub menu icons here */}
+                                  {/* <i className={sub.icon} /> */}
+                                  <label style={{ marginLeft: 8 }}>
+                                    <DisplayIcons
+                                      icon={sub.icon}
+                                      size="1.5rem"
+                                    />{' '}
+                                  </label>{' '}
                                   <IntlMessages id={sub.label} />
                                 </NavLink>
                               )}

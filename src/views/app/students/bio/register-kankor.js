@@ -33,7 +33,7 @@ const FieldOptions = [
   { value: '3', label: 'Option3' },
 ];
 
-const StudentRegistraion = () => {
+const StudentRegistraion = ({ history }) => {
   const UpdatingMode = false;
   const ValidationSchema = Yup.object().shape({
     name1: Yup.string()

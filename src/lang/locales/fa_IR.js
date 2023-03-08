@@ -87,6 +87,30 @@ module.exports = {
   'menu.student_list': 'لست شاگرد',
   'menu.student_register_kankor': ' ثبت شاگرد کانکور',
   'menu.forgot-password': 'فراموشی رمز',
+  'kankorStudentId': 'کانکور ایډی',
+  'studentTimings': 'وخت',
+  'department': 'دیپارتمنت',
+  'studentMarks': 'نمرات کانکور',
+  'studentField': 'رشته',
+  'studentRegtrationDate': 'تاریخ ثبت نام',
+  'studentFatherName': 'نام پدر',
+
+  // department
+
+  'departmentRegistration': "ثبت دیپارتمنت/ د دیپارتمنت ثبت",
+  'departmentField': 'رشته ها/رشتی',
+  'departmentName': 'نام دیپارتمنت',
+  'departmentEnglishName': 'نام انگلیسی دیپارتمنت',
+  'departmentFieldErr': 'نام رشته لازم است',
+  'departmentNameErr': 'نام دیپارتمنت لازم است',
+  'departmentEnglishNameErr': 'نام انگلیسی دیپارتمنت لازم است',
+  'departmentId': 'ایدا دیپارتمنت',
+
+
+
+
+
+
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.instituteT': 'انستیتوتونه/ انستیتوتها',
@@ -166,6 +190,7 @@ module.exports = {
   'menu.validations': 'اعتبار سنجی ها',
   'menu.wizard': 'ویزارد',
   'menu.field': 'رشته ها / رشتې',
+  'fieldSector':'سکتور',
   'menu.teacher-registration': 'د استاد ثبت/ ثبت استاد',
   'menu.field-register': 'د رشتی ثبت/ ثبت رشته',
   'menu.student-marks-register': 'نومرې/ نمرات',
@@ -186,6 +211,60 @@ module.exports = {
   'menu.marks-display-all-subs': 'د ټولو مضمونو نمرې/ نمرات تمام مضامین',
   'menu.single-student-marksUpdate': 'د شاگرد د نمرو اپدیت/ اپدیت نمرات شاگرد',
   'menu.attendance-Update': 'د حاضرۍ تغیر/ تغیر حاضری',
+
+  /* HR Evaluation */
+
+'forms.teacherName': 'د استاد نوم/ نام استاد',
+'forms.instituteName': 'د انستیتوت نوم/ نام انستیتوت',
+'forms.currentGrade': 'پخوانی درجه/درجه سابقه',
+'forms.newGrade': 'نوی درجه/درجه نو',
+'forms.currentStep':" پخوانی قدم/قدم سابفه",
+'forms.newStep': "نوی قدم/قدم نو",
+'forms.evaluationMarks': "نمره",
+'forms.evaluationDate': "نیته / تاریخ",
+
+// worker 
+'worker.registration' : 'ثبت کارمند / د کارمند ثبت',
+'workerProvince': "ولایت",
+'workerAppointedType': 'نوعیت استخدام',
+'workerQualification': 'سطح تحصیل',
+'workerField': "رشته",
+'workerTazkera': "شماره تذکره",
+'workerGender': 'جنسیت',
+'workerDateOfBirth': 'تاریخ تولد',
+'workerPosition': 'عنوان وظیفه',
+'workerStep': 'قدم',
+'workerId': 'کد',
+'workerGrade': 'بست کارمند',
+'workerTashkeilGrade': 'بست تشکیل',
+'workerGradeType': 'نوعیت بست',
+'workerAppointedDate': 'تاریخ استخدام',
+'workerStartDate': 'تاریخ اشغال به وظیفه',
+'workerRegistrationTitle': 'ثبت کارمندان / د کارمندانو ثبت',
+'workerName': 'نام/ نوم',
+'appointedTypeErr': 'نوعیت استخدام لازم است',
+'workerQualificationErr': 'سطح تحصیل لازم است',
+'workerProvinceErr': 'نام ولایت لازم است',
+'workerFieldErr': 'رشته لازم است',
+'workerGenderErr': 'نوعیت جنسیت لازم است',
+'workerTazkeraErr': 'شماره تذکره لازم است',
+'workerDOB': 'تاریخ تولد لازم است',
+'workerPositionErr': 'عنوان وظیفه لازم است',
+'workerStepErr': 'قدم لازم است',
+'workerIdErr': 'کدم لازم است',
+'workerGradeErr': 'بست لازم است',
+'workerTashkilGradeErr': 'بست تشکیل لازم است',
+'workerGradeTypeErr': 'نوعیت بست لازم است',
+'workerAppointedDateErr': 'تاریخ استخدام لازم است',
+'workerStartDateErr': 'تاریخ اشغال به وظیفه لازم است',
+'workerDisplayList': 'لست کارمندان',
+'workerPostion': 'عنوان وظیفه',
+'workerStepAndWorkerGrade': 'بست او قدم',
+'workerProfile': 'د کارمند پروفایل / پروفایل کارمند',
+
+
+
+ 
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -742,6 +821,9 @@ module.exports = {
   'field.SubjectsErr': 'مضمونونه اړین دي/ درج مضامین ضروری است',
   'field.FieldIdLabel': 'د رشتی آیدی/ ایدی رشته',
   'field.FieldIdErr': 'د رشتې ایدی اړین دی/ ایدی رشته ضروری است',
+  'fieldTitle': 'نام رشته',
+  'fieldId': 'ایدی رشته',
+  'fieldEnglishTitle': 'نام انگلیسی رشته',
 
   // Teacher Registration section
   'teacher.RegisterTitle': 'د استادانو ثبتول/ ثبت اساتید',
@@ -1416,7 +1498,7 @@ module.exports = {
   'subject.system_type': 'د مضمون سیسټم ډول / نوعیت سیستم مضمون',
   'subject.code': 'د مضمون کوډ / کد مضمون',
   'subject.register.title': 'د مضمون ثبت کول / ثبت مضمون',
-  'subject.register': 'مضمون ثبت کول / ثبت مضمون',
+  "subject.system.type": 'د مضمون د سیستم ډول',
 
   'class.name': 'د صنف نوم / نام صنف',
   'class.semester': 'د صنف سمستر / سمستر صنف',

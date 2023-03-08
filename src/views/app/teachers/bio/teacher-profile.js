@@ -45,13 +45,15 @@ const TeacherProfile = () => {
   const [teacherEvaluation, setTeacherEvaluation] = useState([]);
   const [teacherHREvaluation, setTeacherHREvaluation] = useState([]);
   const [teacherTransfer, setTeacherTransfer] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false)
+  
 
   useEffect(() => {
     async function fetchTeacher() {
       const response = await axios.get(`${teacherApiUrl}?id=${teacherId}`);
       const data = response.data;
       setTeacher(data);
-
+      setIsLoaded(true)
       const instituteResponse = await axios.get(
         `${teacherApiUrl}institute/?teacher_id=${teacherId}`
       );
@@ -88,10 +90,7 @@ const TeacherProfile = () => {
     fetchTeacherTransfer();
   }, []);
 
-  console.log('teacher', teacher);
-  console.log('teacherEvaluation', teacherEvaluation);
-  console.log('teacherHREvaluation', teacherHREvaluation);
-  console.log('teacherTransfer', teacherTransfer);
+
 
   const handleClick = (event) => {
     setIsNext(event);
@@ -122,13 +121,13 @@ const TeacherProfile = () => {
         </Colxx>
       </Row>
 
-      <Row>
+      {/* <Row>
         <Colxx xxs="1"></Colxx>
         <Colxx>
           <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
         </Colxx>
-      </Row>
-      <Row>
+      </Row> */}
+      {/* <Row>
         <Colxx
           className=" d-flex justify-content-center"
           style={{ marginRight: '2%' }}
@@ -171,7 +170,7 @@ const TeacherProfile = () => {
             </Button>
           </div>
         </Colxx>
-      </Row>
+      </Row> */}
 
       {teacher.length > 0 && institute.length > 0 && (
         <>

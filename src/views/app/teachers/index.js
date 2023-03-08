@@ -66,7 +66,12 @@ const Teachers = ({ match }) => (
         render={(props) => <TeacherProfile {...props} />}
       />
       <Route
+        exact
         path={`${match.url}/teacher-evalaution`}
+        render={(props) => <TeacherEvaluation {...props} />}
+      />
+      <Route
+        path={`${match.url}/teacher-evalaution/:teacherId`}
         render={(props) => <TeacherEvaluation {...props} />}
       />
       <Route

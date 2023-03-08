@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 import {
   Row,
@@ -24,6 +25,8 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
+import { Router } from 'react-router-dom';
+//import TeacherEvaluation from './teacher-evaluation';
 
 const servicePath = 'http://localhost:8000';
 const teachersApiUrl = `${servicePath}/teachers/`;
@@ -33,6 +36,8 @@ const classesApiUrl = `${servicePath}/institute/classs/`;
 const subjectApiUrl = `${servicePath}/institute/subject/`;
 const fieldsApiUrl = `${servicePath}/institute/field/`;
 const evaluationApiUrl = `${servicePath}/teachers/evaluation-create/`;
+const TeacherEvaluationAPI = `${servicePath}/teachers/evaluation`;
+//http://localhost:8000/teachers/evaluation/?id=1
 
 const evaluationTypeOptions = [
   { value: '1', label: <IntlMessages id="teacher.evaluationTypeOption_1" /> },
@@ -116,6 +121,7 @@ const ValidationSchema = Yup.object().shape({
 });
 
 const updatingMode = true;
+
 const TeacherEvaluation = () => {
   const TestData = {
     Id: 'Hamid',
@@ -133,60 +139,78 @@ const TeacherEvaluation = () => {
     WeaknessPoint: 'Lack of Preparation',
     Suggestions: 'Preparation time should be improved!',
   };
+  const { teacherId } = useParams();
+  console.log('teacher evaluation', teacherId);
 
-  const [initialId, setInitialId] = useState(
-    TestData.Id ? [{ label: TestData.Id, value: TestData.Id }] : []
-  );
+  if (teacherId) {
+    useEffect(() => {
+      async function fetchData() {
+        const { data } = await axios.get(
+          `${TeacherEvaluationAPI}/?id=${teacherId}`
+        );
+        setInitialEvaluator(data[0].evaluator_name);
+        setInitialStrengthPoints(data[0].strong_points);
+        setInitialWeaknessPoint(data[0].weak_points);
+        setInitialMarks(data[0].score);
+        setInitialEvaluationDate(data[0].evaluation_date);
+        setInitialSuggestions(data[0].suggestions);
+        setInitialTopic(data[0].topic);
 
-  const [initialDepartment, setInitialDepartment] = useState(
-    TestData.Department
-      ? [{ label: TestData.Department, value: TestData.Department }]
-      : []
-  );
+        setInitialId([
+          { value: data[0].teacher_id.id, label: data[0].teacher_id.name },
+        ]);
+        setInitialDepartment([
+          {
+            value: data[0].department_id.id,
+            label: data[0].department_id.name,
+          },
+        ]);
+        setInitialSubject([
+          {
+            value: data[0].subject_id.id,
+            label: data[0].subject_id.name,
+          },
+        ]);
 
-  const [initialSubject, setInitialSubject] = useState(
-    TestData.Department
-      ? [{ label: TestData.Subject, value: TestData.Subject }]
-      : []
-  );
+        setInitialInsititute([
+          {
+            value: data[0].institute_id.id,
+            label: data[0].institute_id.name,
+          },
+        ]);
+        setInitialClass([
+          {
+            value: data[0].class_id.id,
+            label: data[0].class_id.name,
+          },
+        ]);
 
-  const [initialEvaluator, setInitialEvaluator] = useState(
-    TestData.Evalovator ? TestData.Evalovator : ''
-  );
-  const [initialMarks, setInitialMarks] = useState(
-    TestData.Marks ? TestData.Marks : ''
-  );
-  const [initialStrengthPoints, setInitialStrengthPoints] = useState(
-    TestData.StrengthPoints ? TestData.StrengthPoints : ''
-  );
-  const [initialEvaluationDate, setInitialEvaluationDate] = useState(
-    TestData.EvaluationDate ? TestData.EvaluationDate : ''
-  );
-  const [initialInsititute, setInitialInsititute] = useState(
-    TestData.Insititute
-      ? [{ label: TestData.Insititute, value: TestData.Insititute }]
-      : []
-  );
+        const TeacherEvaluationOptions = evaluationTypeOptions.map(
+          (evaluationType) => {
+            if (evaluationType.value === data[0].evaluation_type) {
+              setInitialEvluationType(evaluationType);
+            }
+          }
+        );
+      }
+      fetchData();
+      //setUpdateMode(true);
+    }, []);
+  }
 
-  const [initialClass, setInitialClass] = useState(
-    TestData.Class ? [{ label: TestData.Class, value: TestData.Class }] : []
-  );
-  const [initialTopic, setInitialTopic] = useState(
-    TestData.Topic ? TestData.Topic : ''
-  );
-  const [initialEvluationType, setInitialEvluationType] = useState(
-    TestData.EvluationType
-      ? [{ label: TestData.EvluationType, value: TestData.EvluationType }]
-      : []
-  );
-
-  const [initialSuggestions, setInitialSuggestions] = useState(
-    TestData.Suggestions ? TestData.Suggestions : ''
-  );
-
-  const [initialWeaknessPoint, setInitialWeaknessPoint] = useState(
-    TestData.WeaknessPoint ? TestData.WeaknessPoint : ''
-  );
+  const [initialId, setInitialId] = useState([]);
+  const [initialDepartment, setInitialDepartment] = useState([]);
+  const [initialSubject, setInitialSubject] = useState([]);
+  const [initialEvaluator, setInitialEvaluator] = useState([]);
+  const [initialMarks, setInitialMarks] = useState('');
+  const [initialStrengthPoints, setInitialStrengthPoints] = useState('');
+  const [initialEvaluationDate, setInitialEvaluationDate] = useState('');
+  const [initialInsititute, setInitialInsititute] = useState([]);
+  const [initialClass, setInitialClass] = useState([]);
+  const [initialTopic, setInitialTopic] = useState('');
+  const [initialEvluationType, setInitialEvluationType] = useState([]);
+  const [initialSuggestions, setInitialSuggestions] = useState('');
+  const [initialWeaknessPoint, setInitialWeaknessPoint] = useState('');
   const [teachers, setTeachers] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -304,6 +328,7 @@ const TeacherEvaluation = () => {
         </h3>
         <CardBody>
           <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             onSubmit={onSubmit}
             validationSchema={ValidationSchema}

@@ -451,6 +451,3 @@ const StudentRegistraion = () => {
 };
 
 export default StudentRegistraion;
-
-
-

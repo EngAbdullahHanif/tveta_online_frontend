@@ -6,7 +6,7 @@ const data = [
     icon: 'FA.FaChalkboardTeacher',
     label: 'menu.teacher',
     to: `${adminRoot}/teacher`,
- 
+
     subs: [
       {
         icon: 'CG.CgUserList',
@@ -14,18 +14,18 @@ const data = [
         to: `${adminRoot}/teachers/teachers`,
       },
       {
-       // icon: 'iconsminds-add-user',
+        // icon: 'iconsminds-add-user',
         icon: 'GR.GrUserAdd',
         label: 'menu.teacher-registration',
         to: `${adminRoot}/teachers/register`,
       },
-  
+
       {
         icon: 'IM.ImProfile',
         label: 'menu.teacher-profile',
         to: `${adminRoot}/teachers/profile`,
       },
-   
+
       {
         icon: 'MD.MdAddBox',
         label: 'menu.teacher-evaluation',
@@ -72,6 +72,11 @@ const data = [
         icon: 'MD.MdAddBox',
         label: 'menu.attendance-registration',
         to: `${adminRoot}/students/attendance-register`,
+      },
+      {
+        icon: 'FA.FaList',
+        label: 'Attendance-List',
+        to: `${adminRoot}/students/attendance-list`,
       },
       {
         icon: 'IM.ImProfile',
@@ -136,7 +141,6 @@ const data = [
         to: `${adminRoot}/workers/workerId`,
         newWindow: false,
       },
-     
     ],
   },
   {
@@ -273,7 +277,7 @@ const data = [
         label: 'menu.field-register',
         to: `${adminRoot}/fields/register`,
       },
-    
+
       {
         icon: 'MD.MdAddBox',
         label: 'department-register',
@@ -284,7 +288,7 @@ const data = [
         label: 'field-list',
         to: `${adminRoot}/fields/field-list`,
       },
-   
+
       {
         icon: 'FA.FaList',
         label: 'department-list',
@@ -293,7 +297,6 @@ const data = [
     ],
   },
 
- 
   {
     id: 'evaluations',
     icon: 'BS.BsCardChecklist',
@@ -336,7 +339,7 @@ const data = [
       },
     ],
   },
- 
+
   {
     id: 'docs',
     icon: 'iconsminds-library',
@@ -344,6 +347,5 @@ const data = [
     to: 'https://gogo-react-docs.coloredstrategies.com/',
     newWindow: true,
   },
-  
 ];
 export default data;

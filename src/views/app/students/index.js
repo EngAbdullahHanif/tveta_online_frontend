@@ -24,6 +24,16 @@ const KankorStudentList = React.lazy(() =>
     /* webpackChunkName: "kankor-student-list" */ './bio/kankor-students-list/KankorStudentListMain'
   )
 );
+const DismissedStudentList = React.lazy(() =>
+  import(
+    /* webpackChunkName: "kankor-student-list" */ './dismissed-students/DismissedListMain'
+  )
+);
+const TransferedStudentList = React.lazy(() =>
+  import(
+    /* webpackChunkName: "kankor-student-list" */ './transfered-students/TransferedListMain'
+  )
+);
 
 const MarksRegistration = React.lazy(() =>
   import(/* webpackChunkName: "marks-register" */ './marks-register')
@@ -95,6 +105,14 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/attendance-list`}
         render={(props) => <AttendanceList {...props} />}
+      />
+      <Route
+        path={`${match.url}/dismissed-list`}
+        render={(props) => <DismissedStudentList {...props} />}
+      />
+      <Route
+        path={`${match.url}/transfered-list`}
+        render={(props) => <TransferedStudentList {...props} />}
       />
       <Route
         path={`${match.url}/kankor-students`}

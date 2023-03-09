@@ -64,6 +64,18 @@ const data = [
         // roles: [UserRole.Admin],
       },
       {
+        icon: 'CG.CgUserList',
+        label: 'Dismissed-Students',
+        to: `${adminRoot}/students/dismissed-list`,
+        // roles: [UserRole.Admin],
+      },
+      {
+        icon: 'CG.CgUserList',
+        label: 'Transfered-Students',
+        to: `${adminRoot}/students/transfered-list`,
+        // roles: [UserRole.Admin],
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
         to: `${adminRoot}/students/marks-register`,

@@ -16,12 +16,14 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
           })}
         >
           <div
-            className="pl-2 d-flex flex-grow-1 min-width-zero"
+            className="d-flex flex-grow-1 min-width-zero"
             style={{ maxHeight: '50px', width: '100%' }}
           >
             <div
-              className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
-              style={{ width: '100%', paddingTop: 35 }}
+              className=" py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
+              style={{
+                width: '100%',
+              }}
             >
               <NavLink to={`teacher/${teacher.id}`} style={{ width: '10%' }}>
                 <p className="list-item-heading mb-1 truncate">{teacher.id}</p>
@@ -33,7 +35,7 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
               </NavLink>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right',  }}
+                style={{ width: '15%', textAlign: 'right' }}
               >
                 {teacher.father_name}
               </p>

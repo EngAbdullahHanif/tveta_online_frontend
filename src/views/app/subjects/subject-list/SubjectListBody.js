@@ -6,10 +6,14 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
-  console.log('subject list body', subject)
+  console.log('subject list body', subject);
   return (
     <Colxx xxs="12" key={subject.subjectCode} className="mt-2">
-      <ContextMenuTrigger id="menu_id" data={subject.subjectCode} collect={collect}>
+      <ContextMenuTrigger
+        id="menu_id"
+        data={subject.subjectCode}
+        collect={collect}
+      >
         <Card
           onClick={(event) => onCheckItem(event, subject.subjectCode)}
           className={classnames('d-flex flex-row', {
@@ -21,24 +25,32 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
             style={{ maxHeight: '50px', width: '100%' }}
           >
             <div
-              className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%', marginTop: 8 }}
             >
-              <NavLink to={`subjects/${subject.subjectCode}`} style={{ width: '16%' }}>
-                <p className="list-item-heading mb-1 truncate">{subject.subjectCode}</p>
-              </NavLink>
-              <NavLink to={`subjects/${subject.subjectCode}`} style={{ width: '15%', marginRight: 30 }}>
+              <NavLink
+                to={`subjects/${subject.subjectCode}`}
+                style={{ width: '16%' }}
+              >
                 <p className="list-item-heading mb-1 truncate">
-                 {subject.subjectName}
+                  {subject.subjectCode}
+                </p>
+              </NavLink>
+              <NavLink
+                to={`subjects/${subject.subjectCode}`}
+                style={{ width: '15%', marginRight: 30 }}
+              >
+                <p className="list-item-heading mb-1 truncate">
+                  {subject.subjectName}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right', marginRight: 55 }}
               >
-              {subject.subjectEnglishName}
+                {subject.subjectEnglishName}
               </p>
-         
+
               <p
                 className="mb-1 text-small"
                 style={{ width: '10%', textAlign: 'right', marginRight: 40 }}
@@ -47,7 +59,7 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' , marginRight: 50 }}
+                style={{ width: '15%', textAlign: 'right', marginRight: 50 }}
               >
                 {subject.subjectType}
               </p>
@@ -57,7 +69,6 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
               >
                 {subject.subjectSystemType}
               </p>
-             
             </div>
           </div>
         </Card>

@@ -267,13 +267,13 @@ const data = [
     subs: [
       {
         icon: 'MD.MdAddBox',
-        label: 'class.list',
-        to: `${adminRoot}/classes/classes`,
+        label: 'class.register',
+        to: `${adminRoot}/classes/register`,
       },
       {
         icon: 'FA.FaList',
-        label: 'class.register',
-        to: `${adminRoot}/classes/register`,
+        label: 'class.list',
+        to: `${adminRoot}/classes/classes`,
       },
     ],
   },

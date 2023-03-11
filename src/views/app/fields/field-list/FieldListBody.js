@@ -6,7 +6,7 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const FieldListBody = ({ field, isSelect, collect, onCheckItem }) => {
-  console.log('inside body', field)
+  console.log('inside body', field);
   return (
     <Colxx xxs="12" key={field.id} className="mt-2">
       <ContextMenuTrigger id="menu_id" data={field.id} collect={collect}>
@@ -21,18 +21,18 @@ const FieldListBody = ({ field, isSelect, collect, onCheckItem }) => {
             style={{ maxHeight: '50px', width: '100%' }}
           >
             <div
-              className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
               <NavLink to={`fields/${field.id}`} style={{ width: '25%' }}>
                 <p className="list-item-heading mb-1 truncate">{field.id}</p>
               </NavLink>
-             
+
               <p
                 className="mb-1 text-small"
                 style={{ width: '26%', textAlign: 'right' }}
               >
-              {field.name}
+                {field.name}
               </p>
               <p
                 className="mb-1 text-small"
@@ -46,7 +46,6 @@ const FieldListBody = ({ field, isSelect, collect, onCheckItem }) => {
               >
                 {field.sector}
               </p>
-             
             </div>
           </div>
         </Card>

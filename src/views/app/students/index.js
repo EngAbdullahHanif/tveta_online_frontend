@@ -61,6 +61,10 @@ const AttendanceUpdate = React.lazy(() =>
   import(/* webpackChunkName: "attendance-update" */ './attendance-update')
 );
 
+// const Dismissal = React.lazy(() =>
+//   import(/* webpackChunkName: "attendance-update" */ './attendance-update')
+// );
+
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -122,9 +126,9 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/test`}
         render={(props) => <Test {...props} />}
-        />
+      />
       <Route
-        path={`${match.url}/dismissal`}
+        path={`${match.url}/student-dismissal`}
         render={(props) => <Dismissal {...props} />}
       />
       <Route

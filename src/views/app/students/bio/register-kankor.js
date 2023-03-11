@@ -96,7 +96,7 @@ const StudentRegistraion = ({ history }) => {
   // Temporaray varaibles
   const testName = 'Ahmad';
   const testKankorId = '232423';
-  const testFatherName = 'Rashid';
+  const testFatherName = '';
   const testInteranceDate = '23-243-4323';
   const testStudyTime = 'Morning';
   const testDepartment = 'Engineering';
@@ -175,12 +175,13 @@ const StudentRegistraion = ({ history }) => {
     setDepartments(updatedData);
   };
 
-  const handleClick = (event) => {
-    setIsNext(event);
-  };
+  // const handleClick = (event) => {
+  //   setIsNext(event);
+  // };
 
   const onRegister = (values) => {
     console.log('values', values);
+    setIsNext(false);
 
     const data = {
       name: values.name1,
@@ -231,7 +232,7 @@ const StudentRegistraion = ({ history }) => {
             <Formik
               initialValues={initialValues}
               onSubmit={onRegister}
-              // validationSchema={ValidationSchema}
+              validationSchema={ValidationSchema}
             >
               {({
                 errors,
@@ -407,10 +408,9 @@ const StudentRegistraion = ({ history }) => {
                         className="float-right m-5"
                         size="lg"
                         type="submit"
-                        onClick={() => {
-                          onRegister;
-                          handleClick(false);
-                        }}
+                        // onClick={() => {
+                        //   handleClick(false);
+                        // }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -437,7 +437,8 @@ const StudentRegistraion = ({ history }) => {
                 </h3>
                 <Button
                   className="m-5 bg-primary"
-                  onClick={() => window.location.reload()}
+                  // onClick={() => window.location.reload()}
+                  onClick={() => setIsNext(true)}
                 >
                   <IntlMessages id="button.back" />
                 </Button>

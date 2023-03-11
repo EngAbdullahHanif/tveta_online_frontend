@@ -741,12 +741,22 @@ const StudentRegistration = ({ intl }, values) => {
       }
     });
   };
+
   const onClickPrev = (goToPrev, steps, step) => {
     if (steps.indexOf(step) <= 0) {
       return;
     }
     goToPrev();
   };
+
+  // const onClickReload = (goToPrev, steps, step) => {
+  //   // if (steps.indexOf(step) <= 4) {
+  //   //   return;
+  //   // }
+  //   for (i = 0; i <= 3; i++) {
+  //     goToPrev();
+  //   }
+  // };
   const { messages } = intl;
 
   return (
@@ -787,7 +797,7 @@ const StudentRegistration = ({ intl }, values) => {
                     tazkiraType: initialTazkiraType,
                   }}
                   validateOnMount
-                  validationSchema={ValidationStepOne}
+                  // validationSchema={ValidationStepOne}
                   onSubmit={() => {}}
                 >
                   {({
@@ -1157,7 +1167,7 @@ const StudentRegistration = ({ intl }, values) => {
                     C_Village: initialC_Village,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepTwo}
+                  // validationSchema={ValidationStepTwo}
                   validateOnMount
                 >
                   {({
@@ -1404,7 +1414,7 @@ const StudentRegistration = ({ intl }, values) => {
                     batch: initialBatch,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepThree}
+                  // validationSchema={ValidationStepThree}
                   validateOnMount
                 >
                   {({

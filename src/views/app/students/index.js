@@ -71,9 +71,14 @@ const Reregister = React.lazy(() =>
 const SingleStudentMarksUpdate = React.lazy(() =>
   import(/* webpackChunkName: "marks-update" */ './single-student-marksUpdate')
 );
+// const UpdateAttendance = React.lazy(() =>
+//   import(/* webpackChunkName: "marks-update" */ './')
+// );
 
 const AttendanceUpdate = React.lazy(() =>
-  import(/* webpackChunkName: "attendance-update" */ './attendance-update')
+  import(
+    /* webpackChunkName: "attendance-update" */ './attendence/update-attendance'
+  )
 );
 
 const Students = ({ match }) => (
@@ -103,8 +108,13 @@ const Students = ({ match }) => (
         render={(props) => <StudentList {...props} />}
       />
       <Route
+        exact
         path={`${match.url}/attendance-list`}
         render={(props) => <AttendanceList {...props} />}
+      />
+      <Route
+        path={`${match.url}/attendance-list/:attendance_id`}
+        render={(props) => <AttendanceUpdate {...props} />}
       />
       <Route
         path={`${match.url}/dismissed-list`}
@@ -176,10 +186,6 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/marks-update`}
         render={(props) => <SingleStudentMarksUpdate {...props} />}
-      />
-      <Route
-        path={`${match.url}/attendance-update`}
-        render={(props) => <AttendanceUpdate {...props} />}
       />
 
       {/* <ProtectedRoute

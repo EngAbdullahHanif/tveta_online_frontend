@@ -241,10 +241,10 @@ const ValidationStepOne = Yup.object().shape({
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="teacher.NameErr" />),
-  idCardJoldNo: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="teacher.NameErr" />),
+  // idCardJoldNo: Yup.string()
+  //   .min(3, <IntlMessages id="min.minInputValue" />)
+  //   .max(50, <IntlMessages id="max.maxInputValue" />)
+  //   .required(<IntlMessages id="teacher.NameErr" />),
 
   fatherName: Yup.string()
     .required(<IntlMessages id="teacher.FatherNameErr" />)
@@ -294,23 +294,19 @@ const ValidationStepOne = Yup.object().shape({
   phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
   DoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
 
-  tazkiraType: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StdTazkiraTypeErr" />)
-    : null,
+  tazkiraType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
 
-  gender: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.genderErr" />)
-    : null,
+  gender: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.genderErr" />),
 
   email: Yup.string()
     .email(<IntlMessages id="teacher.EmailRequiredErr" />)
@@ -318,48 +314,38 @@ const ValidationStepOne = Yup.object().shape({
 });
 
 const ValidationStepTwo = Yup.object().shape({
-  levelOfEducation: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="teacher.LevelOfEducationErr" />)
-    : null,
+  levelOfEducation: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
 
   preSchool: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="forms.StPreShcoolErr" />),
 
-  schoolProvince: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StdInteranceTypeErr" />)
-    : null,
+  schoolProvince: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
 
   graduationYear: Yup.date().required(
     <IntlMessages id="forms.StdGraduationYearErr" />
   ),
-  province: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-    : null,
-
-  C_Province: updateMode
-    ? Yup.object()
-        .shape({ value: Yup.string().required() })
-        .nullable()
-        .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-    : null,
-
+  province: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  C_Province: Yup.object()
+    .shape({ value: Yup.string().required() })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
   C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
 
   district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
@@ -368,91 +354,67 @@ const ValidationStepTwo = Yup.object().shape({
 });
 
 const ValidationStepThree = Yup.object().shape({
-  institute: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.InstituteErr" />)
-    : null,
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.InstituteErr" />),
 
-  studyTime: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StudyTimeErr" />)
-    : null,
+  studyTime: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudyTimeErr" />),
+  class: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.ClassErr" />),
 
-  class: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="marks.ClassErr" />)
-    : null,
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
 
-  educationalYear: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.educationYearErr" />)
-    : null,
+  department: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.departmentIdErr" />),
+  interanceType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
+  studentType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudentTypeErr" />),
 
-  department: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="teacher.departmentIdErr" />)
-    : null,
-
-  interanceType: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StdInteranceTypeErr" />)
-    : null,
-
-  studentType: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StudentTypeErr" />)
-    : null,
-
-  mediumOfInstruction: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.mediumOfInstructionErr" />)
-    : null,
-
-  batch: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.batchErr" />)
-    : null,
-
+  mediumOfInstruction: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.mediumOfInstructionErr" />),
+  batch: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.batchErr" />),
   kankorId: Yup.string().required(<IntlMessages id="forms.kankorIdErr" />),
 });
 
-const updateMode = true;
 const StudentRegistration = ({ intl }, values) => {
   const { studentId } = useParams();
   console.log('studentID', studentId);
@@ -593,7 +555,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
   const [initialFatherDuty, setInitialFatherDuty] = useState('');
   const [initialLastNameEng, setInitialLastNameEng] = useState();
-  const [initialGender, setInitialGender] = useState('');
+  const [initialGender, setInitialGender] = useState([]);
   const [initialEnglishName, setInitialEnglishName] = useState('');
   const [initialPhoneNo, setInitialPhoneNo] = useState();
   const [initialDoB, setInitialDoB] = useState();
@@ -1028,7 +990,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
-                              {!Gender && errors.gender ? (
+                              {errors.gender && !Gender ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
                                   {errors.gender}
                                 </div>
@@ -1069,6 +1031,32 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
+                            {values.tazkiraType.value === '2' ? (
+                              <div>
+                                {/* Jold Number */}
+                                <div>
+                                  <FormGroup className="form-group has-float-label error-l-100">
+                                    <Label>
+                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                                    </Label>
+                                    <Field
+                                      className="form-control"
+                                      name="idCardJoldNo"
+                                      type="string"
+                                    />
+                                    {errors.idCardJoldNo &&
+                                    touched.idCardJoldNo ? (
+                                      <div className="invalid-feedback d-block  bg-danger text-white">
+                                        {errors.idCardJoldNo}
+                                      </div>
+                                    ) : null}
+                                  </FormGroup>
+                                </div>
+                              </div>
+                            ) : (
+                              <div></div>
+                            )}
+
                             {/* Place of birth */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
@@ -1085,32 +1073,6 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {/* {values.tazkiraType.value === '' ? (
-
-                            ) : (
-                              <div></div>
-                            )} */}
-                            <div>
-                              {/* Jold Number */}
-                              <div>
-                                <FormGroup className="form-group has-float-label error-l-100">
-                                  <Label>
-                                    <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                  </Label>
-                                  <Field
-                                    className="form-control"
-                                    name="idCardJoldNo"
-                                    type="string"
-                                  />
-                                  {errors.idCardJoldNo &&
-                                  touched.idCardJoldNo ? (
-                                    <div className="invalid-feedback d-block  bg-danger text-white">
-                                      {errors.idCardJoldNo}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
-                            </div>
                             {/* Email Address */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
@@ -1157,7 +1119,7 @@ const StudentRegistration = ({ intl }, values) => {
                     C_Village: initialC_Village,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepTwo}
+                  // validationSchema={ValidationStepTwo}
                   validateOnMount
                 >
                   {({
@@ -1404,7 +1366,7 @@ const StudentRegistration = ({ intl }, values) => {
                     batch: initialBatch,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepThree}
+                  // validationSchema={ValidationStepThree}
                   validateOnMount
                 >
                   {({

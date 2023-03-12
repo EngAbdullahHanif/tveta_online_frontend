@@ -177,6 +177,11 @@ const data = [
         to: `${adminRoot}/institutes/institute-upgrade`,
       },
       {
+        icon: 'FA.FaList',
+        label: 'promotion-demotion-list',
+        to: `${adminRoot}/institutes/promotion-demotion-list`,
+      },
+      {
         icon: 'BI.BiMessageAltDetail',
         label: 'menu.Institute-details',
         to: `${adminRoot}/institutes/institute-details`,

@@ -120,12 +120,12 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="teacher.departmentIdErr" />),
 
-  subject: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.SubjectErr" />),
+  // subject: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="marks.SubjectErr" />),
 });
 
 const StudentAttendance = ({ match }) => {
@@ -206,12 +206,12 @@ const StudentAttendance = ({ match }) => {
     setInstitutes(updatedData);
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setFields(updatedData);
+    // const response = await axios.get('http://localhost:8000/institute/filed/');
+    // const updatedData = await response.data.map((item) => ({
+    //   value: item.id,
+    //   label: item.name,
+    // }));
+    // setFields(updatedData);
   };
   const fetchDepartments = async () => {
     const response = await axios.get(
@@ -253,7 +253,7 @@ const StudentAttendance = ({ match }) => {
   }, []);
 
   const handleClick = (event) => {
-    // setIsNext(event);
+    setIsNext(event);
     axios
       .get(
         `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
@@ -261,6 +261,7 @@ const StudentAttendance = ({ match }) => {
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
+        // setIsNext(false);
       });
     console.log('students', students);
   };

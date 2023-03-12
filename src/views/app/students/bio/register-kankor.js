@@ -37,7 +37,7 @@ const FieldOptions = [
 ];
 
 const StudentRegistraion = ({ history }) => {
-  const UpdatingMode = false;
+  const UpdatingMode = true;
   const ValidationSchema = Yup.object().shape({
     name1: Yup.string()
       .min(3, <IntlMessages id="min.minInputValue" />)
@@ -200,7 +200,7 @@ const StudentRegistraion = ({ history }) => {
   };
 
   const handleClick = (event) => {
-    setIsNext(event);
+    // setIsNext(event);
   };
 
   const handleReload = () => {

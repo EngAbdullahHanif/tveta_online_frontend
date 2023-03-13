@@ -34,7 +34,6 @@ const StudentListBody = ({
                 className=""
               >
                 <p className="list-item-heading mb-1 truncate ">
-                  <span className="mr-4">{transferedStudents.id}</span>
                   {transferedStudents.id}
                 </p>
               </NavLink>

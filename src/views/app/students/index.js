@@ -31,7 +31,7 @@ const DismissedStudentList = React.lazy(() =>
 );
 const TransferedStudentList = React.lazy(() =>
   import(
-    /* webpackChunkName: "kankor-student-list" */ './transfered-students/TransferedListMain'
+    /* webpackChunkName: "kankor-student-list" */ './transfered-students/transfered-students'
   )
 );
 

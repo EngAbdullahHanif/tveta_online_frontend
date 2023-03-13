@@ -8,10 +8,11 @@ import {
   ModalFooter,
 } from 'reactstrap';
 
-import Pagination from '../../../../containers/pages/Pagination';
-import ContextMenuContainer from '../../../../containers/pages/ContextMenuContainer';
-import DataListView from '../../../../containers/pages/DataListView';
-import ImageListView from '../../../../containers/pages/ImageListView';
+//import Pagination from '../../../../containers/pages/Pagination';
+import Pagination from '../../../../../containers/pages/Pagination';
+import ContextMenuContainer from '../../../../../containers/pages/ContextMenuContainer';
+import DataListView from '../../../../../containers/pages/DataListView';
+import ImageListView from '../../../../../containers/pages/ImageListView';
 import StudentsListBody from './TransferedListBody';
 
 function collect(props) {

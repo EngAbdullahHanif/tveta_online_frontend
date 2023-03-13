@@ -188,7 +188,7 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
-const ThumbListPages = ({ match }) => {
+const ThumbListPages = ({ match, item_list }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -222,15 +222,9 @@ const ThumbListPages = ({ match }) => {
     label: 'ولایت',
   });
 
-  const fetchTransferedStudent = async () => {
-    const { data } = await axios.get(TransferedStudentsAPI);
-    setsetTransferedStudentsTra(data);
-    console.log('transfered students list', data);
-    setIsLoaded(true);
-  };
-
   useEffect(() => {
-    fetchTransferedStudent();
+    setItems(item_list);
+    setIsLoaded(true);
   }, []);
   const onCheckItem = (event, id) => {
     if (
@@ -306,15 +300,14 @@ const ThumbListPages = ({ match }) => {
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
-
-  console.log('items', items);
+  console.log('item data', items);
   return !isLoaded ? (
     <div className="loading" />
   ) : (
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د شاگرد لست/لست شاگردان"
+          heading="د تبدیل شوی شاګردانو لست/لست شاگردان تبدیل شده"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -460,7 +453,7 @@ const ThumbListPages = ({ match }) => {
             </tr>
           </thead>
           <ListPageListing
-            items={transferedStudents}
+            items={items}
             displayMode={displayMode}
             selectedItems={selectedItems}
             onCheckItem={onCheckItem}

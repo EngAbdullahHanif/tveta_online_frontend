@@ -734,6 +734,10 @@ module.exports = {
   'forms.StdNecessaryWorkLabel': 'Necessary Work',
   'forms.ConfirmButton': 'Confirm',
   'menu.attendance': 'Attendance',
+  'forms.totolEducationalDays': 'Total Educational Days',
+  'forms.totolEduactionalDaysErr': 'Total Educational Days Required!',
+  'marks.attendanceResult': 'Final Attendance',
+  'marks.eligable_Deprive': 'Eligibility',
 
   // Field Registration
   'field.FieldRegisterTitle': 'Field Registeration',

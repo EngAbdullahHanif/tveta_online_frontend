@@ -62,7 +62,7 @@ const AttendanceUpdate = React.lazy(() =>
 );
 
 const Random = React.lazy(() =>
-  import(/* webpackChunkName: "random" */ './bio/random')
+  import(/* webpackChunkName: "register-1" */ '../main-register-route')
 );
 
 const Students = ({ match }) => (
@@ -145,7 +145,7 @@ const Students = ({ match }) => (
         render={(props) => <AttendanceUpdate {...props} />}
       />
       <Route
-        path={`${match.url}/random`}
+        path={`${match.url}/register-1`}
         render={(props) => <Random {...props} />}
       />
 

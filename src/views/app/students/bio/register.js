@@ -1710,10 +1710,7 @@ const StudentRegistration = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <NavLink
-                      to={'/app/students/random'}
-                      style={{ width: '10%' }}
-                    >
+                    <NavLink to={'/app/students/register-1'}>
                       <Button className="mt-5 bg-primary">
                         <IntlMessages id="button.back" />
                       </Button>

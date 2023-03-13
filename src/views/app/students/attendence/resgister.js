@@ -61,6 +61,33 @@ const ClassOptions = [
   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
 ];
+const educationYears = [
+  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
+  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
+  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
+  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
+  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
+  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
+  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
+  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
+  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
+  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
+  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
+  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
+  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
+  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
+  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
+  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
+  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
+  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
+  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
+  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
+  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
+  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
+  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+];
 
 const StudyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
@@ -89,9 +116,12 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
 
-  educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
-  ),
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
 
   studyTime: Yup.object()
     .shape({
@@ -114,12 +144,16 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="teacher.departmentIdErr" />),
 
-  subject: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.SubjectErr" />),
+  totolEducationalDays: Yup.string().required(
+    <IntlMessages id="forms.totolEduactionalDaysErr" />
+  ),
+
+  // subject: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="marks.SubjectErr" />),
 });
 
 const initialValues = {
@@ -128,7 +162,8 @@ const initialValues = {
   studyTime: [],
   classs: [],
   department: [],
-  subject: [],
+  totolEducationalDays: '',
+  educationalYear: [],
 };
 
 const StudentAttendance = ({ match }) => {
@@ -312,23 +347,23 @@ const StudentAttendance = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                      {/* Eduactional Year*/}
+                      <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
                         <Label>
-                          <IntlMessages id="forms.educationYearLabel" />
+                          <IntlMessages id="curriculum.eduactionalYearLabel" />
                         </Label>
-                        <Field
-                          type="number"
-                          id="educationlaYear"
-                          className="form-control"
-                          name="educationlaYear"
-                          // assign value to selectedEducationalYear
-                          onClick={setSelectedEducationalYear(
-                            values.educationlaYear
-                          )}
+                        <FormikReactSelect
+                          name="educationalYear"
+                          id="educationalYear"
+                          value={values.educationalYear}
+                          options={educationYears}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
                         />
-                        {errors.educationlaYear && touched.educationlaYear ? (
+                        {errors.educationalYear && touched.educationalYear ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.educationlaYear}
+                            {errors.educationalYear}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -377,7 +412,7 @@ const StudentAttendance = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                      {/* <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
                         </Label>
@@ -394,6 +429,26 @@ const StudentAttendance = ({ match }) => {
                         {errors.subject && touched.subject ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.subject}
+                          </div>
+                        ) : null}
+                      </FormGroup> */}
+                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                        <Label>
+                          <IntlMessages id="forms.totolEducationalDays" />
+                        </Label>
+                        <Field
+                          type="number"
+                          id="totolEducationalDays"
+                          className="form-control"
+                          name="totolEducationalDays"
+                          onClick={setSelectedEducationalYear(
+                            values.totolEducationalDays
+                          )}
+                        />
+                        {errors.totolEducationalDays &&
+                        touched.totolEducationalDays ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.totolEducationalDays}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -481,6 +536,10 @@ const StudentAttendance = ({ match }) => {
                       <th colspan="4" className="border text-center">
                         <IntlMessages id="marks.marksDisplayTitle" />
                       </th>
+                      <th colspan="1" className="border text-center">
+                        {' '}
+                        <IntlMessages id="marks.attendanceResult" />
+                      </th>
                     </tr>
                   </thead>
                   <thead className="thead-dark">
@@ -513,6 +572,9 @@ const StudentAttendance = ({ match }) => {
                       </th>
                       <th scope="col" className="border text-center">
                         <IntlMessages id="forms.StdSicknessLabel" />
+                      </th>
+                      <th scope="col" className="border text-center">
+                        <IntlMessages id="marks.eligable_Deprive" />
                       </th>
                     </tr>
                   </thead>
@@ -603,6 +665,9 @@ const StudentAttendance = ({ match }) => {
                             ) : null}
                           </FormGroup>
                         </div>
+                        <td>
+                          Mahroom or full attendance should be displayed here
+                        </td>
                       </tr>
                     ))}
                   </tbody>

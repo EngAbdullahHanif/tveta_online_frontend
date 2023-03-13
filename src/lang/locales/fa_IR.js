@@ -821,6 +821,12 @@ module.exports = {
   'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
   'forms.ConfirmButton': 'تایید/ تصدیق',
   'menu.attendance': 'حاضری',
+  'forms.totolEducationalDays': 'د تعلیمی ورځو تعداد / تعداد روزهای تعلیمی',
+  'forms.totolEduactionalDaysErr':
+    'د دتعلیمی ورځو لیکل اړین دي/ روز های تعلیمی ضروری است',
+
+  'marks.attendanceResult': 'وروستۍ پایله / نتیجه نهایی',
+  'marks.eligable_Deprive': 'شامل امتحان/ محرومله',
 
   // Field Registration
   'field.FieldRegisterTitle': 'ثبت رشته / درشتې ثبت',

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
 
@@ -9,9 +10,13 @@ import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
+import { CgInsertBefore } from 'react-icons/cg';
 
 const servicePath = 'http://localhost:8000';
 const StudentAttendanceAPI = `${servicePath}/api/stdatten`;
+const UpdateStudentAttendanceAPI =
+  'http://localhost:8000/api/update_student_atten';
+//http://localhost:8000/api/update_student_atten/1//
 //http://localhost:8000/api/stdatten/?id=1
 
 const ValidationSchema = Yup.object().shape({
@@ -26,12 +31,13 @@ const ValidationSchema = Yup.object().shape({
 });
 
 const UpdateStudentAttendance = ({ match }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [studentName, setStudentName] = useState('');
   const [present, setPresentDays] = useState();
   const [absent, setAbsentDays] = useState();
   const [holidays, setHolidays] = useState();
   const [educationalDays, setEducationalDays] = useState();
+  const [attendanceRecord, setAttendanceRecord] = useState({});
   const [sickness, setSickness] = useState();
   const [inititalStudentName, setInititalStudentName] = useState('');
   const [initialPresent, setInitialPresent] = useState();
@@ -54,6 +60,7 @@ const UpdateStudentAttendance = ({ match }) => {
     const { data } = await axios.get(
       `${StudentAttendanceAPI}/?id=${attendance_id}`
     );
+    setAttendanceRecord(data[0]);
     setInititalStudentName(data[0].student_id.name);
     setInitialPresent(data[0].Present_days);
     setInitialAbsent(data[0].appsent_days);
@@ -70,15 +77,36 @@ const UpdateStudentAttendance = ({ match }) => {
   }, []);
 
   const onSubmit = (values) => {
+    console.log('old attendance data', attendanceRecord);
+
     const data = {
-      studentName: values.studentName,
-      present: values.present,
-      absent: values.absent,
-      holidays: values.holidays,
-      sickness: values.sickness,
-      educationalDays: values.educationalDays,
+      id: attendanceRecord.id,
+      Present_days: values.present,
+      appsent_days: values.absent,
+      holy_days: values.holidays,
+      sikness_days: values.sickness,
+      educational_days: values.educationalDays,
+      type: attendanceRecord.type,
+      educational_year: attendanceRecord.educational_year,
+      created_date: attendanceRecord.created_date,
+      updated_date: attendanceRecord.updated_date,
+      is_deleted: attendanceRecord.is_deleted,
+      institute_id: attendanceRecord.institute_id.id,
+      department_id: attendanceRecord.department_id.id,
+      student_id: attendanceRecord.student_id.student_id,
+      class_id: attendanceRecord.class_id.id,
+      user_id: attendanceRecord.user_id,
     };
-    console.log('values on register', data);
+
+    // post the updated data to the server
+    axios
+      .put(`${UpdateStudentAttendanceAPI}/${data.id}/`, data)
+      .then((res) => {
+        console.log('success message', res);
+      })
+      .catch((err) => {
+        console.log('error message here', err);
+      });
   };
   return !isLoaded ? (
     <div className="loading" />

@@ -82,17 +82,6 @@ const mediumOfInstructionOptions = [
 ];
 
 const educationYears = [
-  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
-  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
-  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
-  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
-  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
-  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
-  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
-  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
-  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
   { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
   { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
   { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
@@ -100,6 +89,24 @@ const educationYears = [
   { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
   { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
   { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
+  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
+  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
+  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
+  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
+  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
+  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
+  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
+  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
+  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
+  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
+  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
+  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
+  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
+  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
+  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
+  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
 ];
 
 const genderOptions = [

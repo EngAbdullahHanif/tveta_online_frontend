@@ -61,6 +61,10 @@ const AttendanceUpdate = React.lazy(() =>
   import(/* webpackChunkName: "attendance-update" */ './attendance-update')
 );
 
+const Random = React.lazy(() =>
+  import(/* webpackChunkName: "random" */ './bio/random')
+);
+
 const Students = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -79,6 +83,7 @@ const Students = ({ match }) => (
         render={(props) => <RegisterKankor {...props} />}
       />
       <Route
+        exact
         path={`${match.url}/students`}
         render={(props) => <StudentList {...props} />}
       />
@@ -122,9 +127,9 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/test`}
         render={(props) => <Test {...props} />}
-        />
+      />
       <Route
-        path={`${match.url}/dismissal`}
+        path={`${match.url}/student-dismissal`}
         render={(props) => <Dismissal {...props} />}
       />
       <Route
@@ -138,6 +143,10 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/attendance-update`}
         render={(props) => <AttendanceUpdate {...props} />}
+      />
+      <Route
+        path={`${match.url}/random`}
+        render={(props) => <Random {...props} />}
       />
 
       {/* <ProtectedRoute

@@ -582,6 +582,11 @@ module.exports = {
   'forms.VillageErr': 'Village Is Required',
   'forms.PlaceOfBirthLabel': 'Place Birth',
   'forms.StdPlaceOfBirthErr': 'Place of Birth Requiered!',
+  'forms.sector': 'Sector',
+  'forms.fieldErr': 'Field Is Required!',
+  'forms.sectorErr': 'Sector Is Required!',
+  'student.photo': 'Image',
+  'student.photoErr': 'Student Photo Is Required!',
 
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',
@@ -857,7 +862,6 @@ module.exports = {
   'marks.grade': 'Grade',
   'marks.type': 'Chance',
   'marks.result': 'Passed',
-  
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',
@@ -1017,7 +1021,7 @@ module.exports = {
   'dash.dormsList': 'Dorms',
   'dash.fieldsList': 'Fields',
   'dash.notifcation': 'Notifications',
-
+  'dash.field-1': 'field',
   // Admin DASHBOARD
   'dash.totalStudents': 'Total Students',
   'dash.instituteComplex': 'Complex',

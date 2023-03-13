@@ -451,11 +451,6 @@ const MarksRegistration = ({ match }) => {
                         size="lg"
                         type="submit"
                       >
-                        <span className="spinner d-inline-block">
-                          <span className="bounce1" />
-                          <span className="bounce2" />
-                          <span className="bounce3" />
-                        </span>
                         <span className="label">
                           <IntlMessages id="button.Next" />
                         </span>
@@ -625,7 +620,11 @@ const MarksRegistration = ({ match }) => {
                   </Row>
                   <Row className=" justify-content-center">
                     <Colxx xxs="9" className="m-5">
-                      <Button className=" m-4 " onClick={() => setIsNext(true)}>
+                      <Button
+                        className=" m-4 "
+                        color="primary"
+                        onClick={() => setIsNext(true)}
+                      >
                         <IntlMessages id="button.Back" />
                       </Button>
 
@@ -656,7 +655,7 @@ const MarksRegistration = ({ match }) => {
                       // onClick={() => window.location.reload()}
                       onClick={() => {
                         setIsNext(true);
-                        setIsSubmitted(true);
+                        setIsSubmitted(true); 
                       }}
                     >
                       <IntlMessages id="button.Back" />

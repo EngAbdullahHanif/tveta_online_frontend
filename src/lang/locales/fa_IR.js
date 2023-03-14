@@ -807,7 +807,7 @@ module.exports = {
   'student.Profile': ' د شاگرد پروفایل/ پروفایل شاگرد',
   'forms.RegistrationDateLabel': 'د ثبت نام وخت/ تاریخ ثبت نام',
 
-  // Student Attendance
+  // Student Attendance Register
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',
   'forms.StdIdLabel': ' د شاګرد ایډي/ ایدی شاگرد',
   'forms.StdIdErr': 'د شاګرد ایډي اړین دی/ ایدی شاگرد ضروری است',
@@ -821,9 +821,10 @@ module.exports = {
   'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
   'forms.ConfirmButton': 'تایید/ تصدیق',
   'menu.attendance': 'حاضری',
-  'forms.totolEducationalDays': 'د تعلیمی ورځو تعداد / تعداد روزهای تعلیمی',
+  'forms.totolEducationalDays': 'تعلیمی ورځې/روزهای تعلیمی',
   'forms.totolEduactionalDaysErr':
     'د دتعلیمی ورځو لیکل اړین دي/ روز های تعلیمی ضروری است',
+  'attendance.departmentLabel': 'دیپارتمنت',
 
   'marks.attendanceResult': 'وروستۍ پایله / نتیجه نهایی',
   'marks.eligable_Deprive': 'شامل امتحان/ محرومله',

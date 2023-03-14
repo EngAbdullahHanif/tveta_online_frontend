@@ -144,7 +144,7 @@ const AllSubjectsMarks = ({ match }) => {
     setInstitutes(updatedData);
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
+    const response = await axios.get('http://localhost:8000/institute/field/');
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name,
@@ -190,18 +190,21 @@ const AllSubjectsMarks = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const handleClick = (event) => {
+  const handleClick = async (event) => {
     setIsNext(event);
-    axios
+    await axios
       .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+        `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
       )
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
       });
-    console.log('students', students);
+    console.log(
+      `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+    );
   };
+  console.log('students', students);
 
   const onSubmit = (values) => {
     console.log('values', values);
@@ -244,7 +247,6 @@ const AllSubjectsMarks = ({ match }) => {
           {inNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={onSubmit}
               validationSchema={ValidationSchema}
             >
               {({
@@ -372,7 +374,6 @@ const AllSubjectsMarks = ({ match }) => {
                         size="lg"
                         type="submit"
                         onClick={() => {
-                          onSubmit;
                           handleClick(false);
                         }}
                       >
@@ -524,7 +525,22 @@ const AllSubjectsMarks = ({ match }) => {
                       overflowX: 'hidden',
                     }}
                   >
-                    <tr>
+                    {students &&
+                      students.map((student, index) => (
+                        <>
+                          <tr>
+                            <td>{index + 1}</td>
+                            <td>{student.studnet_name}</td>
+                            <td>{student.student_father_name}</td>
+                            <td>{student.student_id}</td>
+                            {student.subject_id.map((mark, index) => (
+                              <td>{mark.marks}</td>
+                            ))}
+                          </tr>{' '}
+                        </>
+                      ))}
+
+                    {/* <tr>
                       <td>1</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
                       <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
                       <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
@@ -559,7 +575,7 @@ const AllSubjectsMarks = ({ match }) => {
                       <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
                       <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
                       <td>hdsfsda18</td>
-                    </tr>
+                    </tr> */}
                     {/* {students.map((student, index) => (
                       <tr>
                         <th scope="row">{index}</th>

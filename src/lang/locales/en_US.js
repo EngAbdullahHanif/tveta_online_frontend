@@ -720,8 +720,7 @@ module.exports = {
   'forms.SubimssionButton': 'Submit',
   'student.Profile': 'Student Profile',
 
-  // Student Attendance
-
+  // Student Attendance Register
   'forms.AttendanceTitle': 'Student Attendance',
   'forms.StdIdLabel': 'Student Id',
   'forms.StdIdErr': 'Student Id Required!',
@@ -734,10 +733,11 @@ module.exports = {
   'forms.StdNecessaryWorkLabel': 'Necessary Work',
   'forms.ConfirmButton': 'Confirm',
   'menu.attendance': 'Attendance',
-  'forms.totolEducationalDays': 'Total Educational Days',
+  'forms.totolEducationalDays': 'Educational Days',
   'forms.totolEduactionalDaysErr': 'Total Educational Days Required!',
   'marks.attendanceResult': 'Final Attendance',
   'marks.eligable_Deprive': 'Eligibility',
+  'attendance.departmentLabel': 'Department',
 
   // Field Registration
   'field.FieldRegisterTitle': 'Field Registeration',

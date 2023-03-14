@@ -655,7 +655,7 @@ const MarksRegistration = ({ match }) => {
                       // onClick={() => window.location.reload()}
                       onClick={() => {
                         setIsNext(true);
-                        setIsSubmitted(true); 
+                        setIsSubmitted(true);
                       }}
                     >
                       <IntlMessages id="button.Back" />

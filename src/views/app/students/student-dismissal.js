@@ -94,7 +94,10 @@ const StudentsDismissal = (values) => {
       `${studentSearchApiUrl}?student_id=${studentId}`
     );
     const studentResponse = await response.data;
-    studentId ? setStudentIdMatch(true) : setStudentIdMatch(false);
+    console.log('reone', studentResponse.student_id);
+    studentId == studentResponse.student_id
+      ? setStudentIdMatch(true)
+      : setStudentIdMatch(false);
     console.log(studentId, 'student Response');
     if (studentResponse) {
       setStudent(studentResponse);

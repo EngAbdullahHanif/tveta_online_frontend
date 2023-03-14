@@ -15,7 +15,6 @@ import {
   CardTitle,
   Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -24,12 +23,12 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
-import TransferedStudentList from './transfered-student-list/TransferedListMain';
+
+import DismissedStudents from './dismissed-student-list/DismissedListMain';
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
-const transferedStudentsAPI = `${servicePath}/api/student_institutes`;
-// http://localhost:8000/api/student_institutes/?institute=&type=&language=&time=&student_id=&educational_year=&is_transfer=2
+const dismissedStudentsAPI = `${servicePath}/api/student_institutes`;
+// http://localhost:8000/api/student_institutes/?institute=1&type=3&language=&time=&student_id=&educational_year=1990&is_transfer=
 
 const StudyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
@@ -61,8 +60,8 @@ const MarksRegistration = ({ match }) => {
   const [institutes, setInstitutes] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState('');
   const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
-  const [transferedStudents, setTransferedStudents] = useState([]);
-  const [transferedStudentList, setTransferedStudentList] = useState(false);
+  const [dismissedStudents, setDismissedStudents] = useState([]);
+  const [dismissedStudentsList, setDismissedStudentList] = useState(false);
 
   const { markId } = useParams();
 
@@ -98,27 +97,27 @@ const MarksRegistration = ({ match }) => {
     fetchInstitutes();
   }, []);
 
-  const fetchTransferedStudents = async (values) => {
+  const fetchDismissedStudents = async (values) => {
     const { data } = await axios.get(
-      `${transferedStudentsAPI}/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}&is_transfer=2`
+      `${dismissedStudentsAPI}/?institute=${values.institute.value}&type=3&language=&time=&student_id=&educational_year=${values.educationlaYear}&is_transfer=`
     );
-    setTransferedStudents(data);
-    //console.log('transfered students list', data);
+    setDismissedStudents(data);
+    console.log('dismissed students list', data);
     setIsLoaded(true);
-    setTransferedStudentList(true);
+    setDismissedStudentList(true);
   };
 
   const onSubmit = (values) => {
-    fetchTransferedStudents(values);
+    fetchDismissedStudents(values);
   };
 
   return (
     <>
-      {transferedStudentList ? (
-        <TransferedStudentList item_list={transferedStudents} />
+      {dismissedStudentsList ? (
+        <DismissedStudents item_list={dismissedStudents} />
       ) : (
         <Card>
-          <h3 className="mt-5 m-5">لست شاگردان تبدیل شده</h3>
+          <h3 className="mt-5 m-5">لست شاگردان منفک شده</h3>
           <CardBody>
             {' '}
             <Formik

@@ -23,8 +23,8 @@ const apiUrl = `${servicePath}/cakes/paging`;
 const studentApiUrl = `${servicePath}/api/`;
 const studentInstituteApiUrl = `${servicePath}/api/student_institutes/`;
 const instituteApiUrl = `${servicePath}/institute/`;
-const dismissedStudentsAPI = `${servicePath}/api/?graduat_14_types=3&graduat_12_types=3`;
-//http://localhost:8000/api/?student_id=&graduat_14_types=2&graduat_12_types=&student_type=&internse_type=&current_province=&current_district=&gender=
+const TransferedStudentsAPI = `${servicePath}/api/student_institutes/?is_transfer=2`;
+//http://localhost:8000/api/student_institutes/?institute=&type=&language=&time=&student_id=&educational_year=&is_transfer=2
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -188,7 +188,7 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
-const ThumbListPages = ({ match }) => {
+const ThumbListPages = ({ match, item_list }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -212,6 +212,7 @@ const ThumbListPages = ({ match }) => {
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
+  const [transferedStudents, setsetTransferedStudentsTra] = useState([]);
   const [selectedGenderOption, setSelectedGenderOption] = useState({
     column: 'all',
     label: 'جنیست',
@@ -220,19 +221,11 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
-  const [dismissedStudents, setDismissedStudents] = useState([]);
-
-  const fetchDismissedStudent = async () => {
-    const { data } = await axios.get(dismissedStudentsAPI);
-    setDismissedStudents(data);
-    console.log('dissmied students list', data);
-    setIsLoaded(true);
-  };
 
   useEffect(() => {
-    fetchDismissedStudent();
+    setItems(item_list);
+    setIsLoaded(true);
   }, []);
-
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||
@@ -307,15 +300,14 @@ const ThumbListPages = ({ match }) => {
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
-
-  console.log('items', items);
+  console.log('item data', items);
   return !isLoaded ? (
     <div className="loading" />
   ) : (
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="  د منفک شوی شاگردانو لست/لست شاگردان منفک شده"
+          heading="د تبدیل شوی شاګردانو لست/لست شاگردان تبدیل شده"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -392,6 +384,16 @@ const ThumbListPages = ({ match }) => {
                   borderStyle: 'hidden',
                 }}
               >
+                <IntlMessages id="ایدی" />
+              </th>
+              <th
+                style={{
+                  width: '10%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
                 <IntlMessages id="ایدی شاگرد" />
               </th>
               <th
@@ -404,16 +406,7 @@ const ThumbListPages = ({ match }) => {
               >
                 <IntlMessages id="نام/نوم" />
               </th>
-              <th
-                style={{
-                  width: '10%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="جنسیت" />
-              </th>
+
               <th
                 style={{
                   width: '16%',
@@ -455,12 +448,12 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 {' '}
-                <IntlMessages id="شماره موبایل" />
+                <IntlMessages id="سال تعلیمی " />
               </th>
             </tr>
           </thead>
           <ListPageListing
-            items={dismissedStudents}
+            items={items}
             displayMode={displayMode}
             selectedItems={selectedItems}
             onCheckItem={onCheckItem}

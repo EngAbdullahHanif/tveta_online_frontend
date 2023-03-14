@@ -8,11 +8,11 @@ import {
   ModalFooter,
 } from 'reactstrap';
 
-import Pagination from '../../../../containers/pages/Pagination';
-// import ContextMenuContainer from '../../../../../../containers/pages/ContextMenuContainer';
-import ContextMenuContainer from '../../../../containers/pages/ContextMenuContainer';
-import DataListView from '../../../../containers/pages/DataListView';
-import ImageListView from '../../../../containers/pages/ImageListView';
+//import Pagination from '../../../../containers/pages/Pagination';
+import Pagination from '../../../../../containers/pages/Pagination';
+import ContextMenuContainer from '../../../../../containers/pages/ContextMenuContainer';
+import DataListView from '../../../../../containers/pages/DataListView';
+import ImageListView from '../../../../../containers/pages/ImageListView';
 import StudentsListBody from './DismissedListBody';
 
 function collect(props) {
@@ -40,13 +40,13 @@ const ListPageListing = ({
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((dismissedStudents) => {
+        {items.map((transferedStudents) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
-                key={dismissedStudents.student_id}
-                dismissedStudents={dismissedStudents}
-                isSelect={selectedItems.includes(dismissedStudents.student_id)}
+                key={transferedStudents.id}
+                transferedStudents={transferedStudents}
+                isSelect={selectedItems.includes(transferedStudents.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -55,9 +55,9 @@ const ListPageListing = ({
           if (displayMode === 'thumblist') {
             return (
               <StudentsListBody
-                key={dismissedStudents.student_id}
-                dismissedStudents={dismissedStudents}
-                isSelect={selectedItems.includes(dismissedStudents.student_id)}
+                key={transferedStudents.id}
+                transferedStudents={transferedStudents}
+                isSelect={selectedItems.includes(transferedStudents.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -65,9 +65,9 @@ const ListPageListing = ({
           }
           return (
             <DataListView
-              key={dismissedStudents.student_id}
-              dismissedStudents={dismissedStudents}
-              isSelect={selectedItems.includes(dismissedStudents.student_id)}
+              key={transferedStudents.id}
+              transferedStudents={transferedStudents}
+              isSelect={selectedItems.includes(transferedStudents.id)}
               onCheckItem={onCheckItem}
               collect={collect}
             />

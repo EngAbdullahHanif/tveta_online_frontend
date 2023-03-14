@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
+import callApi from 'helpers/callApi';
 
 // Year  and SHift
 
@@ -135,40 +136,59 @@ const AllSubjectsMarks = ({ match }) => {
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
 
+  const [classs, setClasss] = useState();
+  const [semester, setSemester] = useState();
+  const [section, setSection] = useState();
+
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
+    const response = await callApi('institute/field/', '', null);
+    if (response.data && response.status === 200) {
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name,
     }));
     setFields(updatedData);
+  } else {
+    console.log('field error');
+  }
   };
   const fetchDepartments = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/department/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDepartments(updatedData);
+    const response = await callApi('institute/department/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('department error');
+    }
+
   };
 
   const fetchClasses = async () => {
-    const response = await axios.get('http://localhost:8000/institute/classs/');
+    const response = await callApi('/institute/classs/', '', null);
+    if (response.data && response.status === 200) {
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name + ' - ' + item.semester + ' - ' + item.section,
     }));
     setClasses(updatedData);
+  } else {
+    console.log('class error');
+  }
   };
 
   const fetchSubjects = async () => {
@@ -190,16 +210,32 @@ const AllSubjectsMarks = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const handleClick = (event) => {
-    setIsNext(event);
-    axios
-      .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-      )
-      .then((response) => {
-        console.log('response.data', response.data);
-        setStudents(response.data);
-      });
+  const handleClick = async (event) => {
+    // setIsNext(event);
+    // axios
+    // .get(
+    //   `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
+    // )
+    //   .then((response) => {
+    //     console.log('response.data', response.data);
+    //     setStudents(response.data);
+    //     setIsNext(event);
+    //   });
+    const response = await callApi(`api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`, '', null);
+    console.log('students response', response.data)
+    if (response.data && response.status === 200) {
+      setStudents(response.data);
+      setIsNext(event);
+
+      // split selected class to get semester and section
+    const classArray = selectedClass.label.split(' - ');
+    setClasss(classArray[0]);
+    setSemester(classArray[1]);
+    setSection(classArray[2]);
+
+    } else {
+      console.log('students error');
+    }
     console.log('students', students);
   };
 
@@ -409,7 +445,7 @@ const AllSubjectsMarks = ({ match }) => {
                   <Label>
                     <IntlMessages id="marks.ClassLabel" />
                   </Label>
-                  <h6>{selectedClass.label}</h6>
+                  <h6>{classs}</h6>
                 </Colxx>
 
                 <Colxx xxs="2">
@@ -423,14 +459,14 @@ const AllSubjectsMarks = ({ match }) => {
                   <Label>
                     <IntlMessages id="marks.SemesterLabel" />
                   </Label>
-                  <h6>{selectedClass.label}</h6>
+                  <h6>{semester}</h6>
                 </Colxx>
 
                 <Colxx xxs="2">
                   <Label>
                     <IntlMessages id="marks.SectionLabel" />
                   </Label>
-                  <h6>{selectedClass.label}</h6>
+                  <h6>{section}</h6>
                 </Colxx>
               </Row>
 
@@ -524,7 +560,24 @@ const AllSubjectsMarks = ({ match }) => {
                       overflowX: 'hidden',
                     }}
                   >
-                    <tr>
+                    {students && students.map((student, index) => (
+                      <>
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{student.studnet_name}</td>
+                        <td>{student.student_father_name}</td>
+                        <td>{student.student_id}</td>
+                        {student.subject_id.map((mark, index) => (
+                          <>
+                          <td>{mark.marks}</td>
+                          <td>{mark.subject_name}</td>
+                          </>
+                        ))}
+                      
+                      </tr>{' '}
+                      </>
+                    ))}
+                    {/* <tr>
                       <td>1</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
                       <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
                       <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
@@ -559,7 +612,7 @@ const AllSubjectsMarks = ({ match }) => {
                       <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
                       <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
                       <td>hdsfsda18</td>
-                    </tr>
+                    </tr> */}
                     {/* {students.map((student, index) => (
                       <tr>
                         <th scope="row">{index}</th>

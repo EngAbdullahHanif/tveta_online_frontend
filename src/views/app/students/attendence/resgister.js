@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
+// import useSelector
+import { useSelector } from 'react-redux';
 
 // Year  and SHift
 
@@ -25,6 +27,8 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
+import { getDirection, getCurrentUser } from './../../../../helpers/Utils';
+
 
 const LevelOfEdcationOptions = [
   { value: '1', label: 'اصلی' },
@@ -131,7 +135,7 @@ const initialValues = {
   subject: [],
 };
 
-const StudentAttendance = ({ match }) => {
+const StudentAttendance = ({ match, currentUser}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [inNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -149,7 +153,9 @@ const StudentAttendance = ({ match }) => {
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
+  // const currentUser = useSelector(({ auth }) => auth);
 
+  console.log('currentUser', getCurrentUser());
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
     const updatedData = await response.data.map((item) => ({

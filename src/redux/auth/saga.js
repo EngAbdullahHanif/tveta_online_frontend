@@ -35,7 +35,7 @@ async function getUserDetails() {
   try {
     const accessToken = localStorage.getItem('access_token');
     return await axios
-      .get('http://localhost:8000/api/user/user-profile/', {
+      .get('http://localhost:8000/user/user-profile/', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -52,7 +52,7 @@ function loginWithEmailPassword(username, password) {
   return (
     axios
       // .post('http://localhost:8000/api/token/', { username, password })
-      .post('http://localhost:8000/api/user/login/', { username, password })
+      .post('http://localhost:8000/user/logins/', { username, password })
       .then((response) => {
         console.log('response', response.data.token);
         return response.data.token;
@@ -66,6 +66,7 @@ function loginWithEmailPassword(username, password) {
 
 export function* loginWithEmailPasswordAsync(action) {
   const { email, password } = action.payload.user;
+  const { history } = action.payload;
   try {
     const tokens = yield call(loginWithEmailPassword, email, password);
     localStorage.setItem('access_token', tokens.access);
@@ -76,9 +77,9 @@ export function* loginWithEmailPasswordAsync(action) {
     yield put(loginUserSuccess(tokens));
 
     // yield browserHistory.push('/');
-    yield put(push('/'));
-    // history.push('/');
-    console.log('after the push');
+    // yield put(push('/'));
+    history.push('/');
+    // console.log('after the push');
     // yield call(history.push, adminRoot);
   } catch (error) {
     yield put(loginUserError(error));

@@ -396,7 +396,9 @@ class Sidebar extends Component {
                             {/* Main Menu icons here */}
                             {/* <i className={item.icon } /> */}
                             <DisplayIcons icon={item.icon} size="2.5rem" />{' '}
-                            <IntlMessages id={item.label} />
+                            <p style={{ fontSize: '19px' }}>
+                              <IntlMessages id={item.label} />
+                            </p>
                           </NavLink>
                         )}
                       </NavItem>
@@ -526,7 +528,9 @@ class Sidebar extends Component {
                                       size="1.5rem"
                                     />{' '}
                                   </label>{' '}
-                                  <IntlMessages id={sub.label} />
+                                  <p style={{ fontSize: '16px' }}>
+                                    <IntlMessages id={sub.label} />
+                                  </p>
                                 </NavLink>
                               )}
                             </NavItem>

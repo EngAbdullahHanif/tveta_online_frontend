@@ -38,7 +38,12 @@ const Dorms = ({ match }) => (
         render={(props) => <DormList {...props} />}
       />
       <Route
+        exact
         path={`${match.url}/register`}
+        render={(props) => <DormRegister {...props} />}
+      />
+      <Route
+        path={`${match.url}/register/:dormId`}
         render={(props) => <DormRegister {...props} />}
       />
       <Route

@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
 // Year  and SHift
+import { useParams } from 'react-router-dom';
 
 import * as Yup from 'yup';
 import {
@@ -25,6 +26,11 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
+//import StudentAttendance from './attendance-display';
+
+const servicePath = 'http://localhost:8000';
+const StudentAttendanceAPI = `${servicePath}/api/stdatten`;
+//http://localhost:8000/api/stdatten/?id=1
 
 const LevelOfEdcationOptions = [
   { value: '1', label: 'اصلی' },
@@ -114,28 +120,56 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="teacher.departmentIdErr" />),
 
-  subject: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.SubjectErr" />),
+  // subject: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="marks.SubjectErr" />),
 });
 
-const initialValues = {
-  institute: [],
-  educationlaYear: '',
-  studyTime: [],
-  classs: [],
-  department: [],
-  subject: [],
-};
-
 const StudentAttendance = ({ match }) => {
+  const { studentAttendanceId } = useParams();
+  console.log('id of the attendacne', studentAttendanceId);
+  if (studentAttendanceId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        const { data } = await axios.get(
+          `${StudentAttendanceAPI}/?id=${studentAttendanceId}`
+        );
+        console.log(data[0].institute_id.name, 'kaknor student data');
+        setInitialEducationalYear(data[0].educational_year),
+          setInititalInstitute([
+            {
+              value: data[0].institute_id.id,
+              label: data[0].institute_id.name,
+            },
+          ]);
+        setInitialClass([
+          { value: data[0].class_id.id, label: data[0].class_id.name },
+        ]);
+        setInitialDepartment([
+          {
+            value: data[0].department_id.id,
+            label: data[0].department_id.name,
+          },
+        ]);
+        setInitialSubject([
+          {
+            value: data[0].student_id.student_id,
+            label: data[0].student_id.name,
+          },
+        ]);
+      }
+      fetchStudent();
+      //setUpdateMode(true);
+    }, []);
+  }
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [inNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
+  const [institutes, setInstitutes] = useState([{ label: 1, value: 'he' }]);
   const [departments, setDepartments] = useState([]);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -149,6 +183,19 @@ const StudentAttendance = ({ match }) => {
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
+  const [initialInstitue, setInititalInstitute] = useState([]);
+  const [initailEducationalYear, setInitialEducationalYear] = useState('');
+  const [initalClass, setInitialClass] = useState([]);
+  const [initailDepartment, setInitialDepartment] = useState([]);
+  const [initalSubject, setInitialSubject] = useState([]);
+
+  const initialValues = {
+    institute: initialInstitue,
+    educationlaYear: initailEducationalYear,
+    classs: initalClass,
+    department: initailDepartment,
+    subject: initalSubject,
+  };
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
@@ -159,12 +206,12 @@ const StudentAttendance = ({ match }) => {
     setInstitutes(updatedData);
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setFields(updatedData);
+    // const response = await axios.get('http://localhost:8000/institute/filed/');
+    // const updatedData = await response.data.map((item) => ({
+    //   value: item.id,
+    //   label: item.name,
+    // }));
+    // setFields(updatedData);
   };
   const fetchDepartments = async () => {
     const response = await axios.get(
@@ -214,6 +261,7 @@ const StudentAttendance = ({ match }) => {
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
+        // setIsNext(false);
       });
     console.log('students', students);
   };
@@ -258,6 +306,7 @@ const StudentAttendance = ({ match }) => {
         <CardBody>
           {inNext ? (
             <Formik
+              enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onSubmit}
               validationSchema={ValidationSchema}
@@ -293,7 +342,7 @@ const StudentAttendance = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
+                      {/* <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.StudyTimeLabel" />
                         </Label>
@@ -311,7 +360,8 @@ const StudentAttendance = ({ match }) => {
                             {errors.studyTime}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
+
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
-
+import { useParams } from 'react-router-dom';
 import {
   Row,
   Card,
@@ -31,10 +31,12 @@ import { Colxx } from 'components/common/CustomBootstrap';
 
 const servicePath = 'http://localhost:8000';
 const teacherResitgerAPIUrl = `${servicePath}/teachers/create_teachers/`;
+const gettingSingleTeacherAPI = `${servicePath}/teachers/institute`;
+// http://localhost:8000/teachers/?id=1
 
 const tazkiraOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdTazkiraElectronic" /> },
-  { value: '2', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
+  { value: '1', label: 'الکترونیکی' },
+  { value: '2', label: 'کاغذی' },
 ];
 
 const dutyLocationOptions = [
@@ -44,10 +46,11 @@ const dutyLocationOptions = [
 const teacherteachingfieldOptions = [
   { value: '1', label: 'زراعت' },
   { value: '2', label: 'کمپیوتر ساینس ' },
+  { value: '3', label: 'کمپیوتر ساینس ' },
 ];
 const StatusOptions = [
-  { value: '1', label: <IntlMessages id="teacher.StatusOption_1" /> },
-  { value: '2', label: <IntlMessages id="teacher.StatusOption_2" /> },
+  { value: '1', label: 'فعال' },
+  { value: '3', label: 'منفک' },
 ];
 
 const GradeOptions = [
@@ -70,50 +73,50 @@ const StepOptions = [
 
 const levelOfEdcationOptions = [
   {
-    value: '14th',
-    label: <IntlMessages id="teacher.EducationLevelOption_1" />,
+    value: '1',
+    label: '14th',
   },
   {
-    value: 'bachelor',
-    label: <IntlMessages id="teacher.EducationLevelOption_2" />,
+    value: '2',
+    label: 'لسانس',
   },
   {
-    value: 'master',
-    label: <IntlMessages id="teacher.EducationLevelOption_3" />,
+    value: '3',
+    label: 'ماستر',
   },
-  { value: 'PHD', label: <IntlMessages id="teacher.EducationLevelOption_4" /> },
+  { value: '4', label: 'PHD' },
 ];
 
 const majorOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
+  { value: '1', label: 'Computer Science' },
+  { value: '2', label: 'Agriculture' },
+  { value: '3', label: 'BBA' },
+  { value: '4', label: 'Mechenical Engineering' },
 ];
 
 const langOptions = [
   {
-    value: '1',
-    label: <IntlMessages id="teacher.langOptions_1" />,
+    value: 1,
+    label: 'پښتو',
   },
   {
-    value: '2',
-    label: <IntlMessages id="teacher.langOptions_2" />,
+    value: 2,
+    label: 'دری',
   },
   {
-    value: '3',
-    label: <IntlMessages id="teacher.langOptions_3" />,
+    value: 3,
+    label: 'English',
   },
 ];
 
 const appointmentTypeOptions = [
   {
     value: '1',
-    label: <IntlMessages id="teacher.appointmentTOptions_1" />,
+    label: 'رسمی',
   },
   {
     value: '2',
-    label: <IntlMessages id="teacher.appointmentTOptions_2" />,
+    label: 'قراردادی',
   },
 ];
 const contractTypeOptions = [
@@ -128,258 +131,160 @@ const contractTypeOptions = [
 ];
 
 const StdSchoolProvinceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
-  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
-  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
-  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
-  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
-  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
-  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
-  {
-    value: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    value: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    value: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    value: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    value: '14',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    value: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    value: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    value: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    value: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    value: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    value: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    value: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    value: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    value: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    value: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    value: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    value: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    value: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    value: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    value: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    value: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    value: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    value: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
+  { value: 123, label: 'کابل' },
+  { value: 23123, label: 'ننگرهار' },
+  { value: 3, label: 'هرات' },
 ];
 
 const genderOptions = [
-  { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
-  { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
+  { value: '1', label: 'نارینه/مذکر' },
+  { value: '2', label: 'ښځینه/مونث' },
 ];
 
 const TeacherRegister = ({ intl }, values) => {
-  const TestData = {
-    Name: 'Hamid',
-    FatherName: 'Samir AHmad',
-    Gender: 'Male',
-    GrandFatherName: 'Mohammad Ali',
-    TazkiraNo: '23423523',
-    PhoneNo: '089098098',
-    DoB: '2022-08-12',
-    LevelOfEducation: 'Bachelor',
-    Major: 'Electric',
-    TazkiraType: '111الکترونیک',
-    Email: 'sami@gmail.com',
-    IdcardPageNo: '24',
-    IdCardJoldNo: '2214',
-    Status: 'Active',
-    Grade: 'Fifth',
-    TeachingField: 'BBA',
-    AppointmentType: 'Formal',
-    Province: 'initialProvinces',
-    JobLocation: 'initialJobLocation',
-    TeachingLang: 'initialTeachingLang',
-    Step: 'initialStep',
-    ContractType: 'initialContractType',
-    C_Province: 'Kabul',
-    C_District: 'initialCurrentDistrict',
-    District: 'initialProvince',
-    Village: 'initialVillage',
-    C_Village: 'initialCurrentVillage',
-  };
+  const [intialName, setInitialName] = useState('');
+  const [intialFatherName, setInitialFatherName] = useState('');
+  const [initialGender, setInitialGender] = useState([]);
+  const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
+  const [initialTazkiraNo, setInitialTazkiraNo] = useState('');
+  const [initialPhoneNo, setInitialPhoneNo] = useState('');
+  const [initialDoB, setInitialDoB] = useState('');
+  const [initialEmail, setInitialEmail] = useState('');
+  const [initialIdcardPageNo, setInitialIdcardPageNo] = useState('');
+  const [initialTazkiraType, setInitialTazkiraType] = useState([]);
+  const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
+  const [initialMajor, setInitialMajor] = useState([]);
+  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('');
+  const [initialStatus, setinitialStatus] = useState('');
+  const [initialGrade, setIntialGrade] = useState([]);
+  const [initialTeachingField, setInitialTeachingField] = useState([]);
+  const [initialAppointmentType, setInitialAppointmentType] = useState([]);
+  const [initialProvince, setInitialProvince] = useState([]);
+  const [initialJobLocation, setInitialJobLocation] = useState('');
+  const [initialTeachingLang, setInitialTeachingLang] = useState([]);
+  const [initialStep, setInitialStep] = useState([]);
+  const [initialContractType, setInitialContractType] = useState([]);
+  const [initialCurrentProvince, setInitialCurrentProvince] = useState([]);
+  const [initialCurrentDistrict, setInitialCurrentDistrict] = useState([]);
+  const [initialCurrentVillage, setInitialCurrentVillage] = useState('');
+  const [initialDistrict, setInitialDistrict] = useState('');
+  const [initialVillage, setInitialVillage] = useState('');
 
-  const [intialName, setInitialName] = useState(
-    TestData.Name ? TestData.Name : ''
-  );
-  const [intialFatherName, setInitialFatherName] = useState(
-    TestData.FatherName ? TestData.FatherName : ''
-  );
-  const [initialGender, setInitialGender] = useState(
-    TestData.Gender ? [{ label: TestData.Gender, value: TestData.Gender }] : []
-  );
-  const [initialGrandFatherName, setInitialGrandFatherName] = useState(
-    TestData.GrandFatherName ? TestData.GrandFatherName : ''
-  );
-  const [initialTazkiraNo, setInitialTazkiraNo] = useState(
-    TestData.TazkiraNo ? TestData.TazkiraNo : ''
-  );
-  const [initialPhoneNo, setInitialPhoneNo] = useState(
-    TestData.PhoneNo ? TestData.PhoneNo : ''
-  );
-  const [initialDoB, setInitialDoB] = useState(
-    TestData.DoB ? TestData.DoB : ''
-  );
-  const [initialLevelOfEducation, setInitialLevelOfEducation] = useState(
-    TestData.LevelOfEducation
-      ? [{ label: TestData.LevelOfEducation, value: TestData.LevelOfEducation }]
-      : []
-  );
-  const [initialMajor, setInitialMajor] = useState(
-    TestData.Major ? [{ label: TestData.Major, value: TestData.Major }] : []
-  );
-  const [initialEmail, setInitialEmail] = useState(
-    TestData.Email ? TestData.Email : ''
-  );
+  const { teacherId } = useParams();
+  console.log('teacher-id', teacherId);
 
-  const [initialIdcardPageNo, setInitialIdcardPageNo] = useState(
-    TestData.IdcardPageNo ? TestData.IdcardPageNo : ''
-  );
+  if (teacherId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        const { data } = await axios.get(
+          `${gettingSingleTeacherAPI}/?teacher_id=${teacherId}`
+        );
+        console.log(data, 'object of the data');
 
-  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState(
-    TestData.IdCardJoldNo ? TestData.IdCardJoldNo : ''
-  );
-  const [initialTazkiraType, setInitialTazkiraType] = useState(
-    TestData.TazkiraType
-      ? [{ label: TestData.TazkiraType, value: TestData.TazkiraType }]
-      : []
-  );
+        setInitialName(data[0].teacher_id.name);
+        setInitialFatherName(data[0].teacher_id.father_name);
+        setInitialGrandFatherName(data[0].teacher_id.grand_father_name);
+        setInitialTazkiraNo(data[0].teacher_id.sukuk_number);
+        if (data[0].teacher_id.sukuk_number)
+          setInitialTazkiraType(tazkiraOptions[1]);
+        else setInitialTazkiraType(tazkiraOptions[0]);
+        setInitialPhoneNo(data[0].teacher_id.phone_number);
+        setInitialDoB('2022-08-12');
+        setInitialIdcardPageNo(data[0].teacher_id.page_number);
+        setInitialEmail(data[0].teacher_id.email);
+        const teacherFieldOptions = majorOptions.map((teacherField) => {
+          if (teacherField.value === data[0].teacher_id.education_degree) {
+            setInitialMajor(teacherField);
+          }
+        });
+        const teahcerGenderOptions = genderOptions.map((teacherGender) => {
+          if (teacherGender.value === data[0].teacher_id.gender) {
+            setInitialGender(teacherGender);
+          }
+        });
+        setInitialIdCardJoldNo(data[0].teacher_id.cover_number);
 
-  const [initialStatus, setinitialStatus] = useState(
-    TestData.Status ? [{ label: TestData.Status, value: TestData.Status }] : []
-  );
-  const [initialGrade, setIntialGrade] = useState(
-    TestData.Grade ? [{ label: TestData.Grade, value: TestData.Grade }] : []
-  );
-  const [initialTeachingField, setInitialTeachingField] = useState(
-    TestData.TeachingField
-      ? [{ label: TestData.TeachingField, value: TestData.TeachingField }]
-      : []
-  );
-  const [initialAppointmentType, setInitialAppointmentType] = useState(
-    TestData.AppointmentType
-      ? [{ label: TestData.AppointmentType, value: TestData.AppointmentType }]
-      : []
-  );
+        const teacherLevelOfEducationOptions = levelOfEdcationOptions.map(
+          (teacherLevelOfEducation) => {
+            if (
+              teacherLevelOfEducation.value ===
+              data[0].teacher_id.education_degree
+            ) {
+              setInitialLevelOfEducation(teacherLevelOfEducation);
+            }
+          }
+        );
+        const teacherMainProvince = StdSchoolProvinceOptions.map((province) => {
+          if (province.value == data[0].teacher_id.main_province) {
+            setInitialProvince(province);
+          }
+        });
+        const teacherCurrentProvince = StdSchoolProvinceOptions.map(
+          (province) => {
+            if (province.value == data[0].teacher_id.current_province) {
+              setInitialCurrentProvince(province);
+            }
+          }
+        );
+        const teachingLangugaeOptions = langOptions.map((teachingLangugage) => {
+          if (teachingLangugage.value == data[0].institute_id.language) {
+            setInitialTeachingLang(teachingLangugage);
+          }
+        });
+        const teacherStatusOptions = StatusOptions.map((teacherStatus) => {
+          if (teacherStatus.value == data[0].teacher_id.status_type) {
+            setinitialStatus(teacherStatus);
+          }
+        });
+        const teacherAppointingOptions = appointmentTypeOptions.map(
+          (appointingType) => {
+            if (appointingType.value == data[0].job_type) {
+              setInitialAppointmentType(appointingType);
+            }
+          }
+        );
+        const teachingFieldOptions = teacherteachingfieldOptions.map(
+          (teachingField) => {
+            if (teachingField.value == data[0].teacher_id.education_degree) {
+              setInitialTeachingField(teachingField);
+            }
+          }
+        );
+        const teacherGradeOptions = GradeOptions.map((teacherGrade) => {
+          if (teacherGrade.value == data[0].teacher_id.status_type) {
+            setIntialGrade(teacherGrade);
+          }
+        });
 
-  const [initialProvince, setInitialProvince] = useState(
-    TestData.Province
-      ? [{ label: TestData.Province, value: TestData.Province }]
-      : []
-  );
-  const [initialJobLocation, setInitialJobLocation] = useState(
-    TestData.JobLocation ? TestData.JobLocation : ''
-  );
+        setInitialCurrentDistrict(data[0].teacher_id.current_district);
+        setInitialCurrentVillage(data[0].teacher_id.current_village);
+        setInitialDistrict(data[0].teacher_id.main_district);
+        setInitialVillage(data[0].teacher_id.main_village);
+        setInitialJobLocation([
+          {
+            value: data[0].institute_id.id,
+            label: data[0].institute_id.name,
+          },
+        ]);
 
-  const [initialTeachingLang, setInitialTeachingLang] = useState(
-    TestData.TeachingLang
-      ? [{ label: TestData.TeachingLang, value: TestData.TeachingLang }]
-      : []
-  );
+        const teacherStepOptions = StepOptions.map((teacherStep) => {
+          if (teacherStep.value == data[0].teacher_id.step) {
+            setInitialStep(teacherStep);
+          }
+        });
 
-  const [initialStep, setInitialStep] = useState(
-    TestData.Step ? [{ label: TestData.Step, value: TestData.Step }] : []
-  );
-
-  const [initialContractType, setInitialContractType] = useState(
-    TestData.ContractType
-      ? [{ label: TestData.ContractType, value: TestData.ContractType }]
-      : []
-  );
-  const [initialCurrentProvince, setInitialCurrentProvince] = useState(
-    TestData.C_Province
-      ? [{ label: TestData.C_Province, value: TestData.C_Province }]
-      : []
-  );
-
-  const [initialCurrentDistrict, setInitialCurrentDistrict] = useState(
-    TestData.C_District ? TestData.C_District : ''
-  );
-  const [initialCurrentVillage, setInitialCurrentVillage] = useState(
-    TestData.C_Village ? TestData.C_Village : ''
-  );
-  const [initialDistrict, setInitialDistrict] = useState(
-    TestData.District ? TestData.District : ''
-  );
-  const [initialVillage, setInitialVillage] = useState(
-    TestData.Village ? TestData.Village : ''
-  );
+        const contractTypeOptionss = contractTypeOptions.map(
+          (teacherContractType) => {
+            if (teacherContractType.value == data[0].contract_type) {
+              setInitialContractType(teacherContractType);
+            }
+          }
+        );
+      }
+      fetchStudent();
+      //setUpdateMode(true);
+    }, []);
+  }
 
   // Updating Mode is through
   const UpdatingMode = false;
@@ -698,6 +603,7 @@ const TeacherRegister = ({ intl }, values) => {
             >
               <div className="wizard-basic-step">
                 <Formik
+                  enableReinitialize={true}
                   innerRef={forms[0]}
                   initialValues={{
                     name1: intialName,

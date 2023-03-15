@@ -2,43 +2,6 @@ import { adminRoot } from './defaultValues';
 
 const data = [
   {
-    id: 'ُteacher',
-    icon: 'FA.FaChalkboardTeacher',
-    label: 'menu.teacher',
-    to: `${adminRoot}/teacher`,
-
-    subs: [
-      {
-        icon: 'CG.CgUserList',
-        label: 'teacher list',
-        to: `${adminRoot}/teachers/teachers`,
-      },
-      {
-        // icon: 'iconsminds-add-user',
-        icon: 'GR.GrUserAdd',
-        label: 'menu.teacher-registration',
-        to: `${adminRoot}/teachers/register`,
-      },
-
-      {
-        icon: 'IM.ImProfile',
-        label: 'menu.teacher-profile',
-        to: `${adminRoot}/teachers/profile`,
-      },
-
-      {
-        icon: 'MD.MdAddBox',
-        label: 'menu.teacher-evaluation',
-        to: `${adminRoot}/teachers/teacher-evalaution`,
-      },
-      {
-        icon: 'MD.MdOutlineTransferWithinAStation',
-        label: 'menu.teacher-transfer',
-        to: `${adminRoot}/teachers/teacher-transfer`,
-      },
-    ],
-  },
-  {
     id: 'students',
     icon: 'FA.FaUserGraduate',
     label: 'menu.students',
@@ -46,8 +9,14 @@ const data = [
     // roles: [UserRole.Admin, UserRole.Editor],
     subs: [
       {
+        icon: 'CG.CgUserList',
+        label: 'menu.student_list',
+        to: `${adminRoot}/students/students`,
+        // roles: [UserRole.Admin],
+      },
+      {
         icon: 'GR.GrUserAdd',
-        label: 'student-register',
+        label: 'forms.studentRegisterTitle',
         to: `${adminRoot}/students/register`,
         newWindow: false,
       },
@@ -57,12 +26,7 @@ const data = [
         to: `${adminRoot}/students/register-kankor`,
         // roles: [UserRole.Admin],
       },
-      {
-        icon: 'CG.CgUserList',
-        label: 'menu.student_list',
-        to: `${adminRoot}/students/students`,
-        // roles: [UserRole.Admin],
-      },
+
       {
         icon: 'CG.CgUserList',
         label: 'Dismissed-Students',
@@ -85,15 +49,15 @@ const data = [
         label: 'menu.attendance-registration',
         to: `${adminRoot}/students/attendance-register`,
       },
+      // {
+      //   icon: 'IM.ImProfile',
+      //   label: 'menu.student-profile',
+      //   to: `${adminRoot}/students/student-profile`,
+      // },
       {
         icon: 'FA.FaList',
         label: 'Attendance-List',
         to: `${adminRoot}/students/attendance-list`,
-      },
-      {
-        icon: 'IM.ImProfile',
-        label: 'menu.student-profile',
-        to: `${adminRoot}/students/student-profile`,
       },
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
@@ -130,6 +94,44 @@ const data = [
         label: 'student.dismissal',
         to: `${adminRoot}/students/student-dismissal`,
         newWindow: false,
+      },
+    ],
+  },
+
+  {
+    id: 'ُteacher',
+    icon: 'FA.FaChalkboardTeacher',
+    label: 'menu.teacher',
+    to: `${adminRoot}/teacher`,
+
+    subs: [
+      {
+        icon: 'CG.CgUserList',
+        label: 'teacher list',
+        to: `${adminRoot}/teachers/teachers`,
+      },
+      {
+        // icon: 'iconsminds-add-user',
+        icon: 'GR.GrUserAdd',
+        label: 'menu.teacher-registration',
+        to: `${adminRoot}/teachers/register`,
+      },
+
+      {
+        icon: 'IM.ImProfile',
+        label: 'menu.teacher-profile',
+        to: `${adminRoot}/teachers/profile`,
+      },
+
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.teacher-evaluation',
+        to: `${adminRoot}/teachers/teacher-evalaution`,
+      },
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'menu.teacher-transfer',
+        to: `${adminRoot}/teachers/teacher-transfer`,
       },
     ],
   },

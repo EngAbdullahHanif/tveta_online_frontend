@@ -238,6 +238,7 @@ const AllSubjectsMarks = ({ match }) => {
     }
     console.log('students', students);
   };
+  console.log('students', students);
 
   const onSubmit = (values) => {
     console.log('values', values);
@@ -280,7 +281,6 @@ const AllSubjectsMarks = ({ match }) => {
           {inNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={onSubmit}
               validationSchema={ValidationSchema}
             >
               {({
@@ -408,7 +408,6 @@ const AllSubjectsMarks = ({ match }) => {
                         size="lg"
                         type="submit"
                         onClick={() => {
-                          onSubmit;
                           handleClick(false);
                         }}
                       >

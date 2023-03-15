@@ -1,46 +1,95 @@
-import React from 'react';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import React, { useState } from 'react';
+
 import Photo55 from '../../../assets/img/blog/car1.png';
 import Photo52 from '../../../assets/img/blog/car2.png';
 import Photo53 from '../../../assets/img/blog/45.png';
+import { Colxx } from 'components/common/CustomBootstrap';
+import {
+  Row,
+  Card,
+  CardBody,
+  CardTitle,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  FormGroup,
+  Input,
+  Label,
+} from 'reactstrap';
+import IntlMessages from 'helpers/IntlMessages';
 
-const DemoCarousel = () => {
-  const onChange = (currentSlide, _prevSlide) => {
-    console.log('onChange:', currentSlide);
-  };
+const Demo = () => {
+  const [modalBasic, setModalBasic] = useState(false);
+  const [dataDeletion, setDeletion] = useState(false);
 
-  const onClickItem = (index, _item) => {
-    console.log('onClickItem:', index);
-  };
-
-  const onClickThumb = (index, _item) => {
-    console.log('onClickThumb:', index);
+  const handleClick = (event) => {
+    setDeletion(event);
   };
 
   return (
-    <Carousel
-      showArrows={true}
-      onChange={onChange}
-      onClickItem={onClickItem}
-      onClickThumb={onClickThumb}
-      autoPlay={true}
-      interval={3000}
-    >
-      <div>
-        <img src={Photo55} alt="slide 1" />
-        <p className="legend">Legend 1</p>
-      </div>
-      <div>
-        <img src={Photo52} alt="slide 2" />
-        <p className="legend">Legend 2</p>
-      </div>
-      <div>
-        <img src={Photo53} alt="slide 3" />
-        <p className="legend">Legend 3</p>
-      </div>
-    </Carousel>
+    <div>
+      <Colxx xxs="12">
+        <Card>
+          <CardBody>
+            <CardTitle>
+              <IntlMessages id="modal.basic" />
+            </CardTitle>
+            <div>
+              <Button
+                color="primary"
+                outline
+                onClick={() => setModalBasic(true)}
+              >
+                Delete
+              </Button>
+            </div>
+            <Modal
+              isOpen={modalBasic}
+              toggle={() => setModalBasic(!modalBasic)}
+              style={{ marginTop: '10%' }}
+            >
+              <ModalHeader>
+                <IntlMessages id="modal.deletion-message-title" />
+              </ModalHeader>
+              <ModalBody className="text-center">
+                ایا تاسو غواړئ د شاګرد ریکارد دلیت کړئ/ ایا شما میخواهید که
+                معلومات شاګرد متذکره را دلیت نماید؟
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  onClick={() => setModalBasic(false)}
+                  style={{ marginLeft: '55%' }}
+                >
+                  نه/ نخیر
+                </Button>
+                <Button
+                  color="danger"
+                  onClick={() => {
+                    setModalBasic(false);
+                    handleClick(true);
+                  }}
+                  style={{ marginLeft: '5%' }}
+                >
+                  هو / بلی
+                </Button>{' '}
+              </ModalFooter>
+            </Modal>{' '}
+            {!dataDeletion ? (
+              <div className="p-5">
+                <h1>Ahmad Is Student of Nima</h1>
+              </div>
+            ) : (
+              <CardTitle className="p-5">
+                Your Students Data Deleted Successfully
+              </CardTitle>
+            )}
+          </CardBody>
+        </Card>
+      </Colxx>
+    </div>
   );
 };
 
-export default DemoCarousel;
+export default Demo;

@@ -125,8 +125,15 @@ const data = [
         to: `${adminRoot}/students/kankor-students`,
         newWindow: false,
       },
+      {
+        icon: 'CG.CgUserList',
+        label: 'student.dismissal',
+        to: `${adminRoot}/students/student-dismissal`,
+        newWindow: false,
+      },
     ],
   },
+
   {
     id: 'workers',
     icon: 'FA.FaUsers',
@@ -155,6 +162,7 @@ const data = [
       },
     ],
   },
+
   {
     id: 'institute',
     icon: 'FA.FaUniversity',

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
-
+import { NavLink } from 'react-router-dom';
 import {
   Row,
   Card,
@@ -9,6 +9,9 @@ import {
   Label,
   Spinner,
   Button,
+  InputGroup,
+  InputGroupAddon,
+  CustomInput,
   CardTitle,
   Input,
 } from 'reactstrap';
@@ -413,6 +416,22 @@ const ValidationStepThree = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.batchErr" />),
   kankorId: Yup.string().required(<IntlMessages id="forms.kankorIdErr" />),
+
+  field: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.fieldErr" />),
+
+  sector: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.sectorErr" />),
+
+  photo: Yup.string().required(<IntlMessages id="student.photoErr" />),
 });
 
 const StudentRegistration = ({ intl }, values) => {
@@ -455,7 +474,7 @@ const StudentRegistration = ({ intl }, values) => {
 
         setInitialPreSchool(data[0].school);
         setInitialGraduationYear(data[0].finished_grade_year);
-        setInitialLevelOfEducation(EducationLevelOptions[1]);
+        setInitialLevelOfEducation(EducationLevelOptions[0]);
 
         // const studentFinishGrade = EducationLevelOptions.map(
         //   (finishedGrade) => {
@@ -499,6 +518,9 @@ const StudentRegistration = ({ intl }, values) => {
         setInitialMediumOfInstruction(data[0].kankor_id);
         setInitialStudyTime(data[0].kankor_id);
         setInitialStudentType(data[0].student_type);
+        setInitialField(data[0].field);
+        setInitialSector(data[0].sector);
+        setInitialphoto(data[0].photo);
       }
       fetchStudent();
       //setUpdateMode(true);
@@ -590,7 +612,9 @@ const StudentRegistration = ({ intl }, values) => {
   );
   const [initialStudyTime, setInitialStudyTime] = useState([]);
   const [initialStudentType, setInitialStudentType] = useState([]);
-
+  const [initialField, setInitialField] = useState([]);
+  const [initialSector, setInitialSector] = useState([]);
+  const [initialphoto, setInitialphoto] = useState('');
   const [isNext, setIsNext] = useState(false);
   const handleClick = (event) => {
     setIsNext(event);
@@ -629,7 +653,7 @@ const StudentRegistration = ({ intl }, values) => {
       student_type: values.studentType.value,
       internse_type: values.interanceType.value,
       // std_photo: values,
-      // Documents: 'images/2.jpg',
+      // Documents: 'photos/2.jpg',
 
       //add student photo
 
@@ -666,6 +690,11 @@ const StudentRegistration = ({ intl }, values) => {
     }
     const formIndex = steps.indexOf(step);
     const form = forms[formIndex].current;
+
+    console.log(step.length, 'step.lenght');
+    console.log(formIndex, 'formIndex');
+    console.log(form, ' form');
+    console.log(step, ' step');
 
     if (step.id === 'step1') {
       setTazkiraType(form.values.tazkiraType.value);
@@ -709,6 +738,7 @@ const StudentRegistration = ({ intl }, values) => {
     }
     goToPrev();
   };
+
   const { messages } = intl;
 
   return (
@@ -749,7 +779,7 @@ const StudentRegistration = ({ intl }, values) => {
                     tazkiraType: initialTazkiraType,
                   }}
                   validateOnMount
-                  validationSchema={ValidationStepOne}
+                  // validationSchema={ValidationStepOne}
                   onSubmit={() => {}}
                 >
                   {({
@@ -1147,7 +1177,6 @@ const StudentRegistration = ({ intl }, values) => {
                                   options={EducationLevelOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
-                                  required
                                 />
                                 {errors.levelOfEducation &&
                                 !LevelOfEducation ? (
@@ -1364,6 +1393,9 @@ const StudentRegistration = ({ intl }, values) => {
                     interanceType: initialInteranceType,
                     studentType: initialStudentType,
                     batch: initialBatch,
+                    field: initialField,
+                    sector: initialSector,
+                    photo: initialphoto,
                   }}
                   onSubmit={() => {}}
                   // validationSchema={ValidationStepThree}
@@ -1445,6 +1477,27 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
+                            {/* Sector */}
+                            <FormGroup className="form-group has-float-label ">
+                              <Label>
+                                <IntlMessages id="forms.sector" />
+                              </Label>
+                              <FormikReactSelect
+                                name="sector"
+                                id="sector"
+                                value={values.sector}
+                                options={educationYears}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                required
+                              />
+                              {errors.sector && touched.sector ? (
+                                <div className="invalid-feedback d-block bg-danger text-white">
+                                  {errors.sector}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
                             {/* kankor Id */}
                             <FormGroup className="form-group has-float-label">
                               <Label>
@@ -1477,6 +1530,28 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
+
+                            {/* Upload Photo */}
+                            <FormGroup>
+                              {/* <Label>
+                                <IntlMessages id="student.photo" />
+                              </Label> */}
+                              <InputGroup className="mb-3">
+                                <InputGroupAddon addonType="prepend">
+                                  آپلود عکس
+                                </InputGroupAddon>
+                                <CustomInput
+                                  type="file"
+                                  id="exampleCustomFileBrowser1"
+                                  name="photo"
+                                />
+                              </InputGroup>
+                              {errors.photo && touched.photo ? (
+                                <div className="invalid-feedback d-block bg-danger text-white">
+                                  {errors.photo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">
                             {/* Departement  */}
@@ -1496,6 +1571,27 @@ const StudentRegistration = ({ intl }, values) => {
                               {errors.department && touched.department ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
                                   {errors.department}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/* field  */}
+                            <FormGroup className="form-group has-float-label ">
+                              <Label>
+                                <IntlMessages id="dash.field-1" />
+                              </Label>
+                              <FormikReactSelect
+                                name="field"
+                                id="field"
+                                value={values.field}
+                                options={StdInteranceOptions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                required
+                              />
+                              {errors.field && touched.field ? (
+                                <div className="invalid-feedback d-block bg-danger text-white">
+                                  {errors.field}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -1607,9 +1703,14 @@ const StudentRegistration = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <Button className="mt-5 bg-primary">
-                      <IntlMessages id="button.back" />
-                    </Button>
+                    <NavLink
+                      to={'/app/students/random'}
+                      style={{ width: '10%' }}
+                    >
+                      <Button className="mt-5 bg-primary">
+                        <IntlMessages id="button.back" />
+                      </Button>
+                    </NavLink>
                   </div>
                 )}
               </div>
@@ -1628,3 +1729,14 @@ const StudentRegistration = ({ intl }, values) => {
   );
 };
 export default injectIntl(StudentRegistration);
+
+// const onClickNext = (goToNext, steps, step, values) => {
+//   if (steps.length - 1 <= steps.indexOf(step)) {
+//     return;
+//   }
+//   const formIndex = steps.indexOf(step);
+//   const form = forms[formIndex].current;
+
+//   console.log(step.length, 'step.lenght');
+//   console.log(formIndex, 'formIndex');
+//   console.log(form, ' form');

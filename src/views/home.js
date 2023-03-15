@@ -19,6 +19,7 @@ import CarPhoto12 from '../assets/img/blog/12.png';
 import CarPhoto15 from '../assets/img/blog/15.png';
 import CarPhoto13 from '../assets/img/blog/13.png';
 import CarPhoto14 from '../assets/img/blog/14.png';
+import RahimiPhoto from '../assets/img/blog/Rahimi.jpg';
 import Carousel from 'react-grid-carousel';
 import IndividualIntervalsExample from './carousel';
 import DemoCarousel from './../views/app/subjects/draftFileJustForTest';
@@ -219,24 +220,6 @@ const Home = () => {
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
-
-  useEffect(() => {
-    const handleClick = (event) => {
-      const btn = event.currentTarget;
-      btn.classList.toggle('change');
-      btn.nextElementSibling.classList.toggle('change');
-    };
-
-    document.querySelectorAll('.story-btn').forEach((btn) => {
-      btn.addEventListener('click', handleClick);
-    });
-
-    return () => {
-      document.querySelectorAll('.story-btn').forEach((btn) => {
-        btn.removeEventListener('click', handleClick);
-      });
-    };
-  }, []);
 
   return (
     <>
@@ -670,7 +653,7 @@ const Home = () => {
                     >
                       {' '}
                       <img
-                        src={Photo55}
+                        src={RahimiPhoto}
                         class="developers-member-img"
                         id="img1"
                         style={{ margin: '', width: 'auto' }}

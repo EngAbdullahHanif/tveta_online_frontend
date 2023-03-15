@@ -21,26 +21,25 @@ const validatePassword = (value) => {
 };
 
 const validateEmail = (value) => {
-  // let error;
-  // if (!value) {
-  //   error = 'لطفا پست الکترونیکی خودتو وارد کن';
-  // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-  //   error = 'ایمیل که وارد کردی نامعتبره';
-  // }
-  // return error;
+  let error;
+  if (!value) {
+    error = 'لطفا پست الکترونیکی خودتو وارد کن';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    error = 'ایمیل که وارد کردی نامعتبره';
+  }
+  return error;
 };
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  const [email] = useState('demo@gogo.com');
-  console.log('history', history);
-  const [password] = useState('gogo123');
+  const [email] = useState('');
+  const [password] = useState('');
 
   useEffect(() => {
     if (error) {
-      NotificationManager.warning(
-        error,
-        'ارور ورود به سایت',
-        3000,
+      NotificationManager.error(
+        "دوباره کوشش کنید",
+        'یوزر یا پسورد اشتباهست',
+        9000,
         null,
         null,
         ''
@@ -79,6 +78,15 @@ const Login = ({ history, loading, error, loginUserAction }) => {
               <span className="logo-single" />
             </NavLink>
             <CardTitle className="mb-4">
+              {error && <div className="alert alert-danger">
+              <h2>
+                {"یوزر یا پسورد اشتباهست"}
+              </h2>
+                
+              <h6>
+                {"دوباره کوشش کنید"}
+              </h6>
+                </div>}
               <IntlMessages id="user.login-title" />
             </CardTitle>
 

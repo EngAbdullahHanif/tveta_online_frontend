@@ -1,6 +1,10 @@
 export const UserRole = {
-  Admin: 0,
-  Editor: 1,
+  superUser: 1,
+  Admin: 2,
+  provincial: 3,
+  institute: 4,
+  User: 5,
+  
 };
 
 /* 
@@ -48,7 +52,7 @@ export const defaultColor = 'light.purplemonster';
 export const isDarkSwitchActive = true;
 export const defaultDirection = 'rtl';
 export const themeRadiusStorageKey = '__theme_radius';
-export const isAuthGuardActive = false;
+export const isAuthGuardActive = true;
 export const colors = [
   'bluenavy',
   'blueyale',

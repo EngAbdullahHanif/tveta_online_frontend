@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
+// import useSelector
+import { useSelector } from 'react-redux';
 
 // Year  and SHift
 import { useParams } from 'react-router-dom';
@@ -26,11 +28,8 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
-//import StudentAttendance from './attendance-display';
+import { getDirection, getCurrentUser } from './../../../../helpers/Utils';
 
-const servicePath = 'http://localhost:8000';
-const StudentAttendanceAPI = `${servicePath}/api/stdatten`;
-//http://localhost:8000/api/stdatten/?id=1
 
 const LevelOfEdcationOptions = [
   { value: '1', label: 'اصلی' },
@@ -242,6 +241,7 @@ const StudentAttendance = ({ match }) => {
     subject: initalSubject,
   };
 
+  console.log('currentUser', getCurrentUser());
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
     const updatedData = await response.data.map((item) => ({

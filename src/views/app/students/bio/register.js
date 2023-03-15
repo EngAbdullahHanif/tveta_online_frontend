@@ -32,10 +32,13 @@ import axios from 'axios';
 import * as Yup from 'yup';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-
+import { institute } from 'lang/locales/fa_IR';
+import callApi from 'helpers/callApi';
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
+
+//http://localhost:8000/api/student_create
 
 const tazkiraOptions = [
   { value: '1', label: 'الکترونیکی' },
@@ -43,12 +46,12 @@ const tazkiraOptions = [
 ];
 
 const EducationLevelOptions = [
-  { value: '9th', label: 'نهم صنف / صنف نهم' },
-  { value: '10th', label: 'لسم ټولګی/ صنف دهم' },
-  { value: '11th', label: 'یوولسم ټولګی / صنف یازدهم' },
-  { value: '12th', label: 'دولسم ټولګی/ صنف دوازدهم' },
-  { value: '13th', label: 'دیارلسم ټولګی صنف سیزدهم' },
-  { value: '14th', label: 'kjlkjk' },
+  { value: 9, label: 'نهم صنف / صنف نهم' },
+  { value: 10, label: 'لسم ټولګی/ صنف دهم' },
+  { value: 11, label: 'یوولسم ټولګی / صنف یازدهم' },
+  { value: 12, label: 'دولسم ټولګی/ صنف دوازدهم' },
+  { value: 13, label: 'دیارلسم ټولګی صنف سیزدهم' },
+  { value: 14, label: 'چهارده هم' },
 ];
 
 const StdInteranceOptions = [
@@ -82,6 +85,17 @@ const mediumOfInstructionOptions = [
 ];
 
 const educationYears = [
+  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
+  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
+  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
+  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
+  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
+  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
+  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
+  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
+  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
+  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
+  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
   { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
   { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
   { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
@@ -108,7 +122,6 @@ const educationYears = [
   { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
   { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
 ];
-
 const genderOptions = [
   { value: '1', label: 'نارینه/مذکر' },
   { value: '2', label: 'ښڅینه/مونث' },
@@ -244,6 +257,48 @@ const StdSchoolProvinceOptions = [
 const StudentTypeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudentTypeContiniues" /> },
   { value: '2', label: <IntlMessages id="forms.StudentTypeNonContiniues" /> },
+];
+const batchOptions = [
+  {
+    value: 1,
+    label: '1',
+  },
+  {
+    value: 2,
+    label: '2',
+  },
+  {
+    value: 3,
+    label: '3',
+  },
+  {
+    value: 4,
+    label: '4',
+  },
+  {
+    value: 5,
+    label: '5',
+  },
+  {
+    value: 6,
+    label: '6',
+  },
+  {
+    value: 7,
+    label: '7',
+  },
+  {
+    value: 8,
+    label: '8',
+  },
+  {
+    value: 9,
+    label: '9',
+  },
+  {
+    value: 10,
+    label: '10',
+  },
 ];
 
 const ValidationStepOne = Yup.object().shape({
@@ -443,8 +498,6 @@ const ValidationStepThree = Yup.object().shape({
 
 const StudentRegistration = ({ intl }, values) => {
   const { studentId } = useParams();
-  console.log('studentID', studentId);
-
   if (studentId) {
     useEffect(() => {
       async function fetchStudent() {
@@ -623,60 +676,174 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialSector, setInitialSector] = useState([]);
   const [initialphoto, setInitialphoto] = useState('');
   const [isNext, setIsNext] = useState(false);
-  const handleClick = (event) => {
-    setIsNext(event);
+  const [institutes, setInstitutes] = useState([]);
+  const [fieldList, setFieldList] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [classs, setClasss] = useState([]);
+  const [sectors, setSectors] = useState([]);
+
+  // fetch institute lists
+  const fetchInstitutes = async () => {
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
-  const onRegister = (values) => {
-    // if (!values) {
-    //   return;
-    // }
-    //send data to server
-    const data = {
-      std_id: '1',
-      name: values.name1,
-      Eng_name: values.englishName,
-      father_name: values.fatherName,
-      Eng_father_name: values.fatherEngName,
-      cover_number: values.idCardCover,
-      page_number: values.idCardPageNo,
-      registration_number: values.tazkiraNo,
-      Sukuk_number: values.idCardSakukNo,
-      main_province: values.province.value,
-      main_district: values.district,
-      main_village: values.dillage,
-      current_province: values.C_Province.value,
-      current_district: values.C_District,
-      current_village: values.C_Village,
-      birth_date: values.DoB,
-      fatherـprofession: values.fatherDuty,
-      fatherـplaceـofـduty: values.fatherDutyLocation,
-      finished_grade: values.educationLevel.value,
-      // finished_grade_year: values.StdGraduationYear,
-      finished_grade_year: 2022,
-      school: values.preShcool,
-      schoolـprovince: values.schoolProvince.value,
-      study_types: 1,
-      // study_types: add study types (فارغ، جاری، منفک)
-      student_type: values.studentType.value,
-      internse_type: values.interanceType.value,
-      // std_photo: values,
-      // Documents: 'photos/2.jpg',
 
-      //add student photo
-
-      //add more documents
-    };
-    console.log('data', data);
-
-    axios
-      .post('http://localhost:8000/api/', data)
-      .then((res) => {
-        console.log('res', res);
-      })
-      .catch((err) => {
-        console.log('err', err);
-      });
+  // fetch field list
+  const fetchFields = async () => {
+    const response = await callApi('institute/field/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFieldList(updatedData);
+    } else {
+      console.log('field error');
+    }
   };
+
+  // fetch department list
+  const fetchDepartments = async () => {
+    const response = await callApi('institute/department/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('department error');
+    }
+  };
+
+  //fetch class list
+  const fetchClasses = async () => {
+    const response = await callApi('/institute/classs/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setClasss(updatedData);
+    } else {
+      console.log('class error');
+    }
+  };
+
+  //fetch sector list
+  const fetchSectors = async () => {
+    const response = await callApi('/institute/sectors/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.sector,
+      }));
+      setSectors(updatedData);
+    } else {
+      console.log('class error');
+    }
+  };
+
+  // post student record to server
+  const postStudentRecord = async (data) => {
+    const response = await callApi('api/student_create', 'POST', data);
+    if (response.data && response.status === 200) {
+      console.log('success message', response.data);
+    } else {
+      console.log('class error');
+    }
+  };
+
+  // console.log('institue list', institutes);
+  // console.log('class list', classs);
+  // console.log('fields list', fieldList);
+  // console.log('department list', departments);
+  // console.log('sector list', sectors);
+  // const fetchSubjects = async () => {
+  //   const response = await callApi('/institute/subject/', '', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     setSubjects(updatedData);
+  //   } else {
+  //     console.log('subject error');
+  //   }
+  // };
+
+  useEffect(() => {
+    fetchInstitutes();
+    fetchFields();
+    fetchDepartments();
+    fetchClasses();
+    fetchSectors();
+  }, []);
+
+  // fetch sector list
+
+  // const handleClick = (event) => {
+  //   setIsNext(event);
+  // };
+  // const onRegister = (values) => {
+  //   // if (!values) {
+  //   //   return;
+  //   // }
+  //   //send data to server
+  //   const data = {
+  //     std_id: '1',
+  //     name: values.name1,
+  //     Eng_name: values.englishName,
+  //     father_name: values.fatherName,
+  //     Eng_father_name: values.fatherEngName,
+  //     cover_number: values.idCardCover,
+  //     page_number: values.idCardPageNo,
+  //     registration_number: values.tazkiraNo,
+  //     Sukuk_number: values.idCardSakukNo,
+  //     main_province: values.province.value,
+  //     main_district: values.district,
+  //     main_village: values.dillage,
+  //     current_province: values.C_Province.value,
+  //     current_district: values.C_District,
+  //     current_village: values.C_Village,
+  //     birth_date: values.DoB,
+  //     fatherـprofession: values.fatherDuty,
+  //     fatherـplaceـofـduty: values.fatherDutyLocation,
+  //     finished_grade: values.educationLevel.value,
+  //     // finished_grade_year: values.StdGraduationYear,
+  //     finished_grade_year: 2022,
+  //     school: values.preShcool,
+  //     schoolـprovince: values.schoolProvince.value,
+  //     study_types: 1,
+  //     // study_types: add study types (فارغ، جاری، منفک)
+  //     student_type: values.studentType.value,
+  //     internse_type: values.interanceType.value,
+  //     // std_photo: values,
+  //     // Documents: 'photos/2.jpg',
+
+  //     //add student photo
+
+  //     //add more documents
+  //   };
+  //   console.log('data', data);
+
+  //   axios
+  //     .post('http://localhost:8000/api/', data)
+  //     .then((res) => {
+  //       console.log('res', res);
+  //     })
+  //     .catch((err) => {
+  //       console.log('err', err);
+  //     });
+  // };
 
   const forms = [createRef(null), createRef(null), createRef(null)];
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
@@ -697,21 +864,13 @@ const StudentRegistration = ({ intl }, values) => {
     }
     const formIndex = steps.indexOf(step);
     const form = forms[formIndex].current;
-
-    console.log(step.length, 'step.lenght');
-    console.log(formIndex, 'formIndex');
-    console.log(form, ' form');
-    console.log(step, ' step');
-
     if (step.id === 'step1') {
       setTazkiraType(form.values.tazkiraType.value);
       setGender(form.values.gender.value);
     }
     if (step.id === 'step2') {
-      //
       setLevelOfEducation(form.values.levelOfEducation.value);
       setSchoolProvince(form.values.schoolProvince.value);
-      //
       setProvince(form.values.province.value);
       setCurrentProvince(form.values.C_Province.value);
     }
@@ -719,9 +878,8 @@ const StudentRegistration = ({ intl }, values) => {
     if (step.id === 'step3') {
       setInteranceType(form.values.interanceType.value);
       setStudentType(form.values.studentType.value);
+      //console.log('forms values here', form);
     }
-    console.log(step.id, 'stepoId');
-    console.log('First Step (Form) Values', form.values);
     form.submitForm().then(() => {
       if (!form.isDirty && form.isValid) {
         const newFields = { ...fields, ...form.values };
@@ -730,6 +888,68 @@ const StudentRegistration = ({ intl }, values) => {
           setBottomNavHidden(true);
           setLoading(true);
           console.log(newFields, 'Final Values');
+
+          const data = {
+            // personal info
+            name: newFields.name1,
+            kankor_id: newFields.kankorId,
+            // finished_grade_year: +newFields.graduationYear,
+            finished_grade_year: '2012',
+            school: newFields.preSchool,
+            schoolـprovince: newFields.schoolProvince.value,
+            // graduat_14_types: grade14Type,
+            // graduat_12_types: grade12Type,
+            finished_grade: newFields.levelOfEducation.value,
+            student_type: newFields.studentType.value,
+            english_name: newFields.englishName,
+            last_name: newFields.lastName,
+            english_last_name: newFields.lastNameEng,
+            father_name: newFields.fatherName,
+            english_father_name: newFields.fatherEngName,
+            phone_number: newFields.phoneNo,
+            email: newFields.email,
+            grand_father_name: newFields.grandFatherName,
+            cover_number: newFields.idCardJoldNo,
+            page_number: newFields.idCardPageNo,
+            registration_number: newFields.tazkiraNo,
+            sukuk_number: newFields.tazkiraNo,
+            main_province: newFields.province.value,
+            main_district: newFields.district,
+            main_village: newFields.village,
+            current_province: newFields.C_Province.value,
+            current_district: newFields.C_District,
+            current_village: newFields.C_Village,
+            birth_date: newFields.DoB,
+            fatherـprofession: newFields.fatherDuty,
+            fatherـplaceـofـduty: newFields.fatherDutyLocation,
+            internse_type: newFields.interanceType.value,
+            students_status: newFields.interanceType.value,
+            gender: newFields.gender.value,
+            student_photo: newFields.photo,
+
+            // institue info
+            institute: newFields.institute.value,
+            educational_year: newFields.educationalYear.value,
+            type: '1',
+            language: newFields.mediumOfInstruction.value,
+            time: newFields.studyTime.value,
+            is_transfer: '1',
+
+            // fields info
+            department_id: newFields.department.value,
+            field: newFields.field.value,
+            sector: newFields.sector.value,
+            batch: newFields.batch.value,
+
+            //student class info,
+            class_id: newFields.class.value,
+          };
+
+          console.log('the form data is converted to object', data);
+
+          // posting data to the server
+          postStudentRecord(data);
+
           setTimeout(() => {
             setLoading(false);
           }, 0);
@@ -1430,7 +1650,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="institute"
                                 id="institute"
                                 value={values.institute}
-                                options={StdInteranceOptions}
+                                options={institutes}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
@@ -1441,7 +1661,7 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {/*  Class Id  */}
+                            {/*  Class name  */}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="marks.ClassLabel" />
@@ -1450,7 +1670,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="class"
                                 id="class"
                                 value={values.class}
-                                options={StdInteranceOptions}
+                                options={classs}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -1493,7 +1713,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="sector"
                                 id="sector"
                                 value={values.sector}
-                                options={educationYears}
+                                options={sectors}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -1570,7 +1790,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="department"
                                 id="department"
                                 value={values.department}
-                                options={StdInteranceOptions}
+                                options={departments}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -1591,7 +1811,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="field"
                                 id="field"
                                 value={values.field}
-                                options={StdInteranceOptions}
+                                options={fieldList}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -1612,7 +1832,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="batch"
                                 id="batch"
                                 value={values.batch}
-                                options={StdInteranceOptions}
+                                options={batchOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -1733,14 +1953,3 @@ const StudentRegistration = ({ intl }, values) => {
   );
 };
 export default injectIntl(StudentRegistration);
-
-// const onClickNext = (goToNext, steps, step, values) => {
-//   if (steps.length - 1 <= steps.indexOf(step)) {
-//     return;
-//   }
-//   const formIndex = steps.indexOf(step);
-//   const form = forms[formIndex].current;
-
-//   console.log(step.length, 'step.lenght');
-//   console.log(formIndex, 'formIndex');
-//   console.log(form, ' form');

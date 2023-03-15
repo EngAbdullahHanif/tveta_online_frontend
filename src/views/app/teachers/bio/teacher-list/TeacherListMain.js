@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 import './list.css';
+import callApi from 'helpers/callApi';
+
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -245,24 +247,38 @@ const ThumbListPages = ({ match }) => {
           setTeacherId('');
           setRest(false);
         }
-        axios
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
+      const response = await callApi('/institute/classs/', '', null);
+      if (response.data && response.status === 200) {
 
-            setItems(data);
-            setTotalPage(data.total_pages);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+      setItems(response.data);
+      // setTotalPage(response.data.total_pages);
+      setSelectedItems([]);
+      // setTotalItemCount(response.data.totalItem);
+      setIsLoaded(true);
+      } else {
+        setItems([]);
+    console.log('institutes error');
+
+      }
+      
+        // axios
+        //   .get(
+        //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+        //     );
+
+        //     setItems(data);
+        //     setTotalPage(data.total_pages);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
       } else if (selectedProvinceOption.column === 'all') {
         axios
           .get(
@@ -335,14 +351,17 @@ const ThumbListPages = ({ match }) => {
   ]);
 
   const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      lable: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
-
   useEffect(() => {
     fetchInstitutes();
   }, []);

@@ -8,12 +8,14 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
   const [searchtext, setSearchtext] = useState('');
   const [suggest, setSuggest] = useState([]);
   const [resfound, setResfound] = useState(true);
-
+  
   const handleChange = (e) => {
     let searchval = e.target.value;
     let suggestion = [];
-
+    
+    console.log('inst', inst);
     if (searchval.length > 0) {
+
       suggestion = inst
         .sort()
         .filter((e) => e.toLowerCase().includes(searchval.toLowerCase()));

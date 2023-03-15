@@ -400,9 +400,8 @@ const Home = () => {
 
                         <a
                           className="btn btn-light btn-xl mr-2 mb-2 mt-5"
-                          href={adminRoot}
-                          target="_blank"
-                        >
+                          href={'/user/login'}
+                                                  >
                           ننوتل/ورود <i className="simple-icon-arrow-right" />
                         </a>
                       </div>

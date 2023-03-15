@@ -14,9 +14,24 @@ const StudentList = React.lazy(() =>
     /* webpackChunkName: "student-list" */ './bio/students-list/StudentListMain'
   )
 );
+const AttendanceList = React.lazy(() =>
+  import(
+    /* webpackChunkName: "student-list" */ './attendence/attendance-list/AttendanceListMain'
+  )
+);
 const KankorStudentList = React.lazy(() =>
   import(
     /* webpackChunkName: "kankor-student-list" */ './bio/kankor-students-list/KankorStudentListMain'
+  )
+);
+const DismissedStudentList = React.lazy(() =>
+  import(
+    /* webpackChunkName: "kankor-student-list" */ './dismissed-students/dismissed-students'
+  )
+);
+const TransferedStudentList = React.lazy(() =>
+  import(
+    /* webpackChunkName: "kankor-student-list" */ './transfered-students/transfered-students'
   )
 );
 
@@ -56,9 +71,18 @@ const Reregister = React.lazy(() =>
 const SingleStudentMarksUpdate = React.lazy(() =>
   import(/* webpackChunkName: "marks-update" */ './single-student-marksUpdate')
 );
+// const UpdateAttendance = React.lazy(() =>
+//   import(/* webpackChunkName: "marks-update" */ './')
+// );
 
 const AttendanceUpdate = React.lazy(() =>
-  import(/* webpackChunkName: "attendance-update" */ './attendance-update')
+  import(
+    /* webpackChunkName: "attendance-update" */ './attendence/update-attendance'
+  )
+);
+
+const Random = React.lazy(() =>
+  import(/* webpackChunkName: "random" */ './bio/random')
 );
 
 const Students = ({ match }) => (
@@ -66,11 +90,21 @@ const Students = ({ match }) => (
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/register`} />
       <Route
+        exact
         path={`${match.url}/register`}
         render={(props) => <Register {...props} />}
       />
       <Route
+        path={`${match.url}/register/:studentId`}
+        render={(props) => <Register {...props} />}
+      />
+      <Route
+        exact
         path={`${match.url}/register-kankor`}
+        render={(props) => <RegisterKankor {...props} />}
+      />
+      <Route
+        path={`${match.url}/register-kankor/:kankorStudentId`}
         render={(props) => <RegisterKankor {...props} />}
       />
       <Route
@@ -78,15 +112,42 @@ const Students = ({ match }) => (
         render={(props) => <StudentList {...props} />}
       />
       <Route
+        exact
+        path={`${match.url}/attendance-list`}
+        render={(props) => <AttendanceList {...props} />}
+      />
+      <Route
+        path={`${match.url}/attendance-list/:attendance_id`}
+        render={(props) => <AttendanceUpdate {...props} />}
+      />
+      <Route
+        path={`${match.url}/dismissed-list`}
+        render={(props) => <DismissedStudentList {...props} />}
+      />
+      <Route
+        path={`${match.url}/transfered-list`}
+        render={(props) => <TransferedStudentList {...props} />}
+      />
+      <Route
         path={`${match.url}/kankor-students`}
         render={(props) => <KankorStudentList {...props} />}
       />
       <Route
+        exact
         path={`${match.url}/marks-register`}
         render={(props) => <MarksRegistration {...props} />}
       />
       <Route
+        path={`${match.url}/marks-register/:id`}
+        render={(props) => <MarksRegistration {...props} />}
+      />
+      <Route
+        exact
         path={`${match.url}/attendance-register`}
+        render={(props) => <AttendanceRegistration {...props} />}
+      />
+      <Route
+        path={`${match.url}/attendance-register/:studentAttendanceId`}
         render={(props) => <AttendanceRegistration {...props} />}
       />
       <Route
@@ -117,9 +178,9 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/test`}
         render={(props) => <Test {...props} />}
-        />
+      />
       <Route
-        path={`${match.url}/dismissal`}
+        path={`${match.url}/student-dismissal`}
         render={(props) => <Dismissal {...props} />}
       />
       <Route
@@ -133,6 +194,10 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/attendance-update`}
         render={(props) => <AttendanceUpdate {...props} />}
+      />
+      <Route
+        path={`${match.url}/random`}
+        render={(props) => <Random {...props} />}
       />
 
       {/* <ProtectedRoute

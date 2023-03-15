@@ -494,7 +494,7 @@ const ThumbListPages = ({ match }) => {
 
         <table className="table">
           <thead
-            className="pl-2 d-flex flex-grow-1  table-dark"
+            className="pl-2 d-flex flex-grow-1  table-dark "
             style={{ maxHeight: '55px' }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">

@@ -6,7 +6,6 @@ import axios from 'axios';
 
 import ListPageHeading from './HREvaluationListHeading';
 import IntlMessages from 'helpers/IntlMessages';
-
 import ListPageListing from './HREvaluationListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
@@ -206,75 +205,41 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
         />
 
-          <table  className="table w-100" >
+        <table className="table">
           <thead
-            className="pl-2 d-flex flex-grow-1  table-dark w-100"
-            style={{ maxHeight: '55px' }}
+            style={{ maxHeight: '55px ' }}
+            className="pl-2 d-flex flex-grow-1  table-dark mb-2"
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
               <th
                 style={{
-                  width: '8%',
+                  width: '11%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
                 <IntlMessages id="marks.No" />
-              
               </th>
               <th
                 style={{
-                  width: '16%',
+                  width: '14%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
-                <IntlMessages id="forms.teacherName" />
+                <IntlMessages id="forms.StdName" />
               </th>
               <th
                 style={{
-                  width: '20%',
+                  width: '15%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
-                <IntlMessages id="forms.instituteName" />
-              </th>
-              <th
-                style={{
-                  width: '17%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="forms.currentGrade" />
-              </th>
-              <th
-                style={{
-                  width: '14%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="forms.newGrade" />
-              </th>
-              <th
-                style={{
-                  width: '17%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="forms.currentStep" />
+                <IntlMessages id="forms.StdFatherName" />
               </th>
               <th
                 style={{
@@ -285,7 +250,29 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 {' '}
-                <IntlMessages id="forms.newStep" />
+                <IntlMessages id="forms.ProvinceLabel" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.PhoneNoLabel" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.MajorLabel" />
               </th>
               <th
                 style={{
@@ -296,36 +283,21 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 {' '}
-                <IntlMessages id="forms.evaluationMarks" />
-              </th>
-              <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="forms.evaluationDate" />
+                <IntlMessages id="teacher.GradeLabel" />
               </th>
             </tr>
-          </thead> 
-          <tr className='w-100'>
-            <td className='w-100'>
-            <ListPageListing
-              items={items}
-              displayMode={displayMode}
-              selectedItems={selectedItems}
-              onCheckItem={onCheckItem}
-              currentPage={currentPage}
-              totalPage={totalPage}
-              onContextMenuClick={onContextMenuClick}
-              onContextMenu={onContextMenu}
-              onChangePage={setCurrentPage}
-            />
-            </td>
-            </tr>
+          </thead>
+          <ListPageListing
+            items={items}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
         </table>
       </div>
     </>

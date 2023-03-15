@@ -361,7 +361,7 @@ const StudentsRergister = (values) => {
               <Formik
                 initialValues={initialValues}
                 //   onSubmit={searhResult}
-                validationSchema={dismissalSchema}
+                // validationSchema={dismissalSchema}
               >
                 {({
                   errors,

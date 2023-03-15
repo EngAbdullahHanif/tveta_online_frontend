@@ -87,29 +87,24 @@ module.exports = {
   'menu.student_list': 'لست شاگرد',
   'menu.student_register_kankor': ' ثبت شاگرد کانکور',
   'menu.forgot-password': 'فراموشی رمز',
-  'kankorStudentId': 'کانکور ایډی',
-  'studentTimings': 'وخت',
-  'department': 'دیپارتمنت',
-  'studentMarks': 'نمرات کانکور',
-  'studentField': 'رشته',
-  'studentRegtrationDate': 'تاریخ ثبت نام',
-  'studentFatherName': 'نام پدر',
+  kankorStudentId: 'کانکور ایډی',
+  studentTimings: 'وخت',
+  department: 'دیپارتمنت',
+  studentMarks: 'نمرات کانکور',
+  studentField: 'رشته',
+  studentRegtrationDate: 'تاریخ ثبت نام',
+  studentFatherName: 'نام پدر',
 
   // department
 
-  'departmentRegistration': "ثبت دیپارتمنت/ د دیپارتمنت ثبت",
-  'departmentField': 'رشته ها/رشتی',
-  'departmentName': 'نام دیپارتمنت',
-  'departmentEnglishName': 'نام انگلیسی دیپارتمنت',
-  'departmentFieldErr': 'نام رشته لازم است',
-  'departmentNameErr': 'نام دیپارتمنت لازم است',
-  'departmentEnglishNameErr': 'نام انگلیسی دیپارتمنت لازم است',
-  'departmentId': 'ایدا دیپارتمنت',
-
-
-
-
-
+  departmentRegistration: 'ثبت دیپارتمنت/ د دیپارتمنت ثبت',
+  departmentField: 'رشته ها/رشتی',
+  departmentName: 'نام دیپارتمنت',
+  departmentEnglishName: 'نام انگلیسی دیپارتمنت',
+  departmentFieldErr: 'نام رشته لازم است',
+  departmentNameErr: 'نام دیپارتمنت لازم است',
+  departmentEnglishNameErr: 'نام انگلیسی دیپارتمنت لازم است',
+  departmentId: 'ایدا دیپارتمنت',
 
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
@@ -190,7 +185,7 @@ module.exports = {
   'menu.validations': 'اعتبار سنجی ها',
   'menu.wizard': 'ویزارد',
   'menu.field': 'رشته ها / رشتې',
-  'fieldSector':'سکتور',
+  fieldSector: 'سکتور',
   'menu.teacher-registration': 'د استاد ثبت/ ثبت استاد',
   'menu.field-register': 'د رشتی ثبت/ ثبت رشته',
   'menu.student-marks-register': 'نومرې/ نمرات',
@@ -214,57 +209,53 @@ module.exports = {
 
   /* HR Evaluation */
 
-'forms.teacherName': 'د استاد نوم/ نام استاد',
-'forms.instituteName': 'د انستیتوت نوم/ نام انستیتوت',
-'forms.currentGrade': 'پخوانی درجه/درجه سابقه',
-'forms.newGrade': 'نوی درجه/درجه نو',
-'forms.currentStep':" پخوانی قدم/قدم سابفه",
-'forms.newStep': "نوی قدم/قدم نو",
-'forms.evaluationMarks': "نمره",
-'forms.evaluationDate': "نیته / تاریخ",
+  'forms.teacherName': 'د استاد نوم/ نام استاد',
+  'forms.instituteName': 'د انستیتوت نوم/ نام انستیتوت',
+  'forms.currentGrade': 'پخوانی درجه/درجه سابقه',
+  'forms.newGrade': 'نوی درجه/درجه نو',
+  'forms.currentStep': ' پخوانی قدم/قدم سابفه',
+  'forms.newStep': 'نوی قدم/قدم نو',
+  'forms.evaluationMarks': 'نمره',
+  'forms.evaluationDate': 'نیته / تاریخ',
 
-// worker 
-'worker.registration' : 'ثبت کارمند / د کارمند ثبت',
-'workerProvince': "ولایت",
-'workerAppointedType': 'نوعیت استخدام',
-'workerQualification': 'سطح تحصیل',
-'workerField': "رشته",
-'workerTazkera': "شماره تذکره",
-'workerGender': 'جنسیت',
-'workerDateOfBirth': 'تاریخ تولد',
-'workerPosition': 'عنوان وظیفه',
-'workerStep': 'قدم',
-'workerId': 'کد',
-'workerGrade': 'بست کارمند',
-'workerTashkeilGrade': 'بست تشکیل',
-'workerGradeType': 'نوعیت بست',
-'workerAppointedDate': 'تاریخ استخدام',
-'workerStartDate': 'تاریخ اشغال به وظیفه',
-'workerRegistrationTitle': 'ثبت کارمندان / د کارمندانو ثبت',
-'workerName': 'نام/ نوم',
-'appointedTypeErr': 'نوعیت استخدام لازم است',
-'workerQualificationErr': 'سطح تحصیل لازم است',
-'workerProvinceErr': 'نام ولایت لازم است',
-'workerFieldErr': 'رشته لازم است',
-'workerGenderErr': 'نوعیت جنسیت لازم است',
-'workerTazkeraErr': 'شماره تذکره لازم است',
-'workerDOB': 'تاریخ تولد لازم است',
-'workerPositionErr': 'عنوان وظیفه لازم است',
-'workerStepErr': 'قدم لازم است',
-'workerIdErr': 'کدم لازم است',
-'workerGradeErr': 'بست لازم است',
-'workerTashkilGradeErr': 'بست تشکیل لازم است',
-'workerGradeTypeErr': 'نوعیت بست لازم است',
-'workerAppointedDateErr': 'تاریخ استخدام لازم است',
-'workerStartDateErr': 'تاریخ اشغال به وظیفه لازم است',
-'workerDisplayList': 'لست کارمندان',
-'workerPostion': 'عنوان وظیفه',
-'workerStepAndWorkerGrade': 'بست او قدم',
-'workerProfile': 'د کارمند پروفایل / پروفایل کارمند',
-
-
-
- 
+  // worker
+  'worker.registration': 'ثبت کارمند / د کارمند ثبت',
+  workerProvince: 'ولایت',
+  workerAppointedType: 'نوعیت استخدام',
+  workerQualification: 'سطح تحصیل',
+  workerField: 'رشته',
+  workerTazkera: 'شماره تذکره',
+  workerGender: 'جنسیت',
+  workerDateOfBirth: 'تاریخ تولد',
+  workerPosition: 'عنوان وظیفه',
+  workerStep: 'قدم',
+  workerId: 'کد',
+  workerGrade: 'بست کارمند',
+  workerTashkeilGrade: 'بست تشکیل',
+  workerGradeType: 'نوعیت بست',
+  workerAppointedDate: 'تاریخ استخدام',
+  workerStartDate: 'تاریخ اشغال به وظیفه',
+  workerRegistrationTitle: 'ثبت کارمندان / د کارمندانو ثبت',
+  workerName: 'نام/ نوم',
+  appointedTypeErr: 'نوعیت استخدام لازم است',
+  workerQualificationErr: 'سطح تحصیل لازم است',
+  workerProvinceErr: 'نام ولایت لازم است',
+  workerFieldErr: 'رشته لازم است',
+  workerGenderErr: 'نوعیت جنسیت لازم است',
+  workerTazkeraErr: 'شماره تذکره لازم است',
+  workerDOB: 'تاریخ تولد لازم است',
+  workerPositionErr: 'عنوان وظیفه لازم است',
+  workerStepErr: 'قدم لازم است',
+  workerIdErr: 'کدم لازم است',
+  workerGradeErr: 'بست لازم است',
+  workerTashkilGradeErr: 'بست تشکیل لازم است',
+  workerGradeTypeErr: 'نوعیت بست لازم است',
+  workerAppointedDateErr: 'تاریخ استخدام لازم است',
+  workerStartDateErr: 'تاریخ اشغال به وظیفه لازم است',
+  workerDisplayList: 'لست کارمندان',
+  workerPostion: 'عنوان وظیفه',
+  workerStepAndWorkerGrade: 'بست او قدم',
+  workerProfile: 'د کارمند پروفایل / پروفایل کارمند',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'درحال انتظار',
@@ -734,6 +725,11 @@ module.exports = {
   'forms.mediumOfInstructionErr': 'تدریسی ژبه اړینه ده/ زبان تدریسی ضروری است',
   'forms.batch': 'دوره',
   'forms.batchErr': 'دوره اړینه ده/ دوره ضروری است',
+  'forms.sector': 'سکتور',
+  'forms.fieldErr': 'رشته اړینه ده/ رشته ضروری است',
+  'forms.sectorErr': 'سکتور اړین دی/ سکتور ضروری است',
+  'student.photo': 'انځور / عکس',
+  'student.photoErr': 'د شاگرد انځور اړین دی/ عکس شاګرد ضروری است',
 
   // ولایات
   'forms.StdSchoolProvinceOptions_1': 'بدخشان',
@@ -821,9 +817,9 @@ module.exports = {
   'field.SubjectsErr': 'مضمونونه اړین دي/ درج مضامین ضروری است',
   'field.FieldIdLabel': 'د رشتی آیدی/ ایدی رشته',
   'field.FieldIdErr': 'د رشتې ایدی اړین دی/ ایدی رشته ضروری است',
-  'fieldTitle': 'نام رشته',
-  'fieldId': 'ایدی رشته',
-  'fieldEnglishTitle': 'نام انگلیسی رشته',
+  fieldTitle: 'نام رشته',
+  fieldId: 'ایدی رشته',
+  fieldEnglishTitle: 'نام انگلیسی رشته',
 
   // Teacher Registration section
   'teacher.RegisterTitle': 'د استادانو ثبتول/ ثبت اساتید',
@@ -842,6 +838,7 @@ module.exports = {
   'teacher.IdCardJoldNoLabel': 'جلد',
   'teacher.IdCardJoldNoErr': 'دجلد شمیره اړینه ده/ نمبر جلد ضروری است',
   'teacher.PhoneNoLabel': 'د تلفن شمیره/ نمبر تلفن',
+  'teacher-list.PhoneNoLabel': 'تلفن',
   'teacher.PhoneNoErr': 'د تلفن شمیره اړینه ده/ نمبر تلفن ضروری است',
   'teacher.EmailLabel': 'برښنالیک/ ایمیل آدرس',
   'teacher.EmailErr': 'برښنا لیک اړین دی/ ایمیل ادرس ضروری است',
@@ -853,6 +850,7 @@ module.exports = {
   'teacher.EducationLevelOption_3': 'ماستر',
   'teacher.EducationLevelOption_4': 'داکتر',
   'teacher.MajorLabel': 'تحصیلی رشته/ رشته تحصیلی',
+  'teacher-list.MajorLabel': 'رشته ',
   'teacher.MajorErr': 'تحصیلی رشته اړینه ده/ رشته تحصیلی ضروری است',
   'teacher.DoBLabel': 'زیږیدنې نیټه/ تاریخ تولد',
   'teacher.DoBErr': 'د زیږیدنې نیټه اړینه ده/ تاریخ تولد ضروری است',
@@ -901,7 +899,7 @@ module.exports = {
 
   // institute
   'institute.studentgenderOption_1': 'نارینه/ذکور',
-  'institute.studentgenderOption_2': 'ښځینه/ ذکور',
+  'institute.studentgenderOption_2': 'ښځینه/ اناث',
   'institute.studentgenderOption_3': 'دواړه/مختلط',
   // Type
   'institute.instTypeOptions_1': 'دولتی',
@@ -938,6 +936,10 @@ module.exports = {
   'marks.Marks': 'نمرې / نمرات',
   'marks.marksDisplayTitle': 'نمرې/ نمرات',
   'marks.studentChar': 'د شاګرد مالومات/ معلومات شاگرد',
+  'marks.gpa': 'جی پی ای',
+  'marks.grade': 'درجه',
+  'marks.type': 'چانس',
+  'marks.result': 'نتیجه',
 
   // Dorm
   'dorm.RegisterTitle': 'د لیلې ثبت/ ثبت لیلیه',
@@ -984,6 +986,13 @@ module.exports = {
   'dorm.search.district': 'ولسوالی',
   'forms.NoData': 'پورتنۍ آیډي شتون نه لري/ آیدی فوق در سیستم موجود نیست',
   'forms.StudentResidentsPlace': 'د شاګرد استوګنځی/ محل بود و باش شاگرد',
+
+  studentNameErr: 'نام لازم است',
+  presentErr: 'حاضری لازم است',
+  absentErr: 'غیر حاضری لازم است',
+  holidaysErr: 'رخصتی لازم است',
+  sicknessErr: 'مریضی لازم است',
+  educationalDaysErr: 'سال تعلیمی لازم است',
 
   // Teacher Evaluation
   'teacher.EvalautionTitle': 'د استاد ارزونه/ ارزیابی استاد',
@@ -1246,7 +1255,6 @@ module.exports = {
   'dash.teacherGender': 'جنسیت',
   'dash.totalNo': 'تعداد',
   'dash.teacherStatistics': 'د استاد مجموعی ارقام / ارقام مجموعی استاد',
-
   'dash.14YearsGreduatedTotal': 'مجموع 14 پاس',
   'dash.bachelorTotal': 'مجموع لسانس',
   'dash.masterTotal': 'مجموع ماستر',
@@ -1321,6 +1329,11 @@ module.exports = {
   'class.nameErr': 'د صنف نوم اړین دی/ نام صنف ضروری است',
   'class.semesterLabel': 'سمستر',
   'class.semesterErr': 'سمستر اړین دی/ سمستر ضروری است',
+
+  // Deletion flash message model
+  'modal.deletion-message-title': 'تایید',
+  'modal.deletion-message-details':
+    'ایا تاسې ډاډه یاست چې دا ریکارډ ډلیت کړئ/ آیا مطمین هستید که این ریکارد دلیت شود',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Inputs سفارشی',
@@ -1488,7 +1501,7 @@ module.exports = {
   'subject.system_type': 'د مضمون سیسټم ډول / نوعیت سیستم مضمون',
   'subject.code': 'د مضمون کوډ / کد مضمون',
   'subject.register.title': 'د مضمون ثبت کول / ثبت مضمون',
-  "subject.system.type": 'د مضمون د سیستم ډول',
+  'subject.system.type': 'د مضمون د سیستم ډول',
 
   'class.name': 'د صنف نوم / نام صنف',
   'class.semester': 'د صنف سمستر / سمستر صنف',

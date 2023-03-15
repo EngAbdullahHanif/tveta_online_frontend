@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
+import './style.css';
 
-// Year  and SHift
 
 import * as Yup from 'yup';
 import {
@@ -18,7 +18,7 @@ import {
 import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
+import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
   FormikTagsInput,
@@ -165,7 +165,7 @@ const MarksDisplay = ({ match }) => {
     setInstitutes(updatedData);
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
+    const response = await axios.get('http://localhost:8000/institute/field/');
     const updatedData = await response.data.map((item) => ({
       value: item.id,
       label: item.name,
@@ -211,8 +211,89 @@ const MarksDisplay = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const handleClick = (event) => {
-    setIsNext(event);
+  const tbodies = students.map((student, index) => {
+    const scores = Object.values(student.subject_id);
+    const studentRows = scores.map((score, i) => {
+      const student_name =
+        i === 0 ? (
+          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+            {student.student_name}
+          </td>
+        ) : null;
+      const student_father_name =
+        i === 0 ? (
+          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+            {student.student_father_name}
+          </td>
+        ) : null;
+      const student_id =
+        i === 0 ? (
+          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+            {student.student_id}
+          </td>
+        ) : null;
+      const index_no =
+        i === 0 ? (
+          <td rowSpan={index.length + 1} style={{ borderStyle: 'hidden' }}>
+            {index + 1}
+          </td>
+        ) : null;
+
+      return (
+        <>
+          <tr key={i} className="red-background">
+            <td className="red-background">{index_no}</td>
+            <td className="red-background"> {student_name}</td>
+            <td className="red-background">{student_father_name}</td>
+            <td className="red-background">{student_id}</td>
+            <td className="red-background">
+              {<td style={{ borderStyle: 'hidden' }}>{score.score}</td>}
+            </td>
+            <td className="red-background">
+              {score.exam_type == 1 && (
+                <td style={{ borderStyle: 'hidden' }}>First</td>
+              )}
+              {score.exam_type == 2 && (
+                <td style={{ borderStyle: 'hidden', color: '#de0a26' }}>
+                  Second
+                </td>
+              )}
+            </td>
+            <td className="red-background">
+              {' '}
+              {score.grad && (
+                <td style={{ borderStyle: 'hidden' }}>{score.grad}</td>
+              )}
+            </td>
+            <td className="red-background">
+              {' '}
+              {score.Gpa && (
+                <td style={{ borderStyle: 'hidden' }}>{score.Gpa}</td>
+              )}
+            </td>
+            <td className="red-background">
+              {score.score >= 55 ? (
+                <div className="text-success">Passed </div>
+              ) : (
+                <div className="text-danger">Failed </div>
+              )}
+            </td>
+          </tr>
+        </>
+      );
+    });
+    return (
+      <>
+        <tbody key={index} className={student.name + ' ' + ' border border '}>
+          {studentRows}
+        </tbody>
+      </>
+    );
+  });
+
+
+  const onSubmit = (values) => {
+    setIsNext(false);
     axios
       .get(
         `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
@@ -221,7 +302,6 @@ const MarksDisplay = ({ match }) => {
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
-        setIsNext(false);
       });
     console.log(
       `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
@@ -232,59 +312,7 @@ const MarksDisplay = ({ match }) => {
     setClasss(classArray[0]);
     setSemester(classArray[1]);
     setSection(classArray[2]);
-  };
 
-  const tbodies = students.map((student, index) => {
-    const scores = Object.values(student.subject_id);
-    const studentRows = scores.map((score, i) => {
-      const student_name =
-        i === 0 ? (
-          <td rowSpan={scores.length + 1}>{student.student_name}</td>
-        ) : null;
-      const student_father_name =
-        i === 0 ? (
-          <td rowSpan={scores.length + 1}>{student.student_father_name}</td>
-        ) : null;
-      const student_id =
-        i === 0 ? (
-          <td rowSpan={scores.length + 1}>{student.student_id}</td>
-        ) : null;
-      return (
-        <tr key={i}>
-          <td>{index + 1}</td>
-          {student_name}
-          {student_father_name}
-          {student_id}
-          <td>{score.score}</td>
-          {score.grad && <td>{score.grad}</td>}
-          {score.Gpa && <td>{score.Gpa}</td>}
-          {score.exam_type == 1 && <td>first CHANCE</td>}
-          {score.exam_type == 2 && <td>second CHANCE</td>}
-          {/* {score.exam_type == 2 && (
-            <>
-              {score.exam_type == 1 && <td>first CHANCE</td>}
-              {score.exam_type == 2  && <td>second CHANCE</td>}
-            </>
-          )} */}
-        </tr>
-      );
-    });
-    return (
-      <tbody
-        key={index}
-        className={student.name + ' ' + ' border border '}
-        style={{
-          height: '200px',
-          overflowY: 'scroll',
-          overflowX: 'hidden',
-        }}
-      >
-        {studentRows}
-      </tbody>
-    );
-  });
-
-  const onSubmit = (values) => {
     console.log('values', values);
     const educational_year = selectedEducationalYear;
     const institute_id = selectedInstitute.value;
@@ -474,10 +502,9 @@ const MarksDisplay = ({ match }) => {
                         className="float-right m-5"
                         size="lg"
                         type="submit"
-                        onClick={() => {
-                          onSubmit;
-                          handleClick(false);
-                        }}
+                        // onClick={() => {
+                        //   onSubmit(false);
+                        // }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -497,7 +524,7 @@ const MarksDisplay = ({ match }) => {
             <>
               <Row
                 className="border border bg-primary me-5 p-1 "
-                style={{ marginInline: '16%' }}
+                style={{ marginInline: '6%' }}
               >
                 <Colxx xxs="2">
                   <Label>
@@ -544,9 +571,9 @@ const MarksDisplay = ({ match }) => {
 
               <Row
                 className="justify-content-center  border border"
-                style={{ marginInline: '16%' }}
+                style={{ marginInline: '6%' }}
               >
-                <table className="table">
+                <table className="table ">
                   <thead className="thead-dark">
                     <tr>
                       <th scope="col">
@@ -564,9 +591,21 @@ const MarksDisplay = ({ match }) => {
                       <th scope="col">
                         <IntlMessages id="marks.Marks" />
                       </th>
+                      <th scope="col">
+                        <IntlMessages id="marks.type" />
+                      </th>{' '}
+                      <th scope="col">
+                        <IntlMessages id="marks.grade" />
+                      </th>
+                      <th scope="col">
+                        <IntlMessages id="marks.gpa" />
+                      </th>{' '}
+                      <th scope="col">
+                        <IntlMessages id="marks.result" />
+                      </th>{' '}
                     </tr>
                   </thead>
-                </table>
+                  {/* </table>
               </Row>
 
               <Row
@@ -578,7 +617,7 @@ const MarksDisplay = ({ match }) => {
                   overflowX: 'hidden',
                 }}
               >
-                <table class="table ">
+                <table class="table"> */}
                   {/* <tbody
                     className="border border "
                     style={{
@@ -597,24 +636,8 @@ const MarksDisplay = ({ match }) => {
                       </tr>
                     ))}
                   </tbody> */}
+
                   {tbodies}
-                </table>
-              </Row>
-              <Row
-                className="justify-content-center  border border"
-                style={{
-                  marginInline: '16%',
-                }}
-              >
-                <table class="table ">
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
                   <tfoot className="thead-dark">
                     <tr>
                       <th scope="col">
@@ -632,13 +655,25 @@ const MarksDisplay = ({ match }) => {
                       <th scope="col">
                         <IntlMessages id="marks.Marks" />
                       </th>
+                      <th scope="col">
+                        <IntlMessages id="marks.grade" />
+                      </th>
+                      <th scope="col">
+                        <IntlMessages id="marks.gpa" />
+                      </th>{' '}
+                      <th scope="col">
+                        <IntlMessages id="marks.type" />
+                      </th>{' '}
+                      <th scope="col">
+                        <IntlMessages id="marks.result" />
+                      </th>{' '}
                     </tr>
                   </tfoot>
                 </table>
               </Row>
               <Row className=" justify-content-center">
                 <Colxx xxs="9" className="m-5">
-                  <Button className=" m-4" onClick={() => handleClick(true)}>
+                  <Button className=" m-4" onClick={() => setIsNext(true)}>
                     <IntlMessages id="button.Back" />
                   </Button>
                 </Colxx>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
+import { useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import {
   Row,
@@ -16,15 +17,17 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
+const servicePath = 'http://localhost:8000';
+const KankorstudentAPI = `${servicePath}/api/kankorResults`;
+//http://localhost:8000/api/kankorResults/?id=1
+
 const studyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
-
 const InstituteOptions = [
-  { value: '1', label: 'Option1' },
-  { value: '2', label: 'Option2' },
-  { value: '3', label: 'Option3' },
+  { value: 1, label: 'Tech Afg' },
+  { value: 2, label: 'IT' },
 ];
 
 const FieldOptions = [
@@ -33,8 +36,14 @@ const FieldOptions = [
   { value: '3', label: 'Option3' },
 ];
 
+const genderOptions = [
+  { value: '1', label: <IntlMessages id="institute.studentgenderOption_1" /> },
+  { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
+];
+
 const StudentRegistraion = ({ history }) => {
-  const UpdatingMode = false;
+  const UpdatingMode = true;
+  console.log(UpdatingMode, 'updating Mode');
   const ValidationSchema = Yup.object().shape({
     name1: Yup.string()
       .min(3, <IntlMessages id="min.minInputValue" />)
@@ -46,17 +55,17 @@ const StudentRegistraion = ({ history }) => {
       .max(50, <IntlMessages id="max.maxInputValue" />)
       .required(<IntlMessages id="teacher.FatherNameErr" />),
 
-    interanceDate: Yup.string().required(
+    interanceDate: Yup.date().required(
       <IntlMessages id="forms.KankorMarksErr" />
     ),
 
-    kankorId: Yup.string().required(<IntlMessages id="forms.StdKankorIdErr" />),
+    // kankorId: Yup.string().required(<IntlMessages id="forms.StdKankorIdErr" />),
 
     kankorMarks: Yup.string().required(
       <IntlMessages id="forms.KankorMarksErr" />
     ),
 
-    department: UpdatingMode
+    department: !UpdatingMode
       ? Yup.object()
           .shape({
             value: Yup.string().required(),
@@ -65,7 +74,16 @@ const StudentRegistraion = ({ history }) => {
           .required(<IntlMessages id="teacher.departmentIdErr" />)
       : null,
 
-    institute: UpdatingMode
+    gender: updateMode
+      ? Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="forms.genderErr" />)
+      : null,
+
+    institute: !UpdatingMode
       ? Yup.object()
           .shape({
             value: Yup.string().required(),
@@ -93,21 +111,58 @@ const StudentRegistraion = ({ history }) => {
       : null,
   });
 
+  const { kankorStudentId } = useParams();
+  //console.log(kankorStudentId);
+  if (kankorStudentId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        const { data } = await axios.get(
+          `${KankorstudentAPI}/?id=${kankorStudentId}`
+        );
+        console.log(data[0].id, 'kaknor student data');
+        setInitialName(data[0].name);
+        setInitailKankorId(data[0].user_id);
+        setInitialFatherName(data[0].father_name);
+        setInitailInteranceDate('04/23/1995');
+        setInitailDepartment([
+          {
+            value: data[0].department_id.id,
+            label: data[0].department_id.name,
+          },
+        ]);
+        setInitialField([
+          {
+            value: data[0].field_id.id,
+            label: data[0].field_id.name,
+          },
+        ]);
+        setInitialKankorMarks(data[0].score);
+        setInitialstudyTime([{ value: 1, label: 'سهار' }]);
+        setInitialInstitute([
+          { value: data[0].Institute.id, label: data[0].Institute.name },
+        ]);
+      }
+      fetchStudent();
+      //setUpdateMode(true);
+    }, []);
+  }
+
   // Temporaray varaibles
   const testName = 'Ahmad';
-  const testKankorId = '232423';
-  const testFatherName = 'Rashid';
+  // const testKankorId = '232423';
+  const testFatherName = '';
   const testInteranceDate = '23-243-4323';
   const testStudyTime = 'Morning';
-  const testDepartment = 'Engineering';
+  const testDepartment = '';
   const testFieldfield = 'CS';
-  const testInstitute = 'Nima';
+  const testInstitute = '';
   const testKankorMarks = '87';
+  const testGender = '';
 
   const [intialName, setInitialName] = useState(testName ? 'Ahmad' : '');
-  const [initailKankorId, setInitailKankorId] = useState(
-    testKankorId ? '213f-12' : ''
-  );
+  // const [initailKankorId, setInitailKankorId] = useState(
+  //   testKankorId ? '213f-12' : ''
+  // );
   const [initialFatherName, setInitialFatherName] = useState(
     testFatherName ? 'Rashid' : ''
   );
@@ -117,10 +172,10 @@ const StudentRegistraion = ({ history }) => {
   const [initialKankorMarks, setInitialKankorMarks] = useState(
     testKankorMarks ? '87' : ''
   );
-  const [initailDepartment, setInitailDepartment] = useState(
+  const [initialField, setInitailField] = useState(
     testFieldfield ? [{ label: testFieldfield, value: testFieldfield }] : []
   );
-  const [initialField, setInitialField] = useState(
+  const [initailDepartment, setInitailDepartment] = useState(
     testDepartment ? [{ label: testDepartment, value: testDepartment }] : []
   );
   const [initialstudyTime, setInitialstudyTime] = useState(
@@ -130,9 +185,14 @@ const StudentRegistraion = ({ history }) => {
   const [initialInstitute, setInitialInstitute] = useState(
     testInstitute ? [{ label: testInstitute, value: testInstitute }] : []
   );
+
+  const [initialGender, setInitialGender] = useState(
+    testGender ? [{ label: testGender, value: testGender }] : []
+  );
   const initialValues = {
     name1: intialName,
-    kankorId: initailKankorId,
+    // kankorId: initailKankorId,
+    gender: initialGender,
     fatherName: initialFatherName,
     kankorMarks: initialKankorMarks,
     interanceDate: initailInteranceDate,
@@ -175,18 +235,14 @@ const StudentRegistraion = ({ history }) => {
     setDepartments(updatedData);
   };
 
-  const handleClick = (event) => {
-    setIsNext(event);
-  };
+  // const handleClick = (event) => {
+  //   setIsNext(event);
+  // };
 
-  const handleReload = () => {
-    // window.location.reload();
-    console.log('history', history.location.pathname);
-    // history.push('/app/teacher/teacher-list');
-  };
-
+  const updateMode = true;
   const onRegister = (values) => {
     console.log('values', values);
+    setIsNext(false);
 
     const data = {
       name: values.name1,
@@ -210,6 +266,7 @@ const StudentRegistraion = ({ history }) => {
       .post('http://localhost:8000/api/Create_kankorResults/', data)
       .then((response) => {
         console.log(response);
+        setIsNext(false);
       })
       .catch((error) => {
         console.log(error);
@@ -222,9 +279,6 @@ const StudentRegistraion = ({ history }) => {
     fetchDepartments();
   }, []);
 
-  // console.log('fields', fields);
-  // console.log('institutes', institutes);
-
   return (
     <>
       <Card>
@@ -234,6 +288,7 @@ const StudentRegistraion = ({ history }) => {
         <CardBody>
           {isNext ? (
             <Formik
+              enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onRegister}
               validationSchema={ValidationSchema}
@@ -261,15 +316,22 @@ const StudentRegistraion = ({ history }) => {
                         ) : null}
                       </FormGroup>
 
-                      {/*Father Name  */}
-                      <FormGroup className="form-group has-float-label error-l-175">
+                      {/* Gender */}
+                      <FormGroup className="form-group has-float-label error-l-100">
                         <Label>
-                          <IntlMessages id="forms.StdFatherName" />
+                          <IntlMessages id="gender.gender" />
                         </Label>
-                        <Field className="form-control" name="fatherName" />
-                        {errors.fatherName && touched.fatherName ? (
+                        <FormikReactSelect
+                          name="gender"
+                          id="gender"
+                          value={values.gender}
+                          options={genderOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {touched.gender && errors.gender ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.fatherName}
+                            {errors.gender}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -290,6 +352,7 @@ const StudentRegistraion = ({ history }) => {
                         {errors.institute && touched.institute ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.institute}
+                            {console.log(errors.institute, 'sdafhsakh')}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -337,8 +400,20 @@ const StudentRegistraion = ({ history }) => {
                     </Colxx>
 
                     <Colxx xxs="6">
-                      {/* Exam Id */}
+                      {/*Father Name  */}
                       <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.StdFatherName" />
+                        </Label>
+                        <Field className="form-control" name="fatherName" />
+                        {errors.fatherName && touched.fatherName ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.fatherName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.StdKankorIdLabel" />
                         </Label>
@@ -348,7 +423,7 @@ const StudentRegistraion = ({ history }) => {
                             {errors.kankorId}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
 
                       {/* Kankor Marks */}
                       <FormGroup className="form-group has-float-label error-l-175">
@@ -412,10 +487,9 @@ const StudentRegistraion = ({ history }) => {
                         className="float-right m-5"
                         size="lg"
                         type="submit"
-                        onClick={() => {
-                          onRegister;
-                          handleClick(false);
-                        }}
+                        // onClick={() => {
+                        //   handleClick(false);
+                        // }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -440,7 +514,11 @@ const StudentRegistraion = ({ history }) => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary" onClick={handleReload}>
+                <Button
+                  className="m-5 bg-primary"
+                  // onClick={() => window.location.reload()}
+                  onClick={() => setIsNext(true)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

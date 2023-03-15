@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
-import Register from './register';
+import Register from './students/bio/register';
 const Random = () => {
   return (
-    <NavLink to={'/app/students/register'} style={{ width: '10%' }}>
+    <NavLink to={'/app/students/register'}>
       <div>
         <Register />
       </div>

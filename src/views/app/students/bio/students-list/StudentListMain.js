@@ -39,15 +39,18 @@ const categories = [
 const genderOptions = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: 'ټول / همه',
   },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
+  {
+    column: '1',
+    label: <IntlMessages id="institute.studentgenderOption_1" />,
+  },
+  { column: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
 ];
 const provinces = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: 'ټول / همه',
   },
   {
     column: '1',
@@ -186,6 +189,16 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
+
+const shiftOption = [
+  {
+    column: 'all',
+    label: 'ټول / همه',
+  },
+  { column: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
+  { column: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+];
+
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -218,6 +231,14 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectedShiftOption, setSelectedShiftOption] = useState({
+    column: 'all',
+    label: 'وقت/ شفت',
+  });
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState({
+    column: 'all',
+    label: 'وقت/ شفت',
+  });
   useEffect(() => {
     setCurrentPage(1);
   }, [
@@ -225,6 +246,7 @@ const ThumbListPages = ({ match }) => {
     selectedOrderOption,
     selectedGenderOption,
     selectedProvinceOption,
+    selectedShiftOption,
   ]);
 
   useEffect(() => {
@@ -244,7 +266,8 @@ const ThumbListPages = ({ match }) => {
         setIsLoaded(true);
       } else if (
         selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
+        selectedGenderOption.column === 'all' &&
+        selectedShiftOption
       ) {
         if (rest == true) {
           setDistrict('');
@@ -347,8 +370,8 @@ const ThumbListPages = ({ match }) => {
   const fetchInstitutes = async () => {
     const response = await axios.get(instituteApiUrl);
     const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
+      value: item.id,
+      lable: item.name,
     }));
     setInstitutes(updatedData);
   };
@@ -467,6 +490,7 @@ const ThumbListPages = ({ match }) => {
           orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
+          // Gender
           changeGenderBy={(column) => {
             setSelectedGenderOption(
               genderOptions.find((x) => x.column === column)
@@ -479,13 +503,16 @@ const ThumbListPages = ({ match }) => {
           }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
+          selectedShiftOption={selectedShiftOption}
           genderOptions={genderOptions}
+          shiftOption={shiftOption}
           provinces={provinces}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
               setStudentId(e.target.value.toLowerCase());
             }
           }}
+          // Province
           onProvinceSearchKey={(e) => {
             if (e.key === 'Enter') {
               setProvince(e.target.value.toLowerCase());
@@ -500,6 +527,12 @@ const ThumbListPages = ({ match }) => {
           reset={rest}
           institutes={institutes}
           onInstituteSelect={setInstitute}
+          // Shift
+          changeShiftBy={(column) => {
+            setSelectedShiftOption(
+              shiftOption.find((x) => x.column === column)
+            );
+          }}
         />
         <table className="table">
           <thead

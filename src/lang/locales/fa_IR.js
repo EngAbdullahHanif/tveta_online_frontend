@@ -1518,6 +1518,7 @@ module.exports = {
   'inst.typeErr': 'د انستیتوت ډول اړین دی/ نوع انستیتوت ضروری است',
   'institute.gender': 'جندر اړین دی/ جنسیت ضروری است',
   'search.institute.name': 'د انستیتوت نوم ',
+  'search.department.name': 'د دیپارتمنت نوم ',
 
   'subject.name': 'د مضمون نوم / نام مضمون',
   'subject.english_name': 'د مضمون انگلیسی نوم / نام انگلیسی مضمون',

@@ -4,6 +4,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import { injectIntl } from 'react-intl';
 const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
   //   const { messages } = intl;
+  console.log(inst, 'institute Data');
   const [searchtext, setSearchtext] = useState('');
   const [suggest, setSuggest] = useState([]);
   const [resfound, setResfound] = useState(true);
@@ -59,7 +60,7 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
   };
   return (
     <>
-      <div className='searchDiv'>
+      <div className="searchDiv">
         <input
           type="text"
           placeholder={placeholder}

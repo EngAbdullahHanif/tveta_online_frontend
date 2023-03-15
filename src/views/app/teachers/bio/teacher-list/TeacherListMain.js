@@ -229,7 +229,7 @@ const ThumbListPages = ({ match }) => {
     async function fetchData() {
       if (institute !== '') {
         const res = await axios.get(
-          `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
+          `${teacherInstituteApiUrl}?institute_id=${institute.value}&page=${currentPage}&limit=${selectedPageSize}`
         );
         console.log('res', res.data);
         setInstituteTeachers(res.data);
@@ -337,8 +337,8 @@ const ThumbListPages = ({ match }) => {
   const fetchInstitutes = async () => {
     const response = await axios.get(instituteApiUrl);
     const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
+      value: item.id,
+      lable: item.name,
     }));
     setInstitutes(updatedData);
   };

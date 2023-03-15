@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key, react/no-danger */
 import React, { useState, useEffect, useRef } from 'react';
 import { Nav, NavItem, TabContent, TabPane } from 'reactstrap';
+import ReactCardCarousel from 'react-card-carousel';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { scroller } from 'react-scroll';
@@ -85,47 +86,47 @@ const slideSettings = {
 const slideItems = [
   {
     icon: 'iconsminds-mouse-3',
-    title: 'منوی کلیک راست',
+    title: 'اقتصاد او مدریت',
     detail:
       'برای این گذاشتیم که استفاده ی کامل و حداکثری از قالب بتونین داشته باشید',
   },
   {
-    icon: 'iconsminds-electric-guitar',
-    title: 'ویدئو پلیر',
+    icon: 'iconsminds-mouse-3',
+    title: 'علوم حیوانی و وترنری',
     detail: 'با پکیج Video.js کار میکنه و حتی از یوتیوب هم پشتیبانی میکنه',
   },
   {
-    icon: 'iconsminds-keyboard',
-    title: 'شورتکات صفحه کلید',
+    icon: 'iconsminds-mouse-3',
+    title: 'ادبیات او هنر',
     detail:
       'میانبر های صفحه کلید درست کردیم که هم قابل تنظیمه و هم ux برای کاربرهات بهتر میکنه',
   },
   {
-    icon: 'iconsminds-three-arrow-fork ',
-    title: 'منو با دوتا پنل',
+    icon: 'iconsminds-mouse-3',
+    title: 'تکنالوؤ',
     detail:
       'یه منو با سه تا مرحله، تا هرجا خواستی ازش استفاده کنی و حتی تو ریسپانسیو هم اذیتت نمیکنه',
   },
   {
-    icon: 'iconsminds-deer',
+    icon: 'iconsminds-mouse-3',
     title: 'پکیج آیکن Mind',
     detail:
       '1040 آیکن توی 53 تا مجموعه, طراحیش پیکسلی هست و توی پروژه برای شما قرار دادیم تا هرکدوم دلت خواست استفاده کنی',
   },
   {
-    icon: 'iconsminds-palette',
+    icon: 'iconsminds-mouse-3',
     title: '20 تا تم رنگی',
     detail:
       'رنگ ها، آیکن ها و طراحی هارمونی که توسط بهترین گرافیستهامون طراحی شدن',
   },
   {
-    icon: 'iconsminds-air-balloon-1',
+    icon: 'iconsminds-mouse-3',
     title: '3 اپلیکیشن کاربردی',
     detail:
       'برنامه هایی رو برات قرار دادیم که در زمان یه برنامه نویس بشدت صرفه جویی میکنه',
   },
   {
-    icon: 'iconsminds-resize',
+    icon: 'iconsminds-mouse-3',
     title: 'ریسپانسیو قوی و موبایلی',
     detail:
       'کلاسهای سفارشی بوت استرپ 4 xxs & xxl تجربه های بهتری را برای صفحات کوچک و بزرگ ارائه می دهد',
@@ -432,7 +433,62 @@ const Home = () => {
                     </ScrollAnimation>
                   </div>
                 </div>
-                {/* <ControlledCarousel /> */}
+              </div>
+            </div>
+            <div
+              className="CONTAINER_STYLE col-s-12 col-12  bg-primary"
+              style={{
+                position: 'relative',
+                marginBottom: '400px',
+                marginTop: '-500px',
+                // backgroundColor: 'important blue',
+              }}
+            >
+              <ReactCardCarousel
+                autoplay={true}
+                // spread={medium}
+                disable_box_shadow={true}
+                autoplay_speed={2500}
+              >
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE ">
+                    First Card <img src={CarPhoto15} />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE ">First Card</div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE ">First Card</div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE ">First Card</div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE ">First Card</div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE ">First Card</div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE ">First Card</div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE ">First Card</div>{' '}
+                </Card>
+              </ReactCardCarousel>
+            </div>
+
+            {/* 
+                <ControlledCarousel />
                 <div className="row ">
                   <div className="col-s-12 col-12  d-md-block">
                     <div className="home-carousel rounded ">
@@ -457,9 +513,7 @@ const Home = () => {
                       </GlideComponent>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                </div> */}
 
             <div className="section">
               <div className="container" id="goals">

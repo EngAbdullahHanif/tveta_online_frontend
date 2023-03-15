@@ -419,6 +419,8 @@ module.exports = {
   'button.TeacherBackround': 'Background',
   'button.Teacherprofile': 'profile',
   'button.back': 'Back',
+  'search.institute.name': 'institute name',
+  'search.department.name': 'department name',
 
   'button.states-text':
     'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',

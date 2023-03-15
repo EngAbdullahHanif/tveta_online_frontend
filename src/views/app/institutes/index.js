@@ -7,6 +7,12 @@ const InstituteList = React.lazy(() =>
     './institute-list/InstituteListMain'
   )
 );
+const PromotionDemotionList = React.lazy(() =>
+  import(
+    // /* webpackChunkName: "institue-list" */ './bio/institute-list/InstituteListMain'
+    './promotion-demotion-list/PromotionDemortionListMain'
+  )
+);
 const InstituteRegister = React.lazy(() => import('./institute-register.js'));
 
 const InstitueCreate = React.lazy(() =>
@@ -25,6 +31,10 @@ const Institues = ({ match }) => (
       <Route
         path={`${match.url}/institutes`}
         render={(props) => <InstituteList {...props} />}
+      />
+         <Route
+        path={`${match.url}/promotion-demotion-list`}
+        render={(props) => <PromotionDemotionList {...props} />}
       />
 
       <Route

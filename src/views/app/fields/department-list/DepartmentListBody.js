@@ -6,7 +6,7 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const DepartmentListBody = ({ department, isSelect, collect, onCheckItem }) => {
-  console.log('inside body', department)
+  console.log('inside body', department);
   return (
     <Colxx xxs="12" key={department.id} className="mt-2">
       <ContextMenuTrigger id="menu_id" data={department.id} collect={collect}>
@@ -21,18 +21,23 @@ const DepartmentListBody = ({ department, isSelect, collect, onCheckItem }) => {
             style={{ maxHeight: '50px', width: '100%' }}
           >
             <div
-              className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`departments/${department.id}`} style={{ width: '25%' }}>
-                <p className="list-item-heading mb-1 truncate">{department.id}</p>
+              <NavLink
+                to={`departments/${department.id}`}
+                style={{ width: '25%' }}
+              >
+                <p className="list-item-heading mb-1 truncate">
+                  {department.id}
+                </p>
               </NavLink>
-             
+
               <p
                 className="mb-1 text-small"
                 style={{ width: '26%', textAlign: 'right' }}
               >
-              {department.filed.name}
+                {department.filed.name}
               </p>
               <p
                 className="mb-1 text-small"
@@ -46,7 +51,6 @@ const DepartmentListBody = ({ department, isSelect, collect, onCheckItem }) => {
               >
                 {department.english_name}
               </p>
-             
             </div>
           </div>
         </Card>

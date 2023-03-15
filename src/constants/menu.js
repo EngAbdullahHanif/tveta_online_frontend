@@ -28,6 +28,18 @@ const data = [
       },
 
       {
+        icon: 'CG.CgUserList',
+        label: 'Dismissed-Students',
+        to: `${adminRoot}/students/dismissed-list`,
+        // roles: [UserRole.Admin],
+      },
+      {
+        icon: 'CG.CgUserList',
+        label: 'Transfered-Students',
+        to: `${adminRoot}/students/transfered-list`,
+        // roles: [UserRole.Admin],
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
         to: `${adminRoot}/students/marks-register`,
@@ -42,6 +54,11 @@ const data = [
       //   label: 'menu.student-profile',
       //   to: `${adminRoot}/students/student-profile`,
       // },
+      {
+        icon: 'FA.FaList',
+        label: 'Attendance-List',
+        to: `${adminRoot}/students/attendance-list`,
+      },
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'menu.student-transfer',
@@ -170,6 +187,11 @@ const data = [
         to: `${adminRoot}/institutes/institute-upgrade`,
       },
       {
+        icon: 'FA.FaList',
+        label: 'promotion-demotion-list',
+        to: `${adminRoot}/institutes/promotion-demotion-list`,
+      },
+      {
         icon: 'BI.BiMessageAltDetail',
         label: 'menu.Institute-details',
         to: `${adminRoot}/institutes/institute-details`,
@@ -260,13 +282,13 @@ const data = [
     subs: [
       {
         icon: 'MD.MdAddBox',
-        label: 'class.list',
-        to: `${adminRoot}/classes/classes`,
+        label: 'class.register',
+        to: `${adminRoot}/classes/register`,
       },
       {
         icon: 'FA.FaList',
-        label: 'class.register',
-        to: `${adminRoot}/classes/register`,
+        label: 'class.list',
+        to: `${adminRoot}/classes/classes`,
       },
     ],
   },

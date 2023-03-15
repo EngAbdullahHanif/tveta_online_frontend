@@ -1012,6 +1012,13 @@ module.exports = {
   'forms.NoData': 'پورتنۍ آیډي شتون نه لري/ آیدی فوق در سیستم موجود نیست',
   'forms.StudentResidentsPlace': 'د شاګرد استوګنځی/ محل بود و باش شاگرد',
 
+  studentNameErr: 'نام لازم است',
+  presentErr: 'حاضری لازم است',
+  absentErr: 'غیر حاضری لازم است',
+  holidaysErr: 'رخصتی لازم است',
+  sicknessErr: 'مریضی لازم است',
+  educationalDaysErr: 'سال تعلیمی لازم است',
+
   // Teacher Evaluation
   'teacher.EvalautionTitle': 'د استاد ارزونه/ ارزیابی استاد',
   'teacher.EvalautionTitle1':

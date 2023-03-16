@@ -22,9 +22,18 @@ import CarPhoto13 from '../assets/img/blog/13.png';
 import CarPhoto14 from '../assets/img/blog/14.png';
 import RahimiPhoto from '../assets/img/blog/Rahimi.jpg';
 import Carousel from 'react-grid-carousel';
+import CS_Sector from '../assets/img/sectors/CS.jpg';
+import SpecialEducationSector from '../assets/img/sectors/Special_Education.png';
+import Economic_Sector from '../assets/img/sectors/Economic.jpg';
+import Agriculture_Sector from '../assets/img/sectors/agriculture.jfif';
+import literature_sector from '../assets/img/sectors/literature.jpg';
+import OilAndGas_Sector from '../assets/img/sectors/oil_gas.jpeg';
+import civil_Eng from '../assets/img/sectors/civil_Engineering.jpg';
+import Industerial from '../assets/img/sectors/Industerial.jpg';
 import IndividualIntervalsExample from './carousel';
 import DemoCarousel from './../views/app/subjects/draftFileJustForTest';
 import ScrollAnimation from 'react-animate-on-scroll';
+import IntlMessages from 'helpers/IntlMessages';
 import './carousel.css';
 import {
   Row,
@@ -401,7 +410,7 @@ const Home = () => {
                         <a
                           className="btn btn-light btn-xl mr-2 mb-2 mt-5"
                           href={'/user/login'}
-                                                  >
+                        >
                           ننوتل/ورود <i className="simple-icon-arrow-right" />
                         </a>
                       </div>
@@ -447,41 +456,153 @@ const Home = () => {
                 autoplay={true}
                 // spread={medium}
                 disable_box_shadow={true}
-                autoplay_speed={2500}
+                autoplay_speed={3000}
               >
                 <Card>
                   {' '}
                   <div className="CARD_STYLE ">
-                    First Card <img src={CarPhoto15} />
+                    <IntlMessages id="dash.sectorType_1" />
+                    <img
+                      src={SpecialEducationSector}
+                      style={{
+                        width: '400px',
+                        height: '210px',
+                        padding: '15px',
+                        borderRadius: '30px',
+                      }}
+                    />
                   </div>{' '}
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">First Card</div>{' '}
+                  <div className="CARD_STYLE ">
+                    <IntlMessages id="dash.sectorType_2" />
+                    <img
+                      src={Economic_Sector}
+                      style={{
+                        width: '400px',
+                        height: '235px',
+                        padding: '15px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">First Card</div>{' '}
+                  <div className="CARD_STYLE ">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_3" />
+                    <img
+                      src={Agriculture_Sector}
+                      style={{
+                        width: '400px',
+                        height: '235px',
+                        padding: '15px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">First Card</div>{' '}
+                  <div className="CARD_STYLE ">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_4" />
+                    <img
+                      src={literature_sector}
+                      style={{
+                        width: '400px',
+                        height: '235px',
+                        padding: '15px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">First Card</div>{' '}
+                  <div className="CARD_STYLE ">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_5" />
+                    <img
+                      src={CS_Sector}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">First Card</div>{' '}
+                  <div className="CARD_STYLE ">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_6" />
+                    <img
+                      src={OilAndGas_Sector}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        height: '235px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">First Card</div>{' '}
+                  <div className="CARD_STYLE ">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_7" />
+                    <img
+                      src={civil_Eng}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        height: '235px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">First Card</div>{' '}
+                  <div className="CARD_STYLE ">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_8" />
+                    <img
+                      src={civil_Eng}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        height: '235px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE ">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_9" />
+                    <img
+                      src={Industerial}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        height: '235px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
                 </Card>
               </ReactCardCarousel>
             </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import logo from '../../assets/img/logo2.png';
 import { Formik, Form, Field } from 'formik';
 import { NotificationManager } from 'components/common/react-notifications';
 
@@ -13,9 +13,9 @@ import { loginUser } from 'redux/actions';
 const validatePassword = (value) => {
   let error;
   if (!value) {
-    error = 'لطفا رمزت رو وارد کن';
-  } else if (value.length < 4) {
-    error = 'باید بیشتر از 3 کاراکتر باشد';
+    error = <IntlMessages id="login.passwordErr" />;
+  } else if (value.length < 6) {
+    error = <IntlMessages id="login.passwordErr-1" />;
   }
   return error;
 };
@@ -23,9 +23,9 @@ const validatePassword = (value) => {
 const validateEmail = (value) => {
   let error;
   if (!value) {
-    error = 'لطفا پست الکترونیکی خودتو وارد کن';
+    error = <IntlMessages id="login.email-addressErr" />;
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = 'ایمیل که وارد کردی نامعتبره';
+    error = <IntlMessages id="login.email-addressErr-1" />;
   }
   return error;
 };
@@ -37,8 +37,9 @@ const Login = ({ history, loading, error, loginUserAction }) => {
   useEffect(() => {
     if (error) {
       NotificationManager.error(
-        "دوباره کوشش کنید",
-        'یوزر یا پسورد اشتباهست',
+        <IntlMessages id="login.wrong-credintialErr" />,
+        <IntlMessages id="login.wrong-credintialErr-1" />,
+
         9000,
         null,
         null,
@@ -62,7 +63,12 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       <Colxx xxs="12" md="10" className="mx-auto my-auto m-all-outo">
         <Card className="auth-card">
           <div className="position-relative image-side ">
-            <p className="text-white h2">جادوی کاره مارو توی جزئیاتش ببین</p>
+            <NavLink to="/" className="white">
+              <img src={logo} alt="Logo" />
+            </NavLink>
+            <p className="text-white h2">
+              برای استفاده از سیستم شما نیاز به ورود دارید
+            </p>
             <p className="white mb-0">
               برای ورود به سیستم نام کاربری و رمز خود را وارد کنید
               <br />
@@ -74,19 +80,14 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             </p>
           </div>
           <div className="form-side">
-            <NavLink to="/" className="white">
-              <span className="logo-single" />
-            </NavLink>
             <CardTitle className="mb-4">
-              {error && <div className="alert alert-danger">
-              <h2>
-                {"یوزر یا پسورد اشتباهست"}
-              </h2>
-                
-              <h6>
-                {"دوباره کوشش کنید"}
-              </h6>
-                </div>}
+              {error && (
+                <div className="alert alert-danger">
+                  <h2>{'یوزر یا پسورد اشتباهست'}</h2>
+
+                  <h6>{'دوباره کوشش کنید'}</h6>
+                </div>
+              )}
               <IntlMessages id="user.login-title" />
             </CardTitle>
 
@@ -124,27 +125,32 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       </div>
                     )}
                   </FormGroup>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <NavLink to="/user/forgot-password">
+                  {/* <div className="d-flex justify-content-between align-items-center"> */}
+                    {/* <NavLink to="/user/forgot-password">
                       <IntlMessages id="user.forgot-password-question" />
-                    </NavLink>
-                    <Button
-                      color="primary"
-                      className={`btn-shadow btn-multiple-state ${
-                        loading ? 'show-spinner' : ''
-                      }`}
-                      size="lg"
-                    >
-                      <span className="spinner d-inline-block">
-                        <span className="bounce1" />
-                        <span className="bounce2" />
-                        <span className="bounce3" />
-                      </span>
-                      <span className="label">
-                        <IntlMessages id="user.login-button" />
-                      </span>
-                    </Button>
-                  </div>
+                    </NavLink> */}
+                    <Row>
+                      <Colxx className="text-left">
+                        {' '}
+                        <Button
+                          color="primary"
+                          className={`btn-shadow btn-multiple-state ${
+                            loading ? 'show-spinner' : ''
+                          }`}
+                          size="lg"
+                        >
+                          <span className="spinner d-inline-block">
+                            <span className="bounce1" />
+                            <span className="bounce2" />
+                            <span className="bounce3" />
+                          </span>
+                          <span className="label">
+                            <IntlMessages id="user.login-button" />
+                          </span>
+                        </Button>
+                      </Colxx>
+                    </Row>
+                  {/* </div> */}
                 </Form>
               )}
             </Formik>

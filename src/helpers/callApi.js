@@ -25,10 +25,9 @@ const callApi = async (endpoint, method = 'get', data = null) => {
       headers,
       data,
     });
-    // console.log('response of callApi', response)
+    console.log('response of callApi', response);
     return response;
   } catch (error) {
-    console.error(error);
     return error.response.data;
   }
 };

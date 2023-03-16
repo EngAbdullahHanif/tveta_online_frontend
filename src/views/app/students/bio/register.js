@@ -684,7 +684,7 @@ const StudentRegistration = ({ intl }, values) => {
 
   // fetch institute lists
   const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
+    const response = await callApi('institute/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -696,9 +696,9 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  // fetch field list
+  // fetch fields
   const fetchFields = async () => {
-    const response = await callApi('institute/field/', '', null);
+    const response = await callApi('institute/field/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -712,7 +712,7 @@ const StudentRegistration = ({ intl }, values) => {
 
   // fetch department list
   const fetchDepartments = async () => {
-    const response = await callApi('institute/department/', '', null);
+    const response = await callApi('institute/department/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -726,7 +726,7 @@ const StudentRegistration = ({ intl }, values) => {
 
   //fetch class list
   const fetchClasses = async () => {
-    const response = await callApi('/institute/classs/', '', null);
+    const response = await callApi('institute/classs/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -740,7 +740,7 @@ const StudentRegistration = ({ intl }, values) => {
 
   //fetch sector list
   const fetchSectors = async () => {
-    const response = await callApi('/institute/sectors/', '', null);
+    const response = await callApi('institute/sectors/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -761,24 +761,6 @@ const StudentRegistration = ({ intl }, values) => {
       console.log('class error');
     }
   };
-
-  // console.log('institue list', institutes);
-  // console.log('class list', classs);
-  // console.log('fields list', fieldList);
-  // console.log('department list', departments);
-  // console.log('sector list', sectors);
-  // const fetchSubjects = async () => {
-  //   const response = await callApi('/institute/subject/', '', null);
-  //   if (response.data && response.status === 200) {
-  //     const updatedData = await response.data.map((item) => ({
-  //       value: item.id,
-  //       label: item.name,
-  //     }));
-  //     setSubjects(updatedData);
-  //   } else {
-  //     console.log('subject error');
-  //   }
-  // };
 
   useEffect(() => {
     fetchInstitutes();
@@ -887,62 +869,97 @@ const StudentRegistration = ({ intl }, values) => {
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
-          console.log(newFields, 'Final Values');
+          // console.log(newFields, 'Final Values');
 
           const data = {
             // personal info
-            name: newFields.name1,
-            kankor_id: newFields.kankorId,
-            // finished_grade_year: +newFields.graduationYear,
-            finished_grade_year: '2012',
-            school: newFields.preSchool,
-            schoolـprovince: newFields.schoolProvince.value,
-            // graduat_14_types: grade14Type,
-            // graduat_12_types: grade12Type,
-            finished_grade: newFields.levelOfEducation.value,
-            student_type: newFields.studentType.value,
-            english_name: newFields.englishName,
-            last_name: newFields.lastName,
-            english_last_name: newFields.lastNameEng,
-            father_name: newFields.fatherName,
-            english_father_name: newFields.fatherEngName,
-            phone_number: newFields.phoneNo,
-            email: newFields.email,
-            grand_father_name: newFields.grandFatherName,
-            cover_number: newFields.idCardJoldNo,
-            page_number: newFields.idCardPageNo,
-            registration_number: newFields.tazkiraNo,
-            sukuk_number: newFields.tazkiraNo,
-            main_province: newFields.province.value,
-            main_district: newFields.district,
-            main_village: newFields.village,
-            current_province: newFields.C_Province.value,
-            current_district: newFields.C_District,
-            current_village: newFields.C_Village,
-            birth_date: newFields.DoB,
-            fatherـprofession: newFields.fatherDuty,
-            fatherـplaceـofـduty: newFields.fatherDutyLocation,
-            internse_type: newFields.interanceType.value,
-            students_status: newFields.interanceType.value,
-            gender: newFields.gender.value,
-            student_photo: newFields.photo,
-
-            // institue info
-            institute: newFields.institute.value,
-            educational_year: newFields.educationalYear.value,
+            // name: newFields.name1,
+            // kankor_id: newFields.kankorId,
+            // finished_grade_year: '1990',
+            // school: newFields.preSchool,
+            // schoolـprovince: newFields.schoolProvince.value,
+            // finished_grade: newFields.levelOfEducation.value.toString(10),
+            // student_type: newFields.studentType.value,
+            // english_name: newFields.englishName,
+            // last_name: newFields.lastName,
+            // english_last_name: newFields.lastNameEng,
+            // father_name: newFields.fatherName,
+            // english_father_name: newFields.fatherEngName,
+            // phone_number: newFields.phoneNo.toString(10),
+            // email: newFields.email,
+            // grand_father_name: newFields.grandFatherName,
+            // cover_number: newFields.idCardJoldNo,
+            // page_number: newFields.idCardPageNo,
+            // registration_number: newFields.tazkiraNo.toString(10),
+            // sukuk_number: newFields.tazkiraNo.toString(10),
+            // main_province: newFields.province.value,
+            // main_district: newFields.district,
+            // main_village: newFields.village,
+            // current_province: newFields.C_Province.value,
+            // current_district: newFields.C_District,
+            // current_village: newFields.C_Village,
+            // birth_date: newFields.DoB,
+            // fatherـprofession: newFields.fatherDuty,
+            // fatherـplaceـofـduty: newFields.fatherDutyLocation,
+            // internse_type: newFields.interanceType.value,
+            // //students_status: newFields.interanceType.value,
+            // gender: newFields.gender.value,
+            // //student_photo: newFields.photo,// institue info
+            // institute: newFields.institute.value.toString(10),
+            // educational_year: newFields.educationalYear.value,
+            // type: '1',
+            // language: newFields.mediumOfInstruction.value,
+            // time: newFields.studyTime.value,
+            // // is_transfer: '1',// fields info
+            // department_id: newFields.department.value.toString(10),
+            // field: newFields.field.value.toString(10), //sector: newFields.sector.value.toString(10),
+            // sector: '1',
+            // batch: newFields.batch.value.toString(10), //student class info,
+            // class_id: newFields.class.value.toString(10),
+            // place_of_birth: 'jalalabad',
+            // user_id: '1',
+            kankor_id: '22',
+            name: 'dfgdfsdfsfdsfdsfdsfgfdg',
+            english_name: 'lksd',
+            last_name: 'ldkfj',
+            english_last_name: 'dlkjf',
+            father_name: 'dklfjds',
+            english_father_name: 'dlfkjds',
+            phone_number: '1231',
+            email: 'man@man.com',
+            grand_father_name: 'lsdkjfds',
+            cover_number: '11',
+            page_number: '23',
+            registration_number: '2323',
+            sukuk_number: '2323',
+            main_province: 'lsdkfj',
+            main_district: 'dlkfj',
+            main_village: 'lsdkfj',
+            current_province: 'lsdkjf',
+            current_district: 'lsdkfj',
+            current_village: 'lsdkfj',
+            birth_date: '2023-03-13',
+            place_of_birth: 'sdfasfdsf',
+            fatherـprofession: 'dslfkj',
+            fatherـplaceـofـduty: 'sldkfj',
+            finished_grade: 'ldkfj',
+            finished_grade_year: '1212',
+            school: 'lsdkfj',
+            schoolـprovince: 'lskdfj',
+            student_type: '1',
+            internse_type: '1',
+            gender: '2',
+            user_id: '1',
+            class_id: '3',
+            educational_year: '2002',
             type: '1',
-            language: newFields.mediumOfInstruction.value,
-            time: newFields.studyTime.value,
-            is_transfer: '1',
-
-            // fields info
-            department_id: newFields.department.value,
-            field: newFields.field.value,
-            sector: newFields.sector.value,
-            batch: newFields.batch.value,
-
-            //student class info,
-            class_id: newFields.class.value,
+            institute: '1',
+            language: '2',
+            time: '3',
+            department_id: '2',
+            field: '2',
+            sector: '2',
+            batch: '2',
           };
 
           console.log('the form data is converted to object', data);

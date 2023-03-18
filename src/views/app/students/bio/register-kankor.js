@@ -278,7 +278,7 @@ const StudentRegistraion = ({ history }) => {
   });
 
   const { kankorStudentId } = useParams();
-  //console.log(kankorStudentId);
+  console.log(kankorStudentId);
   if (kankorStudentId) {
     useEffect(() => {
       async function fetchStudent() {

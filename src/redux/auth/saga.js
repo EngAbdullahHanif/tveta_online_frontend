@@ -56,6 +56,7 @@ function loginWithEmailPassword(username, password) {
     axios
       .post('http://localhost:8000/user/logins/', { username, password })
       .then((response) => {
+        console.log('response', response.data)
         return response.data;
       })
       .catch((error) => {
@@ -67,10 +68,12 @@ function loginWithEmailPassword(username, password) {
 }
 
 export function* loginWithEmailPasswordAsync(action) {
-  const { email, password } = action.payload.user;
+  const { username, password } = action.payload.user;
   const { history } = action.payload;
+  console.log('username, password, history', username, password, history)
   try {
-    const data = yield call(loginWithEmailPassword, email, password);
+    const data = yield call(loginWithEmailPassword, username, password);
+    console.log('data', data)
     if(data){
       localStorage.setItem('access_token', data.token.access);
       localStorage.setItem('refresh_token', data.token.refresh);

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import axios from 'axios';
+import callApi from 'helpers/callApi';
+
 
 import * as Yup from 'yup';
 import {
@@ -13,6 +15,9 @@ import {
   Label,
   Button,
   CardTitle,
+  InputGroup,
+  InputGroupAddon,
+  CustomInput,
   Input,
 } from 'reactstrap';
 import Select from 'react-select';
@@ -65,6 +70,7 @@ const initialValues = {
   code: '',
   credit: '',
   type: [],
+  studetn_photo: '',
   systemType: [],
 };
 
@@ -77,33 +83,42 @@ const SubjectRegister = () => {
     // HANIF BROTHER DONT FORGET TO DISPLAY THE SUCCESS MESSAGE AFTER SUBMISSION
     // setIsNext(event);
   };
-  const onRegister = (values) => {
-    console.log('values', values);
 
-    const data = {
-      name: values.name1,
-      english_name: values.englishName,
-      code: values.code,
-      credits: values.credit,
-      type: values.type.value,
-      system_type: values.systemType.value,
-    };
-    console.log('data', data);
-    axios
-      .post('http://localhost:8000/institute/subject/', data)
-      .then((response) => {
-        console.log(response);
-        console.log('data sent to the server2');
-      })
-      .catch((error) => {
-        console.log('data sent to the server4');
-        console.log(error);
-      });
+  const onRegister = async (values) => {
+    const formData = new FormData();
+    formData.append('name', values.name1);
+    formData.append('english_name', values.englishName);
+    formData.append('code', values.code);
+    formData.append('sub_credit', values.credit);
+    formData.append('sub_type', values.type.value);
+    formData.append('system', values.systemType.value);
+    formData.append('studetn_photo', values.studetn_photo);
+    formData.append('user_id', 1);
 
-    if (!loading) {
-      // if (values.email !== '' && values.password !== '') {
-      //   loginUserAction(values, history);
-      // }
+    console.log('student photo', values);
+
+    // const reader = new FileReader();
+    // reader.readAsArrayBuffer(values.studetn_photo);
+
+    // reader.onload = function() {
+    //   const fileContent = reader.result;
+    //   const file = new Blob([fileContent], { type: values.studetn_photo.type });
+    //   const formData = new FormData();
+    //   formData.append('name', values.name);
+    //   formData.append('studetn_photo', file);
+    // }
+    // const file = values.studetn_photo
+    // // console.log('file', file)
+    // const blob  = new Blob([file], { type: 'image/png' });
+    // console.log("blob", blob)
+    // formData.append('studetn_photo', blob );
+
+    const response = await callApi('institute/subject_create/', 'POST', formData);
+    console.log('response of tthe', response);
+    if (response.data) {
+      console.log('data sent to the server2');
+    } else {
+      console.log('data not sent to the server3');
     }
   };
   return (
@@ -228,6 +243,44 @@ const SubjectRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
+
+                       {/* Upload Photo */}
+                       {/* <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="subject.credits" />
+                        </Label>
+                        <Field
+                          type="file"
+                          className="form-control"
+                          name="studetn_photo"
+                          accept="image/*"
+                        />
+                        {errors.studetn_photo && touched.studetn_photo && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.studetn_photo}
+                          </div>
+                        )}
+                      </FormGroup> */}
+
+
+                            <FormGroup>
+                               
+                                <InputGroup className="mb-3">
+                                  <InputGroupAddon addonType="prepend">
+                                    آپلود عکس
+                                  </InputGroupAddon>
+                                  <CustomInput
+                                    type="file"
+                                    id="studetn_photo"
+                                    name="studetn_photo"
+                                  />
+                                </InputGroup>
+                                {errors.studetn_photo && touched.studetn_photo ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                    {errors.studetn_photo}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
                     </Colxx>
                   </Row>
                   <Row>

@@ -48,9 +48,9 @@ const Login = ({ history, loading, error, loginUserAction }) => {
   }, [error]);
 
   const onUserLogin = (values) => {
+    loginUserAction(values, history);
     if (!loading) {
       if (values.email !== '' && values.password !== '') {
-        loginUserAction(values, history);
       }
     }
   };
@@ -99,12 +99,12 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                     </Label>
                     <Field
                       className="form-control"
-                      name="email"
-                      validate={validateEmail}
+                      name="username"
+                      // validate={validateEmail}
                     />
-                    {errors.email && touched.email && (
+                    {errors.username && touched.username && (
                       <div className="invalid-feedback d-block">
-                        {errors.email}
+                        {errors.username}
                       </div>
                     )}
                   </FormGroup>

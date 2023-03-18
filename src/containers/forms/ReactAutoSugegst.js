@@ -3,7 +3,11 @@ import { injectIntl } from 'react-intl';
 import Search from './search';
 
 const ReactAutoSugegstExample = ({ intl, data, select, placeholder }) => {
-  var result = data.map((a) => a.label);
+  if (data) {
+    var result = data.map((a) => a.label);
+  } else {
+    result = [];
+  }
 
   // var result = ''
 

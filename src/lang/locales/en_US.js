@@ -258,6 +258,7 @@ module.exports = {
   'dashboards.keyword': 'Keyword',
   'dashboards.search': 'Search',
   'dashboards.top-rated-items': 'Top Rated Items',
+  'option.all': 'All',
 
   /* 05.Pages */
   'pages.add-new': 'ADD NEW',
@@ -451,6 +452,7 @@ module.exports = {
   'button.back': 'Back',
   'search.institute.name': 'institute name',
   'search.department.name': 'department name',
+  'user.email-Id': 'Username Id/Email',
 
   'button.states-text':
     'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',

@@ -460,7 +460,7 @@ const Home = () => {
               >
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">
+                  <div className="CARD_STYLE text-muted">
                     <IntlMessages id="dash.sectorType_1" />
                     <img
                       src={SpecialEducationSector}
@@ -475,7 +475,7 @@ const Home = () => {
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">
+                  <div className="CARD_STYLE text-muted">
                     <IntlMessages id="dash.sectorType_2" />
                     <img
                       src={Economic_Sector}
@@ -490,7 +490,7 @@ const Home = () => {
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">
+                  <div className="CARD_STYLE text-muted">
                     {' '}
                     <IntlMessages id="dash.sectorType_3" />
                     <img
@@ -506,7 +506,7 @@ const Home = () => {
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">
+                  <div className="CARD_STYLE text-muted">
                     {' '}
                     <IntlMessages id="dash.sectorType_4" />
                     <img
@@ -522,7 +522,7 @@ const Home = () => {
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">
+                  <div className="CARD_STYLE text-muted">
                     {' '}
                     <IntlMessages id="dash.sectorType_5" />
                     <img
@@ -538,7 +538,7 @@ const Home = () => {
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">
+                  <div className="CARD_STYLE text-muted">
                     {' '}
                     <IntlMessages id="dash.sectorType_6" />
                     <img
@@ -555,7 +555,7 @@ const Home = () => {
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">
+                  <div className="CARD_STYLE text-muted">
                     {' '}
                     <IntlMessages id="dash.sectorType_7" />
                     <img
@@ -572,7 +572,7 @@ const Home = () => {
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">
+                  <div className="CARD_STYLE text-muted">
                     {' '}
                     <IntlMessages id="dash.sectorType_8" />
                     <img
@@ -589,7 +589,7 @@ const Home = () => {
                 </Card>
                 <Card>
                   {' '}
-                  <div className="CARD_STYLE ">
+                  <div className="CARD_STYLE text-muted">
                     {' '}
                     <IntlMessages id="dash.sectorType_9" />
                     <img

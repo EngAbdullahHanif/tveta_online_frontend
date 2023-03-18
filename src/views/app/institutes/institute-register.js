@@ -62,7 +62,7 @@ const InstituteRegister = () => {
 
   const [initialGender, setInitialGender] = useState([]);
 
-  const [isNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(false);
   const [province, setProvince] = useState({});
   const [instType, setInstType] = useState({});
   const [gender, setGender] = useState({});
@@ -136,11 +136,10 @@ const InstituteRegister = () => {
       : null,
   });
 
-  const handleClick = (event) => {
-    // setIsNext(event);
-  };
-
-  const onRegister = (values) => {
+  const onRegister = (values, { resetForm }) => {
+    console.log(values, 'Values ');
+    resetForm();
+    setIsNext(true);
     // if (!values.province || values.province.value === '0') {
     //   return;
     // }
@@ -187,7 +186,7 @@ const InstituteRegister = () => {
           {<IntlMessages id="inst.register.title" />}
         </h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               enableReinitialize={true}
               validateOnMount
@@ -208,6 +207,7 @@ const InstituteRegister = () => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right  error-l-200">
                   <Row className="justify-content-center">
@@ -311,9 +311,6 @@ const InstituteRegister = () => {
                           size="lg"
                           type="submit"
                           color="primary"
-                          onClick={() => {
-                            handleClick(false);
-                          }}
                         >
                           <span className="spinner d-inline-block ">
                             <span className="bounce1" />
@@ -342,7 +339,10 @@ const InstituteRegister = () => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

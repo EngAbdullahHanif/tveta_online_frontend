@@ -39,7 +39,7 @@ const categories = [
 const genderOptions = [
   {
     column: 'all',
-    label: 'ټول / همه',
+    label: <IntlMessages id="option.all" />,
   },
   {
     column: '1',
@@ -50,7 +50,7 @@ const genderOptions = [
 const provinces = [
   {
     column: 'all',
-    label: 'ټول / همه',
+    label: <IntlMessages id="option.all" />,
   },
   {
     column: '1',
@@ -193,10 +193,76 @@ const provinces = [
 const shiftOption = [
   {
     column: 'all',
-    label: 'ټول / همه',
+    label: <IntlMessages id="option.all" />,
   },
+
   { column: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { column: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+];
+const educationYears = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
+  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
+  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
+  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
+  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
+  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
+  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
+  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
+  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
+  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
+  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
+  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
+  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
+  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
+  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
+  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
+  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
+  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
+  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
+  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
+  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
+  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
+  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
+  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
+  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
+  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
+  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
+  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
+  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
+  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
+  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
+  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
+  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
+  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+];
+
+const levelOfEdcation = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  {
+    value: '14th',
+    label: <IntlMessages id="teacher.EducationLevelOption_1" />,
+  },
+  {
+    value: 'bachelor',
+    label: <IntlMessages id="teacher.EducationLevelOption_2" />,
+  },
+  {
+    value: 'master',
+    label: <IntlMessages id="teacher.EducationLevelOption_3" />,
+  },
+  {
+    value: 'PHD',
+    label: <IntlMessages id="teacher.EducationLevelOption_4" />,
+  },
 ];
 
 const ThumbListPages = ({ match }) => {
@@ -235,10 +301,16 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'وقت/ شفت',
   });
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState({
-    column: 'all',
-    label: 'وقت/ شفت',
-  });
+  const [selectedEducationalYearOption, seSelectedEducationalYearOption] =
+    useState({
+      column: 'all',
+      label: 'سال تعلیمی',
+    });
+  const [selectLevelOfEducationOption, setSelectLevelOfEducationOption] =
+    useState({
+      column: 'all',
+      label: 'سطح تحصیلی',
+    });
   useEffect(() => {
     setCurrentPage(1);
   }, [
@@ -247,6 +319,8 @@ const ThumbListPages = ({ match }) => {
     selectedGenderOption,
     selectedProvinceOption,
     selectedShiftOption,
+    selectedEducationalYearOption,
+    selectLevelOfEducationOption,
   ]);
 
   useEffect(() => {
@@ -371,7 +445,7 @@ const ThumbListPages = ({ match }) => {
     const response = await axios.get(instituteApiUrl);
     const updatedData = await response.data.map((item) => ({
       value: item.id,
-      lable: item.name,
+      label: item.name,
     }));
     setInstitutes(updatedData);
   };
@@ -461,6 +535,7 @@ const ThumbListPages = ({ match }) => {
   ) : (
     <>
       <div className="disable-text-selection">
+        {/* This is he */}
         <ListPageHeading
           heading="د شاگرد لست/لست شاگردان"
           // Using display mode we can change the display of the list.
@@ -502,6 +577,8 @@ const ThumbListPages = ({ match }) => {
             );
           }}
           selectedGenderOption={selectedGenderOption}
+          selectedEducationalYearOption={selectedEducationalYearOption}
+          selectLevelOfEducationOption={selectLevelOfEducationOption}
           selectedProvinceOption={selectedProvinceOption}
           selectedShiftOption={selectedShiftOption}
           genderOptions={genderOptions}
@@ -518,6 +595,7 @@ const ThumbListPages = ({ match }) => {
               setProvince(e.target.value.toLowerCase());
             }
           }}
+          // District
           onDistrictSearchKey={(e) => {
             if (e.key === 'Enter') {
               setDistrict(e.target.value.toLowerCase());
@@ -533,6 +611,20 @@ const ThumbListPages = ({ match }) => {
               shiftOption.find((x) => x.column === column)
             );
           }}
+          // Educational Year
+          changeEducationalYearBy={(column) => {
+            seSelectedEducationalYearOption(
+              educationYears.find((x) => x.column === column)
+            );
+          }}
+          educationYears={educationYears}
+          // Level of Education
+          changeLevelOfEducationBy={(column) => {
+            setSelectLevelOfEducationOption(
+              levelOfEdcation.find((x) => x.column === column)
+            );
+          }}
+          levelOfEdcation={levelOfEdcation}
         />
         <table className="table">
           <thead

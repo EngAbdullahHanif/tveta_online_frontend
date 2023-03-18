@@ -63,17 +63,15 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       <Colxx xxs="12" md="10" className="mx-auto my-auto m-all-outo">
         <Card className="auth-card">
           <div className="position-relative image-side ">
-            <NavLink to="/" className="white">
+            <NavLink to="/" className="">
               <img src={logo} alt="Logo" />
             </NavLink>
-            <p className="text-white h2">
-              برای استفاده از سیستم شما نیاز به ورود دارید
-            </p>
-            <p className="white mb-0">
+            <p className=" h2 ">برای استفاده از سیستم شما نیاز به ورود دارید</p>
+            <p className=" mb-0">
               برای ورود به سیستم نام کاربری و رمز خود را وارد کنید
               <br />
               اگه حساب کاربری نداری نگران نباش، از{' '}
-              <NavLink to="/user/register" className="white">
+              <NavLink to="/user/register" className="">
                 اینجا
               </NavLink>{' '}
               میتونی تو سایت اسمتو بویسی
@@ -96,7 +94,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                 <Form className="av-tooltip tooltip-label-bottom">
                   <FormGroup className="form-group has-float-label">
                     <Label>
-                      <IntlMessages id="user.email" />
+                      <IntlMessages id="user.email-Id" />
                     </Label>
                     <Field
                       className="form-control"
@@ -126,30 +124,30 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                     )}
                   </FormGroup>
                   {/* <div className="d-flex justify-content-between align-items-center"> */}
-                    {/* <NavLink to="/user/forgot-password">
+                  {/* <NavLink to="/user/forgot-password">
                       <IntlMessages id="user.forgot-password-question" />
                     </NavLink> */}
-                    <Row>
-                      <Colxx className="text-left">
-                        {' '}
-                        <Button
-                          color="primary"
-                          className={`btn-shadow btn-multiple-state ${
-                            loading ? 'show-spinner' : ''
-                          }`}
-                          size="lg"
-                        >
-                          <span className="spinner d-inline-block">
-                            <span className="bounce1" />
-                            <span className="bounce2" />
-                            <span className="bounce3" />
-                          </span>
-                          <span className="label">
-                            <IntlMessages id="user.login-button" />
-                          </span>
-                        </Button>
-                      </Colxx>
-                    </Row>
+                  <Row>
+                    <Colxx className="text-left">
+                      {' '}
+                      <Button
+                        color="primary"
+                        className={`btn-shadow btn-multiple-state ${
+                          loading ? 'show-spinner' : ''
+                        }`}
+                        size="lg"
+                      >
+                        <span className="spinner d-inline-block">
+                          <span className="bounce1" />
+                          <span className="bounce2" />
+                          <span className="bounce3" />
+                        </span>
+                        <span className="label">
+                          <IntlMessages id="user.login-button" />
+                        </span>
+                      </Button>
+                    </Colxx>
+                  </Row>
                   {/* </div> */}
                 </Form>
               )}

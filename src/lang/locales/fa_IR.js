@@ -66,7 +66,7 @@ module.exports = {
   'user.forgot-password': 'فراموشی رمز عبور',
   'user.email': 'برښنالیک/ ایمیل آدرس',
   'user.password': 'پسورد/ رمز  ',
-  'login.email-addressErr': 'برښنالیک اړین دی/ایمیل ادرس ضروری است',
+  'login.email-addressErr': 'آیدی/برښنالیک اړین دی/آیدی/ایمیل ادرس ضروری است',
   'login.email-addressErr-1': 'ستاسو برښنالیک سم ندی/ ایمیل ادرس شما درست نیست',
   'login.passwordErr': 'پسورد   اړین دی/ رمز ضروری است',
   'user.forgot-password-question': 'پسورډ مو هیر شوی/ رمز عبورت یادت رفته؟',
@@ -339,6 +339,7 @@ module.exports = {
   'dashboards.keyword': 'کلمه کلیدی',
   'dashboards.search': 'جستجو',
   'dashboards.top-rated-items': 'موارد دارای بالاترین امتیاز',
+  'option.all': 'ټول/ همه',
 
   /* 05.Pages */
   'pages.add-new': 'افزودن جدید',
@@ -365,7 +366,8 @@ module.exports = {
   'pages.bake-progress': 'فرآیند پخت',
   'pages.popularity': 'محبوبیت',
   'pages.comments': 'نظرات',
-  'pages.error-title': 'ای واااای ...انگار یه خطایی پیش اومده!!',
+  'user.email-Id': 'آیدی/ایمیل کاربر',
+  'pages.error-title': 'درخواست اشتباه! لطفا دوباره کوشش نمایید',
   'pages.error-code': 'کد خطا',
   'pages.go-back-home': 'بازگشت به صفحه اصلی',
   'pages.mailing-info':

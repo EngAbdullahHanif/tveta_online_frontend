@@ -41,18 +41,28 @@ const ListPageHeading = ({
   // toggleModal,
   heading,
   onIdSearchKey,
-  changeGenderBy,
-  changeShiftBy,
+  // Gender
   selectedGenderOption,
-  selectedShiftOption,
+  changeGenderBy,
   genderOptions,
+  selectedShiftOption,
+  changeShiftBy,
   shiftOption,
+  // Educational Years
+  selectedEducationalYearOption,
+  changeEducationalYearBy,
+  educationYears,
+  // Level Of Education
+  selectLevelOfEducationOption,
+  changeLevelOfEducationBy,
+  levelOfEdcation,
+  // Province
   selectedProvinceOption,
-  provinces,
   changeProvinceBy,
+  provinces,
+  // Districts
   onDistrictSearchKey,
   onProvinceSearchKey,
-  selectedEducationalYear,
   onResetClick,
   reset,
   institutes,
@@ -255,69 +265,7 @@ const ListPageHeading = ({
                 </UncontrolledDropdown>
 
                 {/* Institute */}
-                {/* <div>
-                  <ReactAutoSugegst
-                    data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
-                    }}
-                    placeholder={messages['search.institute.name']}
-                  />
-                </div> */}
-
-                {/* Educational Year */}
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
-                  </DropdownToggle>
-                  <DropdownMenu
-                    style={{
-                      height: '300px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
-                  >
-                    {provinces.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeProvinceBy(order.column)}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-
-                {/* Educational Year */}
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="filter" />
-                    {selectedEducationalYear.label}
-                  </DropdownToggle>
-                  <DropdownMenu
-                    style={{
-                      height: '300px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
-                  >
-                    {provinces.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeProvinceBy(order.column)}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-
-                <div>
+                <div style={{ marginLeft: '75px' }}>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(opt) => {
@@ -327,7 +275,60 @@ const ListPageHeading = ({
                   />
                 </div>
 
-                <div style={{ marginRight: '70px' }}>
+                <div>
+                  {/* Educational Year */}
+                  <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                    <DropdownToggle caret color="outline-dark" size="xs">
+                      <IntlMessages id="filter" />
+                      {selectedEducationalYearOption.label}
+                      {/* {Educationnal} */}
+                      {/* <span>fdsg</span> */}
+                    </DropdownToggle>
+                    <DropdownMenu
+                      style={{
+                        height: '300px',
+                        overflowY: 'scroll',
+                        overflowX: 'hidden',
+                      }}
+                    >
+                      {educationYears.map((order, index) => {
+                        return (
+                          <DropdownItem
+                            key={index}
+                            onClick={() =>
+                              changeEducationalYearBy(order.column)
+                            }
+                          >
+                            {order.label}
+                          </DropdownItem>
+                        );
+                      })}
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                </div>
+
+                {/* Education Level */}
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectLevelOfEducationOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {levelOfEdcation.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeLevelOfEducationBy(order.column)}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+
+                {/* INTEGRATE THIS BASE ON DEPARTMENT */}
+                <div>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(opt) => {
@@ -344,6 +345,9 @@ const ListPageHeading = ({
                 onClick={() => {
                   changeGenderBy('all');
                   changeProvinceBy('all');
+                  changeShiftBy('all');
+                  changeLevelOfEducationBy('all');
+                  changeEducationalYearBy('all');
                   document.getElementById('district').value = '';
                   document.getElementById('student_id').value = '';
                   setSelectedInstitute('');

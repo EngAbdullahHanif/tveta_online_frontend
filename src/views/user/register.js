@@ -65,15 +65,15 @@ const Register = ({ history, registerUserAction, loading, error }) => {
         <Card className="auth-card">
           <div className="position-relative image-side ">
             <img src={logo} alt="Logo" />
-            <NavLink to="/" className="white">
-              <p className="text-white h2">اکونت جدید</p>
+            <NavLink to="/" className="">
+              <p className=" h2">اکونت جدید</p>
             </NavLink>
-            <p className="white mb-3"></p>
-            <p className="white mb-0">
+            <p className=" mb-3"></p>
+            <p className="mb-0">
               برای ورود به سیستم نام کاربری و رمز خود را وارد کنید
               <br />
               اگه حساب کاربری نداری نگران نباش، از{' '}
-              <NavLink to="/user/register" className="white">
+              <NavLink to="/user/register" className="">
                 اینجا
               </NavLink>{' '}
               میتونی تو سایت اسمتو بویسی

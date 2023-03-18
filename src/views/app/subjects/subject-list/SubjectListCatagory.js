@@ -29,20 +29,19 @@ const ListPageListing = ({
   onContextMenuClick,
   onContextMenu,
   onChangePage,
-  roughData
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
-  console.log('subject data', roughData)
+  console.log('subject data', items)
 
   return (
     <>
       <Row>
-        {roughData.length === 0 ? (
+        {items.length === 0 ? (
           <div className="no-result">
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {roughData.map((subject) => {
+        {items && items.map((subject) => {
           
           if (displayMode === 'imagelist') {
             

@@ -2,17 +2,7 @@ import axios from 'axios';
 
 const servicePath = 'http://localhost:8000';
 
-// Define a function to get the API headers
-// const getHeaders = () => {
-//     const user = JSON.parse(localStorage.getItem('current_user'));
-//     const access_token = localStorage.getItem('access_token');
-//     console.log('user', user)
-//     if (user && access_token) {
-//       return { Authorization: `Bearer ${access_token}` };
-//     } else {
-//       return {};
-//     }
-// };
+//  get the API headers
 const getHeaders = (data) => {
   const user = JSON.parse(localStorage.getItem('current_user'));
   const access_token = localStorage.getItem('access_token');
@@ -30,10 +20,18 @@ const getHeaders = (data) => {
   }
 };
 
-// Define a function to make API calls
+// make API calls
 const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
+
+  //add current user id to the data
+  if (data && data instanceof FormData) {
+    data.append('user_id', JSON.parse(localStorage.getItem('current_user')).user_id);
+  } else if (data) {
+    data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
+  }
+
   try {
       const response = await axios({
             method,

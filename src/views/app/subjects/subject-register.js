@@ -3,6 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
+// import { getCurrentUser } from './helpers/Utils';
+
 
 
 import * as Yup from 'yup';
@@ -70,7 +72,6 @@ const initialValues = {
   code: '',
   credit: '',
   type: [],
-  studetn_photo: '',
   systemType: [],
 };
 
@@ -84,7 +85,7 @@ const SubjectRegister = () => {
     // setIsNext(event);
   };
 
-  const onRegister = async (values) => {
+  const onRegister = async (values, { setSubmitting, setFieldValue }) => {
     const formData = new FormData();
     formData.append('name', values.name1);
     formData.append('english_name', values.englishName);
@@ -92,35 +93,15 @@ const SubjectRegister = () => {
     formData.append('sub_credit', values.credit);
     formData.append('sub_type', values.type.value);
     formData.append('system', values.systemType.value);
-    formData.append('studetn_photo', values.studetn_photo);
-    formData.append('user_id', 1);
-
-    console.log('student photo', values);
-
-    // const reader = new FileReader();
-    // reader.readAsArrayBuffer(values.studetn_photo);
-
-    // reader.onload = function() {
-    //   const fileContent = reader.result;
-    //   const file = new Blob([fileContent], { type: values.studetn_photo.type });
-    //   const formData = new FormData();
-    //   formData.append('name', values.name);
-    //   formData.append('studetn_photo', file);
-    // }
-    // const file = values.studetn_photo
-    // // console.log('file', file)
-    // const blob  = new Blob([file], { type: 'image/png' });
-    // console.log("blob", blob)
-    // formData.append('studetn_photo', blob );
 
     const response = await callApi('institute/subject_create/', 'POST', formData);
-    console.log('response of tthe', response);
     if (response.data) {
       console.log('data sent to the server2');
     } else {
       console.log('data not sent to the server3');
     }
   };
+
   return (
     <>
       <Card>
@@ -243,44 +224,6 @@ const SubjectRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-
-                       {/* Upload Photo */}
-                       {/* <FormGroup className="form-group has-float-label">
-                        <Label>
-                          <IntlMessages id="subject.credits" />
-                        </Label>
-                        <Field
-                          type="file"
-                          className="form-control"
-                          name="studetn_photo"
-                          accept="image/*"
-                        />
-                        {errors.studetn_photo && touched.studetn_photo && (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.studetn_photo}
-                          </div>
-                        )}
-                      </FormGroup> */}
-
-
-                            <FormGroup>
-                               
-                                <InputGroup className="mb-3">
-                                  <InputGroupAddon addonType="prepend">
-                                    آپلود عکس
-                                  </InputGroupAddon>
-                                  <CustomInput
-                                    type="file"
-                                    id="studetn_photo"
-                                    name="studetn_photo"
-                                  />
-                                </InputGroup>
-                                {errors.studetn_photo && touched.studetn_photo ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.studetn_photo}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
                     </Colxx>
                   </Row>
                   <Row>

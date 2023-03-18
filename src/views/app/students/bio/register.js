@@ -1809,26 +1809,26 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* Upload Photo */}
-                            <FormGroup>
-                              {/* <Label>
-                                <IntlMessages id="student.photo" />
-                              </Label> */}
-                              <InputGroup className="mb-3">
-                                <InputGroupAddon addonType="prepend">
-                                  آپلود عکس
-                                </InputGroupAddon>
-                                <CustomInput
-                                  type="file"
-                                  id="exampleCustomFileBrowser1"
-                                  name="photo"
-                                />
-                              </InputGroup>
-                              {errors.photo && touched.photo ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.photo}
-                                </div>
-                              ) : null}
-                            </FormGroup>
+                              <FormGroup>
+                                {/* <Label>
+                                  <IntlMessages id="student.photo" />
+                                </Label> */}
+                                <InputGroup className="mb-3">
+                                  <InputGroupAddon addonType="prepend">
+                                    آپلود عکس
+                                  </InputGroupAddon>
+                                  <CustomInput
+                                    type="file"
+                                    id="exampleCustomFileBrowser1"
+                                    name="photo"
+                                  />
+                                </InputGroup>
+                                {errors.photo && touched.photo ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                    {errors.photo}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">
                             {/* Departement  */}

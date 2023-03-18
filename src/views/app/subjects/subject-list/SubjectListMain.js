@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
+import callApi from 'helpers/callApi';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -12,6 +13,7 @@ import ListPageHeading from 'views/app/subjects/subject-list/SubjectListHeading'
 
 import ListPageListing from 'views/app/subjects/subject-list/SubjectListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
+
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -283,24 +285,32 @@ const ThumbListPages = ({ match }) => {
           setTeacherId('');
           setRest(false);
         }
-        axios
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
+        // axios
+        //   .get(
+        //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
 
-            setItems(data);
-            setTotalPage(data.total_pages);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        const response = await callApi('institute/subject/', '', null);
+        setItems(response.data);
+        // setTotalPage(response.data.total_pages);
+        setSelectedItems([]);
+        // setTotalItemCount(response.data.totalItem);
+        setIsLoaded(true);
+          // .then((data) => {
+          //   console.log(
+          //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+          //   );
+
+          //   setItems(data);
+          //   setTotalPage(data.total_pages);
+          //   setSelectedItems([]);
+          //   setTotalItemCount(data.totalItem);
+          //   setIsLoaded(true);
+          // });
+
       } else if (selectedProvinceOption.column === 'all') {
         axios
           .get(
@@ -372,13 +382,25 @@ const ThumbListPages = ({ match }) => {
     institute,
   ]);
 
+  // const fetchInstitutes = async () => {
+  //   const response = await axios.get(instituteApiUrl);
+  //   const updatedData = await response.data.map((item) => ({
+  //     id: item.id,
+  //     name: item.name,
+  //   }));
+  //   setInstitutes(updatedData);
+  // };
   const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
 
   useEffect(() => {
@@ -598,7 +620,7 @@ const ThumbListPages = ({ match }) => {
             onContextMenuClick={onContextMenuClick}
             onContextMenu={onContextMenu}
             onChangePage={setCurrentPage}
-            roughData={roughData}
+            // roughData={roughData}
           />
         
         </table>

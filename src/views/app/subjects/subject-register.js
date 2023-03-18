@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import axios from 'axios';
+import callApi from 'helpers/callApi';
+// import { getCurrentUser } from './helpers/Utils';
+
+
 
 import * as Yup from 'yup';
 import {
@@ -13,6 +17,9 @@ import {
   Label,
   Button,
   CardTitle,
+  InputGroup,
+  InputGroupAddon,
+  CustomInput,
   Input,
 } from 'reactstrap';
 import Select from 'react-select';
@@ -77,35 +84,24 @@ const SubjectRegister = () => {
     // HANIF BROTHER DONT FORGET TO DISPLAY THE SUCCESS MESSAGE AFTER SUBMISSION
     // setIsNext(event);
   };
-  const onRegister = (values) => {
-    console.log('values', values);
 
-    const data = {
-      name: values.name1,
-      english_name: values.englishName,
-      code: values.code,
-      credits: values.credit,
-      type: values.type.value,
-      system_type: values.systemType.value,
-    };
-    console.log('data', data);
-    axios
-      .post('http://localhost:8000/institute/subject/', data)
-      .then((response) => {
-        console.log(response);
-        console.log('data sent to the server2');
-      })
-      .catch((error) => {
-        console.log('data sent to the server4');
-        console.log(error);
-      });
+  const onRegister = async (values, { setSubmitting, setFieldValue }) => {
+    const formData = new FormData();
+    formData.append('name', values.name1);
+    formData.append('english_name', values.englishName);
+    formData.append('code', values.code);
+    formData.append('sub_credit', values.credit);
+    formData.append('sub_type', values.type.value);
+    formData.append('system', values.systemType.value);
 
-    if (!loading) {
-      // if (values.email !== '' && values.password !== '') {
-      //   loginUserAction(values, history);
-      // }
+    const response = await callApi('institute/subject_create/', 'POST', formData);
+    if (response.data) {
+      console.log('data sent to the server2');
+    } else {
+      console.log('data not sent to the server3');
     }
   };
+
   return (
     <>
       <Card>

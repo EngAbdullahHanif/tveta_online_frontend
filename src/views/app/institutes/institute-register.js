@@ -19,11 +19,15 @@ import {
 import callApi from 'helpers/callApi';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
+
+import { institute } from 'lang/locales/fa_IR';
+
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
+
 const provinces = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
   { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
@@ -150,6 +154,25 @@ const genderOptions = [
   { value: '1', label: 'مرد' },
   { value: '2', label: 'زن' },
 ];
+
+const instituteCityOptions = [
+  { value: '1', label: 'شهری' },
+  { value: '2', label: 'دهاتی' },
+];
+const instituteLanguageOptions = [
+  { value: '1', label: 'پښتو' },
+  { value: '2', label: 'دری' },
+];
+const instituteClimateOptions = [
+  { value: '1', label: 'سرد سیر' },
+  { value: '2', label: 'گرم سیر' },
+  { value: '3', label: 'زیاد سرد سیر' },
+];
+const instituteTypeOptions = [
+  { value: '1', label: 'انستیتوت' },
+  { value: '2', label: 'لیسه' },
+];
+
 const servicePath = 'http://localhost:8000';
 const instituteApiUrl = `${servicePath}/institute/institute_create`;
 //http://localhost:8000/institute/institute_create
@@ -218,6 +241,34 @@ const InstituteRegister = () => {
           .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
       : null,
 
+    instituteType: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+    institueCityType: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+    institueLanguage: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+    province: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
     district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
 
     village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
@@ -248,8 +299,8 @@ const InstituteRegister = () => {
   // post student record to server
   const postInstituteRecord = async (data) => {
     const response = await callApi('institute/institute_create', 'POST', data);
-    if (response.data && response.status === 200) {
-      console.log('success message', response.data);
+    if (response) {
+      console.log('success message from backend', response);
     } else {
       console.log('class error');
     }
@@ -264,11 +315,11 @@ const InstituteRegister = () => {
       district: values.district,
       village: values.village,
       type: values.instType.value,
-      inst_city_type: '1',
+      inst_city_type: values.institueCityType.value,
       inst_status: '1', //as it is registered for the first time so it is considered to be active
-      inst_climaty: '1',
-      school_type: '1',
-      language: '1',
+      inst_climaty: values.instituteClimate.value,
+      school_type: values.instituteType.value,
+      language: values.institueLanguage.value,
       gender: values.gender.value,
       user_id: '1',
     };
@@ -402,78 +453,84 @@ const InstituteRegister = () => {
                         ) : null}
                       </FormGroup>
 
+                      {/* institute type */}
+
                       <FormGroup className="form-group has-float-label">
                         <Label>
-                          <IntlMessages id="forms.ProvinceLabel" />
+                          <IntlMessages id="institue type" />
                         </Label>
                         <FormikReactSelect
-                          name="province"
-                          id="province"
-                          value={values.province}
-                          options={provinces}
+                          name="instituteType"
+                          id="instituteType"
+                          value={values.instituteType}
+                          options={instituteTypeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.province && touched.province ? (
+                        {errors.instituteType && touched.instituteType ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.province}
+                            {errors.instituteType}
                           </div>
                         ) : null}
                       </FormGroup>
 
+                      {/* institue city options */}
                       <FormGroup className="form-group has-float-label">
                         <Label>
-                          <IntlMessages id="forms.ProvinceLabel" />
+                          <IntlMessages id="City Type" />
                         </Label>
                         <FormikReactSelect
-                          name="province"
-                          id="province"
-                          value={values.province}
-                          options={provinces}
+                          name="institueCityType"
+                          id="institueCityType"
+                          value={values.institueCityType}
+                          options={instituteCityOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.province && touched.province ? (
+                        {errors.institueCityType && touched.institueCityType ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.province}
+                            {errors.institueCityType}
                           </div>
                         ) : null}
                       </FormGroup>
 
-                      {/* village permanent */}
+                      {/* institute language  */}
                       <FormGroup className="form-group has-float-label">
                         <Label>
-                          <IntlMessages id="forms.ProvinceLabel" />
+                          <IntlMessages id="institute langugage" />
                         </Label>
                         <FormikReactSelect
-                          name="province"
-                          id="province"
-                          value={values.province}
-                          options={provinces}
+                          name="institueLanguage"
+                          id="institueLanguage"
+                          value={values.institueLanguage}
+                          options={instituteLanguageOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.province && touched.province ? (
+                        {errors.institueLanguage && touched.institueLanguage ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.province}
+                            {errors.institueLanguage}
                           </div>
                         ) : null}
                       </FormGroup>
+
+                      {/* institute climate*/}
+
                       <FormGroup className="form-group has-float-label">
                         <Label>
-                          <IntlMessages id="forms.ProvinceLabel" />
+                          <IntlMessages id="institute climate" />
                         </Label>
                         <FormikReactSelect
-                          name="province"
-                          id="province"
-                          value={values.province}
-                          options={provinces}
+                          name="instituteClimate"
+                          id="instituteClimate"
+                          value={values.instituteClimate}
+                          options={instituteClimateOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.province && touched.province ? (
+                        {errors.instituteClimate && touched.instituteClimate ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.province}
+                            {errors.instituteClimate}
                           </div>
                         ) : null}
                       </FormGroup>

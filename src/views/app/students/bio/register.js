@@ -752,12 +752,44 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'شاگرد موفقانه لیلی ته رجستر شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
   // post student record to server
   const postStudentRecord = async (data) => {
     const response = await callApi('api/student_create', 'POST', data);
-    if (response.data && response.status === 200) {
+    if (response) {
+      createNotification('success', 'filled');
       console.log('success message', response.data);
     } else {
+      createNotification('error', 'filled');
       console.log('class error');
     }
   };
@@ -872,7 +904,7 @@ const StudentRegistration = ({ intl }, values) => {
           // console.log(newFields, 'Final Values');
 
           const data = {
-            // personal info
+            //personal info,
             // name: newFields.name1,
             // kankor_id: newFields.kankorId,
             // finished_grade_year: '1990',
@@ -918,6 +950,7 @@ const StudentRegistration = ({ intl }, values) => {
             // class_id: newFields.class.value.toString(10),
             // place_of_birth: 'jalalabad',
             // user_id: '1',
+
             kankor_id: '22',
             name: 'dfgdfsdfsfdsfdsfdsfgfdg',
             english_name: 'lksd',
@@ -962,7 +995,7 @@ const StudentRegistration = ({ intl }, values) => {
             batch: '2',
           };
 
-          console.log('the form data is converted to object', data);
+          //console.log('the form data is converted to object', data);
 
           // posting data to the server
           postStudentRecord(data);

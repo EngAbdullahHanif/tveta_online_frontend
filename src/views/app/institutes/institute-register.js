@@ -19,7 +19,7 @@ import {
 import callApi from 'helpers/callApi';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-
+import { NotificationManager } from 'components/common/react-notifications';
 import { institute } from 'lang/locales/fa_IR';
 
 import {
@@ -226,6 +226,37 @@ const InstituteRegister = () => {
     }, []);
   }
 
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'شاگرد موفقانه لیلی ته رجستر شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
+
   // this function is used to update all the state of the fields in case we are updating a record
   function updateFormFields() {}
 
@@ -300,8 +331,10 @@ const InstituteRegister = () => {
   const postInstituteRecord = async (data) => {
     const response = await callApi('institute/institute_create', 'POST', data);
     if (response) {
+      createNotification('success', 'filled');
       console.log('success message from backend', response);
     } else {
+      createNotification('error', 'filled');
       console.log('class error');
     }
   };

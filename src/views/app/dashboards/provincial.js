@@ -170,7 +170,8 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.totalStudents" />
                     </td>
-                    <td> {provinceTeachersCount['total_teachers']}</td>
+                    {/* <td> {provinceTeachersCount['total_teachers']}</td> */}
+                    <td>34554</td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
@@ -178,7 +179,8 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </td>
-                    <td> {provinceTeachersCount['male_teachers']}</td>
+                    {/* <td> {provinceTeachersCount['male_teachers']}</td> */}
+                    <td>7686</td>
                   </tr>
                   <tr>
                     <th scope="row">3</th>
@@ -186,7 +188,8 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </td>
-                    <td>{provinceTeachersCount['female_teachers']}</td>
+                    {/* <td>{provinceTeachersCount['female_teachers']}</td> */}
+                    <td>567</td>
                   </tr>
                   <tr>
                     <th scope="row">4</th>
@@ -194,14 +197,15 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.14YearsGreduatedTotal" />
                     </td>
-                    <td> {provinceTeachersCount['14_teachers']}</td>
+                    {/* <td> {provinceTeachersCount['14_teachers']}</td> */}
+                    <td>6756</td>
                   </tr>
                   <tr>
                     <th scope="row">4</th>
                     <td>
                       <IntlMessages id="dash.14YearsGreduatedMale" />
                     </td>
-                    <td>58</td>
+                    <td>5435</td>
                   </tr>
                   <tr>
                     <th scope="row">5</th>
@@ -209,7 +213,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.14YearsGreduatedFemale" />
                     </td>
-                    <td>58</td>
+                    <td>675</td>
                   </tr>
                   <tr>
                     <th scope="row">6</th>
@@ -217,7 +221,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.bachelorTotal" />
                     </td>
-                    <td>58</td>
+                    <td>234</td>
                   </tr>
                   <tr>
                     <th scope="row">7</th>
@@ -225,7 +229,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.bachelorMale" />
                     </td>
-                    <td>58</td>
+                    <td>56765</td>
                   </tr>
 
                   <tr>
@@ -234,7 +238,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.bachelorFemale" />
                     </td>
-                    <td>58</td>
+                    <td>657</td>
                   </tr>
                   <tr>
                     <th scope="row">9</th>
@@ -250,7 +254,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.masterMale" />
                     </td>
-                    <td>58</td>
+                    <td>345</td>
                   </tr>
                   <tr>
                     <th scope="row">9</th>
@@ -258,7 +262,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.masterFemale" />
                     </td>
-                    <td>58</td>
+                    <td>78</td>
                   </tr>
                   <tr>
                     <th scope="row">9</th>
@@ -266,7 +270,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.phdTotal" />
                     </td>
-                    <td>58</td>
+                    <td>456</td>
                   </tr>
                   <tr>
                     <th scope="row">9</th>
@@ -274,7 +278,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.phdMale" />
                     </td>
-                    <td>58</td>
+                    <td>345</td>
                   </tr>
                   <tr>
                     <th scope="row">9</th>
@@ -282,7 +286,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.phdFemale" />
                     </td>
-                    <td>58</td>
+                    <td>2345</td>
                   </tr>
                 </tbody>
               </Table>
@@ -364,7 +368,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                         {' '}
                         <IntlMessages id="dash.TeacherEvaluatedTotal" />
                       </td>
-                      <td>۵۵</td>
+                      <td>456</td>
                     </tr>
                     <tr>
                       <th scope="row">2</th>
@@ -372,7 +376,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                         {' '}
                         <IntlMessages id="dash.TeacherNotEvaluatedTotal" />
                       </td>
-                      <td> ۱۰۰۰</td>
+                      <td> 3456</td>
                     </tr>
                     <tr>
                       <th scope="row">3</th>
@@ -380,7 +384,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                         {' '}
                         <IntlMessages id="teacher.EvaluatedMale" />
                       </td>
-                      <td>w23</td>
+                      <td>6786</td>
                     </tr>
                     <tr>
                       <th scope="row">4</th>
@@ -399,7 +403,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
 
         {/* Students */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4 ">
-          <Card style={{ minHeight: '180px' }} id="divId">
+          <Card style={{ minHeight: '180px' }}>
             <CardBody>
               <CardTitle>
                 <IntlMessages id="dash.totalStudentsInst" />
@@ -413,7 +417,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>4546</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -423,7 +427,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>345</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -433,7 +437,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>7687</p>
                   <br />
                 </Colxx>
               </Row>
@@ -450,7 +454,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>456</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -460,7 +464,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>34556</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -470,7 +474,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>5675</p>
                   <br />
                 </Colxx>
               </Row>
@@ -488,7 +492,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>3456</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -498,7 +502,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>768</p>
                 </Colxx>
                 <Colxx>
                   <p>
@@ -507,7 +511,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>2345</p>
                   <br />
                 </Colxx>
               </Row>
@@ -523,7 +527,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>98796</p>
                 </Colxx>
                 <Colxx>
                   <p>
@@ -532,7 +536,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>5467</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -542,7 +546,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.DormStudentType_1" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>2345</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -552,7 +556,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.DormStudentType_2" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>56757</p>
                   <br />
                 </Colxx>
               </Row>
@@ -854,7 +858,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
 
         {/* Total Statistics */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
-          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }}>
             <CardBody>
               <CardTitle>
                 <IntlMessages id="dash.totalStatistics" />
@@ -870,7 +874,8 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                     </b>
                   </p>
                   <p style={{ marginRight: '10%' }}>
-                    {provinceTeachersCount['institute_count']}
+                    {/* {provinceTeachersCount['institute_count']} */}
+                    5674
                   </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -881,7 +886,8 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                     </b>
                   </p>
                   <p style={{ marginRight: '10%' }}>
-                    {provinceTeachersCount['school_count']}
+                    {/* {provinceTeachersCount['school_count']} */}
+                    3245
                   </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -892,7 +898,8 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                     </b>
                   </p>
                   <p style={{ marginRight: '10%' }}>
-                    {provinceDormsCount['total_dorms']}
+                    {/* {provinceDormsCount['total_dorms']} */}
+                    345
                   </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>

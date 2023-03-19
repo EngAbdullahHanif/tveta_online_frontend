@@ -453,6 +453,9 @@ module.exports = {
   'search.institute.name': 'institute name',
   'search.department.name': 'department name',
   'user.email-Id': 'Username Id/Email',
+  'department.field': 'Field',
+  'department.FieldEngNameLabel': 'Department Name in English',
+  'department.departmentRegisterlabel': 'Department Register',
 
   'button.states-text':
     'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
@@ -621,6 +624,8 @@ module.exports = {
   'forms.sectorErr': 'Sector Is Required!',
   'student.photo': 'Image',
   'student.photoErr': 'Student Photo Is Required!',
+  'department.nameErr': 'Department Name Is Required!',
+  'department.englishNameErr': 'Department English Name Is Required!',
 
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',
@@ -995,6 +1000,7 @@ module.exports = {
   'evaluation.evaluationDetails': 'Details',
   'teacher.EvaluatedMale': 'Evaluated Male',
   'teacher.EvaluatedFemale': 'Evaluated Female',
+  'forms.teacherIdErr': 'Teacher Id Is Required!',
 
   // HR Evaluation
   'teacher.EvalautionHrTitle': 'Teacher Hr Evaluation',
@@ -1038,6 +1044,10 @@ module.exports = {
   'student.transferDateLabel': 'Transfer Date',
   'student.transferDocuments': 'Upgrading Documents',
   'transfered-Students': 'Transfered Student List',
+  'student.ID': 'Student Id',
+  'student.interenaceType': 'Enterance Type',
+  'student.PhoneNo': 'Phone No',
+  'study.type': 'student Type',
 
   // Curriculum
   'subject.curriculum': 'Curriculum',

@@ -635,16 +635,18 @@ const ThumbListPages = ({ match }) => {
               <th
                 style={{
                   width: '11%',
+                  fontSize: '20px',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
-                <IntlMessages id="marks.No" />
+                <IntlMessages id="student.ID" />
               </th>
               <th
                 style={{
                   width: '14%',
+                  fontSize: '20px',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -655,6 +657,7 @@ const ThumbListPages = ({ match }) => {
               <th
                 style={{
                   width: '15%',
+                  fontSize: '20px',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -666,6 +669,7 @@ const ThumbListPages = ({ match }) => {
                 style={{
                   width: '15%',
                   padding: '0%',
+                  fontSize: '20px',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
@@ -675,36 +679,39 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '14%',
+                  width: '15%',
                   padding: '0%',
+                  fontSize: '20px',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
                 {' '}
-                <IntlMessages id="teacher.PhoneNoLabel" />
+                <IntlMessages id="student.PhoneNo" />
               </th>
               <th
                 style={{
                   width: '15%',
                   padding: '0%',
+                  fontSize: '20px',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
                 {' '}
-                <IntlMessages id="teacher.MajorLabel" />
+                <IntlMessages id="student.interenaceType" />
               </th>
               <th
                 style={{
                   width: '10%',
                   padding: '0%',
+                  fontSize: '20px',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
                 {' '}
-                <IntlMessages id="teacher.GradeLabel" />
+                <IntlMessages id="study.type" />
               </th>
             </tr>
           </thead>

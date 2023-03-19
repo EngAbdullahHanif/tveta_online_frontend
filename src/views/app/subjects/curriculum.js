@@ -134,14 +134,12 @@ const Curriculum = (values) => {
     educationalYear: initialEducationalYear,
   };
 
-  const [isNext, setIsNext] = useState(true);
-  const handleClick = (event) => {
-    // HANIF BROTHER DONT FORGET TO DISPLAY THE SUCCESS MESSAGE AFTER SUBMISSION
-    setIsNext(event);
-  };
+  const [isNext, setIsNext] = useState(false);
 
   const onRegister = (values) => {
     console.log(' The Values', values);
+    setIsNext(true);
+    resetForm();
   };
 
   return (
@@ -151,7 +149,7 @@ const Curriculum = (values) => {
           {<IntlMessages id="curriculum.curriculumTittle" />}
         </h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onRegister}
@@ -163,6 +161,7 @@ const Curriculum = (values) => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right error-l-175">
                   <Row className="justify-content-center inlineBlock">
@@ -260,10 +259,6 @@ const Curriculum = (values) => {
                         size="lg"
                         type="submit"
                         color="primary"
-                        onClick={() => {
-                          onRegister;
-                          handleClick(false);
-                        }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -291,7 +286,10 @@ const Curriculum = (values) => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

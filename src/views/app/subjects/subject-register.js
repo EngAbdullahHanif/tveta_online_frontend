@@ -5,8 +5,6 @@ import axios from 'axios';
 import callApi from 'helpers/callApi';
 // import { getCurrentUser } from './helpers/Utils';
 
-
-
 import * as Yup from 'yup';
 import {
   Row,
@@ -78,7 +76,7 @@ const initialValues = {
 const SubjectRegister = () => {
   const [subjectType, setSubjectType] = useState({});
   const [systemType, setSystemType] = useState({});
-  const [isNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(false);
 
   const handleClick = (event) => {
     // HANIF BROTHER DONT FORGET TO DISPLAY THE SUCCESS MESSAGE AFTER SUBMISSION
@@ -94,8 +92,14 @@ const SubjectRegister = () => {
     formData.append('sub_type', values.type.value);
     formData.append('system', values.systemType.value);
 
-    const response = await callApi('institute/subject_create/', 'POST', formData);
+    const response = await callApi(
+      'institute/subject_create/',
+      'POST',
+      formData
+    );
     if (response.data) {
+      setIsNext(true);
+      resetForm();
       console.log('data sent to the server2');
     } else {
       console.log('data not sent to the server3');
@@ -109,7 +113,7 @@ const SubjectRegister = () => {
           {<IntlMessages id="subject.register.title" />}
         </h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onRegister}
@@ -121,6 +125,7 @@ const SubjectRegister = () => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right error-l-175">
                   <Row className="justify-content-center">
@@ -234,10 +239,6 @@ const SubjectRegister = () => {
                         size="lg"
                         type="submit"
                         color="primary"
-                        onClick={() => {
-                          onRegister;
-                          handleClick(false);
-                        }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -262,7 +263,10 @@ const SubjectRegister = () => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

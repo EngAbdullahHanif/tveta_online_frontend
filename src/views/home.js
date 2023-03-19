@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key, react/no-danger */
 import React, { useState, useEffect, useRef } from 'react';
 import { Nav, NavItem, TabContent, TabPane } from 'reactstrap';
+import ReactCardCarousel from 'react-card-carousel';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { scroller } from 'react-scroll';
@@ -21,9 +22,18 @@ import CarPhoto13 from '../assets/img/blog/13.png';
 import CarPhoto14 from '../assets/img/blog/14.png';
 import RahimiPhoto from '../assets/img/blog/Rahimi.jpg';
 import Carousel from 'react-grid-carousel';
+import CS_Sector from '../assets/img/sectors/CS.jpg';
+import SpecialEducationSector from '../assets/img/sectors/Special_Education.png';
+import Economic_Sector from '../assets/img/sectors/Economic.jpg';
+import Agriculture_Sector from '../assets/img/sectors/agriculture.jfif';
+import literature_sector from '../assets/img/sectors/literature.jpg';
+import OilAndGas_Sector from '../assets/img/sectors/oil_gas.jpeg';
+import civil_Eng from '../assets/img/sectors/civil_Engineering.jpg';
+import Industerial from '../assets/img/sectors/Industerial.jpg';
 import IndividualIntervalsExample from './carousel';
 import DemoCarousel from './../views/app/subjects/draftFileJustForTest';
 import ScrollAnimation from 'react-animate-on-scroll';
+import IntlMessages from 'helpers/IntlMessages';
 import './carousel.css';
 import {
   Row,
@@ -85,47 +95,47 @@ const slideSettings = {
 const slideItems = [
   {
     icon: 'iconsminds-mouse-3',
-    title: 'منوی کلیک راست',
+    title: 'اقتصاد او مدریت',
     detail:
       'برای این گذاشتیم که استفاده ی کامل و حداکثری از قالب بتونین داشته باشید',
   },
   {
-    icon: 'iconsminds-electric-guitar',
-    title: 'ویدئو پلیر',
+    icon: 'iconsminds-mouse-3',
+    title: 'علوم حیوانی و وترنری',
     detail: 'با پکیج Video.js کار میکنه و حتی از یوتیوب هم پشتیبانی میکنه',
   },
   {
-    icon: 'iconsminds-keyboard',
-    title: 'شورتکات صفحه کلید',
+    icon: 'iconsminds-mouse-3',
+    title: 'ادبیات او هنر',
     detail:
       'میانبر های صفحه کلید درست کردیم که هم قابل تنظیمه و هم ux برای کاربرهات بهتر میکنه',
   },
   {
-    icon: 'iconsminds-three-arrow-fork ',
-    title: 'منو با دوتا پنل',
+    icon: 'iconsminds-mouse-3',
+    title: 'تکنالوؤ',
     detail:
       'یه منو با سه تا مرحله، تا هرجا خواستی ازش استفاده کنی و حتی تو ریسپانسیو هم اذیتت نمیکنه',
   },
   {
-    icon: 'iconsminds-deer',
+    icon: 'iconsminds-mouse-3',
     title: 'پکیج آیکن Mind',
     detail:
       '1040 آیکن توی 53 تا مجموعه, طراحیش پیکسلی هست و توی پروژه برای شما قرار دادیم تا هرکدوم دلت خواست استفاده کنی',
   },
   {
-    icon: 'iconsminds-palette',
+    icon: 'iconsminds-mouse-3',
     title: '20 تا تم رنگی',
     detail:
       'رنگ ها، آیکن ها و طراحی هارمونی که توسط بهترین گرافیستهامون طراحی شدن',
   },
   {
-    icon: 'iconsminds-air-balloon-1',
+    icon: 'iconsminds-mouse-3',
     title: '3 اپلیکیشن کاربردی',
     detail:
       'برنامه هایی رو برات قرار دادیم که در زمان یه برنامه نویس بشدت صرفه جویی میکنه',
   },
   {
-    icon: 'iconsminds-resize',
+    icon: 'iconsminds-mouse-3',
     title: 'ریسپانسیو قوی و موبایلی',
     detail:
       'کلاسهای سفارشی بوت استرپ 4 xxs & xxl تجربه های بهتری را برای صفحات کوچک و بزرگ ارائه می دهد',
@@ -400,7 +410,7 @@ const Home = () => {
                         <a
                           className="btn btn-light btn-xl mr-2 mb-2 mt-5"
                           href={'/user/login'}
-                                                  >
+                        >
                           ننوتل/ورود <i className="simple-icon-arrow-right" />
                         </a>
                       </div>
@@ -431,7 +441,174 @@ const Home = () => {
                     </ScrollAnimation>
                   </div>
                 </div>
-                {/* <ControlledCarousel /> */}
+              </div>
+            </div>
+            <div
+              className="CONTAINER_STYLE col-s-12 col-12  bg-primary"
+              style={{
+                position: 'relative',
+                marginBottom: '400px',
+                marginTop: '-500px',
+                // backgroundColor: 'important blue',
+              }}
+            >
+              <ReactCardCarousel
+                autoplay={true}
+                // spread={medium}
+                disable_box_shadow={true}
+                autoplay_speed={3000}
+              >
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE text-muted">
+                    <IntlMessages id="dash.sectorType_1" />
+                    <img
+                      src={SpecialEducationSector}
+                      style={{
+                        width: '400px',
+                        height: '210px',
+                        padding: '15px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE text-muted">
+                    <IntlMessages id="dash.sectorType_2" />
+                    <img
+                      src={Economic_Sector}
+                      style={{
+                        width: '400px',
+                        height: '235px',
+                        padding: '15px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE text-muted">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_3" />
+                    <img
+                      src={Agriculture_Sector}
+                      style={{
+                        width: '400px',
+                        height: '235px',
+                        padding: '15px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE text-muted">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_4" />
+                    <img
+                      src={literature_sector}
+                      style={{
+                        width: '400px',
+                        height: '235px',
+                        padding: '15px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE text-muted">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_5" />
+                    <img
+                      src={CS_Sector}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE text-muted">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_6" />
+                    <img
+                      src={OilAndGas_Sector}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        height: '235px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE text-muted">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_7" />
+                    <img
+                      src={civil_Eng}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        height: '235px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE text-muted">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_8" />
+                    <img
+                      src={civil_Eng}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        height: '235px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+                <Card>
+                  {' '}
+                  <div className="CARD_STYLE text-muted">
+                    {' '}
+                    <IntlMessages id="dash.sectorType_9" />
+                    <img
+                      src={Industerial}
+                      style={{
+                        width: '400px',
+                        padding: '15px',
+                        height: '235px',
+                        // marginInline: '30px',
+                        borderRadius: '30px',
+                      }}
+                    />
+                  </div>{' '}
+                </Card>
+              </ReactCardCarousel>
+            </div>
+
+            {/* 
+                <ControlledCarousel />
                 <div className="row ">
                   <div className="col-s-12 col-12  d-md-block">
                     <div className="home-carousel rounded ">
@@ -456,9 +633,7 @@ const Home = () => {
                       </GlideComponent>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                </div> */}
 
             <div className="section">
               <div className="container" id="goals">

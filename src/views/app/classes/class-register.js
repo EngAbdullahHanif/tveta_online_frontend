@@ -53,17 +53,17 @@ const SubjcetRegister = () => {
   const [initialSemester, setInitialSemester] = useState(
     TestData.Semester ? TestData.Semester : ''
   );
-  const [isNext, setIsNext] = useState(true);
-  const handleClick = (event) => {
-    // setIsNext(event);
-  };
+  const [isNext, setIsNext] = useState(false);
 
   const initialValues = {
     className: initialClassName,
     semester: initialSemester,
   };
-  const onRegister = (values) => {
-    console.log(values);
+  const onRegister = (values, { resetForm }) => {
+    console.log(values, 'Value');
+    setIsNext(true);
+    resetForm();
+
     const data = {
       name: values.className,
       semester: values.semester,
@@ -94,7 +94,7 @@ const SubjcetRegister = () => {
           {<IntlMessages id="class.register.title" />}
         </h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onRegister}
@@ -106,6 +106,7 @@ const SubjcetRegister = () => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right error-l-100">
                   <Row className="justify-content-center">
@@ -147,9 +148,6 @@ const SubjcetRegister = () => {
                         size="lg"
                         type="submit"
                         color="primary"
-                        onClick={() => {
-                          handleClick(false);
-                        }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -177,7 +175,10 @@ const SubjcetRegister = () => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

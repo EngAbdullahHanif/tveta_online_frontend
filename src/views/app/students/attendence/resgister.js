@@ -30,7 +30,6 @@ import {
 import userEvent from '@testing-library/user-event';
 import { getDirection, getCurrentUser } from './../../../../helpers/Utils';
 
-
 const LevelOfEdcationOptions = [
   { value: '1', label: 'اصلی' },
   { value: '2', label: 'فرعی' },
@@ -423,6 +422,27 @@ const StudentAttendance = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
+
+                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                        <Label>
+                          <IntlMessages id="forms.totolEducationalDays" />
+                        </Label>
+                        <Field
+                          type="number"
+                          id="totolEducationalDays"
+                          className="form-control"
+                          name="totolEducationalDays"
+                          onClick={setSelectedEducationalYear(
+                            values.totolEducationalDays
+                          )}
+                        />
+                        {errors.totolEducationalDays &&
+                        touched.totolEducationalDays ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.totolEducationalDays}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                     </Colxx>
 
                     <Colxx xxs="6">
@@ -488,26 +508,6 @@ const StudentAttendance = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup> */}
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
-                        <Label>
-                          <IntlMessages id="forms.totolEducationalDays" />
-                        </Label>
-                        <Field
-                          type="number"
-                          id="totolEducationalDays"
-                          className="form-control"
-                          name="totolEducationalDays"
-                          onClick={setSelectedEducationalYear(
-                            values.totolEducationalDays
-                          )}
-                        />
-                        {errors.totolEducationalDays &&
-                        touched.totolEducationalDays ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.totolEducationalDays}
-                          </div>
-                        ) : null}
-                      </FormGroup>
                     </Colxx>
                   </Row>
                   <Row>

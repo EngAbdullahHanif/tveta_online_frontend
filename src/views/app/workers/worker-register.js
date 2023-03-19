@@ -16,96 +16,100 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
-
-
 const ValidationSchema = Yup.object().shape({
   workerName: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="forms.StdKankorNameErr" />),
 
-    workerProvince:  Yup.object()
+  workerProvince: Yup.object()
     .shape({
-       value: Yup.string().required(),
-      }).nullable().required(<IntlMessages id="workerProvinceErr" />),
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="workerProvinceErr" />),
 
-
-    workerQualification: Yup.string()
+  workerQualification: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="workerQualificationErr" />),
 
-    workerField:  Yup.string()
+  workerField: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="workerFieldErr" />),
 
-    workerGender:  Yup.object()
+  workerGender: Yup.object()
     .shape({
-       value: Yup.string().required(),
-}).nullable().required(<IntlMessages id="workerGenderErr" />),
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="workerGenderErr" />),
 
-workerTazkera:  Yup.string()
-.min(3, <IntlMessages id="min.minInputValue" />)
-.max(50, <IntlMessages id="max.maxInputValue" />)
-.required(<IntlMessages id="workerTazkeraErr" />),
+  workerTazkera: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="workerTazkeraErr" />),
 
-workerDateOfBirth:  Yup.string()
-.required(<IntlMessages id="workerDOB" />),
+  workerDateOfBirth: Yup.string().required(<IntlMessages id="workerDOB" />),
 
-workerPosition:  Yup.string()
-.min(3, <IntlMessages id="min.minInputValue" />)
-.max(50, <IntlMessages id="max.maxInputValue" />)
-.required(<IntlMessages id="workerPositionErr" />),
+  workerPosition: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="workerPositionErr" />),
 
-workerStep:  Yup.string()
-.min(3, <IntlMessages id="min.minInputValue" />)
-.max(50, <IntlMessages id="max.maxInputValue" />)
-.required(<IntlMessages id="workerStepErr" />),
+  workerStep: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="workerStepErr" />),
 
-workerGrade:  Yup.object()
-.shape({
-   value: Yup.string().required(),
-}).nullable().required(<IntlMessages id="workerGradeErr" />),
+  workerGrade: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="workerGradeErr" />),
 
-workerId:  Yup.string()
-.min(3, <IntlMessages id="min.minInputValue" />)
-.max(50, <IntlMessages id="max.maxInputValue" />)
-.required(<IntlMessages id="workerIdErr" />),
+  workerId: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="workerIdErr" />),
 
-workerTashkilGrade: Yup.object()
-.shape({
-   value: Yup.string().required(),
-}).nullable().required(<IntlMessages id="workerTashkilGradeErr" />),
+  workerTashkilGrade: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="workerTashkilGradeErr" />),
 
-workerGradeType: Yup.object()
-.shape({
-   value: Yup.string().required(),
-}).nullable().required(<IntlMessages id="workerGradeTypeErr" />),
+  workerGradeType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="workerGradeTypeErr" />),
 
-workerAppointedDate:  Yup.string()
-.required(<IntlMessages id="workerAppointedDateErr" />),
+  workerAppointedDate: Yup.string().required(
+    <IntlMessages id="workerAppointedDateErr" />
+  ),
 
-workerStartDate: Yup.string()
-.required(<IntlMessages id="workerStartDateErr" />),
+  workerStartDate: Yup.string().required(
+    <IntlMessages id="workerStartDateErr" />
+  ),
 
-workerAppointedType: Yup.object()
-.shape({
-  value: Yup.string().required(),
-})
-.nullable()
-.required(<IntlMessages id="appointedTypeErr" />),
-
+  workerAppointedType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="appointedTypeErr" />),
 });
 
-
-
 const StudentRegistraion = () => {
-
   // worker's field initiliazation
   const initialValues = {
-    workerAppointedType:[],
-    workerQualification:'',
+    workerAppointedType: [],
+    workerQualification: '',
     workerGender: [],
     workerName: '',
     workerProvince: [],
@@ -121,21 +125,47 @@ const StudentRegistraion = () => {
     workerStartDate: '',
     workerStep: '',
     workerTazkera: '',
-    
   };
 
   // state varibales are going to be set to defaul values
-  const [isNext, setIsNext] = useState(true);
-  const [workerProvince, setWorkerProvince] = useState( [
-    { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-    { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-    { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
-    { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
-    { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
-    { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
-    { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
-    { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
-    { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
+  const [isNext, setIsNext] = useState(false);
+  const [workerProvince, setWorkerProvince] = useState([
+    {
+      value: '1',
+      label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
+    },
+    {
+      value: '2',
+      label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
+    },
+    {
+      value: '3',
+      label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
+    },
+    {
+      value: '4',
+      label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
+    },
+    {
+      value: '5',
+      label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
+    },
+    {
+      value: '6',
+      label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
+    },
+    {
+      value: '7',
+      label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
+    },
+    {
+      value: '8',
+      label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
+    },
+    {
+      value: '9',
+      label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
+    },
     {
       value: '10',
       label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
@@ -239,132 +269,125 @@ const StudentRegistraion = () => {
   ]);
   const [workerAppointedType, setworkerAppointedType] = useState([
     {
-    value: 1,
-    label: 'حکمی'
+      value: 1,
+      label: 'حکمی',
     },
     {
       value: 2,
-      label: 'رقابتی'
-    }
-]);
-const [workerGender, setWorkerGender] = useState([
-  {
-  value: 1,
-  label: 'مرد'
-  },
-  {
-    value: 2,
-    label: 'زن'
-  }
-]);
+      label: 'رقابتی',
+    },
+  ]);
+  const [workerGender, setWorkerGender] = useState([
+    {
+      value: 1,
+      label: 'مرد',
+    },
+    {
+      value: 2,
+      label: 'زن',
+    },
+  ]);
 
-const [workerGrade, setworkerGrade] = useState([
-  {
-  value: 1,
-  label: '1'
-  },
-  {
-    value: 2,
-    label: '2'
-  },
-  {
-    value: 3,
-    label: '3'
+  const [workerGrade, setworkerGrade] = useState([
+    {
+      value: 1,
+      label: '1',
+    },
+    {
+      value: 2,
+      label: '2',
+    },
+    {
+      value: 3,
+      label: '3',
     },
     {
       value: 4,
-      label: '4'
+      label: '4',
     },
     {
       value: 5,
-      label: '5'
-      },
-      {
-        value: 6,
-        label: '6'
-      },
-      {
-        value: 7,
-        label: '7'
-        },
-        {
-          value: 8,
-          label: '8'
-        },
-        {
-          value: 9,
-          label: 'مافوق'
-        },
+      label: '5',
+    },
+    {
+      value: 6,
+      label: '6',
+    },
+    {
+      value: 7,
+      label: '7',
+    },
+    {
+      value: 8,
+      label: '8',
+    },
+    {
+      value: 9,
+      label: 'مافوق',
+    },
+  ]);
 
-]);
-
-const [workerTashkilGrade, setworkerTashkilGrade] = useState([
-  {
-  value: 1,
-  label: '1'
-  },
-  {
-    value: 2,
-    label: '2'
-  },
-  {
-    value: 3,
-    label: '3'
+  const [workerTashkilGrade, setworkerTashkilGrade] = useState([
+    {
+      value: 1,
+      label: '1',
+    },
+    {
+      value: 2,
+      label: '2',
+    },
+    {
+      value: 3,
+      label: '3',
     },
     {
       value: 4,
-      label: '4'
+      label: '4',
     },
     {
       value: 5,
-      label: '5'
-      },
-      {
-        value: 6,
-        label: '6'
-      },
-      {
-        value: 7,
-        label: '7'
-        },
-        {
-          value: 8,
-          label: '8'
-        },
-        {
-          value: 9,
-          label: 'مافوق'
-        },
+      label: '5',
+    },
+    {
+      value: 6,
+      label: '6',
+    },
+    {
+      value: 7,
+      label: '7',
+    },
+    {
+      value: 8,
+      label: '8',
+    },
+    {
+      value: 9,
+      label: 'مافوق',
+    },
+  ]);
 
-]);
+  const [workerGradeType, setWorkerGradeType] = useState([
+    {
+      value: 1,
+      label: 'مامور',
+    },
+    {
+      value: 2,
+      label: 'اجیر',
+    },
+  ]);
 
-const [workerGradeType, setWorkerGradeType] = useState([
-  {
-  value: 1,
-  label: 'مامور'
-  },
-  {
-    value: 2,
-    label: 'اجیر'
-  }
-]);
-
-
- // after submitting the form
-  const handleClick = (event) => {
-     //setIsNext(event);
-  };
+  // after submitting the form
+  const handleClick = (event) => {};
 
   // when form is submitted
-  const onRegister = (values) => {
+  const onRegister = (values, { resetForm }) => {
     console.log('values', values);
+    resetForm();
+    setIsNext(true);
   };
 
-  useEffect(() => {
-
-  }, []);
-
-
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -373,7 +396,7 @@ const [workerGradeType, setWorkerGradeType] = useState([
           {<IntlMessages id="workerRegistrationTitle" />}
         </h3>
         <CardBody>
-          {isNext == true ? (
+          {!isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onRegister}
@@ -383,8 +406,9 @@ const [workerGradeType, setWorkerGradeType] = useState([
                 errors,
                 touched,
                 values,
-                setFieldTouched,  
+                setFieldTouched,
                 setFieldValue,
+                isSubmitting,
               }) => (
                 <Form className="av-tooltip tooltip-label-right">
                   <Row>
@@ -394,7 +418,7 @@ const [workerGradeType, setWorkerGradeType] = useState([
                         <Label>
                           <IntlMessages id="workerName" />
                         </Label>
-                        <Field className="form-control" name="workerName"/>
+                        <Field className="form-control" name="workerName" />
                         {errors.workerName && touched.workerName ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.workerName}
@@ -435,47 +459,48 @@ const [workerGradeType, setWorkerGradeType] = useState([
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.workerAppointedType && touched.workerAppointedType ? (
+                        {errors.workerAppointedType &&
+                        touched.workerAppointedType ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.workerAppointedType}
                           </div>
                         ) : null}
                       </FormGroup>
-                      
 
-                            {/*worker qualifications  */}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="workerQualification" />
-                              </Label>
-                              <Field className="form-control" name="workerQualification" />
-                              {errors.workerQualification && touched.workerQualification ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.workerQualification}
-                                </div>
-                              ) : null}
-                            </FormGroup>
+                      {/*worker qualifications  */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="workerQualification" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="workerQualification"
+                        />
+                        {errors.workerQualification &&
+                        touched.workerQualification ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.workerQualification}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                            {/* worker field*/}
+                      {/* worker field*/}
 
-                            <FormGroup className="form-group has-float-label error-l-175">
-                                <Label>
-                                  <IntlMessages id="workerField" />
-                                </Label>
-                                <Field className="form-control" name="workerField" />
-                                {errors.workerField && touched.workerField ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.workerField}
-                                  </div>
-                                ) : null}
-                            </FormGroup>
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="workerField" />
+                        </Label>
+                        <Field className="form-control" name="workerField" />
+                        {errors.workerField && touched.workerField ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.workerField}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
+                      {/* worker Gender */}
 
-                                {/* worker Gender */}
-                            
-                            <FormGroup className="form-group has-float-label error-l-175">
-
-                              
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="workerGender" />
                         </Label>
@@ -493,21 +518,21 @@ const [workerGradeType, setWorkerGradeType] = useState([
                           </div>
                         ) : null}
                       </FormGroup>
-                    
-                          {/* worker Tazkera */}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="workerTazkera" />
-                              </Label>
-                              <Field className="form-control" name="workerTazkera" />
-                              {errors.workerTazkera && touched.workerTazkera ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.workerTazkera}
-                                </div>
-                              ) : null}
-                            </FormGroup>
 
-                             {/* worker date of birth*/}
+                      {/* worker Tazkera */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="workerTazkera" />
+                        </Label>
+                        <Field className="form-control" name="workerTazkera" />
+                        {errors.workerTazkera && touched.workerTazkera ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.workerTazkera}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* worker date of birth*/}
                       <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="workerDateOfBirth" />
@@ -517,63 +542,58 @@ const [workerGradeType, setWorkerGradeType] = useState([
                           name="workerDateOfBirth"
                           type="date"
                         />
-                        {errors.workerDateOfBirth && touched.workerDateOfBirth ? (
+                        {errors.workerDateOfBirth &&
+                        touched.workerDateOfBirth ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.workerDateOfBirth}
                           </div>
                         ) : null}
                       </FormGroup>
-                           
-                            
-                                          
-                                          
-                                                
                     </Colxx>
 
                     <Colxx xxs="6">
+                      {/* worker position title*/}
 
-                          {/* worker position title*/}
-                    
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="workerPosition" />
-                              </Label>
-                              <Field className="form-control" name="workerPosition" />
-                              {errors.workerPosition && touched.workerPosition ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.workerPosition}
-                                </div>
-                              ) : null}
-                            </FormGroup>
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="workerPosition" />
+                        </Label>
+                        <Field className="form-control" name="workerPosition" />
+                        {errors.workerPosition && touched.workerPosition ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.workerPosition}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                            {/* wroker step */}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="workerStep" />
-                              </Label>
-                              <Field className="form-control" name="workerStep" />
-                              {errors.workerStep && touched.workerStep ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.workerStep}
-                                </div>
-                              ) : null}
-                            </FormGroup>
+                      {/* wroker step */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="workerStep" />
+                        </Label>
+                        <Field className="form-control" name="workerStep" />
+                        {errors.workerStep && touched.workerStep ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.workerStep}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                            {/* worker ID */}
-                            <FormGroup className="form-group has-float-label error-l-175">
-                              <Label>
-                                <IntlMessages id="workerId" />
-                              </Label>
-                              <Field className="form-control" name="workerId" />
-                              {errors.workerId && touched.workerId ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.workerId}
-                                </div>
-                              ) : null}
-                            </FormGroup>
+                      {/* worker ID */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="workerId" />
+                        </Label>
+                        <Field className="form-control" name="workerId" />
+                        {errors.workerId && touched.workerId ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.workerId}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                            {/* worker grade */}
-                            <FormGroup className="form-group has-float-label error-l-175">
+                      {/* worker grade */}
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="workerGrade" />
                         </Label>
@@ -599,13 +619,14 @@ const [workerGradeType, setWorkerGradeType] = useState([
                         </Label>
                         <FormikReactSelect
                           name="workerTashkilGrade"
-                          id="workerTashkilGrade"  
+                          id="workerTashkilGrade"
                           value={values.workerTashkilGrade}
                           options={workerTashkilGrade}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.workerTashkilGrade && touched.workerTashkilGrade ? (
+                        {errors.workerTashkilGrade &&
+                        touched.workerTashkilGrade ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.workerTashkilGrade}
                           </div>
@@ -631,8 +652,7 @@ const [workerGradeType, setWorkerGradeType] = useState([
                         ) : null}
                       </FormGroup>
 
-                      
-                            <FormGroup className="form-group has-float-label error-l-175">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="workerAppointedDate" />
                         </Label>
@@ -641,13 +661,14 @@ const [workerGradeType, setWorkerGradeType] = useState([
                           name="workerAppointedDate"
                           type="date"
                         />
-                        {errors.workerAppointedDate && touched.workerAppointedDate ? (
+                        {errors.workerAppointedDate &&
+                        touched.workerAppointedDate ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.workerAppointedDate}
                           </div>
                         ) : null}
                       </FormGroup>
-                    
+
                       <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="workerStartDate" />
@@ -663,9 +684,6 @@ const [workerGradeType, setWorkerGradeType] = useState([
                           </div>
                         ) : null}
                       </FormGroup>
-                      
-
-                     
                     </Colxx>
                   </Row>
                   <Row>
@@ -675,9 +693,6 @@ const [workerGradeType, setWorkerGradeType] = useState([
                         className="float-right m-5"
                         size="lg"
                         type="submit"
-                        onClick={() => {
-                          handleClick(false);
-                        }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -702,7 +717,10 @@ const [workerGradeType, setWorkerGradeType] = useState([
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

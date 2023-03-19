@@ -52,9 +52,14 @@ const ListPageHeading = ({
   changeGenderBy,
   selectedGenderOption,
   genderOptions,
+  // province
   selectedProvinceOption,
-  provinces,
   changeProvinceBy,
+  provinces,
+  // Level Of Education
+  selectLevelOfEducationOption,
+  changeLevelOfEducationBy,
+  levelOfEdcation,
   onDistrictSearchKey,
   onProvinceSearchKey,
   onResetClick,
@@ -233,6 +238,26 @@ const ListPageHeading = ({
                     onKeyPress={(e) => onIdSearchKey(e)}
                   />
                 </div>
+
+                {/* Education Level */}
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectLevelOfEducationOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {levelOfEdcation.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeLevelOfEducationBy(order.column)}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
 
                 <div>
                   <ReactAutoSugegst

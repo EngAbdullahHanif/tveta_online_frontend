@@ -22,16 +22,24 @@ import {
 
 const servicePath = 'http://localhost:8000';
 const fieldRegisterationApiUrl = `${servicePath}/institute/field-create/`;
-const SignupSchema = Yup.object().shape({
-  FieldId: Yup.string().required(<IntlMessages id="field.FieldIdErr" />),
 
-  FieldName: Yup.string()
+const SignupSchema = Yup.object().shape({
+  fieldId: Yup.string().required(<IntlMessages id="field.FieldIdErr" />),
+
+  fieldName: Yup.string()
     //  .min(3, <IntlMessages id="forms.StdId" />)
     .required(<IntlMessages id="field.FieldNameErr" />),
 
-  FieldEngName: Yup.string().required(
+  fieldEnglishName: Yup.string().required(
     <IntlMessages id="field.FieldEngNameErr" />
   ),
+
+  sector: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.sectorErr" />),
 });
 
 const sectorOptions = [
@@ -41,12 +49,15 @@ const sectorOptions = [
 ];
 
 const FieldRegister = () => {
-  const onSubmit = (values) => {
+  const [isNext, setIsNext] = useState(false);
+  const onSubmit = (values, { resetForm }) => {
     console.log('values', values);
-
+    console.log(values, 'values');
+    setIsNext(true);
+    resetForm();
     //remove the user_id after authentication is done
     const data = {
-      fieldCode: values.fieldCode,
+      fieldId: values.fieldId,
       name: values.fieldName,
       english_name: values.fieldEnglishName,
       sector: values.sector.value,
@@ -70,95 +81,140 @@ const FieldRegister = () => {
           {<IntlMessages id="field.FieldRegisterTitle" />}
         </h3>
         <CardBody>
-          <Formik
-            initialValues={{}}
-            // validationSchema={SignupSchema}
-            onSubmit={onSubmit}
-          >
-            {({
-              handleSubmit,
-              setFieldValue,
-              setFieldTouched,
-              handleChange,
-              handleBlur,
-              values,
-              errors,
-              touched,
-              isSubmitting,
-            }) => (
-              <Form className="av-tooltip tooltip-label-bottom">
-                <Row className="justify-content-center">
-                  <Colxx xxs="10">
-                    {/* Field ID */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="field.FieldIdLabel" />
-                      </Label>
+          {!isNext ? (
+            <Formik
+              initialValues={{
+                fieldId: '',
+                fieldName: '',
+                fieldEnglishName: '',
+                sector: [],
+              }}
+              validationSchema={SignupSchema}
+              onSubmit={onSubmit}
+            >
+              {({
+                handleSubmit,
+                setFieldValue,
+                setFieldTouched,
+                handleChange,
+                handleBlur,
+                values,
+                errors,
+                touched,
+                resetForm,
+              }) => (
+                <Form className="av-tooltip tooltip-label-right error-l-175">
+                  <Row className="justify-content-center">
+                    <Colxx xxs="10">
+                      {/* Field ID */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="field.FieldIdLabel" />
+                        </Label>
 
-                      <Field className="form-control" name="fieldCode" />
-                      {errors.fieldCode && touched.fieldCode ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.fieldCode}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                        <Field className="form-control" name="fieldId" />
+                        {errors.fieldId && touched.fieldId ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.fieldId}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Field Name */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="field.FieldNameLabel" />
-                      </Label>
+                      {/* Field Name */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="field.FieldNameLabel" />
+                        </Label>
 
-                      <Field className="form-control" name="fieldName" />
-                      {errors.fieldName && touched.fieldName ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.fieldName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                        <Field className="form-control" name="fieldName" />
+                        {errors.fieldName && touched.fieldName ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.fieldName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Field Name In English */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="field.FieldEngNameLabel" />
-                      </Label>
-                      <Field className="form-control" name="fieldEnglishName" />
-                      {errors.fieldEnglishName && touched.fieldEnglishName ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.fieldEnglishName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* Field Name In English */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="field.FieldEngNameLabel" />
+                        </Label>
+                        <Field
+                          className="form-control"
+                          name="fieldEnglishName"
+                        />
+                        {errors.fieldEnglishName && touched.fieldEnglishName ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.fieldEnglishName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* sector*/}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        {/* <IntlMessages id="forms.sector" /> */}
-                        sector
-                      </Label>
-                      <FormikReactSelect
-                        name="sector"
-                        id="sector"
-                        value={values.sector}
-                        options={sectorOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                      />
-                      {errors.sector && touched.sector ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.sector}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    <Button className="float-right m-3 ">
-                      {<IntlMessages id="forms.SubimssionButton" />}
-                    </Button>
-                  </Colxx>
-                </Row>
-              </Form>
-            )}
-          </Formik>
+                      {/* sector*/}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="forms.sector" />
+                        </Label>
+                        <FormikReactSelect
+                          name="sector"
+                          id="sector"
+                          value={values.sector}
+                          options={sectorOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.sector && touched.sector ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.sector}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </Colxx>
+                  </Row>
+                  <Row>
+                    {' '}
+                    <Colxx style={{ marginLeft: '5%', marginBottom: '8%' }}>
+                      <Button
+                        className="float-right m-5 "
+                        size="lg"
+                        type="submit"
+                        color="primary"
+                      >
+                        <span className="spinner d-inline-block">
+                          <span className="bounce1" />
+                          <span className="bounce2" />
+                          <span className="bounce3" />
+                        </span>
+                        <span className="label">
+                          <IntlMessages id="forms.SubimssionButton" />
+                        </span>
+                      </Button>
+                    </Colxx>
+                  </Row>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <div
+              className="wizard-basic-step text-center pt-3 "
+              style={{ minHeight: '400px' }}
+            >
+              <div>
+                <h1 className="mb-2">
+                  <IntlMessages id="wizard.content-thanks" />
+                </h1>
+                <h3>
+                  <IntlMessages id="wizard.registered" />
+                </h3>
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
+                  <IntlMessages id="button.back" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardBody>
       </Card>
     </>

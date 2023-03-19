@@ -51,21 +51,43 @@ module.exports = {
   district: 'ولسوال/ناحیه',
   vilage: 'کلی/ قریه',
   /* 02.User Login, Logout, Register */
-  'user.login-title': 'ورود',
-  'user.register': 'ثبت نام',
+  'user.login-title': 'ننوتل/ ورود',
+  'login.wrong-credintialErr': 'بیا هڅه وکړئ/ دوباره کوشش کنید',
+  'login.wrong-credintialErr-1':
+    'غلط برښنالیک یا پسورد/ ایمیل ادرس یا رمز اشتباه',
+  'login.passwordErr-1':
+    'پسورد باید حد اقل 6 توري وي/پسورد باید حد اقل 6 حرف باشد',
+
+  'user.name': 'نوم/نام',
+  'login.userNameErr': 'نوم اړین دی/ نام ضروری است',
+
+  'user.register': 'راجستر',
+  'user.register-button-1': 'راجستر',
   'user.forgot-password': 'فراموشی رمز عبور',
-  'user.email': 'پست الکترونیک',
-  'user.password': 'رمز عبور',
-  'user.forgot-password-question': 'رمز عبورت یادت رفته؟',
+  'user.email': 'برښنالیک/ ایمیل آدرس',
+  'user.password': 'پسورد/ رمز  ',
+  'login.email-addressErr': 'آیدی/برښنالیک اړین دی/آیدی/ایمیل ادرس ضروری است',
+  'login.email-addressErr-1': 'ستاسو برښنالیک سم ندی/ ایمیل ادرس شما درست نیست',
+  'login.passwordErr': 'پسورد   اړین دی/ رمز ضروری است',
+  'user.forgot-password-question': 'پسورډ مو هیر شوی/ رمز عبورت یادت رفته؟',
   'user.fullname': 'نام کامل',
-  'user.login-button': 'ورود',
-  'user.register-button': 'ثبت نام',
+  'user.login-button': 'ننوتل/ ورود',
+  'user.register-button': 'ثبت',
   'user.reset-password-button': 'بازنشانی',
   'user.buy': 'خرید',
   'user.username': 'نام کاربری',
   'user.new-password-again': 'تکرار کلمه عبور جدید',
   'user.new-password': 'رمز جدید',
   'user.reset-password': 'بازنشانی رمزعبور',
+  'user.userRole': 'صلاحیت',
+  'user.roleOption-1': 'ادمین عمومی',
+  'user.roleOption-2': 'ادمین',
+  'user.roleOption-3': 'ولایتی',
+  'user.roleOption-4': 'انستیتوت',
+  'user.roleOption-5': 'کاربر',
+  'user.roleOption-6': 'استاد',
+  'user.roleOption-7': 'شاګرد',
+
   /* 03.Menu */
   'menu.home': 'خانه',
   'menu.app': 'خانه',
@@ -84,7 +106,7 @@ module.exports = {
   'menu.search': 'جستجو',
   'menu.login': 'ورود',
   'menu.student_register': 'ثبت شاگرد',
-  'menu.student_list': 'لست شاگرد',
+  'menu.student_list': 'د شاګردانو لست/ لست شاگردان',
   'menu.student_register_kankor': ' ثبت شاگرد کانکور',
   'menu.forgot-password': 'فراموشی رمز',
   kankorStudentId: 'کانکور ایډی',
@@ -105,13 +127,11 @@ module.exports = {
   departmentNameErr: 'نام دیپارتمنت لازم است',
   departmentEnglishNameErr: 'نام انگلیسی دیپارتمنت لازم است',
   departmentId: 'ایدا دیپارتمنت',
-
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.instituteT': 'انستیتوتونه/ انستیتوتها',
   'menu.student-dismissal': 'منفکی',
-  'menu.dorm-student-dismissal': 'منفکی',
-
+  'menu.dorm-student-dismissal': 'د لیلې نه د شاګرد منفکول',
   'menu.institute_list': 'لست انستیتوت/لیسه',
   'menu.institute_register': 'ثبت انستیتوت/لیسه',
   'menu.todo': 'لیست To-do',
@@ -185,10 +205,10 @@ module.exports = {
   'menu.validations': 'اعتبار سنجی ها',
   'menu.wizard': 'ویزارد',
   'menu.field': 'رشته ها / رشتې',
-  fieldSector: 'سکتور',
+  'field.fieldSector': 'سکتور',
   'menu.teacher-registration': 'د استاد ثبت/ ثبت استاد',
   'menu.field-register': 'د رشتی ثبت/ ثبت رشته',
-  'menu.student-marks-register': 'نومرې/ نمرات',
+  'menu.student-marks-register': 'د نومرو ثبت/ثبت نمرات',
   'menu.attendance-registration': 'د حاضری ثبت/ درج حاضری',
   'menu.dorm-commision': 'د لیلی شمولیت/ شمولیت در لیلیه',
   'menu.teacher-profile': 'پروفایل استاد/ استاد فروفایل',
@@ -203,9 +223,19 @@ module.exports = {
   'menu.student-transfer': 'د شاگرد تبدیلی/ تبدیلی شاگرد',
   'menu.Institute-details': 'مشخصات انستیتوت',
   'menu.marks-display': 'دیو مضمون نمرې/ نمرات یک مضمون',
-  'menu.marks-display-all-subs': 'د ټولو مضمونو نمرې/ نمرات تمام مضامین',
+  'menu.class-marks': 'د یو صنف نمرې/ نمرات یک صنف',
   'menu.single-student-marksUpdate': 'د شاگرد د نمرو اپدیت/ اپدیت نمرات شاگرد',
   'menu.attendance-Update': 'د حاضرۍ تغیر/ تغیر حاضری',
+  'menu.workers': 'کارمند',
+  'menu.kankor-student-list': 'د کانکور sectorType_9لست/ لست کانکور',
+  'menu.worker-register': 'د کارمند ثبتول/ ثبت کارمند',
+  'menu.workers-list': 'د کارمندانو لست/ لست کارمندان',
+  'menu.workers-profile': 'د کارمند پروفایل/ پروفایل کارمند',
+  'menu.promotion-demotion-list': 'د ارتقا شویو انستیتونو/لیسو لست',
+  'menu.subject-list': 'د مضامینو لست/ لست مضامین',
+  'menu.field-list': 'د رشتو لست/ لست رشته ها',
+  'menu.department-register': 'دڅانګې ثبتول/ ثبت دیپارتمنت',
+  'menu.department-list': 'د څانګو لست/ لست دیپارتمنت ها',
 
   /* HR Evaluation */
 
@@ -309,6 +339,7 @@ module.exports = {
   'dashboards.keyword': 'کلمه کلیدی',
   'dashboards.search': 'جستجو',
   'dashboards.top-rated-items': 'موارد دارای بالاترین امتیاز',
+  'option.all': 'ټول/ همه',
 
   /* 05.Pages */
   'pages.add-new': 'افزودن جدید',
@@ -335,7 +366,8 @@ module.exports = {
   'pages.bake-progress': 'فرآیند پخت',
   'pages.popularity': 'محبوبیت',
   'pages.comments': 'نظرات',
-  'pages.error-title': 'ای واااای ...انگار یه خطایی پیش اومده!!',
+  'user.email-Id': 'آیدی/ایمیل کاربر',
+  'pages.error-title': 'درخواست اشتباه! لطفا دوباره کوشش نمایید',
   'pages.error-code': 'کد خطا',
   'pages.go-back-home': 'بازگشت به صفحه اصلی',
   'pages.mailing-info':
@@ -820,11 +852,14 @@ module.exports = {
   'forms.StdNecessaryWorkLabel': 'اړین کار/ کار ضروری',
   'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
   'forms.ConfirmButton': 'تایید/ تصدیق',
-  'menu.attendance': 'حاضری',
+  'menu.attendance': 'د حاضرۍ لست/ لست حاضری',
+  'student.dismissal': ' د شاګرد منفکول/ منفک کردن شاگرد',
+
   'forms.totolEducationalDays': 'تعلیمی ورځې/روزهای تعلیمی',
   'forms.totolEduactionalDaysErr':
     'د دتعلیمی ورځو لیکل اړین دي/ روز های تعلیمی ضروری است',
   'attendance.departmentLabel': 'دیپارتمنت',
+  'attendance-list': 'د حاضرۍ اپدیت لست',
 
   'marks.attendanceResult': 'وروستۍ پایله / نتیجه نهایی',
   'marks.eligable_Deprive': 'شامل امتحان/ محرومله',
@@ -1109,7 +1144,7 @@ module.exports = {
   'subject.curriculum': 'د نصاب ثبت / ثبت نصاب',
   'curriculum.curriculumTittle': 'د نصاب ثبت/ ثبت نصاب',
   'curriculum.departmentIdLabel': 'دیپارتمنت',
-
+  'menu.curriculum-list': 'د نصابونو لست/ لست نصاب ها',
   'curriculum.subjectdLabel': 'مضمون',
   'curriculum.subjectdErr': 'مضمون اړین دی/ مضمون ضروری است',
 
@@ -1308,6 +1343,8 @@ module.exports = {
   'student.dissmissalDocumentErr':
     'د منفکي اسناد اړین دی/ اسناد منفکی ضروری است',
   'student.buttonDismissal': 'منفک',
+  'studendts.dismisseds-students': 'لست شاگردان منفک ',
+  'transfered-Students': 'د تبدیل شویو شاګردانو لست',
 
   // Student Dismissal from dorm
   'student.dismissalFromDormTitle':
@@ -1336,6 +1373,7 @@ module.exports = {
   'subject.typeErr': 'د مضمون ډول اړین دی / نام مضمون ضروری است',
   'subject.systemType': 'د مضمون سیستم اړین دی/ سیستم مضمون ضروری است',
   'forms.SubjectCreditLabel': 'کریدت',
+  'subject.register': 'د مضمون ثبت/ ثبت مضمون',
 
   // Marks Update
   'marks.singleStudentMarksUpdate': 'د نمراتو اپدیت/ تغییر نمرات',
@@ -1518,6 +1556,7 @@ module.exports = {
   'inst.typeErr': 'د انستیتوت ډول اړین دی/ نوع انستیتوت ضروری است',
   'institute.gender': 'جندر اړین دی/ جنسیت ضروری است',
   'search.institute.name': 'د انستیتوت نوم ',
+  'search.department.name': 'د دیپارتمنت نوم ',
 
   'subject.name': 'د مضمون نوم / نام مضمون',
   'subject.english_name': 'د مضمون انگلیسی نوم / نام انگلیسی مضمون',
@@ -1549,8 +1588,8 @@ module.exports = {
   'institute.search': 'د انستیتوت لتول',
   'evaluation.filter': 'فلتر',
 
-  'dorm.list': 'د لیلی لیست',
-  'dorm.register': 'د لیلی ثبت',
+  'dorm.list': 'د لیلیو لیست/ لست لیلیه ها',
+  'dorm.register': 'د لیلی ثبت/ثبت لیله',
 
   'forms.educationYearLabel': 'تحصیلی کال / سال تحصیلی',
   'forms.educationYearErr': ' تحصیلی کال اړین دی / سال تحصیلی ضروری است',

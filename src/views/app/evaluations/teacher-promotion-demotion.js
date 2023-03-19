@@ -38,6 +38,27 @@ const promotionTypeOptions = [
 
 const SignupSchema = Yup.object().shape({
   evaluator: Yup.string().required(<IntlMessages id="teacher.evaluatorErr" />),
+
+  teacher: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.sectorErr" />),
+
+  teacher: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.sectorErr" />),
+
+  teacher: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.sectorErr" />),
 });
 const createNotification = (type, className) => {
   const cName = className || '';

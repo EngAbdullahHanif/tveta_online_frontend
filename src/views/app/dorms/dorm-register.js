@@ -327,13 +327,12 @@ const DormRegistration = (values) => {
   };
 
   const [dormTypeOption, setDormTypeOption] = useState('');
-  const [isNext, setIsNext] = useState(true);
-  const handleClick = (event) => {
-    // setIsNext(event);
-  };
+  const [isNext, setIsNext] = useState(false);
 
-  const onRegister = (values) => {
+  const onRegister = (values, { resetForm }) => {
     console.log(' The Values', values);
+    setIsNext(true);
+    resetForm();
     // if (errors) {
     //   console.log('error');
 
@@ -387,7 +386,7 @@ const DormRegistration = (values) => {
       <Card>
         <h3 className="mt-5 m-5">{<IntlMessages id="dorm.RegisterTitle" />}</h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               enableReinitialize={true}
               initialValues={initialValues}
@@ -400,6 +399,7 @@ const DormRegistration = (values) => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right error-l-100">
                   <Row className="justify-content-center inlineBlock">
@@ -655,9 +655,6 @@ const DormRegistration = (values) => {
                         size="lg"
                         type="submit"
                         color="primary"
-                        onClick={() => {
-                          handleClick(false);
-                        }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -685,7 +682,10 @@ const DormRegistration = (values) => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

@@ -41,12 +41,26 @@ const ListPageHeading = ({
   // toggleModal,
   heading,
   onIdSearchKey,
-  changeGenderBy,
+  // Gender
   selectedGenderOption,
+  changeGenderBy,
   genderOptions,
+  selectedShiftOption,
+  changeShiftBy,
+  shiftOption,
+  // Educational Years
+  selectedEducationalYearOption,
+  changeEducationalYearBy,
+  educationYears,
+  // Level Of Education
+  selectLevelOfEducationOption,
+  changeLevelOfEducationBy,
+  levelOfEdcation,
+  // Province
   selectedProvinceOption,
-  provinces,
   changeProvinceBy,
+  provinces,
+  // Districts
   onDistrictSearchKey,
   onProvinceSearchKey,
   onResetClick,
@@ -162,6 +176,7 @@ const ListPageHeading = ({
             </span>
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
+                {/* Gender */}
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark" size="xs">
                     <IntlMessages id="filter" />
@@ -180,6 +195,8 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
+
+                {/* Province */}
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark" size="xs">
                     <IntlMessages id="filter" />
@@ -204,6 +221,8 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
+
+                {/* District */}
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
@@ -213,6 +232,8 @@ const ListPageHeading = ({
                     onKeyPress={(e) => onDistrictSearchKey(e)}
                   />
                 </div>
+
+                {/* Student Id */}
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
@@ -223,7 +244,28 @@ const ListPageHeading = ({
                   />
                 </div>
 
-                {/* <div>
+                {/* Timing Shift */}
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectedShiftOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {shiftOption.map((shift, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeShiftBy(shift.column)}
+                        >
+                          {shift.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+
+                {/* Institute */}
+                <div style={{ marginLeft: '75px' }}>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(opt) => {
@@ -231,7 +273,70 @@ const ListPageHeading = ({
                     }}
                     placeholder={messages['search.institute.name']}
                   />
-                </div> */}
+                </div>
+
+                <div>
+                  {/* Educational Year */}
+                  <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                    <DropdownToggle caret color="outline-dark" size="xs">
+                      <IntlMessages id="filter" />
+                      {selectedEducationalYearOption.label}
+                      {/* {Educationnal} */}
+                      {/* <span>fdsg</span> */}
+                    </DropdownToggle>
+                    <DropdownMenu
+                      style={{
+                        height: '300px',
+                        overflowY: 'scroll',
+                        overflowX: 'hidden',
+                      }}
+                    >
+                      {educationYears.map((order, index) => {
+                        return (
+                          <DropdownItem
+                            key={index}
+                            onClick={() =>
+                              changeEducationalYearBy(order.column)
+                            }
+                          >
+                            {order.label}
+                          </DropdownItem>
+                        );
+                      })}
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                </div>
+
+                {/* Education Level */}
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectLevelOfEducationOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {levelOfEdcation.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeLevelOfEducationBy(order.column)}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+
+                {/* INTEGRATE THIS BASE ON DEPARTMENT */}
+                <div>
+                  <ReactAutoSugegst
+                    data={institutes}
+                    select={(opt) => {
+                      setSelectedInstitute(opt);
+                    }}
+                    placeholder={messages['search.department.name']}
+                  />
+                </div>
               </div>
               <Button
                 color="outline-dark"
@@ -240,6 +345,9 @@ const ListPageHeading = ({
                 onClick={() => {
                   changeGenderBy('all');
                   changeProvinceBy('all');
+                  changeShiftBy('all');
+                  changeLevelOfEducationBy('all');
+                  changeEducationalYearBy('all');
                   document.getElementById('district').value = '';
                   document.getElementById('student_id').value = '';
                   setSelectedInstitute('');
@@ -279,3 +387,5 @@ const ListPageHeading = ({
 };
 
 export default injectIntl(ListPageHeading);
+
+// Study time (Shift) Should be integrated

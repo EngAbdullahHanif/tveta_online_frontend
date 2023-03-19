@@ -46,8 +46,18 @@ module.exports = {
   /* 02.User Login, Logout, Register */
   'user.login-title': 'Login',
   'user.register': 'Register',
+  'user.register-button-1': 'Register',
   'user.forgot-password': 'Forgot Password',
-  'user.email': 'E-mail',
+  'user.email': 'Email Address',
+  'login.email-addressErr': 'Please Enter Your Email Address!',
+  'login.email-addressErr-1': 'Incorrect Email Address',
+  'login.passwordErr': 'Password is Required!',
+  'login.wrong-credintialErr': 'Please Try Again',
+  'login.wrong-credintialErr-1': 'Wrong Credintials',
+  'login.passwordErr-1': 'Password should be at least 6 Characters',
+  'user.name': 'Username',
+  'login.userNameErr': 'Name is required!',
+
   'user.password': 'Password',
   'user.forgot-password-question': 'Forget password?',
   'user.fullname': 'Full Name',
@@ -59,6 +69,15 @@ module.exports = {
   'user.new-password-again': 'New Password Again',
   'user.new-password': 'New Password',
   'user.reset-password': 'Reset Password',
+  'user.userRole': 'User Role',
+  'user.roleOption-1': 'Super User',
+  'user.roleOption-2': 'Admin',
+  'user.roleOption-3': 'Provincial',
+  'user.roleOption-4': 'institute',
+  'user.roleOption-5': 'User',
+  'user.roleOption-6': 'Teacher',
+  'user.roleOption-7': 'Student',
+
   /* 03.Menu */
   'menu.home': 'Home',
   'menu.app': 'Home',
@@ -155,7 +174,7 @@ module.exports = {
   'menu.field': 'Fields',
   'menu.field-register': 'Register',
   'menu.teacher-registration': 'Register',
-  'menu.menu.student-marks-register': 'Add marks',
+  'menu.menu.student-marks-register': 'Marks Register',
   'menu.attendance-registration': 'Attendance Registration',
   'menu.dorm-commision': 'Regisration hostel',
   'menu.teacher-profile': 'Teacher Profile',
@@ -170,11 +189,21 @@ module.exports = {
   'menu.Institute-details': 'Institute Details',
   'menu.dorm-details': 'Dorm Details',
   'menu.marks-display': 'Marks',
-  'menu.marks-display-all-subs': 'Marks of All Subjects',
+  'menu.class-marks': 'Class marks',
   'menu.student-dismissal': 'Student Dismissal',
   'menu.dorm-student-dismissal': ' Dorm Student Dismissal',
   'menu.single-student-marksUpdate': 'Student Marks Update',
   'menu.attendance-Update': 'Attendance Update',
+  'menu.workers': 'Staffs',
+  'menu.kankor-student-list': 'Kankor Students List',
+  'student.dismissal': 'Student Dismissal',
+  'menu.worker-register': 'Staff Registration',
+  'menu.workers-list': 'Staffs List',
+  'menu.workers-profile': "Staff's Profile",
+  'menu.promotion-demotion-list': 'Promoted/Demoted Institute/School List',
+  'menu.field-list': 'Field List',
+  'menu.department-register': 'Department Registration',
+  'menu.department-list': 'Departments List',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -185,6 +214,7 @@ module.exports = {
   'dashboards.orders': 'Orders',
   'dashboards.refunds': 'Refunds',
   'dashboards.recent-orders': 'Recent Orders',
+  'field.fieldSector': 'Sector',
   'dashboards.product-categories': 'Product Categories',
   'dashboards.cakes': 'Cakes',
   'dashboards.tickets': 'Tickets',
@@ -228,6 +258,7 @@ module.exports = {
   'dashboards.keyword': 'Keyword',
   'dashboards.search': 'Search',
   'dashboards.top-rated-items': 'Top Rated Items',
+  'option.all': 'All',
 
   /* 05.Pages */
   'pages.add-new': 'ADD NEW',
@@ -419,6 +450,9 @@ module.exports = {
   'button.TeacherBackround': 'Background',
   'button.Teacherprofile': 'profile',
   'button.back': 'Back',
+  'search.institute.name': 'institute name',
+  'search.department.name': 'department name',
+  'user.email-Id': 'Username Id/Email',
 
   'button.states-text':
     'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
@@ -732,12 +766,13 @@ module.exports = {
   'forms.StdSicknessErr': 'this field is required!',
   'forms.StdNecessaryWorkLabel': 'Necessary Work',
   'forms.ConfirmButton': 'Confirm',
-  'menu.attendance': 'Attendance',
+  'menu.attendance': 'AttendanceList',
   'forms.totolEducationalDays': 'Educational Days',
   'forms.totolEduactionalDaysErr': 'Total Educational Days Required!',
   'marks.attendanceResult': 'Final Attendance',
   'marks.eligable_Deprive': 'Eligibility',
   'attendance.departmentLabel': 'Department',
+  'attendance-list': 'Attendance List For UPdate',
 
   // Field Registration
   'field.FieldRegisterTitle': 'Field Registeration',
@@ -915,6 +950,8 @@ module.exports = {
   'dorm.TotalKitchensErr': ' Total Number of Kitchens Required!',
   'dorm.ToiletLabel': ' Total Toilets',
   'dorm.ToiletErr': ' Total Number of Toilets Required!',
+  'dorm.list': 'Dorms List',
+  'dorm.register': 'Dorm Registration',
 
   // Students Registration in Dorm
   'dorm.StudentRegisterTitle': 'Student Registration',
@@ -1000,6 +1037,7 @@ module.exports = {
   'student.transferTitle': 'Transfer',
   'student.transferDateLabel': 'Transfer Date',
   'student.transferDocuments': 'Upgrading Documents',
+  'transfered-Students': 'Transfered Student List',
 
   // Curriculum
   'subject.curriculum': 'Curriculum',
@@ -1011,6 +1049,7 @@ module.exports = {
   'curriculum.classLabel': 'Class',
   'curriculum.eduactionalYearLabel': 'Educational Year',
   'curriculum.eduactionalYearErr': 'Educational Year Is Required!',
+  'menu.curriculum-list': 'Curriculums List ',
 
   //Institute Details Page
   'institute.detailsTitle': 'More Details',
@@ -1186,6 +1225,7 @@ module.exports = {
   'student.dissmissalDocuments': 'Dismissal Documents',
   'student.dissmissalDocumentErr': 'Dismissal Document Is Required!',
   'student.buttonDismissal': 'Dismiss',
+  'studendts.dismisseds-students': 'Dismissed Students',
 
   // Student Dismissal from dorm
   'student.dismissalFromDormTitle': 'Dismissal from Dorm',
@@ -1212,6 +1252,8 @@ module.exports = {
   'subject.creditErr': 'Credit is Required!',
   'subject.typeErr': ' Subject Type Is Required!',
   'subject.systemType': ' Subject System Type Is Required!',
+  'menu.subject-list': 'Subjects List',
+  'subject.register': 'Subject Register',
 
   // Marks Update
   'marks.singleStudentMarksUpdate': ' Marks Update',

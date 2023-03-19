@@ -190,7 +190,7 @@ const InstituteRegister = () => {
 
   const [initialGender, setInitialGender] = useState([]);
 
-  const [isNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(false);
   const [province, setProvince] = useState({});
   const [instType, setInstType] = useState({});
   const [gender, setGender] = useState({});
@@ -323,15 +323,29 @@ const InstituteRegister = () => {
       : null,
   });
 
-  const handleClick = (event) => {
-    // setIsNext(event);
-  };
+  // const onRegister = (values, { resetForm }) => {
+  //   console.log(values, 'Values ');
+  //   resetForm();
+  //   setIsNext(true);
+  //   // if (!values.province || values.province.value === '0') {
+  //   //   return;
+  //   // }
+  //   // if (!values.instType || values.instType.value === '0') {
+  //   //   return;
+  //   // }
+
+  //   // insert the data to the API with Axios here and redirect to the current page
+  // const handleClick = (event) => {
+  //   // setIsNext(event);
+  // };
 
   // post student record to server
   const postInstituteRecord = async (data) => {
     const response = await callApi('institute/institute_create', 'POST', data);
     if (response) {
       createNotification('success', 'filled');
+      resetForm();
+      setIsNext(true);
       console.log('success message from backend', response);
     } else {
       createNotification('error', 'filled');
@@ -367,7 +381,7 @@ const InstituteRegister = () => {
           {<IntlMessages id="inst.register.title" />}
         </h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               enableReinitialize={true}
               validateOnMount
@@ -388,6 +402,7 @@ const InstituteRegister = () => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right  error-l-200">
                   <Row className="justify-content-center">
@@ -573,9 +588,6 @@ const InstituteRegister = () => {
                           size="lg"
                           type="submit"
                           color="primary"
-                          onClick={() => {
-                            handleClick(false);
-                          }}
                         >
                           <span className="spinner d-inline-block ">
                             <span className="bounce1" />
@@ -604,7 +616,10 @@ const InstituteRegister = () => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

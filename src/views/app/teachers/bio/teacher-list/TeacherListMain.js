@@ -5,7 +5,6 @@ import IntlMessages from 'helpers/IntlMessages';
 import './list.css';
 import callApi from 'helpers/callApi';
 
-
 // import { servicePath } from 'constants/defaultValues';
 
 import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
@@ -193,6 +192,30 @@ const Provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
+
+const levelOfEdcation = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  {
+    value: '14th',
+    label: <IntlMessages id="teacher.EducationLevelOption_1" />,
+  },
+  {
+    value: 'bachelor',
+    label: <IntlMessages id="teacher.EducationLevelOption_2" />,
+  },
+  {
+    value: 'master',
+    label: <IntlMessages id="teacher.EducationLevelOption_3" />,
+  },
+  {
+    value: 'PHD',
+    label: <IntlMessages id="teacher.EducationLevelOption_4" />,
+  },
+];
+
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -206,6 +229,11 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectLevelOfEducationOption, setSelectLevelOfEducationOption] =
+    useState({
+      column: 'all',
+      label: 'سطح تحصیلی',
+    });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
@@ -223,7 +251,12 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
+  }, [
+    selectedPageSize,
+    selectedGenderOption,
+    selectedProvinceOption,
+    selectLevelOfEducationOption,
+  ]);
 
   useEffect(() => {
     console.log('institute', institute);
@@ -231,7 +264,7 @@ const ThumbListPages = ({ match }) => {
     async function fetchData() {
       if (institute !== '') {
         const res = await axios.get(
-          `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
+          `${teacherInstituteApiUrl}?institute_id=${institute.value}&page=${currentPage}&limit=${selectedPageSize}`
         );
         console.log('res', res.data);
         setInstituteTeachers(res.data);
@@ -247,20 +280,18 @@ const ThumbListPages = ({ match }) => {
           setTeacherId('');
           setRest(false);
         }
-      const response = await callApi('/institute/classs/', '', null);
-      if (response.data && response.status === 200) {
+        const response = await callApi('institute/classs/', '', null);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          // setTotalPage(response.data.total_pages);
+          setSelectedItems([]);
+          // setTotalItemCount(response.data.totalItem);
+          setIsLoaded(true);
+        } else {
+          setItems([]);
+          console.log('insttutes error');
+        }
 
-      setItems(response.data);
-      // setTotalPage(response.data.total_pages);
-      setSelectedItems([]);
-      // setTotalItemCount(response.data.totalItem);
-      setIsLoaded(true);
-      } else {
-        setItems([]);
-    console.log('institutes error');
-
-      }
-      
         // axios
         //   .get(
         //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
@@ -462,6 +493,7 @@ const ThumbListPages = ({ match }) => {
           }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
+          selectLevelOfEducationOption={selectLevelOfEducationOption}
           genderOptions={genderOptions}
           provinces={Provinces}
           changePageSize={setSelectedPageSize}
@@ -487,6 +519,13 @@ const ThumbListPages = ({ match }) => {
               setDistrict(e.target.value.toLowerCase());
             }
           }}
+          // Level of Education
+          changeLevelOfEducationBy={(column) => {
+            setSelectLevelOfEducationOption(
+              levelOfEdcation.find((x) => x.column === column)
+            );
+          }}
+          levelOfEdcation={levelOfEdcation}
           onResetClick={setRest}
           reset={rest}
           pageSizes={pageSizes}

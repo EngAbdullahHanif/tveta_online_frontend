@@ -29,13 +29,13 @@ const data = [
 
       {
         icon: 'CG.CgUserList',
-        label: 'Dismissed-Students',
+        label: 'studendts.dismisseds-students',
         to: `${adminRoot}/students/dismissed-list`,
         // roles: [UserRole.Admin],
       },
       {
         icon: 'CG.CgUserList',
-        label: 'Transfered-Students',
+        label: 'transfered-Students',
         to: `${adminRoot}/students/transfered-list`,
         // roles: [UserRole.Admin],
       },
@@ -56,7 +56,7 @@ const data = [
       // },
       {
         icon: 'FA.FaList',
-        label: 'Attendance-List',
+        label: 'attendance-list',
         to: `${adminRoot}/students/attendance-list`,
       },
       {
@@ -66,14 +66,14 @@ const data = [
         newWindow: false,
       },
       {
-        icon: 'MD.MdAddBox',
+        icon: 'FA.FaList',
         label: 'menu.marks-display',
         to: `${adminRoot}/students/marks-display`,
         newWindow: false,
       },
       {
-        icon: 'MD.MdAddBox',
-        label: 'menu.marks-display-all-subs',
+        icon: 'FA.FaList',
+        label: 'menu.class-marks',
         to: `${adminRoot}/students/marks-display-allsubs`,
         newWindow: false,
       },
@@ -84,13 +84,13 @@ const data = [
         newWindow: false,
       },
       {
-        icon: 'CG.CgUserList',
-        label: 'Kankor Student List',
+        icon: 'FA.FaList',
+        label: 'menu.kankor-student-list',
         to: `${adminRoot}/students/kankor-students`,
         newWindow: false,
       },
       {
-        icon: 'CG.CgUserList',
+        icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'student.dismissal',
         to: `${adminRoot}/students/student-dismissal`,
         newWindow: false,
@@ -107,7 +107,7 @@ const data = [
     subs: [
       {
         icon: 'CG.CgUserList',
-        label: 'teacher list',
+        label: 'menu.teacher_list',
         to: `${adminRoot}/teachers/teachers`,
       },
       {
@@ -117,11 +117,11 @@ const data = [
         to: `${adminRoot}/teachers/register`,
       },
 
-      {
-        icon: 'IM.ImProfile',
-        label: 'menu.teacher-profile',
-        to: `${adminRoot}/teachers/profile`,
-      },
+      // {
+      //   icon: 'IM.ImProfile',
+      //   label: 'menu.teacher-profile',
+      //   to: `${adminRoot}/teachers/profile`,
+      // },
 
       {
         icon: 'MD.MdAddBox',
@@ -140,25 +140,26 @@ const data = [
     id: 'workers',
     icon: 'FA.FaUsers',
     // label: 'menu.students',
-    label: 'workers',
+    label: 'menu.workers',
     to: `${adminRoot}/workers`,
     // roles: [UserRole.Admin, UserRole.Editor],
     subs: [
       {
-        icon: 'GR.GrUserAdd',
-        label: 'worker register',
-        to: `${adminRoot}/workers/worker`,
-        newWindow: false,
-      },
-      {
         icon: 'CG.CgUserList',
-        label: 'worker list',
+        label: 'menu.workers-list',
         to: `${adminRoot}/workers/worker-list`,
         newWindow: false,
       },
       {
+        icon: 'GR.GrUserAdd',
+        label: 'menu.worker-register',
+        to: `${adminRoot}/workers/worker`,
+        newWindow: false,
+      },
+
+      {
         icon: 'IM.ImProfile',
-        label: 'worker Profile',
+        label: 'menu.workers-profile',
         to: `${adminRoot}/workers/workerId`,
         newWindow: false,
       },
@@ -188,14 +189,14 @@ const data = [
       },
       {
         icon: 'FA.FaList',
-        label: 'promotion-demotion-list',
+        label: 'menu.promotion-demotion-list',
         to: `${adminRoot}/institutes/promotion-demotion-list`,
       },
-      {
-        icon: 'BI.BiMessageAltDetail',
-        label: 'menu.Institute-details',
-        to: `${adminRoot}/institutes/institute-details`,
-      },
+      // {
+      //   icon: 'BI.BiMessageAltDetail',
+      //   label: 'menu.Institute-details',
+      //   to: `${adminRoot}/institutes/institute-details`,
+      // },
     ],
   },
   {
@@ -224,11 +225,11 @@ const data = [
         label: 'menu.dorm-students',
         to: `${adminRoot}/dorms/students`,
       },
-      {
-        icon: 'BI.BiMessageAltDetail',
-        label: 'menu.dorm-details',
-        to: `${adminRoot}/dorms/details`,
-      },
+      // {
+      //   icon: 'BI.BiMessageAltDetail',
+      //   label: 'menu.dorm-details',
+      //   to: `${adminRoot}/dorms/details`,
+      // },
       {
         icon: 'IO.IoPersonRemoveSharp',
         label: 'menu.dorm-student-dismissal',
@@ -243,34 +244,24 @@ const data = [
     to: `${adminRoot}/subjects`,
     subs: [
       {
+        icon: 'FA.FaList',
+        label: 'menu.subject-list',
+        to: `${adminRoot}/subjects/subject-list`,
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'subject.register',
         to: `${adminRoot}/subjects/register`,
       },
       {
+        icon: 'FA.FaList',
+        label: 'menu.curriculum-list',
+        to: `${adminRoot}/subjects/curriculum-list`,
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'subject.curriculum',
         to: `${adminRoot}/subjects/curriculum`,
-      },
-      {
-        icon: 'MD.MdDashboard',
-        label: 'provincail Dashboard',
-        to: `${adminRoot}/subjects/provincial-dash`,
-      },
-      {
-        icon: 'MD.MdDashboard',
-        label: 'Admin dashboard',
-        to: `${adminRoot}/subjects/admin-dashboard`,
-      },
-      {
-        icon: 'FA.FaList',
-        label: 'subject-list',
-        to: `${adminRoot}/subjects/subject-list`,
-      },
-      {
-        icon: 'FA.FaList',
-        label: 'curriculum-list',
-        to: `${adminRoot}/subjects/curriculum-list`,
       },
     ],
   },
@@ -300,26 +291,26 @@ const data = [
     to: `${adminRoot}/fields`,
     subs: [
       {
+        icon: 'FA.FaList',
+        label: 'menu.field-list',
+        to: `${adminRoot}/fields/field-list`,
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'menu.field-register',
         to: `${adminRoot}/fields/register`,
       },
 
       {
-        icon: 'MD.MdAddBox',
-        label: 'department-register',
-        to: `${adminRoot}/fields/department-register`,
-      },
-      {
         icon: 'FA.FaList',
-        label: 'field-list',
-        to: `${adminRoot}/fields/field-list`,
+        label: 'menu.department-list',
+        to: `${adminRoot}/fields/department-list`,
       },
 
       {
-        icon: 'FA.FaList',
-        label: 'department-list',
-        to: `${adminRoot}/fields/department-list`,
+        icon: 'MD.MdAddBox',
+        label: 'menu.department-register',
+        to: `${adminRoot}/fields/department-register`,
       },
     ],
   },

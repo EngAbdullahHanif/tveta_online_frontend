@@ -260,68 +260,68 @@ const InstituteRegister = () => {
   // this function is used to update all the state of the fields in case we are updating a record
   function updateFormFields() {}
 
-  const ValidationSchema = Yup.object().shape({
-    institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
+  // const ValidationSchema = Yup.object().shape({
+  //   institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
 
-    province: updateMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-      : null,
+  //   province: updateMode
+  //     ? Yup.object()
+  //         .shape({
+  //           value: Yup.string().required(),
+  //         })
+  //         .nullable()
+  //         .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
+  //     : null,
 
-    instituteType: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  //   instituteType: Yup.object()
+  //     .shape({
+  //       value: Yup.string().required(),
+  //     })
+  //     .nullable()
+  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-    institueCityType: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  //   institueCityType: Yup.object()
+  //     .shape({
+  //       value: Yup.string().required(),
+  //     })
+  //     .nullable()
+  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-    institueLanguage: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  //   institueLanguage: Yup.object()
+  //     .shape({
+  //       value: Yup.string().required(),
+  //     })
+  //     .nullable()
+  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-    province: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  //   province: Yup.object()
+  //     .shape({
+  //       value: Yup.string().required(),
+  //     })
+  //     .nullable()
+  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-    district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+  //   district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
 
-    village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+  //   village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 
-    instType: updateMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="inst.typeErr" />)
-      : null,
+  //   instType: updateMode
+  //     ? Yup.object()
+  //         .shape({
+  //           value: Yup.string().required(),
+  //         })
+  //         .nullable()
+  //         .required(<IntlMessages id="inst.typeErr" />)
+  //     : null,
 
-    gender: updateMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="institute.gender" />)
-      : null,
-  });
+  //   gender: updateMode
+  //     ? Yup.object()
+  //         .shape({
+  //           value: Yup.string().required(),
+  //         })
+  //         .nullable()
+  //         .required(<IntlMessages id="institute.gender" />)
+  //     : null,
+  // });
 
   // const onRegister = (values, { resetForm }) => {
   //   console.log(values, 'Values ');
@@ -393,7 +393,7 @@ const InstituteRegister = () => {
                 instType: initialInstType,
                 gender: initialGender,
               }}
-              validationSchema={ValidationSchema}
+              // validationSchema={ValidationSchema}
               onSubmit={onRegister}
             >
               {({

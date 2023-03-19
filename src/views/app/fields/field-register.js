@@ -50,6 +50,8 @@ const sectorOptions = [
 
 const FieldRegister = () => {
   const [isNext, setIsNext] = useState(false);
+
+  // Onregister
   const onSubmit = (values, { resetForm }) => {
     console.log('values', values);
     console.log(values, 'values');

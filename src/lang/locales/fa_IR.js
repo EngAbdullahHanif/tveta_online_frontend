@@ -227,7 +227,7 @@ module.exports = {
   'menu.single-student-marksUpdate': 'د شاگرد د نمرو اپدیت/ اپدیت نمرات شاگرد',
   'menu.attendance-Update': 'د حاضرۍ تغیر/ تغیر حاضری',
   'menu.workers': 'کارمند',
-  'menu.kankor-student-list': 'د کانکور sectorType_9لست/ لست کانکور',
+  'menu.kankor-student-list': 'د کانکور/لست کانکور',
   'menu.worker-register': 'د کارمند ثبتول/ ثبت کارمند',
   'menu.workers-list': 'د کارمندانو لست/ لست کارمندان',
   'menu.workers-profile': 'د کارمند پروفایل/ پروفایل کارمند',
@@ -780,6 +780,13 @@ module.exports = {
   'forms.sectorErr': 'سکتور اړین دی/ سکتور ضروری است',
   'student.photo': 'انځور / عکس',
   'student.photoErr': 'د شاگرد انځور اړین دی/ عکس شاګرد ضروری است',
+  'student.ID': 'آیدی',
+  'student.interenaceType': 'د جذب نوعیت',
+  'student.PhoneNo': 'د تلفن نمبر',
+  'study.type': 'د شاګرد ډول',
+  'department.nameErr': 'د دیپارتمنت نوم اړین دی/ نام دیپارتمنت ضروری است',
+  'department.englishNameErr':
+    'د دیپارتمنت انګریزی نوم اړین دی/ نام انګلسی دیپارتمنت ضروری است',
 
   // ولایات
   'forms.StdSchoolProvinceOptions_1': 'بدخشان',
@@ -860,6 +867,9 @@ module.exports = {
     'د دتعلیمی ورځو لیکل اړین دي/ روز های تعلیمی ضروری است',
   'attendance.departmentLabel': 'دیپارتمنت',
   'attendance-list': 'د حاضرۍ اپدیت لست',
+  'department.field': 'رشته',
+  'department.FieldEngNameLabel': 'د څانګې انګریزي نوم/ نام انگلسی دیپارتمنت',
+  'department.departmentRegisterlabel': 'د څانګې ثبت/ ثبت دیپارتمنت',
 
   'marks.attendanceResult': 'وروستۍ پایله / نتیجه نهایی',
   'marks.eligable_Deprive': 'شامل امتحان/ محرومله',
@@ -1095,6 +1105,8 @@ module.exports = {
   'evaluation.evaluationDetails': 'د ارزیابۍ نور جزیات/ جزیات دیگر',
   'teacher.EvaluatedMale': 'ارزیابی شوي نارینه/ ارزیابی شده ذکور',
   'teacher.EvaluatedFemale': 'ارزیابي شوي ښځینه/ ارزیابی شده اناث',
+  'forms.teacherIdErr': 'د استاد ایډي اړینه ده/ آیدی استاد ضروری است',
+
   // Hr Evaluation
   'teacher.EvalautionHrTitle':
     'د استاد ارزونه د بشری منابع لخوا/ ارزیابی استاد توسط منابع بشری',

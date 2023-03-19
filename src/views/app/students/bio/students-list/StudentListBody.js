@@ -55,7 +55,7 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                 </p>
               </NavLink>
               <NavLink
-                to={`teacher/${student.student_id}`}
+                to={`student/${student.student_id}`}
                 style={{ width: '15%' }}
               >
                 <p className="list-item-heading mb-1 truncate">
@@ -68,6 +68,12 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                 style={{ width: '15%', textAlign: 'right' }}
               >
                 {student.father_name}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
+              >
+                {student.phone_number}
               </p>
 
               {/* UN COMMINT IT WHEN THE API IS COMPLETED */}
@@ -130,13 +136,18 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                 style={{ display: 'flex', flexDirection: 'row' }}
                 className="align-self-center pr-4"
               >
+                 <NavLink
+                to={`/app/students/register/${student.student_id}`}
+                // style={{ width: '10%' }}
+              >
                 <div>
                   <BsPencilSquare
                     outline
                     style={{ fontSize: '20px' }}
                     id="updateIcon"
-                  />
+                    />
                 </div>
+                    </NavLink>
                 <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"

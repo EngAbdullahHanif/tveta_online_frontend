@@ -166,6 +166,7 @@ const AllSubjectsMarks = ({ match }) => {
   };
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', '', null);
+    console.log('response of department', response)
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -178,7 +179,7 @@ const AllSubjectsMarks = ({ match }) => {
   };
 
   const fetchClasses = async () => {
-    const response = await callApi('/institute/classs/', '', null);
+    const response = await callApi('institute/classs/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -191,7 +192,7 @@ const AllSubjectsMarks = ({ match }) => {
   };
 
   const fetchSubjects = async () => {
-    const response = await callApi('/institute/subject/', '', null);
+    const response = await callApi('institute/subject/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,

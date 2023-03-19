@@ -70,7 +70,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
       <Row>
         {/* Teachers */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
-          <Card style={{ minHeight: '530px', marginBottom: '7% ' }} id="divId">
+          {/* <Card style={{ minHeight: '530px', marginBottom: '7% ' }} id="divId"> */}{' '}
+          {/* we commented this line because we wanna stop howering*/}{' '}
+          <Card style={{ minHeight: '530px', marginBottom: '7% ' }}>
             <CardBody>
               <CardTitle>
                 <IntlMessages id="dash.totalNumberOfTeachers" />
@@ -104,7 +106,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.14YearsGreduatedMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>13</p>
+                    <p style={{ marginRight: '10%' }}>25</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>
@@ -113,7 +115,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.14YearsGreduatedFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>13</p>
+                    <p style={{ marginRight: '10%' }}>32</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>
@@ -122,7 +124,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.bachelorMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>13</p>
+                    <p style={{ marginRight: '10%' }}>45</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>
@@ -131,7 +133,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.bachelorFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>13</p>
+                    <p style={{ marginRight: '10%' }}>58</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>
@@ -140,7 +142,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.phdMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>13</p>
+                    <p style={{ marginRight: '10%' }}>23</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>
@@ -149,7 +151,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.phdFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>13</p>
+                    <p style={{ marginRight: '10%' }}>78</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>
@@ -158,7 +160,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="teacher.EvaluatedMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>13</p>
+                    <p style={{ marginRight: '10%' }}>54</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>
@@ -167,7 +169,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="teacher.EvaluatedFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>13</p>
+                    <p style={{ marginRight: '10%' }}>78</p>
                   </div>
                   <br />
                   <br />
@@ -230,7 +232,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
 
         {/* Students */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4 ">
-          <Card style={{ minHeight: '180px' }} id="divId">
+          {/* <Card style={{ minHeight: '180px' }} id="divId"> */}{' '}
+          {/* commented because of stoping hower*/}
+          <Card style={{ minHeight: '180px' }}>
             <CardBody>
               <CardTitle>
                 <IntlMessages id="dash.totalStudentsInst" />
@@ -244,7 +248,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>7867</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -254,7 +258,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>1576</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -264,7 +268,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>2543</p>
                   <br />
                 </Colxx>
               </Row>
@@ -281,7 +285,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>1232</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -291,7 +295,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>5646</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -301,7 +305,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>7865</p>
                   <br />
                 </Colxx>
               </Row>
@@ -319,7 +323,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>3453</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -329,7 +333,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>654</p>
                 </Colxx>
                 <Colxx>
                   <p>
@@ -338,10 +342,11 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>5000</p>
+                  <p>3453</p>
                   <br />
                 </Colxx>
               </Row>
+
               <CardTitle>
                 <IntlMessages id="dash.totalStudentsDorm" />
               </CardTitle>
@@ -354,7 +359,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>76856</p>
                 </Colxx>
                 <Colxx>
                   <p>
@@ -363,7 +368,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>3453</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -373,7 +378,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.DormStudentType_1" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>23454</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -383,7 +388,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.DormStudentType_2" />
                     </b>
                   </p>
-                  <p>‌10000</p>
+                  <p>456456</p>
                   <br />
                 </Colxx>
               </Row>
@@ -493,9 +498,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>23</td>
+                    <td>345</td>
+                    <td>324</td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
@@ -503,9 +508,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>234</td>
+                    <td>456</td>
+                    <td>67</td>
                   </tr>
                   <tr>
                     <th scope="row">3</th>
@@ -513,9 +518,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.instituteComplex" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>345</td>
+                    <td>234</td>
+                    <td>546</td>
                   </tr>
                   <tr>
                     <th scope="row">4</th>
@@ -523,9 +528,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.instituteShahri" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>456</td>
+                    <td>45</td>
+                    <td>345</td>
                   </tr>
                   <tr>
                     <th scope="row">5</th>
@@ -533,9 +538,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.instituteRural" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>345</td>
+                    <td>345</td>
+                    <td>67</td>
                   </tr>
                   <tr>
                     <th scope="row">6</th>
@@ -543,9 +548,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.instituteColdArea" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>78</td>
+                    <td>56</td>
+                    <td>345</td>
                   </tr>
                   <tr>
                     <th scope="row">7</th>
@@ -553,9 +558,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.instituteWarmArea" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>657</td>
+                    <td>4356</td>
+                    <td>345</td>
                   </tr>
 
                   <tr>
@@ -564,9 +569,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.institutePublic" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>23</td>
+                    <td>567</td>
+                    <td>56</td>
                   </tr>
                   <tr>
                     <th scope="row">9</th>
@@ -574,9 +579,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.institutePrivate" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>23</td>
+                    <td>765</td>
+                    <td>345</td>
                   </tr>
                 </tbody>
               </Table>
@@ -620,8 +625,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.sectorType_1" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>234</td>
+                    <td>5654</td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
@@ -629,8 +634,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.sectorType_2" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>345</td>
+                    <td>345</td>
                   </tr>
                   <tr>
                     <th scope="row">3</th>
@@ -638,8 +643,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.sectorType_3" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>786</td>
+                    <td>456</td>
                   </tr>
                   <tr>
                     <th scope="row">4</th>
@@ -647,8 +652,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.sectorType_4" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>345</td>
+                    <td>78</td>
                   </tr>
                   <tr>
                     <th scope="row">5</th>
@@ -656,8 +661,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.sectorType_5" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>567</td>
+                    <td>54</td>
                   </tr>
                   <tr>
                     <th scope="row">6</th>
@@ -665,8 +670,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.sectorType_6" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>34</td>
+                    <td>78</td>
                   </tr>
                   <tr>
                     <th scope="row">7</th>
@@ -674,8 +679,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.sectorType_7" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>45</td>
+                    <td>78</td>
                   </tr>
 
                   <tr>
@@ -684,8 +689,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.sectorType_8" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>456</td>
+                    <td>34</td>
                   </tr>
                   <tr>
                     <th scope="row">9</th>
@@ -693,8 +698,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.sectorType_9" />
                     </td>
-                    <td>58</td>
-                    <td>58</td>
+                    <td>78</td>
+                    <td>234</td>
                   </tr>
                 </tbody>
               </Table>
@@ -744,8 +749,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_1" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>23</td>
+                        <td>67</td>
                       </tr>
                       <tr>
                         <th scope="row">2</th>
@@ -753,8 +758,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_2" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>67</td>
+                        <td>54</td>
                       </tr>
                       <tr>
                         <th scope="row">3</th>
@@ -763,7 +768,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           <IntlMessages id="dash.field_3" />
                         </td>
                         <td>58</td>
-                        <td>58</td>
+                        <td>345</td>
                       </tr>
                       <tr>
                         <th scope="row">4</th>
@@ -771,8 +776,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_4" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>67</td>
+                        <td>234</td>
                       </tr>
                       <tr>
                         <th scope="row">5</th>
@@ -780,8 +785,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_5" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>456</td>
+                        <td>67</td>
                       </tr>
                       <tr>
                         <th scope="row">6</th>
@@ -790,7 +795,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           <IntlMessages id="dash.field_6" />
                         </td>
                         <td>58</td>
-                        <td>58</td>
+                        <td>345</td>
                       </tr>
                       <tr>
                         <th scope="row">7</th>
@@ -798,7 +803,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_7" />
                         </td>
-                        <td>58</td>
+                        <td>768</td>
                         <td>58</td>
                       </tr>
                       <tr>
@@ -807,8 +812,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_8" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>23</td>
+                        <td>67</td>
                       </tr>
                       <tr>
                         <th scope="row">9</th>
@@ -816,8 +821,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_9" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>75</td>
+                        <td>34</td>
                       </tr>
                       <tr>
                         <th scope="row">10</th>
@@ -825,8 +830,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_10" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>78</td>
+                        <td>32</td>
                       </tr>
                       <tr>
                         <th scope="row">11</th>
@@ -834,8 +839,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_11" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>876</td>
+                        <td>234</td>
                       </tr>
                       <tr>
                         <th scope="row">12</th>
@@ -843,8 +848,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_12" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>87</td>
+                        <td>234</td>
                       </tr>
                       <tr>
                         <th scope="row">13</th>
@@ -852,8 +857,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_13" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>78</td>
+                        <td>234</td>
                       </tr>
                       <tr>
                         <th scope="row">14</th>
@@ -861,8 +866,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_14" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>67</td>
+                        <td>345</td>
                       </tr>
                       <tr>
                         <th scope="row">15</th>
@@ -870,8 +875,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_15" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>78</td>
+                        <td>345</td>
                       </tr>
                       <tr>
                         <th scope="row">16</th>
@@ -879,8 +884,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_16" />
                         </td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>67</td>
+                        <td>234</td>
                       </tr>
                       <tr>
                         <th scope="row">17</th>
@@ -888,7 +893,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           {' '}
                           <IntlMessages id="dash.field_17" />
                         </td>
-                        <td>58</td>
+                        <td>56</td>
                         <td>58</td>
                       </tr>
                       <tr>
@@ -1472,50 +1477,50 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <tr>
                         <th scope="row">1</th>
                         <td> Kabul</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>567</td>
+                        <td>345</td>
+                        <td>57</td>
+                        <td>234</td>
+                        <td>78</td>
+                        <td>234</td>
+                        <td>5677</td>
+                        <td>234</td>
                       </tr>
                       <tr>
                         <th scope="row">2</th>
                         <td>Kabul</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>657</td>
+                        <td>234</td>
+                        <td>123</td>
+                        <td>546</td>
+                        <td>345</td>
+                        <td>67</td>
+                        <td>345</td>
+                        <td>234</td>
                       </tr>
                       <tr>
                         <th scope="row">3</th>
                         <td>Kabul</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>346</td>
+                        <td>67</td>
+                        <td>23</td>
+                        <td>456</td>
+                        <td>657</td>
+                        <td>456</td>
+                        <td>234</td>
+                        <td>234</td>
                       </tr>
                       <tr>
                         <th scope="row">4</th>
                         <td> Kabul</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
-                        <td>58</td>
+                        <td>67</td>
+                        <td>234</td>
+                        <td>234</td>
+                        <td>67</td>
+                        <td>234</td>
+                        <td>657</td>
+                        <td>324</td>
+                        <td>243</td>
                       </tr>
                       <tr>
                         <th scope="row">5</th>
@@ -2111,7 +2116,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
 
         {/* Total statistics */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
-          <Card style={{ minHeight: '180px', marginBottom: '7%' }} id="divId">
+          <Card style={{ minHeight: '180px', marginBottom: '7%' }}>
             <CardBody>
               <CardTitle>
                 <IntlMessages id="dash.totalStatistics" />
@@ -2126,7 +2131,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalNumberOfInstitute" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>5000</p>
+                  <p style={{ marginRight: '10%' }}>2700</p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -2135,7 +2140,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalNumberOfSchool" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>500</p>
+                  <p style={{ marginRight: '10%' }}>67989</p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -2144,7 +2149,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalNumberOfDorms" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>13</p>
+                  <p style={{ marginRight: '10%' }}>234345</p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p>
@@ -2153,7 +2158,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalNumberOfTeachers" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>90</p>
+                  <p style={{ marginRight: '10%' }}>234</p>
                 </div>
               </Colxx>
             </CardBody>

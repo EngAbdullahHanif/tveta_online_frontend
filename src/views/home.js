@@ -14,13 +14,16 @@ import CarPhotoWithoutBackground from '../assets/img/blog/132.png';
 import CarPhoto2 from '../assets/img/blog/car2.png';
 import CarPhoto3 from '../assets/img/blog/45.png';
 import Shahamat from '../assets/img/blog/9090.JPG';
-import Photo55 from '../assets/img/blog/55.jpeg';
+import Photo55 from '../assets/img/blog/img1000.jpeg';
+import mansoor from '../assets/img/blog/mansoor.jpeg';
+
+import hanif from '../assets/img/blog/hanif.jpeg';
 import CarPhoto22 from '../assets/img/blog/Car22.png';
 import CarPhoto12 from '../assets/img/blog/12.png';
 import CarPhoto15 from '../assets/img/blog/15.png';
 import CarPhoto13 from '../assets/img/blog/13.png';
 import CarPhoto14 from '../assets/img/blog/14.png';
-import RahimiPhoto from '../assets/img/blog/Rahimi.jpg';
+import RahimiPhoto from '../assets/img/blog/rahimi.jpeg';
 import Carousel from 'react-grid-carousel';
 import CS_Sector from '../assets/img/sectors/CS.jpg';
 import SpecialEducationSector from '../assets/img/sectors/Special_Education.png';
@@ -731,9 +734,11 @@ const Home = () => {
                     </p>
                   </Colxx>
                 </Row>
+
+                {/* the developers pictures here */}
                 <Row className="justify-content-center m-4 d-flex-block ">
                   {/* Sharif Ahmad */}
-                  <Colxx
+                  {/* <Colxx
                     xxs="12"
                     sm="4"
                     md="2"
@@ -751,7 +756,7 @@ const Home = () => {
                       <img
                         src={Photo55}
                         class="developers-member-img"
-                        id="img1"
+                        id="img1000"
                         style={{ margin: '', width: 'auto' }}
                       />
                       <div className="p-3">
@@ -770,7 +775,7 @@ const Home = () => {
                         </div>
                       </div>
                     </Card>
-                  </Colxx>
+                  </Colxx> */}
                   {/* Abdullah Hanif */}
                   <Colxx
                     xxs="12"
@@ -788,7 +793,7 @@ const Home = () => {
                     >
                       {' '}
                       <img
-                        src={Photo55}
+                        src={hanif}
                         class="developers-member-img"
                         id="img1"
                         style={{ margin: '', width: 'auto' }}
@@ -810,7 +815,7 @@ const Home = () => {
                       </div>
                     </Card>
                   </Colxx>
-                  {/* Samiullah Rahimi */}
+
                   <Colxx
                     xxs="12"
                     sm="4"
@@ -866,7 +871,7 @@ const Home = () => {
                     >
                       {' '}
                       <img
-                        src={Photo55}
+                        src={mansoor}
                         class="developers-member-img"
                         id="img1"
                         style={{ margin: '', width: 'auto' }}

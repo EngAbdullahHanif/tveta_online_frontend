@@ -46,8 +46,18 @@ module.exports = {
   /* 02.User Login, Logout, Register */
   'user.login-title': 'Login',
   'user.register': 'Register',
+  'user.register-button-1': 'Register',
   'user.forgot-password': 'Forgot Password',
-  'user.email': 'E-mail',
+  'user.email': 'Email Address',
+  'login.email-addressErr': 'Please Enter Your Email Address!',
+  'login.email-addressErr-1': 'Incorrect Email Address',
+  'login.passwordErr': 'Password is Required!',
+  'login.wrong-credintialErr': 'Please Try Again',
+  'login.wrong-credintialErr-1': 'Wrong Credintials',
+  'login.passwordErr-1': 'Password should be at least 6 Characters',
+  'user.name': 'Username',
+  'login.userNameErr': 'Name is required!',
+
   'user.password': 'Password',
   'user.forgot-password-question': 'Forget password?',
   'user.fullname': 'Full Name',
@@ -59,6 +69,15 @@ module.exports = {
   'user.new-password-again': 'New Password Again',
   'user.new-password': 'New Password',
   'user.reset-password': 'Reset Password',
+  'user.userRole': 'User Role',
+  'user.roleOption-1': 'Super User',
+  'user.roleOption-2': 'Admin',
+  'user.roleOption-3': 'Provincial',
+  'user.roleOption-4': 'institute',
+  'user.roleOption-5': 'User',
+  'user.roleOption-6': 'Teacher',
+  'user.roleOption-7': 'Student',
+
   /* 03.Menu */
   'menu.home': 'Home',
   'menu.app': 'Home',
@@ -155,7 +174,7 @@ module.exports = {
   'menu.field': 'Fields',
   'menu.field-register': 'Register',
   'menu.teacher-registration': 'Register',
-  'menu.menu.student-marks-register': 'Add marks',
+  'menu.menu.student-marks-register': 'Marks Register',
   'menu.attendance-registration': 'Attendance Registration',
   'menu.dorm-commision': 'Regisration hostel',
   'menu.teacher-profile': 'Teacher Profile',
@@ -170,11 +189,21 @@ module.exports = {
   'menu.Institute-details': 'Institute Details',
   'menu.dorm-details': 'Dorm Details',
   'menu.marks-display': 'Marks',
-  'menu.marks-display-all-subs': 'Marks of All Subjects',
+  'menu.class-marks': 'Class marks',
   'menu.student-dismissal': 'Student Dismissal',
   'menu.dorm-student-dismissal': ' Dorm Student Dismissal',
   'menu.single-student-marksUpdate': 'Student Marks Update',
   'menu.attendance-Update': 'Attendance Update',
+  'menu.workers': 'Staffs',
+  'menu.kankor-student-list': 'Kankor Students List',
+  'student.dismissal': 'Student Dismissal',
+  'menu.worker-register': 'Staff Registration',
+  'menu.workers-list': 'Staffs List',
+  'menu.workers-profile': "Staff's Profile",
+  'menu.promotion-demotion-list': 'Promoted/Demoted Institute/School List',
+  'menu.field-list': 'Field List',
+  'menu.department-register': 'Department Registration',
+  'menu.department-list': 'Departments List',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -185,6 +214,7 @@ module.exports = {
   'dashboards.orders': 'Orders',
   'dashboards.refunds': 'Refunds',
   'dashboards.recent-orders': 'Recent Orders',
+  'field.fieldSector': 'Sector',
   'dashboards.product-categories': 'Product Categories',
   'dashboards.cakes': 'Cakes',
   'dashboards.tickets': 'Tickets',
@@ -228,6 +258,7 @@ module.exports = {
   'dashboards.keyword': 'Keyword',
   'dashboards.search': 'Search',
   'dashboards.top-rated-items': 'Top Rated Items',
+  'option.all': 'All',
 
   /* 05.Pages */
   'pages.add-new': 'ADD NEW',
@@ -419,6 +450,12 @@ module.exports = {
   'button.TeacherBackround': 'Background',
   'button.Teacherprofile': 'profile',
   'button.back': 'Back',
+  'search.institute.name': 'institute name',
+  'search.department.name': 'department name',
+  'user.email-Id': 'Username Id/Email',
+  'department.field': 'Field',
+  'department.FieldEngNameLabel': 'Department Name in English',
+  'department.departmentRegisterlabel': 'Department Register',
 
   'button.states-text':
     'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
@@ -582,6 +619,13 @@ module.exports = {
   'forms.VillageErr': 'Village Is Required',
   'forms.PlaceOfBirthLabel': 'Place Birth',
   'forms.StdPlaceOfBirthErr': 'Place of Birth Requiered!',
+  'forms.sector': 'Sector',
+  'forms.fieldErr': 'Field Is Required!',
+  'forms.sectorErr': 'Sector Is Required!',
+  'student.photo': 'Image',
+  'student.photoErr': 'Student Photo Is Required!',
+  'department.nameErr': 'Department Name Is Required!',
+  'department.englishNameErr': 'Department English Name Is Required!',
 
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',
@@ -613,24 +657,42 @@ module.exports = {
   'student.results': 'Results',
   'forms.personalInfo': 'Personal Info',
   'student.educationType': 'Education Type',
-  'forms.educationalYearOption_1': '1402',
-  'forms.educationalYearOption_2': '1403',
-  'forms.educationalYearOption_3': '1404',
-  'forms.educationalYearOption_4': '1405',
-  'forms.educationalYearOption_5': '1406',
-  'forms.educationalYearOption_6': '1407',
-  'forms.educationalYearOption_7': '1408',
-  'forms.educationalYearOption_8': '1409',
-  'forms.educationalYearOption_9': '1410',
-  'forms.educationalYearOption_10': '1411',
-  'forms.educationalYearOption_11': '1413',
-  'forms.educationalYearOption_12': '1414',
-  'forms.educationalYearOption_13': '1415',
-  'forms.educationalYearOption_14': '1416',
-  'forms.educationalYearOption_15': '1417',
-  'forms.educationalYearOption_16': '1418',
-  'forms.educationalYearOption_17': '1419',
-  'forms.educationalYearOption_18': '1420',
+  'forms.educationalYearOption_1': '1390',
+  'forms.educationalYearOption_2': '1391',
+  'forms.educationalYearOption_3': '1392',
+  'forms.educationalYearOption_4': '1393',
+  'forms.educationalYearOption_5': '1394',
+  'forms.educationalYearOption_6': '1395',
+  'forms.educationalYearOption_7': '1396',
+  'forms.educationalYearOption_8': '1397',
+  'forms.educationalYearOption_9': '1398',
+  'forms.educationalYearOption_10': '1399',
+  'forms.educationalYearOption_11': '1400',
+  'forms.educationalYearOption_12': '1401',
+  'forms.educationalYearOption_13': '1402',
+  'forms.educationalYearOption_14': '1403',
+  'forms.educationalYearOption_15': '1404',
+  'forms.educationalYearOption_16': '1405',
+  'forms.educationalYearOption_17': '1406',
+  'forms.educationalYearOption_18': '1407',
+  'forms.educationalYearOption_19': '1408',
+  'forms.educationalYearOption_20': '1409',
+  'forms.educationalYearOption_21': '1410',
+  'forms.educationalYearOption_22': '1411',
+  'forms.educationalYearOption_23': '1412',
+  'forms.educationalYearOption_24': '1413',
+  'forms.educationalYearOption_25': '1414',
+  'forms.educationalYearOption_26': '1415',
+  'forms.educationalYearOption_27': '1416',
+  'forms.educationalYearOption_28': '1417',
+  'forms.educationalYearOption_29': '1418',
+  'forms.educationalYearOption_30': '1419',
+  'forms.educationalYearOption_31': '1420',
+  'forms.educationalYearOption_32': '1421',
+  'forms.educationalYearOption_33': '1422',
+  'forms.educationalYearOption_34': '1423',
+  'forms.educationalYearOption_35': '1424',
+  'forms.educationalYearOption_36': '1425',
   'forms.kankorId': 'Kankor Id',
   'forms.kankorIdErr': 'Kankor Id Is Required!',
   'forms.mediumOfInstructionOption_1': 'Pashto',
@@ -697,8 +759,7 @@ module.exports = {
   'forms.SubimssionButton': 'Submit',
   'student.Profile': 'Student Profile',
 
-  // Student Attendance
-
+  // Student Attendance Register
   'forms.AttendanceTitle': 'Student Attendance',
   'forms.StdIdLabel': 'Student Id',
   'forms.StdIdErr': 'Student Id Required!',
@@ -710,7 +771,13 @@ module.exports = {
   'forms.StdSicknessErr': 'this field is required!',
   'forms.StdNecessaryWorkLabel': 'Necessary Work',
   'forms.ConfirmButton': 'Confirm',
-  'menu.attendance': 'Attendance',
+  'menu.attendance': 'AttendanceList',
+  'forms.totolEducationalDays': 'Educational Days',
+  'forms.totolEduactionalDaysErr': 'Total Educational Days Required!',
+  'marks.attendanceResult': 'Final Attendance',
+  'marks.eligable_Deprive': 'Eligibility',
+  'attendance.departmentLabel': 'Department',
+  'attendance-list': 'Attendance List For UPdate',
 
   // Field Registration
   'field.FieldRegisterTitle': 'Field Registeration',
@@ -742,6 +809,7 @@ module.exports = {
   'teacher.IdCardJoldNoLabel': 'Folder (Jold)',
   'teacher.IdCardJoldNoErr': 'Id Card Jold is required!',
   'teacher.PhoneNoLabel': 'Contact No',
+  'teacher-list.PhoneNoLabel': 'Phone No',
   'teacher.PhoneNoErr': 'Contact number is Required!',
   'teacher.EmailLabel': 'Email Address',
   'teacher.EmailErr': 'Email is Required!',
@@ -852,6 +920,10 @@ module.exports = {
   'marks.Marks': 'Marks',
   'marks.marksDisplayTitle': 'Marks',
   'marks.studentChar': 'Students Info',
+  'marks.gpa': 'GPA',
+  'marks.grade': 'Grade',
+  'marks.type': 'Chance',
+  'marks.result': 'Passed',
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',
@@ -883,6 +955,8 @@ module.exports = {
   'dorm.TotalKitchensErr': ' Total Number of Kitchens Required!',
   'dorm.ToiletLabel': ' Total Toilets',
   'dorm.ToiletErr': ' Total Number of Toilets Required!',
+  'dorm.list': 'Dorms List',
+  'dorm.register': 'Dorm Registration',
 
   // Students Registration in Dorm
   'dorm.StudentRegisterTitle': 'Student Registration',
@@ -926,6 +1000,7 @@ module.exports = {
   'evaluation.evaluationDetails': 'Details',
   'teacher.EvaluatedMale': 'Evaluated Male',
   'teacher.EvaluatedFemale': 'Evaluated Female',
+  'forms.teacherIdErr': 'Teacher Id Is Required!',
 
   // HR Evaluation
   'teacher.EvalautionHrTitle': 'Teacher Hr Evaluation',
@@ -968,6 +1043,11 @@ module.exports = {
   'student.transferTitle': 'Transfer',
   'student.transferDateLabel': 'Transfer Date',
   'student.transferDocuments': 'Upgrading Documents',
+  'transfered-Students': 'Transfered Student List',
+  'student.ID': 'Student Id',
+  'student.interenaceType': 'Enterance Type',
+  'student.PhoneNo': 'Phone No',
+  'study.type': 'student Type',
 
   // Curriculum
   'subject.curriculum': 'Curriculum',
@@ -979,6 +1059,7 @@ module.exports = {
   'curriculum.classLabel': 'Class',
   'curriculum.eduactionalYearLabel': 'Educational Year',
   'curriculum.eduactionalYearErr': 'Educational Year Is Required!',
+  'menu.curriculum-list': 'Curriculums List ',
 
   //Institute Details Page
   'institute.detailsTitle': 'More Details',
@@ -1011,7 +1092,7 @@ module.exports = {
   'dash.dormsList': 'Dorms',
   'dash.fieldsList': 'Fields',
   'dash.notifcation': 'Notifications',
-
+  'dash.field-1': 'field',
   // Admin DASHBOARD
   'dash.totalStudents': 'Total Students',
   'dash.instituteComplex': 'Complex',
@@ -1154,6 +1235,7 @@ module.exports = {
   'student.dissmissalDocuments': 'Dismissal Documents',
   'student.dissmissalDocumentErr': 'Dismissal Document Is Required!',
   'student.buttonDismissal': 'Dismiss',
+  'studendts.dismisseds-students': 'Dismissed Students',
 
   // Student Dismissal from dorm
   'student.dismissalFromDormTitle': 'Dismissal from Dorm',
@@ -1180,6 +1262,8 @@ module.exports = {
   'subject.creditErr': 'Credit is Required!',
   'subject.typeErr': ' Subject Type Is Required!',
   'subject.systemType': ' Subject System Type Is Required!',
+  'menu.subject-list': 'Subjects List',
+  'subject.register': 'Subject Register',
 
   // Marks Update
   'marks.singleStudentMarksUpdate': ' Marks Update',
@@ -1198,6 +1282,11 @@ module.exports = {
   'class.nameErr': 'Class Name Is Required!',
   'class.semesterLabel': 'Semester',
   'class.semesterErr': 'Semester Is Required!',
+  'teacher-list.MajorLabel': 'field',
+
+  // Deletion flash message title
+  'modal.deletion-message-title': 'Confirm',
+  'modal.deletion-message-details': 'Are you Sure to Delete the Record',
 
   /* 07.11.Form Components */
   'form-components.custom-inputs': 'Custom Inputs',

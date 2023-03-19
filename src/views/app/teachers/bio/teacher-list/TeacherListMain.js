@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
+import './list.css';
+import callApi from 'helpers/callApi';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -190,6 +192,30 @@ const Provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
+
+const levelOfEdcation = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  {
+    value: '14th',
+    label: <IntlMessages id="teacher.EducationLevelOption_1" />,
+  },
+  {
+    value: 'bachelor',
+    label: <IntlMessages id="teacher.EducationLevelOption_2" />,
+  },
+  {
+    value: 'master',
+    label: <IntlMessages id="teacher.EducationLevelOption_3" />,
+  },
+  {
+    value: 'PHD',
+    label: <IntlMessages id="teacher.EducationLevelOption_4" />,
+  },
+];
+
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -203,6 +229,11 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectLevelOfEducationOption, setSelectLevelOfEducationOption] =
+    useState({
+      column: 'all',
+      label: 'سطح تحصیلی',
+    });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
@@ -220,7 +251,12 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
+  }, [
+    selectedPageSize,
+    selectedGenderOption,
+    selectedProvinceOption,
+    selectLevelOfEducationOption,
+  ]);
 
   useEffect(() => {
     console.log('institute', institute);
@@ -228,13 +264,13 @@ const ThumbListPages = ({ match }) => {
     async function fetchData() {
       if (institute !== '') {
         const res = await axios.get(
-          `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
+          `${teacherInstituteApiUrl}?institute_id=${institute.value}&page=${currentPage}&limit=${selectedPageSize}`
         );
         console.log('res', res.data);
         setInstituteTeachers(res.data);
         setItems(res.data);
         setTotalItemCount(res.data.count);
-        setIsLoaded(true);
+        //setIsLoaded(true);
       } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'
@@ -244,24 +280,36 @@ const ThumbListPages = ({ match }) => {
           setTeacherId('');
           setRest(false);
         }
-        axios
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
+        const response = await callApi('institute/classs/', '', null);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          // setTotalPage(response.data.total_pages);
+          setSelectedItems([]);
+          // setTotalItemCount(response.data.totalItem);
+          setIsLoaded(true);
+        } else {
+          setItems([]);
+          console.log('insttutes error');
+        }
 
-            setItems(data);
-            setTotalPage(data.total_pages);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        // axios
+        //   .get(
+        //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+        //     );
+
+        //     setItems(data);
+        //     setTotalPage(data.total_pages);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
       } else if (selectedProvinceOption.column === 'all') {
         axios
           .get(
@@ -334,14 +382,17 @@ const ThumbListPages = ({ match }) => {
   ]);
 
   const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
-
   useEffect(() => {
     fetchInstitutes();
   }, []);
@@ -442,6 +493,7 @@ const ThumbListPages = ({ match }) => {
           }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
+          selectLevelOfEducationOption={selectLevelOfEducationOption}
           genderOptions={genderOptions}
           provinces={Provinces}
           changePageSize={setSelectedPageSize}
@@ -467,6 +519,13 @@ const ThumbListPages = ({ match }) => {
               setDistrict(e.target.value.toLowerCase());
             }
           }}
+          // Level of Education
+          changeLevelOfEducationBy={(column) => {
+            setSelectLevelOfEducationOption(
+              levelOfEdcation.find((x) => x.column === column)
+            );
+          }}
+          levelOfEdcation={levelOfEdcation}
           onResetClick={setRest}
           reset={rest}
           pageSizes={pageSizes}
@@ -476,13 +535,13 @@ const ThumbListPages = ({ match }) => {
         />
         <table className="table">
           <thead
+            style={{ maxHeight: '55px ' }}
             className="pl-2 d-flex flex-grow-1  table-dark"
-            style={{ maxHeight: '55px' }}
           >
-            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+            <tr className="card-body align-self-center d-flex flex-lg-row align-items-lg-center">
               <th
                 style={{
-                  width: '11%',
+                  width: '10%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -491,30 +550,27 @@ const ThumbListPages = ({ match }) => {
                 <IntlMessages id="marks.No" />
               </th>
               <th
+                className="header-responsiveness"
                 style={{
-                  width: '14%',
                   paddingInline: '0%',
-                  textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
                 <IntlMessages id="forms.StdName" />
               </th>
               <th
+                className="header-responsiveness"
                 style={{
-                  width: '15%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >
                 <IntlMessages id="forms.StdFatherName" />
               </th>
               <th
+                className="header-responsiveness1"
                 style={{
-                  width: '15%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >
@@ -522,32 +578,28 @@ const ThumbListPages = ({ match }) => {
                 <IntlMessages id="forms.ProvinceLabel" />
               </th>
               <th
+                className="header-responsiveness2"
                 style={{
-                  width: '14%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >
                 {' '}
-                <IntlMessages id="teacher.PhoneNoLabel" />
+                <IntlMessages id="teacher-list.PhoneNoLabel" />
               </th>
               <th
+                className="header-responsiveness3"
                 style={{
-                  width: '15%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >
-                {' '}
-                <IntlMessages id="teacher.MajorLabel" />
+                <IntlMessages id="teacher-list.MajorLabel" />
               </th>
               <th
+                className="header-responsiveness4"
                 style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
+                  paddingInline: '0%',
                   borderStyle: 'hidden',
                 }}
               >

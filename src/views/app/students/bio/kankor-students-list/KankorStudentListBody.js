@@ -6,10 +6,13 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
-  
   return (
     <Colxx xxs="12" key={student.kankorId} className="mt-2">
-      <ContextMenuTrigger id="menu_id" data={student.kankorId} collect={collect}>
+      <ContextMenuTrigger
+        id="menu_id"
+        data={student.kankorId}
+        collect={collect}
+      >
         <Card
           onClick={(event) => onCheckItem(event, student.kankorId)}
           className={classnames('d-flex flex-row', {
@@ -21,22 +24,25 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
             style={{ maxHeight: '50px', width: '100%' }}
           >
             <div
-              className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
               <NavLink to={`students/${student.id}`} style={{ width: '10%' }}>
                 <p className="list-item-heading mb-1 truncate">{student.id}</p>
               </NavLink>
               <NavLink to={`students/${student.id}`} style={{ width: '15%' }}>
-                <p className="list-item-heading mb-1 truncate" style={{marginLeft: 5}}>
-                 {student.name}
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ marginLeft: 5 }}
+                >
+                  {student.name}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right'}}
+                style={{ width: '15%', textAlign: 'right' }}
               >
-              {student.father_name}
+                {student.father_name}
               </p>
               <p
                 className="mb-1 text-small"
@@ -102,7 +108,7 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
         </Card>
       </ContextMenuTrigger>
     </Colxx>
-  )
+  );
 };
 
 export default React.memo(KankorStudentListBody);

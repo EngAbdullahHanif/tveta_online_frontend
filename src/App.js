@@ -7,7 +7,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
-import './helpers/Firebase';
+// import './helpers/Firebase';
 import AppLocale from './lang';
 import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
@@ -16,7 +16,7 @@ import {
   adminRoot,
   UserRole,
 } from './constants/defaultValues';
-import { getDirection } from './helpers/Utils';
+import { getDirection, getCurrentUser } from './helpers/Utils';
 import { ProtectedRoute } from './helpers/authHelper';
 
 const ViewHome = React.lazy(() =>
@@ -62,10 +62,14 @@ const App = ({ locale }) => {
           <Suspense fallback={<div className="loading" />}>
             <Router>
               <Switch>
-                <ProtectedRoute
+                {/* <ProtectedRoute
                   path={adminRoot}
                   component={ViewApp}
-                  roles={[UserRole.Admin, UserRole.Editor]}
+                  roles={[UserRole.provincial]}
+                /> */}
+                <Route
+                  path={adminRoot}
+                  render={(props) => <ViewApp {...props} />}
                 />
                 <Route
                   path="/user"
@@ -105,7 +109,11 @@ const App = ({ locale }) => {
 };
 
 const mapStateToProps = ({ authUser, settings }) => {
-  const { currentUser } = authUser;
+  // const { currentUser } = authUser;
+  const { currentUser } = getCurrentUser();
+
+  // const { currentUser } = '';
+
   const { locale } = settings;
   return { currentUser, locale };
 };

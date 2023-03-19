@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
+import { useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import {
   Row,
@@ -16,15 +17,17 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
+const servicePath = 'http://localhost:8000';
+const KankorstudentAPI = `${servicePath}/api/kankorResults`;
+//http://localhost:8000/api/kankorResults/?id=1
+
 const studyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
-
 const InstituteOptions = [
-  { value: '1', label: 'Option1' },
-  { value: '2', label: 'Option2' },
-  { value: '3', label: 'Option3' },
+  { value: 1, label: 'Tech Afg' },
+  { value: 2, label: 'IT' },
 ];
 
 const FieldOptions = [
@@ -33,8 +36,170 @@ const FieldOptions = [
   { value: '3', label: 'Option3' },
 ];
 
-const StudentRegistraion = () => {
-  const UpdatingMode = false;
+const genderOptions = [
+  { value: '1', label: <IntlMessages id="institute.studentgenderOption_1" /> },
+  { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
+];
+
+const educationYears = [
+  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
+  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
+  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
+  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
+  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
+  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
+  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
+  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
+  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
+  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
+  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
+  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
+  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
+  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
+  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
+  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
+  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
+  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
+  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
+  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
+  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
+  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
+  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
+  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
+  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
+  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
+  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
+  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
+  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
+  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
+  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
+  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
+  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
+  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+  { value: '324', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+];
+
+const StdSchoolProvinceOptions = [
+  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
+  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
+  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
+  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
+  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
+  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
+  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
+  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
+  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
+  {
+    value: '10',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
+  },
+  {
+    value: '11',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
+  },
+  {
+    value: '12',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
+  },
+  {
+    value: '13',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
+  },
+  {
+    value: '14',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
+  },
+  {
+    value: '15',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
+  },
+  {
+    value: '16',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
+  },
+  {
+    value: '17',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
+  },
+  {
+    value: '18',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
+  },
+  {
+    value: '19',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
+  },
+  {
+    value: '20',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    value: '21',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
+  },
+  {
+    value: '22',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
+  },
+  {
+    value: '23',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
+  },
+  {
+    value: '24',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
+  },
+  {
+    value: '25',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
+  },
+  {
+    value: '26',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
+  },
+  {
+    value: '27',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
+  },
+  {
+    value: '28',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
+  },
+  {
+    value: '29',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    value: '30',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
+  },
+  {
+    value: '31',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
+  },
+  {
+    value: '32',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
+  },
+  {
+    value: '33',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
+  },
+  {
+    value: '34',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+  },
+  {
+    value: '234234',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+  },
+];
+
+const StudentRegistraion = ({ history }) => {
+  const UpdatingMode = true;
+
   const ValidationSchema = Yup.object().shape({
     name1: Yup.string()
       .min(3, <IntlMessages id="min.minInputValue" />)
@@ -46,93 +211,134 @@ const StudentRegistraion = () => {
       .max(50, <IntlMessages id="max.maxInputValue" />)
       .required(<IntlMessages id="teacher.FatherNameErr" />),
 
-    interanceDate: Yup.string().required(
+    interanceDate: Yup.date().required(
       <IntlMessages id="forms.KankorMarksErr" />
     ),
 
-    kankorId: Yup.string().required(<IntlMessages id="forms.StdKankorIdErr" />),
+    // kankorId: Yup.string().required(<IntlMessages id="forms.StdKankorIdErr" />),
 
     kankorMarks: Yup.string().required(
       <IntlMessages id="forms.KankorMarksErr" />
     ),
 
-    department: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="teacher.departmentIdErr" />)
-      : null,
+    department: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="teacher.departmentIdErr" />),
+    gender: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.genderErr" />),
+    institute: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.InstituteErr" />),
+    field: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.FieldErr" />),
+    studyTime: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StudyTimeErr" />),
+    educationalYear: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.educationYearErr" />),
 
-    institute: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.InstituteErr" />)
-      : null,
+    province: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-    field: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.FieldErr" />)
-      : null,
-
-    studyTime: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.StudyTimeErr" />)
-      : null,
+    district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
   });
 
-  // Temporaray varaibles
-  const testName = 'Ahmad';
-  const testKankorId = '232423';
-  const testFatherName = 'Rashid';
-  const testInteranceDate = '23-243-4323';
-  const testStudyTime = 'Morning';
-  const testDepartment = 'Engineering';
-  const testFieldfield = 'CS';
-  const testInstitute = 'Nima';
-  const testKankorMarks = '87';
+  const { kankorStudentId } = useParams();
+  console.log(kankorStudentId);
+  if (kankorStudentId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        const { data } = await axios.get(
+          `${KankorstudentAPI}/?id=${kankorStudentId}`
+        );
+        console.log(data, 'kaknor student data');
+        setInitialName(data[0].name);
+        //setInitailKankorId(data[0].user_id);
+        setInitialFatherName(data[0].father_name);
+        setInitailInteranceDate('04/23/1995');
+        setInitialDistrict(data[0].district);
 
-  const [intialName, setInitialName] = useState(testName ? 'Ahmad' : '');
-  const [initailKankorId, setInitailKankorId] = useState(
-    testKankorId ? '213f-12' : ''
-  );
-  const [initialFatherName, setInitialFatherName] = useState(
-    testFatherName ? 'Rashid' : ''
-  );
-  const [initailInteranceDate, setInitailInteranceDate] = useState(
-    testInteranceDate ? '2022-08-12' : ''
-  );
-  const [initialKankorMarks, setInitialKankorMarks] = useState(
-    testKankorMarks ? '87' : ''
-  );
-  const [initailDepartment, setInitailDepartment] = useState(
-    testFieldfield ? [{ label: testFieldfield, value: testFieldfield }] : []
-  );
-  const [initialField, setInitialField] = useState(
-    testDepartment ? [{ label: testDepartment, value: testDepartment }] : []
-  );
-  const [initialstudyTime, setInitialstudyTime] = useState(
-    testStudyTime ? [{ label: testStudyTime, value: testStudyTime }] : []
-  );
+        const educationYearsOptions = educationYears.map((year) => {
+          if (year.value == data[0].educational_year) {
+            setInitialEducationalYear(year);
+          }
+        });
+        const provinceOptions = StdSchoolProvinceOptions.map((province) => {
+          if (province.value == data[0].provence) {
+            setInitialProvince(province);
+          }
+        });
 
-  const [initialInstitute, setInitialInstitute] = useState(
-    testInstitute ? [{ label: testInstitute, value: testInstitute }] : []
-  );
+        setInitailDepartment([
+          {
+            value: data[0].department_id.id,
+            label: data[0].department_id.name,
+          },
+        ]);
+        setInitialGender([
+          {
+            value: data[0].department_id.id,
+            label: data[0].department_id.name,
+          },
+        ]);
+        setInitailField([
+          {
+            value: data[0].field_id.id,
+            label: data[0].field_id.name,
+          },
+        ]);
+        setInitialKankorMarks(data[0].score);
+        setInitialstudyTime([{ value: 1, label: 'سهار' }]);
+        setInitialInstitute([
+          { value: data[0].Institute.id, label: data[0].Institute.name },
+        ]);
+      }
+      fetchStudent();
+      //setUpdateMode(true);
+    }, []);
+  }
+
+  const [intialName, setInitialName] = useState('');
+  const [initialFatherName, setInitialFatherName] = useState('');
+  const [initailInteranceDate, setInitailInteranceDate] = useState('');
+  const [initialKankorMarks, setInitialKankorMarks] = useState('');
+  const [initialField, setInitailField] = useState([]);
+  const [initailDepartment, setInitailDepartment] = useState([]);
+  const [initialstudyTime, setInitialstudyTime] = useState([]);
+  const [initialInstitute, setInitialInstitute] = useState([]);
+
+  const [initialGender, setInitialGender] = useState([]);
+  const [initialEducationalYear, setInitialEducationalYear] = useState([]);
+  const [initialProvince, setInitialProvince] = useState([]);
+  const [initialDistrict, setInitialDistrict] = useState('');
   const initialValues = {
     name1: intialName,
-    kankorId: initailKankorId,
+    gender: initialGender,
     fatherName: initialFatherName,
     kankorMarks: initialKankorMarks,
     interanceDate: initailInteranceDate,
@@ -140,13 +346,15 @@ const StudentRegistraion = () => {
     department: initailDepartment,
     field: initialField,
     institute: initialInstitute,
+    educationalYear: initialEducationalYear,
+    province: initialProvince,
+    district: initialDistrict,
   };
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [isNext, setIsNext] = useState(true);
   const [StudyTime, setStudyTIme] = useState('0');
-  
 
   const fetchInstitutes = async () => {
     const response = await axios.get('http://localhost:8000/institute/');
@@ -176,12 +384,10 @@ const StudentRegistraion = () => {
     setDepartments(updatedData);
   };
 
-  const handleClick = (event) => {
-    // setIsNext(event);
-  };
-
+  const updateMode = true;
   const onRegister = (values) => {
     console.log('values', values);
+    setIsNext(false);
 
     const data = {
       name: values.name1,
@@ -205,6 +411,7 @@ const StudentRegistraion = () => {
       .post('http://localhost:8000/api/Create_kankorResults/', data)
       .then((response) => {
         console.log(response);
+        setIsNext(false);
       })
       .catch((error) => {
         console.log(error);
@@ -217,9 +424,6 @@ const StudentRegistraion = () => {
     fetchDepartments();
   }, []);
 
-  // console.log('fields', fields);
-  // console.log('institutes', institutes);
-
   return (
     <>
       <Card>
@@ -229,6 +433,7 @@ const StudentRegistraion = () => {
         <CardBody>
           {isNext ? (
             <Formik
+              enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onRegister}
               validationSchema={ValidationSchema}
@@ -256,15 +461,22 @@ const StudentRegistraion = () => {
                         ) : null}
                       </FormGroup>
 
-                      {/*Father Name  */}
-                      <FormGroup className="form-group has-float-label error-l-175">
+                      {/* Gender */}
+                      <FormGroup className="form-group has-float-label error-l-100">
                         <Label>
-                          <IntlMessages id="forms.StdFatherName" />
+                          <IntlMessages id="gender.gender" />
                         </Label>
-                        <Field className="form-control" name="fatherName" />
-                        {errors.fatherName && touched.fatherName ? (
+                        <FormikReactSelect
+                          name="gender"
+                          id="gender"
+                          value={values.gender}
+                          options={genderOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {touched.gender && errors.gender ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.fatherName}
+                            {errors.gender}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -285,6 +497,7 @@ const StudentRegistraion = () => {
                         {errors.institute && touched.institute ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.institute}
+                            {console.log(errors.institute, 'sdafhsakh')}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -329,11 +542,36 @@ const StudentRegistraion = () => {
                           </div>
                         ) : null}
                       </FormGroup>
+
+                      {/* District */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.DistrictLabel" />
+                        </Label>
+                        <Field className="form-control" name="district" />
+                        {errors.district && touched.district ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.district}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                     </Colxx>
 
                     <Colxx xxs="6">
-                      {/* Exam Id */}
+                      {/*Father Name  */}
                       <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.StdFatherName" />
+                        </Label>
+                        <Field className="form-control" name="fatherName" />
+                        {errors.fatherName && touched.fatherName ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.fatherName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.StdKankorIdLabel" />
                         </Label>
@@ -343,7 +581,7 @@ const StudentRegistraion = () => {
                             {errors.kankorId}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
 
                       {/* Kankor Marks */}
                       <FormGroup className="form-group has-float-label error-l-175">
@@ -382,7 +620,47 @@ const StudentRegistraion = () => {
                         ) : null}
                       </FormGroup>
 
-                      {/* date */}
+                      {/* Eduactional Year*/}
+                      <FormGroup className="form-group has-float-label error-l-175 ">
+                        <Label>
+                          <IntlMessages id="curriculum.eduactionalYearLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="educationalYear"
+                          id="educationalYear"
+                          value={values.educationalYear}
+                          options={educationYears}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.educationalYear}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.ProvinceLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="province"
+                          id="province"
+                          value={values.province}
+                          options={StdSchoolProvinceOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.province && touched.province ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.province}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/*           
                       <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.RegistrationDateLabel" />
@@ -397,7 +675,7 @@ const StudentRegistraion = () => {
                             {errors.interanceDate}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
                     </Colxx>
                   </Row>
                   <Row>
@@ -407,10 +685,9 @@ const StudentRegistraion = () => {
                         className="float-right m-5"
                         size="lg"
                         type="submit"
-                        onClick={() => {
-                          onRegister;
-                          handleClick(false);
-                        }}
+                        // onClick={() => {
+                        //   handleClick(false);
+                        // }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -435,7 +712,11 @@ const StudentRegistraion = () => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  // onClick={() => window.location.reload()}
+                  onClick={() => setIsNext(true)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

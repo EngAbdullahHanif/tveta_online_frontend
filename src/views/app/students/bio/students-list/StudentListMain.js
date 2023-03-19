@@ -39,15 +39,18 @@ const categories = [
 const genderOptions = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: <IntlMessages id="option.all" />,
   },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
+  {
+    column: '1',
+    label: <IntlMessages id="institute.studentgenderOption_1" />,
+  },
+  { column: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
 ];
 const provinces = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: <IntlMessages id="option.all" />,
   },
   {
     column: '1',
@@ -186,6 +189,82 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
+
+const shiftOption = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+
+  { column: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
+  { column: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+];
+const educationYears = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
+  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
+  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
+  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
+  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
+  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
+  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
+  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
+  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
+  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
+  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
+  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
+  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
+  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
+  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
+  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
+  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
+  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
+  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
+  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
+  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
+  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
+  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
+  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
+  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
+  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
+  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
+  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
+  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
+  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
+  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
+  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
+  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
+  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+];
+
+const levelOfEdcation = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  {
+    value: '14th',
+    label: <IntlMessages id="teacher.EducationLevelOption_1" />,
+  },
+  {
+    value: 'bachelor',
+    label: <IntlMessages id="teacher.EducationLevelOption_2" />,
+  },
+  {
+    value: 'master',
+    label: <IntlMessages id="teacher.EducationLevelOption_3" />,
+  },
+  {
+    value: 'PHD',
+    label: <IntlMessages id="teacher.EducationLevelOption_4" />,
+  },
+];
+
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -218,6 +297,20 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectedShiftOption, setSelectedShiftOption] = useState({
+    column: 'all',
+    label: 'وقت/ شفت',
+  });
+  const [selectedEducationalYearOption, seSelectedEducationalYearOption] =
+    useState({
+      column: 'all',
+      label: 'سال تعلیمی',
+    });
+  const [selectLevelOfEducationOption, setSelectLevelOfEducationOption] =
+    useState({
+      column: 'all',
+      label: 'سطح تحصیلی',
+    });
   useEffect(() => {
     setCurrentPage(1);
   }, [
@@ -225,6 +318,9 @@ const ThumbListPages = ({ match }) => {
     selectedOrderOption,
     selectedGenderOption,
     selectedProvinceOption,
+    selectedShiftOption,
+    selectedEducationalYearOption,
+    selectLevelOfEducationOption,
   ]);
 
   useEffect(() => {
@@ -244,7 +340,8 @@ const ThumbListPages = ({ match }) => {
         setIsLoaded(true);
       } else if (
         selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
+        selectedGenderOption.column === 'all' &&
+        selectedShiftOption
       ) {
         if (rest == true) {
           setDistrict('');
@@ -347,8 +444,8 @@ const ThumbListPages = ({ match }) => {
   const fetchInstitutes = async () => {
     const response = await axios.get(instituteApiUrl);
     const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
+      value: item.id,
+      label: item.name,
     }));
     setInstitutes(updatedData);
   };
@@ -438,6 +535,7 @@ const ThumbListPages = ({ match }) => {
   ) : (
     <>
       <div className="disable-text-selection">
+        {/* This is he */}
         <ListPageHeading
           heading="د شاگرد لست/لست شاگردان"
           // Using display mode we can change the display of the list.
@@ -467,6 +565,7 @@ const ThumbListPages = ({ match }) => {
           orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
+          // Gender
           changeGenderBy={(column) => {
             setSelectedGenderOption(
               genderOptions.find((x) => x.column === column)
@@ -478,19 +577,25 @@ const ThumbListPages = ({ match }) => {
             );
           }}
           selectedGenderOption={selectedGenderOption}
+          selectedEducationalYearOption={selectedEducationalYearOption}
+          selectLevelOfEducationOption={selectLevelOfEducationOption}
           selectedProvinceOption={selectedProvinceOption}
+          selectedShiftOption={selectedShiftOption}
           genderOptions={genderOptions}
+          shiftOption={shiftOption}
           provinces={provinces}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
               setStudentId(e.target.value.toLowerCase());
             }
           }}
+          // Province
           onProvinceSearchKey={(e) => {
             if (e.key === 'Enter') {
               setProvince(e.target.value.toLowerCase());
             }
           }}
+          // District
           onDistrictSearchKey={(e) => {
             if (e.key === 'Enter') {
               setDistrict(e.target.value.toLowerCase());
@@ -500,19 +605,129 @@ const ThumbListPages = ({ match }) => {
           reset={rest}
           institutes={institutes}
           onInstituteSelect={setInstitute}
+          // Shift
+          changeShiftBy={(column) => {
+            setSelectedShiftOption(
+              shiftOption.find((x) => x.column === column)
+            );
+          }}
+          // Educational Year
+          changeEducationalYearBy={(column) => {
+            seSelectedEducationalYearOption(
+              educationYears.find((x) => x.column === column)
+            );
+          }}
+          educationYears={educationYears}
+          // Level of Education
+          changeLevelOfEducationBy={(column) => {
+            setSelectLevelOfEducationOption(
+              levelOfEdcation.find((x) => x.column === column)
+            );
+          }}
+          levelOfEdcation={levelOfEdcation}
         />
+        <table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark mb-2"
+            style={{ maxHeight: '55px' }}
+          >
+            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+              <th
+                style={{
+                  width: '11%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="student.ID" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdName" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  fontSize: '20px',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdFatherName" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="forms.ProvinceLabel" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="student.PhoneNo" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="student.interenaceType" />
+              </th>
+              <th
+                style={{
+                  width: '10%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="study.type" />
+              </th>
+            </tr>
+          </thead>
 
-        <ListPageListing
-          items={items}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
+          <ListPageListing
+            items={items}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
+        </table>
       </div>
     </>
   );

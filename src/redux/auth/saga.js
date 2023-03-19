@@ -2,6 +2,13 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { auth } from 'helpers/Firebase';
 import { adminRoot, currentUser } from 'constants/defaultValues';
 import { setCurrentUser } from 'helpers/Utils';
+// import { browserHistory } from 'react-router';
+import { push } from 'react-router-redux';
+import { NotificationManager } from 'components/common/react-notifications';
+
+
+import axios from 'axios';
+
 import {
   LOGIN_USER,
   REGISTER_USER,
@@ -21,69 +28,116 @@ import {
   resetPasswordError,
 } from './actions';
 
-export function* watchLoginUser() {
-  // eslint-disable-next-line no-use-before-define
-  yield takeEvery(LOGIN_USER, loginWithEmailPassword);
-}
-
-const loginWithEmailPasswordAsync = async (email, password) =>
-  // eslint-disable-next-line no-return-await
-  await auth
-    .signInWithEmailAndPassword(email, password)
-    .then((user) => user)
-    .catch((error) => error);
-
-function* loginWithEmailPassword({ payload }) {
-  const { email, password } = payload.user;
-  const { history } = payload;
+async function getUserDetails() {
   try {
-    const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
-    if (!loginUser.message) {
-      const item = { uid: loginUser.user.uid, ...currentUser };
-      setCurrentUser(item);
-      yield put(loginUserSuccess(item));
-      history.push(adminRoot);
-    } else {
-      yield put(loginUserError(loginUser.message));
-    }
+    const accessToken = localStorage.getItem('access_token');
+    return await axios
+      .get('http://localhost:8000/user/user-profile/', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        console.log('user info response', response.data);
+        return response.data;
+      });
   } catch (error) {
-    yield put(loginUserError(error));
+    throw error.response.data;
   }
 }
 
-export function* watchRegisterUser() {
+export function* watchLoginUser() {
   // eslint-disable-next-line no-use-before-define
-  yield takeEvery(REGISTER_USER, registerWithEmailPassword);
+  yield takeEvery(LOGIN_USER, loginWithEmailPasswordAsync);
 }
 
-const registerWithEmailPasswordAsync = async (email, password) =>
-  // eslint-disable-next-line no-return-await
-  await auth
-    .createUserWithEmailAndPassword(email, password)
-    .then((user) => user)
-    .catch((error) => error);
+function loginWithEmailPassword(username, password) {
+  return (
+    axios
+      .post('http://localhost:8000/user/logins/', { username, password })
+      .then((response) => {
+        console.log('response', response.data)
+        return response.data;
+      })
+      .catch((error) => {
+        // history.push('/user/login');
+        console.log('error of response', error)
+        // throw error;  
+      })
+  );
+}
 
-function* registerWithEmailPassword({ payload }) {
-  const { email, password } = payload.user;
-  const { history } = payload;
+export function* loginWithEmailPasswordAsync(action) {
+  const { username, password } = action.payload.user;
+  const { history } = action.payload;
+  console.log('username, password, history', username, password, history)
   try {
-    const registerUser = yield call(
-      registerWithEmailPasswordAsync,
-      email,
-      password
-    );
-    if (!registerUser.message) {
-      const item = { uid: registerUser.user.uid, ...currentUser };
-      setCurrentUser(item);
-      yield put(registerUserSuccess(item));
-      history.push(adminRoot);
-    } else {
-      yield put(registerUserError(registerUser.message));
+    const data = yield call(loginWithEmailPassword, username, password);
+    console.log('data', data)
+    if(data){
+      localStorage.setItem('access_token', data.token.access);
+      localStorage.setItem('refresh_token', data.token.refresh);
+      setCurrentUser(data.data); // set the current user details
+      yield put(loginUserSuccess(data.token));
+      history.push('/app');
+    }  else {
+      yield put(loginUserError('error'));
+    }
+  } catch (error) {
+    yield put(loginUserError(error));
+    
+
+  }
+}
+
+
+export function* watchRegisterUser() {
+  // eslint-disable-next-line no-use-before-define
+  yield takeEvery(REGISTER_USER, registerWithEmailPasswordAsync);
+}
+
+function registerWithEmailPassword(username, email, password) {
+  return (
+    axios
+      .post('http://localhost:8000/user/register/', { username, email, password })
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        console.log('error of response', error)
+      })
+  );
+}
+
+export function* registerWithEmailPasswordAsync (action)   {
+  console.log("action", action)
+  const { username, email, password } = action.payload.user;
+  const { history } = action.payload;
+  console.log('username, email, password, history', username, email, password, history)
+  try {
+    const data = yield call(registerWithEmailPassword, username, email, password);
+    console.log('data', data)
+    if(data){
+      yield put(registerUserSuccess(data));
+      NotificationManager.success(
+        "success",
+        'done',
+        9000,
+        null,
+        null,
+        ''
+      );
+      history.push('/user/register');
+    }  else {
+      yield put(registerUserError('error'));
+      history.push('/user/register');
     }
   } catch (error) {
     yield put(registerUserError(error));
   }
 }
+
+
 
 export function* watchLogoutUser() {
   // eslint-disable-next-line no-use-before-define

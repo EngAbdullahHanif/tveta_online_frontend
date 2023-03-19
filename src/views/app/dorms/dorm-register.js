@@ -19,9 +19,12 @@ import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
+import { useParams } from 'react-router-dom';
 
 const servicePath = 'http://localhost:8000';
 const dormCreateAPI = `${servicePath}/institute/dorms_create/`;
+const dormAPI = `${servicePath}/institute/dorms`;
+//http://localhost:8000/institute/dorms/?id=1
 
 import {
   FormikReactSelect,
@@ -237,78 +240,75 @@ const DormRegistration = (values) => {
     District: 'Doshi',
   };
 
-  const [initialName1, setInitialName1] = useState(
-    TestData.Name1 ? TestData.Name1 : ''
-  );
-  const [initialCapicity, setInitialCapicity] = useState(
-    TestData.Capicity ? TestData.Capicity : ''
-  );
+  const { dormId } = useParams();
+  console.log('Dorm info', dormId);
 
-  const [initialTotalKitchens, setInitialTotalKitchens] = useState(
-    TestData.TotalKitchens ? TestData.TotalKitchens : ''
-  );
+  if (dormId) {
+    useEffect(() => {
+      async function fetchData() {
+        const { data } = await axios.get(`${dormAPI}/?id=${dormId}`);
+        console.log(data, 'data');
+        setInitialName1(data[0].name);
+        setInitialCapicity(data[0].dorm_capacity);
+        setInitialTotalKitchens(data[0].kitchen_qty);
+        const dormTypeOptions = BuildingTypeOptions.map((dormType) => {
+          if (dormType.value === data[0].dorm_type) {
+            setInitialBuildingType(dormType);
+          }
+        });
+        const publicDormTypeOptions = PublicBuildingOwnerOptions.map(
+          (publicDorm) => {
+            if (publicDorm.value === data[0].dorm_type_option) {
+              setInitialPublicBuildingOwner(publicDorm);
+            }
+          }
+        );
+        const privateDormTypeOptions = PrivateBuildingTypeOptions.map(
+          (privateDormType) => {
+            if (privateDormType.value === data[0].dorm_type_option) {
+              setInitialPrivateBuildingType(privateDormType);
+            }
+          }
+        );
+        const provinceOptions = StdSchoolProvinceOptions.map((province) => {
+          if (province.value === data[0].provence) {
+            setInitialProvince(province);
+          }
+        });
+        const genderOptions = GenderOptions.map((gender) => {
+          if (gender.value === data[0].gender_type) {
+            setInitialGender(gender);
+          }
+        });
 
-  const [initialProvince, setInitialProvince] = useState(
-    TestData.Province
-      ? [
-          {
-            label: TestData.Province,
-            value: TestData.Province,
-          },
-        ]
-      : []
-  );
+        setInitialTotalRooms(data[0].rooms_qty);
+        setInitialTotalBuildingNo(data[0].building_qty);
+        setInitialToilet(data[0].toilet_qty);
+        setInitialDistrict(data[0].district);
+        setInitialQuota(data[0].dorm_quota);
+      }
+      fetchData();
+      //setUpdateMode(true);
+    }, []);
+  }
 
-  const [initialGender, setInitialGender] = useState(
-    TestData.Gender ? [{ label: TestData.Gender, value: TestData.Gender }] : []
-  );
-
-  const [initialBuildingType, setInitialBuildingType] = useState(
-    TestData.BuildingType
-      ? [{ label: TestData.BuildingType, value: TestData.BuildingType }]
-      : []
-  );
-
+  const [initialName1, setInitialName1] = useState('');
+  const [initialCapicity, setInitialCapicity] = useState('');
+  const [initialTotalKitchens, setInitialTotalKitchens] = useState('');
+  const [initialProvince, setInitialProvince] = useState([]);
+  const [initialGender, setInitialGender] = useState([]);
+  const [initialBuildingType, setInitialBuildingType] = useState([]);
   const [initialPublicBuildingOwner, setInitialPublicBuildingOwner] = useState(
-    TestData.PublicBuildingOwner
-      ? [
-          {
-            label: TestData.PublicBuildingOwner,
-            value: TestData.PublicBuildingOwner,
-          },
-        ]
-      : []
+    []
   );
-
   const [initialPrivateBuildingType, setInitialPrivateBuildingType] = useState(
-    TestData.PrivateBuildingType
-      ? [
-          {
-            label: TestData.PrivateBuildingType,
-            value: TestData.PrivateBuildingType,
-          },
-        ]
-      : []
+    []
   );
-
-  const [initialQuota, setInitialQuota] = useState(
-    TestData.Quota ? TestData.Quota : ''
-  );
-
-  const [initialTotalRooms, setInitialTotalRooms] = useState(
-    TestData.TotalRooms ? TestData.TotalRooms : ''
-  );
-
-  const [initialTotalBuildingNo, setInitialTotalBuildingNo] = useState(
-    TestData.TotalBuildingNo ? TestData.TotalBuildingNo : ''
-  );
-
-  const [initialToilet, setInitialToilet] = useState(
-    TestData.Toilet ? TestData.Toilet : ''
-  );
-  const [initialDistrict, setInitialDistrict] = useState(
-    TestData.District ? TestData.District : ''
-  );
+  const [initialQuota, setInitialQuota] = useState('');
+  const [initialTotalRooms, setInitialTotalRooms] = useState('');
+  const [initialTotalBuildingNo, setInitialTotalBuildingNo] = useState('');
+  const [initialToilet, setInitialToilet] = useState('');
+  const [initialDistrict, setInitialDistrict] = useState('');
 
   const initialValues = {
     name1: initialName1,
@@ -327,13 +327,12 @@ const DormRegistration = (values) => {
   };
 
   const [dormTypeOption, setDormTypeOption] = useState('');
-  const [isNext, setIsNext] = useState(true);
-  const handleClick = (event) => {
-    // setIsNext(event);
-  };
+  const [isNext, setIsNext] = useState(false);
 
-  const onRegister = (values) => {
+  const onRegister = (values, { resetForm }) => {
     console.log(' The Values', values);
+    setIsNext(true);
+    resetForm();
     // if (errors) {
     //   console.log('error');
 
@@ -387,8 +386,9 @@ const DormRegistration = (values) => {
       <Card>
         <h3 className="mt-5 m-5">{<IntlMessages id="dorm.RegisterTitle" />}</h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
+              enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onRegister}
               validationSchema={SignupSchema}
@@ -399,6 +399,7 @@ const DormRegistration = (values) => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right error-l-100">
                   <Row className="justify-content-center inlineBlock">
@@ -654,9 +655,6 @@ const DormRegistration = (values) => {
                         size="lg"
                         type="submit"
                         color="primary"
-                        onClick={() => {
-                          handleClick(false);
-                        }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -684,7 +682,10 @@ const DormRegistration = (values) => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

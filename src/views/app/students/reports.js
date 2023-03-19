@@ -20,17 +20,6 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 
-import {
-  DoughnutChart,
-  LineChart,
-  PolarAreaChart,
-  AreaChart,
-  ScatterChart,
-  BarChart,
-  RadarChart,
-  PieChart,
-} from 'components/charts';
-
 const colors = ThemeColors();
 
 const servicePath = 'http://localhost:8000';

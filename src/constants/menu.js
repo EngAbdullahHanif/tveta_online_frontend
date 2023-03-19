@@ -2,278 +2,236 @@ import { adminRoot } from './defaultValues';
 
 const data = [
   {
-    id: 'ُteacher',
-    icon: 'iconsminds-student-male',
-    label: 'menu.teacher',
-    to: `${adminRoot}/teacher`,
- 
-    subs: [
-      {
-        icon: 'iconsminds-students',
-        label: 'teacher list',
-        to: `${adminRoot}/teachers/teachers`,
-      },
-      {
-        icon: 'iconsminds-add-user',
-        label: 'menu.teacher-registration',
-        to: `${adminRoot}/teachers/register`,
-      },
-  
-      {
-        icon: 'iconsminds-profile',
-        label: 'menu.teacher-profile',
-        to: `${adminRoot}/teachers/profile`,
-      },
-   
-      {
-        icon: 'iconsminds-add',
-        label: 'menu.teacher-evaluation',
-        to: `${adminRoot}/teachers/teacher-evalaution`,
-      },
-      {
-        icon: 'iconsminds-add',
-        label: 'menu.teacher-transfer',
-        to: `${adminRoot}/teachers/teacher-transfer`,
-      },
-    ],
-  },
-  {
     id: 'students',
-    icon: 'simple-icon-user',
+    icon: 'FA.FaUserGraduate',
     label: 'menu.students',
     to: `${adminRoot}/students`,
     // roles: [UserRole.Admin, UserRole.Editor],
     subs: [
       {
-        icon: 'simple-icon-user-follow',
-        label: 'menu.student_register',
-        to: `${adminRoot}/students/register`,
-        newWindow: false,
-      },
-      {
-        icon: 'simple-icon-user-follow',
-        label: 'menu.student_register_kankor',
-        to: `${adminRoot}/students/register-kankor`,
-        // roles: [UserRole.Admin],
-      },
-      {
-        icon: 'iconsminds-students',
+        icon: 'CG.CgUserList',
         label: 'menu.student_list',
         to: `${adminRoot}/students/students`,
         // roles: [UserRole.Admin],
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'GR.GrUserAdd',
+        label: 'forms.studentRegisterTitle',
+        to: `${adminRoot}/students/register`,
+        newWindow: false,
+      },
+      {
+        icon: 'GR.GrUserAdd',
+        label: 'menu.student_register_kankor',
+        to: `${adminRoot}/students/register-kankor`,
+        // roles: [UserRole.Admin],
+      },
+
+      {
+        icon: 'CG.CgUserList',
+        label: 'studendts.dismisseds-students',
+        to: `${adminRoot}/students/dismissed-list`,
+        // roles: [UserRole.Admin],
+      },
+      {
+        icon: 'CG.CgUserList',
+        label: 'transfered-Students',
+        to: `${adminRoot}/students/transfered-list`,
+        // roles: [UserRole.Admin],
+      },
+      {
+        icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
         to: `${adminRoot}/students/marks-register`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'MD.MdAddBox',
         label: 'menu.attendance-registration',
         to: `${adminRoot}/students/attendance-register`,
       },
+      // {
+      //   icon: 'IM.ImProfile',
+      //   label: 'menu.student-profile',
+      //   to: `${adminRoot}/students/student-profile`,
+      // },
       {
-        icon: 'simple-icon-user',
-        label: 'menu.student-profile',
-        to: `${adminRoot}/students/student-profile`,
+        icon: 'FA.FaList',
+        label: 'attendance-list',
+        to: `${adminRoot}/students/attendance-list`,
       },
       {
-        icon: 'simple-icon-user-follow',
+        icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'menu.student-transfer',
         to: `${adminRoot}/students/student-transfer`,
         newWindow: false,
       },
       {
-        icon: 'simple-icon-user-follow',
+        icon: 'FA.FaList',
         label: 'menu.marks-display',
         to: `${adminRoot}/students/marks-display`,
         newWindow: false,
       },
       {
-        icon: 'simple-icon-user-follow',
-        label: 'menu.marks-display-all-subs',
+        icon: 'FA.FaList',
+        label: 'menu.class-marks',
         to: `${adminRoot}/students/marks-display-allsubs`,
         newWindow: false,
       },
       {
-        icon: 'simple-icon-calculator',
+        icon: 'MD.MdAddBox',
         label: 'menu.attendance',
         to: `${adminRoot}/students/attendance`,
         newWindow: false,
       },
       {
-        icon: 'simple-icon-calculator',
-        label: 'Kankor Student List',
+        icon: 'FA.FaList',
+        label: 'menu.kankor-student-list',
         to: `${adminRoot}/students/kankor-students`,
+        newWindow: false,
+      },
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'student.dismissal',
+        to: `${adminRoot}/students/student-dismissal`,
         newWindow: false,
       },
     ],
   },
+
+  {
+    id: 'ُteacher',
+    icon: 'FA.FaChalkboardTeacher',
+    label: 'menu.teacher',
+    to: `${adminRoot}/teacher`,
+
+    subs: [
+      {
+        icon: 'CG.CgUserList',
+        label: 'menu.teacher_list',
+        to: `${adminRoot}/teachers/teachers`,
+      },
+      {
+        // icon: 'iconsminds-add-user',
+        icon: 'GR.GrUserAdd',
+        label: 'menu.teacher-registration',
+        to: `${adminRoot}/teachers/register`,
+      },
+
+      // {
+      //   icon: 'IM.ImProfile',
+      //   label: 'menu.teacher-profile',
+      //   to: `${adminRoot}/teachers/profile`,
+      // },
+
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.teacher-evaluation',
+        to: `${adminRoot}/teachers/teacher-evalaution`,
+      },
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'menu.teacher-transfer',
+        to: `${adminRoot}/teachers/teacher-transfer`,
+      },
+    ],
+  },
+
   {
     id: 'workers',
-    icon: 'simple-icon-user',
+    icon: 'FA.FaUsers',
     // label: 'menu.students',
-    label: 'workers',
+    label: 'menu.workers',
     to: `${adminRoot}/workers`,
     // roles: [UserRole.Admin, UserRole.Editor],
     subs: [
       {
-        icon: 'simple-icon-user-follow',
-        // label: 'menu.student_register',
-        label: 'worker register',
-        to: `${adminRoot}/workers/worker`,
-        newWindow: false,
-      },
-      {
-        icon: 'simple-icon-user-follow',
-        // label: 'menu.student_register',
-        label: 'worker list',
+        icon: 'CG.CgUserList',
+        label: 'menu.workers-list',
         to: `${adminRoot}/workers/worker-list`,
         newWindow: false,
       },
       {
-        icon: 'simple-icon-user-follow',
-        // label: 'menu.student_register',
-        label: 'worker Profile',
+        icon: 'GR.GrUserAdd',
+        label: 'menu.worker-register',
+        to: `${adminRoot}/workers/worker`,
+        newWindow: false,
+      },
+
+      {
+        icon: 'IM.ImProfile',
+        label: 'menu.workers-profile',
         to: `${adminRoot}/workers/workerId`,
-        newWindow: false,
-      },
-      // {
-      //   icon: 'simple-icon-user-follow',
-      //   label: 'menu.student_register_kankor',
-      //   to: `${adminRoot}/students/register-kankor`,
-      //   // roles: [UserRole.Admin],
-      // },
-      // {
-      //   icon: 'iconsminds-students',
-      //   label: 'menu.student_list',
-      //   to: `${adminRoot}/students/students`,
-      //   // roles: [UserRole.Admin],
-      // },
-      // {
-      //   icon: 'simple-icon-plus',
-      //   label: 'menu.student-marks-register',
-      //   to: `${adminRoot}/students/marks-register`,
-      // },
-      // {
-      //   icon: 'simple-icon-plus',
-      //   label: 'menu.attendance-registration',
-      //   to: `${adminRoot}/students/attendance-register`,
-      // },
-      // {
-      //   icon: 'simple-icon-user',
-      //   label: 'menu.student-profile',
-      //   to: `${adminRoot}/students/student-profile`,
-      // },
-      // {
-      //   icon: 'simple-icon-user-follow',
-      //   label: 'menu.student-transfer',
-      //   to: `${adminRoot}/students/student-transfer`,
-      //   newWindow: false,
-      // },
-      // {
-      //   icon: 'simple-icon-user-follow',
-      //   label: 'menu.marks-display',
-      //   to: `${adminRoot}/students/marks-display`,
-      //   newWindow: false,
-      // },
-      // {
-      //   icon: 'simple-icon-user-follow',
-      //   label: 'menu.marks-display-all-subs',
-      //   to: `${adminRoot}/students/marks-display-allsubs`,
-      //   newWindow: false,
-      // },
-      // {
-      //   icon: 'simple-icon-calculator',
-      //   label: 'menu.attendance',
-      //   to: `${adminRoot}/students/attendance`,
-      //   newWindow: false,
-      // },
-      //   label: 'menu.student-dismissal',
-      //   to: `${adminRoot}/students/dismissal`,
-      //   newWindow: false,
-      // },
-      {
-        icon: 'simple-icon-calculator',
-        label: 'menu.student-reregister',
-        to: `${adminRoot}/students/reregister`,
-        newWindow: false,
-      },
-      {
-        icon: 'simple-icon-calculator',
-        label: 'menu.single-student-marksUpdate',
-        to: `${adminRoot}/students/marks-update`,
-        newWindow: false,
-      },
-      {
-        icon: 'simple-icon-calculator',
-        label: 'menu.attendance-Update',
-        to: `${adminRoot}/students/attendance-update`,
         newWindow: false,
       },
     ],
   },
+
   {
     id: 'institute',
-    icon: 'iconsminds-home',
+    icon: 'FA.FaUniversity',
     label: 'menu.institutes',
     to: `${adminRoot}/institutes`,
     subs: [
       {
-        icon: 'iconsminds-home',
+        icon: 'FA.FaList',
         label: 'menu.institute_list',
         to: `${adminRoot}/institutes/institutes`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'MD.MdAddBox',
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'FA.FaLevelUpAlt',
         label: 'menu.institute-upgrade',
         to: `${adminRoot}/institutes/institute-upgrade`,
       },
       {
-        icon: 'simple-icon-plus',
-        label: 'menu.Institute-details',
-        to: `${adminRoot}/institutes/institute-details`,
+        icon: 'FA.FaList',
+        label: 'menu.promotion-demotion-list',
+        to: `${adminRoot}/institutes/promotion-demotion-list`,
       },
+      // {
+      //   icon: 'BI.BiMessageAltDetail',
+      //   label: 'menu.Institute-details',
+      //   to: `${adminRoot}/institutes/institute-details`,
+      // },
     ],
   },
   {
     id: 'dorms',
-    icon: 'iconsminds-hotel',
+    icon: 'FA.FaHotel',
     label: 'menu.dorms',
     to: `${adminRoot}/dorms`,
     subs: [
       {
-        icon: 'simple-icon-check',
+        icon: 'FA.FaList',
         label: 'dorm.list',
         to: `${adminRoot}/dorms/dorms`,
       },
       {
-        icon: 'simple-icon-calculator',
+        icon: 'MD.MdAddBox',
         label: 'dorm.register',
         to: `${adminRoot}/dorms/register`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'GR.GrUserAdd',
         label: 'menu.student-register-in-dorm',
         to: `${adminRoot}/dorms/student-register`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'CG.CgUserList',
         label: 'menu.dorm-students',
         to: `${adminRoot}/dorms/students`,
       },
+      // {
+      //   icon: 'BI.BiMessageAltDetail',
+      //   label: 'menu.dorm-details',
+      //   to: `${adminRoot}/dorms/details`,
+      // },
       {
-        icon: 'simple-icon-check',
-        label: 'menu.dorm-details',
-        to: `${adminRoot}/dorms/details`,
-      },
-      {
-        icon: 'simple-icon-check',
+        icon: 'IO.IoPersonRemoveSharp',
         label: 'menu.dorm-student-dismissal',
         to: `${adminRoot}/dorms/student-dismissal`,
       },
@@ -281,118 +239,100 @@ const data = [
   },
   {
     id: 'subjects',
-    icon: 'simple-icon-book-open',
+    icon: 'IO.IoBook',
     label: 'menu.subjects',
     to: `${adminRoot}/subjects`,
     subs: [
       {
-        icon: 'simple-icon-plus',
+        icon: 'FA.FaList',
+        label: 'menu.subject-list',
+        to: `${adminRoot}/subjects/subject-list`,
+      },
+      {
+        icon: 'MD.MdAddBox',
         label: 'subject.register',
         to: `${adminRoot}/subjects/register`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'FA.FaList',
+        label: 'menu.curriculum-list',
+        to: `${adminRoot}/subjects/curriculum-list`,
+      },
+      {
+        icon: 'MD.MdAddBox',
         label: 'subject.curriculum',
         to: `${adminRoot}/subjects/curriculum`,
-      },
-      {
-        icon: 'simple-icon-plus',
-        label: 'provincail Dashboard',
-        to: `${adminRoot}/subjects/provincial-dash`,
-      },
-      {
-        icon: 'simple-icon-plus',
-        label: 'Admin dashboard',
-        to: `${adminRoot}/subjects/admin-dashboard`,
-      },
-      {
-        icon: 'simple-icon-plus',
-        label: 'subject-list',
-        to: `${adminRoot}/subjects/subject-list`,
-      },
-      {
-        icon: 'simple-icon-plus',
-        label: 'curriculum-list',
-        to: `${adminRoot}/subjects/curriculum-list`,
       },
     ],
   },
   {
     id: 'classess',
-    icon: 'iconsminds-home-4',
+    icon: 'SI.SiGoogleclassroom',
     label: 'menu.classes',
     to: `${adminRoot}/classes`,
     subs: [
       {
-        icon: 'simple-icon-logout',
-        label: 'class.list',
-        to: `${adminRoot}/classes/classes`,
-      },
-      {
-        icon: 'simple-icon-logout',
+        icon: 'MD.MdAddBox',
         label: 'class.register',
         to: `${adminRoot}/classes/register`,
+      },
+      {
+        icon: 'FA.FaList',
+        label: 'class.list',
+        to: `${adminRoot}/classes/classes`,
       },
     ],
   },
 
   {
     id: 'fields',
-    icon: 'simple-icon-layers',
+    icon: 'MD.MdOutlineNoteAlt',
     label: 'menu.field',
     to: `${adminRoot}/fields`,
     subs: [
       {
-        icon: 'simple-icon-plus',
-        label: 'menu.field-register',
-        to: `${adminRoot}/fields/register`,
-      },
-      // {
-      //   icon: 'simple-icon-logout',
-      //   label: 'class.fields',
-      //   to: `${adminRoot}/fields/fields`,
-      // },
-      {
-        icon: 'simple-icon-logout',
-        // label: 'class.fields',
-        label: 'department-register',
-        to: `${adminRoot}/fields/department-register`,
-      },
-      {
-        icon: 'simple-icon-logout',
-        label: 'field-list',
+        icon: 'FA.FaList',
+        label: 'menu.field-list',
         to: `${adminRoot}/fields/field-list`,
       },
       {
-        icon: 'simple-icon-logout',
-        label: 'department-registration',
-        to: `${adminRoot}/fields/department-registration`,
+        icon: 'MD.MdAddBox',
+        label: 'menu.field-register',
+        to: `${adminRoot}/fields/register`,
       },
+
       {
-        icon: 'simple-icon-logout',
-        label: 'department-list',
+        icon: 'FA.FaList',
+        label: 'menu.department-list',
         to: `${adminRoot}/fields/department-list`,
+      },
+
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.department-register',
+        to: `${adminRoot}/fields/department-register`,
       },
     ],
   },
+
   {
     id: 'evaluations',
-    icon: 'simple-icon-book-open',
+    icon: 'BS.BsCardChecklist',
     label: 'menu.evaluation',
     to: `${adminRoot}/evaluations`,
     subs: [
       {
-        icon: 'simple-icon-logout',
+        icon: 'FA.FaList',
         label: 'evaluation.list',
         to: `${adminRoot}/evaluations/evaluations`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'MD.MdAddBox',
         label: 'menu.teacher-promotion-demotion',
         to: `${adminRoot}/evaluations/promotion-demotion`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'BI.BiMessageAltDetail',
         label: 'جزیات ارزیابی',
         to: `${adminRoot}/evaluations/evaluation-details`,
       },
@@ -401,28 +341,23 @@ const data = [
 
   {
     id: 'hr-evaluations',
-    icon: 'simple-icon-book-open',
+    icon: 'MD.MdManageAccounts',
     label: 'menu.hr-evaluation',
     to: `${adminRoot}/hr-evaluations`,
     subs: [
       {
-        icon: 'simple-icon-logout',
+        icon: 'FA.FaList',
         label: 'evaluation.list',
         to: `${adminRoot}/hr-evaluations/hr-evaluations`,
       },
       {
-        icon: 'simple-icon-plus',
+        icon: 'MD.MdAddBox',
         label: 'menu.teacher-HR-evaluation',
         to: `${adminRoot}/hr-evaluations/teacher-hr-evaluation`,
       },
     ],
   },
-  {
-    id: 'blankpage',
-    icon: 'iconsminds-bucket',
-    label: 'menu.blank-page',
-    to: `${adminRoot}/blank-page`,
-  },
+
   {
     id: 'docs',
     icon: 'iconsminds-library',

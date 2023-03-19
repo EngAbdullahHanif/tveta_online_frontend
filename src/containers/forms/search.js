@@ -4,6 +4,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import { injectIntl } from 'react-intl';
 const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
   //   const { messages } = intl;
+  console.log(inst, 'institute Data');
   const [searchtext, setSearchtext] = useState('');
   const [suggest, setSuggest] = useState([]);
   const [resfound, setResfound] = useState(true);
@@ -12,6 +13,7 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
     let searchval = e.target.value;
     let suggestion = [];
 
+    console.log('inst', inst);
     if (searchval.length > 0) {
       suggestion = inst
         .sort()
@@ -42,8 +44,8 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
               <p
                 style={{
                   paddingInline: '10%',
-                  marginTop: '-15px',
-                  marginBottom: '-18px',
+                  marginTop: '-20px',
+                  marginBottom: '-6px',
                   padding: '10px',
                 }}
                 onClick={() => suggestedText(item)}
@@ -59,7 +61,7 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
   };
   return (
     <>
-      <div className='searchDiv'>
+      <div className="searchDiv">
         <input
           type="text"
           placeholder={placeholder}

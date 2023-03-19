@@ -1,11 +1,31 @@
-import React from 'react';
-import { Card, CustomInput, Badge } from 'reactstrap';
+import React, { useState } from 'react';
+import {
+  Card,
+  CustomInput,
+  Badge,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+import IntlMessages from 'helpers/IntlMessages';
+
+import { BsTrashFill } from 'react-icons/bs';
+import { BsPencilSquare } from 'react-icons/bs';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
+  const [modalBasic, setModalBasic] = useState(false);
+  const [dataDeletion, setDeletion] = useState(false);
+
+  const handleClick = (event) => {
+    setDeletion(event);
+    console.log('API should be called here');
+  };
   return (
     <Colxx xxs="12" key={student.id} className="mb-3">
       <ContextMenuTrigger id="menu_id" data={student.id} collect={collect}>
@@ -23,17 +43,51 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
             />
           </NavLink> */}
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+            <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
               {/* send this to localhost/students/:id */}
 
-              <NavLink to={`student/${student.student_id}`} className="">
-                <p className="list-item-heading mb-1 truncate ">
-                  <span className="mr-5">{student.student_id}</span>
+              <NavLink
+                to={`student/${student.student_id}`}
+                style={{ width: '10%' }}
+              >
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ fontSize: '20px', marginInline: '-7px' }}
+                >
+                  {student.student_id}
+                </p>
+              </NavLink>
+              <NavLink
+                to={`teacher/${student.student_id}`}
+                style={{ width: '15%' }}
+              >
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ fontSize: '20px' }}
+                >
                   {student.name}
                 </p>
               </NavLink>
-              <p className="mb-1 text-small w-10 w-sm-100">
+
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
+              >
                 {student.father_name}
+              </p>
+
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
+              >
+                {student.current_province}
+              </p>
+
+              <p
+                className="list-item-heading mb-1 truncate"
+                style={{ fontSize: '20px', width: '15%' }}
+              >
+                93772323432<span>+</span>
               </p>
 
               {/* UN COMMINT IT WHEN THE API IS COMPLETED */}
@@ -41,40 +95,111 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
               <p className="mb-1 text-small">{student.department}</p>
               <p className="mb-1 text-small">{student.institute}</p> */}
 
-              <p className="mb-1 text-small w-10 w-sm-100">
-                {student.current_province}
-              </p>
               {/* <p className="mb-1 text-small">{student.internse_type}</p> */}
               {student.internse_type === 1 ? (
-                <p className="mb-1 text-small w-10 w-sm-100">حکمی</p>
+                <p
+                  className="mb-1 text-small"
+                  style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
+                >
+                  حکمی
+                </p>
               ) : student.internse_type === 2 ? (
-                <p className="mb-1 text-small w-10 w-sm-100">کانکور اختصاصی</p>
+                <p
+                  className="mb-1 text-small"
+                  style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
+                >
+                  کانکور اختصاصی
+                </p>
               ) : (
-                <p className="mb-1 text-small w-10 w-sm-100">
+                <p
+                  className="mb-1 text-small"
+                  style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
+                >
                   کانکور تحصیلات عالی
                 </p>
               )}
 
               {student.graduat_14_types === '1' ? (
-                <div className="mb-1 text-small ">
+                <div
+                  className="mb-1 text-small "
+                  style={{ fontSize: '20px', width: '15%' }}
+                >
                   <Badge color="success" pill>
                     فارغ التحصیل
                   </Badge>
                 </div>
               ) : student.graduat_14_types == '3' ? (
-                <div className="mb-1 text-small">
+                <div
+                  className="mb-1 text-small"
+                  style={{ fontSize: '20px', width: '10%' }}
+                >
                   <Badge color="danger" pill>
                     منفک
                   </Badge>
                 </div>
               ) : (
-                <div className="mb-1 text-small">
+                <div
+                  className="mb-1 text-small"
+                  style={{ fontSize: '20px', width: '10%' }}
+                >
                   <Badge color="warning" pill>
                     جاری
                   </Badge>
                 </div>
               )}
             </div>
+            <>
+              <div
+                style={{ display: 'flex', flexDirection: 'row' }}
+                className="align-self-center pr-4"
+              >
+                <div>
+                  <BsPencilSquare
+                    outline
+                    style={{ fontSize: '20px' }}
+                    id="updateIcon"
+                  />
+                </div>
+                <div className="ml-2">
+                  <BsTrashFill
+                    id="deleteIcon"
+                    outline
+                    onClick={() => setModalBasic(true)}
+                    style={{ fontSize: '20px' }}
+                  />
+                </div>
+              </div>
+              <Modal
+                isOpen={modalBasic}
+                toggle={() => setModalBasic(!modalBasic)}
+                style={{ marginTop: '10%' }}
+              >
+                <ModalHeader>
+                  <IntlMessages id="modal.deletion-message-title" />
+                </ModalHeader>
+                <ModalBody className="text-center">
+                  <IntlMessages id="modal.deletion-message-details" />
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    onClick={() => setModalBasic(false)}
+                    style={{ marginLeft: '55%' }}
+                  >
+                    نه/ نخیر
+                  </Button>
+                  <Button
+                    color="danger"
+                    onClick={() => {
+                      setModalBasic(false);
+                      handleClick(true);
+                    }}
+                    style={{ marginLeft: '5%' }}
+                  >
+                    هو / بلی
+                  </Button>{' '}
+                </ModalFooter>
+              </Modal>{' '}
+            </>
             {/* <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
               <CustomInput
                 className="item-check mb-0"

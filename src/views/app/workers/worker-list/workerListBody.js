@@ -6,7 +6,7 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const WorkerListBody = ({ worker, isSelect, collect, onCheckItem }) => {
-  console.log('inside body', worker)
+  console.log('inside body', worker);
   return (
     <Colxx xxs="12" key={worker.workerId} className="mt-2">
       <ContextMenuTrigger id="menu_id" data={worker.workerId} collect={collect}>
@@ -21,22 +21,30 @@ const WorkerListBody = ({ worker, isSelect, collect, onCheckItem }) => {
             style={{ maxHeight: '50px', width: '100%' }}
           >
             <div
-              className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`workers/${worker.workerId}`} style={{ width: '10%' }}>
-                <p className="list-item-heading mb-1 truncate">{worker.workerId}</p>
-              </NavLink>
-              <NavLink to={`workers/${worker.workerId}`} style={{ width: '15%' }}>
+              <NavLink
+                to={`workers/${worker.workerId}`}
+                style={{ width: '10%' }}
+              >
                 <p className="list-item-heading mb-1 truncate">
-                 {worker.workerName}
+                  {worker.workerId}
+                </p>
+              </NavLink>
+              <NavLink
+                to={`workers/${worker.workerId}`}
+                style={{ width: '15%' }}
+              >
+                <p className="list-item-heading mb-1 truncate">
+                  {worker.workerName}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-              {worker.workerProvince}
+                {worker.workerProvince}
               </p>
               <p
                 className="mb-1 text-small"

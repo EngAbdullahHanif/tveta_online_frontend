@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 import * as Yup from 'yup';
 import {
@@ -15,17 +15,20 @@ import {
   CardTitle,
   Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
+import callApi from 'helpers/callApi';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
+import { NotificationManager } from 'components/common/react-notifications';
+import { institute } from 'lang/locales/fa_IR';
+
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
-const ProvinceOptions = [
+const provinces = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
   { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
   { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
@@ -143,144 +146,232 @@ const options = [
 ];
 
 const instTypeOptions = [
-  { value: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
-  { value: '2', label: <IntlMessages id="institute.instTypeOptions_2" /> },
+  { value: '1', label: 'دولتی' },
+  { value: '1', label: 'شخصی' },
 ];
 
 const genderOptions = [
-  { value: '1', label: <IntlMessages id="institute.studentgenderOption_1" /> },
-  { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
-  { value: '3', label: <IntlMessages id="institute.studentgenderOption_3" /> },
+  { value: '1', label: 'مرد' },
+  { value: '2', label: 'زن' },
 ];
 
-const ValidationSchema = Yup.object().shape({
-  institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
+const instituteCityOptions = [
+  { value: '1', label: 'شهری' },
+  { value: '2', label: 'دهاتی' },
+];
+const instituteLanguageOptions = [
+  { value: '1', label: 'پښتو' },
+  { value: '2', label: 'دری' },
+];
+const instituteClimateOptions = [
+  { value: '1', label: 'سرد سیر' },
+  { value: '2', label: 'گرم سیر' },
+  { value: '3', label: 'زیاد سرد سیر' },
+];
+const instituteTypeOptions = [
+  { value: '1', label: 'انستیتوت' },
+  { value: '2', label: 'لیسه' },
+];
 
-  province: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-    : null,
+const servicePath = 'http://localhost:8000';
+const instituteApiUrl = `${servicePath}/institute/institute_create`;
+//http://localhost:8000/institute/institute_create
 
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-
-  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-
-  instType: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="inst.typeErr" />)
-    : null,
-
-  gender: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="institute.gender" />)
-    : null,
-});
-
-const updateMode = true;
 const InstituteRegister = () => {
-  const TestData = {
-    InstituteName: 'Nima',
-    Province: 'Kabul-1',
-    District: 'Paghman',
-    Village: 'Chehltan',
-    InstType: 'private',
-    Gender: 'Complex',
-  };
+  const [updateMode, setUpdateMode] = useState(false);
+  const { instituteId } = useParams();
+  const [institute, setInstitute] = useState([]);
+  const [initialInstituteName, setInitialInstituteName] = useState('');
 
-  const [initialInstituteName, setInitialInstituteName] = useState(
-    TestData.InstituteName ? TestData.InstituteName : ''
-  );
+  const [initialProvince, setInitialProvince] = useState('');
+  const [initialDistrict, setInitialDistrict] = useState('');
+  const [initialInstType, setInitialInstType] = useState([]);
+  const [initialVillage, setInitialVillage] = useState('');
 
-  const [initialProvince, setInitialProvince] = useState(
-    TestData.Province
-      ? [
-          {
-            label: TestData.Province,
-            value: TestData.Province,
-          },
-        ]
-      : []
-  );
-  const [initialDistrict, setInitialDistrict] = useState(
-    TestData.District ? TestData.District : ''
-  );
-  const [initialInstType, setInitialInstType] = useState(
-    TestData.InstType
-      ? [
-          {
-            label: TestData.InstType,
-            value: TestData.InstType,
-          },
-        ]
-      : []
-  );
-  const [initialVillage, setInitialVillage] = useState(
-    TestData.Village ? TestData.Village : ''
-  );
+  const [initialGender, setInitialGender] = useState([]);
 
-  const [initialGender, setInitialGender] = useState(
-    TestData.Gender ? [{ label: TestData.Gender, value: TestData.Gender }] : []
-  );
-
-  const [isNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(false);
   const [province, setProvince] = useState({});
   const [instType, setInstType] = useState({});
   const [gender, setGender] = useState({});
   const [] = useState('وتاکئ / انتخاب کنید');
-  const handleClick = (event) => {
-    // setIsNext(event);
+
+  if (instituteId) {
+    useEffect(() => {
+      async function fetchInstitute() {
+        const { data } = await axios.get(`${instituteApiUrl}/${instituteId}`);
+        setInstitute(data);
+        console.log(data, 'object of the data');
+        setInitialInstituteName(data.name);
+        setInitialDistrict(data.district);
+        setInitialVillage(data.village);
+        const Instprovince = provinces.map((provName) => {
+          if (provName.label === data.province) {
+            setInitialProvince([provName]);
+          }
+        });
+        const instTypee = instTypeOptions.map((instType) => {
+          if (instType.value === data.type) {
+            setInitialInstType([instType]);
+          }
+        });
+        const instGender = genderOptions.map((instGender) => {
+          if (instGender.value === data.gender) {
+            setInitialGender(instGender);
+          }
+        });
+      }
+      fetchInstitute();
+      setUpdateMode(true);
+    }, []);
+  }
+
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'شاگرد موفقانه لیلی ته رجستر شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
+
+  // this function is used to update all the state of the fields in case we are updating a record
+  function updateFormFields() {}
+
+  // const ValidationSchema = Yup.object().shape({
+  //   institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
+
+  //   province: updateMode
+  //     ? Yup.object()
+  //         .shape({
+  //           value: Yup.string().required(),
+  //         })
+  //         .nullable()
+  //         .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
+  //     : null,
+
+  //   instituteType: Yup.object()
+  //     .shape({
+  //       value: Yup.string().required(),
+  //     })
+  //     .nullable()
+  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+  //   institueCityType: Yup.object()
+  //     .shape({
+  //       value: Yup.string().required(),
+  //     })
+  //     .nullable()
+  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+  //   institueLanguage: Yup.object()
+  //     .shape({
+  //       value: Yup.string().required(),
+  //     })
+  //     .nullable()
+  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+  //   province: Yup.object()
+  //     .shape({
+  //       value: Yup.string().required(),
+  //     })
+  //     .nullable()
+  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+  //   district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+
+  //   village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+
+  //   instType: updateMode
+  //     ? Yup.object()
+  //         .shape({
+  //           value: Yup.string().required(),
+  //         })
+  //         .nullable()
+  //         .required(<IntlMessages id="inst.typeErr" />)
+  //     : null,
+
+  //   gender: updateMode
+  //     ? Yup.object()
+  //         .shape({
+  //           value: Yup.string().required(),
+  //         })
+  //         .nullable()
+  //         .required(<IntlMessages id="institute.gender" />)
+  //     : null,
+  // });
+
+  // const onRegister = (values, { resetForm }) => {
+  //   console.log(values, 'Values ');
+  //   resetForm();
+  //   setIsNext(true);
+  //   // if (!values.province || values.province.value === '0') {
+  //   //   return;
+  //   // }
+  //   // if (!values.instType || values.instType.value === '0') {
+  //   //   return;
+  //   // }
+
+  //   // insert the data to the API with Axios here and redirect to the current page
+  // const handleClick = (event) => {
+  //   // setIsNext(event);
+  // };
+
+  // post student record to server
+  const postInstituteRecord = async (data) => {
+    const response = await callApi('institute/institute_create', 'POST', data);
+    if (response) {
+      createNotification('success', 'filled');
+      resetForm();
+      setIsNext(true);
+      console.log('success message from backend', response);
+    } else {
+      createNotification('error', 'filled');
+      console.log('class error');
+    }
   };
 
   const onRegister = (values) => {
-    // if (!values.province || values.province.value === '0') {
-    //   return;
-    // }
-    // if (!values.instType || values.instType.value === '0') {
-    //   return;
-    // }
-
-    // insert the data to the API with Axios here and redirect to the current page
+    //console.log('values of the form', values);
     const data = {
       name: values.institute,
+      address: `${values.district}, ${values.province.value}`,
       province: values.province.value,
       district: values.district,
       village: values.village,
       type: values.instType.value,
-      // gender: values.gender[0],
+      inst_city_type: values.institueCityType.value,
+      inst_status: '1', //as it is registered for the first time so it is considered to be active
+      inst_climaty: values.instituteClimate.value,
+      school_type: values.instituteType.value,
+      language: values.institueLanguage.value,
+      gender: values.gender.value,
+      user_id: '1',
     };
-    //conver the data to JSON
-    // const dataJSON = JSON.stringify(data);
-
-    // console.log('data sent to the server1');
-
-    //send the data to https://localhost:8000/institutes with Axios
-
-    //define content type in the axios header
-
-    axios
-      .post('http://localhost:8000/institute/', data)
-      .then((response) => {
-        console.log(response);
-
-        // window.location.reload(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    console.log(data);
+    //console.log('data of the form', data);
+    postInstituteRecord(data);
   };
 
   return (
@@ -290,8 +381,9 @@ const InstituteRegister = () => {
           {<IntlMessages id="inst.register.title" />}
         </h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
+              enableReinitialize={true}
               validateOnMount
               initialValues={{
                 institute: initialInstituteName,
@@ -301,7 +393,7 @@ const InstituteRegister = () => {
                 instType: initialInstType,
                 gender: initialGender,
               }}
-              validationSchema={ValidationSchema}
+              // validationSchema={ValidationSchema}
               onSubmit={onRegister}
             >
               {({
@@ -310,10 +402,11 @@ const InstituteRegister = () => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right  error-l-200">
                   <Row className="justify-content-center">
-                    <Colxx xxs="10">
+                    <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
                         <Label>
                           <IntlMessages id="inst.name" />
@@ -334,7 +427,7 @@ const InstituteRegister = () => {
                           name="province"
                           id="province"
                           value={values.province}
-                          options={ProvinceOptions}
+                          options={provinces}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
@@ -387,7 +480,8 @@ const InstituteRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-
+                    </Colxx>
+                    <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
                         <Label>
                           <IntlMessages id="gender" />
@@ -407,15 +501,93 @@ const InstituteRegister = () => {
                         ) : null}
                       </FormGroup>
 
+                      {/* institute type */}
+
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="institue type" />
+                        </Label>
+                        <FormikReactSelect
+                          name="instituteType"
+                          id="instituteType"
+                          value={values.instituteType}
+                          options={instituteTypeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.instituteType && touched.instituteType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.instituteType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* institue city options */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="City Type" />
+                        </Label>
+                        <FormikReactSelect
+                          name="institueCityType"
+                          id="institueCityType"
+                          value={values.institueCityType}
+                          options={instituteCityOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.institueCityType && touched.institueCityType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.institueCityType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* institute language  */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="institute langugage" />
+                        </Label>
+                        <FormikReactSelect
+                          name="institueLanguage"
+                          id="institueLanguage"
+                          value={values.institueLanguage}
+                          options={instituteLanguageOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.institueLanguage && touched.institueLanguage ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.institueLanguage}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* institute climate*/}
+
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="institute climate" />
+                        </Label>
+                        <FormikReactSelect
+                          name="instituteClimate"
+                          id="instituteClimate"
+                          value={values.instituteClimate}
+                          options={instituteClimateOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.instituteClimate && touched.instituteClimate ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.instituteClimate}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                       <div className="d-flex justify-content-between align-items-center float-right mb-5 mt-3">
                         <Button
                           className="m-4"
                           size="lg"
                           type="submit"
                           color="primary"
-                          onClick={() => {
-                            handleClick(false);
-                          }}
                         >
                           <span className="spinner d-inline-block ">
                             <span className="bounce1" />
@@ -444,7 +616,10 @@ const InstituteRegister = () => {
                 <h3>
                   <IntlMessages id="wizard.registered" />
                 </h3>
-                <Button className="m-5 bg-primary">
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
                   <IntlMessages id="button.back" />
                 </Button>
               </div>

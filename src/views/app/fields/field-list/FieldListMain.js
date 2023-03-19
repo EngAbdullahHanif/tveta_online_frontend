@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
-import ListPageHeading from './FieldListHeading'
+import ListPageHeading from './FieldListHeading';
 
 import ListPageListing from './FieldListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
@@ -45,8 +45,6 @@ const categories = [
   { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
-
-
 
 const Provinces = [
   {
@@ -191,9 +189,7 @@ const Provinces = [
   },
 ];
 
-
 const ThumbListPages = ({ match }) => {
-
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -226,33 +222,29 @@ const ThumbListPages = ({ match }) => {
   }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
 
   useEffect(() => {
-    async function fetchData() {    
-      console.log('insdie useEffect')
-        await axios
-          .get(
-            FieldApiUrl
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      
+    async function fetchData() {
+      console.log('insdie useEffect');
+      await axios
+        .get(FieldApiUrl)
+        .then((res) => {
+          return res.data;
+        })
+        .then((data) => {
+          setItems(data);
+          setSelectedItems([]);
+          setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        });
     }
     fetchData();
-    
   }, [
     selectedPageSize,
     currentPage,
-   //selectedOrderOption,
+    //selectedOrderOption,
     //search,
     selectedGenderOption,
     selectedProvinceOption,
-   // studentId,
+    // studentId,
     province,
     district,
     rest,
@@ -400,7 +392,6 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
-          
         />
         <table className="table">
           <thead
@@ -446,12 +437,11 @@ const ThumbListPages = ({ match }) => {
                   borderStyle: 'hidden',
                 }}
               >
-                <IntlMessages id="fieldSector" />
+                <IntlMessages id="field.fieldSector" />
               </th>
-            
             </tr>
           </thead>
-          
+
           <ListPageListing
             items={items}
             displayMode={displayMode}
@@ -463,7 +453,6 @@ const ThumbListPages = ({ match }) => {
             onContextMenu={onContextMenu}
             onChangePage={setCurrentPage}
           />
-        
         </table>
       </div>
     </>

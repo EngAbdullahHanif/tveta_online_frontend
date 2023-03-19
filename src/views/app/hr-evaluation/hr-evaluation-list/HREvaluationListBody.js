@@ -1,16 +1,34 @@
-import React from 'react';
-import { Card, CustomInput, Badge } from 'reactstrap';
+import React, { useState } from 'react';
+import {
+  Card,
+  CustomInput,
+  Badge,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
+import IntlMessages from 'helpers/IntlMessages';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
-
+import { BsTrashFill } from 'react-icons/bs';
+import { BsPencilSquare } from 'react-icons/bs';
 const EvaluationListBody = ({
   hrEvaluation,
   isSelect,
   collect,
   onCheckItem,
 }) => {
+  const [modalBasic, setModalBasic] = useState(false);
+  const [dataDeletion, setDeletion] = useState(false);
+
+  const handleClick = (event) => {
+    setDeletion(event);
+    console.log('API should be called here');
+  };
   return (
     <Colxx xxs="12" key={hrEvaluation.id} className="mb-3">
       <ContextMenuTrigger id="menu_id" data={hrEvaluation.id} collect={collect}>
@@ -27,24 +45,118 @@ const EvaluationListBody = ({
               className="list-thumbnail responsive border-0 card-img-left"
             />
           </NavLink> */}
-          <div className="pl-2 d-flex flex-grow-1 min-width-zero" >
-            <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-              <NavLink to={`${hrEvaluation.id}`} className="">
-                <p className="list-item-heading mb-1 truncate" style={{margin: 0}}>
-                  <span className="mr-5" style={{margin: 0}}>{hrEvaluation.id}</span>
+          <div
+            className="pl-2 d-flex flex-grow-1 min-width-zero"
+            style={{ maxHeight: '50px', width: '100%' }}
+          >
+            <div
+              className="card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
+              style={{ width: '100%' }}
+            >
+              <NavLink to={`${hrEvaluation.id}`} style={{ width: '10%' }}>
+                <p className="list-item-heading mb-1 truncate">
+                  {hrEvaluation.id}
+                </p>
+              </NavLink>
+              <NavLink
+                to={`${hrEvaluation.teacher_id.name}`}
+                style={{ width: '15%' }}
+              >
+                <p className="list-item-heading mb-1 truncate">
+                  {' '}
                   {hrEvaluation.teacher_id.name}
                 </p>
               </NavLink>
-              <p className="mb-1 text-small" style={{margin: 0}}>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
+              >
                 {hrEvaluation.institute_id.name}
               </p>
-              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.score}</p>
-              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.current_grade}</p>
-              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.new_grade}</p>
-              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.current_step}</p>
-              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.new_step}</p>
-              <p className="mb-1 text-small" style={{margin: 0}}>{hrEvaluation.new_step}</p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
+              >
+                {hrEvaluation.score}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
+              >
+                {hrEvaluation.current_grade}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
+              >
+                {hrEvaluation.new_grade}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
+              >
+                {hrEvaluation.current_step}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
+              >
+                {hrEvaluation.new_step}
+              </p>
             </div>
+            {/* Delete and update Icons */}
+            <>
+              <div
+                style={{ display: 'flex', flexDirection: 'row' }}
+                className="align-self-center pr-4"
+              >
+                <div>
+                  <BsPencilSquare
+                    outline
+                    style={{ fontSize: '20px' }}
+                    id="updateIcon"
+                  />
+                </div>
+                <div className="ml-2">
+                  <BsTrashFill
+                    id="deleteIcon"
+                    outline
+                    onClick={() => setModalBasic(true)}
+                    style={{ fontSize: '20px' }}
+                  />
+                </div>
+              </div>
+              <Modal
+                isOpen={modalBasic}
+                toggle={() => setModalBasic(!modalBasic)}
+                style={{ marginTop: '10%' }}
+              >
+                <ModalHeader>
+                  <IntlMessages id="modal.deletion-message-title" />
+                </ModalHeader>
+                <ModalBody className="text-center">
+                  <IntlMessages id="modal.deletion-message-details" />
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    onClick={() => setModalBasic(false)}
+                    style={{ marginLeft: '55%' }}
+                  >
+                    نه/ نخیر
+                  </Button>
+                  <Button
+                    color="danger"
+                    onClick={() => {
+                      setModalBasic(false);
+                      handleClick(true);
+                    }}
+                    style={{ marginLeft: '5%' }}
+                  >
+                    هو / بلی
+                  </Button>{' '}
+                </ModalFooter>
+              </Modal>{' '}
+            </>
           </div>
         </Card>
       </ContextMenuTrigger>

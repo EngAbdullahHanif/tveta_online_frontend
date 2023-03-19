@@ -329,7 +329,7 @@ const MarksRegistration = ({ match }) => {
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}
-              validationSchema={ValidationSchema}
+              // validationSchema={ValidationSchema}
             >
               {({
                 errors,

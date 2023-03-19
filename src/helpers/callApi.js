@@ -8,12 +8,12 @@ const getHeaders = (data) => {
   const access_token = localStorage.getItem('access_token');
 
   if (user && access_token) {
-    const headers = { Authorization: `Bearer ${access_token}`,}
-      console.log("data instanceof FormData", data instanceof FormData)
+    const headers = { Authorization: `Bearer ${access_token}` };
+    console.log('data instanceof FormData', data instanceof FormData);
     if (data instanceof FormData) {
       headers['Content-Type'] = 'multipart/form-data';
     }
-    console.log('headers', headers)
+    console.log('headers', headers);
     return headers;
   } else {
     return {};
@@ -27,22 +27,25 @@ const callApi = async (endpoint, method = 'get', data = null) => {
 
   //add current user id to the data
   if (data && data instanceof FormData) {
-    data.append('user_id', JSON.parse(localStorage.getItem('current_user')).user_id);
+    data.append(
+      'user_id',
+      JSON.parse(localStorage.getItem('current_user')).user_id
+    );
   } else if (data) {
     data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
   }
 
   try {
-      const response = await axios({
-            method,
-            url,
-            headers,
-            data,
+    const response = await axios({
+      method,
+      url,
+      headers,
+      data,
     });
-    console.log('response of callApi', response)
+    //console.log('response of callApi', response);
     return response;
   } catch (error) {
-    console.error("error of the call", error);
+    console.error('error of the call', error);
     return error.response.data;
   }
 };

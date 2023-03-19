@@ -155,14 +155,14 @@ const AllSubjectsMarks = ({ match }) => {
   const fetchFields = async () => {
     const response = await callApi('institute/field/', '', null);
     if (response.data && response.status === 200) {
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setFields(updatedData);
-  } else {
-    console.log('field error');
-  }
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFields(updatedData);
+    } else {
+      console.log('field error');
+    }
   };
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', '', null);
@@ -175,31 +175,32 @@ const AllSubjectsMarks = ({ match }) => {
     } else {
       console.log('department error');
     }
-
   };
 
   const fetchClasses = async () => {
     const response = await callApi('/institute/classs/', '', null);
     if (response.data && response.status === 200) {
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name + ' - ' + item.semester + ' - ' + item.section,
-    }));
-    setClasses(updatedData);
-  } else {
-    console.log('class error');
-  }
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setClasses(updatedData);
+    } else {
+      console.log('class error');
+    }
   };
 
   const fetchSubjects = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/subject/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setSubjects(updatedData);
+    const response = await callApi('/institute/subject/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('subject error');
+    }
   };
 
   useEffect(() => {
@@ -221,18 +222,21 @@ const AllSubjectsMarks = ({ match }) => {
     //     setStudents(response.data);
     //     setIsNext(event);
     //   });
-    const response = await callApi(`api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`, '', null);
-    console.log('students response', response.data)
+    const response = await callApi(
+      `api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      '',
+      null
+    );
+    console.log('students response', response.data);
     if (response.data && response.status === 200) {
       setStudents(response.data);
       setIsNext(event);
 
       // split selected class to get semester and section
-    const classArray = selectedClass.label.split(' - ');
-    setClasss(classArray[0]);
-    setSemester(classArray[1]);
-    setSection(classArray[2]);
-
+      const classArray = selectedClass.label.split(' - ');
+      setClasss(classArray[0]);
+      setSemester(classArray[1]);
+      setSection(classArray[2]);
     } else {
       console.log('students error');
     }
@@ -559,23 +563,23 @@ const AllSubjectsMarks = ({ match }) => {
                       overflowX: 'hidden',
                     }}
                   >
-                    {students && students.map((student, index) => (
-                      <>
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{student.studnet_name}</td>
-                        <td>{student.student_father_name}</td>
-                        <td>{student.student_id}</td>
-                        {student.subject_id.map((mark, index) => (
-                          <>
-                          <td>{mark.marks}</td>
-                          <td>{mark.subject_name}</td>
-                          </>
-                        ))}
-                      
-                      </tr>{' '}
-                      </>
-                    ))}
+                    {students &&
+                      students.map((student, index) => (
+                        <>
+                          <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{student.studnet_name}</td>
+                            <td>{student.student_father_name}</td>
+                            <td>{student.student_id}</td>
+                            {student.subject_id.map((mark, index) => (
+                              <>
+                                <td>{mark.marks}</td>
+                                <td>{mark.subject_name}</td>
+                              </>
+                            ))}
+                          </tr>{' '}
+                        </>
+                      ))}
                     {/* <tr>
                       <td>1</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
                       <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}

@@ -28,7 +28,7 @@ import DismissedStudents from './dismissed-student-list/DismissedListMain';
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
 const dismissedStudentsAPI = `${servicePath}/api/student_institutes`;
-// http://localhost:8000/api/student_institutes/?institute=1&type=3&language=&time=&student_id=&educational_year=1990&is_transfer=
+// http://localhost:8000/api/student_institutes/?institute=1&type=&language=&time=&student_id=&educational_year=1990
 
 const StudyTimeOptions = [
   { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
@@ -99,7 +99,7 @@ const MarksRegistration = ({ match }) => {
 
   const fetchDismissedStudents = async (values) => {
     const { data } = await axios.get(
-      `${dismissedStudentsAPI}/?institute=${values.institute.value}&type=3&language=&time=&student_id=&educational_year=${values.educationlaYear}&is_transfer=`
+      `${dismissedStudentsAPI}/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}`
     );
     setDismissedStudents(data);
     console.log('dismissed students list', data);

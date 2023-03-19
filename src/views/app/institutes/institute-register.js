@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -16,20 +15,129 @@ import {
   CardTitle,
   Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
+import callApi from 'helpers/callApi';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
+import { NotificationManager } from 'components/common/react-notifications';
+import { institute } from 'lang/locales/fa_IR';
+
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
+
 const provinces = [
-  { value: 1, label: 'کابل' },
-  { value: 2, label: 'هرات' },
-  { value: 3, label: 'مزار' },
-  { value: 4, label: 'جلااباد' },
+  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
+  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
+  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
+  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
+  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
+  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
+  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
+  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
+  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
+  {
+    value: '10',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
+  },
+  {
+    value: '11',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
+  },
+  {
+    value: '12',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
+  },
+  {
+    value: '13',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
+  },
+  {
+    value: '14',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
+  },
+  {
+    value: '15',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
+  },
+  {
+    value: '16',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
+  },
+  {
+    value: '17',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
+  },
+  {
+    value: '18',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
+  },
+  {
+    value: '19',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
+  },
+  {
+    value: '20',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    value: '21',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
+  },
+  {
+    value: '22',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
+  },
+  {
+    value: '23',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
+  },
+  {
+    value: '24',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
+  },
+  {
+    value: '25',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
+  },
+  {
+    value: '26',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
+  },
+  {
+    value: '27',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
+  },
+  {
+    value: '28',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
+  },
+  {
+    value: '29',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+  },
+  {
+    value: '30',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
+  },
+  {
+    value: '31',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
+  },
+  {
+    value: '32',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
+  },
+  {
+    value: '33',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
+  },
+  {
+    value: '34',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+  },
 ];
 
 const options = [
@@ -46,8 +154,28 @@ const genderOptions = [
   { value: '1', label: 'مرد' },
   { value: '2', label: 'زن' },
 ];
+
+const instituteCityOptions = [
+  { value: '1', label: 'شهری' },
+  { value: '2', label: 'دهاتی' },
+];
+const instituteLanguageOptions = [
+  { value: '1', label: 'پښتو' },
+  { value: '2', label: 'دری' },
+];
+const instituteClimateOptions = [
+  { value: '1', label: 'سرد سیر' },
+  { value: '2', label: 'گرم سیر' },
+  { value: '3', label: 'زیاد سرد سیر' },
+];
+const instituteTypeOptions = [
+  { value: '1', label: 'انستیتوت' },
+  { value: '2', label: 'لیسه' },
+];
+
 const servicePath = 'http://localhost:8000';
-const instituteApiUrl = `${servicePath}/institute`;
+const instituteApiUrl = `${servicePath}/institute/institute_create`;
+//http://localhost:8000/institute/institute_create
 
 const InstituteRegister = () => {
   const [updateMode, setUpdateMode] = useState(false);
@@ -98,6 +226,37 @@ const InstituteRegister = () => {
     }, []);
   }
 
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'شاگرد موفقانه لیلی ته رجستر شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
+
   // this function is used to update all the state of the fields in case we are updating a record
   function updateFormFields() {}
 
@@ -112,6 +271,34 @@ const InstituteRegister = () => {
           .nullable()
           .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
       : null,
+
+    instituteType: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+    institueCityType: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+    institueLanguage: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+    province: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
     district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
 
@@ -136,47 +323,55 @@ const InstituteRegister = () => {
       : null,
   });
 
-  const onRegister = (values, { resetForm }) => {
-    console.log(values, 'Values ');
-    resetForm();
-    setIsNext(true);
-    // if (!values.province || values.province.value === '0') {
-    //   return;
-    // }
-    // if (!values.instType || values.instType.value === '0') {
-    //   return;
-    // }
+  // const onRegister = (values, { resetForm }) => {
+  //   console.log(values, 'Values ');
+  //   resetForm();
+  //   setIsNext(true);
+  //   // if (!values.province || values.province.value === '0') {
+  //   //   return;
+  //   // }
+  //   // if (!values.instType || values.instType.value === '0') {
+  //   //   return;
+  //   // }
 
-    // insert the data to the API with Axios here and redirect to the current page
+  //   // insert the data to the API with Axios here and redirect to the current page
+  // const handleClick = (event) => {
+  //   // setIsNext(event);
+  // };
+
+  // post student record to server
+  const postInstituteRecord = async (data) => {
+    const response = await callApi('institute/institute_create', 'POST', data);
+    if (response) {
+      createNotification('success', 'filled');
+      resetForm();
+      setIsNext(true);
+      console.log('success message from backend', response);
+    } else {
+      createNotification('error', 'filled');
+      console.log('class error');
+    }
+  };
+
+  const onRegister = (values) => {
+    //console.log('values of the form', values);
     const data = {
       name: values.institute,
+      address: `${values.district}, ${values.province.value}`,
       province: values.province.value,
       district: values.district,
       village: values.village,
       type: values.instType.value,
-      // gender: values.gender[0],
+      inst_city_type: values.institueCityType.value,
+      inst_status: '1', //as it is registered for the first time so it is considered to be active
+      inst_climaty: values.instituteClimate.value,
+      school_type: values.instituteType.value,
+      language: values.institueLanguage.value,
+      gender: values.gender.value,
+      user_id: '1',
     };
-    //conver the data to JSON
-    // const dataJSON = JSON.stringify(data);
-
-    // console.log('data sent to the server1');
-
-    //send the data to https://localhost:8000/institutes with Axios
-
-    //define content type in the axios header
-
-    axios
-      .post('http://localhost:8000/institute/', data)
-      .then((response) => {
-        console.log(response);
-
-        // window.location.reload(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    console.log(data);
+    //console.log('data of the form', data);
+    postInstituteRecord(data);
   };
 
   return (
@@ -211,7 +406,7 @@ const InstituteRegister = () => {
               }) => (
                 <Form className="av-tooltip tooltip-label-right  error-l-200">
                   <Row className="justify-content-center">
-                    <Colxx xxs="10">
+                    <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
                         <Label>
                           <IntlMessages id="inst.name" />
@@ -285,7 +480,8 @@ const InstituteRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-
+                    </Colxx>
+                    <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
                         <Label>
                           <IntlMessages id="gender" />
@@ -305,6 +501,87 @@ const InstituteRegister = () => {
                         ) : null}
                       </FormGroup>
 
+                      {/* institute type */}
+
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="institue type" />
+                        </Label>
+                        <FormikReactSelect
+                          name="instituteType"
+                          id="instituteType"
+                          value={values.instituteType}
+                          options={instituteTypeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.instituteType && touched.instituteType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.instituteType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* institue city options */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="City Type" />
+                        </Label>
+                        <FormikReactSelect
+                          name="institueCityType"
+                          id="institueCityType"
+                          value={values.institueCityType}
+                          options={instituteCityOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.institueCityType && touched.institueCityType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.institueCityType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* institute language  */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="institute langugage" />
+                        </Label>
+                        <FormikReactSelect
+                          name="institueLanguage"
+                          id="institueLanguage"
+                          value={values.institueLanguage}
+                          options={instituteLanguageOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.institueLanguage && touched.institueLanguage ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.institueLanguage}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* institute climate*/}
+
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="institute climate" />
+                        </Label>
+                        <FormikReactSelect
+                          name="instituteClimate"
+                          id="instituteClimate"
+                          value={values.instituteClimate}
+                          options={instituteClimateOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.instituteClimate && touched.instituteClimate ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.instituteClimate}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                       <div className="d-flex justify-content-between align-items-center float-right mb-5 mt-3">
                         <Button
                           className="m-4"

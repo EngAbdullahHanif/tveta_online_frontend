@@ -78,6 +78,7 @@ const educationYears = [
   { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
   { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
   { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+  { value: '324', label: <IntlMessages id="forms.educationalYearOption_36" /> },
 ];
 
 const StdSchoolProvinceOptions = [
@@ -190,11 +191,15 @@ const StdSchoolProvinceOptions = [
     value: '34',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
+  {
+    value: '234234',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+  },
 ];
 
 const StudentRegistraion = ({ history }) => {
   const UpdatingMode = true;
-  console.log(UpdatingMode, 'updating Mode');
+
   const ValidationSchema = Yup.object().shape({
     name1: Yup.string()
       .min(3, <IntlMessages id="min.minInputValue" />)
@@ -216,50 +221,36 @@ const StudentRegistraion = ({ history }) => {
       <IntlMessages id="forms.KankorMarksErr" />
     ),
 
-    department: !UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="teacher.departmentIdErr" />)
-      : null,
-
-    gender: updateMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.genderErr" />)
-      : null,
-
-    institute: !UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.InstituteErr" />)
-      : null,
-
-    field: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.FieldErr" />)
-      : null,
-
-    studyTime: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.StudyTimeErr" />)
-      : null,
+    department: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="teacher.departmentIdErr" />),
+    gender: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.genderErr" />),
+    institute: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.InstituteErr" />),
+    field: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.FieldErr" />),
+    studyTime: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StudyTimeErr" />),
     educationalYear: Yup.object()
       .shape({
         value: Yup.string().required(),
@@ -278,25 +269,44 @@ const StudentRegistraion = ({ history }) => {
   });
 
   const { kankorStudentId } = useParams();
-  //console.log(kankorStudentId);
+  console.log(kankorStudentId);
   if (kankorStudentId) {
     useEffect(() => {
       async function fetchStudent() {
         const { data } = await axios.get(
           `${KankorstudentAPI}/?id=${kankorStudentId}`
         );
-        console.log(data[0].id, 'kaknor student data');
+        console.log(data, 'kaknor student data');
         setInitialName(data[0].name);
-        setInitailKankorId(data[0].user_id);
+        //setInitailKankorId(data[0].user_id);
         setInitialFatherName(data[0].father_name);
         setInitailInteranceDate('04/23/1995');
+        setInitialDistrict(data[0].district);
+
+        const educationYearsOptions = educationYears.map((year) => {
+          if (year.value == data[0].educational_year) {
+            setInitialEducationalYear(year);
+          }
+        });
+        const provinceOptions = StdSchoolProvinceOptions.map((province) => {
+          if (province.value == data[0].provence) {
+            setInitialProvince(province);
+          }
+        });
+
         setInitailDepartment([
           {
             value: data[0].department_id.id,
             label: data[0].department_id.name,
           },
         ]);
-        setInitialField([
+        setInitialGender([
+          {
+            value: data[0].department_id.id,
+            label: data[0].department_id.name,
+          },
+        ]);
+        setInitailField([
           {
             value: data[0].field_id.id,
             label: data[0].field_id.name,
@@ -313,69 +323,21 @@ const StudentRegistraion = ({ history }) => {
     }, []);
   }
 
-  // Temporaray varaibles
-  const testName = 'Ahmad';
-  // const testKankorId = '232423';
-  const testFatherName = '';
-  const testInteranceDate = '23-243-4323';
-  const testStudyTime = 'Morning';
-  const testDepartment = '';
-  const testFieldfield = 'CS';
-  const testInstitute = '';
-  const testKankorMarks = '87';
-  const testGender = '';
-  const testEducationalYear = '';
-  const testProvince = '';
-  const testDistrict = '87';
+  const [intialName, setInitialName] = useState('');
+  const [initialFatherName, setInitialFatherName] = useState('');
+  const [initailInteranceDate, setInitailInteranceDate] = useState('');
+  const [initialKankorMarks, setInitialKankorMarks] = useState('');
+  const [initialField, setInitailField] = useState([]);
+  const [initailDepartment, setInitailDepartment] = useState([]);
+  const [initialstudyTime, setInitialstudyTime] = useState([]);
+  const [initialInstitute, setInitialInstitute] = useState([]);
 
-  const [intialName, setInitialName] = useState(testName ? 'Ahmad' : '');
-  // const [initailKankorId, setInitailKankorId] = useState(
-  //   testKankorId ? '213f-12' : ''
-  // );
-  const [initialFatherName, setInitialFatherName] = useState(
-    testFatherName ? 'Rashid' : ''
-  );
-  const [initailInteranceDate, setInitailInteranceDate] = useState(
-    testInteranceDate ? '2022-08-12' : ''
-  );
-  const [initialKankorMarks, setInitialKankorMarks] = useState(
-    testKankorMarks ? '87' : ''
-  );
-  const [initialField, setInitailField] = useState(
-    testFieldfield ? [{ label: testFieldfield, value: testFieldfield }] : []
-  );
-  const [initailDepartment, setInitailDepartment] = useState(
-    testDepartment ? [{ label: testDepartment, value: testDepartment }] : []
-  );
-  const [initialstudyTime, setInitialstudyTime] = useState(
-    testStudyTime ? [{ label: testStudyTime, value: testStudyTime }] : []
-  );
-
-  const [initialInstitute, setInitialInstitute] = useState(
-    testInstitute ? [{ label: testInstitute, value: testInstitute }] : []
-  );
-
-  const [initialGender, setInitialGender] = useState(
-    testGender ? [{ label: testGender, value: testGender }] : []
-  );
-
-  const [initialEducationalYear, setInitialEducationalYear] = useState(
-    testEducationalYear
-      ? [{ label: testEducationalYear, value: testEducationalYear }]
-      : []
-  );
-
-  const [initialProvince, setInitialProvince] = useState(
-    testProvince ? [{ label: testProvince, value: testProvince }] : []
-  );
-
-  const [initialDistrict, setInitialDistrict] = useState(
-    testDistrict ? '87' : ''
-  );
-
+  const [initialGender, setInitialGender] = useState([]);
+  const [initialEducationalYear, setInitialEducationalYear] = useState([]);
+  const [initialProvince, setInitialProvince] = useState([]);
+  const [initialDistrict, setInitialDistrict] = useState('');
   const initialValues = {
     name1: intialName,
-    // kankorId: initailKankorId,
     gender: initialGender,
     fatherName: initialFatherName,
     kankorMarks: initialKankorMarks,
@@ -421,10 +383,6 @@ const StudentRegistraion = ({ history }) => {
     }));
     setDepartments(updatedData);
   };
-
-  // const handleClick = (event) => {
-  //   setIsNext(event);
-  // };
 
   const updateMode = true;
   const onRegister = (values) => {

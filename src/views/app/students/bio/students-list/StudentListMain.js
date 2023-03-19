@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
+import callApi from 'helpers/callApi';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -323,7 +324,7 @@ const ThumbListPages = ({ match }) => {
     selectLevelOfEducationOption,
   ]);
 
-  useEffect(() => {
+  useEffect( async  () => {
     async function fetchData() {
       console.log('institute', institute);
       console.log('province', province);
@@ -332,12 +333,17 @@ const ThumbListPages = ({ match }) => {
       console.log('selectedGenderOption', selectedGenderOption);
 
       if (institute !== '') {
-        const res = await axios.get(
-          `${studentInstituteApiUrl}?institute_id=${institute.id}`
-        );
-        setItems(res.data);
-        setTotalItemCount(res.data);
-        setIsLoaded(true);
+
+        const response = await callApi( `api/student_institutes/?institute_id=${institute.id}`, '', null);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
+
       } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all' &&
@@ -348,82 +354,71 @@ const ThumbListPages = ({ match }) => {
           setStudentId('');
           setRest(false);
         }
-        axios
-          .get(
-            `${studentApiUrl}?student_id=${studentId}&current_district=${district}`
-          )
-          .then((res) => {
-            // console.log('res.data', res.data);
-            // console.log('res.data.results', res.data.results);
-            return res.data;
-          })
-          .then((data) => {
-            // console.log('res.data', data.results);
-
-            console.log(
-              `${studentApiUrl}?student_id=${studentId}&current_district=${district} 1`
-            );
-            console.log('data', data);
-            setItems(data);
+          const response = await callApi( `api/?student_id=${studentId}&current_district=${district}`, '', null);
+          console.log('responssdfsd', response);
+          if (response.data && response.status === 200) {
+            setItems(response.data);
             setSelectedItems([]);
-            setTotalItemCount(data);
+            // setTotalItemCount(data);
             setIsLoaded(true);
-          });
+          } else {
+            console.log('students error');
+          }
       } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district} 2`
-            );
 
-            setItems(data);
+          const response = await callApi( `api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`, '', null);
+
+          if (response.data && response.status === 200) {
+            setItems(response.data);
             setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
+            // setTotalItemCount(data);
             setIsLoaded(true);
-          });
+          } else {
+            console.log('students error');
+          }
       } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${studentApiUrl}?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${studentApiUrl}?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-            );
-
-            setItems(data);
+      
+          const response = await callApi(`api/?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`, '', null);
+          if (response.data && response.status === 200) {
+            setItems(response.data);
             setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
+            // setTotalItemCount(data);
             setIsLoaded(true);
-          });
+          } else {
+            console.log('students error');
+          }
+
       } else {
-        axios
-          // get data from localhost:8000/api/student
-          .get(
-            `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-            );
-            setItems(data);
+        // get data from localhost:8000/api/student
+        // axios
+        //   .get(
+        //     `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+        //     );
+        //     setItems(data);
 
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+          const response = await callApi(`api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`, '', null);
+          if (response.data && response.status === 200) {
+            setItems(response.data);
             setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
+            // setTotalItemCount(data);
             setIsLoaded(true);
-          });
+          } else {
+            console.log('students error');
+          }
+          
+
       }
     }
     fetchData();
@@ -440,14 +435,17 @@ const ThumbListPages = ({ match }) => {
     rest,
     institute,
   ]);
-
   const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
 
   useEffect(() => {

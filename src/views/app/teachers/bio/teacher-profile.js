@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import axios from 'axios';
 
+import callApi from 'helpers/callApi';
+
+
 import * as Yup from 'yup';
 import {
   Row,
@@ -50,36 +53,46 @@ const TeacherProfile = () => {
 
   useEffect(() => {
     async function fetchTeacher() {
-      const response = await axios.get(`${teacherApiUrl}?id=${teacherId}`);
+      // const response = await axios.get(`${teacherApiUrl}?id=${teacherId}`);
+      const response = await callApi(`teachers/?id=${teacherId}`, '', null);
+
       const data = response.data;
       setTeacher(data);
       setIsLoaded(true)
-      const instituteResponse = await axios.get(
-        `${teacherApiUrl}institute/?teacher_id=${teacherId}`
-      );
+      // const instituteResponse = await axios.get(
+      //   `${teacherApiUrl}institute/?teacher_id=${teacherId}`
+      // );
+      const instituteResponse = await callApi(`teachers/institute/?id=${teacherId}`, '', null);
+
       const instituteData = await instituteResponse.data;
       setInstitute(instituteData);
     }
     async function fetchTeacherEvaluation() {
       console.log('data');
-      const response = await axios.get(
-        `${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`
-      );
+      // const response = await axios.get(
+      //   `${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`
+      // );
+      const response = await callApi(`teachers/evaluation/?teacher_id=${teacherId}`, '', null);
+
       console.log(`${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`);
       const data = response.data;
       setTeacherEvaluation(data);
     }
     async function fetchTeacherHREvaluation() {
-      const response = await axios.get(
-        `${teacherHREvaluationApiUrl}/?teacher_id=${teacherId}`
-      );
+      // const response = await axios.get(
+      //   `${teacherHREvaluationApiUrl}/?teacher_id=${teacherId}`
+      // );
+      const response = await callApi(`teachers/hr-evaluation/?teacher_id=${teacherId}`, '', null);
+
       const data = response.data;
       setTeacherHREvaluation(data);
     }
     async function fetchTeacherTransfer() {
-      const response = await axios.get(
-        `${teacherTransferApiUrl}/?teacher_id=${teacherId}`
-      );
+      // const response = await axios.get(
+      //   `${teacherTransferApiUrl}/?teacher_id=${teacherId}`
+      // );
+      const response = await callApi(`teachers/institute/?teacher_id=${teacherId}`, '', null);
+
       const data = response.data;
       console.log(`${teacherTransferApiUrl}/?teacher_id=${teacherId}`);
       setTeacherTransfer(data);
@@ -121,13 +134,13 @@ const TeacherProfile = () => {
         </Colxx>
       </Row>
 
-      {/* <Row>
+      <Row>
         <Colxx xxs="1"></Colxx>
         <Colxx>
           <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
         </Colxx>
-      </Row> */}
-      {/* <Row>
+      </Row>
+      <Row>
         <Colxx
           className=" d-flex justify-content-center"
           style={{ marginRight: '2%' }}
@@ -170,7 +183,7 @@ const TeacherProfile = () => {
             </Button>
           </div>
         </Colxx>
-      </Row> */}
+      </Row>
 
       {teacher.length > 0 && institute.length > 0 && (
         <>

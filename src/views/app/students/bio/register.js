@@ -498,12 +498,15 @@ const ValidationStepThree = Yup.object().shape({
 
 const StudentRegistration = ({ intl }, values) => {
   const { studentId } = useParams();
+  console.log('student_id', studentId);
   if (studentId) {
     useEffect(() => {
       async function fetchStudent() {
-        const { data } = await axios.get(
-          `${studentApi}/?student_id=${studentId}`
-        );
+        // const { data } = await axios.get(
+        //   `api/?student_id=${studentId}`
+        // );
+        const {data} = await callApi(`api/?student_id=${studentId}`, '', null);
+          console.log('responsasdfsadfe', data );
         //  console.log(data[0].name, 'object of the data');
         setInitialname1(data[0].name);
         setInitialLastName(data[0].last_name);
@@ -784,6 +787,7 @@ const StudentRegistration = ({ intl }, values) => {
   };
   // post student record to server
   const postStudentRecord = async (data) => {
+    
     const response = await callApi('api/student_create', 'POST', data);
     if (response) {
       createNotification('success', 'filled');

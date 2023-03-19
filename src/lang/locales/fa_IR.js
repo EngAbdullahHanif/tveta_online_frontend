@@ -727,7 +727,7 @@ module.exports = {
   'forms.StdInteranceTypeErr': 'د شمولیت ډول اړین دی/ نوع شمولیت ضروری است',
   'forms.StdGraduationYearLabel': 'د فراغت کال / سال فراغت',
   'forms.StdGraduationYearErr': 'د فراغت کال اړین دی/ سال فراغت ضروری است',
-  'student.results': 'پایلې/ نتایج',
+  'student.results': 'پایلی/ نتایج',
   'student.educationType': 'د زدکړو ‌ډول/ نوع تعلیم',
   'forms.educationalYearOption_1': '1390',
   'forms.educationalYearOption_2': '1391',

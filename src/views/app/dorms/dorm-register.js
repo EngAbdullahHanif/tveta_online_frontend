@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
 import axios from 'axios';
-
+import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
 import {
   Row,
@@ -32,7 +32,7 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
-
+import { NotificationManager } from 'components/common/react-notifications';
 const GenderOptions = [
   { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
   { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
@@ -241,7 +241,7 @@ const DormRegistration = (values) => {
   };
 
   const { dormId } = useParams();
-  console.log('Dorm info', dormId);
+  //console.log('Dorm info', dormId);
 
   if (dormId) {
     useEffect(() => {
@@ -326,59 +326,84 @@ const DormRegistration = (values) => {
     district: initialDistrict,
   };
 
+  // notification message
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'لیله موفقان ثبت شوو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'لیلیه ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
   const [dormTypeOption, setDormTypeOption] = useState('');
   const [isNext, setIsNext] = useState(false);
 
-  const onRegister = (values, { resetForm }) => {
-    console.log(' The Values', values);
-    setIsNext(true);
-    resetForm();
-    // if (errors) {
-    //   console.log('error');
-
-    //   return;
-    // }
-    // if (!values) {
-    //   console.log('empty');
-
-    //   return;
-    // }
-    //insert data to database
-
-    if (values.BuildingType.value == '1') {
-      setDormTypeOption(values.PublicBuildingOwner.value);
+  // post dorm record to the backend
+  const postDormRecord = async (data) => {
+    const response = await callApi('institute/dorms_create/', 'POST', data);
+    if (response) {
+      createNotification('success', 'filled');
+      setIsNext(true);
+      console.log('success message', response.data);
     } else {
-      setDormTypeOption(values.PrivateBuildingType.value);
+      createNotification('error', 'filled');
+      console.log('class error');
+    }
+  };
+  const onRegister = (values, { resetForm }) => {
+    resetForm();
+    let DormTypeOptions;
+    if (values.buildingType.value === '1') {
+      //setDormTypeOption(values.PublicBuildingOwner.value);
+      console.log('condition true', values.PublicBuildingOwner.value);
+      DormTypeOptions = values.publicBuildingOwner.value;
+    } else {
+      //setDormTypeOption(values.PrivateBuildingType.value);
+      console.log('condition false', values.privateBuildingType.value);
+      DormTypeOptions = values.privateBuildingType.value;
     }
 
     //REMOVE USER FROM HERE LATTER, IT'S JUST FOR TESTING PURPOSE
 
     const data = {
-      name: values.Name,
+      name: values.name1,
       provence: values.province.value,
       district: values.district,
       gender_type: values.gender.value,
       dorm_type: values.buildingType.value,
-      dorm_type_option: dormTypeOption,
-      building_qty: valuestotalBuildingNo,
+      dorm_type_option: DormTypeOptions,
+      building_qty: values.totalBuildingNo,
       rooms_qty: values.totalRooms,
       kitchen_qty: values.totalKitchens,
       toilet_qty: values.toilet,
       dorm_quota: values.quota,
       dorm_capacity: values.capicity,
-      user_id: 1,
+      user_id: '1',
     };
-
-    axios
-      .post(dormCreateAPI, data)
-      .then((response) => {
-        console.log(response);
-
-        // window.location.reload(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log('object of data', data);
+    postDormRecord(data);
   };
 
   return (
@@ -391,7 +416,7 @@ const DormRegistration = (values) => {
               enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onRegister}
-              validationSchema={SignupSchema}
+              // validationSchema={SignupSchema}
             >
               {({
                 errors,

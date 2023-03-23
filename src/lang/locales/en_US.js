@@ -204,6 +204,8 @@ module.exports = {
   'menu.field-list': 'Field List',
   'menu.department-register': 'Department Registration',
   'menu.department-list': 'Departments List',
+  'menu.group-label': 'Group',
+  'menu.group-register': 'Group Register',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -982,7 +984,8 @@ module.exports = {
   'teacher.topicLabel': 'Topic',
   'teacher.topicErr': 'Evaluation Topic  is Required!',
   'teacher.evaluatorLabel': 'Evaluator',
-  'teacher.evaluatorErr': 'Evaluator Name Topic  is Required!',
+  'teacher.evaluatorErr': 'Evaluator Name is Required!',
+
   'teacher.evaluationTypeLabel': 'Evaluation Type',
   'teacher.evaluationTypeErr': 'Evaluation Type Is Required!',
   'teacher.evaluationTypeOption_1': 'Goal Oriented',
@@ -1009,11 +1012,16 @@ module.exports = {
   'teacher.currentStepLabel': 'Current Step',
   'teacher.newGradeLabel': 'New Grade',
   'teacher.newStepLabel': 'New Step',
+  'teacher.stepErr': 'Step Is Required!',
+  'teacher.gradeErr': 'Grade Is Required!',
+  'teacher.newStepErr': 'New Step Is Required!',
+  'teacher.newGradeErr': 'New Step Is Required!',
 
   // Promotion and demotion
   'teacher.PromotionDemotionTitle': 'Teacher Promotion/Demotion',
   'teacher.promotionLabel': 'Teacher Promotion',
   'teacher.demotionLabel': 'Demotion',
+  'teacher.promotion.type': 'Type',
 
   // Teacher Transfer
   'teacher.Transfer': 'Teacher Transfer',
@@ -1283,6 +1291,14 @@ module.exports = {
   'class.semesterLabel': 'Semester',
   'class.semesterErr': 'Semester Is Required!',
   'teacher-list.MajorLabel': 'field',
+
+  // Group
+
+  'groug.register.title': 'Group Registration',
+  'group.groupName': 'Group Name',
+  'group.groupNameErr': 'Group Name Required!',
+  'menu.group-premissions': 'Premissions',
+  'groug.premssion.title': 'Adding Premissions',
 
   // Deletion flash message title
   'modal.deletion-message-title': 'Confirm',

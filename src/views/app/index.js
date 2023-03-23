@@ -52,6 +52,10 @@ const Workers = React.lazy(() =>
   import(/* webpackChunkName: "workers" */ './workers')
 );
 
+const Groups = React.lazy(() =>
+  import(/* webpackChunkName: "group" */ './group')
+);
+
 const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
 const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
 const BlankPage = React.lazy(() =>
@@ -141,6 +145,11 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/workers`}
               render={(props) => <Workers {...props} />}
+            />
+
+            <Route
+              path={`${match.url}/groups`}
+              render={(props) => <Groups {...props} />}
             />
 
             <Redirect to="/error" />

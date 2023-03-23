@@ -359,11 +359,34 @@ const data = [
   },
 
   {
-    id: 'docs',
-    icon: 'iconsminds-library',
-    label: 'menu.docs',
-    to: 'https://gogo-react-docs.coloredstrategies.com/',
-    newWindow: true,
+    id: 'groups',
+    icon: 'MD.MdManageAccounts',
+    label: 'menu.group-label',
+    to: `${adminRoot}/groups`,
+    subs: [
+      // {
+      //   icon: 'FA.FaList',
+      //   label: 'evaluation.list',
+      //   to: `${adminRoot}/hr-evaluations/hr-evaluations`,
+      // },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.group-register',
+        to: `${adminRoot}/groups/register`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.group-premissions',
+        to: `${adminRoot}/groups/premissions`,
+      },
+    ],
   },
+  // {
+  //   id: 'docs',
+  //   icon: 'iconsminds-library',
+  //   label: 'menu.docs',
+  //   to: 'https://gogo-react-docs.coloredstrategies.com/',
+  //   newWindow: true,
+  // },
 ];
 export default data;

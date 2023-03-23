@@ -52,7 +52,7 @@ const SignupSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.InstituteErr" />),
 
   evaluationDate: Yup.string().required(
-    <IntlMessages id="teacher.evaluatorErr" />
+    <IntlMessages id="teacher.evaluationDateErr" />
   ),
 
   promotionType: Yup.object()
@@ -60,7 +60,7 @@ const SignupSchema = Yup.object().shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="forms.sectorErr" />),
+    .required(<IntlMessages id="teacher.promotion.typeErr" />),
 });
 
 const createNotification = (type, className) => {

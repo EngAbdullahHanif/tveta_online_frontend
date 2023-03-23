@@ -236,6 +236,8 @@ module.exports = {
   'menu.field-list': 'د رشتو لست/ لست رشته ها',
   'menu.department-register': 'دڅانګې ثبتول/ ثبت دیپارتمنت',
   'menu.department-list': 'د څانګو لست/ لست دیپارتمنت ها',
+  'menu.group-label': 'گروپ',
+  'menu.group-register': 'د ګروپ ثبتول/ ثبت کردن گروپ',
 
   /* HR Evaluation */
 
@@ -247,6 +249,17 @@ module.exports = {
   'forms.newStep': 'نوی قدم/قدم نو',
   'forms.evaluationMarks': 'نمره',
   'forms.evaluationDate': 'نیته / تاریخ',
+  'teacher.gradeErr': 'بست اړین دی/ بست ضروری است',
+  'teacher.stepErr': 'پل اړین دی/ قدم ضروری است',
+  'teacher.newGradeErr': 'نوی بست اړین دی/ بست جدید ضروری است',
+  'teacher.newStepErr': 'نوی پل اړین دی/ قدم جدید ضروری است',
+
+  // Group
+  'groug.register.title': 'د ګروپ ثبت/ ثبت گروپ',
+  'group.groupName': 'د ګروپ نوم/ نام گروپ',
+  'group.groupNameErr': 'د گروپ نوم اړین ده /  نام گروپ ضروری است',
+  'menu.group-premissions': 'صلاحیتونه/ صلاحیت ها',
+  'groug.premssion.title': 'د صلاحیتونو کنترول/ کنترول صلاحیت ها',
 
   // worker
   'worker.registration': 'ثبت کارمند / د کارمند ثبت',
@@ -1097,7 +1110,8 @@ module.exports = {
   'teacher.evaluationDateErr':
     'د ارزونې نیټه اړینه ده / تاریخ ارزیابی ضروری است',
   'teacher.suggestionLabel': 'پیشنهاد / نظریات',
-  'teacher.promotion.type': 'نوعیت',
+  'teacher.promotion.type': 'ډول/ نوعیت',
+  'teacher.promotion.typeErr': 'ډول اړین دی/ نوعیت ضروری است',
   'teacher.promotion.type1': 'مکافات',
   'teacher.promotion.type2': 'مجازات',
   'teacher.promotion.description': 'توضیحات',

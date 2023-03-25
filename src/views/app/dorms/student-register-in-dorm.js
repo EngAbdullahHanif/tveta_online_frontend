@@ -251,7 +251,7 @@ const DormRegistration = (values) => {
     }
   };
 
-  // post student record to server
+  // post dorm record to server
   const postStudentRecord = async (data) => {
     const response = await callApi('api/student_dorms_create/', 'POST', data);
     if (response) {

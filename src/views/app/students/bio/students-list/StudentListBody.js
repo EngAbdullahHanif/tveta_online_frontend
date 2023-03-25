@@ -75,13 +75,7 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
               >
                 {student.father_name}
               </p>
-              <p
-                className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
-              >
-                {student.phone_number}
-              </p>
-
+              
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
@@ -90,11 +84,13 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
               </p>
 
               <p
-                className="list-item-heading mb-1 truncate"
-                style={{ fontSize: '20px', width: '15%' }}
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
               >
-                93772323432<span>+</span>
+                {student.phone_number}
               </p>
+
+
 
               {/* UN COMMINT IT WHEN THE API IS COMPLETED */}
               {/* <p className="mb-1 text-small">{student.class}</p>

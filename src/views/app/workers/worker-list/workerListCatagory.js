@@ -13,7 +13,7 @@ import ContextMenuContainer from '../../../../containers/pages/ContextMenuContai
 import DataListView from '../../../../containers/pages/DataListView';
 import ImageListView from '../../../../containers/pages/ImageListView';
 //import TeacherListBody from './TeacherListBody';
-import WorkerListBody from 'views/app/workers/worker-list/workerListBody.js'
+import WorkerListBody from 'views/app/workers/worker-list/workerListBody.js';
 function collect(props) {
   return { data: props.data };
 }
@@ -28,10 +28,10 @@ const ListPageListing = ({
   onContextMenuClick,
   onContextMenu,
   onChangePage,
-  roughData
+  roughData,
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
-  console.log('inside Catagory', roughData)
+  console.log('inside Catagory', roughData);
 
   return (
     <>
@@ -42,9 +42,8 @@ const ListPageListing = ({
           </div>
         ) : null}
         {roughData.map((worker) => {
-          
           if (displayMode === 'imagelist') {
-            console.log('inside map ImageList', worker)
+            console.log('inside map ImageList', worker);
             return (
               <ImageListView
                 key={worker.workerId}
@@ -56,7 +55,7 @@ const ListPageListing = ({
             );
           }
           if (displayMode === 'thumblist') {
-            console.log('inside map thumblist', worker)
+            console.log('inside map thumblist', worker);
             return (
               <WorkerListBody
                 key={worker.workerId}
@@ -67,9 +66,8 @@ const ListPageListing = ({
               />
             );
           }
-         
+
           return (
-            
             <DataListView
               key={worker.workerId}
               worker={worker}
@@ -78,7 +76,7 @@ const ListPageListing = ({
               collect={collect}
             />
           );
-        })} 
+        })}
         <Pagination
           currentPage={currentPage}
           totalPage={totalPage}

@@ -188,6 +188,24 @@ const genderOptions = [
   { column: '2', label: 'اناث' },
 ];
 
+const statusOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.statusOption_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+];
+
+const buildingTypeOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+];
+
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -222,9 +240,23 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState({
+    column: 'all',
+    label: 'حالت',
+  });
+
+  const [selectedBuildingType, setSelectedBuildingType] = useState({
+    column: 'all',
+    label: 'نوع تعمیر',
+  });
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedOrderOption]);
+  }, [
+    selectedPageSize,
+    selectedOrderOption,
+    selectedStatusOptions,
+    selectedBuildingType,
+  ]);
   const fetchDorms = async () => {
     const response = await axios.get(`${dormUrl}`);
     const updatedData = await response.data.map((item) => ({
@@ -465,9 +497,23 @@ const ThumbListPages = ({ match }) => {
               provinces.find((x) => x.column === column)
             );
           }}
+          changeStatusBy={(column) => {
+            setSelectedStatusOptions(
+              statusOptions.find((x) => x.column === column)
+            );
+          }}
+          changeBuildingTypeBy={(column) => {
+            setSelectedBuildingType(
+              buildingTypeOptions.find((x) => x.column === column)
+            );
+          }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
+          selectedStatusOptions={selectedStatusOptions}
+          selectedBuildingType={selectedBuildingType}
           genderOptions={genderOptions}
+          statusOptions={statusOptions}
+          buildingTypeOptions={buildingTypeOptions}
           provinces={provinces}
           dormsFilterList={dormsFilterList}
           onDormSelect={setDormName}

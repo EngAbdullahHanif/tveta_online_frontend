@@ -927,6 +927,7 @@ module.exports = {
   'teacher.EmailErr': 'برښنا لیک اړین دی/ ایمیل ادرس ضروری است',
   'teacher.EmailRequiredErr': 'برښنا لیک سم ندی/ ایمیل آدرس درست نیست',
   'teacher.LevelOfEducationLabel': 'زده کړې/ تحصیل',
+  'teacher.LevelOfEducationList': 'زده کړې',
   'teacher.LevelOfEducationErr': 'زدکړې اړینې ډي/ نوشتن سطح تحصیل ضروری است',
   'teacher.EducationLevelOption_1': 'څورلسم پاس/ چهارده پاس',
   'teacher.EducationLevelOption_2': 'لسانس',
@@ -958,6 +959,7 @@ module.exports = {
   'teacher.contractTypeOptions_1': 'د تشکیل د ننه/ داخل تشکیل',
   'teacher.contractTypeOptions_2': 'د تشکیل بهر/ خارج تشکیل',
   'teacher.ProfessionalRanksLabel': 'مسلکي رتبه/ رتبه مسلکی',
+  'teacher.status': 'حالت',
 
   // Grade Options
   'teacher.GradeOption_3': 'دریم بست / بست سه ',
@@ -977,6 +979,7 @@ module.exports = {
   'teacher.StepOption_5': 'پنځم قدم/ قدم پنجم',
   'teacher.StepOption_6': 'شپږم قدم / قدم ششم',
   'teacher.StepLabel': 'پل/ قدم',
+  'teacher.Step': 'قدم',
   'teacher.StepErr': 'پل اړین دی/ قدم ضروری است',
   'button.SubmitButton': 'ثبت',
 
@@ -1159,6 +1162,7 @@ module.exports = {
   'institute.newNameLabel': 'نوی نوم/ نام جدید',
   'institute.upgradeDateLabel': 'د ارتقا نیټه/تاریخ ارتقا',
   'institute.upgradingDocuments': 'د ارتقا اسناد/ اسناد ارتقا',
+  'institute.status': 'حالت',
 
   // Student Transfer
   'student.buttonTransfer': 'تبدیل',
@@ -1389,6 +1393,9 @@ module.exports = {
   'forms.newClassLabel': 'نوی ټولګی/ صنف جدید',
   'forms.newFieldLabel': 'نوې رشته/ رشته جدید',
   'forms.classErr': 'نوی ټولګی اړین دی/ صنف جدید ضروری است',
+  'student.typeOption_1': 'جاری',
+  'student.typeOption_2': 'فارغ التحصیل',
+  'student.typeOption_3': 'منفک',
 
   // Subject
   'subject.NameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است',
@@ -1574,6 +1581,7 @@ module.exports = {
   'wizard.async': 'Async save for 3 seconds!',
 
   'inst.name': 'انستیتوت نوم / نام انستیتوت',
+  'inst.nameList': 'نوم/ نام',
   'inst.nameErr': 'د انستیتوت نوم اړین دی/ نام انستیتوت ضروری است',
   institute: 'انستیتوت',
   // 'institute.instituteLabel': 'انستیتوت',
@@ -1583,6 +1591,8 @@ module.exports = {
   'institute.gender': 'جندر اړین دی/ جنسیت ضروری است',
   'search.institute.name': 'د انستیتوت نوم ',
   'search.department.name': 'د دیپارتمنت نوم ',
+  'institute.statusOption_1': 'فعال',
+  'institute.statusOption_2': 'غیر فعال',
 
   'subject.name': 'د مضمون نوم / نام مضمون',
   'subject.english_name': 'د مضمون انگلیسی نوم / نام انگلیسی مضمون',

@@ -33,15 +33,34 @@ const orderOptions = [
 const genderOptions = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: <IntlMessages id="option.all" />,
   },
   { column: '1', label: 'ذکور' },
   { column: '2', label: 'اناث' },
 ];
+const statusOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.statusOption_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+];
+
+const instituteTypeOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+];
+
+
 const provinces = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: <IntlMessages id="option.all" />,
   },
   {
     column: '1',
@@ -220,6 +239,14 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState({
+    column: 'all',
+    label: 'حالت',
+  });
+  const [selectedInstituteType, setSelectedInstituteType] = useState({
+    column: 'all',
+    label: 'ډول/ نوعیت',
+  });
 
   useEffect(() => {
     setCurrentPage(1);
@@ -229,6 +256,8 @@ const ThumbListPages = ({ match }) => {
     selectedOrderOption,
     selectedGenderOption,
     selectedProvinceOption,
+    selectedStatusOptions,
+    selectedInstituteType,
   ]);
 
   useEffect(() => {
@@ -328,6 +357,7 @@ const ThumbListPages = ({ match }) => {
     selectedOrderOption,
     search,
     selectedGenderOption,
+
     selectedProvinceOption,
     instituteId,
     province,
@@ -462,14 +492,28 @@ const ThumbListPages = ({ match }) => {
               genderOptions.find((x) => x.column === column)
             );
           }}
+          changeStatusBy={(column) => {
+            setSelectedStatusOptions(
+              statusOptions.find((x) => x.column === column)
+            );
+          }}
+          changeInstituteBy={(column) => {
+            setSelectedInstituteType(
+              instituteTypeOptions.find((x) => x.column === column)
+            );
+          }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
               provinces.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
+          selectedStatusOptions={selectedStatusOptions}
+          selectedInstituteType={selectedInstituteType}
           selectedProvinceOption={selectedProvinceOption}
           genderOptions={genderOptions}
+          statusOptions={statusOptions}
+          instituteTypeOptions={instituteTypeOptions}
           provinces={provinces}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
@@ -497,33 +541,39 @@ const ThumbListPages = ({ match }) => {
             className="pl-2 d-flex flex-grow-1  table-dark "
             style={{ maxHeight: '55px' }}
           >
-            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+            <tr
+              className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center"
+              style={{ width: '100%' }}
+            >
               <th
                 style={{
                   width: '10%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
-                <IntlMessages id="marks.No" />
+                <IntlMessages id="student.ID" />
               </th>
               <th
                 style={{
-                  width: '22%',
+                  width: '16%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
-                <IntlMessages id="inst.name" />
+                <IntlMessages id="inst.nameList" />
               </th>
               <th
                 style={{
-                  width: '23%',
+                  width: '13%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
@@ -531,10 +581,11 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '22%',
+                  width: '13%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
@@ -542,14 +593,27 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '22%',
+                  width: '13%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
                 <IntlMessages id="gender" />
+              </th>
+              <th
+                style={{
+                  width: '13%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                {' '}
+                <IntlMessages id="institute.status" />
               </th>
             </tr>
           </thead>

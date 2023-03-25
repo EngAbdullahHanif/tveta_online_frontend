@@ -628,6 +628,9 @@ module.exports = {
   'student.photoErr': 'Student Photo Is Required!',
   'department.nameErr': 'Department Name Is Required!',
   'department.englishNameErr': 'Department English Name Is Required!',
+  'student.typeOption_1': 'Registered',
+  'student.typeOption_2': 'Greduated',
+  'student.typeOption_3': 'Dismissed',
 
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',
@@ -854,6 +857,8 @@ module.exports = {
   'max.maxInputValue': 'Input value can not exceed than 50 characters',
   'min.minTazkiraInputValue': 'Input should be at eleast 5 characters',
   'max.maxTazkiraInputValue': 'Input value can not exceed than 17 characters',
+  'teacher.LevelOfEducationList': 'Level Of Education',
+  'teacher.status': 'Status',
 
   // Teacher Grade
   'teacher.GradeOption_3': 'Third Grade ',
@@ -892,6 +897,10 @@ module.exports = {
   'institute.instTypeOptions_2': 'Private',
   'institute.director': 'Director',
   'institute.manager': 'Manager',
+  'institute.status': 'Status',
+  'inst.nameList': 'Institute Name',
+  'institute.statusOption_1': 'Active',
+  'institute.statusOption_2': 'Deactive',
 
   // Marks
   'marks.SectionLabel': 'Section',

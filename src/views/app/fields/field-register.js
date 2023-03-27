@@ -1,27 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
-
+import callApi from 'helpers/callApi';
+import { NotificationManager } from 'components/common/react-notifications';
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-  CardTitle,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from '../../../containers/form-validations/FormikFields';
-
-const servicePath = 'http://localhost:8000';
-const fieldRegisterationApiUrl = `${servicePath}/institute/field-create/`;
+import { FormikReactSelect } from '../../../containers/form-validations/FormikFields';
 
 const SignupSchema = Yup.object().shape({
   fieldId: Yup.string().required(<IntlMessages id="field.FieldIdErr" />),
@@ -42,36 +27,86 @@ const SignupSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.sectorErr" />),
 });
 
-const sectorOptions = [
-  { value: '1', label: 'economic' },
-  { value: '2', label: 'technology' },
-  { value: '3', label: 'agriculture' },
-];
+//const sectorOptions = [
+//   { value: '1', label: 'economic' },
+//   { value: '2', label: 'technology' },
+//   { value: '3', label: 'agriculture' },
+// ];
 
 const FieldRegister = () => {
   const [isNext, setIsNext] = useState(false);
+  const [sectorOptions, setSectorOptions] = useState([]);
+
+  //fetch sector list
+  const fetchSectors = async () => {
+    const response = await callApi('institute/sectors/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.sector,
+      }));
+      setSectorOptions(updatedData);
+    } else {
+      console.log('class error');
+    }
+  };
+  useEffect(() => {
+    fetchSectors();
+  }, []);
+
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'رشته موفقانه ثبت شوو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'رشته ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
+
+  // post student record to server
+  const postStudentRecord = async (data) => {
+    const response = await callApi('institute/field-create/', 'POST', data);
+    if (response) {
+      createNotification('success', 'filled');
+      setIsNext(true);
+      console.log('success message', response.data);
+    } else {
+      createNotification('error', 'filled');
+      console.log('class error');
+    }
+  };
   const onSubmit = (values, { resetForm }) => {
-    console.log('values', values);
-    console.log(values, 'values');
-    setIsNext(true);
     resetForm();
     //remove the user_id after authentication is done
     const data = {
-      fieldId: values.fieldId,
-      name: values.fieldName,
-      english_name: values.fieldEnglishName,
+      name: values.name,
+      english_name: values.english_name,
       sector: values.sector.value,
-      user_id: 1,
+      user_id: '1',
     };
-
-    axios
-      .post(fieldRegisterationApiUrl, data)
-      .then((res) => {
-        console.log('success');
-      })
-      .catch((err) => {
-        console.log('failed');
-      });
+    postStudentRecord(data);
   };
 
   return (
@@ -89,7 +124,7 @@ const FieldRegister = () => {
                 fieldEnglishName: '',
                 sector: [],
               }}
-              validationSchema={SignupSchema}
+              // validationSchema={SignupSchema}
               onSubmit={onSubmit}
             >
               {({
@@ -106,20 +141,6 @@ const FieldRegister = () => {
                 <Form className="av-tooltip tooltip-label-right error-l-175">
                   <Row className="justify-content-center">
                     <Colxx xxs="10">
-                      {/* Field ID */}
-                      <FormGroup className="form-group has-float-label">
-                        <Label>
-                          <IntlMessages id="field.FieldIdLabel" />
-                        </Label>
-
-                        <Field className="form-control" name="fieldId" />
-                        {errors.fieldId && touched.fieldId ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.fieldId}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
                       {/* Field Name */}
                       <FormGroup className="form-group has-float-label">
                         <Label>

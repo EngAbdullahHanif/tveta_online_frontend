@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 
-
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 
@@ -47,7 +46,6 @@ const StudentProfile = () => {
   const [dorm, setDorm] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  
 
   //load data of student from database
   useEffect(() => {
@@ -55,14 +53,18 @@ const StudentProfile = () => {
       // const response = await axios.get(
       //   `${studentApiUrl}?student_id=${studentId}`
       // );
-    const response = await callApi(`api/?student_id=${studentId}`, '', null);
+      const response = await callApi(`api/?student_id=${studentId}`, '', null);
       const data = await response.data;
       setStudent(data);
-        setIsLoaded(true);
+      setIsLoaded(true);
       // const instituteResponse = await axios.get(
       //   `${studentApiUrl}student_institutes/?student_id=${studentId}`
       // );
-    const instituteResponse = await callApi(`api/student_institutes/?student_id=${studentId}`, '', null);
+      const instituteResponse = await callApi(
+        `api/student_institutes/?student_id=${studentId}`,
+        '',
+        null
+      );
 
       const instituteData = await instituteResponse.data;
       setInstitute(instituteData);
@@ -71,7 +73,11 @@ const StudentProfile = () => {
       // const classResponse = await axios.get(
       //   `${studentApiUrl}student_class/?student_id=${studentId}&type=1`
       // );
-    const classResponse = await callApi(`api/student_class/?student_id=${studentId}&type=1`, '', null);
+      const classResponse = await callApi(
+        `api/student_class/?student_id=${studentId}&type=1`,
+        '',
+        null
+      );
 
       const classData = await classResponse.data;
       setClasss(classData);
@@ -79,7 +85,11 @@ const StudentProfile = () => {
       // const dormResponse = await axios.get(
       //   `${studentApiUrl}student_dorms/?student_id=${studentId}`
       // );
-    const dormResponse = await callApi(`api/student_dorms/?student_id=${studentId}`, '', null);
+      const dormResponse = await callApi(
+        `api/student_dorms/?student_id=${studentId}`,
+        '',
+        null
+      );
 
       const dormData = await dormResponse.data;
       setDorm(dormData);
@@ -87,7 +97,11 @@ const StudentProfile = () => {
       // const marksResponse = await axios.get(
       //   `${studentApiUrl}TranscriptData/?student_id=${studentId}`
       // );
-    const marksResponse = await callApi(`api/TranscriptData/?student_id=${studentId}`, '', null);
+      const marksResponse = await callApi(
+        `api/TranscriptData/?student_id=${studentId}`,
+        '',
+        null
+      );
 
       console.log(`${studentApiUrl}TranscriptData/?student_id=${studentId}`);
       const marksData = await marksResponse.data;
@@ -127,18 +141,19 @@ const StudentProfile = () => {
           </div>
         </Colxx>
       </Row>
-        {!isLoaded ? ( <div className="loading" />)
-         : 
-        (<div>
-            <Row>
-              <Colxx xxs="1"></Colxx>
-                {student.length > 0 && (
-                  <Colxx>
-                    <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
-                  </Colxx>
-                )}
-            </Row>
-            <Row>
+      {!isLoaded ? (
+        <div className="loading" />
+      ) : (
+        <div>
+          <Row>
+            <Colxx xxs="1"></Colxx>
+            {student.length > 0 && (
+              <Colxx>
+                <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
+              </Colxx>
+            )}
+          </Row>
+          <Row>
             <Colxx
               className=" d-flex justify-content-center "
               style={{ marginBottom: '2%' }}
@@ -182,9 +197,8 @@ const StudentProfile = () => {
               </div>
             </Colxx>
           </Row>
-          </div>
-        )
-        }
+        </div>
+      )}
 
       {/* if student is loaded show it, if not show empty  */}
       {student.length > 0 && institute.length > 0 && classs.length > 0 && (

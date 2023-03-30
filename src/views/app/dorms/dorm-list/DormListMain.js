@@ -189,6 +189,24 @@ const genderOptions = [
   { column: '2', label: 'اناث' },
 ];
 
+const statusOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.statusOption_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+];
+
+const buildingTypeOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+];
+
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -223,9 +241,23 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState({
+    column: 'all',
+    label: 'حالت',
+  });
+
+  const [selectedBuildingType, setSelectedBuildingType] = useState({
+    column: 'all',
+    label: 'نوع تعمیر',
+  });
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedOrderOption]);
+  }, [
+    selectedPageSize,
+    selectedOrderOption,
+    selectedStatusOptions,
+    selectedBuildingType,
+  ]);
   const fetchDorms = async () => {
     // const response = await axios.get(`institute/dorms`);
     const response = await callApi('institute/', '', null);
@@ -539,27 +571,133 @@ const ThumbListPages = ({ match }) => {
               provinces.find((x) => x.column === column)
             );
           }}
+          changeStatusBy={(column) => {
+            setSelectedStatusOptions(
+              statusOptions.find((x) => x.column === column)
+            );
+          }}
+          changeBuildingTypeBy={(column) => {
+            setSelectedBuildingType(
+              buildingTypeOptions.find((x) => x.column === column)
+            );
+          }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
+          selectedStatusOptions={selectedStatusOptions}
+          selectedBuildingType={selectedBuildingType}
           genderOptions={genderOptions}
+          statusOptions={statusOptions}
+          buildingTypeOptions={buildingTypeOptions}
           provinces={provinces}
           dormsFilterList={dormsFilterList}
           onDormSelect={setDormName}
           onResetClick={setRest}
           reset={rest}
         />
-
-        <ListPageListing
-          dorms={dorms}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
+        <table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark mb-2"
+            style={{ maxHeight: '55px' }}
+          >
+            <tr
+              className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center"
+              style={{ width: '100%' }}
+            >
+              <th
+                style={{
+                  width: '10%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="student.ID" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdName" />
+              </th>
+              <th
+                style={{
+                  width: '13%',
+                  fontSize: '20px',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.ProvinceLabel" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="forms.DistrictLabel" />
+              </th>
+              <th
+                style={{
+                  width: '11%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.CapicityList" />
+              </th>
+              <th
+                style={{
+                  width: '11%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.QuotaLabel" />
+              </th>
+              <th
+                style={{
+                  width: '10%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.BuildingTypeList" />
+              </th>
+            </tr>
+          </thead>
+          <ListPageListing
+            dorms={dorms}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
+        </table>
       </div>
     </>
   );

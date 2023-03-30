@@ -33,13 +33,19 @@ const ListPageHeading = ({
   endIndex,
   selectedItemsLength,
   itemsLength,
-  onSearchDistrict,
+
   pageSizes,
   // toggleModal,
   heading,
-  onSelectStartDate,
-  onSelectEndDate,
-  genderOption,
+  // Year
+  selectedYearOption,
+  educationYears,
+  changeYearBy,
+  // Status
+  selectedStatusOptions,
+  changeStatusBy,
+  statusOptions,
+
   selectedDormTypeOption,
   changeDormTypeBy,
   provinces,
@@ -163,12 +169,14 @@ const ListPageHeading = ({
                 <ImageListIcon />
               </a>
             </span>
+            <br />
+            <br />
 
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                   <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="evaluation.filter" />
+                    <IntlMessages id="filter" />
                     {selectedDormTypeOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
@@ -186,7 +194,7 @@ const ListPageHeading = ({
                 </UncontrolledDropdown>
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark" size="xs">
-                    {/* <IntlMessages id="filter" /> */}
+                    <IntlMessages id="filter" />
                     {selectedProvinceOption.label}
                   </DropdownToggle>
                   <DropdownMenu
@@ -208,22 +216,65 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="district"
-                    id="district"
-                    placeholder={messages['dorm.search.district']}
-                    onKeyPress={(e) => onSearchDistrict(e)}
-                  />
-                </div>
+
+                {/* Year */}
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectedYearOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {educationYears.map((educationYears, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeYearBy(educationYears.column)}
+                        >
+                          {educationYears.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark" size="xs">
+                    <IntlMessages id="filter" />
+                    {selectedStatusOptions.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {statusOptions.map((statusOptions, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeStatusBy(statusOptions.column)}
+                        >
+                          {statusOptions.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+
                 <div className="">
                   <ReactAutoSugegst
                     data={dormsFilterList}
                     select={(opt) => {
                       setSelectDorm(opt);
                     }}
-                    placeholder={messages['dorm.search.name']}
+                    placeholder={messages['dorm.search.dorm.name']}
                   />
                 </div>
               </div>

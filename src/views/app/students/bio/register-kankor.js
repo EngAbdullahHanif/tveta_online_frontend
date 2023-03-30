@@ -198,7 +198,6 @@ const StdSchoolProvinceOptions = [
 ];
 
 const StudentRegistraion = ({ history }) => {
-  const UpdatingMode = true;
 
   const ValidationSchema = Yup.object().shape({
     name1: Yup.string()
@@ -336,6 +335,7 @@ const StudentRegistraion = ({ history }) => {
   const [initialEducationalYear, setInitialEducationalYear] = useState([]);
   const [initialProvince, setInitialProvince] = useState([]);
   const [initialDistrict, setInitialDistrict] = useState('');
+  
   const initialValues = {
     name1: intialName,
     gender: initialGender,

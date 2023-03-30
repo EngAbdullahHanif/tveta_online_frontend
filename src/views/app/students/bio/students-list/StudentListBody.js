@@ -43,7 +43,10 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
             />
           </NavLink> */}
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+            <div
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center"
+              style={{ width: '100%' }}
+            >
               {/* send this to localhost/students/:id */}
 
               <NavLink

@@ -252,6 +252,8 @@ const MarksRegistration = ({ match }) => {
 
   const onSubmit = (values) => {
     setIsNext(false);
+    console.log('students sadfjlksldfjlsdj');
+
     axios
       .get(
         `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`

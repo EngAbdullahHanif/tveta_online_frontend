@@ -16,6 +16,7 @@ import CarPhoto3 from '../assets/img/blog/45.png';
 import Shahamat from '../assets/img/blog/9090.JPG';
 import Photo55 from '../assets/img/blog/img1000.jpeg';
 import mansoor from '../assets/img/blog/mansoor.jpeg';
+import rasikh from '../assets/img/blog/rasikh.JPG';
 
 import hanif from '../assets/img/blog/hanif.jpeg';
 import CarPhoto22 from '../assets/img/blog/Car22.png';
@@ -738,7 +739,7 @@ const Home = () => {
                 {/* the developers pictures here */}
                 <Row className="justify-content-center m-4 d-flex-block ">
                   {/* Sharif Ahmad */}
-                  {/* <Colxx
+                  <Colxx
                     xxs="12"
                     sm="4"
                     md="2"
@@ -754,7 +755,7 @@ const Home = () => {
                     >
                       {' '}
                       <img
-                        src={Photo55}
+                        src={rasikh}
                         class="developers-member-img"
                         id="img1000"
                         style={{ margin: '', width: 'auto' }}
@@ -775,7 +776,7 @@ const Home = () => {
                         </div>
                       </div>
                     </Card>
-                  </Colxx> */}
+                  </Colxx>
                   {/* Abdullah Hanif */}
                   <Colxx
                     xxs="12"

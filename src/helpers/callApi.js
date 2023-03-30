@@ -33,10 +33,12 @@ const callApi = async (endpoint, method = 'get', data = null) => {
       JSON.parse(localStorage.getItem('current_user')).user_id
     );
   } else if (data) {
-    data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
+    // data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
+    data.user_id = '1';
   }
 
   try {
+    console.log('the method', method);
     const response = await axios({
       method,
       url,

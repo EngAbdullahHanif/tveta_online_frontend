@@ -1030,6 +1030,7 @@ module.exports = {
   // Dorm
   'dorm.RegisterTitle': 'د لیلې ثبت/ ثبت لیلیه',
   'dorm.NameLabel': 'د لیلې نوم/ نام لیلیه',
+  'dorm.NameList': 'لیلیه',
   'dorm.NameErr': 'د لیلی نوم اړین دی/ نام لیلیه ضروری است',
   'dorm.Gender': 'د لیلې جندر/ جندر لیلیه',
   'dorm.genderErr': 'د لیلی جندر اړین دی/ جنسیت لیلیه ضروری است',
@@ -1037,6 +1038,7 @@ module.exports = {
   'dorm.GenderOptions_2': 'ښځینه/ اناث',
   'dorm.GenderOptions_3': '‌دواړه/ مختلط',
   'dorm.BuildingTypeLabel': ' د تعمیر ډول/ نوع تعمیر',
+  'dorm.BuildingTypeList': 'د تعمیر ډول',
   'dorm.BuildingTypeOptions_1': 'دولتی',
   'dorm.BuildingTypeOptions_2': 'خصوصی',
   'dorm.PublicBuildingOwnerLabel': 'د دولتی تعمیر مالکیت/مالکیت تعمیر دولتی',
@@ -1047,6 +1049,7 @@ module.exports = {
   'dorm.PrivateBuildingTypeOption_1': 'کرایی',
   'dorm.PrivateBuildingTypeOption_2': 'کمکی',
   'dorm.CapicityLabel': 'گنجایش/ ظرفیت',
+  'dorm.CapicityList': 'ظرفیت',
   'dorm.CapicityErr': 'د لیلی ظرفیت ارقام اړین دي/ ارقام لیلیه ضروری است',
   'dorm.QuotaErr': 'د شاګردانو سهمیه اړین دی/ سهمیه شاگردان در لیلیه ضروری است',
   'dorm.QuotaLabel': 'سهمیه',
@@ -1061,6 +1064,9 @@ module.exports = {
   'dorm.TotalKitchensErr': ' پخلنځي لیکل اړین دی / تعداد آشپزخانه ضروری است',
   'dorm.ToiletLabel': 'د تشنابو شمیر/ تعداد تشناب',
   'dorm.ToiletErr': 'د تشنابو شمیر اړین دی / تعداد تشناب ضروری است',
+  'dorm.yearList': 'کال',
+  'dorm.yearList-1': 'سال',
+  'dorm.type': 'نوعیت',
 
   // Student Registration
   'dorm.StudentRegisterTitle': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
@@ -1069,6 +1075,7 @@ module.exports = {
     'د شاګرد  دننه کړئ / لطفا آیدی شاگرد را وراد نماید',
   'dorm.SearchResult': 'د لټون پایله/ نتیجه جستجو...',
   'dorm.search.name': 'نوم',
+  'dorm.search.dorm.name': 'د لیلې نوم',
   'dorm.search.district': 'ولسوالی',
   'forms.NoData': 'پورتنۍ آیډي شتون نه لري/ آیدی فوق در سیستم موجود نیست',
   'forms.StudentResidentsPlace': 'د شاګرد استوګنځی/ محل بود و باش شاگرد',
@@ -1114,6 +1121,7 @@ module.exports = {
     'د ارزونې نیټه اړینه ده / تاریخ ارزیابی ضروری است',
   'teacher.suggestionLabel': 'پیشنهاد / نظریات',
   'teacher.promotion.type': 'ډول/ نوعیت',
+
   'teacher.promotion.typeErr': 'ډول اړین دی/ نوعیت ضروری است',
   'teacher.promotion.type1': 'مکافات',
   'teacher.promotion.type2': 'مجازات',

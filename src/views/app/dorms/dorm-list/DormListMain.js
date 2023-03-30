@@ -520,18 +520,110 @@ const ThumbListPages = ({ match }) => {
           onResetClick={setRest}
           reset={rest}
         />
-
-        <ListPageListing
-          dorms={dorms}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
+        <table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark mb-2"
+            style={{ maxHeight: '55px' }}
+          >
+            <tr
+              className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center"
+              style={{ width: '100%' }}
+            >
+              <th
+                style={{
+                  width: '10%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="student.ID" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdName" />
+              </th>
+              <th
+                style={{
+                  width: '13%',
+                  fontSize: '20px',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.ProvinceLabel" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="forms.DistrictLabel" />
+              </th>
+              <th
+                style={{
+                  width: '11%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.CapicityList" />
+              </th>
+              <th
+                style={{
+                  width: '11%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.QuotaLabel" />
+              </th>
+              <th
+                style={{
+                  width: '10%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.BuildingTypeList" />
+              </th>
+            </tr>
+          </thead>
+          <ListPageListing
+            dorms={dorms}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
+        </table>
       </div>
     </>
   );

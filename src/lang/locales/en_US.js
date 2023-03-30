@@ -938,7 +938,8 @@ module.exports = {
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',
-  'dorm.': 'Dorm Name',
+  'dorm.NameLabel': 'Dorm Name',
+  'dorm.NameList': 'Dorm',
   'dorm.NameErr': 'Dorm Name Required!',
   'dorm.Gender': ' Gender',
   'dorm.genderErr': ' Drom Gender Is Required!',
@@ -946,6 +947,10 @@ module.exports = {
   'dorm.GenderOptions_2': ' Female',
   'dorm.GenderOptions_3': 'Both',
   'dorm.BuildingTypeLabel': ' Building Type',
+  'dorm.BuildingTypeList': 'Building Type',
+  'dorm.type': 'ُType',
+  'dorm.yearList-1': 'Year',
+
   'dorm.BuildingTypeOptions_1': 'Public',
   'dorm.BuildingTypeOptions_2': ' Private',
   'dorm.PublicBuildingOwnerLabel': 'Public Building Owned By',
@@ -955,6 +960,7 @@ module.exports = {
   'dorm.PrivateBuildingTypeOption_1': 'ًRental',
   'dorm.PrivateBuildingTypeOption_2': 'Assisted',
   'dorm.CapicityLabel': 'Capicity',
+  'dorm.CapicityList': 'Capicity',
   'dorm.CapicityErr': 'Dorm Capicity is Required!',
   'dorm.QuotaErr': 'Dorm  Quota is required!',
   'dorm.QuotaLabel': 'Dorm  Quota',
@@ -1240,6 +1246,7 @@ module.exports = {
   'menu.student_register_kankor': 'Students Kankor Register',
   'menu.student_list': 'Students List',
   'menu.student-marks-register': 'Marks Registration',
+  'dorm.yearList': 'Year',
 
   // Student Dismissal
   'student.dismissalTitleFromInstitute':

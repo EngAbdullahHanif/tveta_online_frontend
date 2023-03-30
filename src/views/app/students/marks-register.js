@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import callApi from 'helpers/callApi';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -178,50 +179,67 @@ const MarksRegistration = ({ match }) => {
   }
 
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/field/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setFields(updatedData);
+    const response = await callApi('institute/field/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFields(updatedData);
+    } else {
+      console.log('field error');
+    }
   };
   const fetchDepartments = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/department/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDepartments(updatedData);
+    const response = await callApi('institute/department/', '', null);
+    console.log('response of department', response);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('department error');
+    }
   };
 
   const fetchClasses = async () => {
-    const response = await axios.get('http://localhost:8000/institute/classs/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name + ' - ' + item.semester + ' - ' + item.section,
-    }));
-    setClasses(updatedData);
+    const response = await callApi('institute/classs/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setClasses(updatedData);
+    } else {
+      console.log('class error');
+    }
   };
 
   const fetchSubjects = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/subject/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setSubjects(updatedData);
+    const response = await callApi('institute/subject/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('subject error');
+    }
   };
 
   useEffect(() => {
@@ -234,6 +252,8 @@ const MarksRegistration = ({ match }) => {
 
   const onSubmit = (values) => {
     setIsNext(false);
+    console.log('students sadfjlksldfjlsdj');
+
     axios
       .get(
         `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`

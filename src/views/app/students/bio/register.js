@@ -498,12 +498,15 @@ const ValidationStepThree = Yup.object().shape({
 
 const StudentRegistration = ({ intl }, values) => {
   const { studentId } = useParams();
+  console.log('student_id', studentId);
   if (studentId) {
     useEffect(() => {
       async function fetchStudent() {
-        const { data } = await axios.get(
-          `${studentApi}/?student_id=${studentId}`
-        );
+        // const { data } = await axios.get(
+        //   `api/?student_id=${studentId}`
+        // );
+        const {data} = await callApi(`api/?student_id=${studentId}`, '', null);
+          console.log('responsasdfsadfe', data );
         //  console.log(data[0].name, 'object of the data');
         setInitialname1(data[0].name);
         setInitialLastName(data[0].last_name);
@@ -684,7 +687,7 @@ const StudentRegistration = ({ intl }, values) => {
 
   // fetch institute lists
   const fetchInstitutes = async () => {
-    const response = await callApi('institute/', 'GET', null);
+    const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -727,6 +730,7 @@ const StudentRegistration = ({ intl }, values) => {
   //fetch class list
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', 'GET', null);
+    console.log('class repspossdfsde', response)
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -782,9 +786,20 @@ const StudentRegistration = ({ intl }, values) => {
         break;
     }
   };
+  
+  useEffect(() => {
+    fetchInstitutes();
+    fetchFields();
+    fetchDepartments();
+    fetchClasses();
+    fetchSectors();
+  }, []);
+  
   // post student record to server
   const postStudentRecord = async (data) => {
+    
     const response = await callApi('api/student_create', 'POST', data);
+    console.log('response of call api', response)
     if (response) {
       createNotification('success', 'filled');
       console.log('success message', response.data);
@@ -793,15 +808,6 @@ const StudentRegistration = ({ intl }, values) => {
       console.log('class error');
     }
   };
-
-  useEffect(() => {
-    fetchInstitutes();
-    fetchFields();
-    fetchDepartments();
-    fetchClasses();
-    fetchSectors();
-  }, []);
-
   // fetch sector list
 
   // const handleClick = (event) => {

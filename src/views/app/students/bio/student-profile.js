@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import callApi from 'helpers/callApi';
 
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
@@ -45,39 +46,63 @@ const StudentProfile = () => {
   const [dorm, setDorm] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  
 
   //load data of student from database
   useEffect(() => {
     async function fetchStudent() {
-      const response = await axios.get(
-        `${studentApiUrl}?student_id=${studentId}`
-      );
+      // const response = await axios.get(
+      //   `${studentApiUrl}?student_id=${studentId}`
+      // );
+      const response = await callApi(`api/?student_id=${studentId}`, '', null);
       const data = await response.data;
       setStudent(data);
-        setIsLoaded(true);
-      const instituteResponse = await axios.get(
-        `${studentApiUrl}student_institutes/?student_id=${studentId}`
+      setIsLoaded(true);
+      // const instituteResponse = await axios.get(
+      //   `${studentApiUrl}student_institutes/?student_id=${studentId}`
+      // );
+      const instituteResponse = await callApi(
+        `api/student_institutes/?student_id=${studentId}`,
+        '',
+        null
       );
+
       const instituteData = await instituteResponse.data;
       setInstitute(instituteData);
 
       //type =1 means current class or current continued class
-      const classResponse = await axios.get(
-        `${studentApiUrl}student_class/?student_id=${studentId}&type=1`
+      // const classResponse = await axios.get(
+      //   `${studentApiUrl}student_class/?student_id=${studentId}&type=1`
+      // );
+      const classResponse = await callApi(
+        `api/student_class/?student_id=${studentId}&type=1`,
+        '',
+        null
       );
+
       const classData = await classResponse.data;
       setClasss(classData);
 
-      const dormResponse = await axios.get(
-        `${studentApiUrl}student_dorms/?student_id=${studentId}`
+      // const dormResponse = await axios.get(
+      //   `${studentApiUrl}student_dorms/?student_id=${studentId}`
+      // );
+      const dormResponse = await callApi(
+        `api/student_dorms/?student_id=${studentId}`,
+        '',
+        null
       );
+
       const dormData = await dormResponse.data;
       setDorm(dormData);
 
-      const marksResponse = await axios.get(
-        `${studentApiUrl}TranscriptData/?student_id=${studentId}`
+      // const marksResponse = await axios.get(
+      //   `${studentApiUrl}TranscriptData/?student_id=${studentId}`
+      // );
+      const marksResponse = await callApi(
+        `api/TranscriptData/?student_id=${studentId}`,
+        '',
+        null
       );
+
       console.log(`${studentApiUrl}TranscriptData/?student_id=${studentId}`);
       const marksData = await marksResponse.data;
       console.log('marksData', marksData);
@@ -116,14 +141,17 @@ const StudentProfile = () => {
           </div>
         </Colxx>
       </Row>
-        {!isLoaded ? ( <div className="loading" />)
-         : 
-        (<div>
+      {!isLoaded ? (
+        <div className="loading" />
+      ) : (
+        <div>
           <Row>
             <Colxx xxs="1"></Colxx>
-            <Colxx>
-              <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
-            </Colxx>
+            {student.length > 0 && (
+              <Colxx>
+                <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
+              </Colxx>
+            )}
           </Row>
           <Row>
             <Colxx
@@ -169,9 +197,8 @@ const StudentProfile = () => {
               </div>
             </Colxx>
           </Row>
-          </div>
-        )
-        }
+        </div>
+      )}
 
       {/* if student is loaded show it, if not show empty  */}
       {student.length > 0 && institute.length > 0 && classs.length > 0 && (

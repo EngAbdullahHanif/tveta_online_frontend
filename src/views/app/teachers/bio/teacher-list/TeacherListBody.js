@@ -45,35 +45,65 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
                 width: '100%',
               }}
             >
-              <NavLink to={`teacher/${teacher.id}`} style={{ width: '10%' }}>
-                <p className="list-item-heading mb-1 truncate ">{teacher.id}</p>
+              <NavLink to={`teacher/${teacher.id}`} style={{ width: '110px' }}>
+                <p
+                  className="list-item-heading mb-1 truncate  "
+                  style={{ fontSize: '20px' }}
+                >
+                  {teacher.id}
+                </p>
               </NavLink>
-              <NavLink to={`teacher/${teacher.id}`} className="responsiveness">
-                <p className="list-item-heading mb-1 truncate ">
+              <NavLink to={`teacher/${teacher.id}`}>
+                <p
+                  className="list-item-heading mb-1 truncate  "
+                  style={{ fontSize: '20px', width: '170px' }}
+                >
                   {teacher.name}
+      
                 </p>
               </NavLink>
               <p
-                className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                className="mb-1 text-small "
+                style={{ width: '170px', textAlign: 'right', fontSize: '20px' }}
               >
                 {teacher.father_name}
+          
               </p>
-              <p className="mb-1 text-small responsiveness1">
+              <p
+                className="mb-1 text-small responsiveness1 "
+                style={{ fontSize: '20px', width: '110px' }}
+              >
                 {teacher.current_province}
+          
               </p>
-              <p className="mb-1 text-small responsiveness2">
+              <p
+                className="mb-1 text-small responsiveness2 "
+                style={{ fontSize: '20px', width: '110px' }}
+              >
                 {teacher.phone_number}
+        
               </p>
-              <p className="mb-1 text-small responsiveness3">{teacher.major}</p>
-              <p className="mb-1 text-small responsiveness4">{teacher.grade}</p>
-              {teacher.status_type === '2' && (
-                <div className="mb-1 text-small">
-                  <Badge color="danger" pill>
-                    منفک
-                  </Badge>
-                </div>
-              )}
+              <p
+                className="mb-1 text-small responsiveness3 "
+                style={{ fontSize: '20px', width: '170px' }}
+              >
+                {teacher.major}
+        
+              </p>
+              <p
+                className="mb-1 text-small responsiveness4 "
+                style={{ fontSize: '20px', width: '170px' }}
+              >
+                {teacher.grade}
+              
+              </p>
+              {/* {teacher.status_type === '2' && ( */}
+              <div className="mb-1 text-small " style={{ width: '100px' }}>
+                <Badge color="danger" pill style={{ fontSize: '12px' }}>
+                  منفک
+                </Badge>
+              </div>
+              {/* )} */}
             </div>
 
             {/* Delete and update Icons */}
@@ -82,13 +112,16 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
                 style={{ display: 'flex', flexDirection: 'row' }}
                 className="align-self-center pr-4"
               >
+                <NavLink to={`/app/teachers/register/${teacher.id}`}>
+
                 <div>
                   <BsPencilSquare
                     outline
                     style={{ fontSize: '20px' }}
                     id="updateIcon"
-                  />
+                    />
                 </div>
+                    </NavLink>
                 <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"

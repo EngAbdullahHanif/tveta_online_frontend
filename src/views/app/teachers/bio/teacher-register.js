@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import callApi from 'helpers/callApi';
+
 import {
   Row,
   Card,
@@ -176,9 +178,11 @@ const TeacherRegister = ({ intl }, values) => {
   if (teacherId) {
     useEffect(() => {
       async function fetchStudent() {
-        const { data } = await axios.get(
-          `${gettingSingleTeacherAPI}/?teacher_id=${teacherId}`
-        );
+        // const { data } = await axios.get(
+        //   `${gettingSingleTeacherAPI}/?teacher_id=${teacherId}`
+        // );
+        const { data } = await callApi(`teachers/institute/?teacher_id=${teacherId}`, '', null);
+
         console.log(data, 'object of the data');
 
         setInitialName(data[0].teacher_id.name);

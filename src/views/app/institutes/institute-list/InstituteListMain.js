@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
+import callApi from 'helpers/callApi';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -33,15 +34,34 @@ const orderOptions = [
 const genderOptions = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: <IntlMessages id="option.all" />,
   },
   { column: '1', label: 'ذکور' },
   { column: '2', label: 'اناث' },
 ];
+const statusOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.statusOption_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+];
+
+const instituteTypeOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+];
+
+
 const provinces = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: <IntlMessages id="option.all" />,
   },
   {
     column: '1',
@@ -220,6 +240,14 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState({
+    column: 'all',
+    label: 'حالت',
+  });
+  const [selectedInstituteType, setSelectedInstituteType] = useState({
+    column: 'all',
+    label: 'ډول/ نوعیت',
+  });
 
   useEffect(() => {
     setCurrentPage(1);
@@ -229,16 +257,29 @@ const ThumbListPages = ({ match }) => {
     selectedOrderOption,
     selectedGenderOption,
     selectedProvinceOption,
+    selectedStatusOptions,
+    selectedInstituteType,
   ]);
 
   useEffect(() => {
     async function fetchData() {
       if (institute !== '') {
-        const res = await axios.get(`${instituteApiUrl}?id=${institute.id}`);
-        console.log('res', res.data);
-        setItems(res.data);
-        setTotalItemCount(res.data.totalItem);
-        setIsLoaded(true);
+        // const res = await axios.get(`institute/?id=${institute.id}`);
+        // console.log('res', response.data);
+        // setItems(response.data);
+        // setTotalItemCount(response.data.totalItem);
+        // setIsLoaded(true);
+
+        const response = await callApi( `institute/?id=${institute.id}`, '', null);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
+
       } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'
@@ -248,77 +289,116 @@ const ThumbListPages = ({ match }) => {
           setInstituteId('');
           setRest(false);
         }
-        axios
-          .get(`${instituteApiUrl}?id=${instituteId}&district=${district}`)
-          .then((res) => {
-            console.log('res.data', res.data);
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${instituteApiUrl}?id=${instituteId}&district=${district}`
-            );
+        // axios
+        //   .get(`${instituteApiUrl}?id=${instituteId}&district=${district}`)
+        //   .then((res) => {
+        //     console.log('res.data', res.data);
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${instituteApiUrl}?id=${instituteId}&district=${district}`
+        //     );
 
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setItems(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+        const response = await callApi( `institute/?id=${instituteId}&district=${district}`, '', null);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
+
       } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
-            );
+        // axios
+        //   .get(
+        //     `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
+        //     );
 
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setItems(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+          const response = await callApi( `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`, '', null);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
       } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
-            );
+        // axios
+        //   .get(
+        //     `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
+        //     );
 
-            setItems(data);
+        //     setItems(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+          const response = await callApi( `institute/?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`, '', null);
+          if (response.data && response.status === 200) {
+            setItems(response.data);
             setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
+            // setTotalItemCount(data);
             setIsLoaded(true);
-          });
+          } else {
+            console.log('students error');
+          }
       } else {
         axios
           // get data from localhost:8000/api/student
-          .get(
-            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-            );
-            setItems(data);
+          // .get(
+          //   `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+          // )
+          // .then((res) => {
+          //   return res.data;
+          // })
+          // .then((data) => {
+          //   console.log(
+          //     `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+          //   );
+          //   setItems(data);
 
+          //   setSelectedItems([]);
+          //   setTotalItemCount(data.totalItem);
+          //   setIsLoaded(true);
+          // });
+          const response = await callApi(`institute/?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`, '', null);
+          if (response.data && response.status === 200) {
+            setItems(response.data);
             setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
+            // setTotalItemCount(data);
             setIsLoaded(true);
-          });
+          } else {
+            console.log('students error');
+          }
       }
     }
     fetchData();
@@ -328,6 +408,7 @@ const ThumbListPages = ({ match }) => {
     selectedOrderOption,
     search,
     selectedGenderOption,
+
     selectedProvinceOption,
     instituteId,
     province,
@@ -336,13 +417,18 @@ const ThumbListPages = ({ match }) => {
     institute,
   ]);
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
+
 
   useEffect(() => {
     fetchInstitutes();
@@ -462,14 +548,28 @@ const ThumbListPages = ({ match }) => {
               genderOptions.find((x) => x.column === column)
             );
           }}
+          changeStatusBy={(column) => {
+            setSelectedStatusOptions(
+              statusOptions.find((x) => x.column === column)
+            );
+          }}
+          changeInstituteBy={(column) => {
+            setSelectedInstituteType(
+              instituteTypeOptions.find((x) => x.column === column)
+            );
+          }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
               provinces.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
+          selectedStatusOptions={selectedStatusOptions}
+          selectedInstituteType={selectedInstituteType}
           selectedProvinceOption={selectedProvinceOption}
           genderOptions={genderOptions}
+          statusOptions={statusOptions}
+          instituteTypeOptions={instituteTypeOptions}
           provinces={provinces}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
@@ -497,33 +597,39 @@ const ThumbListPages = ({ match }) => {
             className="pl-2 d-flex flex-grow-1  table-dark "
             style={{ maxHeight: '55px' }}
           >
-            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+            <tr
+              className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center"
+              style={{ width: '100%' }}
+            >
               <th
                 style={{
                   width: '10%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
-                <IntlMessages id="marks.No" />
+                <IntlMessages id="student.ID" />
               </th>
               <th
                 style={{
-                  width: '22%',
+                  width: '16%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
-                <IntlMessages id="inst.name" />
+                <IntlMessages id="inst.nameList" />
               </th>
               <th
                 style={{
-                  width: '23%',
+                  width: '13%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
@@ -531,10 +637,11 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '22%',
+                  width: '13%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
@@ -542,14 +649,27 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '22%',
+                  width: '13%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
                 <IntlMessages id="gender" />
+              </th>
+              <th
+                style={{
+                  width: '13%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                {' '}
+                <IntlMessages id="institute.status" />
               </th>
             </tr>
           </thead>

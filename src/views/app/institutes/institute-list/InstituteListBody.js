@@ -46,45 +46,63 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
             style={{ maxHeight: '50px', width: '100%' }}
           >
             <div
-              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center"
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row  min-width-zero align-items-lg-center"
               style={{ width: '100%' }}
             >
-              <div style={{ width: '10%' }}>
+              <div style={{ width: '10%', fontSize: '20px' }}>
                 <NavLink to={`institute/${institute.id}`} className="">
-                  <p className="list-item-heading mb-1">{institute.id}</p>
+                  <p
+                    className="list-item-heading mb-1 "
+                    style={{ fontSize: '20px' }}
+                  >
+                    {institute.id}
+                  </p>
                 </NavLink>
               </div>
-              <div style={{ width: '22%' }}>
+              <div style={{ width: '18%', fontSize: '20px' }}>
                 <NavLink to={`institute/${institute.id}`} className="">
-                  <p className="list-item-heading mb-1 truncate">
+                  <p
+                    className="list-item-heading mb-1 truncate"
+                    style={{ fontSize: '20px' }}
+                  >
                     {institute.name}
                   </p>
                 </NavLink>
               </div>
-              <p className="mb-1 text-small" style={{ width: '22%' }}>
+              <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
                 {institute.province}
               </p>
               {institute.type === '1' ? (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  دولتی
+                <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
+                  <IntlMessages id="dash.institutePublic" />
                 </p>
               ) : (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  شخصی
+                <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
+                  <IntlMessages id="dash.institutePrivate" />
                 </p>
               )}
 
               {institute.gender === '1' ? (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  ذکور
+                <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.studentgenderOption_1" />
                 </p>
               ) : institute.gender === '2' ? (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  اناث
+                <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.studentgenderOption_2" />
                 </p>
               ) : (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  مختلط
+                <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.studentgenderOption_3" />
+                </p>
+              )}
+
+              {institute.status === '1' ? (
+                <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.statusOption_1" />
+                </p>
+              ) : (
+                <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.statusOption_2" />
                 </p>
               )}
             </div>
@@ -93,13 +111,15 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
                 style={{ display: 'flex', flexDirection: 'row' }}
                 className="align-self-center pr-4"
               >
+                <NavLink to={`/app/institutes/register/${institute.id}`} >
                 <div>
                   <BsPencilSquare
                     outline
                     style={{ fontSize: '20px' }}
                     id="updateIcon"
-                  />
+                    />
                 </div>
+                    </NavLink>
                 <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"

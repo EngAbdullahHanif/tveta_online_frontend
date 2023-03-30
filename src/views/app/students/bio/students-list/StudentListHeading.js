@@ -53,9 +53,9 @@ const ListPageHeading = ({
   changeEducationalYearBy,
   educationYears,
   // Level Of Education
-  selectLevelOfEducationOption,
-  changeLevelOfEducationBy,
-  levelOfEdcation,
+  studentTypeOptions,
+  changeStudentTypeBy,
+  studentType,
   // Province
   selectedProvinceOption,
   changeProvinceBy,
@@ -178,7 +178,12 @@ const ListPageHeading = ({
               <div className="row">
                 {/* Gender */}
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '17px' }}
+                  >
                     <IntlMessages id="filter" />
                     {selectedGenderOption.label}
                   </DropdownToggle>
@@ -188,6 +193,7 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeGenderBy(gender.column)}
+                          style={{ fontSize: '17px' }}
                         >
                           {gender.label}
                         </DropdownItem>
@@ -198,7 +204,12 @@ const ListPageHeading = ({
 
                 {/* Province */}
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '17px' }}
+                  >
                     <IntlMessages id="filter" />
                     {selectedProvinceOption.label}
                   </DropdownToggle>
@@ -214,6 +225,7 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeProvinceBy(order.column)}
+                          style={{ fontSize: '17px' }}
                         >
                           {order.label}
                         </DropdownItem>
@@ -222,63 +234,15 @@ const ListPageHeading = ({
                   </DropdownMenu>
                 </UncontrolledDropdown>
 
-                {/* District */}
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="district"
-                    id="district"
-                    placeholder={messages['search.district']}
-                    onKeyPress={(e) => onDistrictSearchKey(e)}
-                  />
-                </div>
-
-                {/* Student Id */}
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="student_id"
-                    id="student_id"
-                    placeholder={messages['search.id']}
-                    onKeyPress={(e) => onIdSearchKey(e)}
-                  />
-                </div>
-
-                {/* Timing Shift */}
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="filter" />
-                    {selectedShiftOption.label}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {shiftOption.map((shift, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeShiftBy(shift.column)}
-                        >
-                          {shift.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-
-                {/* Institute */}
-                <div style={{ marginLeft: '75px' }}>
-                  <ReactAutoSugegst
-                    data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
-                    }}
-                    placeholder={messages['search.institute.name']}
-                  />
-                </div>
-
                 <div>
                   {/* Educational Year */}
                   <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                    <DropdownToggle caret color="outline-dark" size="xs">
+                    <DropdownToggle
+                      caret
+                      color="outline-dark"
+                      size="xs"
+                      style={{ fontSize: '17px' }}
+                    >
                       <IntlMessages id="filter" />
                       {selectedEducationalYearOption.label}
                       {/* {Educationnal} */}
@@ -298,6 +262,7 @@ const ListPageHeading = ({
                             onClick={() =>
                               changeEducationalYearBy(order.column)
                             }
+                            style={{ fontSize: '17px' }}
                           >
                             {order.label}
                           </DropdownItem>
@@ -307,18 +272,85 @@ const ListPageHeading = ({
                   </UncontrolledDropdown>
                 </div>
 
-                {/* Education Level */}
+                {/* Timing Shift */}
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '17px' }}
+                  >
                     <IntlMessages id="filter" />
-                    {selectLevelOfEducationOption.label}
+                    {selectedShiftOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {levelOfEdcation.map((order, index) => {
+                    {shiftOption.map((shift, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeLevelOfEducationBy(order.column)}
+                          onClick={() => changeShiftBy(shift.column)}
+                          style={{ fontSize: '17px' }}
+                        >
+                          {shift.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+
+                {/* District */}
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  <input
+                    type="text"
+                    name="district"
+                    id="district"
+                    placeholder={messages['search.district']}
+                    onKeyPress={(e) => onDistrictSearchKey(e)}
+                    style={{ fontSize: '17px' }}
+                  />
+                </div>
+
+                {/* Student Id */}
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  <input
+                    type="text"
+                    name="student_id"
+                    id="student_id"
+                    placeholder={messages['search.id']}
+                    onKeyPress={(e) => onIdSearchKey(e)}
+                    style={{ fontSize: '17px' }}
+                  />
+                </div>
+
+                {/* Institute */}
+                <div style={{ marginLeft: '90px', fontSize: '17px' }}>
+                  <ReactAutoSugegst
+                    data={institutes}
+                    select={(opt) => {
+                      setSelectedInstitute(opt);
+                    }}
+                    placeholder={messages['search.institute.name']}
+                  />
+                </div>
+
+                {/* Education Level */}
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '17px' }}
+                  >
+                    <IntlMessages id="filter" />
+                    {studentTypeOptions.label}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {studentType.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeStudentTypeBy(order.column)}
+                          style={{ fontSize: '17px' }}
                         >
                           {order.label}
                         </DropdownItem>
@@ -328,7 +360,7 @@ const ListPageHeading = ({
                 </UncontrolledDropdown>
 
                 {/* INTEGRATE THIS BASE ON DEPARTMENT */}
-                <div>
+                <div style={{ fontSize: '17px' }}>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(opt) => {
@@ -342,6 +374,7 @@ const ListPageHeading = ({
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
+                style={{ fontSize: '17px' }}
                 onClick={() => {
                   changeGenderBy('all');
                   changeProvinceBy('all');

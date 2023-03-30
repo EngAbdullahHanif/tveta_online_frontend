@@ -334,6 +334,7 @@ const StudentRegistraion = ({ history }) => {
   const [initialEducationalYear, setInitialEducationalYear] = useState([]);
   const [initialProvince, setInitialProvince] = useState([]);
   const [initialDistrict, setInitialDistrict] = useState('');
+
   const initialValues = {
     name1: intialName,
     gender: initialGender,

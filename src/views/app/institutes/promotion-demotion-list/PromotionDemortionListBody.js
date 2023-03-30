@@ -1,11 +1,30 @@
-import React from 'react';
-import { Card, CustomInput, Badge } from 'reactstrap';
+import React, { useState } from 'react';
+import {
+  Card,
+  CustomInput,
+  Badge,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
+import IntlMessages from 'helpers/IntlMessages';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
+import { BsTrashFill } from 'react-icons/bs';
+import { BsPencilSquare } from 'react-icons/bs';
 
 const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
+  const [modalBasic, setModalBasic] = useState(false);
+  const [dataDeletion, setDeletion] = useState(false);
+
+  const handleClick = (event) => {
+    setDeletion(event);
+    console.log('API should be called here');
+  };
   return (
     <Colxx xxs="12" key={institute.id} className="mt-2">
       <ContextMenuTrigger id="menu_id" data={institute.id} collect={collect}>
@@ -27,48 +46,118 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
             style={{ maxHeight: '50px', width: '100%' }}
           >
             <div
-              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center"
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row  min-width-zero align-items-lg-center"
               style={{ width: '100%' }}
             >
-              <div style={{ width: '10%' }}>
+              <div style={{ width: '10%', fontSize: '20px' }}>
                 <NavLink to={`institute/${institute.id}`} className="">
-                  <p className="list-item-heading mb-1">{institute.id}</p>
+                  <p
+                    className="list-item-heading mb-1 "
+                    style={{ fontSize: '20px' }}
+                  >
+                    {institute.id}
+                  </p>
                 </NavLink>
               </div>
-              <div style={{ width: '22%' }}>
+              <div style={{ width: '18%', fontSize: '20px' }}>
                 <NavLink to={`institute/${institute.id}`} className="">
-                  <p className="list-item-heading mb-1 truncate">
+                  <p
+                    className="list-item-heading mb-1 truncate"
+                    style={{ fontSize: '20px' }}
+                  >
                     {institute.name}
                   </p>
                 </NavLink>
               </div>
-              <p className="mb-1 text-small" style={{ width: '22%' }}>
+              <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
                 {institute.province}
               </p>
               {institute.type === '1' ? (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  دولتی
+                <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
+                  <IntlMessages id="dash.institutePublic" />
                 </p>
               ) : (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  شخصی
+                <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
+                  <IntlMessages id="dash.institutePrivate" />
                 </p>
               )}
 
               {institute.gender === '1' ? (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  ذکور
+                <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.studentgenderOption_1" />
                 </p>
               ) : institute.gender === '2' ? (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  اناث
+                <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.studentgenderOption_2" />
                 </p>
               ) : (
-                <p className="mb-1 text-small" style={{ width: '22%' }}>
-                  مختلط
+                <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.studentgenderOption_3" />
+                </p>
+              )}
+
+              {institute.status === '1' ? (
+                <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.statusOption_1" />
+                </p>
+              ) : (
+                <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
+                  <IntlMessages id="institute.statusOption_2" />
                 </p>
               )}
             </div>
+            <>
+              <div
+                style={{ display: 'flex', flexDirection: 'row' }}
+                className="align-self-center pr-4"
+              >
+                <div>
+                  <BsPencilSquare
+                    outline
+                    style={{ fontSize: '20px' }}
+                    id="updateIcon"
+                  />
+                </div>
+                <div className="ml-2">
+                  <BsTrashFill
+                    id="deleteIcon"
+                    outline
+                    onClick={() => setModalBasic(true)}
+                    style={{ fontSize: '20px' }}
+                  />
+                </div>
+              </div>
+              <Modal
+                isOpen={modalBasic}
+                toggle={() => setModalBasic(!modalBasic)}
+                style={{ marginTop: '10%' }}
+              >
+                <ModalHeader>
+                  <IntlMessages id="modal.deletion-message-title" />
+                </ModalHeader>
+                <ModalBody className="text-center">
+                  <IntlMessages id="modal.deletion-message-details" />
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    onClick={() => setModalBasic(false)}
+                    style={{ marginLeft: '55%' }}
+                  >
+                    نه/ نخیر
+                  </Button>
+                  <Button
+                    color="danger"
+                    onClick={() => {
+                      setModalBasic(false);
+                      handleClick(true);
+                    }}
+                    style={{ marginLeft: '5%' }}
+                  >
+                    هو / بلی
+                  </Button>{' '}
+                </ModalFooter>
+              </Modal>{' '}
+            </>
           </div>
         </Card>
       </ContextMenuTrigger>

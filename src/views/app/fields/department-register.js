@@ -9,15 +9,20 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from '../../../containers/form-validations/FormikFields';
 
 const SignupSchema = Yup.object().shape({
-  FieldId: Yup.string().required(<IntlMessages id="field.FieldIdErr" />),
-
-  FieldName: Yup.string()
-    //  .min(3, <IntlMessages id="forms.StdId" />)
-    .required(<IntlMessages id="field.FieldNameErr" />),
-
-  FieldEngName: Yup.string().required(
-    <IntlMessages id="field.FieldEngNameErr" />
+  departmentName: Yup.string().required(
+    <IntlMessages id="department.nameErr" />
   ),
+
+  departmentEnglishName: Yup.string().required(
+    <IntlMessages id="department.englishNameErr" />
+  ),
+
+  field: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.fieldErr" />),
 });
 
 const DepartmentRegister = () => {
@@ -103,8 +108,7 @@ const DepartmentRegister = () => {
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {/* {<IntlMessages id="field.FieldRegisterTitle" />} */}
-          Department Register
+          {<IntlMessages id="department.departmentRegisterlabel" />}
         </h3>
         <CardBody>
           {isNext ? (

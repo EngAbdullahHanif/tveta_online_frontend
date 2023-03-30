@@ -109,17 +109,9 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="teacher.departmentIdErr" />),
 });
 
-const initialValues = {
-  institute: [],
-  educationlaYear: '',
-  studyTime: [],
-  classs: [],
-  department: [],
-};
-
 const AllSubjectsMarks = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [inNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -166,6 +158,7 @@ const AllSubjectsMarks = ({ match }) => {
   };
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', '', null);
+    console.log('response of department', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -178,7 +171,7 @@ const AllSubjectsMarks = ({ match }) => {
   };
 
   const fetchClasses = async () => {
-    const response = await callApi('/institute/classs/', '', null);
+    const response = await callApi('institute/classs/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -191,7 +184,7 @@ const AllSubjectsMarks = ({ match }) => {
   };
 
   const fetchSubjects = async () => {
-    const response = await callApi('/institute/subject/', '', null);
+    const response = await callApi('institute/subject/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -212,25 +205,17 @@ const AllSubjectsMarks = ({ match }) => {
   }, []);
 
   const handleClick = async (event) => {
-    // setIsNext(event);
-    // axios
-    // .get(
-    //   `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
-    // )
-    //   .then((response) => {
-    //     console.log('response.data', response.data);
-    //     setStudents(response.data);
-    //     setIsNext(event);
-    //   });
+    setIsNext(false);
+
     const response = await callApi(
-      `api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/class_marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
       null
     );
-    console.log('students response', response.data);
     if (response.data && response.status === 200) {
       setStudents(response.data);
-      setIsNext(event);
+
+      console.log('response.data ', response.data);
 
       // split selected class to get semester and section
       const classArray = selectedClass.label.split(' - ');
@@ -240,9 +225,10 @@ const AllSubjectsMarks = ({ match }) => {
     } else {
       console.log('students error');
     }
-    console.log('students', students);
+
+    // console.log('students 321', students);
   };
-  console.log('students', students);
+  console.log('students 123', students);
 
   const onSubmit = (values) => {
     console.log('values', values);
@@ -275,6 +261,14 @@ const AllSubjectsMarks = ({ match }) => {
       // axios.post('http://localhost:8000/api/marks/', data);
     });
   };
+
+  const initialValues = {
+    institute: [],
+    educationlaYear: '',
+    studyTime: [],
+    classs: [],
+    department: [],
+  };
   return (
     <>
       <Card>
@@ -282,7 +276,7 @@ const AllSubjectsMarks = ({ match }) => {
           {<IntlMessages id="marks.marksDisplayTitle" />}
         </h3>
         <CardBody>
-          {inNext ? (
+          {isNext ? (
             <Formik
               initialValues={initialValues}
               validationSchema={ValidationSchema}
@@ -563,69 +557,29 @@ const AllSubjectsMarks = ({ match }) => {
                       overflowX: 'hidden',
                     }}
                   >
-                    {students &&
-                      students.map((student, index) => (
-                        <>
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{student.studnet_name}</td>
-                            <td>{student.student_father_name}</td>
-                            <td>{student.student_id}</td>
-                            {student.subject_id.map((mark, index) => (
+                    {students.map((studentRow, index) => {
+                      return (
+                        <tr key={index}>
+                          <th scope="row" className="border text-center">
+                            {index + 1}
+                          </th>
+                          {studentRow.map((student, secondIndex) => {
+                            return (
                               <>
-                                <td>{mark.marks}</td>
-                                <td>{mark.subject_name}</td>
+                                <td key={secondIndex}>{student.score}</td>
+                                {/* <td
+                                  key={index}
+                                  className=""
+                                  style={{ maxWidth: '20px' }}
+                                >
+                                  {student.score}
+                                </td> */}
                               </>
-                            ))}
-                          </tr>{' '}
-                        </>
-                      ))}
-                    {/* <tr>
-                      <td>1</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
-                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
-                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
-                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
-                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
-                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
-                      <td>hdsfsda18</td>
-                    </tr>
-                    <tr>
-                      <td>2</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
-                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
-                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
-                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
-                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
-                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
-                      <td>hdsfsda18</td>
-                    </tr>{' '}
-                    <tr>
-                      <td>3</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
-                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
-                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
-                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
-                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
-                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
-                      <td>hdsfsda18</td>
-                    </tr>{' '}
-                    <tr>
-                      <td>4</td> <td>hdsfsda2</td> <td>hdsfsda3</td>{' '}
-                      <td>hdsfsda4</td> <td>hdsfsda5</td> <td>hdsfsda6</td>{' '}
-                      <td>hdsfsda7</td> <td>hdsfsda8</td> <td>hdsfsda9</td>{' '}
-                      <td>hdsfsda10</td> <td>hdsfsda11</td> <td>hdsfsda12</td>{' '}
-                      <td>hdsfsda13</td> <td>hdsfsda14</td> <td>hdsfsd15</td>
-                      <td>hdsfsda16</td> <td>hdsfsda17</td> <td>hdsfsda18</td>
-                      <td>hdsfsda18</td>
-                    </tr> */}
-                    {/* {students.map((student, index) => (
-                      <tr>
-                        <th scope="row">{index}</th>
-                        <td>{student.name}</td>
-                        <td>{student.father_name}</td>
-                        <td>{student.student_id}</td>
-                        <td>{student.marks}</td>
-              
-                      </tr>
-                    ))} */}
+                            );
+                          })}
+                        </tr>
+                      );
+                    })}
                   </tbody>
 
                   <tfoot className="thead-dark">

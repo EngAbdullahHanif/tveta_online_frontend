@@ -25,6 +25,7 @@ const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
 
+
   //add current user id to the data
   if (data && data instanceof FormData) {
     data.append(
@@ -44,11 +45,11 @@ const callApi = async (endpoint, method = 'get', data = null) => {
       headers,
       data,
     });
-    //console.log('response of callApi', response);
+    console.log('response of callApi', response);
     return response;
   } catch (error) {
     console.error('error of the call', error);
-    return error.response.data;
+    return error;
   }
 };
 

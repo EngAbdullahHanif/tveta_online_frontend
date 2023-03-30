@@ -43,82 +43,110 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
             />
           </NavLink> */}
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+            <div
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center"
+              style={{ width: '100%' }}
+            >
               {/* send this to localhost/students/:id */}
 
               <NavLink
                 to={`student/${student.student_id}`}
                 style={{ width: '10%' }}
               >
-                <p className="list-item-heading mb-1 truncate">
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ fontSize: '20px', marginInline: '-7px' }}
+                >
                   {student.student_id}
                 </p>
               </NavLink>
               <NavLink
-                to={`teacher/${student.student_id}`}
+                to={`student/${student.student_id}`}
                 style={{ width: '15%' }}
               >
-                <p className="list-item-heading mb-1 truncate">
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ fontSize: '20px' }}
+                >
                   {student.name}
                 </p>
               </NavLink>
 
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
                 {student.father_name}
               </p>
+              
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
+              >
+                {student.current_province}
+              </p>
+
+              <p
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
+              >
+                {student.phone_number}
+              </p>
+
+
 
               {/* UN COMMINT IT WHEN THE API IS COMPLETED */}
               {/* <p className="mb-1 text-small">{student.class}</p>
               <p className="mb-1 text-small">{student.department}</p>
               <p className="mb-1 text-small">{student.institute}</p> */}
 
-              <p
-                className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
-              >
-                {student.current_province}
-              </p>
               {/* <p className="mb-1 text-small">{student.internse_type}</p> */}
               {student.internse_type === 1 ? (
                 <p
                   className="mb-1 text-small"
-                  style={{ width: '15%', textAlign: 'right' }}
+                  style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
                 >
                   حکمی
                 </p>
               ) : student.internse_type === 2 ? (
                 <p
                   className="mb-1 text-small"
-                  style={{ width: '15%', textAlign: 'right' }}
+                  style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
                 >
                   کانکور اختصاصی
                 </p>
               ) : (
                 <p
                   className="mb-1 text-small"
-                  style={{ width: '15%', textAlign: 'right' }}
+                  style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
                 >
                   کانکور تحصیلات عالی
                 </p>
               )}
 
               {student.graduat_14_types === '1' ? (
-                <div className="mb-1 text-small ">
+                <div
+                  className="mb-1 text-small "
+                  style={{ fontSize: '20px', width: '15%' }}
+                >
                   <Badge color="success" pill>
                     فارغ التحصیل
                   </Badge>
                 </div>
               ) : student.graduat_14_types == '3' ? (
-                <div className="mb-1 text-small">
+                <div
+                  className="mb-1 text-small"
+                  style={{ fontSize: '20px', width: '10%' }}
+                >
                   <Badge color="danger" pill>
                     منفک
                   </Badge>
                 </div>
               ) : (
-                <div className="mb-1 text-small">
+                <div
+                  className="mb-1 text-small"
+                  style={{ fontSize: '20px', width: '10%' }}
+                >
                   <Badge color="warning" pill>
                     جاری
                   </Badge>
@@ -130,13 +158,18 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                 style={{ display: 'flex', flexDirection: 'row' }}
                 className="align-self-center pr-4"
               >
+                 <NavLink
+                to={`/app/students/register/${student.student_id}`}
+                // style={{ width: '10%' }}
+              >
                 <div>
                   <BsPencilSquare
                     outline
                     style={{ fontSize: '20px' }}
                     id="updateIcon"
-                  />
+                    />
                 </div>
+                    </NavLink>
                 <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"

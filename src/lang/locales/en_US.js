@@ -204,6 +204,8 @@ module.exports = {
   'menu.field-list': 'Field List',
   'menu.department-register': 'Department Registration',
   'menu.department-list': 'Departments List',
+  'menu.group-label': 'Group',
+  'menu.group-register': 'Group Register',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -453,6 +455,9 @@ module.exports = {
   'search.institute.name': 'institute name',
   'search.department.name': 'department name',
   'user.email-Id': 'Username Id/Email',
+  'department.field': 'Field',
+  'department.FieldEngNameLabel': 'Department Name in English',
+  'department.departmentRegisterlabel': 'Department Register',
 
   'button.states-text':
     'This button shows a spinner for 2 seconds and an error icon for 3 seconds before switching to normal state. This states can be triggered by adding and removing classes.',
@@ -621,6 +626,11 @@ module.exports = {
   'forms.sectorErr': 'Sector Is Required!',
   'student.photo': 'Image',
   'student.photoErr': 'Student Photo Is Required!',
+  'department.nameErr': 'Department Name Is Required!',
+  'department.englishNameErr': 'Department English Name Is Required!',
+  'student.typeOption_1': 'Registered',
+  'student.typeOption_2': 'Greduated',
+  'student.typeOption_3': 'Dismissed',
 
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',
@@ -847,6 +857,8 @@ module.exports = {
   'max.maxInputValue': 'Input value can not exceed than 50 characters',
   'min.minTazkiraInputValue': 'Input should be at eleast 5 characters',
   'max.maxTazkiraInputValue': 'Input value can not exceed than 17 characters',
+  'teacher.LevelOfEducationList': 'Level Of Education',
+  'teacher.status': 'Status',
 
   // Teacher Grade
   'teacher.GradeOption_3': 'Third Grade ',
@@ -885,6 +897,10 @@ module.exports = {
   'institute.instTypeOptions_2': 'Private',
   'institute.director': 'Director',
   'institute.manager': 'Manager',
+  'institute.status': 'Status',
+  'inst.nameList': 'Institute Name',
+  'institute.statusOption_1': 'Active',
+  'institute.statusOption_2': 'Deactive',
 
   // Marks
   'marks.SectionLabel': 'Section',
@@ -922,7 +938,8 @@ module.exports = {
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',
-  'dorm.': 'Dorm Name',
+  'dorm.NameLabel': 'Dorm Name',
+  'dorm.NameList': 'Dorm',
   'dorm.NameErr': 'Dorm Name Required!',
   'dorm.Gender': ' Gender',
   'dorm.genderErr': ' Drom Gender Is Required!',
@@ -930,6 +947,10 @@ module.exports = {
   'dorm.GenderOptions_2': ' Female',
   'dorm.GenderOptions_3': 'Both',
   'dorm.BuildingTypeLabel': ' Building Type',
+  'dorm.BuildingTypeList': 'Building Type',
+  'dorm.type': 'ُType',
+  'dorm.yearList-1': 'Year',
+
   'dorm.BuildingTypeOptions_1': 'Public',
   'dorm.BuildingTypeOptions_2': ' Private',
   'dorm.PublicBuildingOwnerLabel': 'Public Building Owned By',
@@ -939,6 +960,7 @@ module.exports = {
   'dorm.PrivateBuildingTypeOption_1': 'ًRental',
   'dorm.PrivateBuildingTypeOption_2': 'Assisted',
   'dorm.CapicityLabel': 'Capicity',
+  'dorm.CapicityList': 'Capicity',
   'dorm.CapicityErr': 'Dorm Capicity is Required!',
   'dorm.QuotaErr': 'Dorm  Quota is required!',
   'dorm.QuotaLabel': 'Dorm  Quota',
@@ -977,7 +999,8 @@ module.exports = {
   'teacher.topicLabel': 'Topic',
   'teacher.topicErr': 'Evaluation Topic  is Required!',
   'teacher.evaluatorLabel': 'Evaluator',
-  'teacher.evaluatorErr': 'Evaluator Name Topic  is Required!',
+  'teacher.evaluatorErr': 'Evaluator Name is Required!',
+
   'teacher.evaluationTypeLabel': 'Evaluation Type',
   'teacher.evaluationTypeErr': 'Evaluation Type Is Required!',
   'teacher.evaluationTypeOption_1': 'Goal Oriented',
@@ -995,6 +1018,7 @@ module.exports = {
   'evaluation.evaluationDetails': 'Details',
   'teacher.EvaluatedMale': 'Evaluated Male',
   'teacher.EvaluatedFemale': 'Evaluated Female',
+  'forms.teacherIdErr': 'Teacher Id Is Required!',
 
   // HR Evaluation
   'teacher.EvalautionHrTitle': 'Teacher Hr Evaluation',
@@ -1003,11 +1027,16 @@ module.exports = {
   'teacher.currentStepLabel': 'Current Step',
   'teacher.newGradeLabel': 'New Grade',
   'teacher.newStepLabel': 'New Step',
+  'teacher.stepErr': 'Step Is Required!',
+  'teacher.gradeErr': 'Grade Is Required!',
+  'teacher.newStepErr': 'New Step Is Required!',
+  'teacher.newGradeErr': 'New Step Is Required!',
 
   // Promotion and demotion
   'teacher.PromotionDemotionTitle': 'Teacher Promotion/Demotion',
   'teacher.promotionLabel': 'Teacher Promotion',
   'teacher.demotionLabel': 'Demotion',
+  'teacher.promotion.type': 'Type',
 
   // Teacher Transfer
   'teacher.Transfer': 'Teacher Transfer',
@@ -1038,6 +1067,10 @@ module.exports = {
   'student.transferDateLabel': 'Transfer Date',
   'student.transferDocuments': 'Upgrading Documents',
   'transfered-Students': 'Transfered Student List',
+  'student.ID': 'Student Id',
+  'student.interenaceType': 'Enterance Type',
+  'student.PhoneNo': 'Phone No',
+  'study.type': 'student Type',
 
   // Curriculum
   'subject.curriculum': 'Curriculum',
@@ -1213,6 +1246,7 @@ module.exports = {
   'menu.student_register_kankor': 'Students Kankor Register',
   'menu.student_list': 'Students List',
   'menu.student-marks-register': 'Marks Registration',
+  'dorm.yearList': 'Year',
 
   // Student Dismissal
   'student.dismissalTitleFromInstitute':
@@ -1273,6 +1307,14 @@ module.exports = {
   'class.semesterLabel': 'Semester',
   'class.semesterErr': 'Semester Is Required!',
   'teacher-list.MajorLabel': 'field',
+
+  // Group
+
+  'groug.register.title': 'Group Registration',
+  'group.groupName': 'Group Name',
+  'group.groupNameErr': 'Group Name Required!',
+  'menu.group-premissions': 'Premissions',
+  'groug.premssion.title': 'Adding Premissions',
 
   // Deletion flash message title
   'modal.deletion-message-title': 'Confirm',

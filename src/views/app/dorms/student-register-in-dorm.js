@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
+import callApi from 'helpers/callApi';
+
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
@@ -173,12 +175,17 @@ const DormRegistration = (values) => {
 
   const [isNext, setIsNext] = useState(true);
   const fetchDorms = async () => {
-    const response = await axios.get(dormsApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDorms(updatedData);
+    // const response = await axios.get(dormsApiUrl);
+    const response = await callApi(`institute/dorms/`, '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDorms(updatedData);
+    } else {
+      console.log('dorm  error');
+    }
   };
 
   useEffect(() => {
@@ -194,29 +201,70 @@ const DormRegistration = (values) => {
   };
 
   const handleSearch = async () => {
-    //search student by student id in database
     console.log(`${studentAPIUrl}?student_id=${data}`);
-    axios.get(`${studentAPIUrl}?student_id=${data}`).then((res) => {
-      setStudent(res.data);
-    });
-    const instituteResponse = await axios.get(
-      `${studentAPIUrl}student_institutes/?student_id=${data}`
-    );
-    const instituteData = await instituteResponse.data;
-    setInstitute(instituteData);
+    // axios.get(`${studentAPIUrl}?student_id=${data}`).then((res) => {
+    //   setStudent(res.data);
+    // });
 
-    const departmentResponse = await axios.get(
-      `${studentAPIUrl}student_Departments/?student_id=${data}`
+    //search student by student id in database
+    const response = await callApi(`api/?student_id=${data}`, '', null);
+    if (response.data && response.status === 200) {
+      setStudent(response.data);
+    } else {
+      console.log('student error');
+    }
+
+    // const instituteResponse = await axios.get(
+    //   `${studentAPIUrl}student_institutes/?student_id=${data}`
+    //   );
+    // const instituteData = await instituteResponse.data;
+
+    const instituteResponse = await callApi(
+      `api/student_institutes/?student_id=${data}`,
+      '',
+      null
     );
-    const departmentData = await departmentResponse.data;
-    setDepartment(departmentData);
+    if (instituteResponse.data && instituteResponse.status === 200) {
+      setInstitute(instituteResponse.data);
+    } else {
+      console.log('student institute error');
+    }
+
+    // const departmentResponse = await axios.get(
+    //   `${studentAPIUrl}student_Departments/?student_id=${data}`
+    // );
+    // const departmentData = await departmentResponse.data;
+    // setDepartment(departmentData);
+
+    const departmentResponse = await callApi(
+      `api/student_Departments/?student_id=${data}`,
+      '',
+      null
+    );
+    if (departmentResponse.data && departmentResponse.status === 200) {
+      setDepartment(departmentResponse.data);
+    } else {
+      console.log('student department error');
+    }
 
     //type =1 means current class or current continued class
-    const classResponse = await axios.get(
-      `${studentAPIUrl}student_class/?student_id=${data}&type=1`
+    // const classResponse = await axios.get(
+    //   `${studentAPIUrl}student_class/?student_id=${data}&type=1`
+    // );
+    // const classData = await classResponse.data;
+    // setClasss(classData);
+
+    const classResponse = await callApi(
+      `api/student_class/?student_id=${data}`,
+      '',
+      null
     );
-    const classData = await classResponse.data;
-    setClasss(classData);
+    if (classResponse.data && classResponse.status === 200) {
+      setClasss(classResponse.data);
+    } else {
+      console.log('student class error');
+    }
+
     console.log('Institute', institute);
     console.log('deparment', classs);
   };

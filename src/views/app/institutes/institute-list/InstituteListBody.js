@@ -111,13 +111,15 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
                 style={{ display: 'flex', flexDirection: 'row' }}
                 className="align-self-center pr-4"
               >
+                <NavLink to={`/app/institutes/register/${institute.id}`} >
                 <div>
                   <BsPencilSquare
                     outline
                     style={{ fontSize: '20px' }}
                     id="updateIcon"
-                  />
+                    />
                 </div>
+                    </NavLink>
                 <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"

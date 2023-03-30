@@ -11,7 +11,8 @@ import {
 import Pagination from '../../../../../containers/pages/Pagination';
 import ContextMenuContainer from '../../../../../containers/pages/ContextMenuContainer';
 import DataListView from '../../../../../containers/pages/DataListView';
-import ImageListView from '../../../../../containers/pages/ImageListView';
+// import ImageListView from '../../../../../containers/pages/ImageListView';
+import ImageListView from './StudentImageListView';
 import StudentListBody from './StudentListBody';
 
 function collect(props) {

@@ -4,6 +4,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import callApi from 'helpers/callApi';
 
 import * as Yup from 'yup';
 import {
@@ -38,15 +39,29 @@ const DormProfile = (values) => {
   const [dormStudents, setDormStudents] = useState([]);
   useEffect(() => {
     async function fetchDrom() {
-      const response = await axios.get(`${dormApiUrl}?id=${dormId}`);
-      const data = await response.data;
-      setDorm(data);
+      // const response = await axios.get(`${dormApiUrl}?id=${dormId}`);
+      const response = await callApi(`institute/dorms/?id=${dormId}`, '', null);
+      if (response.data && response.status === 200) {
+        setDorm(response.data);
+      } else {
+        console.log('dorm error');
+      }
 
-      const dormStudentresponse = await axios.get(
-        `${dormStudentsApiUrl}?dorm_id=${dormId}`
+      // const dormStudentresponse = await axios.get(
+      //   `${dormStudentsApiUrl}?dorm_id=${dormId}`
+      // );
+      // const dormStudentdata = await dormStudentresponse.data;
+
+      const dormStudentresponse = await callApi(
+        `api/Num_stddorm/?dorm_id=${dormId}`,
+        '',
+        null
       );
-      const dormStudentdata = await dormStudentresponse.data;
-      setDormStudents(dormStudentdata);
+      if (dormStudentresponse.data && dormStudentresponse.status === 200) {
+        setDormStudents(dormStudentresponse.data);
+      } else {
+        console.log('dorm student error');
+      }
     }
     fetchDrom();
   }, []);

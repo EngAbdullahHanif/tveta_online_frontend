@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
+import callApi from 'helpers/callApi';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -258,13 +259,18 @@ const ThumbListPages = ({ match }) => {
     selectedBuildingType,
   ]);
   const fetchDorms = async () => {
-    const response = await axios.get(`${dormUrl}`);
-    const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
-    }));
-    setDormsFilterList(updatedData);
-    console.log('dormsFilterList', dormsFilterList);
+    // const response = await axios.get(`institute/dorms`);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        id: item.id,
+        name: item.name,
+      }));
+      setDormsFilterList(updatedData);
+      console.log('dormsFilterList', dormsFilterList);
+    } else {
+      console.log('error');
+    }
   };
 
   useEffect(() => {
@@ -275,19 +281,32 @@ const ThumbListPages = ({ match }) => {
     console.log('district', district);
     async function fetchData() {
       if (dormName !== '') {
-        axios
-          .get(`${dormUrl}?id=${dormName.id}`)
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(`${dormUrl}?id=${dormName.id}`);
+        // axios
+        //   .get(`${dormUrl}?id=${dormName.id}`)
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(`${dormUrl}?id=${dormName.id}`);
 
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setDorms(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+        const response = await callApi(
+          `institute/dorms/?id=${dormName.id}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'
@@ -296,74 +315,129 @@ const ThumbListPages = ({ match }) => {
           setDistrict('');
           setRest(false);
         }
-        axios
-          .get(`${dormUrl}?district=${district}`)
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(`print${dormUrl}`);
+        // axios
+        //   .get(`${dormUrl}?district=${district}`)
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(`print${dormUrl}`);
 
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setDorms(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `institute/dorms/?district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-            );
+        // axios
+        //   .get(
+        //     `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
+        //     );
 
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setDorms(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `institute/dorms/?gender_type=${selectedGenderOption.column}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `2${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-            );
+        // axios
+        //   .get(
+        //     `${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `2${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
+        //     );
 
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setDorms(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+        const response = await callApi(
+          `institute/dorms/?provence=${selectedProvinceOption.column}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       } else {
-        axios
-          // get data from localhost:8000/dorms
-          .get(
-            `${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `3${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-            );
-            setDorms(data);
+        // axios
+        //   // get data from localhost:8000/dorms
+        //   .get(
+        //     `${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `3${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+        //     );
+        //     setDorms(data);
 
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `institute/dorms/?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       }
     }
     fetchData();

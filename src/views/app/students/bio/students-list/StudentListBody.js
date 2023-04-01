@@ -70,30 +70,25 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
               </NavLink>
 
               <p
-                className="mb-1 text-small"
+                className="mb-1 "
                 style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
                 {student.father_name}
               </p>
-              <p
-                className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
-              >
-                {student.phone_number}
-              </p>
+              
 
               <p
-                className="mb-1 text-small"
+                className="mb-1 "
                 style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
                 {student.current_province}
               </p>
 
               <p
-                className="list-item-heading mb-1 truncate"
-                style={{ fontSize: '20px', width: '15%' }}
+                className="mb-1 "
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px'  }}
               >
-                93772323432<span>+</span>
+                {student.phone_number}
               </p>
 
               {/* UN COMMINT IT WHEN THE API IS COMPLETED */}

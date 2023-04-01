@@ -198,8 +198,6 @@ const StdSchoolProvinceOptions = [
 ];
 
 const StudentRegistraion = ({ history }) => {
-  const UpdatingMode = true;
-
   const ValidationSchema = Yup.object().shape({
     name1: Yup.string()
       .min(3, <IntlMessages id="min.minInputValue" />)
@@ -289,7 +287,7 @@ const StudentRegistraion = ({ history }) => {
           }
         });
         const provinceOptions = StdSchoolProvinceOptions.map((province) => {
-          if (province.value == data[0].provence) {
+          if (provifgtfgx4e5gg6htgftghyuhynce.value == data[0].provence) {
             setInitialProvince(province);
           }
         });
@@ -336,6 +334,7 @@ const StudentRegistraion = ({ history }) => {
   const [initialEducationalYear, setInitialEducationalYear] = useState([]);
   const [initialProvince, setInitialProvince] = useState([]);
   const [initialDistrict, setInitialDistrict] = useState('');
+
   const initialValues = {
     name1: intialName,
     gender: initialGender,

@@ -236,6 +236,8 @@ module.exports = {
   'menu.field-list': 'د رشتو لست/ لست رشته ها',
   'menu.department-register': 'دڅانګې ثبتول/ ثبت دیپارتمنت',
   'menu.department-list': 'د څانګو لست/ لست دیپارتمنت ها',
+  'menu.group-label': 'گروپ',
+  'menu.group-register': 'د ګروپ ثبتول/ ثبت کردن گروپ',
 
   /* HR Evaluation */
 
@@ -247,6 +249,17 @@ module.exports = {
   'forms.newStep': 'نوی قدم/قدم نو',
   'forms.evaluationMarks': 'نمره',
   'forms.evaluationDate': 'نیته / تاریخ',
+  'teacher.gradeErr': 'بست اړین دی/ بست ضروری است',
+  'teacher.stepErr': 'پل اړین دی/ قدم ضروری است',
+  'teacher.newGradeErr': 'نوی بست اړین دی/ بست جدید ضروری است',
+  'teacher.newStepErr': 'نوی پل اړین دی/ قدم جدید ضروری است',
+
+  // Group
+  'groug.register.title': 'د ګروپ ثبت/ ثبت گروپ',
+  'group.groupName': 'د ګروپ نوم/ نام گروپ',
+  'group.groupNameErr': 'د گروپ نوم اړین ده /  نام گروپ ضروری است',
+  'menu.group-premissions': 'صلاحیتونه/ صلاحیت ها',
+  'groug.premssion.title': 'د صلاحیتونو کنترول/ کنترول صلاحیت ها',
 
   // worker
   'worker.registration': 'ثبت کارمند / د کارمند ثبت',
@@ -914,6 +927,7 @@ module.exports = {
   'teacher.EmailErr': 'برښنا لیک اړین دی/ ایمیل ادرس ضروری است',
   'teacher.EmailRequiredErr': 'برښنا لیک سم ندی/ ایمیل آدرس درست نیست',
   'teacher.LevelOfEducationLabel': 'زده کړې/ تحصیل',
+  'teacher.LevelOfEducationList': 'زده کړې',
   'teacher.LevelOfEducationErr': 'زدکړې اړینې ډي/ نوشتن سطح تحصیل ضروری است',
   'teacher.EducationLevelOption_1': 'څورلسم پاس/ چهارده پاس',
   'teacher.EducationLevelOption_2': 'لسانس',
@@ -945,6 +959,7 @@ module.exports = {
   'teacher.contractTypeOptions_1': 'د تشکیل د ننه/ داخل تشکیل',
   'teacher.contractTypeOptions_2': 'د تشکیل بهر/ خارج تشکیل',
   'teacher.ProfessionalRanksLabel': 'مسلکي رتبه/ رتبه مسلکی',
+  'teacher.status': 'حالت',
 
   // Grade Options
   'teacher.GradeOption_3': 'دریم بست / بست سه ',
@@ -964,6 +979,7 @@ module.exports = {
   'teacher.StepOption_5': 'پنځم قدم/ قدم پنجم',
   'teacher.StepOption_6': 'شپږم قدم / قدم ششم',
   'teacher.StepLabel': 'پل/ قدم',
+  'teacher.Step': 'قدم',
   'teacher.StepErr': 'پل اړین دی/ قدم ضروری است',
   'button.SubmitButton': 'ثبت',
 
@@ -1014,6 +1030,7 @@ module.exports = {
   // Dorm
   'dorm.RegisterTitle': 'د لیلې ثبت/ ثبت لیلیه',
   'dorm.NameLabel': 'د لیلې نوم/ نام لیلیه',
+  'dorm.NameList': 'لیلیه',
   'dorm.NameErr': 'د لیلی نوم اړین دی/ نام لیلیه ضروری است',
   'dorm.Gender': 'د لیلې جندر/ جندر لیلیه',
   'dorm.genderErr': 'د لیلی جندر اړین دی/ جنسیت لیلیه ضروری است',
@@ -1021,6 +1038,7 @@ module.exports = {
   'dorm.GenderOptions_2': 'ښځینه/ اناث',
   'dorm.GenderOptions_3': '‌دواړه/ مختلط',
   'dorm.BuildingTypeLabel': ' د تعمیر ډول/ نوع تعمیر',
+  'dorm.BuildingTypeList': 'د تعمیر ډول',
   'dorm.BuildingTypeOptions_1': 'دولتی',
   'dorm.BuildingTypeOptions_2': 'خصوصی',
   'dorm.PublicBuildingOwnerLabel': 'د دولتی تعمیر مالکیت/مالکیت تعمیر دولتی',
@@ -1031,6 +1049,7 @@ module.exports = {
   'dorm.PrivateBuildingTypeOption_1': 'کرایی',
   'dorm.PrivateBuildingTypeOption_2': 'کمکی',
   'dorm.CapicityLabel': 'گنجایش/ ظرفیت',
+  'dorm.CapicityList': 'ظرفیت',
   'dorm.CapicityErr': 'د لیلی ظرفیت ارقام اړین دي/ ارقام لیلیه ضروری است',
   'dorm.QuotaErr': 'د شاګردانو سهمیه اړین دی/ سهمیه شاگردان در لیلیه ضروری است',
   'dorm.QuotaLabel': 'سهمیه',
@@ -1045,6 +1064,9 @@ module.exports = {
   'dorm.TotalKitchensErr': ' پخلنځي لیکل اړین دی / تعداد آشپزخانه ضروری است',
   'dorm.ToiletLabel': 'د تشنابو شمیر/ تعداد تشناب',
   'dorm.ToiletErr': 'د تشنابو شمیر اړین دی / تعداد تشناب ضروری است',
+  'dorm.yearList': 'کال',
+  'dorm.yearList-1': 'سال',
+  'dorm.type': 'نوعیت',
 
   // Student Registration
   'dorm.StudentRegisterTitle': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
@@ -1053,6 +1075,7 @@ module.exports = {
     'د شاګرد  دننه کړئ / لطفا آیدی شاگرد را وراد نماید',
   'dorm.SearchResult': 'د لټون پایله/ نتیجه جستجو...',
   'dorm.search.name': 'نوم',
+  'dorm.search.dorm.name': 'د لیلې نوم',
   'dorm.search.district': 'ولسوالی',
   'forms.NoData': 'پورتنۍ آیډي شتون نه لري/ آیدی فوق در سیستم موجود نیست',
   'forms.StudentResidentsPlace': 'د شاګرد استوګنځی/ محل بود و باش شاگرد',
@@ -1097,7 +1120,9 @@ module.exports = {
   'teacher.evaluationDateErr':
     'د ارزونې نیټه اړینه ده / تاریخ ارزیابی ضروری است',
   'teacher.suggestionLabel': 'پیشنهاد / نظریات',
-  'teacher.promotion.type': 'نوعیت',
+  'teacher.promotion.type': 'ډول/ نوعیت',
+
+  'teacher.promotion.typeErr': 'ډول اړین دی/ نوعیت ضروری است',
   'teacher.promotion.type1': 'مکافات',
   'teacher.promotion.type2': 'مجازات',
   'teacher.promotion.description': 'توضیحات',
@@ -1145,6 +1170,7 @@ module.exports = {
   'institute.newNameLabel': 'نوی نوم/ نام جدید',
   'institute.upgradeDateLabel': 'د ارتقا نیټه/تاریخ ارتقا',
   'institute.upgradingDocuments': 'د ارتقا اسناد/ اسناد ارتقا',
+  'institute.status': 'حالت',
 
   // Student Transfer
   'student.buttonTransfer': 'تبدیل',
@@ -1375,6 +1401,9 @@ module.exports = {
   'forms.newClassLabel': 'نوی ټولګی/ صنف جدید',
   'forms.newFieldLabel': 'نوې رشته/ رشته جدید',
   'forms.classErr': 'نوی ټولګی اړین دی/ صنف جدید ضروری است',
+  'student.typeOption_1': 'جاری',
+  'student.typeOption_2': 'فارغ التحصیل',
+  'student.typeOption_3': 'منفک',
 
   // Subject
   'subject.NameErr': 'د مضمون نوم اړین دی/ نام مضمون ضروری است',
@@ -1560,6 +1589,7 @@ module.exports = {
   'wizard.async': 'Async save for 3 seconds!',
 
   'inst.name': 'انستیتوت نوم / نام انستیتوت',
+  'inst.nameList': 'نوم/ نام',
   'inst.nameErr': 'د انستیتوت نوم اړین دی/ نام انستیتوت ضروری است',
   institute: 'انستیتوت',
   // 'institute.instituteLabel': 'انستیتوت',
@@ -1569,6 +1599,8 @@ module.exports = {
   'institute.gender': 'جندر اړین دی/ جنسیت ضروری است',
   'search.institute.name': 'د انستیتوت نوم ',
   'search.department.name': 'د دیپارتمنت نوم ',
+  'institute.statusOption_1': 'فعال',
+  'institute.statusOption_2': 'غیر فعال',
 
   'subject.name': 'د مضمون نوم / نام مضمون',
   'subject.english_name': 'د مضمون انگلیسی نوم / نام انگلیسی مضمون',

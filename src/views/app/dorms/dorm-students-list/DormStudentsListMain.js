@@ -177,6 +177,48 @@ const provinces = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
 ];
+const educationYears = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
+  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
+  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
+  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
+  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
+  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
+  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
+  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
+  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
+  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
+  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
+  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
+  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
+  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
+  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
+  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
+  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
+  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
+  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
+  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
+  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
+  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
+  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
+  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
+  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
+  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
+  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
+  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
+  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
+  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
+  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
+  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
+  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
+  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+];
 const DormTypeOptions = [
   {
     column: 'all',
@@ -184,6 +226,14 @@ const DormTypeOptions = [
   },
   { column: '1', label: 'بدل عاشه' },
   { column: '2', label: 'بدیل عاشه' },
+];
+const statusOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="forms.StudyTypeInrolled" /> },
+  { column: '2', label: <IntlMessages id="forms.StudyTypeDismissed" /> },
 ];
 
 const ThumbListPages = ({ match }) => {
@@ -212,12 +262,24 @@ const ThumbListPages = ({ match }) => {
   const [district, setDistrict] = useState('');
   const [selectedDormTypeOption, setSelectedDormTypeOption] = useState({
     column: 'all',
-    label: '',
+    label: <IntlMessages id="dorm.type" />,
   });
+
   const [selectedProvinceOption, setSelectedProvinceOption] = useState({
     column: 'all',
     label: 'ولایت',
   });
+
+  const [selectedYearOption, setSelectedYearOption] = useState({
+    column: 'all',
+    label: <IntlMessages id="dorm.yearList-1" />,
+  });
+
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState({
+    column: 'all',
+    label: <IntlMessages id="teacher.status" />,
+  });
+
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedOrderOption]);
@@ -240,8 +302,10 @@ const ThumbListPages = ({ match }) => {
     async function fetchData() {
       if (selectedDormTypeOption.column == 'all') {
         console.log('selectedDormTypeOption', selectedDormTypeOption.column);
-        setSelectedDormTypeOption({ column: '', label: '' });
-        console.log('selectedDormTypeOption', selectedDormTypeOption.column);
+        setSelectedDormTypeOption({
+          column: '',
+          label: <IntlMessages id="dorm.type" />,
+        });
       }
       if (dormName !== '') {
         const response = await axios.get(
@@ -267,6 +331,8 @@ const ThumbListPages = ({ match }) => {
     district,
     selectedDormTypeOption,
     selectedProvinceOption,
+    selectedYearOption,
+    selectedStatusOptions,
   ]);
 
   const onCheckItem = (event, id) => {
@@ -350,7 +416,7 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د لیلیو لست/ لست لیله ها"
+          heading="د لیلیو شاګردان/ لست شاگردان لیله ها"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -388,27 +454,146 @@ const ThumbListPages = ({ match }) => {
               provinces.find((x) => x.column === column)
             );
           }}
+          changeYearBy={(column) => {
+            setSelectedYearOption(
+              educationYears.find((x) => x.column === column)
+            );
+          }}
+          changeStatusBy={(column) => {
+            setSelectedStatusOptions(
+              statusOptions.find((x) => x.column === column)
+            );
+          }}
           selectedDormTypeOption={selectedDormTypeOption}
           selectedProvinceOption={selectedProvinceOption}
+          selectedYearOption={selectedYearOption}
+          selectedStatusOptions={selectedStatusOptions}
           DormTypeOptions={DormTypeOptions}
           provinces={provinces}
+          educationYears={educationYears}
+          statusOptions={statusOptions}
           dormsFilterList={dormsFilterList}
           onDormSelect={setDormName}
           onResetClick={setRest}
           reset={rest}
         />
 
-        <ListPageListing
-          dormStudents={dorms}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
+        <table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark mb-2"
+            style={{ maxHeight: '55px' }}
+          >
+            <tr
+              className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center"
+              style={{ width: '100%' }}
+            >
+              <th
+                style={{
+                  width: '10%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="student.ID" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdName" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  fontSize: '20px',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.ProvinceLabel" />
+              </th>
+              {/* <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="forms.DistrictLabel" />
+              </th> */}
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.NameList" />
+              </th>
+              <th
+                style={{
+                  width: '9%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.yearList" />
+              </th>
+              <th
+                style={{
+                  width: '12%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.promotion.type" />
+              </th>
+              <th
+                style={{
+                  width: '10%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.status" />
+              </th>
+            </tr>
+          </thead>
+          <ListPageListing
+            dormStudents={dorms}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
+        </table>
       </div>
     </>
   );

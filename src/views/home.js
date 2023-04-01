@@ -17,6 +17,7 @@ import Shahamat from '../assets/img/blog/9090.JPG';
 import Photo55 from '../assets/img/blog/img1000.jpeg';
 import Rasikh from '../assets/img/blog/rasikh.JPG';
 import mansoor from '../assets/img/blog/mansoor.jpeg';
+import rasikh from '../assets/img/blog/rasikh.JPG';
 
 import hanif from '../assets/img/blog/hanif.jpeg';
 import CarPhoto22 from '../assets/img/blog/Car22.png';
@@ -755,7 +756,7 @@ const Home = () => {
                     >
                       {' '}
                       <img
-                        src={Rasikh}
+                        src={rasikh}
                         class="developers-member-img"
                         id="img1000"
                         style={{ margin: '', width: 'auto' }}

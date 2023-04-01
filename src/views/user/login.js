@@ -12,11 +12,11 @@ import { loginUser } from 'redux/actions';
 
 const validatePassword = (value) => {
   let error;
-  if (!value) {
-    error = <IntlMessages id="login.passwordErr" />;
-  } else if (value.length < 6) {
-    error = <IntlMessages id="login.passwordErr-1" />;
-  }
+  // if (!value) {
+  //   error = <IntlMessages id="login.passwordErr" />;
+  // } else if (value.length < 6) {
+  //   error = <IntlMessages id="login.passwordErr-1" />;
+  // }
   return error;
 };
 

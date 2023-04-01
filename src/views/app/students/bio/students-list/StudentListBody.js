@@ -43,7 +43,10 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
             />
           </NavLink> */}
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+            <div
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center"
+              style={{ width: '100%' }}
+            >
               {/* send this to localhost/students/:id */}
 
               <NavLink
@@ -76,7 +79,6 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                 {student.father_name}
               </p>
               
-
               <p
                 className="mb-1 "
                 style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
@@ -85,11 +87,13 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
               </p>
 
               <p
-                className="mb-1 "
-                style={{ width: '15%', textAlign: 'right', fontSize: '20px'  }}
+                className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right' }}
               >
                 {student.phone_number}
               </p>
+
+
 
               {/* UN COMMINT IT WHEN THE API IS COMPLETED */}
               {/* <p className="mb-1 text-small">{student.class}</p>

@@ -571,6 +571,7 @@ const TeacherRegister = ({ intl }, values) => {
       if (!form.isDirty && form.isValid) {
         const newFields = { ...fields, ...form.values };
         setFields(newFields);
+        console.log('form data all here', newFields);
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);

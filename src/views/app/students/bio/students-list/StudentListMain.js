@@ -37,6 +37,7 @@ const categories = [
   { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
+
 const genderOptions = [
   {
     column: 'all',
@@ -243,26 +244,22 @@ const educationYears = [
   { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
 ];
 
-const levelOfEdcation = [
+const studentType = [
   {
     column: 'all',
     label: <IntlMessages id="option.all" />,
   },
   {
     value: '14th',
-    label: <IntlMessages id="teacher.EducationLevelOption_1" />,
+    label: <IntlMessages id="student.typeOption_1" />,
   },
   {
     value: 'bachelor',
-    label: <IntlMessages id="teacher.EducationLevelOption_2" />,
+    label: <IntlMessages id="student.typeOption_2" />,
   },
   {
     value: 'master',
-    label: <IntlMessages id="teacher.EducationLevelOption_3" />,
-  },
-  {
-    value: 'PHD',
-    label: <IntlMessages id="teacher.EducationLevelOption_4" />,
+    label: <IntlMessages id="student.typeOption_3" />,
   },
 ];
 
@@ -307,11 +304,10 @@ const ThumbListPages = ({ match }) => {
       column: 'all',
       label: 'سال تعلیمی',
     });
-  const [selectLevelOfEducationOption, setSelectLevelOfEducationOption] =
-    useState({
-      column: 'all',
-      label: 'سطح تحصیلی',
-    });
+  const [studentTypeOptions, setStudentTypeOptions] = useState({
+    column: 'all',
+    label: 'حالت شاگرد',
+  });
   useEffect(() => {
     setCurrentPage(1);
   }, [
@@ -321,7 +317,7 @@ const ThumbListPages = ({ match }) => {
     selectedProvinceOption,
     selectedShiftOption,
     selectedEducationalYearOption,
-    selectLevelOfEducationOption,
+    studentTypeOptions,
   ]);
 
   useEffect( async  () => {
@@ -576,7 +572,7 @@ const ThumbListPages = ({ match }) => {
           }}
           selectedGenderOption={selectedGenderOption}
           selectedEducationalYearOption={selectedEducationalYearOption}
-          selectLevelOfEducationOption={selectLevelOfEducationOption}
+          studentTypeOptions={studentTypeOptions}
           selectedProvinceOption={selectedProvinceOption}
           selectedShiftOption={selectedShiftOption}
           genderOptions={genderOptions}
@@ -617,12 +613,10 @@ const ThumbListPages = ({ match }) => {
           }}
           educationYears={educationYears}
           // Level of Education
-          changeLevelOfEducationBy={(column) => {
-            setSelectLevelOfEducationOption(
-              levelOfEdcation.find((x) => x.column === column)
-            );
+          changestudentTypeBy={(column) => {
+            setStudentTypeOptions(studentType.find((x) => x.column === column));
           }}
-          levelOfEdcation={levelOfEdcation}
+          studentType={studentType}
         />
         <table className="table">
           <thead

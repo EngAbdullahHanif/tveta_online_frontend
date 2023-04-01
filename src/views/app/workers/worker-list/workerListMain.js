@@ -3,13 +3,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
-
 // import { servicePath } from 'constants/defaultValues';
 
 //import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
 
 //import ListPageHeadings from './workerListHeading'
-import ListPageHeading from 'views/app/workers/worker-list/workerListHeading'
+import ListPageHeading from 'views/app/workers/worker-list/workerListHeading';
 
 import ListPageListing from 'views/app/workers/worker-list/workerListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
@@ -55,45 +54,42 @@ const categories = [
 
 const roughDataGlobal = [
   {
-  workerId: '1',
-  workerName: 'Noman Ahmadi',
-  workerProvince: 'Nangarhar',
-  workerPosition: 'Software Enginner',
-  workerGradeType: 'Mamor',
-  workerStep: '5',
-  workerGrade: '3'
-},
-{
-  workerId: '2',
-  workerName: 'Noman Ahmadi',
-  workerProvince: 'Nangarhar',
-  workerPosition: 'Software Enginner',
-  workerGradeType: 'Mamor',
-  workerStep: '5',
-  workerGrade: '3'
-},
-{
-  workerId: '3',
-  workerName: 'Noman Ahmadi',
-  workerProvince: 'Nangarhar',
-  workerPosition: 'Software Enginner',
-  workerGradeType: 'Mamor',
-  workerStep: '5',
-  workerGrade: '3'
-},
-{
-  workerId: '4',
-  workerName: 'Noman Ahmadi',
-  workerProvince: 'Nangarhar',
-  workerPosition: 'Software Enginner',
-  workerGradeType: 'Mamor',
-  workerStep: '6',
-  workerGrade: '3'
-}
-]
-
-
-
+    workerId: '1',
+    workerName: 'Noman Ahmadi',
+    workerProvince: 'Nangarhar',
+    workerPosition: 'Software Enginner',
+    workerGradeType: 'Mamor',
+    workerStep: '5',
+    workerGrade: '3',
+  },
+  {
+    workerId: '2',
+    workerName: 'Noman Ahmadi',
+    workerProvince: 'Nangarhar',
+    workerPosition: 'Software Enginner',
+    workerGradeType: 'Mamor',
+    workerStep: '5',
+    workerGrade: '3',
+  },
+  {
+    workerId: '3',
+    workerName: 'Noman Ahmadi',
+    workerProvince: 'Nangarhar',
+    workerPosition: 'Software Enginner',
+    workerGradeType: 'Mamor',
+    workerStep: '5',
+    workerGrade: '3',
+  },
+  {
+    workerId: '4',
+    workerName: 'Noman Ahmadi',
+    workerProvince: 'Nangarhar',
+    workerPosition: 'Software Enginner',
+    workerGradeType: 'Mamor',
+    workerStep: '6',
+    workerGrade: '3',
+  },
+];
 
 const Provinces = [
   {
@@ -238,9 +234,8 @@ const Provinces = [
   },
 ];
 const ThumbListPages = ({ match }) => {
-
   // Hard Coded Data
-const [roughData, setRoughData] = useState([])
+  const [roughData, setRoughData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -267,15 +262,13 @@ const [roughData, setRoughData] = useState([])
   const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
- 
-
 
   // here we are fetching data for the displaying the list
-  useEffect(()=> {
-    setRoughData(roughDataGlobal)
+  useEffect(() => {
+    setRoughData(roughDataGlobal);
     setIsLoaded(false);
     //const timeOut = setTimeout(SetRoughData, 3000);
-  },[]);
+  }, []);
 
   const onCheckItem = (event, id) => {
     if (
@@ -350,7 +343,7 @@ const [roughData, setRoughData] = useState([])
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  return  isLoaded ? (
+  return isLoaded ? (
     <div className="loading" />
   ) : (
     <>
@@ -405,7 +398,7 @@ const [roughData, setRoughData] = useState([])
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
-          roughDate = {roughData}
+          roughDate={roughData}
         />
         <table className="table">
           <thead
@@ -419,10 +412,10 @@ const [roughData, setRoughData] = useState([])
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="workerId" />
-                
               </th>
               <th
                 style={{
@@ -430,6 +423,7 @@ const [roughData, setRoughData] = useState([])
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="workerName" />
@@ -440,6 +434,7 @@ const [roughData, setRoughData] = useState([])
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="workerProvince" />
@@ -450,6 +445,7 @@ const [roughData, setRoughData] = useState([])
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
@@ -461,6 +457,7 @@ const [roughData, setRoughData] = useState([])
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
@@ -472,15 +469,15 @@ const [roughData, setRoughData] = useState([])
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
                 <IntlMessages id="workerStepAndWorkerGrade" />
               </th>
-            
             </tr>
           </thead>
-          
+
           <ListPageListing
             items={items}
             displayMode={displayMode}
@@ -493,7 +490,6 @@ const [roughData, setRoughData] = useState([])
             onChangePage={setCurrentPage}
             roughData={roughData}
           />
-        
         </table>
       </div>
     </>

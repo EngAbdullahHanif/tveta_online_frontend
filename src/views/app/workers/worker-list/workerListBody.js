@@ -26,41 +26,47 @@ const WorkerListBody = ({ worker, isSelect, collect, onCheckItem }) => {
             >
               <NavLink
                 to={`workers/${worker.workerId}`}
-                style={{ width: '10%' }}
+                style={{ width: '10%', fontSize: '20px' }}
               >
-                <p className="list-item-heading mb-1 truncate">
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ fontSize: '20px' }}
+                >
                   {worker.workerId}
                 </p>
               </NavLink>
               <NavLink
                 to={`workers/${worker.workerId}`}
-                style={{ width: '15%' }}
+                style={{ width: '15%', fontSize: '20px' }}
               >
-                <p className="list-item-heading mb-1 truncate">
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ fontSize: '20px' }}
+                >
                   {worker.workerName}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
                 {worker.workerProvince}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
                 {worker.workerPosition}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
                 {worker.workerGradeType}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
                 {`${worker.workerStep}-${worker.workerGrade}`}
               </p>

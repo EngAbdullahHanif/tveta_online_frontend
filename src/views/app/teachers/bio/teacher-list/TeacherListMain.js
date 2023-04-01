@@ -37,7 +37,7 @@ const orderOptions = [
 const genderOptions = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: <IntlMessages id="option.all" />,
   },
   { column: '1', label: 'ذکور' },
   { column: '2', label: 'اناث' },
@@ -53,7 +53,7 @@ const categories = [
 const Provinces = [
   {
     column: 'all',
-    label: 'تول / همه',
+    label: <IntlMessages id="option.all" />,
   },
   {
     column: '1',
@@ -692,11 +692,13 @@ const ThumbListPages = ({ match }) => {
           >
             <tr className="card-body align-self-center d-flex flex-lg-row align-items-lg-center">
               <th
+                className=""
                 style={{
-                  width: '10%',
+                  width: '110px',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="marks.No" />
@@ -704,8 +706,10 @@ const ThumbListPages = ({ match }) => {
               <th
                 className="header-responsiveness"
                 style={{
+                  width: '170px',
                   paddingInline: '0%',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="forms.StdName" />
@@ -713,50 +717,71 @@ const ThumbListPages = ({ match }) => {
               <th
                 className="header-responsiveness"
                 style={{
+                  width: '170px',
                   paddingInline: '0%',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="forms.StdFatherName" />
               </th>
               <th
-                className="header-responsiveness1"
+                className="header-responsiveness1 "
                 style={{
+                  width: '110px',
                   paddingInline: '0%',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
-                <IntlMessages id="forms.ProvinceLabel" />
+                <IntlMessages id="teacher.GradeLabel" />
               </th>
               <th
-                className="header-responsiveness2"
+                className="header-responsiveness2 "
                 style={{
+                  width: '110px',
                   paddingInline: '0%',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
-                <IntlMessages id="teacher-list.PhoneNoLabel" />
+                <IntlMessages id="teacher.Step" />
               </th>
               <th
-                className="header-responsiveness3"
+                className="header-responsiveness3 "
                 style={{
+                  width: '170px',
                   paddingInline: '0%',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                {' '}
+                <IntlMessages id="teacher.LevelOfEducationList" />
+              </th>
+              <th
+                className="header-responsiveness4 "
+                style={{
+                  width: '170px',
+                  paddingInline: '0%',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="teacher-list.MajorLabel" />
               </th>
               <th
-                className="header-responsiveness4"
+                className="header-responsiveness4 "
                 style={{
+                  width: '100px',
                   paddingInline: '0%',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
-                {' '}
-                <IntlMessages id="teacher.GradeLabel" />
+                <IntlMessages id="teacher.status" />
               </th>
             </tr>
           </thead>

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-import axios from 'axios';
 import callApi from 'helpers/callApi';
 // import { getCurrentUser } from './helpers/Utils';
-
+import { NotificationManager } from 'components/common/react-notifications';
 import * as Yup from 'yup';
 import {
   Row,
@@ -14,31 +12,21 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  InputGroup,
-  InputGroupAddon,
-  CustomInput,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
-
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const subjectOptions = [
-  { value: '1', label: 'اصلی' },
+  { value: '1', label: 'عمومی' },
   { value: '2', label: 'فرعی' },
 ];
 
 const systemOption = [
   { value: '1', label: 'عمومی' },
-  { value: '2', label: 'GIZ' },
-  { value: '3', label: 'نیما' },
+  { value: '2', label: 'NIMA' },
+  { value: '3', label: 'GITZ' },
+  { value: '4', label: 'تعلیمات خاص' },
 ];
 
 const SignupSchema = Yup.object().shape({
@@ -74,36 +62,63 @@ const initialValues = {
 };
 
 const SubjectRegister = () => {
-  const [subjectType, setSubjectType] = useState({});
-  const [systemType, setSystemType] = useState({});
   const [isNext, setIsNext] = useState(false);
-
-  const handleClick = (event) => {
-    // HANIF BROTHER DONT FORGET TO DISPLAY THE SUCCESS MESSAGE AFTER SUBMISSION
-    // setIsNext(event);
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'شاگرد موفقانه لیلی ته رجستر شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          5000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
   };
 
-  const onRegister = async (values, { setSubmitting, setFieldValue }) => {
-    const formData = new FormData();
-    formData.append('name', values.name1);
-    formData.append('english_name', values.englishName);
-    formData.append('code', values.code);
-    formData.append('sub_credit', values.credit);
-    formData.append('sub_type', values.type.value);
-    formData.append('system', values.systemType.value);
-
-    const response = await callApi(
-      'institute/subject_create/',
-      'POST',
-      formData
-    );
-    if (response.data) {
+  // post dorm record to server
+  const postStudentRecord = async (data) => {
+    const response = await callApi('institute/subject_create/', 'POST', data);
+    if (response) {
+      createNotification('success', 'filled');
       setIsNext(true);
-      resetForm();
-      console.log('data sent to the server2');
+      console.log('success message', response.data);
     } else {
-      console.log('data not sent to the server3');
+      createNotification('error', 'filled');
+      console.log('class error');
     }
+  };
+
+  const onRegister = async (values) => {
+    const data = {
+      name: values.name1,
+      english_name: values.englishName,
+      system: values.systemType.value,
+      sub_type: values.type.value,
+      sub_credit: values.credit,
+      sub_passingScore: 55, // this field is temporarly, sub_passingScore should be deleted from both front and back
+      user_id: '1',
+      code: values.code,
+    };
+    postStudentRecord(data);
   };
 
   return (

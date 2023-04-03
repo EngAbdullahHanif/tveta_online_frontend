@@ -97,6 +97,12 @@ const data = [
         to: `${adminRoot}/students/student-dismissal`,
         newWindow: false,
       },
+      // {
+      //   icon: 'MD.MdAddBox',
+      //   label: 'menu.student-reregister',
+      //   to: `${adminRoot}/students/reregister`,
+      //   newWindow: false,
+      // },
     ],
   },
 

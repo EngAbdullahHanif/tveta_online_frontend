@@ -4,6 +4,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import axios from 'axios';
+import { studyTimeOptions } from './../global-data/data';
 
 import * as Yup from 'yup';
 import {
@@ -467,7 +468,7 @@ const StudentsRergister = (values) => {
                               id="studyTime"
                               value={values.studyTime}
                               placeholder="Select option"
-                              options={options}
+                              options={studyTimeOptions}
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
                             />

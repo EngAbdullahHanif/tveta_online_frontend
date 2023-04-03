@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { provincesOptionsForList } from './../../global-data/data';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
@@ -503,7 +503,7 @@ const ThumbListPages = ({ match }) => {
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              provinces.find((x) => x.column === column)
+              provincesOptionsForList.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
@@ -513,7 +513,7 @@ const ThumbListPages = ({ match }) => {
           genderOptions={genderOptions}
           statusOptions={statusOptions}
           instituteTypeOptions={instituteTypeOptions}
-          provinces={provinces}
+          provincesOptionsForList={provincesOptionsForList}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
               setInstituteId(e.target.value.toLowerCase());

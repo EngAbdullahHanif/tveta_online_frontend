@@ -4,7 +4,7 @@ import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
 import ListPageHeading from './FieldListHeading';
-
+import { provincesOptionsForList } from './../../global-data/data';
 import ListPageListing from './FieldListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
@@ -356,13 +356,13 @@ const ThumbListPages = ({ match }) => {
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              Provinces.find((x) => x.column === column)
+              provincesOptionsForList.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
           genderOptions={genderOptions}
-          provinces={Provinces}
+          provinces={provincesOptionsForList}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}

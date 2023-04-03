@@ -51,7 +51,7 @@ const ListPageHeading = ({
   genderOption,
   selectedGenderOption,
   changeGenderBy,
-  provinces,
+  provincesOptionsForList,
   selectedProvinceOption,
   changeProvinceBy,
   genderOptions,
@@ -220,7 +220,7 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
-                    {provinces.map((province, index) => {
+                    {provincesOptionsForList.map((province, index) => {
                       return (
                         <DropdownItem
                           key={index}

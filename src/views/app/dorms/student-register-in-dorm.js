@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
-import callApi from 'helpers/callApi';
+// import callApi from 'helpers/callApi';
 
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';

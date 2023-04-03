@@ -250,59 +250,70 @@ const MarksRegistration = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     setIsNext(false);
-    console.log('students sadfjlksldfjlsdj');
+    // console.log('students sadfjlksldfjlsdj');
 
-    axios
-      .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-      )
-      .then((response) => {
-        console.log('response.data', response.data);
-        setStudents(response.data);
-      });
+    // axios
+    //   .get(
+    //     `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+    //   )
+    //   .then((response) => {
+    //     console.log('response.data', response.data);
+    //     setStudents(response.data);
+    //   });
+    const response = await callApi(
+      `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      '',
+      null
+    );
+    if (response.data && response.status === 200) {
+      setStudents(response.data);
+    } else {
+      console.log('subject error');
+    }
+
     console.log(
       `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
     );
     console.log('students', students);
-    console.log('values', values);
-    const educational_year = selectedEducationalYear;
-    const institute_id = selectedInstitute.value;
-    const department_id = selectedDepartment.value;
-    const class_id = selectedClass.value;
-    const subject_id = selectedSubject.value;
+    // console.log('values', values);
+    // const educational_year = selectedEducationalYear;
+    // const institute_id = selectedInstitute.value;
+    // const department_id = selectedDepartment.value;
+    // const class_id = selectedClass.value;
+    // const subject_id = selectedSubject.value;
 
-    // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
-    // values.score[student.student_id]
-    const newStudents = students.map((student, index) => {
-      return {
-        student_id: student.student_id,
-        score: values.score[student.student_id],
-      };
-    });
+    // // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
+    // // values.score[student.student_id]
+    // const newStudents = students.map((student, index) => {
+    //   return {
+    //     student_id: student.student_id,
+    //     score: values.score[student.student_id],
+    //   };
+    // });
 
-    let data = [
-      {
-        educational_year: educational_year,
-        institute_id: institute_id,
-        Department: department_id,
-        class_id: class_id,
-        subject_id: subject_id,
-      },
-      ...newStudents,
-    ];
+    // let data = [
+    //   {
+    //     educational_year: educational_year,
+    //     institute_id: institute_id,
+    //     Department: department_id,
+    //     class_id: class_id,
+    //     subject_id: subject_id,
+    //   },
+    //   ...newStudents,
+    // ];
 
-    console.log('data', data);
+    // console.log('data', data);
 
-    axios
-      .post('http://localhost:8000/api/create_marks/', data)
-      .then((res) => {
-        console.log('res', res);
-      })
-      .then((err) => {
-        console.log('err', err);
-      });
+    // axios
+    //   .post('http://localhost:8000/api/create_marks/', data)
+    //   .then((res) => {
+    //     console.log('res', res);
+    //   })
+    //   .then((err) => {
+    //     console.log('err', err);
+    //   });
 
     // students.map(async (student, index) => {
     //   let exam_id = '';

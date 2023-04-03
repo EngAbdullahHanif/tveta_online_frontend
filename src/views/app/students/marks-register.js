@@ -26,6 +26,7 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
+import { async } from 'q';
 
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
@@ -250,61 +251,56 @@ const MarksRegistration = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const onSubmit = async (values) => {
-    setIsNext(false);
-    // console.log('students sadfjlksldfjlsdj');
-
-    // axios
-    //   .get(
-    //     `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-    //   )
-    //   .then((response) => {
-    //     console.log('response.data', response.data);
-    //     setStudents(response.data);
-    //   });
+  const fechtStudens = async () => {
     const response = await callApi(
       `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
       null
-    );
-    if (response.data && response.status === 200) {
-      setStudents(response.data);
+      );
+      if (response.data && response.status === 200) {
+        setStudents(response.data);
+        setIsNext(false);
     } else {
       console.log('subject error');
     }
+     // console.log(
+    //   `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+    // );
+  }
 
-    console.log(
-      `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-    );
-    console.log('students', students);
+
+
+  const onSubmit = async (values) => {
+   
+    // console.log('students', students);
     // console.log('values', values);
-    // const educational_year = selectedEducationalYear;
-    // const institute_id = selectedInstitute.value;
-    // const department_id = selectedDepartment.value;
-    // const class_id = selectedClass.value;
-    // const subject_id = selectedSubject.value;
+    const educationalYear = selectedEducationalYear;
+    const instituteId = selectedInstitute.value;
+    const departmentId = selectedDepartment.value;
+    const classId = selectedClass.value;
+    const subjectId = selectedSubject.value;
 
-    // // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
-    // // values.score[student.student_id]
-    // const newStudents = students.map((student, index) => {
-    //   return {
-    //     student_id: student.student_id,
-    //     score: values.score[student.student_id],
-    //   };
-    // });
+    // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
+    // values.score[student.student_id]
+    const newStudents = students.map((student, index) => {
+      return {
+        student_id: student.student_id,
+        score: values.score[student.student_id],
+      };
+    });
 
-    // let data = [
-    //   {
-    //     educational_year: educational_year,
-    //     institute_id: institute_id,
-    //     Department: department_id,
-    //     class_id: class_id,
-    //     subject_id: subject_id,
-    //   },
-    //   ...newStudents,
-    // ];
+    let data = [
+      {
+        educational_year: educationalYear,
+        institute_id: instituteId,
+        department_id: departmentId,
+        class_id: classId,
+        subject_id: subjectId,
+      },
+      ...newStudents,
+    ];
 
-    // console.log('data', data);
+    console.log('data', data);
 
     // axios
     //   .post('http://localhost:8000/api/create_marks/', data)
@@ -321,7 +317,7 @@ const MarksRegistration = ({ match }) => {
     //     educational_year: educational_year,
     //     student_id: student.student_id,
     //     institute_id: institute_id,
-    //     Department: department_id,
+    //     department_id: department_id,
     //     class_id: class_id,
     //     semister: 1,
     //     teacher_id: 1,
@@ -348,7 +344,11 @@ const MarksRegistration = ({ match }) => {
     //   console.log('data', data, index);
     //   axios.post('http://localhost:8000/api/create_marks_details/', data);
     // });
+
+    
   };
+
+
 
   console.log('condsotlsa f', students);
   return (
@@ -507,7 +507,7 @@ const MarksRegistration = ({ match }) => {
                         color="primary"
                         className="float-right m-5"
                         size="lg"
-                        type="submit"
+                        onClick={() => fechtStudens()}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />

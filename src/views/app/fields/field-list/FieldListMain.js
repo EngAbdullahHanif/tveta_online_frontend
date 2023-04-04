@@ -354,15 +354,8 @@ const ThumbListPages = ({ match }) => {
               genderOptions.find((x) => x.column === column)
             );
           }}
-          changeProvinceBy={(column) => {
-            setSelectedProvinceOption(
-              provincesOptionsForList.find((x) => x.column === column)
-            );
-          }}
           selectedGenderOption={selectedGenderOption}
-          selectedProvinceOption={selectedProvinceOption}
           genderOptions={genderOptions}
-          provinces={provincesOptionsForList}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}
@@ -374,16 +367,6 @@ const ThumbListPages = ({ match }) => {
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
               setTeacherId(e.target.value.toLowerCase());
-            }
-          }}
-          onProvinceSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setProvince(e.target.value.toLowerCase());
-            }
-          }}
-          onDistrictSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setDistrict(e.target.value.toLowerCase());
             }
           }}
           onResetClick={setRest}

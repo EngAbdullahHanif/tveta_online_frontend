@@ -561,3 +561,35 @@ export const genderOptionsForList = [
   { value: '1', label: <IntlMessages id="institute.studentgenderOption_1" /> },
   { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
 ];
+
+export const subjectCreditOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { value: '1', label: <IntlMessages id="subject.creditOption_1" /> },
+  { value: '2', label: <IntlMessages id="subject.creditOption_2" /> },
+  { value: '3', label: <IntlMessages id="subject.creditOption_3" /> },
+  { value: '4', label: <IntlMessages id="subject.creditOption_4" /> },
+  { value: '5', label: <IntlMessages id="subject.creditOption_5" /> },
+];
+
+export const subjectTypeOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { value: '1', label: <IntlMessages id="subject.coreSubject" /> },
+  { value: '2', label: <IntlMessages id="subject.nonCoreSubject" /> },
+];
+
+export const subjectSystemOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { value: '1', label: <IntlMessages id="subject.systemOption_1" /> },
+  { value: '2', label: <IntlMessages id="subject.systemOption_2" /> },
+  { value: '3', label: <IntlMessages id="subject.systemOption_3" /> },
+  { value: '4', label: <IntlMessages id="subject.systemOption_4" /> },
+];

@@ -1415,6 +1415,17 @@ module.exports = {
   'subject.systemType': 'د مضمون سیستم اړین دی/ سیستم مضمون ضروری است',
   'forms.SubjectCreditLabel': 'کریدت',
   'subject.register': 'د مضمون ثبت/ ثبت مضمون',
+  'subject.creditOption_1': '1',
+  'subject.creditOption_2': '2',
+  'subject.creditOption_3': '3',
+  'subject.creditOption_4': '4',
+  'subject.creditOption_5': '5',
+  'subject.system.type': 'سیستم',
+  'subject.coreSubject': 'اصلی',
+  'subject.nonCoreSubject': 'فرعی',
+  'subject.typeList': 'نوعیت',
+  'subject.systemList': 'سیستم',
+  'search.subject.name': 'دمضمون نوم',
 
   // Marks Update
   'marks.singleStudentMarksUpdate': 'د نمراتو اپدیت/ تغییر نمرات',
@@ -1603,13 +1614,14 @@ module.exports = {
   'institute.statusOption_2': 'غیر فعال',
 
   'subject.name': 'د مضمون نوم / نام مضمون',
-  'subject.english_name': 'د مضمون انگلیسی نوم / نام انگلیسی مضمون',
+  'subject.english_name': 'انګریزی نوم',
   'subject.credits': 'کریډټ / اعتبار',
   'subject.type': 'د مضمون ډول / نوعیت مضمون',
   'subject.system_type': 'د مضمون سیسټم ډول / نوعیت سیستم مضمون',
   'subject.code': 'د مضمون کوډ / کد مضمون',
   'subject.register.title': 'د مضمون ثبت کول / ثبت مضمون',
-  'subject.system.type': 'د مضمون د سیستم ډول',
+
+  'subject.nameList': 'د مضمون نوم',
 
   'class.name': 'د صنف نوم / نام صنف',
   'class.semester': 'د صنف سمستر / سمستر صنف',

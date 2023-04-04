@@ -5,15 +5,18 @@ import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 
 // import { servicePath } from 'constants/defaultValues';
-
+import { subjectCreditOptions } from './../../global-data/data';
 //import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
+import {
+  subjectSystemOptions,
+  subjectTypeOptions,
+} from './../../global-data/data';
 
 //import ListPageHeadings from './workerListHeading'
-import ListPageHeading from 'views/app/subjects/subject-list/SubjectListHeading'
+import ListPageHeading from 'views/app/subjects/subject-list/SubjectListHeading';
 
 import ListPageListing from 'views/app/subjects/subject-list/SubjectListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
-
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -31,20 +34,6 @@ const teacherApiUrl = `${servicePath}/teachers/`;
 const instituteApiUrl = `${servicePath}/institute/`;
 const teacherInstituteApiUrl = `${servicePath}/teachers/institute/`;
 
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-
-const genderOptions = [
-  {
-    column: 'all',
-    label: 'تول / همه',
-  },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
-];
 const pageSizes = [4, 8, 12, 20];
 
 const categories = [
@@ -54,39 +43,40 @@ const categories = [
 ];
 
 // Hard Coded Data
-const roughData = [{
-  subjectName: 'فزیک',
-  subjectEnglishName: 'Maths',
-  subjectCode: '33353',
-  subjectCredits: '3',
-  subjectType: 'اصلی',
-  subjectSystemType: 'عمومی'
-},
-{
-  subjectName: 'ریاضی',
-  subjectEnglishName: 'Maths',
-  subjectCode: '33353',
-  subjectCredits: '3',
-  subjectType: 'اصلی',
-  subjectSystemType: 'عمومی'
-},
-{
-  subjectName: 'منطق',
-  subjectEnglishName: 'Maths',
-  subjectCode: '33353',
-  subjectCredits: '3',
-  subjectType: 'اصلی',
-  subjectSystemType: 'عمومی'
-},
-{
-  subjectName: 'تاریخ',
-  subjectEnglishName: 'Maths',
-  subjectCode: '33353',
-  subjectCredits: '3',
-  subjectType: 'اصلی',
-  subjectSystemType: 'عمومی'
-}
-]
+const roughData = [
+  {
+    subjectName: 'فزیک',
+    subjectEnglishName: 'Maths',
+    subjectCode: '33353',
+    subjectCredits: '3',
+    subjectType: 'اصلی',
+    subjectSystemType: 'عمومی',
+  },
+  {
+    subjectName: 'ریاضی',
+    subjectEnglishName: 'Maths',
+    subjectCode: '33353',
+    subjectCredits: '3',
+    subjectType: 'اصلی',
+    subjectSystemType: 'عمومی',
+  },
+  {
+    subjectName: 'منطق',
+    subjectEnglishName: 'Maths',
+    subjectCode: '33353',
+    subjectCredits: '3',
+    subjectType: 'اصلی',
+    subjectSystemType: 'عمومی',
+  },
+  {
+    subjectName: 'تاریخ',
+    subjectEnglishName: 'Maths',
+    subjectCode: '33353',
+    subjectCredits: '3',
+    subjectType: 'اصلی',
+    subjectSystemType: 'عمومی',
+  },
+];
 
 const Provinces = [
   {
@@ -231,18 +221,22 @@ const Provinces = [
   },
 ];
 const ThumbListPages = ({ match }) => {
-
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
-  const [selectedGenderOption, setSelectedGenderOption] = useState({
+
+  const [selectedCreditOption, setSelectedCreditOption] = useState({
     column: 'all',
-    label: 'جنیست',
+    label: 'کریدت',
   });
-  const [selectedProvinceOption, setSelectedProvinceOption] = useState({
+  const [selectedTypeOption, setSelectedTypeOption] = useState({
     column: 'all',
-    label: 'ولایت',
+    label: <IntlMessages id="subject.typeList" />,
+  });
+  const [selectedSystemOption, setSelectedSystemOption] = useState({
+    column: 'all',
+    label: <IntlMessages id="subject.systemList" />,
   });
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -261,7 +255,12 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
+  }, [
+    selectedPageSize,
+    selectedCreditOption,
+    selectedTypeOption,
+    selectedSystemOption,
+  ]);
 
   useEffect(() => {
     console.log('institute', institute);
@@ -276,7 +275,11 @@ const ThumbListPages = ({ match }) => {
         // setTotalItemCount(response.data.count);
         // setIsLoaded(true);
 
-        const response = await callApi( `teachers/institute/?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/institute/?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
         if (response.data && response.status === 200) {
           setInstituteTeachers(response.data);
           setItems(response.data);
@@ -287,8 +290,8 @@ const ThumbListPages = ({ match }) => {
           console.log('students error');
         }
       } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
+        selectedTypeOption.column === 'all' &&
+        selectedCreditOption.column === 'all'
       ) {
         if (rest == true) {
           setDistrict('');
@@ -303,7 +306,11 @@ const ThumbListPages = ({ match }) => {
         //     return res.data;
         //   })
 
-        const response = await callApi(`teachers/?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
         if (response.data && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
@@ -316,19 +323,18 @@ const ThumbListPages = ({ match }) => {
         // setSelectedItems([]);
         // setTotalItemCount(response.data.totalItem);
         // setIsLoaded(true);
-          // .then((data) => {
-          //   console.log(
-          //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          //   );
+        // .then((data) => {
+        //   console.log(
+        //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+        //   );
 
-          //   setItems(data);
-          //   setTotalPage(data.total_pages);
-          //   setSelectedItems([]);
-          //   setTotalItemCount(data.totalItem);
-          //   setIsLoaded(true);
-          // });
-
-      } else if (selectedProvinceOption.column === 'all') {
+        //   setItems(data);
+        //   setTotalPage(data.total_pages);
+        //   setSelectedItems([]);
+        //   setTotalItemCount(data.totalItem);
+        //   setIsLoaded(true);
+        // });
+      } else if (selectedTypeOption.column === 'all') {
         // axios
         //   .get(
         //     `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
@@ -347,7 +353,11 @@ const ThumbListPages = ({ match }) => {
         //     setIsLoaded(true);
         //   });
 
-        const response = await callApi(`teachers/?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/?id=${teacherId}&gender=${selectedCreditOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
         if (response.data && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
@@ -356,8 +366,7 @@ const ThumbListPages = ({ match }) => {
         } else {
           console.log('students error');
         }
-
-      } else if (selectedGenderOption.column === 'all') {
+      } else if (selectedCreditOption.column === 'all') {
         // axios
         //   .get(
         //     `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
@@ -375,7 +384,11 @@ const ThumbListPages = ({ match }) => {
         //     setTotalItemCount(data.totalItem);
         //     setIsLoaded(true);
         //   });
-        const response = await callApi(`teachers/?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/?id=${teacherId}&current_province=${selectedTypeOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
         if (response.data && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
@@ -403,7 +416,11 @@ const ThumbListPages = ({ match }) => {
         //     setTotalItemCount(data.totalItem);
         //     setIsLoaded(true);
         //   });
-        const response = await callApi(`teachers/?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/?id=${teacherId}&gender=${selectedCreditOption.column}&current_province=${selectedTypeOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
 
         if (response.data && response.status === 200) {
           setItems(response.data);
@@ -413,7 +430,6 @@ const ThumbListPages = ({ match }) => {
         } else {
           console.log('students error');
         }
-
       }
     }
 
@@ -421,8 +437,9 @@ const ThumbListPages = ({ match }) => {
   }, [
     selectedPageSize,
     currentPage,
-    selectedGenderOption,
-    selectedProvinceOption,
+    selectedCreditOption,
+    selectedTypeOption,
+    selectedSystemOption,
     teacherId,
     province,
     district,
@@ -539,20 +556,27 @@ const ThumbListPages = ({ match }) => {
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeGenderBy={(column) => {
-            setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+          changeCreditBy={(column) => {
+            setSelectedCreditOption(
+              subjectCreditOptions.find((x) => x.column === column)
             );
           }}
-          changeProvinceBy={(column) => {
-            setSelectedProvinceOption(
-              Provinces.find((x) => x.column === column)
+          changeTypeBy={(column) => {
+            setSelectedTypeOption(
+              subjectTypeOptions.find((x) => x.column === column)
             );
           }}
-          selectedGenderOption={selectedGenderOption}
-          selectedProvinceOption={selectedProvinceOption}
-          genderOptions={genderOptions}
-          provinces={Provinces}
+          changeSystemBy={(column) => {
+            setSelectedSystemOption(
+              subjectSystemOptions.find((x) => x.column === column)
+            );
+          }}
+          selectedCreditOption={selectedCreditOption}
+          selectedSystemOption={selectedSystemOption}
+          selectedTypeOption={selectedTypeOption}
+          subjectCreditOptions={subjectCreditOptions}
+          subjectSystemOptions={subjectSystemOptions}
+          subjectTypeOptions={subjectTypeOptions}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}
@@ -582,7 +606,7 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
-          roughDate = {roughData}
+          roughDate={roughData}
         />
         <table className="table">
           <thead
@@ -590,43 +614,47 @@ const ThumbListPages = ({ match }) => {
             style={{ maxHeight: '55px', marginRight: 2 }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
-            <th
+              <th
                 style={{
-                  width: '15%',
+                  width: '11%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '18px',
                 }}
               >
-                <IntlMessages id="subject.code" />
+                <IntlMessages id="student.ID" />
               </th>
               <th
                 style={{
-                  width: '15%',
+                  width: '18%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '18px',
                 }}
               >
-                <IntlMessages id="subject.name" />
+                <IntlMessages id="subject.nameList" />
               </th>
               <th
                 style={{
-                  width: '25%',
+                  width: '22%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '18px',
                 }}
               >
                 <IntlMessages id="subject.english_name" />
               </th>
-            
+
               <th
                 style={{
-                  width: '10%',
+                  width: '11%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '18px',
                 }}
               >
                 {' '}
@@ -634,14 +662,15 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '17%',
+                  width: '13%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '18px',
                 }}
               >
                 {' '}
-                <IntlMessages id="subject.type" />
+                <IntlMessages id="inst.type" />
               </th>
               <th
                 style={{
@@ -649,15 +678,15 @@ const ThumbListPages = ({ match }) => {
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '18px',
                 }}
               >
                 {' '}
                 <IntlMessages id="subject.system.type" />
               </th>
-            
             </tr>
           </thead>
-          
+
           <ListPageListing
             items={items}
             displayMode={displayMode}
@@ -670,7 +699,6 @@ const ThumbListPages = ({ match }) => {
             onChangePage={setCurrentPage}
             // roughData={roughData}
           />
-        
         </table>
       </div>
     </>

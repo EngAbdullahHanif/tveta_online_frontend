@@ -505,8 +505,12 @@ const StudentRegistration = ({ intl }, values) => {
         // const { data } = await axios.get(
         //   `api/?student_id=${studentId}`
         // );
-        const {data} = await callApi(`api/?student_id=${studentId}`, '', null);
-          console.log('responsasdfsadfe', data );
+        const { data } = await callApi(
+          `api/?student_id=${studentId}`,
+          '',
+          null
+        );
+        console.log('responsasdfsadfe', data);
         //  console.log(data[0].name, 'object of the data');
         setInitialname1(data[0].name);
         setInitialLastName(data[0].last_name);
@@ -730,7 +734,7 @@ const StudentRegistration = ({ intl }, values) => {
   //fetch class list
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', 'GET', null);
-    console.log('class repspossdfsde', response)
+    console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -786,7 +790,7 @@ const StudentRegistration = ({ intl }, values) => {
         break;
     }
   };
-  
+
   useEffect(() => {
     fetchInstitutes();
     fetchFields();
@@ -794,12 +798,11 @@ const StudentRegistration = ({ intl }, values) => {
     fetchClasses();
     fetchSectors();
   }, []);
-  
+
   // post student record to server
   const postStudentRecord = async (data) => {
-    
     const response = await callApi('api/student_create', 'POST', data);
-    console.log('response of call api', response)
+    console.log('response of call api', response);
     if (response) {
       createNotification('success', 'filled');
       console.log('success message', response.data);
@@ -1815,26 +1818,26 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* Upload Photo */}
-                              <FormGroup>
-                                {/* <Label>
+                            <FormGroup>
+                              {/* <Label>
                                   <IntlMessages id="student.photo" />
                                 </Label> */}
-                                <InputGroup className="mb-3">
-                                  <InputGroupAddon addonType="prepend">
-                                    آپلود عکس
-                                  </InputGroupAddon>
-                                  <CustomInput
-                                    type="file"
-                                    id="exampleCustomFileBrowser1"
-                                    name="photo"
-                                  />
-                                </InputGroup>
-                                {errors.photo && touched.photo ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.photo}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
+                              <InputGroup className="mb-3">
+                                <InputGroupAddon addonType="prepend">
+                                  آپلود عکس
+                                </InputGroupAddon>
+                                <CustomInput
+                                  type="file"
+                                  id="exampleCustomFileBrowser1"
+                                  name="photo"
+                                />
+                              </InputGroup>
+                              {errors.photo && touched.photo ? (
+                                <div className="invalid-feedback d-block bg-danger text-white">
+                                  {errors.photo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">
                             {/* Departement  */}

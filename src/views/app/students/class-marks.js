@@ -560,23 +560,41 @@ const AllSubjectsMarks = ({ match }) => {
                     {students.map((studentRow, index) => {
                       return (
                         <tr key={index}>
-                          <th scope="row" className="border text-center">
+                          <td key={index} className="border text-center">
                             {index + 1}
-                          </th>
-                          {studentRow.map((student, secondIndex) => {
-                            return (
-                              <>
-                                <td key={secondIndex}>{student.score}</td>
-                                {/* <td
-                                  key={index}
-                                  className=""
-                                  style={{ maxWidth: '20px' }}
-                                >
-                                  {student.score}
-                                </td> */}
-                              </>
-                            );
-                          })}
+                          </td>
+                          {index === 0 ? (
+                            <>
+                              {studentRow.map((student, secondIndex) => {
+                                return (
+                                  <>
+                                    <th
+                                      scope="col"
+                                      className="border  text-center thead-dark "
+                                    >
+                                      {student.name}
+                                    </th>
+                                  </>
+                                );
+                              })}
+                            </>
+                          ) : (
+                            <>
+                              {studentRow.map((student, secondIndex) => {
+                                return (
+                                  <>
+                                    {secondIndex === 0 ||
+                                    secondIndex === 1 ||
+                                    secondIndex === 2 ? (
+                                      <td scope="col">{student.name}</td>
+                                    ) : (
+                                      <td scope="col">{student.score}</td>
+                                    )}
+                                  </>
+                                );
+                              })}
+                            </>
+                          )}
                         </tr>
                       );
                     })}

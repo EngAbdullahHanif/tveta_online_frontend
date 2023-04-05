@@ -25,7 +25,6 @@ const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
 
-
   //add current user id to the data
   if (data && data instanceof FormData) {
     data.append(
@@ -33,8 +32,7 @@ const callApi = async (endpoint, method = 'get', data = null) => {
       JSON.parse(localStorage.getItem('current_user')).user_id
     );
   } else if (data) {
-    // data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
-    data.user_id = '1';
+    data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
   }
 
   try {

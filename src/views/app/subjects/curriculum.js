@@ -1,131 +1,98 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
-
+import { NotificationManager } from 'components/common/react-notifications';
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-  CardTitle,
-  Input,
-} from 'reactstrap';
-import Select from 'react-select';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
+import callApi from 'helpers/callApi';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
-
-const Options = [
-  {
-    value: '1',
-    label: 'option -1',
-  },
-  {
-    value: '2',
-    label: 'option-2',
-  },
-];
-
 const SignupSchema = Yup.object().shape({
-  departmentId: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="teacher.departmentIdErr" />)
-    : null,
+  departmentId: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.departmentIdErr" />),
 
-  subject: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="curriculum.subjectdErr" />)
-    : null,
+  subject: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="curriculum.subjectdErr" />),
 
-  class: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="curriculum.classErr" />)
-    : null,
+  class: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="curriculum.classErr" />),
 
-  educationalYear: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="curriculum.eduactionalYearErr" />)
-    : null,
+  educationalYear: Yup.string().required(
+    <IntlMessages id="curriculum.eduactionalYearErr" />
+  ),
 });
 
-const updateMode = true;
 const Curriculum = (values) => {
-  const TestData = {
-    Department: 'harticulture',
-    Subject: 'Botany',
-    Class: '1th-A',
-    EducationalYear: '1401',
+  const [departments, setDepartments] = useState([]);
+  const [classs, setClasss] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+
+  // fetch department list
+  const fetchDepartments = async () => {
+    const response = await callApi('institute/department/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('department error');
+    }
+  };
+  //fetch class list
+  const fetchClasses = async () => {
+    const response = await callApi('institute/classs/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester,
+      }));
+      setClasss(updatedData);
+    } else {
+      console.log('class error');
+    }
   };
 
-  const [initialDepartment, setInitialDepartment] = useState(
-    TestData.Department
-      ? [
-          {
-            label: TestData.Department,
-            value: TestData.Department,
-          },
-        ]
-      : []
-  );
+  // fetch subjects list
+  const fetchSubjects = async () => {
+    const response = await callApi('institute/subject/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('class error');
+    }
+  };
 
-  const [initialSubject, setInitialSubject] = useState(
-    TestData.Subject
-      ? [
-          {
-            label: TestData.Subject,
-            value: TestData.Subject,
-          },
-        ]
-      : []
-  );
+  useEffect(() => {
+    fetchDepartments();
+    fetchClasses();
+    fetchSubjects();
+  }, []);
 
-  const [initialClass, setInitialClass] = useState(
-    TestData.Class
-      ? [
-          {
-            label: TestData.Class,
-            value: TestData.Class,
-          },
-        ]
-      : []
-  );
-  const [initialEducationalYear, setInitialEducationalYear] = useState(
-    TestData.EducationalYear
-      ? [
-          {
-            label: TestData.EducationalYear,
-            value: TestData.EducationalYear,
-          },
-        ]
-      : []
-  );
+  const [initialDepartment, setInitialDepartment] = useState([]);
+  const [initialSubject, setInitialSubject] = useState([]);
+  const [initialClass, setInitialClass] = useState([]);
+  const [initialEducationalYear, setInitialEducationalYear] = useState('');
 
   const initialValues = {
     departmentId: initialDepartment,
@@ -136,10 +103,63 @@ const Curriculum = (values) => {
 
   const [isNext, setIsNext] = useState(false);
 
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'نصاب موفقانه ثبت شوو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'نصاب ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          5000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
+
+  // post dorm record to server
+  const postStudentRecord = async (data) => {
+    const response = await callApi(
+      'institute/department-subject-create/',
+      'POST',
+      data
+    );
+    if (response) {
+      createNotification('success', 'filled');
+      setIsNext(true);
+      console.log('success message', response.data);
+    } else {
+      createNotification('error', 'filled');
+      console.log('class error');
+    }
+  };
+
   const onRegister = (values) => {
-    console.log(' The Values', values);
-    setIsNext(true);
-    resetForm();
+    const data = {
+      department: values.departmentId.value,
+      subject: values.subject.value,
+      class_id: values.class.value,
+      educational_year: values.educationalYear,
+      user_id: '1',
+    };
+    postStudentRecord(data);
   };
 
   return (
@@ -175,7 +195,7 @@ const Curriculum = (values) => {
                           name="departmentId"
                           id="departmentId"
                           value={values.departmentId}
-                          options={Options}
+                          options={departments}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           required
@@ -196,7 +216,7 @@ const Curriculum = (values) => {
                           name="subject"
                           id="subject"
                           value={values.subject}
-                          options={Options}
+                          options={subjects}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           required
@@ -217,7 +237,7 @@ const Curriculum = (values) => {
                           name="class"
                           id="class"
                           value={values.class}
-                          options={Options}
+                          options={classs}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           required
@@ -228,23 +248,18 @@ const Curriculum = (values) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
-                      {/* Eduactional Year*/}
-                      <FormGroup className="form-group has-float-label ">
+                      <FormGroup className="form-group has-float-label">
                         <Label>
-                          <IntlMessages id="curriculum.eduactionalYearLabel" />
+                          <IntlMessages id="forms.educationYear" />
                         </Label>
-                        <FormikReactSelect
+                        <Field
+                          type="number"
+                          className="form-control"
                           name="educationalYear"
-                          id="educationalYear"
-                          value={values.educationalYear}
-                          options={Options}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
                           required
                         />
                         {errors.educationalYear && touched.educationalYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block">
                             {errors.educationalYear}
                           </div>
                         ) : null}

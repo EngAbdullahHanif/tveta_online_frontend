@@ -25,7 +25,6 @@ const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
 
-
   //add current user id to the data
   if (data && data instanceof FormData) {
     data.append(
@@ -37,6 +36,7 @@ const callApi = async (endpoint, method = 'get', data = null) => {
   }
 
   try {
+    console.log('the method', method);
     const response = await axios({
       method,
       url,

@@ -181,7 +181,11 @@ const TeacherRegister = ({ intl }, values) => {
         // const { data } = await axios.get(
         //   `${gettingSingleTeacherAPI}/?teacher_id=${teacherId}`
         // );
-        const { data } = await callApi(`teachers/institute/?teacher_id=${teacherId}`, '', null);
+        const { data } = await callApi(
+          `teachers/institute/?teacher_id=${teacherId}`,
+          '',
+          null
+        );
 
         console.log(data, 'object of the data');
 

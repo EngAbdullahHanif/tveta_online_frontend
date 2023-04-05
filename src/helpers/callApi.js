@@ -22,6 +22,8 @@ const getHeaders = (data) => {
 
 // make API calls
 const callApi = async (endpoint, method = 'get', data = null) => {
+  console.log('the method', method);
+  console.log('data', data);
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
 
@@ -36,8 +38,8 @@ const callApi = async (endpoint, method = 'get', data = null) => {
   }
 
   try {
-    console.log('the method', method);
-    console.log('data', data);
+    console.log('the methodsdf', method);
+    console.log('datsadfsda', data);
     const response = await axios({
       method,
       url,

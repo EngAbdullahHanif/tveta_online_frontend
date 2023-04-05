@@ -765,7 +765,7 @@ const StudentRegistration = ({ intl }, values) => {
     switch (type) {
       case 'success':
         NotificationManager.success(
-          'شاگرد موفقانه لیلی ته رجستر شو',
+          'شاگرد په بریالیتوب ثبت شو',
           'موفقیت',
           3000,
           null,

@@ -4,6 +4,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import axios from 'axios';
+import callApi from 'helpers/callApi';
 
 import * as Yup from 'yup';
 import {
@@ -40,10 +41,22 @@ const instituteOptions = [
 ];
 
 const educationYears = [
-  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
+  {
+    value: '1400',
+    label: <IntlMessages id="forms.educationalYearOption_12" />,
+  },
+  {
+    value: '1401',
+    label: <IntlMessages id="forms.educationalYearOption_13" />,
+  },
+  {
+    value: '1402',
+    label: <IntlMessages id="forms.educationalYearOption_14" />,
+  },
+  {
+    value: '1403',
+    label: <IntlMessages id="forms.educationalYearOption_15" />,
+  },
   { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
   { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
   { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
@@ -166,20 +179,37 @@ const StudentsTransfer = (values) => {
   const handleSearch = async (event, values) => {
     setSearchResult(event);
     //search student in the server
-    const response = await axios.get(
-      `${studentSearchApiUrl}?student_id=${studentId}`
+    // const response = await axios.get(
+    //   `${studentSearchApiUrl}?student_id=${studentId}`
+    // );
+    // const studentResponse = await response.data;
+    // studentId == studentResponse.student_id
+    //   ? setStudentIdMatch(true)
+    //   : setStudentIdMatch(false);
+    // if (studentResponse) {
+    //   setStudent(studentResponse);
+    //   setData(true);
+    // } else {
+    //   setMessage('Student not found');
+    // }
+
+    const response = await callApi(
+      `api/student_accademic/?student_id=${studentId}`,
+      '',
+      null
     );
-    const studentResponse = await response.data;
-    console.log(studentId, 'student IDDD');
-    console.log(values, 'student Input Id');
-    studentId == studentResponse.student_id
-      ? setStudentIdMatch(true)
-      : setStudentIdMatch(false);
-    if (studentResponse) {
-      setStudent(studentResponse);
-      setData(true);
+    if (response.data && response.status === 200) {
+      studentId == response.data.student_id
+        ? setStudentIdMatch(true)
+        : setStudentIdMatch(false);
+      if (response.data) {
+        setStudent(response.data);
+        setData(true);
+      } else {
+        setMessage('Student not found');
+      }
     } else {
-      setMessage('Student not found');
+      console.log('institute error');
     }
   };
   // const handleChange = (event) => {
@@ -187,45 +217,67 @@ const StudentsTransfer = (values) => {
   // };
 
   const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
-    console.log('updatedData', updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
 
   useEffect(() => {
     fetchInstitutes();
   }, []);
-  const onSubmit = (values) => {
-    setReload(true);
-    console.log('values.institute.value', values.institute.id);
+  const onSubmit = async (values) => {
+    // setReload(true);
+    console.log('values.institute.value', values);
     //is_transfer = 2 means transfered
-    data = {
+
+    const data = {
       student_id: studentId,
-      institute_id: values.institute.id,
+      institute_id: values.institute.value,
       transfer_date: values.transferDate,
-      educational_year: values.educationalYear,
-      time: values.shif.value, //shift
-      language: values.language,
+      educational_year: values.educationalYear.value,
+      time: values.studyTime.value, //shift
+      language: values.mediumOfInstruction.value,
       is_transfer: 2,
+      user_id: '',
     };
+
+    console.log('studentID', studentId);
+    console.log('instituteID', values.institute.value);
+    console.log('transferDate', values.transferDate);
+    console.log('educationalYear', values.educationalYear.value);
+    console.log('shift', values.studyTime.value);
+    console.log('language', values.mediumOfInstruction.value);
+    console.log('is_transfer', 2);
+
+    console.log('data', data);
     //transfer student
-    axios
-      .post(`${studentTranferApiUrl}`, {
-        data,
-      })
-      .then((response) => {
-        console.log(response, 'response');
-        if (response.status === 201) {
-          console.log('success');
-        }
-      })
-      .catch((error) => {
-        console.log(error, 'error');
-      });
+    // axios
+    //   .post(`${studentTranferApiUrl}`, {
+    //     data,
+    //   })
+    //   .then((response) => {
+    //     console.log(response, 'response');
+    //     if (response.status === 201) {
+    //       console.log('success');
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error, 'error');
+    //   });
+
+    const response = await callApi(`api/student-transfer/`, 'POST', data);
+    if (response.status === 200) {
+      console.log('success');
+    } else {
+      console.log('institute error');
+    }
   };
 
   return (
@@ -237,7 +289,7 @@ const StudentsTransfer = (values) => {
         {' '}
         Mr Hanif Complete the Integration And Check Why its going to the student
         record if we enter the correct id for first time and incorrect for the
-        second time 
+        second time
       </h3>
       <CardBody>
         {!reload ? (
@@ -250,7 +302,7 @@ const StudentsTransfer = (values) => {
                       <Formik
                         initialValues={initialValues}
                         onSubmit={handleSearch}
-                        validationSchema={SearchResultSchema}
+                        // validationSchema={SearchResultSchema}
                       >
                         {({
                           errors,
@@ -272,11 +324,7 @@ const StudentsTransfer = (values) => {
                                   size="lg"
                                   type="submit"
                                   color="primary"
-                                  onClick={
-                                    values.searchfield.length > 3
-                                      ? () => handleSearch(false)
-                                      : ''
-                                  }
+                                  onClick={() => handleSearch(false)}
                                 >
                                   <span className="spinner d-inline-block">
                                     <span className="bounce1" />
@@ -359,7 +407,7 @@ const StudentsTransfer = (values) => {
                                     <Label>
                                       <IntlMessages id="marks.ClassLabel" />
                                     </Label>
-                                    <h3>انتگریت گردد</h3>
+                                    {/* <h3>انتگریت گردد</h3> */}
                                     <h3>{student.class_name}</h3>
                                   </Colxx>
                                   <Colxx className="p-5 border rounded">

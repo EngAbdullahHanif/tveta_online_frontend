@@ -174,8 +174,16 @@ const ListPageHeading = ({
 
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                <UncontrolledDropdown
+                  className="mr-1 float-md-left btn-group mb-1"
+                  style={{ fontSize: '20px' }}
+                >
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
                     {selectedDormTypeOption.label}
                   </DropdownToggle>
@@ -185,6 +193,7 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeDormTypeBy(gender.column)}
+                          style={{ fontSize: '18px' }}
                         >
                           {gender.label}
                         </DropdownItem>
@@ -193,7 +202,12 @@ const ListPageHeading = ({
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
                     {selectedProvinceOption.label}
                   </DropdownToggle>
@@ -209,6 +223,7 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeProvinceBy(province.column)}
+                          style={{ fontSize: '18px' }}
                         >
                           {province.label}
                         </DropdownItem>
@@ -219,7 +234,12 @@ const ListPageHeading = ({
 
                 {/* Year */}
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
                     {selectedYearOption.label}
                   </DropdownToggle>
@@ -235,6 +255,7 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeYearBy(educationYears.column)}
+                          style={{ fontSize: '18px' }}
                         >
                           {educationYears.label}
                         </DropdownItem>
@@ -244,7 +265,12 @@ const ListPageHeading = ({
                 </UncontrolledDropdown>
 
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
                     {selectedStatusOptions.label}
                   </DropdownToggle>
@@ -260,6 +286,7 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeStatusBy(statusOptions.column)}
+                          style={{ fontSize: '18px' }}
                         >
                           {statusOptions.label}
                         </DropdownItem>
@@ -268,13 +295,14 @@ const ListPageHeading = ({
                   </DropdownMenu>
                 </UncontrolledDropdown>
 
-                <div className="">
+                <div className="" style={{ fontSize: '18px' }}>
                   <ReactAutoSugegst
                     data={dormsFilterList}
                     select={(opt) => {
                       setSelectDorm(opt);
                     }}
                     placeholder={messages['dorm.search.dorm.name']}
+                    style={{ fontSize: '18px' }}
                   />
                 </div>
               </div>
@@ -282,6 +310,7 @@ const ListPageHeading = ({
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
+                style={{ fontSize: '18px' }}
                 onClick={() => {
                   changeDormTypeBy('all');
                   changeProvinceBy('all');
@@ -293,7 +322,7 @@ const ListPageHeading = ({
                 <IntlMessages id="pages.reset" />
               </Button>
             </div>
-            <div className="float-md-right pt-1">
+            {/* <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>
               <UncontrolledDropdown className="d-inline-block">
                 <DropdownToggle caret color="outline-dark" size="xs">
@@ -312,7 +341,7 @@ const ListPageHeading = ({
                   })}
                 </DropdownMenu>
               </UncontrolledDropdown>
-            </div>
+            </div> */}
           </Collapse>
         </div>
         <Separator className="mb-5" />

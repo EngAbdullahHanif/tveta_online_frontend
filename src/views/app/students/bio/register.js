@@ -16,6 +16,15 @@ import {
   Input,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
+import { provinceOptions } from './../../global-data/data';
+import { educationalYearsOptions } from './../../global-data/data';
+import { batchOptions } from './../../global-data/data';
+import { genderOptions } from './../../global-data/data';
+import { mediumOfInstructionOptions } from './../../global-data/data';
+import { StdInteranceOptions } from './../../global-data/data';
+import { StudentTypeOptions } from './../../global-data/data';
+import { studyTimeOptions } from './../../global-data/data';
+
 import {
   FormikReactSelect,
   FormikTagsInput,
@@ -54,79 +63,6 @@ const EducationLevelOptions = [
   { value: 14, label: 'چهارده هم' },
 ];
 
-const StdInteranceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdInteranceOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdInteranceOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdInteranceOption_3" /> },
-];
-
-const StudyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
-
-const mediumOfInstructionOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_2" />,
-  },
-  {
-    value: '3',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_3" />,
-  },
-  {
-    value: '4',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_4" />,
-  },
-];
-
-const educationYears = [
-  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
-  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
-  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
-  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
-  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
-  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
-  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
-  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
-  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
-  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
-  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
-  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
-  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
-  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
-  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
-  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
-  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
-];
-const genderOptions = [
-  { value: '1', label: 'نارینه/مذکر' },
-  { value: '2', label: 'ښڅینه/مونث' },
-];
-
 const studentProvince = [
   {
     value: 1,
@@ -140,164 +76,6 @@ const studentProvince = [
   {
     value: 3,
     label: 'kjlkjkjlkj',
-  },
-];
-const StdSchoolProvinceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
-  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
-  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
-  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
-  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
-  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
-  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
-  {
-    value: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    value: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    value: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    value: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    value: '14',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    value: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    value: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    value: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    value: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    value: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    value: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    value: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    value: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    value: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    value: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    value: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    value: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    value: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    value: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    value: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    value: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    value: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    value: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
-
-const StudentTypeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudentTypeContiniues" /> },
-  { value: '2', label: <IntlMessages id="forms.StudentTypeNonContiniues" /> },
-];
-const batchOptions = [
-  {
-    value: 1,
-    label: '1',
-  },
-  {
-    value: 2,
-    label: '2',
-  },
-  {
-    value: 3,
-    label: '3',
-  },
-  {
-    value: 4,
-    label: '4',
-  },
-  {
-    value: 5,
-    label: '5',
-  },
-  {
-    value: 6,
-    label: '6',
-  },
-  {
-    value: 7,
-    label: '7',
-  },
-  {
-    value: 8,
-    label: '8',
-  },
-  {
-    value: 9,
-    label: '9',
-  },
-  {
-    value: 10,
-    label: '10',
   },
 ];
 
@@ -505,8 +283,12 @@ const StudentRegistration = ({ intl }, values) => {
         // const { data } = await axios.get(
         //   `api/?student_id=${studentId}`
         // );
-        const {data} = await callApi(`api/?student_id=${studentId}`, '', null);
-          console.log('responsasdfsadfe', data );
+        const { data } = await callApi(
+          `api/?student_id=${studentId}`,
+          '',
+          null
+        );
+        console.log('responsasdfsadfe', data);
         //  console.log(data[0].name, 'object of the data');
         setInitialname1(data[0].name);
         setInitialLastName(data[0].last_name);
@@ -730,7 +512,7 @@ const StudentRegistration = ({ intl }, values) => {
   //fetch class list
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', 'GET', null);
-    console.log('class repspossdfsde', response)
+    console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -786,7 +568,7 @@ const StudentRegistration = ({ intl }, values) => {
         break;
     }
   };
-  
+
   useEffect(() => {
     fetchInstitutes();
     fetchFields();
@@ -794,12 +576,11 @@ const StudentRegistration = ({ intl }, values) => {
     fetchClasses();
     fetchSectors();
   }, []);
-  
+
   // post student record to server
   const postStudentRecord = async (data) => {
-    
     const response = await callApi('api/student_create', 'POST', data);
-    console.log('response of call api', response)
+    console.log('response of call api', response);
     if (response) {
       createNotification('success', 'filled');
       console.log('success message', response.data);
@@ -1512,7 +1293,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   name="schoolProvince"
                                   id="schoolProvince"
                                   value={values.schoolProvince}
-                                  options={StdSchoolProvinceOptions}
+                                  options={provinceOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
@@ -1545,7 +1326,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   name="province"
                                   id="province"
                                   value={values.province}
-                                  options={StdSchoolProvinceOptions}
+                                  options={provinceOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
@@ -1609,7 +1390,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   name="C_Province"
                                   id="C_Province"
                                   value={values.C_Province}
-                                  options={StdSchoolProvinceOptions}
+                                  options={provinceOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
@@ -1747,7 +1528,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="educationalYear"
                                 id="educationalYear"
                                 value={values.educationalYear}
-                                options={educationYears}
+                                options={educationalYearsOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -1815,26 +1596,26 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* Upload Photo */}
-                              <FormGroup>
-                                {/* <Label>
+                            <FormGroup>
+                              {/* <Label>
                                   <IntlMessages id="student.photo" />
                                 </Label> */}
-                                <InputGroup className="mb-3">
-                                  <InputGroupAddon addonType="prepend">
-                                    آپلود عکس
-                                  </InputGroupAddon>
-                                  <CustomInput
-                                    type="file"
-                                    id="exampleCustomFileBrowser1"
-                                    name="photo"
-                                  />
-                                </InputGroup>
-                                {errors.photo && touched.photo ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.photo}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
+                              <InputGroup className="mb-3">
+                                <InputGroupAddon addonType="prepend">
+                                  آپلود عکس
+                                </InputGroupAddon>
+                                <CustomInput
+                                  type="file"
+                                  id="exampleCustomFileBrowser1"
+                                  name="photo"
+                                />
+                              </InputGroup>
+                              {errors.photo && touched.photo ? (
+                                <div className="invalid-feedback d-block bg-danger text-white">
+                                  {errors.photo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">
                             {/* Departement  */}
@@ -1931,7 +1712,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="studyTime"
                                 id="studyTime"
                                 value={values.studyTime}
-                                options={StudyTimeOptions}
+                                options={studyTimeOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />

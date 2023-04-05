@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import { evaluationTypeOptions } from './../global-data/data';
 
 import * as Yup from 'yup';
 import {
@@ -17,6 +18,8 @@ import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
+import { gradeOptions } from './../global-data/data';
+import { stepOptions } from './../global-data/data';
 
 import {
   FormikReactSelect,
@@ -24,26 +27,6 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
-const GradeOptions = [
-  { value: '3', label: <IntlMessages id="teacher.GradeOption_3" /> },
-  { value: '4', label: <IntlMessages id="teacher.GradeOption_4" /> },
-  { value: '5', label: <IntlMessages id="teacher.GradeOption_5" /> },
-  { value: '6', label: <IntlMessages id="teacher.GradeOption_6" /> },
-  { value: '7', label: <IntlMessages id="teacher.GradeOption_7" /> },
-  { value: '8', label: <IntlMessages id="teacher.GradeOption_8" /> },
-];
-const StepOptions = [
-  { value: '1', label: <IntlMessages id="teacher.StepOption_1" /> },
-  { value: '2', label: <IntlMessages id="teacher.StepOption_2" /> },
-  { value: '3', label: <IntlMessages id="teacher.StepOption_3" /> },
-  { value: '4', label: <IntlMessages id="teacher.StepOption_4" /> },
-  { value: '5', label: <IntlMessages id="teacher.StepOption_5" /> },
-  { value: '6', label: <IntlMessages id="teacher.StepOption_6" /> },
-];
-const evaluationTypeOptions = [
-  { value: '1', label: <IntlMessages id="teacher.evaluationTypeOption_1" /> },
-  { value: '2', label: <IntlMessages id="teacher.evaluationTypeOption_2" /> },
-];
 
 const SignupSchema = Yup.object().shape({
   teacherId: Yup.object()
@@ -182,7 +165,7 @@ const TeacherEvaluation = () => {
                           value={values.grade}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
-                          options={GradeOptions}
+                          options={gradeOptions}
                         />
                         {errors.grade && touched.grade ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -202,7 +185,7 @@ const TeacherEvaluation = () => {
                           value={values.newGrade}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
-                          options={GradeOptions}
+                          options={gradeOptions}
                           required
                         />
                         {errors.newGrade && touched.newGrade ? (
@@ -260,7 +243,7 @@ const TeacherEvaluation = () => {
                           name="step"
                           id="step"
                           value={values.step}
-                          options={StepOptions}
+                          options={stepOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           required
@@ -281,7 +264,7 @@ const TeacherEvaluation = () => {
                           name="newStep"
                           id="newStep"
                           value={values.newStep}
-                          options={StepOptions}
+                          options={stepOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           required

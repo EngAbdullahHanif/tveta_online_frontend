@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
+import { studyTimeOptions } from './../global-data/data';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -68,10 +69,7 @@ const ClassOptions = [
   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
 ];
 
-const StudyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
+
 
 const SubjectOptions = [
   { value: '14th', label: 'Computer Science' },
@@ -404,7 +402,7 @@ const MarksRegistration = ({ match }) => {
                           name="studyTime"
                           id="studyTime"
                           value={values.studyTime}
-                          options={StudyTimeOptions}
+                          options={studyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedStudyTime(values.studyTime)}

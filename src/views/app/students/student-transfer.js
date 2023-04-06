@@ -3,6 +3,9 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import { educationalYearsOptions } from './../global-data/data';
+import { studyTimeOptions } from './../global-data/data';
+import { mediumOfInstructionOptions } from './../global-data/data';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
@@ -39,70 +42,6 @@ const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
 const instituteOptions = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
   { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-];
-
-const educationYears = [
-  {
-    value: '1400',
-    label: <IntlMessages id="forms.educationalYearOption_12" />,
-  },
-  {
-    value: '1401',
-    label: <IntlMessages id="forms.educationalYearOption_13" />,
-  },
-  {
-    value: '1402',
-    label: <IntlMessages id="forms.educationalYearOption_14" />,
-  },
-  {
-    value: '1403',
-    label: <IntlMessages id="forms.educationalYearOption_15" />,
-  },
-  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
-  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
-  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
-  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
-  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
-  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
-  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
-];
-
-const StudyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
-
-const mediumOfInstructionOptions = [
-  {
-    value: 'پشتو',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_1" />,
-  },
-  {
-    value: 'دری',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_2" />,
-  },
-  {
-    value: 'انگلیسی',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_3" />,
-  },
-  {
-    value: 'دیگر',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_4" />,
-  },
 ];
 
 const SearchResultSchema = Yup.object().shape({
@@ -327,12 +266,12 @@ const StudentsTransfer = (values) => {
       <h3 className="mt-5 m-5">
         {<IntlMessages id="student.transferTitle" />}
       </h3>
-      <h3 className="text-center">
+      {/* <h3 className="text-center">
         {' '}
         Mr Hanif Complete the Integration And Check Why its going to the student
         record if we enter the correct id for first time and incorrect for the
         second time
-      </h3>
+      </h3> */}
       <CardBody>
         {!reload ? (
           <>
@@ -628,7 +567,7 @@ const StudentsTransfer = (values) => {
                                 name="educationalYear"
                                 id="educationalYear"
                                 value={values.educationalYear}
-                                options={educationYears}
+                                options={educationalYearsOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -672,7 +611,7 @@ const StudentsTransfer = (values) => {
                                 name="studyTime"
                                 id="studyTime"
                                 value={values.studyTime}
-                                options={StudyTimeOptions}
+                                options={studyTimeOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />

@@ -4,11 +4,10 @@ import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 import './list.css';
 import callApi from 'helpers/callApi';
-
-// import { servicePath } from 'constants/defaultValues';
-
+import { provincesOptionsForList } from './../../../global-data/data';
+import { levelOfEdcationForList } from './../../../global-data/data';
+import { genderOptionsForList } from './../../../global-data/data';
 import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
-
 import ListPageListing from 'views/app/teachers/bio/teacher-list/TeacherListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
@@ -34,186 +33,11 @@ const orderOptions = [
   { column: 'status', label: 'Status' },
 ];
 
-const genderOptions = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
-];
 const pageSizes = [4, 8, 12, 20];
-
 const categories = [
   { label: 'Cakes', value: 'Cakes', key: 0 },
   { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
   { label: 'Desserts', value: 'Desserts', key: 2 },
-];
-
-const Provinces = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  {
-    column: '1',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
-  },
-  {
-    column: '2',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
-  },
-  {
-    column: '3',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
-  },
-  {
-    column: '4',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
-  },
-  {
-    column: '5',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
-  },
-  {
-    column: '6',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
-  },
-  {
-    column: '7',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
-  },
-  {
-    column: '8',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
-  },
-  {
-    column: '9',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
-  },
-  {
-    column: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    column: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    column: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    column: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    column: 'کابل',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    column: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    column: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    column: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    column: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    column: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    column: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    column: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    column: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    column: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    column: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    column: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    column: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    column: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    column: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    column: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    column: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    column: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    column: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
-
-const levelOfEdcation = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  {
-    value: '14th',
-    label: <IntlMessages id="teacher.EducationLevelOption_1" />,
-  },
-  {
-    value: 'bachelor',
-    label: <IntlMessages id="teacher.EducationLevelOption_2" />,
-  },
-  {
-    value: 'master',
-    label: <IntlMessages id="teacher.EducationLevelOption_3" />,
-  },
-  {
-    value: 'PHD',
-    label: <IntlMessages id="teacher.EducationLevelOption_4" />,
-  },
 ];
 
 const ThumbListPages = ({ match }) => {
@@ -378,7 +202,11 @@ const ThumbListPages = ({ match }) => {
         // setTotalItemCount(response.data.count);
         // setIsLoaded(true);
 
-        const response = await callApi( `teachers/institute/?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/institute/?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
         if (response.data && response.status === 200) {
           setInstituteTeachers(response.data);
           setItems(response.data);
@@ -405,7 +233,11 @@ const ThumbListPages = ({ match }) => {
         //     return res.data;
         //   })
 
-        const response = await callApi(`teachers/?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
         if (response.data && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
@@ -418,18 +250,17 @@ const ThumbListPages = ({ match }) => {
         // setSelectedItems([]);
         // setTotalItemCount(response.data.totalItem);
         // setIsLoaded(true);
-          // .then((data) => {
-          //   console.log(
-          //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          //   );
+        // .then((data) => {
+        //   console.log(
+        //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+        //   );
 
-          //   setItems(data);
-          //   setTotalPage(data.total_pages);
-          //   setSelectedItems([]);
-          //   setTotalItemCount(data.totalItem);
-          //   setIsLoaded(true);
-          // });
-
+        //   setItems(data);
+        //   setTotalPage(data.total_pages);
+        //   setSelectedItems([]);
+        //   setTotalItemCount(data.totalItem);
+        //   setIsLoaded(true);
+        // });
       } else if (selectedProvinceOption.column === 'all') {
         // axios
         //   .get(
@@ -449,7 +280,11 @@ const ThumbListPages = ({ match }) => {
         //     setIsLoaded(true);
         //   });
 
-        const response = await callApi(`teachers/?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
         if (response.data && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
@@ -458,7 +293,6 @@ const ThumbListPages = ({ match }) => {
         } else {
           console.log('students error');
         }
-
       } else if (selectedGenderOption.column === 'all') {
         // axios
         //   .get(
@@ -477,7 +311,11 @@ const ThumbListPages = ({ match }) => {
         //     setTotalItemCount(data.totalItem);
         //     setIsLoaded(true);
         //   });
-        const response = await callApi(`teachers/?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
         if (response.data && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
@@ -505,7 +343,11 @@ const ThumbListPages = ({ match }) => {
         //     setTotalItemCount(data.totalItem);
         //     setIsLoaded(true);
         //   });
-        const response = await callApi(`teachers/?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`, '', null);
+        const response = await callApi(
+          `teachers/?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
+          '',
+          null
+        );
 
         if (response.data && response.status === 200) {
           setItems(response.data);
@@ -515,10 +357,8 @@ const ThumbListPages = ({ match }) => {
         } else {
           console.log('students error');
         }
-
       }
     }
-
 
     fetchData();
   }, [
@@ -635,19 +475,19 @@ const ThumbListPages = ({ match }) => {
           // following code is used for order the list based on different element of the prod
           changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+              genderOptionsForList.find((x) => x.column === column)
             );
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              Provinces.find((x) => x.column === column)
+              provincesOptionsForList.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
           selectLevelOfEducationOption={selectLevelOfEducationOption}
-          genderOptions={genderOptions}
-          provinces={Provinces}
+          genderOptionsForList={genderOptionsForList}
+          provincesOptionsForList={provincesOptionsForList}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}
@@ -674,10 +514,10 @@ const ThumbListPages = ({ match }) => {
           // Level of Education
           changeLevelOfEducationBy={(column) => {
             setSelectLevelOfEducationOption(
-              levelOfEdcation.find((x) => x.column === column)
+              levelOfEdcationForList.find((x) => x.column === column)
             );
           }}
-          levelOfEdcation={levelOfEdcation}
+          levelOfEdcationForList={levelOfEdcationForList}
           onResetClick={setRest}
           reset={rest}
           pageSizes={pageSizes}

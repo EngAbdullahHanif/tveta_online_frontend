@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
-
+import { studyTimeOptions } from './../global-data/data';
 // Year  and SHift
 
 import * as Yup from 'yup';
@@ -13,6 +13,7 @@ import {
   FormGroup,
   Label,
   Button,
+  CustomInput,
   CardTitle,
   Input,
 } from 'reactstrap';
@@ -62,11 +63,6 @@ const SemesterOptions = [
 //   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
 //   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
 // ];
-
-const StudyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -118,6 +114,7 @@ const AllSubjectsMarks = ({ match }) => {
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([]);
+  const [header, setHeader] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
@@ -214,6 +211,7 @@ const AllSubjectsMarks = ({ match }) => {
     );
     if (response.data && response.status === 200) {
       setStudents(response.data);
+      setHeader(response.data[0]);
 
       console.log('response.data ', response.data);
 
@@ -225,11 +223,8 @@ const AllSubjectsMarks = ({ match }) => {
     } else {
       console.log('students error');
     }
-
-    // console.log('students 321', students);
   };
-  console.log('students 123', students);
-
+  console.log('Wanted Data', header.length - 3);
   const onSubmit = (values) => {
     console.log('values', values);
     const educational_year = selectedEducationalYear;
@@ -247,7 +242,6 @@ const AllSubjectsMarks = ({ match }) => {
       };
       //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
       //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-      console.log('exam', examData);
       const data = {
         subject: subject_id,
         exam_types: 1,
@@ -269,6 +263,29 @@ const AllSubjectsMarks = ({ match }) => {
     classs: [],
     department: [],
   };
+
+  //Check Box
+  const [checkedItems, setCheckedItems] = useState(
+    students.reduce((acc, student, index) => ({ ...acc, [index]: false }), {})
+  );
+  const [isMasterChecked, setIsMasterChecked] = useState(false);
+
+  const handleMasterCheckboxChange = (event) => {
+    const isChecked = event.target.checked;
+    const updatedCheckedItems = Object.keys(checkedItems).reduce(
+      (acc, index) => ({ ...acc, [index]: isChecked }),
+      {}
+    );
+    setCheckedItems(updatedCheckedItems);
+    setIsMasterChecked(isChecked);
+  };
+
+  useEffect(() => {
+    setIsMasterChecked(Object.values(checkedItems).every(Boolean));
+  }, [checkedItems]);
+
+
+  console.log(checkedItems, 'Item is checked');
   return (
     <>
       <Card>
@@ -280,6 +297,7 @@ const AllSubjectsMarks = ({ match }) => {
             <Formik
               initialValues={initialValues}
               validationSchema={ValidationSchema}
+              onSubmit={handleClick}
             >
               {({
                 errors,
@@ -321,7 +339,7 @@ const AllSubjectsMarks = ({ match }) => {
                           name="studyTime"
                           id="studyTime"
                           value={values.studyTime}
-                          options={StudyTimeOptions}
+                          options={studyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedStudyTime(values.studyTime)}
@@ -405,9 +423,9 @@ const AllSubjectsMarks = ({ match }) => {
                         className="float-right m-5"
                         size="lg"
                         type="submit"
-                        onClick={() => {
-                          handleClick(false);
-                        }}
+                        // onClick={() => {
+                        //   handleClick(false);
+                        // }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -479,80 +497,45 @@ const AllSubjectsMarks = ({ match }) => {
                 <table className="table" striped>
                   <thead className="thead-dark " style={{ marginInline: '2%' }}>
                     <tr>
-                      <th colspan="4" className="border text-center">
+                      <th colspan="3" className="border text-center">
                         <IntlMessages id="marks.studentChar" />
                       </th>
-                      <th colspan="15" className="border text-center">
+                      <th
+                        colspan={header.length - 3}
+                        className="border text-center"
+                      >
                         <IntlMessages id="marks.marksDisplayTitle" />
+                      </th>{' '}
+                      <th className="border text-center">
+                        <IntlMessages id="marks.resultHeader" />
                       </th>
                     </tr>
                   </thead>
-                  <thead className="thead-dark" style={{ marginInline: '5%' }}>
+                  <thead
+                    className="thead-dark border  text-center"
+                    style={{ marginInline: '5%' }}
+                  >
                     <tr>
-                      <th scope="col" className="border text-center ">
-                        <IntlMessages id="marks.No" />
+                      {header.map((item, index) => (
+                        <th key={index} className="border  text-center">
+                          {item.name}
+                        </th>
+                      ))}
+                      <th className="border text-center">
+                        <CustomInput
+                          type="checkbox"
+                          id="CheckAll"
+                          checked={isMasterChecked}
+                          onChange={handleMasterCheckboxChange}
+                        />
                       </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FullName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FatherName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.ID" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
                     </tr>
                   </thead>
 
                   <tbody
                     className="border border "
                     style={{
-                      height: '200px',
+                      maxHeight: '500px',
                       overflowY: 'scroll',
                       overflowX: 'hidden',
                     }}
@@ -560,25 +543,7 @@ const AllSubjectsMarks = ({ match }) => {
                     {students.map((studentRow, index) => {
                       return (
                         <tr key={index}>
-                          <td key={index} className="border text-center">
-                            {index + 1}
-                          </td>
-                          {index === 0 ? (
-                            <>
-                              {studentRow.map((student, secondIndex) => {
-                                return (
-                                  <>
-                                    <th
-                                      scope="col"
-                                      className="border  text-center thead-dark "
-                                    >
-                                      {student.name}
-                                    </th>
-                                  </>
-                                );
-                              })}
-                            </>
-                          ) : (
+                          {!index == 0 ? (
                             <>
                               {studentRow.map((student, secondIndex) => {
                                 return (
@@ -586,82 +551,54 @@ const AllSubjectsMarks = ({ match }) => {
                                     {secondIndex === 0 ||
                                     secondIndex === 1 ||
                                     secondIndex === 2 ? (
-                                      <td scope="col">{student.name}</td>
+                                      <td
+                                        scope="col"
+                                        className="border text-center "
+                                      >
+                                        {student.name}
+                                      </td>
                                     ) : (
-                                      <td scope="col">{student.score}</td>
+                                      <>
+                                        <td
+                                          scope="col"
+                                          className="border text-center "
+                                        >
+                                          {student.score}
+                                        </td>
+                                      </>
                                     )}
                                   </>
                                 );
                               })}
+                              <td className="border text-center " key={index}>
+                                <CustomInput
+                                  type="checkbox"
+                                  id={`checkbox${index}`}
+                                  checked={checkedItems[index]}
+                                  onChange={(event) =>
+                                    setCheckedItems({
+                                      ...checkedItems,
+                                      [index]: event.target.checked,
+                                    })
+                                  }
+                                />
+                              </td>
                             </>
-                          )}
+                          ) : null}
                         </tr>
                       );
                     })}
                   </tbody>
 
-                  <tfoot className="thead-dark">
+                  <tfoot className="thead-dark" style={{ marginInline: '5%' }}>
                     <tr>
-                      <th
-                        scope="col"
-                        className="border text-center "
-                        style={{ maxWidth: '20px' }}
-                      >
-                        <IntlMessages id="marks.No" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FullName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FatherName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.ID" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
-                      </th>{' '}
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="کمیا" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="قزیک" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="دری" />
+                      {header.map((header1, index) => (
+                        <th key={index} className="border  text-center">
+                          {header1.name}
+                        </th>
+                      ))}
+                      <th className="border text-center">
+                        <IntlMessages id="marks.resultHeader" />
                       </th>
                     </tr>
                   </tfoot>
@@ -669,7 +606,7 @@ const AllSubjectsMarks = ({ match }) => {
               </Row>
               <Row className=" justify-content-center">
                 <Colxx xxs="9" className="m-5">
-                  <Button className=" m-4" onClick={() => handleClick(true)}>
+                  <Button className=" m-4" onClick={() => setIsNext(true)}>
                     <IntlMessages id="button.Back" />
                   </Button>
                 </Colxx>

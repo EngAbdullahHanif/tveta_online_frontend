@@ -3,6 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 // import useSelector
 import { useSelector } from 'react-redux';
+import { educationalYearsOptions } from './../../global-data/data';
+import { studyTimeOptions } from './../../global-data/data';
 
 // Year  and SHift
 import { useParams } from 'react-router-dom';
@@ -30,73 +32,41 @@ import {
 import userEvent from '@testing-library/user-event';
 import { getDirection, getCurrentUser } from './../../../../helpers/Utils';
 
-const LevelOfEdcationOptions = [
-  { value: '1', label: 'اصلی' },
-  { value: '2', label: 'فرعی' },
-];
+// const LevelOfEdcationOptions = [
+//   { value: '1', label: 'اصلی' },
+//   { value: '2', label: 'فرعی' },
+// ];
 
-const FieldOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
+// const FieldOptions = [
+//   { value: '14th', label: 'Computer Science' },
+//   { value: 'bachelor', label: 'Agriculture' },
+//   { value: 'master', label: 'BBA' },
+//   { value: 'PHD', label: 'Mechenical Engineering' },
+// ];
 
-const SemesterOptions = [
-  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
-  // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
-  //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
-];
+// const SemesterOptions = [
+//   { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
+//   { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
+//   // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
+//   //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
+// ];
 
-const SectionOptions = [
-  { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-];
+// const SectionOptions = [
+//   { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
+//   { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
+//   { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
+//   { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
+//   { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
+// ];
 
-const ClassOptions = [
-  { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-  { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-];
-const educationYears = [
-  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
-  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
-  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
-  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
-  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
-  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
-  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
-  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
-];
-
-const StudyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
+// const ClassOptions = [
+//   { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
+//   { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
+//   { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
+//   { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
+//   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
+//   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
+// ];
 
 const SubjectOptions = [
   { value: '14th', label: 'Computer Science' },
@@ -391,7 +361,7 @@ const StudentAttendance = ({ match }) => {
                           name="studyTime"
                           id="studyTime"
                           value={values.studyTime}
-                          options={StudyTimeOptions}
+                          options={studyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedStudyTime(values.studyTime)}
@@ -411,7 +381,7 @@ const StudentAttendance = ({ match }) => {
                           name="educationalYear"
                           id="educationalYear"
                           value={values.educationalYear}
-                          options={educationYears}
+                          options={educationalYearsOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           required

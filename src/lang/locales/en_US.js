@@ -934,7 +934,8 @@ module.exports = {
   'marks.gpa': 'GPA',
   'marks.grade': 'Grade',
   'marks.type': 'Chance',
-  'marks.result': 'Passed',
+  'marks.result': 'ًResult',
+  'marks.resultHeader': 'Passed',
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',
@@ -1280,6 +1281,7 @@ module.exports = {
   // Subject
   'subject.NameErr': 'Subject Name Required!',
   'subject.englishNameErr': 'Subject English Name Required!',
+  'subject.english_name': 'English Name',
   'subject.codeErr': 'Subject Code Required!',
   'forms.SubjectCreditLabel': 'Credit',
   'subject.type': ' Subject Type',
@@ -1288,6 +1290,20 @@ module.exports = {
   'subject.systemType': ' Subject System Type Is Required!',
   'menu.subject-list': 'Subjects List',
   'subject.register': 'Subject Register',
+  'subject.creditOption_1': '1',
+  'subject.creditOption_2': '2',
+  'subject.creditOption_3': '3',
+  'subject.creditOption_4': '4',
+  'subject.creditOption_5': '5',
+  'subject.nameList': 'Subject Name',
+  'subject.system.type': 'System',
+  'subject.coreSubject': 'Core Subject',
+  'subject.nonCoreSubject': 'Secondary Subject',
+  'subject.typeList': 'type',
+  'subject.systemList': 'system',
+  'search.subject.name': 'Subject Name',
+
+  // 'subject.type': 'type',
 
   // Marks Update
   'marks.singleStudentMarksUpdate': ' Marks Update',

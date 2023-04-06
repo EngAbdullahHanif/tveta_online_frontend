@@ -51,7 +51,7 @@ const ListPageHeading = ({
   genderOption,
   selectedGenderOption,
   changeGenderBy,
-  provinces,
+  provincesOptionsForList,
   selectedProvinceOption,
   changeProvinceBy,
   genderOptions,
@@ -177,7 +177,10 @@ const ListPageHeading = ({
 
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
+                <UncontrolledDropdown
+                  className="mr-1 float-md-left btn-group mb-1"
+                  style={{ fontSize: '20px' }}
+                >
                   <DropdownToggle
                     caret
                     color="outline-dark"
@@ -193,6 +196,7 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeGenderBy(gender.column)}
+                          style={{ fontSize: '20px' }}
                         >
                           {gender.label}
                         </DropdownItem>
@@ -220,7 +224,7 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
-                    {provinces.map((province, index) => {
+                    {provincesOptionsForList.map((province, index) => {
                       return (
                         <DropdownItem
                           key={index}

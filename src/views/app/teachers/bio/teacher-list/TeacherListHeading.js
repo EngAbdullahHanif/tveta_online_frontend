@@ -51,15 +51,15 @@ const ListPageHeading = ({
   onIdSearchKey,
   changeGenderBy,
   selectedGenderOption,
-  genderOptions,
+  genderOptionsForList,
   // province
   selectedProvinceOption,
   changeProvinceBy,
-  provinces,
+  provincesOptionsForList,
   // Level Of Education
   selectLevelOfEducationOption,
   changeLevelOfEducationBy,
-  levelOfEdcation,
+  levelOfEdcationForList,
   onDistrictSearchKey,
   onProvinceSearchKey,
   onResetClick,
@@ -190,7 +190,7 @@ const ListPageHeading = ({
                     {selectedGenderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {genderOptions.map((order, index) => {
+                    {genderOptionsForList.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
@@ -220,7 +220,7 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
-                    {provinces.map((order, index) => {
+                    {provincesOptionsForList.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
@@ -265,7 +265,7 @@ const ListPageHeading = ({
                     {selectLevelOfEducationOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {levelOfEdcation.map((order, index) => {
+                    {levelOfEdcationForList.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}

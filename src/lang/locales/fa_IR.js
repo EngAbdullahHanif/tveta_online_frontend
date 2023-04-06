@@ -1026,6 +1026,7 @@ module.exports = {
   'marks.grade': 'درجه',
   'marks.type': 'چانس',
   'marks.result': 'نتیجه',
+  'marks.resultHeader': 'کامیاب',
 
   // Dorm
   'dorm.RegisterTitle': 'د لیلې ثبت/ ثبت لیلیه',

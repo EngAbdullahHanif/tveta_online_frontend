@@ -36,18 +36,19 @@ const callApi = async (endpoint, method = 'get', data = null) => {
   }
 
   try {
-    console.log('the method', method);
     const response = await axios({
       method,
       url,
       headers,
       data,
     });
-    console.log('response of callApi', response);
     return response;
   } catch (error) {
-    console.error('error of the call', error);
-    return error;
+    if (error.response.status === 404) {
+      throw new Error('Resource not found');
+    } else {
+      throw error;
+    }
   }
 };
 

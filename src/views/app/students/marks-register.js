@@ -18,6 +18,7 @@ import {
   Input,
 } from 'reactstrap';
 import Select from 'react-select';
+import { NotificationManager } from 'components/common/react-notifications';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -156,7 +157,6 @@ const MarksRegistration = ({ match }) => {
   const [examId, setExamId] = useState();
 
   const { markId } = useParams();
-  console.log('marks-id', markId);
 
   if (markId) {
     useEffect(() => {
@@ -248,6 +248,37 @@ const MarksRegistration = ({ match }) => {
     fetchClasses();
     fetchSubjects();
   }, []);
+  // notification message
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'نمری په بریالیتوب سره ثبت شوی',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'نمری ثبت نه شوی بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
 
   const fechtStudens = async () => {
     const response = await callApi(
@@ -275,7 +306,11 @@ const MarksRegistration = ({ match }) => {
     const departmentId = selectedDepartment.value;
     const classId = selectedClass.value;
     const subjectId = selectedSubject.value;
-
+    console.log('educationalYear', educationalYear);
+    console.log('instituteId', instituteId);
+    console.log('departmentId', departmentId);
+    console.log('classId', classId);
+    console.log('subjectId', subjectId);
     // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
     // values.score[student.student_id]
     const newStudents = students.map((student, index) => {
@@ -293,6 +328,7 @@ const MarksRegistration = ({ match }) => {
         department_id: departmentId,
         class_id: classId,
         subject_id: subjectId,
+        user_id: '',
       },
       ...newStudents,
     ];
@@ -302,8 +338,12 @@ const MarksRegistration = ({ match }) => {
     const response = await callApi('api/create_marks/', 'POST', data);
     if (response.status === 200) {
       console.log('response of students', response);
+      setIsSubmitted(false);
+      createNotification('success', 'filled');
     } else {
       console.log('marks error');
+      // setIsSubmitted(false);
+      createNotification('error', 'filled');
     }
 
     // axios
@@ -358,9 +398,9 @@ const MarksRegistration = ({ match }) => {
         <CardBody>
           {isNext ? (
             <Formik
-            // initialValues={initialValues}
-            // onSubmit={onSubmit}
-            // validationSchema={ValidationSchema}
+              initialValues={initialValues}
+              // onSubmit={onSubmit}
+              // validationSchema={ValidationSchema}
             >
               {({
                 errors,

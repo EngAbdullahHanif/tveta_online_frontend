@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import './style.css';
+import callApi from 'helpers/callApi';
 import { studyTimeOptions } from './../global-data/data';
 
 import * as Yup from 'yup';
@@ -61,7 +62,6 @@ const ClassOptions = [
   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
 ];
-
 
 const SubjectOptions = [
   { value: '14th', label: 'Computer Science' },
@@ -153,50 +153,70 @@ const MarksDisplay = ({ match }) => {
   let secondIndexValue = 0;
 
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
-  };
-  const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/field/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setFields(updatedData);
-  };
-  const fetchDepartments = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/department/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDepartments(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
 
+  const fetchFields = async () => {
+    const response = await callApi('institute/field/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFields(updatedData);
+    } else {
+      console.log('field error');
+    }
+  };
+
+  const fetchDepartments = async () => {
+    const response = await callApi('institute/department/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('department error');
+    }
+  };
+
+  //fetch class list
   const fetchClasses = async () => {
-    const response = await axios.get('http://localhost:8000/institute/classs/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name + ' - ' + item.semester + ' - ' + item.section,
-    }));
-    setClasses(updatedData);
+    const response = await callApi('institute/classs/', 'GET', null);
+    console.log('class repspossdfsde', response);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setClasses(updatedData);
+    } else {
+      console.log('class error');
+    }
   };
 
   const fetchSubjects = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/subject/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setSubjects(updatedData);
+    const response = await callApi('institute/subject/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('subject error');
+    }
   };
 
   useEffect(() => {
@@ -287,59 +307,72 @@ const MarksDisplay = ({ match }) => {
     );
   });
 
+  const onSubmit = async (values) => {
+    // axios
+    //   .get(
+    //     `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
+    //   )
 
-  const onSubmit = (values) => {
-    setIsNext(false);
-    axios
-      .get(
-        `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
-      )
+    //   .then((response) => {
+    //     console.log('response.data', response.data);
+    //     setStudents(response.data);
+    //   });
+    // console.log(
+    //   `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
+    // );
+    // console.log('students', students);
 
-      .then((response) => {
-        console.log('response.data', response.data);
-        setStudents(response.data);
-      });
-    console.log(
-      `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
+    const response = await callApi(
+      `/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`,
+      '',
+      null
     );
-    console.log('students', students);
+
+    if (response.data && response.status === 200) {
+      setStudents(response.data);
+      console.log('response.data', response.data);
+      console.log('response', response);
+      setIsNext(false);
+      console.log('students', students);
+    } else {
+      console.log('students error');
+    }
     // split selected class to get semester and section
     const classArray = selectedClass.label.split(' - ');
     setClasss(classArray[0]);
     setSemester(classArray[1]);
     setSection(classArray[2]);
 
-    console.log('values', values);
-    const educational_year = selectedEducationalYear;
-    const institute_id = selectedInstitute.value;
-    const department = selectedDepartment.value;
-    const class_id = selectedClass.value;
-    const subject_id = selectedSubject.value;
-    students.map((student) => {
-      const examData = {
-        educational_year: educational_year,
-        student_id: student.student_id,
-        institute_id: institute_id,
-        Department: department,
-        class_id: class_id,
-      };
-      //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-      //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-      console.log('exam', examData);
-      const data = {
-        subject: subject_id,
-        exam_types: 1,
-        passing_score: passingScore,
-        grad: subjectGrad,
-        Gpa: subjectGPA,
-        user_id: 1,
-        mark: values.score[student.student_id],
-      };
-      console.log('data', data);
-      // axios.post('http://localhost:8000/api/marks/', data);
-    });
+    // console.log('values', values);
+    // const educational_year = selectedEducationalYear;
+    // const institute_id = selectedInstitute.value;
+    // const department = selectedDepartment.value;
+    // const class_id = selectedClass.value;
+    // const subject_id = selectedSubject.value;
+    // students.map((student) => {
+    //   const examData = {
+    //     educational_year: educational_year,
+    //     student_id: student.student_id,
+    //     institute_id: institute_id,
+    //     Department: department,
+    //     class_id: class_id,
+    //   };
+    //   //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
+    //   //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
+    //   console.log('exam', examData);
+    //   const data = {
+    //     subject: subject_id,
+    //     exam_types: 1,
+    //     passing_score: passingScore,
+    //     grad: subjectGrad,
+    //     Gpa: subjectGPA,
+    //     user_id: 1,
+    //     mark: values.score[student.student_id],
+    //   };
+    //   console.log('data', data);
+    //   // axios.post('http://localhost:8000/api/marks/', data);
+    // });
   };
-  console.log('selected class', selectedClass);
   return (
     <>
       <Card>

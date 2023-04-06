@@ -156,7 +156,6 @@ const MarksDisplay = ({ match }) => {
   const [section, setSection] = useState();
   let secondIndexValue = 0;
 
-  // fetch institute lists
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
@@ -183,7 +182,6 @@ const MarksDisplay = ({ match }) => {
     }
   };
 
-  // fetch department list
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', 'GET', null);
     if (response.data && response.status === 200) {

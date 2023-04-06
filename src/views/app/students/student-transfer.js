@@ -5,6 +5,7 @@ import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
+import { NotificationManager } from 'components/common/react-notifications';
 
 import * as Yup from 'yup';
 import {
@@ -87,19 +88,19 @@ const StudyTimeOptions = [
 
 const mediumOfInstructionOptions = [
   {
-    value: '1',
+    value: 'پشتو',
     label: <IntlMessages id="forms.mediumOfInstructionOption_1" />,
   },
   {
-    value: '2',
+    value: 'دری',
     label: <IntlMessages id="forms.mediumOfInstructionOption_2" />,
   },
   {
-    value: '3',
+    value: 'انگلیسی',
     label: <IntlMessages id="forms.mediumOfInstructionOption_3" />,
   },
   {
-    value: '4',
+    value: 'دیگر',
     label: <IntlMessages id="forms.mediumOfInstructionOption_4" />,
   },
 ];
@@ -175,6 +176,48 @@ const StudentsTransfer = (values) => {
   const [searchResult, setSearchResult] = useState(true);
   const [studentIdMatch, setStudentIdMatch] = useState(false);
   const [reload, setReload] = useState(false);
+  // notification message
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'زده کوونکی په بریالیتوب سره تبدیل شو',
+          'موفقیت',
+          9000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'info':
+        NotificationManager.info(
+          'زده کوونکی په انستیوت کی شتون نلری',
+          'تیروتنه',
+          9000,
+          null,
+          null,
+          cName
+        );
+        break;
+
+      case 'error':
+        NotificationManager.error(
+          'زده کوونکی تبدیل نشو بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
 
   const handleSearch = async (event, values) => {
     setSearchResult(event);
@@ -234,50 +277,49 @@ const StudentsTransfer = (values) => {
   }, []);
   const onSubmit = async (values) => {
     // setReload(true);
-    console.log('values.institute.value', values);
-    //is_transfer = 2 means transfered
-
     const data = {
       student_id: studentId,
       institute_id: values.institute.value,
       transfer_date: values.transferDate,
       educational_year: values.educationalYear.value,
-      time: values.studyTime.value, //shift
+      shift: values.studyTime.value, //shift
       language: values.mediumOfInstruction.value,
-      is_transfer: 2,
+      type: 1, //type = 1 means this is student new institute, the old institute type is now 2 which means old institute
+      is_transfer: 2, //is_transfer = 2 means transfered
       user_id: '',
     };
 
-    console.log('studentID', studentId);
-    console.log('instituteID', values.institute.value);
-    console.log('transferDate', values.transferDate);
-    console.log('educationalYear', values.educationalYear.value);
-    console.log('shift', values.studyTime.value);
-    console.log('language', values.mediumOfInstruction.value);
-    console.log('is_transfer', 2);
-
-    console.log('data', data);
-    //transfer student
-    // axios
-    //   .post(`${studentTranferApiUrl}`, {
-    //     data,
-    //   })
-    //   .then((response) => {
-    //     console.log(response, 'response');
-    //     if (response.status === 201) {
-    //       console.log('success');
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error, 'error');
-    //   });
-
-    const response = await callApi(`api/student-transfer/`, 'POST', data);
-    if (response.status === 200) {
-      console.log('success');
-    } else {
-      console.log('institute error');
+    try {
+      const response = await callApi(
+        `api/Student_Institute_Transfer_API/`,
+        'POST',
+        data
+      );
+      if (response.status === 200 || response.status === 201) {
+        console.log('success');
+        createNotification('success', 'filled');
+        setReload(true);
+      }
+    } catch (error) {
+      if (error.message === 'Resource not found') {
+        console.log('student not found');
+        createNotification('info', 'filled');
+      } else {
+        console.log('An error occurred:', error.message);
+        createNotification('error', 'filled');
+      }
     }
+
+    // if (response.status === 200 || response.status === 201) {
+    //   console.log('success');
+    //   createNotification('success', 'filled');
+    // } else if (response.status === 404 || response.status === 400) {
+    //   console.log('student not found');
+    //   createNotification('info', 'filled');
+    // } else {
+    //   console.log('error');
+    //   createNotification('error', 'filled');
+    // }
   };
 
   return (

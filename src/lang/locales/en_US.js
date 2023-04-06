@@ -934,7 +934,8 @@ module.exports = {
   'marks.gpa': 'GPA',
   'marks.grade': 'Grade',
   'marks.type': 'Chance',
-  'marks.result': 'Passed',
+  'marks.result': 'ًResult',
+  'marks.resultHeader': 'Passed',
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',

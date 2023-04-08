@@ -13,7 +13,7 @@ import ContextMenuContainer from '../../../../containers/pages/ContextMenuContai
 import DataListView from '../../../../containers/pages/DataListView';
 import ImageListView from '../../../../containers/pages/ImageListView';
 //import TeacherListBody from './TeacherListBody';
-import FieldListBody from './FieldListBody'
+import FieldListBody from './FieldListBody';
 function collect(props) {
   return { data: props.data };
 }
@@ -28,57 +28,52 @@ const ListPageListing = ({
   onContextMenuClick,
   onContextMenu,
   onChangePage,
-
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
-
 
   return (
     <>
       <Row>
-        {items.length === 0 ? (
+        {items && items.length === 0 ? (
           <div className="no-result">
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((field) => {
-          
-          if (displayMode === 'imagelist') {
-           
+        {items &&
+          items.map((field) => {
+            if (displayMode === 'imagelist') {
+              return (
+                <ImageListView
+                  key={field.id}
+                  field={field}
+                  isSelect={selectedItems.includes(field.id)}
+                  collect={collect}
+                  onCheckItem={onCheckItem}
+                />
+              );
+            }
+            if (displayMode === 'thumblist') {
+              return (
+                <FieldListBody
+                  key={field.id}
+                  field={field}
+                  isSelect={selectedItems.includes(field.id)}
+                  collect={collect}
+                  onCheckItem={onCheckItem}
+                />
+              );
+            }
+
             return (
-              <ImageListView
+              <DataListView
                 key={field.id}
                 field={field}
                 isSelect={selectedItems.includes(field.id)}
-                collect={collect}
                 onCheckItem={onCheckItem}
+                collect={collect}
               />
             );
-          }
-          if (displayMode === 'thumblist') {
-            
-            return (
-              <FieldListBody
-                key={field.id}
-                field={field}
-                isSelect={selectedItems.includes(field.id)}
-                collect={collect}
-                onCheckItem={onCheckItem}
-              />
-            );
-          }
-         
-          return (
-            
-            <DataListView
-              key={field.id}
-              field={field}
-              isSelect={selectedItems.includes(field.id)}
-              onCheckItem={onCheckItem}
-              collect={collect}
-            />
-          );
-        })} 
+          })}
         <Pagination
           currentPage={currentPage}
           totalPage={totalPage}

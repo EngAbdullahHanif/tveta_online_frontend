@@ -272,7 +272,10 @@ const StudentsDismissal = (values) => {
                                         size="lg"
                                         type="submit"
                                         color="primary"
-                                        onClick={() => handleSearch(true)}
+                                        onClick={() => {
+                                          handleSearch(true);
+                                          setStudentIdMatch(false);
+                                        }}
                                       >
                                         <span className="spinner d-inline-block">
                                           <span className="bounce1" />

@@ -42,11 +42,13 @@ const callApi = async (endpoint, method = 'get', data = null) => {
       headers,
       data,
     });
-    //console.log('response of callApi', response);
     return response;
   } catch (error) {
-    console.error('error of the call', error);
-    return error.response.data;
+    if (error.response.status === 404) {
+      throw new Error('Resource not found');
+    } else {
+      throw error;
+    }
   }
 };
 

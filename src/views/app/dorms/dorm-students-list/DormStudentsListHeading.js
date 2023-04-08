@@ -33,13 +33,19 @@ const ListPageHeading = ({
   endIndex,
   selectedItemsLength,
   itemsLength,
-  onSearchDistrict,
+
   pageSizes,
   // toggleModal,
   heading,
-  onSelectStartDate,
-  onSelectEndDate,
-  genderOption,
+  // Year
+  selectedYearOption,
+  educationYears,
+  changeYearBy,
+  // Status
+  selectedStatusOptions,
+  changeStatusBy,
+  statusOptions,
+
   selectedDormTypeOption,
   changeDormTypeBy,
   provinces,
@@ -163,12 +169,22 @@ const ListPageHeading = ({
                 <ImageListIcon />
               </a>
             </span>
+            <br />
+            <br />
 
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-                  <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="evaluation.filter" />
+                <UncontrolledDropdown
+                  className="mr-1 float-md-left btn-group mb-1"
+                  style={{ fontSize: '20px' }}
+                >
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
+                    <IntlMessages id="filter" />
                     {selectedDormTypeOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
@@ -177,6 +193,7 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeDormTypeBy(gender.column)}
+                          style={{ fontSize: '18px' }}
                         >
                           {gender.label}
                         </DropdownItem>
@@ -185,8 +202,13 @@ const ListPageHeading = ({
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
-                    {/* <IntlMessages id="filter" /> */}
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
+                    <IntlMessages id="filter" />
                     {selectedProvinceOption.label}
                   </DropdownToggle>
                   <DropdownMenu
@@ -201,6 +223,7 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeProvinceBy(province.column)}
+                          style={{ fontSize: '18px' }}
                         >
                           {province.label}
                         </DropdownItem>
@@ -208,22 +231,78 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="district"
-                    id="district"
-                    placeholder={messages['dorm.search.district']}
-                    onKeyPress={(e) => onSearchDistrict(e)}
-                  />
-                </div>
-                <div className="">
+
+                {/* Year */}
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
+                    <IntlMessages id="filter" />
+                    {selectedYearOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {educationYears.map((educationYears, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeYearBy(educationYears.column)}
+                          style={{ fontSize: '18px' }}
+                        >
+                          {educationYears.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
+                    <IntlMessages id="filter" />
+                    {selectedStatusOptions.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {statusOptions.map((statusOptions, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeStatusBy(statusOptions.column)}
+                          style={{ fontSize: '18px' }}
+                        >
+                          {statusOptions.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+
+                <div className="" style={{ fontSize: '18px' }}>
                   <ReactAutoSugegst
                     data={dormsFilterList}
                     select={(opt) => {
                       setSelectDorm(opt);
                     }}
-                    placeholder={messages['dorm.search.name']}
+                    placeholder={messages['dorm.search.dorm.name']}
+                    style={{ fontSize: '18px' }}
                   />
                 </div>
               </div>
@@ -231,6 +310,7 @@ const ListPageHeading = ({
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
+                style={{ fontSize: '18px' }}
                 onClick={() => {
                   changeDormTypeBy('all');
                   changeProvinceBy('all');
@@ -242,7 +322,7 @@ const ListPageHeading = ({
                 <IntlMessages id="pages.reset" />
               </Button>
             </div>
-            <div className="float-md-right pt-1">
+            {/* <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>
               <UncontrolledDropdown className="d-inline-block">
                 <DropdownToggle caret color="outline-dark" size="xs">
@@ -261,7 +341,7 @@ const ListPageHeading = ({
                   })}
                 </DropdownMenu>
               </UncontrolledDropdown>
-            </div>
+            </div> */}
           </Collapse>
         </div>
         <Separator className="mb-5" />

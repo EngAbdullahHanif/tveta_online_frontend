@@ -1,0 +1,16 @@
+.dualbox {
+  color: blue !important;
+}
+
+select {
+  min-height: 300px !important;
+  background-color: rgb(24, 190, 255);
+}
+button,
+input {
+  background-color: rgb(24, 190, 255);
+}
+
+.rdl-list-box .rdl-move {
+  background-color: rgb(24, 190, 255);
+}

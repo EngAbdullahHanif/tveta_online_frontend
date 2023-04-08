@@ -24,7 +24,7 @@ import {
 
 import { injectIntl } from 'react-intl';
 //import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
-import {FormikReactSelect} from '../../../../containers/form-validations/FormikFields'
+import { FormikReactSelect } from '../../../../containers/form-validations/FormikFields';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
@@ -53,16 +53,11 @@ const ListPageHeading = ({
   changeGenderBy,
   selectedGenderOption,
   genderOptions,
-  selectedProvinceOption,
-  provinces,
   changeProvinceBy,
-  onDistrictSearchKey,
-  onProvinceSearchKey,
   onResetClick,
   reset,
   institutes,
   onInstituteSelect,
-  
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
@@ -193,30 +188,7 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
-                  </DropdownToggle>
-                  <DropdownMenu
-                    style={{
-                      height: '200px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
-                  >
-                    {provinces.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeProvinceBy(order.column)}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"

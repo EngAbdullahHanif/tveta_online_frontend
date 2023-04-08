@@ -51,15 +51,15 @@ const ListPageHeading = ({
   onIdSearchKey,
   changeGenderBy,
   selectedGenderOption,
-  genderOptions,
+  genderOptionsForList,
   // province
   selectedProvinceOption,
   changeProvinceBy,
-  provinces,
+  provincesOptionsForList,
   // Level Of Education
   selectLevelOfEducationOption,
   changeLevelOfEducationBy,
-  levelOfEdcation,
+  levelOfEdcationForList,
   onDistrictSearchKey,
   onProvinceSearchKey,
   onResetClick,
@@ -175,20 +175,27 @@ const ListPageHeading = ({
                 <ImageListIcon />
               </a>
             </span>
-
-            <div className="d-block d-md-inline-block pt-1">
+            <br />
+            <br />
+            <div className="d-block d-md-inline-block pt-1 ">
               <div className="row">
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
                     {selectedGenderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {genderOptions.map((order, index) => {
+                    {genderOptionsForList.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
                           onClick={() => changeGenderBy(order.column)}
+                          style={{ fontSize: '18px' }}
                         >
                           {order.label}
                         </DropdownItem>
@@ -197,7 +204,12 @@ const ListPageHeading = ({
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
                     {selectedProvinceOption.label}
                   </DropdownToggle>
@@ -208,11 +220,12 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
-                    {provinces.map((order, index) => {
+                    {provincesOptionsForList.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
                           onClick={() => changeProvinceBy(order.column)}
+                          style={{ fontSize: '18px' }}
                         >
                           {order.label}
                         </DropdownItem>
@@ -225,6 +238,7 @@ const ListPageHeading = ({
                     type="text"
                     name="district"
                     id="district"
+                    style={{ fontSize: '18px' }}
                     placeholder={messages['search.district']}
                     onKeyPress={(e) => onDistrictSearchKey(e)}
                   />
@@ -234,23 +248,29 @@ const ListPageHeading = ({
                     type="text"
                     name="keyword"
                     id="search"
+                    style={{ fontSize: '18px' }}
                     placeholder={messages['search.id']}
                     onKeyPress={(e) => onIdSearchKey(e)}
                   />
                 </div>
 
-                {/* Education Level */}
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
                     {selectLevelOfEducationOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {levelOfEdcation.map((order, index) => {
+                    {levelOfEdcationForList.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
                           onClick={() => changeLevelOfEducationBy(order.column)}
+                          style={{ fontSize: '18px' }}
                         >
                           {order.label}
                         </DropdownItem>
@@ -259,18 +279,23 @@ const ListPageHeading = ({
                   </DropdownMenu>
                 </UncontrolledDropdown>
 
-                <div>
+                <div
+                  style={{ fontSize: '18px' }}
+                  className=" d-inline-block float-md-left mr-1 mb-1 align-top"
+                >
                   <ReactAutoSugegst
                     data={institutes}
                     select={(opt) => {
                       setSelectedInstitute(opt);
                     }}
+                    style={{ fontSize: '18px' }}
                     placeholder={messages['search.institute.name']}
                   />
                 </div>
               </div>
 
               <Button
+                style={{ fontSize: '18px' }}
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
@@ -285,27 +310,6 @@ const ListPageHeading = ({
               >
                 <IntlMessages id="pages.reset" />
               </Button>
-            </div>
-
-            <div className="float-md-right pt-1">
-              <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>
-              <UncontrolledDropdown className="d-inline-block ">
-                <DropdownToggle caret color="outline-dark" size="xs">
-                  {selectedPageSize}
-                </DropdownToggle>
-                <DropdownMenu right>
-                  {pageSizes.map((size, index) => {
-                    return (
-                      <DropdownItem
-                        key={index}
-                        onClick={() => changePageSize(size)}
-                      >
-                        {size}
-                      </DropdownItem>
-                    );
-                  })}
-                </DropdownMenu>
-              </UncontrolledDropdown>
             </div>
           </Collapse>
         </div>

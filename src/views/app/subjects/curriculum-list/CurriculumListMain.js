@@ -8,8 +8,8 @@ import IntlMessages from 'helpers/IntlMessages';
 //import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
 
 //import ListPageHeadings from './workerListHeading'
-import ListPageHeading from './CurriculumListHeading'
-
+import ListPageHeading from './CurriculumListHeading';
+import callApi from 'helpers/callApi';
 import ListPageListing from './CurriculumListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
@@ -52,35 +52,36 @@ const categories = [
 ];
 
 // Hard Coded Data
-const roughData = [{
-  curriculumId: '1',
-  department: 'انجینری',
-  subject: 'ریاضی',
-  class: '3',
-  educationalYear: '1399'
-},
-{
-  curriculumId: '2',
-  department: 'انجینری',
-  subject: 'فزیک',
-  class: '4',
-  educationalYear: '1389'
-},
-{
-  curriculumId: '3',
-  department: 'طب',
-  subject: 'بیولژی',
-  class: '2',
-  educationalYear: '1400'
-},
-{
-  curriculumId: '4',
-  department: 'طب',
-  subject: 'کیمیا',
-  class: '3',
-  educationalYear: '1399'
-}
-]
+const roughData = [
+  {
+    curriculumId: '1',
+    department: 'انجینری',
+    subject: 'ریاضی',
+    class: '3',
+    educationalYear: '1399',
+  },
+  {
+    curriculumId: '2',
+    department: 'انجینری',
+    subject: 'فزیک',
+    class: '4',
+    educationalYear: '1389',
+  },
+  {
+    curriculumId: '3',
+    department: 'طب',
+    subject: 'بیولژی',
+    class: '2',
+    educationalYear: '1400',
+  },
+  {
+    curriculumId: '4',
+    department: 'طب',
+    subject: 'کیمیا',
+    class: '3',
+    educationalYear: '1399',
+  },
+];
 
 const Provinces = [
   {
@@ -225,8 +226,7 @@ const Provinces = [
   },
 ];
 const ThumbListPages = ({ match }) => {
-
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
@@ -253,133 +253,153 @@ const ThumbListPages = ({ match }) => {
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
 
+  // fetch curriculum list from server
+  const fetchCurrculumn = async () => {
+    const response = await callApi(
+      'institute/department-subject/',
+      'GET',
+      null
+    );
+    if (response.data && response.status === 200) {
+      console.log('list of the curriculum', response.data);
+      setItems(response.data);
+    } else {
+      console.log('class error');
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrculumn();
+  }, []);
+
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
 
-  useEffect(() => {
-    console.log('institute', institute);
-    console.log('current page', currentPage);
-    async function fetchData() {
-      if (institute !== '') {
-        const res = await axios.get(
-          `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
-        );
-        console.log('res', res.data);
-        setInstituteTeachers(res.data);
-        setItems(res.data);
-        setTotalItemCount(res.data.count);
-        setIsLoaded(true);
-      } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setTeacherId('');
-          setRest(false);
-        }
-        axios
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
+  // useEffect(() => {
+  //   console.log('institute', institute);
+  //   console.log('current page', currentPage);
+  //   async function fetchData() {
+  //     if (institute !== '') {
+  //       const res = await axios.get(
+  //         `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
+  //       );
+  //       console.log('res', res.data);
+  //       setInstituteTeachers(res.data);
+  //       setItems(res.data);
+  //       setTotalItemCount(res.data.count);
+  //       setIsLoaded(true);
+  //     } else if (
+  //       selectedProvinceOption.column === 'all' &&
+  //       selectedGenderOption.column === 'all'
+  //     ) {
+  //       if (rest == true) {
+  //         setDistrict('');
+  //         setTeacherId('');
+  //         setRest(false);
+  //       }
+  //       axios
+  //         .get(
+  //           `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+  //         )
+  //         .then((res) => {
+  //           return res.data;
+  //         })
+  //         .then((data) => {
+  //           console.log(
+  //             `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+  //           );
 
-            setItems(data);
-            setTotalPage(data.total_pages);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
+  //           setItems(data);
+  //           setTotalPage(data.total_pages);
+  //           setSelectedItems([]);
+  //           setTotalItemCount(data.totalItem);
+  //           setIsLoaded(true);
+  //         });
+  //     } else if (selectedProvinceOption.column === 'all') {
+  //       axios
+  //         .get(
+  //           `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+  //         )
+  //         .then((res) => {
+  //           return res.data;
+  //         })
+  //         .then((data) => {
+  //           console.log(
+  //             `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+  //           );
 
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
+  //           setItems(data);
+  //           setSelectedItems([]);
+  //           setTotalItemCount(data.totalItem);
+  //           setIsLoaded(true);
+  //         });
+  //     } else if (selectedGenderOption.column === 'all') {
+  //       axios
+  //         .get(
+  //           `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+  //         )
+  //         .then((res) => {
+  //           return res.data;
+  //         })
+  //         .then((data) => {
+  //           console.log(
+  //             `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+  //           );
 
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      } else {
-        axios
-          // get data from localhost:8000/teachers
-          .get(
-            `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-            );
-            setItems(data);
+  //           setItems(data);
+  //           setSelectedItems([]);
+  //           setTotalItemCount(data.totalItem);
+  //           setIsLoaded(true);
+  //         });
+  //     } else {
+  //       axios
+  //         // get data from localhost:8000/teachers
+  //         .get(
+  //           `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+  //         )
+  //         .then((res) => {
+  //           return res.data;
+  //         })
+  //         .then((data) => {
+  //           console.log(
+  //             `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
+  //           );
+  //           setItems(data);
 
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      }
-    }
+  //           setSelectedItems([]);
+  //           setTotalItemCount(data.totalItem);
+  //           setIsLoaded(true);
+  //         });
+  //     }
+  //   }
 
-    fetchData();
-  }, [
-    selectedPageSize,
-    currentPage,
-    selectedGenderOption,
-    selectedProvinceOption,
-    teacherId,
-    province,
-    district,
-    rest,
-    institute,
-  ]);
+  //   fetchData();
+  // }, [
+  //   selectedPageSize,
+  //   currentPage,
+  //   selectedGenderOption,
+  //   selectedProvinceOption,
+  //   teacherId,
+  //   province,
+  //   district,
+  //   rest,
+  //   institute,
+  // ]);
 
-  const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
-    }));
-    setInstitutes(updatedData);
-  };
+  // const fetchInstitutes = async () => {
+  //   const response = await axios.get(instituteApiUrl);
+  //   const updatedData = await response.data.map((item) => ({
+  //     id: item.id,
+  //     name: item.name,
+  //   }));
+  //   setInstitutes(updatedData);
+  // };
 
-  useEffect(() => {
-    fetchInstitutes();
-  }, []);
+  // useEffect(() => {
+  //   fetchInstitutes();
+  // }, []);
+
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||
@@ -508,7 +528,7 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
-          roughDate = {roughData}
+          items={items}
         />
         <table className="table">
           <thead
@@ -516,7 +536,7 @@ const ThumbListPages = ({ match }) => {
             style={{ maxHeight: '55px', marginRight: 2 }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
-            <th
+              <th
                 style={{
                   width: '20%',
                   padding: '0%',
@@ -526,7 +546,7 @@ const ThumbListPages = ({ match }) => {
               >
                 <IntlMessages id="curriculumId" />
               </th>
-            <th
+              <th
                 style={{
                   width: '20%',
                   padding: '0%',
@@ -556,7 +576,7 @@ const ThumbListPages = ({ match }) => {
               >
                 <IntlMessages id="curriculum.classLabel" />
               </th>
-            
+
               <th
                 style={{
                   width: '20%',
@@ -570,7 +590,7 @@ const ThumbListPages = ({ match }) => {
               </th>
             </tr>
           </thead>
-          
+
           <ListPageListing
             items={items}
             displayMode={displayMode}
@@ -583,7 +603,6 @@ const ThumbListPages = ({ match }) => {
             onChangePage={setCurrentPage}
             roughData={roughData}
           />
-        
         </table>
       </div>
     </>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { provinceOptions } from './../global-data/data';
+import { workersGrade } from './../global-data/data';
 import axios from 'axios';
 
 import * as Yup from 'yup';
@@ -129,144 +131,8 @@ const StudentRegistraion = () => {
 
   // state varibales are going to be set to defaul values
   const [isNext, setIsNext] = useState(false);
-  const [workerProvince, setWorkerProvince] = useState([
-    {
-      value: '1',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
-    },
-    {
-      value: '2',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
-    },
-    {
-      value: '3',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
-    },
-    {
-      value: '4',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
-    },
-    {
-      value: '5',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
-    },
-    {
-      value: '6',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
-    },
-    {
-      value: '7',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
-    },
-    {
-      value: '8',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
-    },
-    {
-      value: '9',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
-    },
-    {
-      value: '10',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-    },
-    {
-      value: '11',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-    },
-    {
-      value: '12',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-    },
-    {
-      value: '13',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-    },
-    {
-      value: '14',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-    },
-    {
-      value: '15',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-    },
-    {
-      value: '16',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-    },
-    {
-      value: '17',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-    },
-    {
-      value: '18',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-    },
-    {
-      value: '19',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-    },
-    {
-      value: '20',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-    },
-    {
-      value: '21',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-    },
-    {
-      value: '22',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-    },
-    {
-      value: '23',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-    },
-    {
-      value: '24',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-    },
-    {
-      value: '25',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-    },
-    {
-      value: '26',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-    },
-    {
-      value: '27',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-    },
-    {
-      value: '28',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-    },
-    {
-      value: '29',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-    },
-    {
-      value: '30',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-    },
-    {
-      value: '31',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-    },
-    {
-      value: '32',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-    },
-    {
-      value: '33',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-    },
-    {
-      value: '34',
-      label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-    },
-  ]);
+
+  const [workerProvince, setWorkerProvince] = useState(provinceOptions);
   const [workerAppointedType, setworkerAppointedType] = useState([
     {
       value: 1,
@@ -288,83 +154,8 @@ const StudentRegistraion = () => {
     },
   ]);
 
-  const [workerGrade, setworkerGrade] = useState([
-    {
-      value: 1,
-      label: '1',
-    },
-    {
-      value: 2,
-      label: '2',
-    },
-    {
-      value: 3,
-      label: '3',
-    },
-    {
-      value: 4,
-      label: '4',
-    },
-    {
-      value: 5,
-      label: '5',
-    },
-    {
-      value: 6,
-      label: '6',
-    },
-    {
-      value: 7,
-      label: '7',
-    },
-    {
-      value: 8,
-      label: '8',
-    },
-    {
-      value: 9,
-      label: 'مافوق',
-    },
-  ]);
-
-  const [workerTashkilGrade, setworkerTashkilGrade] = useState([
-    {
-      value: 1,
-      label: '1',
-    },
-    {
-      value: 2,
-      label: '2',
-    },
-    {
-      value: 3,
-      label: '3',
-    },
-    {
-      value: 4,
-      label: '4',
-    },
-    {
-      value: 5,
-      label: '5',
-    },
-    {
-      value: 6,
-      label: '6',
-    },
-    {
-      value: 7,
-      label: '7',
-    },
-    {
-      value: 8,
-      label: '8',
-    },
-    {
-      value: 9,
-      label: 'مافوق',
-    },
-  ]);
+  const [workerGrade, setworkerGrade] = useState(workersGrade);
+  const [workerTashkilGrade, setworkerTashkilGrade] = useState(workersGrade);
 
   const [workerGradeType, setWorkerGradeType] = useState([
     {

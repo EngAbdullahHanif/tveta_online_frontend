@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { provincesOptionsForList } from './../../global-data/data';
 
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
+import callApi from 'helpers/callApi';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -37,148 +39,7 @@ const categories = [
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
 
-const provinces = [
-  {
-    column: 'all',
-    label: 'تول / همه',
-  },
-  {
-    column: '1',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
-  },
-  {
-    column: '2',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
-  },
-  {
-    column: '3',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
-  },
-  {
-    column: '4',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
-  },
-  {
-    column: '5',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
-  },
-  {
-    column: '6',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
-  },
-  {
-    column: '7',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
-  },
-  {
-    column: '8',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
-  },
-  {
-    column: '9',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
-  },
-  {
-    column: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    column: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    column: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    column: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    column: 'کابل',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    column: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    column: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    column: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    column: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    column: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    column: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    column: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    column: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    column: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    column: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    column: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    column: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    column: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    column: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    column: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    column: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    column: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    column: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
+
 const genderOptions = [
   {
     column: 'all',
@@ -186,6 +47,24 @@ const genderOptions = [
   },
   { column: '1', label: 'ذکور' },
   { column: '2', label: 'اناث' },
+];
+
+const statusOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.statusOption_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+];
+
+const buildingTypeOptions = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
 ];
 
 const ThumbListPages = ({ match }) => {
@@ -222,17 +101,36 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState({
+    column: 'all',
+    label: 'حالت',
+  });
+
+  const [selectedBuildingType, setSelectedBuildingType] = useState({
+    column: 'all',
+    label: 'نوع تعمیر',
+  });
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedOrderOption]);
+  }, [
+    selectedPageSize,
+    selectedOrderOption,
+    selectedStatusOptions,
+    selectedBuildingType,
+  ]);
   const fetchDorms = async () => {
-    const response = await axios.get(`${dormUrl}`);
-    const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
-    }));
-    setDormsFilterList(updatedData);
-    console.log('dormsFilterList', dormsFilterList);
+    // const response = await axios.get(`institute/dorms`);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        id: item.id,
+        name: item.name,
+      }));
+      setDormsFilterList(updatedData);
+      console.log('dormsFilterList', dormsFilterList);
+    } else {
+      console.log('error');
+    }
   };
 
   useEffect(() => {
@@ -243,19 +141,32 @@ const ThumbListPages = ({ match }) => {
     console.log('district', district);
     async function fetchData() {
       if (dormName !== '') {
-        axios
-          .get(`${dormUrl}?id=${dormName.id}`)
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(`${dormUrl}?id=${dormName.id}`);
+        // axios
+        //   .get(`${dormUrl}?id=${dormName.id}`)
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(`${dormUrl}?id=${dormName.id}`);
 
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setDorms(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+        const response = await callApi(
+          `institute/dorms/?id=${dormName.id}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'
@@ -264,74 +175,129 @@ const ThumbListPages = ({ match }) => {
           setDistrict('');
           setRest(false);
         }
-        axios
-          .get(`${dormUrl}?district=${district}`)
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(`print${dormUrl}`);
+        // axios
+        //   .get(`${dormUrl}?district=${district}`)
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(`print${dormUrl}`);
 
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setDorms(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `institute/dorms/?district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-            );
+        // axios
+        //   .get(
+        //     `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
+        //     );
 
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setDorms(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `institute/dorms/?gender_type=${selectedGenderOption.column}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `2${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-            );
+        // axios
+        //   .get(
+        //     `${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `2${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
+        //     );
 
-            setDorms(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setDorms(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+        const response = await callApi(
+          `institute/dorms/?provence=${selectedProvinceOption.column}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       } else {
-        axios
-          // get data from localhost:8000/dorms
-          .get(
-            `${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `3${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-            );
-            setDorms(data);
+        // axios
+        //   // get data from localhost:8000/dorms
+        //   .get(
+        //     `${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `3${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+        //     );
+        //     setDorms(data);
 
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `institute/dorms/?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 1 error');
+        }
       }
     }
     fetchData();
@@ -462,30 +428,136 @@ const ThumbListPages = ({ match }) => {
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              provinces.find((x) => x.column === column)
+              provincesOptionsForList.find((x) => x.column === column)
+            );
+          }}
+          changeStatusBy={(column) => {
+            setSelectedStatusOptions(
+              statusOptions.find((x) => x.column === column)
+            );
+          }}
+          changeBuildingTypeBy={(column) => {
+            setSelectedBuildingType(
+              buildingTypeOptions.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
+          selectedStatusOptions={selectedStatusOptions}
+          selectedBuildingType={selectedBuildingType}
           genderOptions={genderOptions}
-          provinces={provinces}
+          statusOptions={statusOptions}
+          buildingTypeOptions={buildingTypeOptions}
+          provincesOptionsForList={provincesOptionsForList}
           dormsFilterList={dormsFilterList}
           onDormSelect={setDormName}
           onResetClick={setRest}
           reset={rest}
         />
-
-        <ListPageListing
-          dorms={dorms}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
+        <table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark mb-2"
+            style={{ maxHeight: '55px' }}
+          >
+            <tr
+              className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center"
+              style={{ width: '100%' }}
+            >
+              <th
+                style={{
+                  width: '10%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="student.ID" />
+              </th>
+              <th
+                style={{
+                  width: '14%',
+                  fontSize: '20px',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.StdName" />
+              </th>
+              <th
+                style={{
+                  width: '13%',
+                  fontSize: '20px',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                <IntlMessages id="forms.ProvinceLabel" />
+              </th>
+              <th
+                style={{
+                  width: '15%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="forms.DistrictLabel" />
+              </th>
+              <th
+                style={{
+                  width: '11%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.CapicityList" />
+              </th>
+              <th
+                style={{
+                  width: '11%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.QuotaLabel" />
+              </th>
+              <th
+                style={{
+                  width: '10%',
+                  padding: '0%',
+                  fontSize: '20px',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.BuildingTypeList" />
+              </th>
+            </tr>
+          </thead>
+          <ListPageListing
+            dorms={dorms}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
+        </table>
       </div>
     </>
   );

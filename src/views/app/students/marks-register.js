@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import callApi from 'helpers/callApi';
+import { studyTimeOptions } from './../global-data/data';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -16,6 +18,7 @@ import {
   Input,
 } from 'reactstrap';
 import Select from 'react-select';
+import { NotificationManager } from 'components/common/react-notifications';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -25,6 +28,7 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
+import { async } from 'q';
 
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
@@ -66,10 +70,7 @@ const ClassOptions = [
   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
 ];
 
-const StudyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
+
 
 const SubjectOptions = [
   { value: '14th', label: 'Computer Science' },
@@ -156,7 +157,6 @@ const MarksRegistration = ({ match }) => {
   const [examId, setExamId] = useState();
 
   const { markId } = useParams();
-  console.log('marks-id', markId);
 
   if (markId) {
     useEffect(() => {
@@ -178,50 +178,67 @@ const MarksRegistration = ({ match }) => {
   }
 
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/field/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setFields(updatedData);
+    const response = await callApi('institute/field/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFields(updatedData);
+    } else {
+      console.log('field error');
+    }
   };
   const fetchDepartments = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/department/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDepartments(updatedData);
+    const response = await callApi('institute/department/', '', null);
+    console.log('response of department', response);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('department error');
+    }
   };
 
   const fetchClasses = async () => {
-    const response = await axios.get('http://localhost:8000/institute/classs/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name + ' - ' + item.semester + ' - ' + item.section,
-    }));
-    setClasses(updatedData);
+    const response = await callApi('institute/classs/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setClasses(updatedData);
+    } else {
+      console.log('class error');
+    }
   };
 
   const fetchSubjects = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/subject/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setSubjects(updatedData);
+    const response = await callApi('institute/subject/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('subject error');
+    }
   };
 
   useEffect(() => {
@@ -231,31 +248,73 @@ const MarksRegistration = ({ match }) => {
     fetchClasses();
     fetchSubjects();
   }, []);
+  // notification message
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'نمری په بریالیتوب سره ثبت شوی',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'نمری ثبت نه شوی بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
 
-  const onSubmit = (values) => {
-    setIsNext(false);
-    axios
-      .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-      )
-      .then((response) => {
-        console.log('response.data', response.data);
-        setStudents(response.data);
-      });
-    console.log(
-      `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+  const fechtStudens = async () => {
+    const response = await callApi(
+      `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      '',
+      null
     );
-    console.log('students', students);
-    console.log('values', values);
-    const educational_year = selectedEducationalYear;
-    const institute_id = selectedInstitute.value;
-    const department_id = selectedDepartment.value;
-    const class_id = selectedClass.value;
-    const subject_id = selectedSubject.value;
+    if (response.data && response.status === 200) {
+      console.log('response of students', response);
+      setStudents(response.data);
+      setIsNext(false);
+    } else {
+      console.log('subject error');
+    }
+    // console.log(
+    //   `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+    // );
+  };
 
+  const onSubmit = async (values) => {
+    // console.log('students', students);
+    console.log('values sdfs', values);
+    const educationalYear = selectedEducationalYear;
+    const instituteId = selectedInstitute.value;
+    const departmentId = selectedDepartment.value;
+    const classId = selectedClass.value;
+    const subjectId = selectedSubject.value;
+    console.log('educationalYear', educationalYear);
+    console.log('instituteId', instituteId);
+    console.log('departmentId', departmentId);
+    console.log('classId', classId);
+    console.log('subjectId', subjectId);
     // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
     // values.score[student.student_id]
     const newStudents = students.map((student, index) => {
+      console.log('student sadfsd', student.student_id);
       return {
         student_id: student.student_id,
         score: values.score[student.student_id],
@@ -264,25 +323,37 @@ const MarksRegistration = ({ match }) => {
 
     let data = [
       {
-        educational_year: educational_year,
-        institute_id: institute_id,
-        Department: department_id,
-        class_id: class_id,
-        subject_id: subject_id,
+        educational_year: educationalYear,
+        institute_id: instituteId,
+        department_id: departmentId,
+        class_id: classId,
+        subject_id: subjectId,
+        user_id: '',
       },
       ...newStudents,
     ];
 
     console.log('data', data);
 
-    axios
-      .post('http://localhost:8000/api/create_marks/', data)
-      .then((res) => {
-        console.log('res', res);
-      })
-      .then((err) => {
-        console.log('err', err);
-      });
+    const response = await callApi('api/create_marks/', 'POST', data);
+    if (response.status === 200) {
+      console.log('response of students', response);
+      setIsSubmitted(false);
+      createNotification('success', 'filled');
+    } else {
+      console.log('marks error');
+      // setIsSubmitted(false);
+      createNotification('error', 'filled');
+    }
+
+    // axios
+    //   .post('http://localhost:8000/api/create_marks/', data)
+    //   .then((res) => {
+    //     console.log('res', res);
+    //   })
+    //   .then((err) => {
+    //     console.log('err', err);
+    //   });
 
     // students.map(async (student, index) => {
     //   let exam_id = '';
@@ -290,7 +361,7 @@ const MarksRegistration = ({ match }) => {
     //     educational_year: educational_year,
     //     student_id: student.student_id,
     //     institute_id: institute_id,
-    //     Department: department_id,
+    //     department_id: department_id,
     //     class_id: class_id,
     //     semister: 1,
     //     teacher_id: 1,
@@ -328,7 +399,7 @@ const MarksRegistration = ({ match }) => {
           {isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={onSubmit}
+              // onSubmit={onSubmit}
               // validationSchema={ValidationSchema}
             >
               {({
@@ -371,7 +442,7 @@ const MarksRegistration = ({ match }) => {
                           name="studyTime"
                           id="studyTime"
                           value={values.studyTime}
-                          options={StudyTimeOptions}
+                          options={studyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedStudyTime(values.studyTime)}
@@ -476,7 +547,7 @@ const MarksRegistration = ({ match }) => {
                         color="primary"
                         className="float-right m-5"
                         size="lg"
-                        type="submit"
+                        onClick={() => fechtStudens()}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />
@@ -564,109 +635,128 @@ const MarksRegistration = ({ match }) => {
                       </thead>
                     </table>
                   </Row>
-                  <Row
-                    className="justify-content-center  border border"
-                    style={{
-                      marginInline: '16%',
-                      height: '30rem',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
+                  <Formik
+                    initialValues={initialValues}
+                    onSubmit={onSubmit}
+                    // validationSchema={ValidationSchema}
                   >
-                    <table class="table ">
-                      <tbody
-                        className="border border "
-                        style={{
-                          height: '200px',
-                          overflowY: 'scroll',
-                          overflowX: 'hidden',
-                        }}
-                      >
-                        {students.map((student, index) => (
-                          <tr>
-                            <th scope="row">{index}</th>
-                            <td>{student.name}</td>
-                            <td>{student.father_name}</td>
-                            <td>{student.student_id}</td>
-
-                            {/* Marks Entry */}
-                            <div class="form-group mx-sm-3 mb-2">
-                              <FormGroup className="form-group">
-                                <Field
-                                  type="number"
-                                  className="form-control"
-                                  name={`score[${student.student_id}]`}
-                                />
-                                {errors.score && touched.score ? (
-                                  <div className="invalid-feedback d-block">
-                                    {errors.score}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </Row>
-                  <Row
-                    className="justify-content-center  border border"
-                    style={{
-                      marginInline: '16%',
-                    }}
-                  >
-                    <table class="table ">
-                      <tbody>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                      <tfoot className="thead-dark">
-                        <tr>
-                          <th scope="col">
-                            <IntlMessages id="marks.No" />
-                          </th>
-                          <th scope="col">
-                            <IntlMessages id="marks.FullName" />
-                          </th>
-                          <th scope="col">
-                            <IntlMessages id="marks.FatherName" />
-                          </th>
-                          <th scope="col">
-                            <IntlMessages id="marks.ID" />
-                          </th>
-                          <th scope="col">
-                            <IntlMessages id="marks.Marks" />
-                          </th>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </Row>
-                  <Row className=" justify-content-center">
-                    <Colxx xxs="9" className="m-5">
-                      <Button
-                        className=" m-4 "
-                        color="primary"
-                        onClick={() => setIsNext(true)}
-                      >
-                        <IntlMessages id="button.Back" />
-                      </Button>
-
-                      <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                        <Button
-                          size="lg"
-                          type="submit"
-                          color="primary"
-                          onClick={() => setIsSubmitted(false)}
+                    {({
+                      errors,
+                      // touched,
+                      // // values,
+                      // setFieldTouched,
+                      // setFieldValue,
+                    }) => (
+                      <Form className="av-tooltip tooltip-label-right ">
+                        <Row
+                          className="justify-content-center  border border"
+                          style={{
+                            marginInline: '16%',
+                            height: '30rem',
+                            overflowY: 'scroll',
+                            overflowX: 'hidden',
+                          }}
                         >
-                          <IntlMessages id="button.SubmitButton" />
-                        </Button>
-                      </div>
-                    </Colxx>
-                  </Row>
+                          <table class="table ">
+                            <tbody
+                              className="border border "
+                              style={{
+                                height: '200px',
+                                overflowY: 'scroll',
+                                overflowX: 'hidden',
+                              }}
+                            >
+                              {students.length > 0 &&
+                                students.map((student, index) => (
+                                  <tr key={index}>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{student.name}</td>
+                                    <td>{student.father_name}</td>
+                                    <td>{student.student_id}</td>
+
+                                    {/* Marks Entry */}
+                                    <td>
+                                      <div class="form-group mx-sm-3 mb-2">
+                                        <FormGroup className="form-group">
+                                          <Field
+                                            type="number"
+                                            className="form-control"
+                                            name={`score[${student.student_id}]`}
+                                          />
+                                          {errors.score && touched.score ? (
+                                            <div className="invalid-feedback d-block">
+                                              {errors.score}
+                                            </div>
+                                          ) : null}
+                                        </FormGroup>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))}
+                            </tbody>
+                          </table>
+                        </Row>
+                        <Row
+                          className="justify-content-center  border border"
+                          style={{
+                            marginInline: '16%',
+                          }}
+                        >
+                          <table class="table ">
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                            <tfoot className="thead-dark">
+                              <tr>
+                                <th scope="col">
+                                  <IntlMessages id="marks.No" />
+                                </th>
+                                <th scope="col">
+                                  <IntlMessages id="marks.FullName" />
+                                </th>
+                                <th scope="col">
+                                  <IntlMessages id="marks.FatherName" />
+                                </th>
+                                <th scope="col">
+                                  <IntlMessages id="marks.ID" />
+                                </th>
+                                <th scope="col">
+                                  <IntlMessages id="marks.Marks" />
+                                </th>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        </Row>
+                        <Row className=" justify-content-center">
+                          <Colxx xxs="9" className="m-5">
+                            <Button
+                              className=" m-4 "
+                              color="primary"
+                              onClick={() => setIsNext(true)}
+                            >
+                              <IntlMessages id="button.Back" />
+                            </Button>
+
+                            <div className="d-flex justify-content-between align-items-center m-4 float-right">
+                              <Button
+                                size="lg"
+                                type="submit"
+                                color="primary"
+                                // onSubmit={onSubmit}
+                              >
+                                <IntlMessages id="button.SubmitButton" />
+                              </Button>
+                            </div>
+                          </Colxx>
+                        </Row>
+                      </Form>
+                    )}
+                  </Formik>
                 </>
               ) : (
                 <div className="wizard-basic-step text-center pt-3">

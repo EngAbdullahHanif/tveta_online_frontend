@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-
+import { provincesOptionsForList } from './../../global-data/data';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
-
 
 // import { servicePath } from 'constants/defaultValues';
 
 //import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
 
 //import ListPageHeadings from './workerListHeading'
-import ListPageHeading from 'views/app/workers/worker-list/workerListHeading'
+import ListPageHeading from 'views/app/workers/worker-list/workerListHeading';
 
 import ListPageListing from 'views/app/workers/worker-list/workerListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
@@ -55,192 +54,46 @@ const categories = [
 
 const roughDataGlobal = [
   {
-  workerId: '1',
-  workerName: 'Noman Ahmadi',
-  workerProvince: 'Nangarhar',
-  workerPosition: 'Software Enginner',
-  workerGradeType: 'Mamor',
-  workerStep: '5',
-  workerGrade: '3'
-},
-{
-  workerId: '2',
-  workerName: 'Noman Ahmadi',
-  workerProvince: 'Nangarhar',
-  workerPosition: 'Software Enginner',
-  workerGradeType: 'Mamor',
-  workerStep: '5',
-  workerGrade: '3'
-},
-{
-  workerId: '3',
-  workerName: 'Noman Ahmadi',
-  workerProvince: 'Nangarhar',
-  workerPosition: 'Software Enginner',
-  workerGradeType: 'Mamor',
-  workerStep: '5',
-  workerGrade: '3'
-},
-{
-  workerId: '4',
-  workerName: 'Noman Ahmadi',
-  workerProvince: 'Nangarhar',
-  workerPosition: 'Software Enginner',
-  workerGradeType: 'Mamor',
-  workerStep: '6',
-  workerGrade: '3'
-}
-]
-
-
-
-
-const Provinces = [
-  {
-    column: 'all',
-    label: 'تول / همه',
+    workerId: '1',
+    workerName: 'Noman Ahmadi',
+    workerProvince: 'Nangarhar',
+    workerPosition: 'Software Enginner',
+    workerGradeType: 'Mamor',
+    workerStep: '5',
+    workerGrade: '3',
   },
   {
-    column: '1',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
+    workerId: '2',
+    workerName: 'Noman Ahmadi',
+    workerProvince: 'Nangarhar',
+    workerPosition: 'Software Enginner',
+    workerGradeType: 'Mamor',
+    workerStep: '5',
+    workerGrade: '3',
   },
   {
-    column: '2',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
+    workerId: '3',
+    workerName: 'Noman Ahmadi',
+    workerProvince: 'Nangarhar',
+    workerPosition: 'Software Enginner',
+    workerGradeType: 'Mamor',
+    workerStep: '5',
+    workerGrade: '3',
   },
   {
-    column: '3',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
-  },
-  {
-    column: '4',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
-  },
-  {
-    column: '5',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
-  },
-  {
-    column: '6',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
-  },
-  {
-    column: '7',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
-  },
-  {
-    column: '8',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
-  },
-  {
-    column: '9',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
-  },
-  {
-    column: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    column: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    column: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    column: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    column: 'کابل',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    column: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    column: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    column: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    column: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    column: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    column: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    column: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    column: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    column: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    column: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    column: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    column: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    column: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    column: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    column: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    column: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    column: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    column: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+    workerId: '4',
+    workerName: 'Noman Ahmadi',
+    workerProvince: 'Nangarhar',
+    workerPosition: 'Software Enginner',
+    workerGradeType: 'Mamor',
+    workerStep: '6',
+    workerGrade: '3',
   },
 ];
-const ThumbListPages = ({ match }) => {
 
+const ThumbListPages = ({ match }) => {
   // Hard Coded Data
-const [roughData, setRoughData] = useState([])
+  const [roughData, setRoughData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -267,15 +120,13 @@ const [roughData, setRoughData] = useState([])
   const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
- 
-
 
   // here we are fetching data for the displaying the list
-  useEffect(()=> {
-    setRoughData(roughDataGlobal)
+  useEffect(() => {
+    setRoughData(roughDataGlobal);
     setIsLoaded(false);
     //const timeOut = setTimeout(SetRoughData, 3000);
-  },[]);
+  }, []);
 
   const onCheckItem = (event, id) => {
     if (
@@ -350,7 +201,7 @@ const [roughData, setRoughData] = useState([])
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  return  isLoaded ? (
+  return isLoaded ? (
     <div className="loading" />
   ) : (
     <>
@@ -369,13 +220,13 @@ const [roughData, setRoughData] = useState([])
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              Provinces.find((x) => x.column === column)
+              provincesOptionsForList.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
           genderOptions={genderOptions}
-          provinces={Provinces}
+          provincesOptionsForList={provincesOptionsForList}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}
@@ -405,7 +256,7 @@ const [roughData, setRoughData] = useState([])
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
-          roughDate = {roughData}
+          roughDate={roughData}
         />
         <table className="table">
           <thead
@@ -419,10 +270,10 @@ const [roughData, setRoughData] = useState([])
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="workerId" />
-                
               </th>
               <th
                 style={{
@@ -430,6 +281,7 @@ const [roughData, setRoughData] = useState([])
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="workerName" />
@@ -440,6 +292,7 @@ const [roughData, setRoughData] = useState([])
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="workerProvince" />
@@ -450,6 +303,7 @@ const [roughData, setRoughData] = useState([])
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
@@ -461,6 +315,7 @@ const [roughData, setRoughData] = useState([])
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
@@ -472,15 +327,15 @@ const [roughData, setRoughData] = useState([])
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
                 <IntlMessages id="workerStepAndWorkerGrade" />
               </th>
-            
             </tr>
           </thead>
-          
+
           <ListPageListing
             items={items}
             displayMode={displayMode}
@@ -493,7 +348,6 @@ const [roughData, setRoughData] = useState([])
             onChangePage={setCurrentPage}
             roughData={roughData}
           />
-        
         </table>
       </div>
     </>

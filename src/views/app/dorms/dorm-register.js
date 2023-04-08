@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import { provinceOptions } from './../global-data/data';
+import { publicBuildingOwnerOptions } from './../global-data/data';
+import { privateBuildingTypeOptions } from './../global-data/data';
+import { BuildingTypeOptions } from './../global-data/data';
+import { dormGenderOptions } from './../global-data/data';
 import './dorm-register.css';
 import axios from 'axios';
-
+import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
 import {
   Row,
@@ -32,150 +37,6 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
-
-const GenderOptions = [
-  { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
-  { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
-  { value: '3', label: <IntlMessages id="dorm.GenderOptions_3" /> },
-];
-const BuildingTypeOptions = [
-  { value: '1', label: <IntlMessages id="dorm.BuildingTypeOptions_1" /> },
-  { value: '2', label: <IntlMessages id="dorm.BuildingTypeOptions_2" /> },
-];
-
-const PublicBuildingOwnerOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="dorm.PublicBuildingOwnerLabelOption_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="dorm.PublicBuildingOwnerLabelOption_2" />,
-  },
-];
-
-const PrivateBuildingTypeOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="dorm.PrivateBuildingTypeOption_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="dorm.PrivateBuildingTypeOption_2" />,
-  },
-];
-
-const StdSchoolProvinceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
-  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
-  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
-  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
-  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
-  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
-  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
-  {
-    value: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    value: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    value: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    value: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    value: '14',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    value: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    value: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    value: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    value: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    value: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    value: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    value: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    value: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    value: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    value: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    value: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    value: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    value: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    value: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    value: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    value: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    value: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    value: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
 
 const SignupSchema = Yup.object().shape({
   name1: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
@@ -241,7 +102,7 @@ const DormRegistration = (values) => {
   };
 
   const { dormId } = useParams();
-  console.log('Dorm info', dormId);
+  //console.log('Dorm info', dormId);
 
   if (dormId) {
     useEffect(() => {
@@ -256,26 +117,26 @@ const DormRegistration = (values) => {
             setInitialBuildingType(dormType);
           }
         });
-        const publicDormTypeOptions = PublicBuildingOwnerOptions.map(
+        const publicDormTypeOptions = publicBuildingOwnerOptions.map(
           (publicDorm) => {
             if (publicDorm.value === data[0].dorm_type_option) {
               setInitialPublicBuildingOwner(publicDorm);
             }
           }
         );
-        const privateDormTypeOptions = PrivateBuildingTypeOptions.map(
+        const privateDormTypeOptions = privateBuildingTypeOptions.map(
           (privateDormType) => {
             if (privateDormType.value === data[0].dorm_type_option) {
               setInitialPrivateBuildingType(privateDormType);
             }
           }
         );
-        const provinceOptions = StdSchoolProvinceOptions.map((province) => {
+        const provinceOptions = provinceOptions.map((province) => {
           if (province.value === data[0].provence) {
             setInitialProvince(province);
           }
         });
-        const genderOptions = GenderOptions.map((gender) => {
+        const genderOptions = dormGenderOptions.map((gender) => {
           if (gender.value === data[0].gender_type) {
             setInitialGender(gender);
           }
@@ -326,59 +187,84 @@ const DormRegistration = (values) => {
     district: initialDistrict,
   };
 
+  // notification message
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'لیله موفقان ثبت شوو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'لیلیه ثبت نشو، بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
   const [dormTypeOption, setDormTypeOption] = useState('');
   const [isNext, setIsNext] = useState(false);
 
-  const onRegister = (values, { resetForm }) => {
-    console.log(' The Values', values);
-    setIsNext(true);
-    resetForm();
-    // if (errors) {
-    //   console.log('error');
-
-    //   return;
-    // }
-    // if (!values) {
-    //   console.log('empty');
-
-    //   return;
-    // }
-    //insert data to database
-
-    if (values.BuildingType.value == '1') {
-      setDormTypeOption(values.PublicBuildingOwner.value);
+  // post dorm record to the backend
+  const postDormRecord = async (data) => {
+    const response = await callApi('institute/dorms_create/', 'POST', data);
+    if (response) {
+      createNotification('success', 'filled');
+      setIsNext(true);
+      console.log('success message', response.data);
     } else {
-      setDormTypeOption(values.PrivateBuildingType.value);
+      createNotification('error', 'filled');
+      console.log('class error');
+    }
+  };
+  const onRegister = (values, { resetForm }) => {
+    resetForm();
+    let DormTypeOptions;
+    if (values.buildingType.value === '1') {
+      //setDormTypeOption(values.PublicBuildingOwner.value);
+      console.log('condition true', values.PublicBuildingOwner.value);
+      DormTypeOptions = values.publicBuildingOwner.value;
+    } else {
+      //setDormTypeOption(values.PrivateBuildingType.value);
+      console.log('condition false', values.privateBuildingType.value);
+      DormTypeOptions = values.privateBuildingType.value;
     }
 
     //REMOVE USER FROM HERE LATTER, IT'S JUST FOR TESTING PURPOSE
 
     const data = {
-      name: values.Name,
+      name: values.name1,
       provence: values.province.value,
       district: values.district,
       gender_type: values.gender.value,
       dorm_type: values.buildingType.value,
-      dorm_type_option: dormTypeOption,
-      building_qty: valuestotalBuildingNo,
+      dorm_type_option: DormTypeOptions,
+      building_qty: values.totalBuildingNo,
       rooms_qty: values.totalRooms,
       kitchen_qty: values.totalKitchens,
       toilet_qty: values.toilet,
       dorm_quota: values.quota,
       dorm_capacity: values.capicity,
-      user_id: 1,
+      user_id: '1',
     };
-
-    axios
-      .post(dormCreateAPI, data)
-      .then((response) => {
-        console.log(response);
-
-        // window.location.reload(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log('object of data', data);
+    postDormRecord(data);
   };
 
   return (
@@ -391,7 +277,7 @@ const DormRegistration = (values) => {
               enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onRegister}
-              validationSchema={SignupSchema}
+              // validationSchema={SignupSchema}
             >
               {({
                 errors,
@@ -468,7 +354,7 @@ const DormRegistration = (values) => {
                               value={values.PublicBuildingOwner}
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
-                              options={PublicBuildingOwnerOptions}
+                              options={publicBuildingOwnerOptions}
                               required
                             />
                             {errors.PublicBuildingOwner &&
@@ -492,7 +378,7 @@ const DormRegistration = (values) => {
                               value={values.privateBuildingType}
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
-                              options={PrivateBuildingTypeOptions}
+                              options={privateBuildingTypeOptions}
                               required
                             />
                             {errors.privateBuildingType &&
@@ -531,7 +417,7 @@ const DormRegistration = (values) => {
                           name="province"
                           id="province"
                           value={values.province}
-                          options={StdSchoolProvinceOptions}
+                          options={provinceOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
@@ -555,7 +441,7 @@ const DormRegistration = (values) => {
                           value={values.gender}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
-                          options={GenderOptions}
+                          options={dormGenderOptions}
                           required
                         />
                         {errors.gender && touched.gender ? (

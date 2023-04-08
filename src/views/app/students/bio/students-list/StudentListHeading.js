@@ -53,13 +53,13 @@ const ListPageHeading = ({
   changeEducationalYearBy,
   educationYears,
   // Level Of Education
-  selectLevelOfEducationOption,
-  changeLevelOfEducationBy,
-  levelOfEdcation,
+  studentTypeOptions,
+  changeStudentTypeBy,
+  studentType,
   // Province
   selectedProvinceOption,
   changeProvinceBy,
-  provinces,
+  provincesOptionsForList,
   // Districts
   onDistrictSearchKey,
   onProvinceSearchKey,
@@ -220,7 +220,7 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
-                    {provinces.map((order, index) => {
+                    {provincesOptionsForList.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
@@ -342,14 +342,14 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectLevelOfEducationOption.label}
+                    {studentTypeOptions.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {levelOfEdcation.map((order, index) => {
+                    {studentType.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeLevelOfEducationBy(order.column)}
+                          onClick={() => changeStudentTypeBy(order.column)}
                           style={{ fontSize: '17px' }}
                         >
                           {order.label}

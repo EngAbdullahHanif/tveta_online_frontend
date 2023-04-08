@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
-
+import callApi from 'helpers/callApi';
+import { provincesOptionsForList } from './../../../global-data/data';
 // import { servicePath } from 'constants/defaultValues';
-
 import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
-
 import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
@@ -36,6 +35,7 @@ const categories = [
   { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
+
 const genderOptions = [
   {
     column: 'all',
@@ -47,6 +47,7 @@ const genderOptions = [
   },
   { column: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
 ];
+
 const provinces = [
   {
     column: 'all',
@@ -242,26 +243,22 @@ const educationYears = [
   { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
 ];
 
-const levelOfEdcation = [
+const studentType = [
   {
     column: 'all',
     label: <IntlMessages id="option.all" />,
   },
   {
     value: '14th',
-    label: <IntlMessages id="teacher.EducationLevelOption_1" />,
+    label: <IntlMessages id="student.typeOption_1" />,
   },
   {
     value: 'bachelor',
-    label: <IntlMessages id="teacher.EducationLevelOption_2" />,
+    label: <IntlMessages id="student.typeOption_2" />,
   },
   {
     value: 'master',
-    label: <IntlMessages id="teacher.EducationLevelOption_3" />,
-  },
-  {
-    value: 'PHD',
-    label: <IntlMessages id="teacher.EducationLevelOption_4" />,
+    label: <IntlMessages id="student.typeOption_3" />,
   },
 ];
 
@@ -306,11 +303,10 @@ const ThumbListPages = ({ match }) => {
       column: 'all',
       label: 'سال تعلیمی',
     });
-  const [selectLevelOfEducationOption, setSelectLevelOfEducationOption] =
-    useState({
-      column: 'all',
-      label: 'سطح تحصیلی',
-    });
+  const [studentTypeOptions, setStudentTypeOptions] = useState({
+    column: 'all',
+    label: 'حالت شاگرد',
+  });
   useEffect(() => {
     setCurrentPage(1);
   }, [
@@ -320,10 +316,10 @@ const ThumbListPages = ({ match }) => {
     selectedProvinceOption,
     selectedShiftOption,
     selectedEducationalYearOption,
-    selectLevelOfEducationOption,
+    studentTypeOptions,
   ]);
 
-  useEffect(() => {
+  useEffect(async () => {
     async function fetchData() {
       console.log('institute', institute);
       console.log('province', province);
@@ -332,12 +328,19 @@ const ThumbListPages = ({ match }) => {
       console.log('selectedGenderOption', selectedGenderOption);
 
       if (institute !== '') {
-        const res = await axios.get(
-          `${studentInstituteApiUrl}?institute_id=${institute.id}`
+        const response = await callApi(
+          `api/student_institutes/?institute_id=${institute.id}`,
+          '',
+          null
         );
-        setItems(res.data);
-        setTotalItemCount(res.data);
-        setIsLoaded(true);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
       } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all' &&
@@ -348,82 +351,82 @@ const ThumbListPages = ({ match }) => {
           setStudentId('');
           setRest(false);
         }
-        axios
-          .get(
-            `${studentApiUrl}?student_id=${studentId}&current_district=${district}`
-          )
-          .then((res) => {
-            // console.log('res.data', res.data);
-            // console.log('res.data.results', res.data.results);
-            return res.data;
-          })
-          .then((data) => {
-            // console.log('res.data', data.results);
-
-            console.log(
-              `${studentApiUrl}?student_id=${studentId}&current_district=${district} 1`
-            );
-            console.log('data', data);
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data);
-            setIsLoaded(true);
-          });
+        const response = await callApi(
+          `api/?student_id=${studentId}&current_district=${district}`,
+          '',
+          null
+        );
+        console.log('responssdfsd', response);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
       } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district} 2`
-            );
+        const response = await callApi(
+          `api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`,
+          '',
+          null
+        );
 
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
       } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${studentApiUrl}?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${studentApiUrl}?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-            );
-
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        const response = await callApi(
+          `api/?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
       } else {
-        axios
-          // get data from localhost:8000/api/student
-          .get(
-            `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-            );
-            setItems(data);
+        // get data from localhost:8000/api/student
+        // axios
+        //   .get(
+        //     `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
+        //     );
+        //     setItems(data);
 
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
       }
     }
     fetchData();
@@ -440,14 +443,17 @@ const ThumbListPages = ({ match }) => {
     rest,
     institute,
   ]);
-
   const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
 
   useEffect(() => {
@@ -573,17 +579,17 @@ const ThumbListPages = ({ match }) => {
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              provinces.find((x) => x.column === column)
+              provincesOptionsForList.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
           selectedEducationalYearOption={selectedEducationalYearOption}
-          selectLevelOfEducationOption={selectLevelOfEducationOption}
+          studentTypeOptions={studentTypeOptions}
           selectedProvinceOption={selectedProvinceOption}
           selectedShiftOption={selectedShiftOption}
           genderOptions={genderOptions}
           shiftOption={shiftOption}
-          provinces={provinces}
+          provincesOptionsForList={provincesOptionsForList}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
               setStudentId(e.target.value.toLowerCase());
@@ -619,12 +625,10 @@ const ThumbListPages = ({ match }) => {
           }}
           educationYears={educationYears}
           // Level of Education
-          changeLevelOfEducationBy={(column) => {
-            setSelectLevelOfEducationOption(
-              levelOfEdcation.find((x) => x.column === column)
-            );
+          changestudentTypeBy={(column) => {
+            setStudentTypeOptions(studentType.find((x) => x.column === column));
           }}
-          levelOfEdcation={levelOfEdcation}
+          studentType={studentType}
         />
         <table className="table">
           <thead

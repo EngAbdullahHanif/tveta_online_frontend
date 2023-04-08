@@ -15,6 +15,35 @@ const data = [
         // roles: [UserRole.Admin],
       },
       {
+        icon: 'FA.FaList',
+        label: 'menu.kankor-student-list',
+        to: `${adminRoot}/students/kankor-students`,
+        newWindow: false,
+      },
+      {
+        icon: 'FA.FaList',
+        label: 'attendance-list',
+        to: `${adminRoot}/students/attendance-list`,
+      },
+      {
+        icon: 'CG.CgUserList',
+        label: 'transfered-Students',
+        to: `${adminRoot}/students/transfered-list`,
+        // roles: [UserRole.Admin],
+      },
+      {
+        icon: 'CG.CgUserList',
+        label: 'studendts.dismisseds-students',
+        to: `${adminRoot}/students/dismissed-list`,
+        // roles: [UserRole.Admin],
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.attendance',
+        to: `${adminRoot}/students/attendance`,
+        newWindow: false,
+      },
+      {
         icon: 'GR.GrUserAdd',
         label: 'forms.studentRegisterTitle',
         to: `${adminRoot}/students/register`,
@@ -27,18 +56,6 @@ const data = [
         // roles: [UserRole.Admin],
       },
 
-      {
-        icon: 'CG.CgUserList',
-        label: 'studendts.dismisseds-students',
-        to: `${adminRoot}/students/dismissed-list`,
-        // roles: [UserRole.Admin],
-      },
-      {
-        icon: 'CG.CgUserList',
-        label: 'transfered-Students',
-        to: `${adminRoot}/students/transfered-list`,
-        // roles: [UserRole.Admin],
-      },
       {
         icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
@@ -54,11 +71,7 @@ const data = [
       //   label: 'menu.student-profile',
       //   to: `${adminRoot}/students/student-profile`,
       // },
-      {
-        icon: 'FA.FaList',
-        label: 'attendance-list',
-        to: `${adminRoot}/students/attendance-list`,
-      },
+
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'menu.student-transfer',
@@ -77,24 +90,19 @@ const data = [
         to: `${adminRoot}/students/marks-display-allsubs`,
         newWindow: false,
       },
-      {
-        icon: 'MD.MdAddBox',
-        label: 'menu.attendance',
-        to: `${adminRoot}/students/attendance`,
-        newWindow: false,
-      },
-      {
-        icon: 'FA.FaList',
-        label: 'menu.kankor-student-list',
-        to: `${adminRoot}/students/kankor-students`,
-        newWindow: false,
-      },
+
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'student.dismissal',
         to: `${adminRoot}/students/student-dismissal`,
         newWindow: false,
       },
+      // {
+      //   icon: 'MD.MdAddBox',
+      //   label: 'menu.student-reregister',
+      //   to: `${adminRoot}/students/reregister`,
+      //   newWindow: false,
+      // },
     ],
   },
 
@@ -178,6 +186,11 @@ const data = [
         to: `${adminRoot}/institutes/institutes`,
       },
       {
+        icon: 'FA.FaList',
+        label: 'menu.promotion-demotion-list',
+        to: `${adminRoot}/institutes/promotion-demotion-list`,
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
@@ -187,11 +200,7 @@ const data = [
         label: 'menu.institute-upgrade',
         to: `${adminRoot}/institutes/institute-upgrade`,
       },
-      {
-        icon: 'FA.FaList',
-        label: 'menu.promotion-demotion-list',
-        to: `${adminRoot}/institutes/promotion-demotion-list`,
-      },
+
       // {
       //   icon: 'BI.BiMessageAltDetail',
       //   label: 'menu.Institute-details',
@@ -211,6 +220,11 @@ const data = [
         to: `${adminRoot}/dorms/dorms`,
       },
       {
+        icon: 'CG.CgUserList',
+        label: 'menu.dorm-students',
+        to: `${adminRoot}/dorms/students`,
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'dorm.register',
         to: `${adminRoot}/dorms/register`,
@@ -220,11 +234,7 @@ const data = [
         label: 'menu.student-register-in-dorm',
         to: `${adminRoot}/dorms/student-register`,
       },
-      {
-        icon: 'CG.CgUserList',
-        label: 'menu.dorm-students',
-        to: `${adminRoot}/dorms/students`,
-      },
+
       // {
       //   icon: 'BI.BiMessageAltDetail',
       //   label: 'menu.dorm-details',
@@ -249,15 +259,16 @@ const data = [
         to: `${adminRoot}/subjects/subject-list`,
       },
       {
-        icon: 'MD.MdAddBox',
-        label: 'subject.register',
-        to: `${adminRoot}/subjects/register`,
-      },
-      {
         icon: 'FA.FaList',
         label: 'menu.curriculum-list',
         to: `${adminRoot}/subjects/curriculum-list`,
       },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'subject.register',
+        to: `${adminRoot}/subjects/register`,
+      },
+
       {
         icon: 'MD.MdAddBox',
         label: 'subject.curriculum',
@@ -272,14 +283,14 @@ const data = [
     to: `${adminRoot}/classes`,
     subs: [
       {
-        icon: 'MD.MdAddBox',
-        label: 'class.register',
-        to: `${adminRoot}/classes/register`,
-      },
-      {
         icon: 'FA.FaList',
         label: 'class.list',
         to: `${adminRoot}/classes/classes`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'class.register',
+        to: `${adminRoot}/classes/register`,
       },
     ],
   },
@@ -296,15 +307,14 @@ const data = [
         to: `${adminRoot}/fields/field-list`,
       },
       {
-        icon: 'MD.MdAddBox',
-        label: 'menu.field-register',
-        to: `${adminRoot}/fields/register`,
-      },
-
-      {
         icon: 'FA.FaList',
         label: 'menu.department-list',
         to: `${adminRoot}/fields/department-list`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.field-register',
+        to: `${adminRoot}/fields/register`,
       },
 
       {
@@ -359,11 +369,34 @@ const data = [
   },
 
   {
-    id: 'docs',
-    icon: 'iconsminds-library',
-    label: 'menu.docs',
-    to: 'https://gogo-react-docs.coloredstrategies.com/',
-    newWindow: true,
+    id: 'groups',
+    icon: 'MD.MdManageAccounts',
+    label: 'menu.group-label',
+    to: `${adminRoot}/groups`,
+    subs: [
+      // {
+      //   icon: 'FA.FaList',
+      //   label: 'evaluation.list',
+      //   to: `${adminRoot}/hr-evaluations/hr-evaluations`,
+      // },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.group-register',
+        to: `${adminRoot}/groups/register`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.group-premissions',
+        to: `${adminRoot}/groups/premissions`,
+      },
+    ],
   },
+  // {
+  //   id: 'docs',
+  //   icon: 'iconsminds-library',
+  //   label: 'menu.docs',
+  //   to: 'https://gogo-react-docs.coloredstrategies.com/',
+  //   newWindow: true,
+  // },
 ];
 export default data;

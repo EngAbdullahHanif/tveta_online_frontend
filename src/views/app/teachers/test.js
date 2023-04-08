@@ -12,6 +12,13 @@ import {
   Input,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
+import { levelOfEdcationOptions } from './../global-data/data';
+import { langOptions } from './../global-data/data';
+import { contractTypeOptions } from './../global-data/data';
+import { appointmentTypeOptions } from './../global-data/data';
+import { provinceOptions } from './../global-data/data';
+import { gradeOptions } from './../global-data/data';
+import { stepOptions } from './../global-data/data';
 
 import {
   FormikReactSelect,
@@ -72,175 +79,11 @@ const StepOptions = [
   { value: '6', label: <IntlMessages id="teacher.StepOption_6" /> },
 ];
 
-const LevelOfEdcationOptions = [
-  {
-    value: '14th',
-    label: <IntlMessages id="teacher.EducationLevelOption_1" />,
-  },
-  {
-    value: 'bachelor',
-    label: <IntlMessages id="teacher.EducationLevelOption_2" />,
-  },
-  {
-    value: 'master',
-    label: <IntlMessages id="teacher.EducationLevelOption_3" />,
-  },
-  { value: 'PHD', label: <IntlMessages id="teacher.EducationLevelOption_4" /> },
-];
-
 const MajorOptions = [
   { value: '14th', label: 'Computer Science' },
   { value: 'bachelor', label: 'Agriculture' },
   { value: 'master', label: 'BBA' },
   { value: 'PHD', label: 'Mechenical Engineering' },
-];
-
-const langOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="teacher.langOptions_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="teacher.langOptions_2" />,
-  },
-  {
-    value: '3',
-    label: <IntlMessages id="teacher.langOptions_3" />,
-  },
-];
-
-const appointmentTypeOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="teacher.appointmentTOptions_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="teacher.appointmentTOptions_2" />,
-  },
-];
-const contractTypeOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="teacher.contractTypeOptions_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="teacher.contractTypeOptions_2" />,
-  },
-];
-
-const StdSchoolProvinceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
-  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
-  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
-  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
-  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
-  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
-  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
-  {
-    value: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    value: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    value: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    value: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    value: '14',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    value: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    value: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    value: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    value: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    value: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    value: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    value: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    value: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    value: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    value: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    value: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    value: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    value: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    value: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    value: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    value: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    value: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    value: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
 ];
 
 const genderOptions = [
@@ -788,7 +631,7 @@ const Validation = ({ intl }) => {
                               name="LevelOfEducation"
                               id="LevelOfEducation"
                               value={values.LevelOfEducation}
-                              options={LevelOfEdcationOptions}
+                              options={levelOfEdcationOptions}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               required
@@ -856,7 +699,7 @@ const Validation = ({ intl }) => {
                                   name="Status"
                                   id="Status"
                                   value={values.Status}
-                                  options={StatusOptions}
+                                  options={stepOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                   required
@@ -982,7 +825,7 @@ const Validation = ({ intl }) => {
                                   name="Step"
                                   id="Step"
                                   value={values.Step}
-                                  options={StepOptions}
+                                  options={stepOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                   required
@@ -1035,7 +878,7 @@ const Validation = ({ intl }) => {
                                   name="Province"
                                   id="Province"
                                   value={values.Province}
-                                  options={StdSchoolProvinceOptions}
+                                  options={provinceOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
@@ -1099,7 +942,7 @@ const Validation = ({ intl }) => {
                                   name="C_Province"
                                   id="C_Province"
                                   value={values.C_Province}
-                                  options={StdSchoolProvinceOptions}
+                                  options={provinceOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />

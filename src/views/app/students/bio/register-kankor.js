@@ -16,15 +16,14 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-
+import { genderOptions } from './../../global-data/data';
+import { provinceOptions } from './../../global-data/data';
+import { educationalYearsOptions } from './../../global-data/data';
+import { studyTimeOptions } from './../../global-data/data';
 const servicePath = 'http://localhost:8000';
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
 //http://localhost:8000/api/kankorResults/?id=1
 
-const studyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
 const InstituteOptions = [
   { value: 1, label: 'Tech Afg' },
   { value: 2, label: 'IT' },
@@ -36,170 +35,7 @@ const FieldOptions = [
   { value: '3', label: 'Option3' },
 ];
 
-const genderOptions = [
-  { value: '1', label: <IntlMessages id="institute.studentgenderOption_1" /> },
-  { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
-];
-
-const educationYears = [
-  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
-  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
-  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
-  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
-  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
-  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
-  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
-  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
-  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
-  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
-  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
-  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
-  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
-  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
-  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
-  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
-  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
-  { value: '324', label: <IntlMessages id="forms.educationalYearOption_36" /> },
-];
-
-const StdSchoolProvinceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
-  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
-  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
-  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
-  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
-  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
-  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
-  {
-    value: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    value: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    value: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    value: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    value: '14',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    value: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    value: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    value: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    value: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    value: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    value: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    value: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    value: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    value: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    value: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    value: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    value: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    value: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    value: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    value: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    value: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    value: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    value: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    value: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-  {
-    value: '234234',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
-
 const StudentRegistraion = ({ history }) => {
-  const UpdatingMode = true;
-
   const ValidationSchema = Yup.object().shape({
     name1: Yup.string()
       .min(3, <IntlMessages id="min.minInputValue" />)
@@ -283,12 +119,12 @@ const StudentRegistraion = ({ history }) => {
         setInitailInteranceDate('04/23/1995');
         setInitialDistrict(data[0].district);
 
-        const educationYearsOptions = educationYears.map((year) => {
+        const educationYearsOptions = educationalYearsOptions.map((year) => {
           if (year.value == data[0].educational_year) {
             setInitialEducationalYear(year);
           }
         });
-        const provinceOptions = StdSchoolProvinceOptions.map((province) => {
+        const provinceOptions = provinceOptions.map((province) => {
           if (province.value == data[0].provence) {
             setInitialProvince(province);
           }
@@ -336,6 +172,7 @@ const StudentRegistraion = ({ history }) => {
   const [initialEducationalYear, setInitialEducationalYear] = useState([]);
   const [initialProvince, setInitialProvince] = useState([]);
   const [initialDistrict, setInitialDistrict] = useState('');
+
   const initialValues = {
     name1: intialName,
     gender: initialGender,
@@ -629,7 +466,7 @@ const StudentRegistraion = ({ history }) => {
                           name="educationalYear"
                           id="educationalYear"
                           value={values.educationalYear}
-                          options={educationYears}
+                          options={educationalYearsOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           required
@@ -649,7 +486,7 @@ const StudentRegistraion = ({ history }) => {
                           name="province"
                           id="province"
                           value={values.province}
-                          options={StdSchoolProvinceOptions}
+                          options={provinceOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />

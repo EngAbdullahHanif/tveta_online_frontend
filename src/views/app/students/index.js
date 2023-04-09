@@ -64,6 +64,11 @@ const Test = React.lazy(() => import(/* webpackChunkName: "test" */ './test'));
 const Dismissal = React.lazy(() =>
   import(/* webpackChunkName: "dismissal" */ './student-dismissal')
 );
+// const Dismissal = React.lazy(() =>
+//   import(
+//     /* webpackChunkName: "dismissal" */ './dismissed-students/dismissed-students'
+//   )
+// );
 
 const Reregister = React.lazy(() =>
   import(/* webpackChunkName: "reregister" */ './reregister')

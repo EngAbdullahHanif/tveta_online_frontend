@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
 
 import callApi from 'helpers/callApi';
 
@@ -10,27 +9,16 @@ import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-  CardTitle,
-  Input,
-} from 'reactstrap';
-import Select from 'react-select';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import callApi from 'helpers/callApi';
+
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import { useEffect } from 'react';
 
 const StdSchoolProvinceOptions = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },

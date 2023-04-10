@@ -24,33 +24,31 @@ const getHeaders = (data) => {
 const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
-  //const user_id = '1';
+
   //add current user id to the data
-  // if (data && data instanceof FormData) {
-  //   data.append(
-  //     'user_id',
-  //     //
-  //     '1'
-  //   );
-  // } else if (data) {
-  //   // data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
-  //   // data.user_id = '1';
-  //   user_id = '1';
-  // }
+  if (data && data instanceof FormData) {
+    data.append(
+      'user_id',
+      JSON.parse(localStorage.getItem('current_user')).user_id
+    );
+  } else if (data) {
+    data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
+  }
 
   try {
-    console.log('the method', method);
     const response = await axios({
       method,
       url,
       headers,
       data,
     });
-    console.log('response of callApi', response);
     return response;
   } catch (error) {
-    console.error('error of the call', error);
-    return error;
+    if (error.response.status === 404) {
+      throw new Error('Resource not found');
+    } else {
+      throw error;
+    }
   }
 };
 

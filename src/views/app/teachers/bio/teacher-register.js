@@ -2,6 +2,11 @@
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
+import { genderOptions } from './../../global-data/data';
+import { contractTypeOptions } from './../../global-data/data';
+import { gradeOptions } from './../../global-data/data';
+import { stepOptions } from './../../global-data/data';
+import { provinceOptions } from './../../global-data/data';
 
 import {
   Row,
@@ -55,24 +60,6 @@ const StatusOptions = [
   { value: '3', label: 'منفک' },
 ];
 
-const GradeOptions = [
-  { value: '3', label: <IntlMessages id="teacher.GradeOption_3" /> },
-  { value: '4', label: <IntlMessages id="teacher.GradeOption_4" /> },
-  { value: '5', label: <IntlMessages id="teacher.GradeOption_5" /> },
-  { value: '6', label: <IntlMessages id="teacher.GradeOption_6" /> },
-  { value: '7', label: <IntlMessages id="teacher.GradeOption_7" /> },
-  { value: '8', label: <IntlMessages id="teacher.GradeOption_8" /> },
-];
-
-const StepOptions = [
-  { value: '1', label: <IntlMessages id="teacher.StepOption_1" /> },
-  { value: '2', label: <IntlMessages id="teacher.StepOption_2" /> },
-  { value: '3', label: <IntlMessages id="teacher.StepOption_3" /> },
-  { value: '4', label: <IntlMessages id="teacher.StepOption_4" /> },
-  { value: '5', label: <IntlMessages id="teacher.StepOption_5" /> },
-  { value: '6', label: <IntlMessages id="teacher.StepOption_6" /> },
-];
-
 const levelOfEdcationOptions = [
   {
     value: '1',
@@ -121,27 +108,6 @@ const appointmentTypeOptions = [
     label: 'قراردادی',
   },
 ];
-const contractTypeOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="teacher.contractTypeOptions_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="teacher.contractTypeOptions_2" />,
-  },
-];
-
-const StdSchoolProvinceOptions = [
-  { value: 123, label: 'کابل' },
-  { value: 23123, label: 'ننگرهار' },
-  { value: 3, label: 'هرات' },
-];
-
-const genderOptions = [
-  { value: '1', label: 'نارینه/مذکر' },
-  { value: '2', label: 'ښځینه/مونث' },
-];
 
 const TeacherRegister = ({ intl }, values) => {
   const [intialName, setInitialName] = useState('');
@@ -181,7 +147,11 @@ const TeacherRegister = ({ intl }, values) => {
         // const { data } = await axios.get(
         //   `${gettingSingleTeacherAPI}/?teacher_id=${teacherId}`
         // );
-        const { data } = await callApi(`teachers/institute/?teacher_id=${teacherId}`, '', null);
+        const { data } = await callApi(
+          `teachers/institute/?teacher_id=${teacherId}`,
+          '',
+          null
+        );
 
         console.log(data, 'object of the data');
 
@@ -218,18 +188,16 @@ const TeacherRegister = ({ intl }, values) => {
             }
           }
         );
-        const teacherMainProvince = StdSchoolProvinceOptions.map((province) => {
+        const teacherMainProvince = provinceOptions.map((province) => {
           if (province.value == data[0].teacher_id.main_province) {
             setInitialProvince(province);
           }
         });
-        const teacherCurrentProvince = StdSchoolProvinceOptions.map(
-          (province) => {
-            if (province.value == data[0].teacher_id.current_province) {
-              setInitialCurrentProvince(province);
-            }
+        const teacherCurrentProvince = provinceOptions.map((province) => {
+          if (province.value == data[0].teacher_id.current_province) {
+            setInitialCurrentProvince(province);
           }
-        );
+        });
         const teachingLangugaeOptions = langOptions.map((teachingLangugage) => {
           if (teachingLangugage.value == data[0].institute_id.language) {
             setInitialTeachingLang(teachingLangugage);
@@ -254,7 +222,7 @@ const TeacherRegister = ({ intl }, values) => {
             }
           }
         );
-        const teacherGradeOptions = GradeOptions.map((teacherGrade) => {
+        const teacherGradeOptions = gradeOptions.map((teacherGrade) => {
           if (teacherGrade.value == data[0].teacher_id.status_type) {
             setIntialGrade(teacherGrade);
           }
@@ -271,7 +239,7 @@ const TeacherRegister = ({ intl }, values) => {
           },
         ]);
 
-        const teacherStepOptions = StepOptions.map((teacherStep) => {
+        const teacherStepOptions = stepOptions.map((teacherStep) => {
           if (teacherStep.value == data[0].teacher_id.step) {
             setInitialStep(teacherStep);
           }
@@ -996,7 +964,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   value={values.grade}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
-                                  options={GradeOptions}
+                                  options={gradeOptions}
                                   required
                                 />
                                 {errors.grade && !Grade ? (
@@ -1078,7 +1046,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   name="step"
                                   id="step"
                                   value={values.step}
-                                  options={StepOptions}
+                                  options={stepOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                   required
@@ -1131,7 +1099,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   name="province"
                                   id="province"
                                   value={values.province}
-                                  options={StdSchoolProvinceOptions}
+                                  options={provinceOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
@@ -1195,7 +1163,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   name="C_Province"
                                   id="C_Province"
                                   value={values.C_Province}
-                                  options={StdSchoolProvinceOptions}
+                                  options={provinceOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />

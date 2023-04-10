@@ -3,6 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../../dorms/dorm-register.css';
 import profilePhoto from './../../../../../src/assets/img/profiles/22.jpg';
+import { appointmentTypeOptions } from './../../global-data/data';
+import { contractTypeOptions } from './../../global-data/data';
 
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -61,27 +63,7 @@ const initialValues = {
   transferDoc: [],
 };
 
-const appointmentTypeOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="teacher.appointmentTOptions_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="teacher.appointmentTOptions_2" />,
-  },
-];
 
-const contractTypeOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="teacher.contractTypeOptions_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="teacher.contractTypeOptions_2" />,
-  },
-];
 
 const TeacherTransfer = (values) => {
   const [data, setData] = useState(false);

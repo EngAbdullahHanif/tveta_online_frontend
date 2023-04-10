@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
+import { studyTimeOptions } from './../global-data/data';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -61,10 +62,6 @@ const ClassOptions = [
   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
 ];
 
-const StudyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
 
 const chanceOptions = [
   { value: '1', label: <IntlMessages id="forms.chanceOne" /> },
@@ -368,7 +365,7 @@ const MarksUpdate = ({ match }) => {
                           name="studyTime"
                           id="studyTime"
                           value={values.studyTime}
-                          options={StudyTimeOptions}
+                          options={studyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedStudyTime(values.studyTime)}

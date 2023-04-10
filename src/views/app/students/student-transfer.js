@@ -3,7 +3,12 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import { educationalYearsOptions } from './../global-data/data';
+import { studyTimeOptions } from './../global-data/data';
+import { mediumOfInstructionOptions } from './../global-data/data';
 import axios from 'axios';
+import callApi from 'helpers/callApi';
+import { NotificationManager } from 'components/common/react-notifications';
 
 import * as Yup from 'yup';
 import {
@@ -37,58 +42,6 @@ const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
 const instituteOptions = [
   { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
   { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-];
-
-const educationYears = [
-  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
-  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
-  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
-  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
-  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
-  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
-  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
-  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
-];
-
-const StudyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
-
-const mediumOfInstructionOptions = [
-  {
-    value: '1',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_1" />,
-  },
-  {
-    value: '2',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_2" />,
-  },
-  {
-    value: '3',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_3" />,
-  },
-  {
-    value: '4',
-    label: <IntlMessages id="forms.mediumOfInstructionOption_4" />,
-  },
 ];
 
 const SearchResultSchema = Yup.object().shape({
@@ -162,24 +115,83 @@ const StudentsTransfer = (values) => {
   const [searchResult, setSearchResult] = useState(true);
   const [studentIdMatch, setStudentIdMatch] = useState(false);
   const [reload, setReload] = useState(false);
+  // notification message
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'زده کوونکی په بریالیتوب سره تبدیل شو',
+          'موفقیت',
+          9000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'info':
+        NotificationManager.info(
+          'زده کوونکی په انستیوت کی شتون نلری',
+          'تیروتنه',
+          9000,
+          null,
+          null,
+          cName
+        );
+        break;
+
+      case 'error':
+        NotificationManager.error(
+          'زده کوونکی تبدیل نشو بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
 
   const handleSearch = async (event, values) => {
     setSearchResult(event);
     //search student in the server
-    const response = await axios.get(
-      `${studentSearchApiUrl}?student_id=${studentId}`
+    // const response = await axios.get(
+    //   `${studentSearchApiUrl}?student_id=${studentId}`
+    // );
+    // const studentResponse = await response.data;
+    // studentId == studentResponse.student_id
+    //   ? setStudentIdMatch(true)
+    //   : setStudentIdMatch(false);
+    // if (studentResponse) {
+    //   setStudent(studentResponse);
+    //   setData(true);
+    // } else {
+    //   setMessage('Student not found');
+    // }
+
+    const response = await callApi(
+      `api/student_accademic/?student_id=${studentId}`,
+      '',
+      null
     );
-    const studentResponse = await response.data;
-    console.log(studentId, 'student IDDD');
-    console.log(values, 'student Input Id');
-    studentId == studentResponse.student_id
-      ? setStudentIdMatch(true)
-      : setStudentIdMatch(false);
-    if (studentResponse) {
-      setStudent(studentResponse);
-      setData(true);
+    if (response.data && response.status === 200) {
+      studentId == response.data.student_id
+        ? setStudentIdMatch(true)
+        : setStudentIdMatch(false);
+      if (response.data) {
+        setStudent(response.data);
+        setData(true);
+      } else {
+        setMessage('Student not found');
+      }
     } else {
-      setMessage('Student not found');
+      console.log('institute error');
     }
   };
   // const handleChange = (event) => {
@@ -187,45 +199,66 @@ const StudentsTransfer = (values) => {
   // };
 
   const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
-    console.log('updatedData', updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
 
   useEffect(() => {
     fetchInstitutes();
   }, []);
-  const onSubmit = (values) => {
-    setReload(true);
-    console.log('values.institute.value', values.institute.id);
-    //is_transfer = 2 means transfered
-    data = {
+  const onSubmit = async (values) => {
+    // setReload(true);
+    const data = {
       student_id: studentId,
-      institute_id: values.institute.id,
+      institute_id: values.institute.value,
       transfer_date: values.transferDate,
-      educational_year: values.educationalYear,
-      time: values.shif.value, //shift
-      language: values.language,
-      is_transfer: 2,
+      educational_year: values.educationalYear.value,
+      shift: values.studyTime.value, //shift
+      language: values.mediumOfInstruction.value,
+      type: 1, //type = 1 means this is student new institute, the old institute type is now 2 which means old institute
+      is_transfer: 2, //is_transfer = 2 means transfered
+      user_id: '',
     };
-    //transfer student
-    axios
-      .post(`${studentTranferApiUrl}`, {
-        data,
-      })
-      .then((response) => {
-        console.log(response, 'response');
-        if (response.status === 201) {
-          console.log('success');
-        }
-      })
-      .catch((error) => {
-        console.log(error, 'error');
-      });
+
+    try {
+      const response = await callApi(
+        `api/Student_Institute_Transfer_API/`,
+        'POST',
+        data
+      );
+      if (response.status === 200 || response.status === 201) {
+        console.log('success');
+        createNotification('success', 'filled');
+        setReload(true);
+      }
+    } catch (error) {
+      if (error.message === 'Resource not found') {
+        console.log('student not found');
+        createNotification('info', 'filled');
+      } else {
+        console.log('An error occurred:', error.message);
+        createNotification('error', 'filled');
+      }
+    }
+
+    // if (response.status === 200 || response.status === 201) {
+    //   console.log('success');
+    //   createNotification('success', 'filled');
+    // } else if (response.status === 404 || response.status === 400) {
+    //   console.log('student not found');
+    //   createNotification('info', 'filled');
+    // } else {
+    //   console.log('error');
+    //   createNotification('error', 'filled');
+    // }
   };
 
   return (
@@ -233,12 +266,12 @@ const StudentsTransfer = (values) => {
       <h3 className="mt-5 m-5">
         {<IntlMessages id="student.transferTitle" />}
       </h3>
-      <h3 className="text-center">
+      {/* <h3 className="text-center">
         {' '}
         Mr Hanif Complete the Integration And Check Why its going to the student
         record if we enter the correct id for first time and incorrect for the
-        second time 
-      </h3>
+        second time
+      </h3> */}
       <CardBody>
         {!reload ? (
           <>
@@ -250,7 +283,7 @@ const StudentsTransfer = (values) => {
                       <Formik
                         initialValues={initialValues}
                         onSubmit={handleSearch}
-                        validationSchema={SearchResultSchema}
+                        // validationSchema={SearchResultSchema}
                       >
                         {({
                           errors,
@@ -272,11 +305,7 @@ const StudentsTransfer = (values) => {
                                   size="lg"
                                   type="submit"
                                   color="primary"
-                                  onClick={
-                                    values.searchfield.length > 3
-                                      ? () => handleSearch(false)
-                                      : ''
-                                  }
+                                  onClick={() => handleSearch(false)}
                                 >
                                   <span className="spinner d-inline-block">
                                     <span className="bounce1" />
@@ -359,7 +388,7 @@ const StudentsTransfer = (values) => {
                                     <Label>
                                       <IntlMessages id="marks.ClassLabel" />
                                     </Label>
-                                    <h3>انتگریت گردد</h3>
+                                    {/* <h3>انتگریت گردد</h3> */}
                                     <h3>{student.class_name}</h3>
                                   </Colxx>
                                   <Colxx className="p-5 border rounded">
@@ -538,7 +567,7 @@ const StudentsTransfer = (values) => {
                                 name="educationalYear"
                                 id="educationalYear"
                                 value={values.educationalYear}
-                                options={educationYears}
+                                options={educationalYearsOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -582,7 +611,7 @@ const StudentsTransfer = (values) => {
                                 name="studyTime"
                                 id="studyTime"
                                 value={values.studyTime}
-                                options={StudyTimeOptions}
+                                options={studyTimeOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />

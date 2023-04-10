@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
-
+import { provincesOptionsForList } from './../../../global-data/data';
 // import { servicePath } from 'constants/defaultValues';
-
 import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
-
 import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
@@ -49,6 +47,7 @@ const genderOptions = [
   },
   { column: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
 ];
+
 const provinces = [
   {
     column: 'all',
@@ -581,7 +580,7 @@ const ThumbListPages = ({ match }) => {
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              provinces.find((x) => x.column === column)
+              provincesOptionsForList.find((x) => x.column === column)
             );
           }}
           selectedGenderOption={selectedGenderOption}
@@ -591,7 +590,7 @@ const ThumbListPages = ({ match }) => {
           selectedShiftOption={selectedShiftOption}
           genderOptions={genderOptions}
           shiftOption={shiftOption}
-          provinces={provinces}
+          provincesOptionsForList={provincesOptionsForList}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
               setStudentId(e.target.value.toLowerCase());

@@ -3,8 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import axios from 'axios';
-
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import { upgradeToOption } from './../global-data/data';
 
 import * as Yup from 'yup';
 import {
@@ -32,12 +32,6 @@ import {
 } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
 import { institute } from 'lang/locales/fa_IR';
-
-const upgradeToOption = [
-  { value: '1', label: <IntlMessages id="institute.upgradingOptions_1" /> },
-  { value: '2', label: <IntlMessages id="institute.upgradingOptions_2" /> },
-  { value: '3', label: <IntlMessages id="institute.upgradingOptions_3" /> },
-];
 
 const servicePath = 'http://localhost:8000';
 const instituteSearchApiUrl = `${servicePath}/institute/`;

@@ -19,6 +19,8 @@ import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
+import { studyTimeOptions } from './../../global-data/data';
+
 import {
   FormikReactSelect,
   FormikTagsInput,
@@ -60,11 +62,6 @@ const ClassOptions = [
   { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-];
-
-const StudyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
 const SubjectOptions = [
@@ -299,7 +296,7 @@ const StudentAttendance = ({ match }) => {
                           name="studyTime"
                           id="studyTime"
                           value={values.studyTime}
-                          options={StudyTimeOptions}
+                          options={studyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedStudyTime(values.studyTime)}

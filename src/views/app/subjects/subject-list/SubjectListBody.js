@@ -3,6 +3,7 @@ import { Card, CustomInput, Badge } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
+import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
@@ -26,48 +27,77 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
           >
             <div
               className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
-              style={{ width: '100%', marginTop: 8 }}
+              style={{ width: '100%', marginTop: 8, marginRight: '0px' }}
             >
               <NavLink
                 to={`subjects/${subject.code}`}
-                style={{ width: '16%' }}
+                style={{ width: '8%', marginRight: '-5px', fontSize: '20px' }}
               >
-                <p className="list-item-heading mb-1 truncate">
+                <p
+                  className="list-item-heading mb-1  truncate"
+                  style={{ fontSize: '20px' }}
+                >
                   {subject.code}
+                  checkIntegration
                 </p>
               </NavLink>
               <NavLink
                 to={`subjects/${subject.code}`}
-                style={{ width: '15%', marginRight: 30 }}
+                style={{ width: '12%', marginRight: 30, fontSize: '20px' }}
               >
-                <p className="list-item-heading mb-1 truncate">
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ fontSize: '20px' }}
+                >
                   {subject.name}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right', marginRight: 55 }}
+                style={{
+                  width: '18%',
+                  textAlign: 'right',
+                  marginRight: 55,
+                  fontSize: '20px',
+                }}
               >
                 {subject.english_name}
+                checkIntegration
               </p>
 
               <p
                 className="mb-1 text-small"
-                style={{ width: '10%', textAlign: 'right', marginRight: 40 }}
+                style={{
+                  width: '6%',
+                  textAlign: 'right',
+                  marginRight: 40,
+                  fontSize: '20px',
+                }}
               >
                 {subject.sub_credit}
+                checkinteg
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right', marginRight: 50 }}
+                style={{
+                  width: '13%',
+                  textAlign: 'right',
+                  marginRight: 50,
+                  fontSize: '20px',
+                }}
               >
-                {subject.sub_type == 1 ? 'اختیاری' ? subject.sub_type == 2 : 'اجباری' ? subject.sub_type == 3 : 'ترمی' ? subject.sub_type == 4 : 'ترمی اختیاری' ? subject.sub_type == 5 : 'ترمی اجباری' ? subject.sub_type == 6 : 'ترمی اختیاری' ? subject.sub_type == 7 : 'ترمی اجباری' ? subject.sub_type == 8 : 'ترمی اختیاری' ? subject.sub_type == 9 : 'ترمی ': 'sld'}
+                {subject.sub_type == 1 ? (
+                  <IntlMessages id="subject.coreSubject" />
+                ) : (
+                  <IntlMessages id="subject.nonCoreSubject" />
+                )}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                style={{ width: '16%', textAlign: 'right', fontSize: '20px' }}
               >
                 {subject.system}
+                checkInteg
               </p>
             </div>
           </div>

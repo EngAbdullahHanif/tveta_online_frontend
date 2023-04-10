@@ -59,7 +59,7 @@ const ListPageHeading = ({
   // Province
   selectedProvinceOption,
   changeProvinceBy,
-  provinces,
+  provincesOptionsForList,
   // Districts
   onDistrictSearchKey,
   onProvinceSearchKey,
@@ -220,7 +220,7 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
-                    {provinces.map((order, index) => {
+                    {provincesOptionsForList.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}

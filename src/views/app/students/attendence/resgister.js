@@ -21,7 +21,7 @@ import {
   Input,
 } from 'reactstrap';
 import Select from 'react-select';
-
+import callApi from 'helpers/callApi';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
@@ -97,13 +97,6 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.educationYearErr" />),
 
-  studyTime: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StudyTimeErr" />),
-
   classs: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -122,6 +115,27 @@ const ValidationSchema = Yup.object().shape({
     <IntlMessages id="forms.totolEduactionalDaysErr" />
   ),
 
+  // studyTime: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.StudyTimeErr" />),
+
+  // StdPresent: Yup.number().required(
+  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
+  // ),
+  // StdAbsent: Yup.number().required(
+  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
+  // ),
+  // StdNecessaryWork: Yup.number().required(
+  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
+  // ),
+  // StdSickness: Yup.number().required(
+  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
+  // ),
+  //StdPresent number
+
   // subject: Yup.object()
   //   .shape({
   //     value: Yup.string().required(),
@@ -132,7 +146,6 @@ const ValidationSchema = Yup.object().shape({
 
 const initialValues = {
   institute: [],
-  educationlaYear: '',
   studyTime: [],
   classs: [],
   department: [],
@@ -179,8 +192,8 @@ const StudentAttendance = ({ match }) => {
   }
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(true);
-  const [inNext, setIsNext] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isNext, setIsNext] = useState(false);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([{ label: 1, value: 'he' }]);
   const [departments, setDepartments] = useState([]);
@@ -202,60 +215,106 @@ const StudentAttendance = ({ match }) => {
   const [initailDepartment, setInitialDepartment] = useState([]);
   const [initalSubject, setInitialSubject] = useState([]);
 
-  const initialValues = {
-    institute: initialInstitue,
-    educationlaYear: initailEducationalYear,
-    classs: initalClass,
-    department: initailDepartment,
-    subject: initalSubject,
-  };
+  // const initialValues = {
+  //   institute: initialInstitue,
+  //   educationlaYear: initailEducationalYear,
+  //   classs: initalClass,
+  //   department: initailDepartment,
+  //   subject: initalSubject,
+  // };
 
-  console.log('currentUser', getCurrentUser());
+  // fetch institute lists
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
+
+  // fetch fields
   const fetchFields = async () => {
-    // const response = await axios.get('http://localhost:8000/institute/filed/');
-    // const updatedData = await response.data.map((item) => ({
-    //   value: item.id,
-    //   label: item.name,
-    // }));
-    // setFields(updatedData);
+    const response = await callApi('institute/field/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFields(updatedData);
+    } else {
+      console.log('field error');
+    }
   };
+
+  // fetch department list
   const fetchDepartments = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/department/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDepartments(updatedData);
+    const response = await callApi('institute/department/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('department error');
+    }
   };
 
+  //fetch class list
   const fetchClasses = async () => {
-    const response = await axios.get('http://localhost:8000/institute/classs/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name + ' - ' + item.semester + ' - ' + item.section,
-    }));
-    setClasses(updatedData);
+    const response = await callApi('institute/classs/', 'GET', null);
+    console.log('class repspossdfsde', response);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setClasses(updatedData);
+    } else {
+      console.log('class error');
+    }
   };
 
+  //fetch subject list
   const fetchSubjects = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/subject/'
+    const response = await callApi('institute/subject/', 'GET', null);
+    console.log('class repspossdfsde', response);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('class error');
+    }
+  };
+
+  // fetch student list for typing attendance
+  const fetchStudentList = async (
+    selectedInstitute,
+    selectedClass,
+    selecedStudyTime = [],
+    selectedDepartment,
+    selectedEducationalYear
+  ) => {
+    const response = await callApi(
+      '/api',
+      //`api/student-for-marks?institute=${selectedInstitute}&classs=${selectedClass}&study_time=${selecedStudyTime}&department=${selectedDepartment}&educational_year=${selectedEducationalYear}`,
+      'GET',
+      null
     );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setSubjects(updatedData);
+    console.log('class repspossdfsde', response);
+    if (response.data && response.status === 200) {
+      setStudents(response.data);
+    } else {
+      console.log('class error');
+    }
   };
 
   useEffect(() => {
@@ -266,8 +325,23 @@ const StudentAttendance = ({ match }) => {
     fetchSubjects();
   }, []);
 
+  const random = (values) => {
+    console.log(values);
+    console.log('inside the random function form new score');
+    console.log('stdPresnet', values.StdPresent);
+    setIsSubmitted(true);
+  };
   const onSubmit = (values) => {
-    setIsNext(false);
+    // console.log('value of the form', values);
+    // console.log('institueID', values.institute.value);
+    // console.log('inside the submit function');
+
+    // fetchStudentList(
+    //   values.institue.value,
+    //   values.classs.value,
+    //   values.department.value,
+    //   values.educationalYear.value
+    // );
     axios
       .get(
         `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
@@ -275,39 +349,41 @@ const StudentAttendance = ({ match }) => {
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
-        // setIsNext(false);
+        console.log('student data', response.data);
+        setIsNext(true);
       });
-    console.log('students', students);
-    console.log('values', values);
-    const educational_year = selectedEducationalYear;
-    const institute_id = selectedInstitute.value;
-    const department = selectedDepartment.value;
-    const class_id = selectedClass.value;
-    const subject_id = selectedSubject.value;
-    students.map((student) => {
-      const examData = {
-        educational_year: educational_year,
-        student_id: student.student_id,
-        institute_id: institute_id,
-        Department: department,
-        class_id: class_id,
-      };
-      //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-      //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-      console.log('exam', examData);
-      const data = {
-        subject: subject_id,
-        exam_types: 1,
-        passing_score: passingScore,
-        grad: subjectGrad,
-        Gpa: subjectGPA,
-        user_id: 1,
-        mark: values.score[student.student_id],
-      };
-      console.log('data', data);
-      // axios.post('http://localhost:8000/api/marks/', data);
-    });
+    //console.log('students', students);
+    // console.log('values of the form', values);
+    // const educational_year = selectedEducationalYear;
+    // const institute_id = selectedInstitute.value;
+    // const department = selectedDepartment.value;
+    // const class_id = selectedClass.value;
+    // const subject_id = selectedSubject.value;
+    // students.map((student) => {
+    //   const examData = {
+    //     educational_year: educational_year,
+    //     student_id: student.student_id,
+    //     institute_id: institute_id,
+    //     Department: department,
+    //     class_id: class_id,
+    //   };
+    //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
+    //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
+
+    // const data = {
+    //   subject: subject_id,
+    //   exam_types: 1,
+    //   passing_score: passingScore,
+    //   grad: subjectGrad,
+    //   Gpa: subjectGPA,
+    //   user_id: 1,
+    //   mark: values.score[student.student_id],
+    // };
+    //console.log('data', data);
+    // axios.post('http://localhost:8000/api/marks/', data);
   };
+  console.log('isNext, isSubmitted', isNext, isSubmitted);
+
   return (
     <>
       <Card>
@@ -315,7 +391,7 @@ const StudentAttendance = ({ match }) => {
           {<IntlMessages id="forms.AttendanceTitle" />}
         </h3>
         <CardBody>
-          {inNext ? (
+          {!isNext ? (
             <Formik
               enableReinitialize={true}
               initialValues={initialValues}
@@ -353,26 +429,6 @@ const StudentAttendance = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      {/* <FormGroup className="form-group has-float-label mt-5  error-l-150">
-                        <Label>
-                          <IntlMessages id="forms.StudyTimeLabel" />
-                        </Label>
-                        <FormikReactSelect
-                          name="studyTime"
-                          id="studyTime"
-                          value={values.studyTime}
-                          options={studyTimeOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          onClick={setSelectedStudyTime(values.studyTime)}
-                        />
-                        {errors.studyTime && touched.studyTime ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.studyTime}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-                      {/* Eduactional Year*/}
                       <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
                         <Label>
                           <IntlMessages id="curriculum.eduactionalYearLabel" />
@@ -384,7 +440,6 @@ const StudentAttendance = ({ match }) => {
                           options={educationalYearsOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
-                          required
                         />
                         {errors.educationalYear && touched.educationalYear ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -457,27 +512,6 @@ const StudentAttendance = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
-                      {/* <FormGroup className="form-group has-float-label mt-5 error-l-150">
-                        <Label>
-                          <IntlMessages id="marks.SubjectLabel" />
-                        </Label>
-                        <FormikReactSelect
-                          name="subject"
-                          id="subject"
-                          value={values.subject}
-                          options={subjects}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          onClick={setSelectedSubject(values.subject)}
-                          required
-                        />
-                        {errors.subject && touched.subject ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.subject}
-                          </div>
-                        ) : null}
-                      </FormGroup> */}
                     </Colxx>
                   </Row>
                   <Row>
@@ -504,7 +538,7 @@ const StudentAttendance = ({ match }) => {
             </Formik>
           ) : (
             <>
-              {isSubmitted ? (
+              {!isSubmitted ? (
                 <>
                   <Row
                     className="border border bg-primary me-5 p-1 "
@@ -552,7 +586,6 @@ const StudentAttendance = ({ match }) => {
                       <h6>دینامیک گردد</h6>
                     </Colxx>
                   </Row>
-
                   <Row
                     className="justify-content-center  border border"
                     style={{ marginInline: '10%' }}
@@ -610,175 +643,209 @@ const StudentAttendance = ({ match }) => {
                       </thead>
                     </table>
                   </Row>
-
-                  <Row
-                    className="justify-content-center  border border"
-                    style={{
-                      marginInline: '10%',
-                      height: '30rem',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
+                  <Formik
+                    initialValues={initialValues}
+                    onSubmit={random}
+                    // validationSchema={ValidationSchema}
                   >
-                    <table class="table ">
-                      <tbody
-                        className="border border "
-                        style={{
-                          height: '200px',
-                          overflowY: 'scroll',
-                          overflowX: 'hidden',
-                        }}
-                      >
-                        {students.map((student, index) => (
-                          <tr>
-                            <th scope="row">{index}</th>
-                            <td>{student.name}</td>
-                            <td>{student.father_name}</td>
-                            <td>{student.student_id}</td>; ; ;{/* Present*/}
-                            <div class="form-group mx-sm-3 mb-2">
-                              <FormGroup className="form-group">
-                                <Field
-                                  type="number"
-                                  className="form-control"
-                                  name={`StdPresent[${student.student_id}]`}
-                                />
-                                {errors.StdPresent && touched.StdPresent ? (
-                                  <div className="invalid-feedback d-block">
-                                    {errors.StdPresent}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                            {/* Absent */}
-                            <div class="form-group mx-sm-3 mb-2">
-                              <FormGroup className="form-group">
-                                <Field
-                                  type="number"
-                                  className="form-control"
-                                  name={`StdAbsent[${student.student_id}]`}
-                                />
-                                {errors.StdAbsent && touched.StdAbsent ? (
-                                  <div className="invalid-feedback d-block">
-                                    {errors.StdAbsent}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                            {/* Necessary Work */}
-                            <div class="form-group mx-sm-3 mb-2">
-                              <FormGroup className="form-group">
-                                <Field
-                                  type="number"
-                                  className="form-control"
-                                  name={`StdNecessaryWork[${student.student_id}]`}
-                                />
-                                {errors.StdNecessaryWork &&
-                                touched.StdNecessaryWork ? (
-                                  <div className="invalid-feedback d-block">
-                                    {errors.StdNecessaryWork}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                            {/* SickNess */}
-                            <div class="form-group mx-sm-3 mb-2">
-                              <FormGroup className="form-group">
-                                <Field
-                                  type="number"
-                                  className="form-control"
-                                  name={`StdSickness[${student.student_id}]`}
-                                />
-                                {errors.StdSickness && touched.StdSickness ? (
-                                  <div className="invalid-feedback d-block">
-                                    {errors.StdSickness}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                            <td>
-                              Mahroom or full attendance should be displayed
-                              here
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </Row>
-                  <Row
-                    className="justify-content-center  border border"
-                    style={{
-                      marginInline: '10%',
-                    }}
-                  >
-                    <table class="table ">
-                      <tbody>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                      <tfoot className="thead-dark">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="border text-center "
-                            style={{ maxWidth: '20px' }}
-                          >
-                            <IntlMessages id="marks.No" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="marks.FullName" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="marks.FatherName" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="marks.ID" />
-                          </th>
-
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="forms.StdPresentLabel" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="forms.StdAbsentLabel" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="forms.StdNecessaryWorkLabel" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="forms.StdSicknessLabel" />
-                          </th>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </Row>
-                  <Row className=" justify-content-center">
-                    <Colxx xxs="9" className="m-5">
-                      <Button className=" m-4" onClick={() => setIsNext(true)}>
-                        <IntlMessages id="button.Back" />
-                      </Button>
-
-                      <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                        <Button
-                          className={`btn-shadow btn-multiple-state `}
-                          size="lg"
-                          type="submit"
-                          onClick={() => setIsSubmitted(false)}
+                    {({
+                      errors,
+                      // touched,
+                      // // values,
+                      // setFieldTouched,
+                      // setFieldValue,
+                    }) => (
+                      <Form className="av-tooltip tooltip-label-right ">
+                        <Row
+                          className="justify-content-center  border border"
+                          style={{
+                            marginInline: '10%',
+                            height: '30rem',
+                            overflowY: 'scroll',
+                            overflowX: 'hidden',
+                          }}
                         >
-                          <span className="spinner d-inline-block">
-                            <span className="bounce1" />
-                            <span className="bounce2" />
-                            <span className="bounce3" />
-                          </span>
-                          <span className="label">
-                            <IntlMessages id="button.SubmitButton" />
-                          </span>
-                        </Button>
-                      </div>
-                    </Colxx>
-                  </Row>
+                          <table class="table ">
+                            <tbody
+                              className="border border "
+                              style={{
+                                height: '200px',
+                                overflowY: 'scroll',
+                                overflowX: 'hidden',
+                              }}
+                            >
+                              {students.length > 0 &&
+                                students.map((student, index) => (
+                                  <tr>
+                                    <th scope="row">{index}</th>
+                                    <td>{student.name}</td>
+                                    <td>{student.father_name}</td>
+                                    <td>{student.student_id}</td>
+                                    <td>
+                                      {/* Present*/}
+                                      <div class="form-group mx-sm-3 mb-2">
+                                        <FormGroup className="form-group">
+                                          <Field
+                                            type="string"
+                                            className="form-control"
+                                            // name={`StdPresent[${student.student_id}]`}
+                                            name="StdPresent"
+                                          />
+                                          {errors.StdPresent &&
+                                          touched.StdPresent ? (
+                                            <div className="invalid-feedback d-block">
+                                              {errors.StdPresent}
+                                            </div>
+                                          ) : null}
+                                        </FormGroup>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      {/* Absent */}
+                                      <div class="form-group mx-sm-3 mb-2">
+                                        <FormGroup className="form-group">
+                                          <Field
+                                            type="string"
+                                            className="form-control"
+                                            //name={`StdAbsent[${student.student_id}]`}
+                                            name={`${index}`}
+                                          />
+                                          {errors.StdAbsent &&
+                                          touched.StdAbsent ? (
+                                            <div className="invalid-feedback d-block">
+                                              {errors.StdAbsent}
+                                            </div>
+                                          ) : null}
+                                        </FormGroup>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      {/* Necessary Work */}
+                                      <div class="form-group mx-sm-3 mb-2">
+                                        <FormGroup className="form-group">
+                                          <Field
+                                            type="string"
+                                            className="form-control"
+                                            //name={`StdNecessaryWork[${student.student_id}]`}
+                                            name={`${index}`}
+                                          />
+                                          {errors.StdNecessaryWork &&
+                                          touched.StdNecessaryWork ? (
+                                            <div className="invalid-feedback d-block">
+                                              {errors.StdNecessaryWork}
+                                            </div>
+                                          ) : null}
+                                        </FormGroup>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      {/* SickNess */}
+                                      <div class="form-group mx-sm-3 mb-2">
+                                        <FormGroup className="form-group">
+                                          <Field
+                                            type="string"
+                                            className="form-control"
+                                            //name={`StdSickness[${student.student_id}]`}
+                                            name={`${index}`}
+                                          />
+                                          {errors.StdSickness &&
+                                          touched.StdSickness ? (
+                                            <div className="invalid-feedback d-block">
+                                              {errors.StdSickness}
+                                            </div>
+                                          ) : null}
+                                        </FormGroup>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      Mahroom or full attendance should be
+                                      displayed here
+                                    </td>
+                                  </tr>
+                                ))}
+                            </tbody>
+                          </table>
+                        </Row>
+                        <Row
+                          className="justify-content-center  border border"
+                          style={{
+                            marginInline: '10%',
+                          }}
+                        >
+                          <table class="table ">
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                            <tfoot className="thead-dark">
+                              <tr>
+                                <th
+                                  scope="col"
+                                  className="border text-center "
+                                  style={{ maxWidth: '20px' }}
+                                >
+                                  <IntlMessages id="marks.No" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="marks.FullName" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="marks.FatherName" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="marks.ID" />
+                                </th>
+
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="forms.StdPresentLabel" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="forms.StdAbsentLabel" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="forms.StdSicknessLabel" />
+                                </th>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        </Row>
+                        <Row className=" justify-content-center">
+                          <Colxx xxs="9" className="m-5">
+                            <Button
+                              className=" m-4"
+                              onClick={() => setIsNext(false)}
+                            >
+                              <IntlMessages id="button.Back" />
+                            </Button>
+
+                            <div className="d-flex justify-content-between align-items-center m-4 float-right">
+                              <Button
+                                className={`btn-shadow btn-multiple-state `}
+                                size="lg"
+                                type="submit"
+                              >
+                                <span className="spinner d-inline-block">
+                                  <span className="bounce1" />
+                                  <span className="bounce2" />
+                                  <span className="bounce3" />
+                                </span>
+                                <span className="label">
+                                  <IntlMessages id="button.SubmitButton" />
+                                </span>
+                              </Button>
+                            </div>
+                          </Colxx>
+                        </Row>
+                      </Form>
+                    )}
+                  </Formik>
                 </>
               ) : (
                 <div className="wizard-basic-step text-center pt-3">
@@ -793,8 +860,8 @@ const StudentAttendance = ({ match }) => {
                       className="m-5 bg-primary"
                       // onClick={() => window.location.reload()}
                       onClick={() => {
-                        setIsNext(true);
-                        setIsSubmitted(true);
+                        setIsNext(false);
+                        setIsSubmitted(false);
                       }}
                     >
                       <IntlMessages id="button.Back" />

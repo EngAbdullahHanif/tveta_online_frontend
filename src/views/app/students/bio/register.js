@@ -1,6 +1,11 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import DatePicker from 'react-multi-date-picker';
+import solarHijriCalender from 'react-date-object/calendars/persian';
+import afghanDateFormat from 'react-date-object/locales/persian_en';
+//import solarHijriCalender from 'helpers/solarHijriCalender';
+//import afghanDateFormat from 'helpers/persian';
 import {
   Row,
   Card,
@@ -34,6 +39,7 @@ import * as Yup from 'yup';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import { institute } from 'lang/locales/fa_IR';
 import callApi from 'helpers/callApi';
+//import { Controller } from 'react';
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
@@ -85,34 +91,54 @@ const mediumOfInstructionOptions = [
 ];
 
 const educationYears = [
-  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
-  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
-  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
-  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
-  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
-  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
-  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
-  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
-  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
-  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
-  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
+  { value: '1', label: '1370' },
+  { value: '2', label: '1371' },
+  { value: '3', label: '1372' },
+  { value: '4', label: '1373' },
+  { value: '5', label: '1374' },
+  { value: '6', label: '1375' },
+  { value: '7', label: '1376' },
+  { value: '8', label: '1377' },
+  { value: '9', label: '1378' },
+  { value: '10', label: '1379' },
+  { value: '11', label: '1380' },
+  { value: '12', label: '1381' },
+  { value: '14', label: '1382' },
+  { value: '14', label: '1383' },
+  { value: '15', label: '1384' },
+  { value: '16', label: '1385' },
+  { value: '17', label: '1386' },
+  { value: '18', label: '1387' },
+  { value: '19', label: '1388' },
+  { value: '20', label: '1389' },
+  { value: '21', label: <IntlMessages id="forms.educationalYearOption_1" /> },
+  { value: '22', label: <IntlMessages id="forms.educationalYearOption_2" /> },
+  { value: '23', label: <IntlMessages id="forms.educationalYearOption_3" /> },
+  { value: '24', label: <IntlMessages id="forms.educationalYearOption_4" /> },
+  { value: '25', label: <IntlMessages id="forms.educationalYearOption_5" /> },
+  { value: '26', label: <IntlMessages id="forms.educationalYearOption_6" /> },
+  { value: '27', label: <IntlMessages id="forms.educationalYearOption_7" /> },
+  { value: '28', label: <IntlMessages id="forms.educationalYearOption_8" /> },
+  { value: '29', label: <IntlMessages id="forms.educationalYearOption_9" /> },
+  { value: '30', label: <IntlMessages id="forms.educationalYearOption_10" /> },
+  { value: '31', label: <IntlMessages id="forms.educationalYearOption_11" /> },
+  { value: '32', label: <IntlMessages id="forms.educationalYearOption_12" /> },
+  { value: '33', label: <IntlMessages id="forms.educationalYearOption_13" /> },
+  { value: '34', label: <IntlMessages id="forms.educationalYearOption_14" /> },
+  { value: '35', label: <IntlMessages id="forms.educationalYearOption_15" /> },
+  { value: '36', label: <IntlMessages id="forms.educationalYearOption_16" /> },
+  { value: '37', label: <IntlMessages id="forms.educationalYearOption_17" /> },
+  { value: '38', label: <IntlMessages id="forms.educationalYearOption_18" /> },
+  { value: '39', label: <IntlMessages id="forms.educationalYearOption_19" /> },
+  { value: '40', label: <IntlMessages id="forms.educationalYearOption_20" /> },
+  { value: '41', label: <IntlMessages id="forms.educationalYearOption_21" /> },
+  { value: '42', label: <IntlMessages id="forms.educationalYearOption_22" /> },
+  { value: '43', label: <IntlMessages id="forms.educationalYearOption_23" /> },
+  { value: '44', label: <IntlMessages id="forms.educationalYearOption_24" /> },
+  { value: '45', label: <IntlMessages id="forms.educationalYearOption_25" /> },
+  { value: '46', label: <IntlMessages id="forms.educationalYearOption_26" /> },
+  { value: '47', label: <IntlMessages id="forms.educationalYearOption_27" /> },
+  { value: '48', label: <IntlMessages id="forms.educationalYearOption_28" /> },
   { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
   { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
   { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
@@ -640,7 +666,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialname1, setInitialname1] = useState('');
   const [initialLastName, setInitialLastName] = useState('');
   const [initialFatherName, setInitialFatherName] = useState('');
-
+  const [DoB, setDoB] = useState();
   const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
   const [initialFatherDuty, setInitialFatherDuty] = useState('');
   const [initialLastNameEng, setInitialLastNameEng] = useState();
@@ -803,7 +829,7 @@ const StudentRegistration = ({ intl }, values) => {
   const postStudentRecord = async (data) => {
     const response = await callApi('api/student_create', 'POST', data);
     console.log('response of call api', response);
-    if (response) {
+    if (response & response.data) {
       createNotification('success', 'filled');
       console.log('success message', response.data);
     } else {
@@ -910,13 +936,13 @@ const StudentRegistration = ({ intl }, values) => {
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
-          console.log(newFields, 'Final Values');
+          console.log(newFields, 'new hirjri date');
 
           const data = {
             //personal info,
             name: newFields.name1,
             kankor_id: newFields.kankorId,
-            finished_grade_year: newFields.graduationYear,
+            finished_grade_year: newFields.graduationYear.label,
             school: newFields.preSchool,
             schoolـprovince: newFields.schoolProvince.value,
             finished_grade: newFields.levelOfEducation.value.toString(10),
@@ -939,7 +965,7 @@ const StudentRegistration = ({ intl }, values) => {
             current_province: newFields.C_Province.value,
             current_district: newFields.C_District,
             current_village: newFields.C_Village,
-            birth_date: newFields.DoB,
+            birth_date: newFields.DoB.label,
             fatherـprofession: newFields.fatherDuty,
             fatherـplaceـofـduty: newFields.fatherDutyLocation,
             internse_type: newFields.interanceType.value,
@@ -947,7 +973,7 @@ const StudentRegistration = ({ intl }, values) => {
             gender: newFields.gender.value,
             //student_photo: newFields.photo,// institue info
             institute: newFields.institute.value.toString(10),
-            educational_year: newFields.educationalYear.value,
+            educational_year: newFields.educationalYear.label,
             type: '1',
             language: newFields.mediumOfInstruction.value,
             time: newFields.studyTime.value,
@@ -983,6 +1009,7 @@ const StudentRegistration = ({ intl }, values) => {
   };
 
   const { messages } = intl;
+  console.log('today date', DoB);
 
   return (
     <Card>
@@ -1166,14 +1193,35 @@ const StudentRegistration = ({ intl }, values) => {
                             )}
 
                             {/* Date Of Birth */}
-                            <FormGroup className="form-group has-float-label">
-                              <Label>
+
+                            {/* <Label>
                                 <IntlMessages id="teacher.DoBLabel" />
                               </Label>
                               <Field
                                 className="form-control"
                                 name="DoB"
                                 type="date"
+                              />
+                              {errors.DoB && touched.DoB ? (
+                                <div className="invalid-feedback d-block bg-danger text-white">
+                                  {errors.DoB}
+                                </div>
+                              ) : null} */}
+
+                            {/* <IntlMessages id="teacher.DoBLabel" /> */}
+
+                            <FormGroup className="form-group has-float-label ">
+                              <Label>
+                                <IntlMessages id="teacher.DoBLabel" />
+                              </Label>
+                              <FormikReactSelect
+                                name="DoB"
+                                id="DoB"
+                                value={values.educationalYear}
+                                options={educationYears}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                required
                               />
                               {errors.DoB && touched.DoB ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
@@ -1447,7 +1495,28 @@ const StudentRegistration = ({ intl }, values) => {
                           </Colxx>
                           <Colxx xxs="6" className="pt-3">
                             <div className="square p-3 ">
-                              <FormGroup className="form-group has-float-label error-l-100">
+                              <FormGroup className="form-group has-float-label ">
+                                <Label>
+                                  <IntlMessages id="teacher.DoBLabel" />
+                                </Label>
+                                <FormikReactSelect
+                                  name="graduationYear"
+                                  id="graduationYear"
+                                  value={values.educationalYear}
+                                  options={educationYears}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                  required
+                                />
+                                {errors.graduationYear &&
+                                touched.graduationYear ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                    {errors.graduationYear}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+
+                              {/* <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.StdGraduationYearLabel" />
                                 </Label>
@@ -1462,7 +1531,7 @@ const StudentRegistration = ({ intl }, values) => {
                                     {errors.graduationYear}
                                   </div>
                                 ) : null}
-                              </FormGroup>
+                              </FormGroup> */}
                               {/*School province*/}
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const servicePath = 'http://localhost:8000';
+const servicePath = 'http://localhost/tveta';
 
 //  get the API headers
 const getHeaders = (data) => {
@@ -32,7 +32,8 @@ const callApi = async (endpoint, method = 'get', data = null) => {
       JSON.parse(localStorage.getItem('current_user')).user_id
     );
   } else if (data) {
-    data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
+    data.user_id = 1
+    // data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
   }
 
   try {

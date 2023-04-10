@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
+import callApi from 'helpers/callApi';
 // Year  and SHift
 import * as Yup from 'yup';
 import {
@@ -84,15 +84,19 @@ const MarksRegistration = ({ match }) => {
     }, []);
   }
 
+  // fetch institute lists
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
-
   useEffect(() => {
     fetchInstitutes();
   }, []);

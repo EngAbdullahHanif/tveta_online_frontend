@@ -392,7 +392,9 @@ const MarksRegistration = ({ match }) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">{<IntlMessages id="marks.title" />}</h3>
+        <h3 className="mt-5 m-5">
+          {<IntlMessages id="menu.second-chance-marks-register" />}
+        </h3>
         <CardBody>
           {!isNext ? (
             <Formik
@@ -628,7 +630,10 @@ const MarksRegistration = ({ match }) => {
                             <IntlMessages id="marks.ID" />
                           </th>
                           <th scope="col">
-                            <IntlMessages id="marks.Marks" />
+                            <IntlMessages id="marks.firstChance" />
+                          </th>
+                          <th scope="col">
+                            <IntlMessages id="marks.secondChance" />
                           </th>
                         </tr>
                       </thead>
@@ -672,8 +677,9 @@ const MarksRegistration = ({ match }) => {
                                     <td>{student.name}</td>
                                     <td>{student.father_name}</td>
                                     <td>{student.student_id}</td>
+                                    <td>first chance marks</td>
 
-                                    {/* Marks Entry */}
+                                    {/* Second Chance Marks */}
                                     <td>
                                       <div class="form-group mx-sm-3 mb-2">
                                         <FormGroup className="form-group">
@@ -725,7 +731,10 @@ const MarksRegistration = ({ match }) => {
                                   <IntlMessages id="marks.ID" />
                                 </th>
                                 <th scope="col">
-                                  <IntlMessages id="marks.Marks" />
+                                  <IntlMessages id="marks.firstChance" />
+                                </th>
+                                <th scope="col">
+                                  <IntlMessages id="marks.secondChance" />
                                 </th>
                               </tr>
                             </tfoot>

@@ -27,49 +27,6 @@ import {
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
 
-const LevelOfEdcationOptions = [
-  { value: '1', label: 'اصلی' },
-  { value: '2', label: 'فرعی' },
-];
-
-const FieldOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
-
-const SemesterOptions = [
-  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
-  // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
-  //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
-];
-
-const SectionOptions = [
-  { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-];
-
-const ClassOptions = [
-  { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-  { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-];
-
-const SubjectOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
-
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
   { column: 'category', label: 'Category' },
@@ -130,7 +87,7 @@ const initialValues = {
 };
 const MarksDisplay = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(false);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -226,6 +183,8 @@ const MarksDisplay = ({ match }) => {
     fetchClasses();
     fetchSubjects();
   }, []);
+  let gpa = null;
+  let grad = null;
 
   const tbodies = students.map((student, index) => {
     const scores = Object.values(student.subject_id);
@@ -275,23 +234,31 @@ const MarksDisplay = ({ match }) => {
                 </td>
               )}
             </td>
-            <td className="red-background">
-              {' '}
-              {score.grad && (
-                <td style={{ borderStyle: 'hidden' }}>{score.grad}</td>
-              )}
-            </td>
-            <td className="red-background">
-              {' '}
-              {score.Gpa && (
-                <td style={{ borderStyle: 'hidden' }}>{score.Gpa}</td>
-              )}
-            </td>
+            {score.grad
+              ? (grad = score.grad) && (
+                  <td className="red-background">
+                    {' '}
+                    {score.grad && (
+                      <td style={{ borderStyle: 'hidden' }}>{score.grad}</td>
+                    )}
+                  </td>
+                )
+              : null}
+            {score.Gpa
+              ? (gpa = score.Gpa) && (
+                  <td className="red-background">
+                    {' '}
+                    {score.Gpa && (
+                      <td style={{ borderStyle: 'hidden' }}>{score.Gpa}</td>
+                    )}
+                  </td>
+                )
+              : null}
             <td className="red-background">
               {score.score >= 55 ? (
-                <div className="text-success">Passed </div>
+                <div className="text-success pt-3">Passed </div>
               ) : (
-                <div className="text-danger">Failed </div>
+                <div className="text-danger pt-3">Failed </div>
               )}
             </td>
           </tr>
@@ -332,11 +299,12 @@ const MarksDisplay = ({ match }) => {
       setStudents(response.data);
       console.log('response.data', response.data);
       console.log('response', response);
-      setIsNext(false);
+      setIsNext(true);
       console.log('students', students);
     } else {
       console.log('students error');
     }
+
     // split selected class to get semester and section
     const classArray = selectedClass.label.split(' - ');
     setClasss(classArray[0]);
@@ -373,6 +341,7 @@ const MarksDisplay = ({ match }) => {
     //   // axios.post('http://localhost:8000/api/marks/', data);
     // });
   };
+
   return (
     <>
       <Card>
@@ -380,7 +349,7 @@ const MarksDisplay = ({ match }) => {
           {<IntlMessages id="marks.marksDisplayTitle" />}
         </h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}
@@ -623,12 +592,16 @@ const MarksDisplay = ({ match }) => {
                       <th scope="col">
                         <IntlMessages id="marks.type" />
                       </th>{' '}
-                      <th scope="col">
-                        <IntlMessages id="marks.grade" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.gpa" />
-                      </th>{' '}
+                      {grad ? (
+                        <th scope="col">
+                          <IntlMessages id="marks.grade" />
+                        </th>
+                      ) : null}
+                      {gpa ? (
+                        <th scope="col">
+                          <IntlMessages id="marks.gpa" />
+                        </th>
+                      ) : null}
                       <th scope="col">
                         <IntlMessages id="marks.result" />
                       </th>{' '}
@@ -684,12 +657,16 @@ const MarksDisplay = ({ match }) => {
                       <th scope="col">
                         <IntlMessages id="marks.Marks" />
                       </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.grade" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.gpa" />
-                      </th>{' '}
+                      {grad ? (
+                        <th scope="col">
+                          <IntlMessages id="marks.grade" />
+                        </th>
+                      ) : null}
+                      {gpa ? (
+                        <th scope="col">
+                          <IntlMessages id="marks.gpa" />
+                        </th>
+                      ) : null}
                       <th scope="col">
                         <IntlMessages id="marks.type" />
                       </th>{' '}
@@ -702,7 +679,7 @@ const MarksDisplay = ({ match }) => {
               </Row>
               <Row className=" justify-content-center">
                 <Colxx xxs="9" className="m-5">
-                  <Button className=" m-4" onClick={() => setIsNext(true)}>
+                  <Button className=" m-4" onClick={() => setIsNext(false)}>
                     <IntlMessages id="button.Back" />
                   </Button>
                 </Colxx>

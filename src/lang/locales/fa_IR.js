@@ -736,6 +736,9 @@ module.exports = {
   'forms.StdInteranceOption_1': 'حکمی',
   'forms.StdInteranceOption_2': 'اختصاصی کانکور/کانکور اختصاصی',
   'forms.StdInteranceOption_3': 'عمومی کانکور / کانکور عمومی',
+  'student.studentId': 'اساس نمبر',
+  'student.studentIdErr': 'اساس نمبر اړین دی/ اساس نمبر ضروری است',
+
   'forms.StdInteranceTypeLabel': 'د شمولیت ډول/ نوع شمولیت',
   'forms.StdInteranceTypeErr': 'د شمولیت ډول اړین دی/ نوع شمولیت ضروری است',
   'forms.StdGraduationYearLabel': 'د فراغت کال / سال فراغت',
@@ -1027,6 +1030,8 @@ module.exports = {
   'marks.type': 'چانس',
   'marks.result': 'نتیجه',
   'marks.resultHeader': 'کامیاب',
+  'marks.firstChance': 'لومړی چانس',
+  'marks.secondChance': 'دویم چانس',
 
   // Dorm
   'dorm.RegisterTitle': 'د لیلې ثبت/ ثبت لیلیه',
@@ -1630,6 +1635,7 @@ module.exports = {
   'class.register': 'صنف ثبت کول / ثبت صنف',
   'class.list': 'د صنف لیست / لیست صنف',
   'menu.evaluation': 'ارزیابی',
+  'menu.second-chance-marks-register': 'د دویم چانس د نومرو ثبت',
   'evaluation.list': 'د ارزیابی لیست ',
   'menu.hr-evaluation': 'منابع بشری ارزیابی',
   'hr-evaluation.list': 'د ارزیابی لیست ',

@@ -151,9 +151,10 @@ const StudentsDismissal = (values) => {
                                     type="submit"
                                     color="primary"
                                     onClick={
-                                      values.searchfield.length > 3
-                                        ? () => handleSearch(false)
-                                        : ''
+                                      // values.searchfield.length > 3
+                                      // ?
+                                      () => handleSearch(false)
+                                      // : ''
                                     }
                                   >
                                     <span className="spinner d-inline-block">

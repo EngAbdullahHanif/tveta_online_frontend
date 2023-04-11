@@ -16,14 +16,16 @@ import {
   Input,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
-import { provinceOptions } from './../../global-data/data';
-import { educationalYearsOptions } from './../../global-data/data';
-import { batchOptions } from './../../global-data/data';
-import { genderOptions } from './../../global-data/data';
-import { mediumOfInstructionOptions } from './../../global-data/data';
-import { StdInteranceOptions } from './../../global-data/data';
-import { StudentTypeOptions } from './../../global-data/data';
-import { studyTimeOptions } from './../../global-data/data';
+import {
+  provinceOptions,
+  educationalYearsOptions,
+  batchOptions,
+  genderOptions,
+  mediumOfInstructionOptions,
+  StdInteranceOptions,
+  StudentTypeOptions,
+  studyTimeOptions,
+} from './../../global-data/data';
 
 import {
   FormikReactSelect,
@@ -255,7 +257,8 @@ const ValidationStepThree = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.batchErr" />),
-  kankorId: Yup.string().required(<IntlMessages id="forms.kankorIdErr" />),
+  // kankorId: Yup.string().required(<IntlMessages id="forms.kankorIdErr" />),
+  studentId: Yup.string().required(<IntlMessages id="student.studentIdErr" />),
 
   field: Yup.object()
     .shape({
@@ -275,16 +278,16 @@ const ValidationStepThree = Yup.object().shape({
 });
 
 const StudentRegistration = ({ intl }, values) => {
-  const { studentId } = useParams();
-  console.log('student_id', studentId);
-  if (studentId) {
+  const { updateStudentId } = useParams();
+  console.log('student_id', updateStudentId);
+  if (updateStudentId) {
     useEffect(() => {
       async function fetchStudent() {
         // const { data } = await axios.get(
-        //   `api/?student_id=${studentId}`
+        //   `api/?student_id=${updateStudentId}`
         // );
         const { data } = await callApi(
-          `api/?student_id=${studentId}`,
+          `api/?student_id=${updateStudentId}`,
           '',
           null
         );
@@ -355,7 +358,8 @@ const StudentRegistration = ({ intl }, values) => {
         setInitialC_Village(data[0].current_village);
         setInitialInstitute(data[0].school);
         setInitialEducationalYear(data[0].finished_grade_year);
-        setInitialKankorId(data[0].kankor_id);
+        // setInitialKankorId(data[0].kankor_id);
+        setInitialStudentId(data[0].student_id);
         setInitialClass(data[0].graduat_12_types);
         setInitialInteranceType(data[0].internse_type);
         setInitialDepartment(data[0].kankor_id);
@@ -448,7 +452,8 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialInstitute, setInitialInstitute] = useState([]);
   const [initialClass, setInitialClass] = useState([]);
   const [initialEducationalYear, setInitialEducationalYear] = useState([]);
-  const [initialKankorId, setInitialKankorId] = useState('');
+  // const [initialKankorId, setInitialKankorId] = useState('');
+  const [initialStudentId, setInitialStudentId] = useState('');
   const [initialInteranceType, setInitialInteranceType] = useState([]);
   const [initialDepartment, setInitialDepartment] = useState([]);
   const [initialBatch, setInitialBatch] = useState([]);
@@ -1452,7 +1457,8 @@ const StudentRegistration = ({ intl }, values) => {
                     educationalYear: initialEducationalYear,
                     department: initialDepartment,
                     mediumOfInstruction: initialMediumOfInstruction,
-                    kankorId: initialKankorId,
+                    // kankorId: initialKankorId,
+                    studentId: initialStudentId,
                     studyTime: initialStudyTime,
                     interanceType: initialInteranceType,
                     studentType: initialStudentType,
@@ -1462,7 +1468,7 @@ const StudentRegistration = ({ intl }, values) => {
                     photo: initialphoto,
                   }}
                   onSubmit={() => {}}
-                  // validationSchema={ValidationStepThree}
+                  validationSchema={ValidationStepThree}
                   validateOnMount
                 >
                   {({
@@ -1477,6 +1483,22 @@ const StudentRegistration = ({ intl }, values) => {
                         <Row style={{ marginInline: '2%' }}>
                           {' '}
                           <Colxx xxs="6">
+                            {/* Student Id */}
+                            <FormGroup className="form-group has-float-label">
+                              <Label>
+                                <IntlMessages id="student.studentId" />
+                              </Label>
+                              <Field
+                                className="form-control"
+                                name="studentId"
+                              />
+                              {errors.studentId && touched.studentId ? (
+                                <div className="invalid-feedback d-block bg-danger text-white">
+                                  {errors.studentId}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
                             {/* Institute Name*/}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
@@ -1563,7 +1585,7 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* kankor Id */}
-                            <FormGroup className="form-group has-float-label">
+                            {/* <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="forms.kankorId" />
                               </Label>
@@ -1573,7 +1595,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   {errors.kankorId}
                                 </div>
                               ) : null}
-                            </FormGroup>
+                            </FormGroup> */}
 
                             {/* internse type*/}
                             <FormGroup className="form-group has-float-label error-l-100">

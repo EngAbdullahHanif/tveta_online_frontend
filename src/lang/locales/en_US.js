@@ -206,6 +206,7 @@ module.exports = {
   'menu.department-list': 'Departments List',
   'menu.group-label': 'Group',
   'menu.group-register': 'Group Register',
+  'menu.second-chance-marks-register': 'Second Chance Marks Registeration',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
@@ -631,6 +632,8 @@ module.exports = {
   'student.typeOption_1': 'Registered',
   'student.typeOption_2': 'Greduated',
   'student.typeOption_3': 'Dismissed',
+  'student.studentId': 'Student Id',
+  'student.studentIdErr': 'Student Id Is Required!',
 
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',
@@ -936,6 +939,8 @@ module.exports = {
   'marks.type': 'Chance',
   'marks.result': 'ًResult',
   'marks.resultHeader': 'Passed',
+  'marks.firstChance': 'First Chance',
+  'marks.secondChance': 'Second Chance',
 
   // Dorm
   'dorm.RegisterTitle': 'Dorm Registration',

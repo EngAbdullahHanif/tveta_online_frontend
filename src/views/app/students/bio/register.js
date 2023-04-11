@@ -1,6 +1,11 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import DatePicker from 'react-multi-date-picker';
+import solarHijriCalender from 'react-date-object/calendars/persian';
+import afghanDateFormat from 'react-date-object/locales/persian_en';
+//import solarHijriCalender from 'helpers/solarHijriCalender';
+//import afghanDateFormat from 'helpers/persian';
 import {
   Row,
   Card,
@@ -45,6 +50,7 @@ import * as Yup from 'yup';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import { institute } from 'lang/locales/fa_IR';
 import callApi from 'helpers/callApi';
+//import { Controller } from 'react';
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
@@ -422,7 +428,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialname1, setInitialname1] = useState('');
   const [initialLastName, setInitialLastName] = useState('');
   const [initialFatherName, setInitialFatherName] = useState('');
-
+  const [DoB, setDoB] = useState();
   const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
   const [initialFatherDuty, setInitialFatherDuty] = useState('');
   const [initialLastNameEng, setInitialLastNameEng] = useState();
@@ -693,101 +699,58 @@ const StudentRegistration = ({ intl }, values) => {
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
-          // console.log(newFields, 'Final Values');
+          console.log(newFields, 'new hirjri date');
 
           const data = {
             //personal info,
-            // name: newFields.name1,
-            // kankor_id: newFields.kankorId,
-            // finished_grade_year: '1990',
-            // school: newFields.preSchool,
-            // schoolـprovince: newFields.schoolProvince.value,
-            // finished_grade: newFields.levelOfEducation.value.toString(10),
-            // student_type: newFields.studentType.value,
-            // english_name: newFields.englishName,
-            // last_name: newFields.lastName,
-            // english_last_name: newFields.lastNameEng,
-            // father_name: newFields.fatherName,
-            // english_father_name: newFields.fatherEngName,
-            // phone_number: newFields.phoneNo.toString(10),
-            // email: newFields.email,
-            // grand_father_name: newFields.grandFatherName,
-            // cover_number: newFields.idCardJoldNo,
-            // page_number: newFields.idCardPageNo,
-            // registration_number: newFields.tazkiraNo.toString(10),
-            // sukuk_number: newFields.tazkiraNo.toString(10),
-            // main_province: newFields.province.value,
-            // main_district: newFields.district,
-            // main_village: newFields.village,
-            // current_province: newFields.C_Province.value,
-            // current_district: newFields.C_District,
-            // current_village: newFields.C_Village,
-            // birth_date: newFields.DoB,
-            // fatherـprofession: newFields.fatherDuty,
-            // fatherـplaceـofـduty: newFields.fatherDutyLocation,
-            // internse_type: newFields.interanceType.value,
-            // //students_status: newFields.interanceType.value,
-            // gender: newFields.gender.value,
-            // //student_photo: newFields.photo,// institue info
-            // institute: newFields.institute.value.toString(10),
-            // educational_year: newFields.educationalYear.value,
-            // type: '1',
-            // language: newFields.mediumOfInstruction.value,
-            // time: newFields.studyTime.value,
-            // // is_transfer: '1',// fields info
-            // department_id: newFields.department.value.toString(10),
-            // field: newFields.field.value.toString(10), //sector: newFields.sector.value.toString(10),
-            // sector: '1',
-            // batch: newFields.batch.value.toString(10), //student class info,
-            // class_id: newFields.class.value.toString(10),
-            // place_of_birth: 'jalalabad',
-            // user_id: '1',
-
-            kankor_id: '22',
-            name: 'dfgdfsdfsfdsfdsfdsfgfdg',
-            english_name: 'lksd',
-            last_name: 'ldkfj',
-            english_last_name: 'dlkjf',
-            father_name: 'dklfjds',
-            english_father_name: 'dlfkjds',
-            phone_number: '1231',
-            email: 'man@man.com',
-            grand_father_name: 'lsdkjfds',
-            cover_number: '11',
-            page_number: '23',
-            registration_number: '2323',
-            sukuk_number: '2323',
-            main_province: 'lsdkfj',
-            main_district: 'dlkfj',
-            main_village: 'lsdkfj',
-            current_province: 'lsdkjf',
-            current_district: 'lsdkfj',
-            current_village: 'lsdkfj',
-            birth_date: '2023-03-13',
-            place_of_birth: 'sdfasfdsf',
-            fatherـprofession: 'dslfkj',
-            fatherـplaceـofـduty: 'sldkfj',
-            finished_grade: 'ldkfj',
-            finished_grade_year: '1212',
-            school: 'lsdkfj',
-            schoolـprovince: 'lskdfj',
-            student_type: '1',
-            internse_type: '1',
-            gender: '2',
-            user_id: '1',
-            class_id: '3',
-            educational_year: '2002',
+            name: newFields.name1,
+            kankor_id: newFields.kankorId,
+            finished_grade_year: newFields.graduationYear.label,
+            school: newFields.preSchool,
+            schoolـprovince: newFields.schoolProvince.value,
+            finished_grade: newFields.levelOfEducation.value.toString(10),
+            student_type: newFields.studentType.value,
+            english_name: newFields.englishName,
+            last_name: newFields.lastName,
+            english_last_name: newFields.lastNameEng,
+            father_name: newFields.fatherName,
+            english_father_name: newFields.fatherEngName,
+            phone_number: newFields.phoneNo.toString(10),
+            email: newFields.email,
+            grand_father_name: newFields.grandFatherName,
+            cover_number: newFields.idCardJoldNo,
+            page_number: newFields.idCardPageNo,
+            registration_number: newFields.tazkiraNo.toString(10),
+            sukuk_number: newFields.tazkiraNo.toString(10),
+            main_province: newFields.province.value,
+            main_district: newFields.district,
+            main_village: newFields.village,
+            current_province: newFields.C_Province.value,
+            current_district: newFields.C_District,
+            current_village: newFields.C_Village,
+            birth_date: newFields.DoB.label,
+            fatherـprofession: newFields.fatherDuty,
+            fatherـplaceـofـduty: newFields.fatherDutyLocation,
+            internse_type: newFields.interanceType.value,
+            students_status: '2',
+            gender: newFields.gender.value,
+            //student_photo: newFields.photo,// institue info
+            institute: newFields.institute.value.toString(10),
+            educational_year: newFields.educationalYear.label,
             type: '1',
-            institute: '1',
-            language: '2',
-            time: '3',
-            department_id: '2',
-            field: '2',
-            sector: '2',
-            batch: '2',
+            language: newFields.mediumOfInstruction.value,
+            time: newFields.studyTime.value,
+            // is_transfer: '1',// fields info
+            department_id: newFields.department.value.toString(10),
+            field: newFields.field.value.toString(10), //sector: newFields.sector.value.toString(10),
+            sector: newFields.sector.value.toString(10),
+            batch: newFields.batch.value.toString(10), //student class info,
+            class_id: newFields.class.value.toString(10),
+            place_of_birth: newFields.placeOfBirth,
+            user_id: '1',
           };
 
-          //console.log('the form data is converted to object', data);
+          console.log('the form data is converted to object', data);
 
           // posting data to the server
           postStudentRecord(data);
@@ -809,6 +772,7 @@ const StudentRegistration = ({ intl }, values) => {
   };
 
   const { messages } = intl;
+  console.log('today date', DoB);
 
   return (
     <Card>
@@ -992,14 +956,35 @@ const StudentRegistration = ({ intl }, values) => {
                             )}
 
                             {/* Date Of Birth */}
-                            <FormGroup className="form-group has-float-label">
-                              <Label>
+
+                            {/* <Label>
                                 <IntlMessages id="teacher.DoBLabel" />
                               </Label>
                               <Field
                                 className="form-control"
                                 name="DoB"
                                 type="date"
+                              />
+                              {errors.DoB && touched.DoB ? (
+                                <div className="invalid-feedback d-block bg-danger text-white">
+                                  {errors.DoB}
+                                </div>
+                              ) : null} */}
+
+                            {/* <IntlMessages id="teacher.DoBLabel" /> */}
+
+                            <FormGroup className="form-group has-float-label ">
+                              <Label>
+                                <IntlMessages id="teacher.DoBLabel" />
+                              </Label>
+                              <FormikReactSelect
+                                name="DoB"
+                                id="DoB"
+                                value={values.educationalYear}
+                                options={educationYears}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                required
                               />
                               {errors.DoB && touched.DoB ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
@@ -1273,7 +1258,28 @@ const StudentRegistration = ({ intl }, values) => {
                           </Colxx>
                           <Colxx xxs="6" className="pt-3">
                             <div className="square p-3 ">
-                              <FormGroup className="form-group has-float-label error-l-100">
+                              <FormGroup className="form-group has-float-label ">
+                                <Label>
+                                  <IntlMessages id="teacher.DoBLabel" />
+                                </Label>
+                                <FormikReactSelect
+                                  name="graduationYear"
+                                  id="graduationYear"
+                                  value={values.educationalYear}
+                                  options={educationYears}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                  required
+                                />
+                                {errors.graduationYear &&
+                                touched.graduationYear ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                    {errors.graduationYear}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+
+                              {/* <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.StdGraduationYearLabel" />
                                 </Label>
@@ -1288,7 +1294,7 @@ const StudentRegistration = ({ intl }, values) => {
                                     {errors.graduationYear}
                                   </div>
                                 ) : null}
-                              </FormGroup>
+                              </FormGroup> */}
                               {/*School province*/}
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>

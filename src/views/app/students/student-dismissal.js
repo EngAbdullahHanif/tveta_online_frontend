@@ -4,7 +4,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import axios from 'axios';
-
+import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
 import {
   Row,
@@ -63,9 +63,6 @@ const StudentsDismissal = (values) => {
     dismissalDate: Yup.string().required(
       <IntlMessages id="student.dissmissalDateErr" />
     ),
-    dismissalDocument: Yup.string().required(
-      <IntlMessages id="student.dissmissalDocumentErr" />
-    ),
   });
 
   const initialValues = {
@@ -82,23 +79,66 @@ const StudentsDismissal = (values) => {
   const [searchResult, setSearchResult] = useState(true);
   const [studentIdMatch, setStudentIdMatch] = useState(false);
 
-  // const handleSearch = (event, values) => {
-  //   setSearchResult(event);
-  //   studentId === 'abcc' ? setStudentIdMatch(true) : setStudentIdMatch(false);
+  // const createNotification = (type, className) => {
+  //   const cName = className || '';
+  //   switch (type) {
+  //     case 'success':
+  //       NotificationManager.success(
+  //         'شاگرد موفقانه لیلی ته رجستر شو',
+  //         'موفقیت',
+  //         3000,
+  //         null,
+  //         null,
+  //         cName
+  //       );
+  //       break;
+  //     case 'error':
+  //       NotificationManager.error(
+  //         'شاگرد ثبت نشو، بیا کوشش وکری',
+  //         'خطا',
+  //         9000,
+  //         () => {
+  //           alert('callback');
+  //         },
+  //         null,
+  //         cName
+  //       );
+  //       break;
+  //     default:
+  //       NotificationManager.info('Info message');
+  //       break;
+  //   }
+  // };
+
+  // post student record to server
+
+  // const postStudentRecord = async (data) => {
+  //   const response = await callApi('api/student_create', 'POST', data);
+  //   console.log('response of call api', response);
+  //   if (response) {
+  //     createNotification('success', 'filled');
+  //     console.log('success message', response.data);
+  //   } else {
+  //     createNotification('error', 'filled');
+  //     console.log('class error');
+  //   }
   // };
 
   const handleSearch = async (event) => {
+    console.log('handle search is called');
     setSearchResult(event);
     //search student in the server
-    const response = await axios.get(
-      `${studentSearchApiUrl}?student_id=${studentId}`
+    const response = await callApi(
+      `api/student_accademic/?student_id=${studentId}`,
+      'GET',
+      'NULL'
     );
     const studentResponse = await response.data;
-    console.log('reone', studentResponse.student_id);
+    //console.log('reone', studentResponse.student_id);
     studentId == studentResponse.student_id
       ? setStudentIdMatch(true)
       : setStudentIdMatch(false);
-    console.log(studentId, 'student Response');
+    //console.log(studentId, 'student Response');
     if (studentResponse) {
       setStudent(studentResponse);
       setData(true);
@@ -107,10 +147,12 @@ const StudentsDismissal = (values) => {
     }
   };
 
-  // const onSubmit = () => {
-  //   setReload(true);
-  // };
+  const onSubmit = (values) => {
+    console.log('form values after search', values);
+    //setReload(true);
+  };
 
+  console.log('reload, isNext, searchResult,', reload, isNext, searchResult);
   return (
     <>
       <Card>
@@ -358,7 +400,7 @@ const StudentsDismissal = (values) => {
                 <>
                   <Formik
                     initialValues={initialValues}
-                    // onSubmit={onSubmit}
+                    onSubmit={onSubmit}
                     validationSchema={dismissalSchema}
                   >
                     {({
@@ -438,6 +480,22 @@ const StudentsDismissal = (values) => {
                           </Colxx>
                           <Colxx style={{ marginLeft: '15%' }}>
                             <Button
+                              className="float-right mb-5 mt-5  "
+                              size="lg"
+                              type="submit"
+                              color="primary"
+                              //onClick={() => setReload(true)}
+                            >
+                              <span className="spinner d-inline-block">
+                                <span className="bounce1" />
+                                <span className="bounce2" />
+                                <span className="bounce3" />
+                              </span>
+                              <span className="label">
+                                <IntlMessages id="student.buttonDismissal" />
+                              </span>
+                            </Button>
+                            {/* <Button
                               className="float-right m-5 "
                               size="lg"
                               type="submit"
@@ -452,7 +510,7 @@ const StudentsDismissal = (values) => {
                               <span className="label">
                                 <IntlMessages id="forms.SubimssionButton" />
                               </span>
-                            </Button>
+                            </Button> */}
                           </Colxx>
                         </Row>
                       </Form>

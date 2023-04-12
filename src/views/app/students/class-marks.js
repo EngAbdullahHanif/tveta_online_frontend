@@ -284,7 +284,6 @@ const AllSubjectsMarks = ({ match }) => {
     setIsMasterChecked(Object.values(checkedItems).every(Boolean));
   }, [checkedItems]);
 
-
   console.log(checkedItems, 'Item is checked');
   return (
     <>
@@ -506,9 +505,9 @@ const AllSubjectsMarks = ({ match }) => {
                       >
                         <IntlMessages id="marks.marksDisplayTitle" />
                       </th>{' '}
-                      <th className="border text-center">
+                      {/* <th className="border text-center">
                         <IntlMessages id="marks.resultHeader" />
-                      </th>
+                      </th> */}
                     </tr>
                   </thead>
                   <thead
@@ -521,14 +520,14 @@ const AllSubjectsMarks = ({ match }) => {
                           {item.name}
                         </th>
                       ))}
-                      <th className="border text-center">
+                      {/* <th className="border text-center">
                         <CustomInput
                           type="checkbox"
                           id="CheckAll"
                           checked={isMasterChecked}
                           onChange={handleMasterCheckboxChange}
                         />
-                      </th>
+                      </th> */}
                     </tr>
                   </thead>
 
@@ -570,7 +569,7 @@ const AllSubjectsMarks = ({ match }) => {
                                   </>
                                 );
                               })}
-                              <td className="border text-center " key={index}>
+                              {/* <td className="border text-center " key={index}>
                                 <CustomInput
                                   type="checkbox"
                                   id={`checkbox${index}`}
@@ -582,7 +581,7 @@ const AllSubjectsMarks = ({ match }) => {
                                     })
                                   }
                                 />
-                              </td>
+                              </td> */}
                             </>
                           ) : null}
                         </tr>
@@ -597,9 +596,9 @@ const AllSubjectsMarks = ({ match }) => {
                           {header1.name}
                         </th>
                       ))}
-                      <th className="border text-center">
+                      {/* <th className="border text-center">
                         <IntlMessages id="marks.resultHeader" />
-                      </th>
+                      </th> */}
                     </tr>
                   </tfoot>
                 </table>

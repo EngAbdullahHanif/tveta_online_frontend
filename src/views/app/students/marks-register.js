@@ -70,8 +70,6 @@ const ClassOptions = [
   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
 ];
 
-
-
 const SubjectOptions = [
   { value: '14th', label: 'Computer Science' },
   { value: 'bachelor', label: 'Agriculture' },

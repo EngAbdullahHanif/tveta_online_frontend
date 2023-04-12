@@ -304,8 +304,7 @@ const StudentAttendance = ({ match }) => {
     selectedEducationalYear
   ) => {
     const response = await callApi(
-      '/api',
-      //`api/student-for-marks?institute=${selectedInstitute}&classs=${selectedClass}&study_time=${selecedStudyTime}&department=${selectedDepartment}&educational_year=${selectedEducationalYear}`,
+      `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       'GET',
       null
     );
@@ -331,56 +330,53 @@ const StudentAttendance = ({ match }) => {
     console.log('stdPresnet', values.StdPresent);
     setIsSubmitted(true);
   };
-  const onSubmit = (values) => {
-    // console.log('value of the form', values);
-    // console.log('institueID', values.institute.value);
-    // console.log('inside the submit function');
+  const onSubmit = async (values) => {
+    console.log('values of the form', values);
 
-    // fetchStudentList(
-    //   values.institue.value,
-    //   values.classs.value,
-    //   values.department.value,
-    //   values.educationalYear.value
-    // );
-    axios
-      .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-      )
-      .then((response) => {
-        console.log('response.data', response.data);
-        setStudents(response.data);
-        console.log('student data', response.data);
-        setIsNext(true);
-      });
-    //console.log('students', students);
-    // console.log('values of the form', values);
-    // const educational_year = selectedEducationalYear;
-    // const institute_id = selectedInstitute.value;
-    // const department = selectedDepartment.value;
-    // const class_id = selectedClass.value;
-    // const subject_id = selectedSubject.value;
-    // students.map((student) => {
-    //   const examData = {
-    //     educational_year: educational_year,
-    //     student_id: student.student_id,
-    //     institute_id: institute_id,
-    //     Department: department,
-    //     class_id: class_id,
-    //   };
-    //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-    //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
+    const educationalYear = selectedEducationalYear;
+    const instituteId = selectedInstitute.value;
+    const departmentId = selectedDepartment.value;
+    const classId = selectedClass.value;
+    const subjectId = selectedSubject.value;
+    console.log('educationalYear', educationalYear);
+    console.log('instituteId', instituteId);
+    console.log('departmentId', departmentId);
+    console.log('classId', classId);
+    console.log('subjectId', subjectId);
+    //create an array which first node has exam_id and the rest of the nodes has student_id and marks
+    // values.score[student.student_id]
+    const newStudents = students.map((student, index) => {
+      console.log('student sadfsd', student.student_id);
+      return {
+        student_id: student.student_id,
+        // score: values.score[student.student_id],
+      };
+    });
 
-    // const data = {
-    //   subject: subject_id,
-    //   exam_types: 1,
-    //   passing_score: passingScore,
-    //   grad: subjectGrad,
-    //   Gpa: subjectGPA,
-    //   user_id: 1,
-    //   mark: values.score[student.student_id],
-    // };
-    //console.log('data', data);
-    // axios.post('http://localhost:8000/api/marks/', data);
+    let data = [
+      {
+        educational_year: educationalYear,
+        institute_id: instituteId,
+        department_id: departmentId,
+        class_id: classId,
+        subject_id: subjectId,
+        user_id: '',
+      },
+      ...newStudents,
+    ];
+
+    console.log('data', data);
+
+    const response = await callApi('api/create_marks/', 'POST', data);
+    if (response.status === 200) {
+      console.log('response of students', response);
+      setIsSubmitted(false);
+      createNotification('success', 'filled');
+    } else {
+      console.log('marks error');
+      // setIsSubmitted(false);
+      createNotification('error', 'filled');
+    }
   };
   console.log('isNext, isSubmitted', isNext, isSubmitted);
 

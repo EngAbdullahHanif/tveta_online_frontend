@@ -69,6 +69,11 @@ const data = [
       },
       {
         icon: 'MD.MdAddBox',
+        label: 'menu.second-chance-marks-register',
+        to: `${adminRoot}/students/second-chance`,
+      },
+      {
+        icon: 'MD.MdAddBox',
         label: 'menu.attendance-registration',
         to: `${adminRoot}/students/attendance-register`,
       },

@@ -443,6 +443,7 @@ const ThumbListPages = ({ match }) => {
     rest,
     institute,
   ]);
+
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
@@ -535,7 +536,7 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  console.log('items', items);
+  console.log('student data here', items);
   return !isLoaded ? (
     <div className="loading" />
   ) : (

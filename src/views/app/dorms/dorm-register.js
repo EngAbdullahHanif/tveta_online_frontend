@@ -37,34 +37,30 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
-
+const UpdateMode = true;
 const SignupSchema = Yup.object().shape({
   name1: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
 
   capicity: Yup.string().required(<IntlMessages id="dorm.CapicityErr" />),
-  buildingType: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-    : null,
+  buildingType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
   totalBuildingNo: Yup.string().required(
     <IntlMessages id="dorm.TotalBuildingNoErr" />
   ),
 
-  province: updateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-    : null,
+  province: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-  gender: updateMode
+  PublicBuildingOwner: UpdateMode
     ? Yup.object()
         .shape({
           value: Yup.string().required(),
@@ -277,7 +273,7 @@ const DormRegistration = (values) => {
               enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onRegister}
-              // validationSchema={SignupSchema}
+              validationSchema={SignupSchema}
             >
               {({
                 errors,

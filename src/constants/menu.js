@@ -15,6 +15,12 @@ const data = [
         // roles: [UserRole.Admin],
       },
       {
+        icon: 'CG.CgUserList',
+        label: 'hijri',
+        to: `${adminRoot}/students/hijriData`,
+        // roles: [UserRole.Admin],
+      },
+      {
         icon: 'FA.FaList',
         label: 'menu.kankor-student-list',
         to: `${adminRoot}/students/kankor-students`,
@@ -60,6 +66,11 @@ const data = [
         icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
         to: `${adminRoot}/students/marks-register`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.second-chance-marks-register',
+        to: `${adminRoot}/students/second-chance`,
       },
       {
         icon: 'MD.MdAddBox',

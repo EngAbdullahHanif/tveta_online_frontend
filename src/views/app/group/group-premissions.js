@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-import axios from 'axios';
+
 import * as Yup from 'yup';
 import Select from 'react-select';
 import 'react-dual-listbox/lib/react-dual-listbox.css';

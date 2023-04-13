@@ -1,9 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import DatePicker from 'react-multi-date-picker';
-import solarHijriCalender from 'react-date-object/calendars/persian';
-import afghanDateFormat from 'react-date-object/locales/persian_en';
 //import solarHijriCalender from 'helpers/solarHijriCalender';
 //import afghanDateFormat from 'helpers/persian';
 import {
@@ -50,6 +47,8 @@ import * as Yup from 'yup';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import { institute } from 'lang/locales/fa_IR';
 import callApi from 'helpers/callApi';
+import currentUser from 'helpers/currentUser';
+
 //import { Controller } from 'react';
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;

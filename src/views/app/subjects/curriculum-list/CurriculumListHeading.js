@@ -50,9 +50,9 @@ const ListPageHeading = ({
   // toggleModal,
   heading,
   onIdSearchKey,
-  changeGenderBy,
-  selectedGenderOption,
-  genderOptions,
+  changeDepartmentBy,
+  selectedDepartmentOption,
+  departmentOptions,
   selectedProvinceOption,
   provinces,
   changeProvinceBy,
@@ -171,30 +171,31 @@ const ListPageHeading = ({
               >
                 <ImageListIcon />
               </a>
-            </span>
-
+            </span> 
+            <br/>
+            <br/>
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                  <DropdownToggle caret color="outline-dark" size="xs"   style={{fontSize: '18px'}}>
                     <IntlMessages id="filter" />
-                    {selectedGenderOption.label}
+                    {selectedDepartmentOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {genderOptions.map((order, index) => {
+                    {departmentOptions.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeGenderBy(order.column)}
-                        >
+                          onClick={() => changeDepartmentBy(order.column)}
+                          style={{fontSize: '18px'}} >
                           {order.label}
                         </DropdownItem>
                       );
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 " >
+                  <DropdownToggle caret color="outline-dark" size="xs"   style={{fontSize: '18px'}}>
                     <IntlMessages id="filter" />
                     {selectedProvinceOption.label}
                   </DropdownToggle>
@@ -203,6 +204,7 @@ const ListPageHeading = ({
                       height: '200px',
                       overflowY: 'scroll',
                       overflowX: 'hidden',
+                      
                     }}
                   >
                     {provinces.map((order, index) => {
@@ -210,39 +212,21 @@ const ListPageHeading = ({
                         <DropdownItem
                           key={index}
                           onClick={() => changeProvinceBy(order.column)}
-                        >
+                       style={{fontSize: '18px'}} >
                           {order.label}
                         </DropdownItem>
                       );
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top"   style={{fontSize: '18px'}}>
                   <input
                     type="text"
-                    name="district"
-                    id="district"
-                    placeholder={messages['search.district']}
-                    onKeyPress={(e) => onDistrictSearchKey(e)}
-                  />
-                </div>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
+                    style={{fontSize: '18px'}}
                     name="keyword"
                     id="search"
                     placeholder={messages['search.id']}
                     onKeyPress={(e) => onIdSearchKey(e)}
-                  />
-                </div>
-
-                <div>
-                  <ReactAutoSugegst
-                    data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
-                    }}
-                    placeholder={messages['search.institute.name']}
                   />
                 </div>
               </div>
@@ -250,9 +234,10 @@ const ListPageHeading = ({
               <Button
                 color="outline-dark"
                 size="xs"
+                style={{fontSize: '18px'}}
                 className="float-md-left mb-1"
                 onClick={() => {
-                  changeGenderBy('all');
+                  changeDepartmentBy('all');
                   changeProvinceBy('all');
                   document.getElementById('district').value = '';
                   document.getElementById('search').value = '';

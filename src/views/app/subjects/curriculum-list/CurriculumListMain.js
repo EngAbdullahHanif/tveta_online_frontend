@@ -35,7 +35,8 @@ const orderOptions = [
   { column: 'status', label: 'Status' },
 ];
 
-const genderOptions = [
+// DEPARTMENT SHOULD BE TAKEN FROM BACKEND
+const departmentOptions = [
   {
     column: 'all',
     label: 'تول / همه',
@@ -230,9 +231,9 @@ const ThumbListPages = ({ match }) => {
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
-  const [selectedGenderOption, setSelectedGenderOption] = useState({
+  const [selectedDepartmentOption, setSelectedDepartmentOption] = useState({
     column: 'all',
-    label: 'جنیست',
+    label: <IntlMessages id="attendance.departmentLabel" />,
   });
   const [selectedProvinceOption, setSelectedProvinceOption] = useState({
     column: 'all',
@@ -274,7 +275,7 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
+  }, [selectedPageSize, selectedDepartmentOption, selectedProvinceOption]);
 
   // useEffect(() => {
   //   console.log('institute', institute);
@@ -485,9 +486,9 @@ const ThumbListPages = ({ match }) => {
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeGenderBy={(column) => {
-            setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+          changeDepartmentBy={(column) => {
+            setSelectedDepartmentOption(
+              departmentOptions.find((x) => x.column === column)
             );
           }}
           changeProvinceBy={(column) => {
@@ -495,9 +496,9 @@ const ThumbListPages = ({ match }) => {
               Provinces.find((x) => x.column === column)
             );
           }}
-          selectedGenderOption={selectedGenderOption}
+          selectedDepartmentOption={selectedDepartmentOption}
           selectedProvinceOption={selectedProvinceOption}
-          genderOptions={genderOptions}
+          departmentOptions={departmentOptions}
           provinces={Provinces}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
@@ -542,9 +543,10 @@ const ThumbListPages = ({ match }) => {
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
-                <IntlMessages id="curriculumId" />
+                <IntlMessages id="marks.ID" />
               </th>
               <th
                 style={{
@@ -552,6 +554,7 @@ const ThumbListPages = ({ match }) => {
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="curriculum.departmentIdLabel" />
@@ -562,16 +565,7 @@ const ThumbListPages = ({ match }) => {
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="curriculum.subjectdLabel" />
-              </th>
-              <th
-                style={{
-                  width: '20%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 <IntlMessages id="curriculum.classLabel" />
@@ -583,6 +577,7 @@ const ThumbListPages = ({ match }) => {
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                       fontSize: '20px',
                 }}
               >
                 {' '}

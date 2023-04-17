@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import callApi from 'helpers/callApi';
 
 import axios from 'axios';
 
@@ -60,34 +61,43 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     async function fetchData() {
-      axios
-        // .get(
-        //   `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
-        // )
-        // get data from localhost:8000/institute
-        .get(`${instituteApiUrl}`)
-        .then((res) => {
-          console.log('res.data', res.data);
-          return res.data;
-        })
-        .then((data) => {
-          // setTotalPage(data.totalPage);
-          // setItems(data.data);
-          // set fecahed data to items
-          setItems(data);
+      // axios
+      //   // .get(
+      //   //   `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+      //   // )
+      //   // get data from localhost:8000/institute
+      //   .get(`${instituteApiUrl}`)
+      //   .then((res) => {
+      //     console.log('res.data', res.data);
+      //     return res.data;
+      //   })
+      //   .then((data) => {
+      // setTotalPage(data.totalPage);
+      // setItems(data.data);
+      // set fecahed data to items
+      // setItems(data);
 
-          // setSelectedItems([]);
+      // setSelectedItems([]);
 
-          // setItems(
-          //   data.data.map((x) => {
-          //     console.log('Single Value of the array ', x);
-          //     return { ...x, img: x.img.replace('img/', 'img/products/') };
-          //   })
-          // );
-          setSelectedItems([]);
-          setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        });
+      // setItems(
+      //   data.data.map((x) => {
+      //     console.log('Single Value of the array ', x);
+      //     return { ...x, img: x.img.replace('img/', 'img/products/') };
+      //   })
+      // );
+      // setSelectedItems([]);
+      // setTotalItemCount(data.totalItem);
+      // setIsLoaded(true);
+      // });
+      const response = await callApi(`institute/classs/`, '', null);
+      if (response.data && response.status === 200) {
+        setItems(response.data);
+        setSelectedItems([]);
+        // setTotalItemCount(data.totalItem);
+        setIsLoaded(true);
+      } else {
+        console.log('3, institute error');
+      }
     }
     fetchData();
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);

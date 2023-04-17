@@ -32,42 +32,6 @@ import {
 import userEvent from '@testing-library/user-event';
 import { getDirection, getCurrentUser } from './../../../../helpers/Utils';
 
-// const LevelOfEdcationOptions = [
-//   { value: '1', label: 'اصلی' },
-//   { value: '2', label: 'فرعی' },
-// ];
-
-// const FieldOptions = [
-//   { value: '14th', label: 'Computer Science' },
-//   { value: 'bachelor', label: 'Agriculture' },
-//   { value: 'master', label: 'BBA' },
-//   { value: 'PHD', label: 'Mechenical Engineering' },
-// ];
-
-// const SemesterOptions = [
-//   { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
-//   // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
-//   //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
-// ];
-
-// const SectionOptions = [
-//   { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-// ];
-
-// const ClassOptions = [
-//   { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-//   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-// ];
-
 const SubjectOptions = [
   { value: '14th', label: 'Computer Science' },
   { value: 'bachelor', label: 'Agriculture' },
@@ -121,27 +85,21 @@ const ValidationSchema = Yup.object().shape({
   //   })
   //   .nullable()
   //   .required(<IntlMessages id="forms.StudyTimeErr" />),
+});
 
-  // StdPresent: Yup.number().required(
-  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
-  // ),
-  // StdAbsent: Yup.number().required(
-  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
-  // ),
-  // StdNecessaryWork: Yup.number().required(
-  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
-  // ),
-  // StdSickness: Yup.number().required(
-  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
-  // ),
-  //StdPresent number
-
-  // subject: Yup.object()
-  //   .shape({
-  //     value: Yup.string().required(),
-  //   })
-  //   .nullable()
-  //   .required(<IntlMessages id="marks.SubjectErr" />),
+const InnerInpufieldsValidation = Yup.object().shape({
+  present: Yup.number().required(
+    <IntlMessages id="forms.totolEduactionalDaysErr" />
+  ),
+  absent: Yup.number().required(
+    <IntlMessages id="forms.totolEduactionalDaysErr" />
+  ),
+  necessaryWork: Yup.number().required(
+    <IntlMessages id="forms.totolEduactionalDaysErr" />
+  ),
+  sickness: Yup.number().required(
+    <IntlMessages id="forms.totolEduactionalDaysErr" />
+  ),
 });
 
 const initialValues = {
@@ -151,6 +109,10 @@ const initialValues = {
   department: [],
   totolEducationalDays: '',
   educationalYear: [],
+  present: '',
+  absent: '',
+  necessaryWork: '',
+  sickness: '',
 };
 
 const StudentAttendance = ({ match }) => {
@@ -214,14 +176,6 @@ const StudentAttendance = ({ match }) => {
   const [initalClass, setInitialClass] = useState([]);
   const [initailDepartment, setInitialDepartment] = useState([]);
   const [initalSubject, setInitialSubject] = useState([]);
-
-  // const initialValues = {
-  //   institute: initialInstitue,
-  //   educationlaYear: initailEducationalYear,
-  //   classs: initalClass,
-  //   department: initailDepartment,
-  //   subject: initalSubject,
-  // };
 
   // fetch institute lists
   const fetchInstitutes = async () => {
@@ -304,14 +258,14 @@ const StudentAttendance = ({ match }) => {
     selectedEducationalYear
   ) => {
     const response = await callApi(
-      '/api',
-      //`api/student-for-marks?institute=${selectedInstitute}&classs=${selectedClass}&study_time=${selecedStudyTime}&department=${selectedDepartment}&educational_year=${selectedEducationalYear}`,
+      `api/student-for-marks?institute=${selectedInstitute}&classs=${selectedClass}&study_time=${selecedStudyTime}&department=${selectedDepartment}&educational_year=${selectedEducationalYear}`,
       'GET',
       null
     );
     console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       setStudents(response.data);
+      setIsNext(true);
     } else {
       console.log('class error');
     }
@@ -325,62 +279,11 @@ const StudentAttendance = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const random = (values) => {
+  const onSubmit = (values) => {
     console.log(values);
     console.log('inside the random function form new score');
-    console.log('stdPresnet', values.StdPresent);
+    console.log('stdPresnet', values.present);
     setIsSubmitted(true);
-  };
-  const onSubmit = (values) => {
-    // console.log('value of the form', values);
-    // console.log('institueID', values.institute.value);
-    // console.log('inside the submit function');
-
-    // fetchStudentList(
-    //   values.institue.value,
-    //   values.classs.value,
-    //   values.department.value,
-    //   values.educationalYear.value
-    // );
-    axios
-      .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-      )
-      .then((response) => {
-        console.log('response.data', response.data);
-        setStudents(response.data);
-        console.log('student data', response.data);
-        setIsNext(true);
-      });
-    //console.log('students', students);
-    // console.log('values of the form', values);
-    // const educational_year = selectedEducationalYear;
-    // const institute_id = selectedInstitute.value;
-    // const department = selectedDepartment.value;
-    // const class_id = selectedClass.value;
-    // const subject_id = selectedSubject.value;
-    // students.map((student) => {
-    //   const examData = {
-    //     educational_year: educational_year,
-    //     student_id: student.student_id,
-    //     institute_id: institute_id,
-    //     Department: department,
-    //     class_id: class_id,
-    //   };
-    //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-    //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-
-    // const data = {
-    //   subject: subject_id,
-    //   exam_types: 1,
-    //   passing_score: passingScore,
-    //   grad: subjectGrad,
-    //   Gpa: subjectGPA,
-    //   user_id: 1,
-    //   mark: values.score[student.student_id],
-    // };
-    //console.log('data', data);
-    // axios.post('http://localhost:8000/api/marks/', data);
   };
   console.log('isNext, isSubmitted', isNext, isSubmitted);
 
@@ -395,7 +298,7 @@ const StudentAttendance = ({ match }) => {
             <Formik
               enableReinitialize={true}
               initialValues={initialValues}
-              onSubmit={onSubmit}
+              onSubmit={fetchStudentList}
               validationSchema={ValidationSchema}
             >
               {({
@@ -521,6 +424,7 @@ const StudentAttendance = ({ match }) => {
                         className="float-right m-5"
                         size="lg"
                         type="submit"
+                        // onClick={() => fetchStudentList()}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -645,15 +549,15 @@ const StudentAttendance = ({ match }) => {
                   </Row>
                   <Formik
                     initialValues={initialValues}
-                    onSubmit={random}
-                    // validationSchema={ValidationSchema}
+                    onSubmit={onSubmit}
+                    validationSchema={InnerInpufieldsValidation}
                   >
                     {({
                       errors,
-                      // touched,
-                      // // values,
-                      // setFieldTouched,
-                      // setFieldValue,
+                      touched,
+                      values,
+                      setFieldTouched,
+                      setFieldValue,
                     }) => (
                       <Form className="av-tooltip tooltip-label-right ">
                         <Row
@@ -689,12 +593,11 @@ const StudentAttendance = ({ match }) => {
                                             type="string"
                                             className="form-control"
                                             // name={`StdPresent[${student.student_id}]`}
-                                            name="StdPresent"
+                                            name="present"
                                           />
-                                          {errors.StdPresent &&
-                                          touched.StdPresent ? (
+                                          {errors.present && touched.present ? (
                                             <div className="invalid-feedback d-block">
-                                              {errors.StdPresent}
+                                              {errors.present}
                                             </div>
                                           ) : null}
                                         </FormGroup>
@@ -710,8 +613,7 @@ const StudentAttendance = ({ match }) => {
                                             //name={`StdAbsent[${student.student_id}]`}
                                             name={`${index}`}
                                           />
-                                          {errors.StdAbsent &&
-                                          touched.StdAbsent ? (
+                                          {errors.absent && touched.absent ? (
                                             <div className="invalid-feedback d-block">
                                               {errors.StdAbsent}
                                             </div>
@@ -729,10 +631,10 @@ const StudentAttendance = ({ match }) => {
                                             //name={`StdNecessaryWork[${student.student_id}]`}
                                             name={`${index}`}
                                           />
-                                          {errors.StdNecessaryWork &&
-                                          touched.StdNecessaryWork ? (
+                                          {errors.necessaryWork &&
+                                          touched.necessaryWork ? (
                                             <div className="invalid-feedback d-block">
-                                              {errors.StdNecessaryWork}
+                                              {errors.necessaryWork}
                                             </div>
                                           ) : null}
                                         </FormGroup>
@@ -748,10 +650,10 @@ const StudentAttendance = ({ match }) => {
                                             //name={`StdSickness[${student.student_id}]`}
                                             name={`${index}`}
                                           />
-                                          {errors.StdSickness &&
-                                          touched.StdSickness ? (
+                                          {errors.sickness &&
+                                          touched.sickness ? (
                                             <div className="invalid-feedback d-block">
-                                              {errors.StdSickness}
+                                              {errors.sickness}
                                             </div>
                                           ) : null}
                                         </FormGroup>
@@ -786,7 +688,10 @@ const StudentAttendance = ({ match }) => {
                                 <th
                                   scope="col"
                                   className="border text-center "
-                                  style={{ maxWidth: '20px' }}
+                                  style={{
+                                    maxWidth: '20px ',
+                                    minWidth: '50px',
+                                  }}
                                 >
                                   <IntlMessages id="marks.No" />
                                 </th>
@@ -811,6 +716,9 @@ const StudentAttendance = ({ match }) => {
                                 </th>
                                 <th scope="col" className="border text-center">
                                   <IntlMessages id="forms.StdSicknessLabel" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="marks.eligable_Deprive" />
                                 </th>
                               </tr>
                             </tfoot>

@@ -205,6 +205,22 @@ const InstituteRegister = () => {
   //         .nullable()
   //         .required(<IntlMessages id="institute.gender" />)
   //     : null,
+
+  // image validation
+  // // image: Yup.mixed()
+  // // .required("You need to provide a file")
+  // // .test("fileSize", "The file is too large", (value) => {
+  // //     return value && value[0].sienter <= 2000000;
+  // // })
+  // // .test("type", "Only the following formats are accepted: .jpeg, .jpg, .bmp, .pdf and .doc", (value) => {
+  // //     return value && (
+  // //         value[0].type === "image/jpeg" ||
+  // //         value[0].type === "image/bmp" ||
+  // //         value[0].type === "image/png" ||
+  // //         value[0].type === 'application/pdf' ||
+  // //         value[0].type === "application/msword"
+  // //     );
+  // }),
   // });
 
   // const onRegister = (values, { resetForm }) => {
@@ -238,7 +254,7 @@ const InstituteRegister = () => {
   };
 
   const onRegister = (values) => {
-    //console.log('values of the form', values);
+    console.log('form values with the image', values);
     const data = {
       name: values.institute,
       address: `${values.district}, ${values.province.value}`,
@@ -301,6 +317,34 @@ const InstituteRegister = () => {
                             {errors.institute}
                           </div>
                         )}
+                      </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        {/* <Label>
+                          <IntlMessages id="inst.name" />
+                        </Label>
+                        <Field className="form-control" name="institute" />
+                        {errors.institute && touched.institute && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.institute}
+                          </div>
+                        )} */}
+                        <label>Image</label>
+                        {/* <ErrorMessage name="image" component="span"/> */}
+
+                        <input
+                          autoComplete="off"
+                          id="image"
+                          name="imageFile"
+                          type="file"
+                          onChange={() => {
+                            console.log('file is picked');
+                          }}
+                        />
+                        {errors.file && touched.file ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.file}
+                          </div>
+                        ) : null}
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">

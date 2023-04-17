@@ -258,7 +258,11 @@ const StudentAttendance = ({ match }) => {
     selectedEducationalYear
   ) => {
     const response = await callApi(
+<<<<<<< HEAD
       `api/student-for-marks?institute=${selectedInstitute}&classs=${selectedClass}&study_time=${selecedStudyTime}&department=${selectedDepartment}&educational_year=${selectedEducationalYear}`,
+=======
+      `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+>>>>>>> 42f0ec37e53b3cca86da580557fd60ed31636dc6
       'GET',
       null
     );
@@ -285,6 +289,57 @@ const StudentAttendance = ({ match }) => {
     console.log('stdPresnet', values.present);
     setIsSubmitted(true);
   };
+<<<<<<< HEAD
+=======
+  const onSubmit = async (values) => {
+    console.log('values of the form', values);
+
+    const educationalYear = selectedEducationalYear;
+    const instituteId = selectedInstitute.value;
+    const departmentId = selectedDepartment.value;
+    const classId = selectedClass.value;
+    const subjectId = selectedSubject.value;
+    console.log('educationalYear', educationalYear);
+    console.log('instituteId', instituteId);
+    console.log('departmentId', departmentId);
+    console.log('classId', classId);
+    console.log('subjectId', subjectId);
+    //create an array which first node has exam_id and the rest of the nodes has student_id and marks
+    // values.score[student.student_id]
+    const newStudents = students.map((student, index) => {
+      console.log('student sadfsd', student.student_id);
+      return {
+        student_id: student.student_id,
+        // score: values.score[student.student_id],
+      };
+    });
+
+    let data = [
+      {
+        educational_year: educationalYear,
+        institute_id: instituteId,
+        department_id: departmentId,
+        class_id: classId,
+        subject_id: subjectId,
+        user_id: '',
+      },
+      ...newStudents,
+    ];
+
+    console.log('data', data);
+
+    const response = await callApi('api/create_marks/', 'POST', data);
+    if (response.status === 200) {
+      console.log('response of students', response);
+      setIsSubmitted(false);
+      createNotification('success', 'filled');
+    } else {
+      console.log('marks error');
+      // setIsSubmitted(false);
+      createNotification('error', 'filled');
+    }
+  };
+>>>>>>> 42f0ec37e53b3cca86da580557fd60ed31636dc6
   console.log('isNext, isSubmitted', isNext, isSubmitted);
 
   return (

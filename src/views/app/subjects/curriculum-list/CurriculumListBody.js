@@ -18,27 +18,28 @@ const CurriculumListBody = ({ curriculum, isSelect, collect, onCheckItem }) => {
         >
           <div
             className="pl-2 d-flex flex-grow-1 min-width-zero"
-            style={{ maxHeight: '50px', width: '100%' }}
+            style={{ maxHeight: '50px', width: '100%',fontSize: '20px' }}
           >
             <div
               className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
-              style={{ width: '100%', marginTop: 8 }}
+              style={{ width: '100%', marginTop: 8,fontSize: '20px'  }}
             >
               <NavLink
                 to={`curriculums/${curriculum.id}`}
-                style={{ width: '10%' }}
+                style={{ width: '12.5%',fontSize: '20px'  }}
               >
-                <p className="list-item-heading mb-1 truncate">
+                <p className="list-item-heading mb-1 truncate" style={{fontSize: '20px'  }}>
                   {curriculum.id}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
                 style={{
-                  width: '16%',
+                  width: '17%',
                   textAlign: 'right',
                   marginRight: 55,
                   marginRight: 100,
+                  fontSize: '20px' 
                 }}
               >
                 {curriculum.department.name}
@@ -46,19 +47,13 @@ const CurriculumListBody = ({ curriculum, isSelect, collect, onCheckItem }) => {
 
               <p
                 className="mb-1 text-small"
-                style={{ width: '18%', textAlign: 'right', marginRight: 40 }}
-              >
-                {curriculum.subject.name}
-              </p>
-              <p
-                className="mb-1 text-small"
-                style={{ width: '23%', textAlign: 'right', marginRight: 50 }}
+                style={{ width: '23%', textAlign: 'right', marginRight: 50,fontSize: '20px'  }}
               >
                 {curriculum.class_id.name}
               </p>
               <p
-                className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                        className="mb-1 text-small"
+                style={{ width: '15%', textAlign: 'right',fontSize: '20px'  }}
               >
                 {curriculum.educational_year}
               </p>

@@ -6,7 +6,7 @@ import IntlMessages from 'helpers/IntlMessages';
 // import { servicePath } from 'constants/defaultValues';
 
 //import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
-
+import { educationalYearsOptionsForList } from './../../global-data/data';
 //import ListPageHeadings from './workerListHeading'
 import ListPageHeading from './CurriculumListHeading';
 import callApi from 'helpers/callApi';
@@ -41,8 +41,8 @@ const departmentOptions = [
     column: 'all',
     label: 'تول / همه',
   },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
+  { column: '1', label: 'integrate' },
+  { column: '2', label: 'integrate ' },
 ];
 const pageSizes = [4, 8, 12, 20];
 
@@ -84,147 +84,16 @@ const roughData = [
   },
 ];
 
-const Provinces = [
+const classes = [
   {
     column: 'all',
     label: 'تول / همه',
   },
   {
     column: '1',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
+    label: <IntlMessages id="Integrate" />,
   },
-  {
-    column: '2',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
-  },
-  {
-    column: '3',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
-  },
-  {
-    column: '4',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
-  },
-  {
-    column: '5',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
-  },
-  {
-    column: '6',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
-  },
-  {
-    column: '7',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
-  },
-  {
-    column: '8',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
-  },
-  {
-    column: '9',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
-  },
-  {
-    column: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    column: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    column: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    column: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    column: 'کابل',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    column: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    column: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    column: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    column: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    column: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    column: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    column: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    column: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    column: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    column: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    column: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    column: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    column: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    column: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    column: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    column: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    column: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    column: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
+ 
 ];
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(true);
@@ -235,9 +104,14 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: <IntlMessages id="attendance.departmentLabel" />,
   });
-  const [selectedProvinceOption, setSelectedProvinceOption] = useState({
+  const [selectedClassOption, setSelectedClassOption] = useState({
     column: 'all',
-    label: 'ولایت',
+    label: <IntlMessages id="marks.ClassLabelList" />,
+  });
+  
+  const [selectedEducationalYearOption, setSelectedEducationalYearOption] = useState({
+    column: 'all',
+    label: <IntlMessages id="curriculum.eduactionalYearList"/>,
   });
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -275,7 +149,7 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedDepartmentOption, selectedProvinceOption]);
+  }, [selectedPageSize, selectedDepartmentOption, selectedClassOption ,selectedEducationalYearOption]);
 
   // useEffect(() => {
   //   console.log('institute', institute);
@@ -491,15 +365,22 @@ const ThumbListPages = ({ match }) => {
               departmentOptions.find((x) => x.column === column)
             );
           }}
-          changeProvinceBy={(column) => {
-            setSelectedProvinceOption(
-              Provinces.find((x) => x.column === column)
+          changeClassBy={(column) => {
+            setSelectedClassOption(
+              classes.find((x) => x.column === column)
+            );
+          }}
+          changeEducationalYearBy={(column) => {
+            setSelectedEducationalYearOption(
+              educationalYearsOptionsForList.find((x) => x.column === column)
             );
           }}
           selectedDepartmentOption={selectedDepartmentOption}
-          selectedProvinceOption={selectedProvinceOption}
+          selectedClassOption={selectedClassOption}
+          selectedEducationalYearOption={selectedEducationalYearOption}
+          educationalYearsOptionsForList={educationalYearsOptionsForList}
           departmentOptions={departmentOptions}
-          provinces={Provinces}
+          classes={classes}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}

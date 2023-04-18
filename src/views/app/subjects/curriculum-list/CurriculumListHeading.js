@@ -53,9 +53,14 @@ const ListPageHeading = ({
   changeDepartmentBy,
   selectedDepartmentOption,
   departmentOptions,
-  selectedProvinceOption,
-  provinces,
-  changeProvinceBy,
+  selectedClassOption,
+  classes,
+  changeClassBy,
+
+  // Educational Year
+  selectedEducationalYearOption,
+  educationalYearsOptionsForList,
+  changeEducationalYearBy,  
   onDistrictSearchKey,
   onProvinceSearchKey,
   onResetClick,
@@ -197,7 +202,7 @@ const ListPageHeading = ({
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 " >
                   <DropdownToggle caret color="outline-dark" size="xs"   style={{fontSize: '18px'}}>
                     <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
+                    {selectedClassOption.label}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -207,11 +212,37 @@ const ListPageHeading = ({
                       
                     }}
                   >
-                    {provinces.map((order, index) => {
+                    {classes.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeProvinceBy(order.column)}
+                          onClick={() => changeClassBy(order.column)}
+                       style={{fontSize: '18px'}} >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 " >
+                  <DropdownToggle caret color="outline-dark" size="xs"   style={{fontSize: '18px'}}>
+                    <IntlMessages id="filter" />
+                    {selectedEducationalYearOption.label}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '200px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                      
+                    }}
+                  >
+                    {educationalYearsOptionsForList.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeEducationalYearBy(order.column)}
                        style={{fontSize: '18px'}} >
                           {order.label}
                         </DropdownItem>
@@ -238,7 +269,8 @@ const ListPageHeading = ({
                 className="float-md-left mb-1"
                 onClick={() => {
                   changeDepartmentBy('all');
-                  changeProvinceBy('all');
+                  changeClassBy('all');
+                  changeEducationalYearBy('all');
                   document.getElementById('district').value = '';
                   document.getElementById('search').value = '';
                   setSelectedInstitute('');

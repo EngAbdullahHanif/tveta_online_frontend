@@ -920,6 +920,7 @@ module.exports = {
   'marks.SectionOption_4': 'D',
   'marks.SectionOption_5': 'E',
   'marks.ClassLabel': 'Class',
+  'marks.ClassLabelList': 'Class',
   'marks.ClassErr': 'Class Is Required!',
   'marks.ClassOption_1': '9th',
   'marks.ClassOption_2': '10th',
@@ -1087,6 +1088,7 @@ module.exports = {
   'curriculum.classErr': 'Class Is Required!',
   'curriculum.classLabel': 'Class',
   'curriculum.eduactionalYearLabel': 'Educational Year',
+  'curriculum.eduactionalYearList': 'Educational Year',
   'curriculum.eduactionalYearErr': 'Educational Year Is Required!',
   'menu.curriculum-list': 'Curriculums List ',
 

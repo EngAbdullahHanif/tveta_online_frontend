@@ -1011,6 +1011,7 @@ module.exports = {
   'marks.SectionOption_4': 'د',
   'marks.SectionOption_5': 'ح',
   'marks.ClassLabel': 'ټولګی/ صنف',
+  'marks.ClassLabelList': 'صنف',
   'marks.ClassErr': 'ټولګی اړین دی/ صنف ضروری است',
   'marks.ClassOption_1': 'نهم',
   'marks.ClassOption_2': 'لسم/ دهم',
@@ -1195,6 +1196,7 @@ module.exports = {
   'curriculum.classLabel': 'ټولګی/ صنف',
   'curriculum.classErr': 'ټولګی اړین دی/ صنف ضروری است',
   'curriculum.eduactionalYearLabel': 'تعلیمی کال/سال تعلیمی',
+  'curriculum.eduactionalYearList': 'سال تعلیمی',
   'curriculum.eduactionalYearErr': 'ټعلیمی کال اړین دی / سال تعلیمی ضروری است',
 
   //Institute Details Page

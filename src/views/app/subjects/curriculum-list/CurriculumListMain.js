@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';

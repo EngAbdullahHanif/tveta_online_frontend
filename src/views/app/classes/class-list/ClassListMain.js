@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import callApi from 'helpers/callApi';
-
-import axios from 'axios';
-
+import IntlMessages from 'helpers/IntlMessages';
 // import { servicePath } from 'constants/defaultValues';
 
 import ListPageHeading from './ClassListHeading';
 
 import ListPageListing from './ClassListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
+import { semesterOptions } from 'views/app/global-data/data';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -19,32 +18,23 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
+
 const servicePath = 'http://localhost:8000';
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const instituteApiUrl = `${servicePath}/institute/classs/`;
 
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
 const pageSizes = [4, 8, 12, 20];
 
-const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
-];
 
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
-  const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'title',
-    label: 'Product Name',
+  const [selectedSemesterOption, setSelectedSemesterOption] = useState({
+    column: 'all',
+    label: <IntlMessages id="field.SemesterLabel"/>,
   });
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -54,10 +44,11 @@ const ThumbListPages = ({ match }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
+  const [rest, setRest] = useState(0);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedOrderOption]);
+  }, [selectedPageSize, selectedSemesterOption]);
 
   useEffect(() => {
     async function fetchData() {
@@ -100,7 +91,7 @@ const ThumbListPages = ({ match }) => {
       }
     }
     fetchData();
-  }, [selectedPageSize, currentPage, selectedOrderOption, search]);
+  }, [selectedPageSize, currentPage, selectedSemesterOption, search]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -191,15 +182,15 @@ const ThumbListPages = ({ match }) => {
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeOrderBy={(column) => {
-            setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
+          changeSemesterBy={(column) => {
+            setSelectedSemesterOption(
+              semesterOptions.find((x) => x.column === column)
             );
           }}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
           totalItemCount={totalItemCount}
-          selectedOrderOption={selectedOrderOption}
+          selectedSemesterOption={selectedSemesterOption}
           match={match}
           startIndex={startIndex}
           endIndex={endIndex}
@@ -210,22 +201,67 @@ const ThumbListPages = ({ match }) => {
             // if (e.key === 'Enter') {
             // }
           }}
-          orderOptions={orderOptions}
+          onResetClick={setRest}
+        semesterOptions={semesterOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />
+           <table className="table">
+          <thead
+            className="pl-2 d-flex flex-grow-1  table-dark"
+            style={{ maxHeight: '55px', marginRight: 2 }}
+          >
+            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+              <th
+                style={{
+                  width: '20%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                <IntlMessages id="marks.ID" />
+              </th>
+              <th
+                style={{
+                  width: '20%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                <IntlMessages id="curriculum.classLabel" />
+              </th>
 
-        <ListPageListing
-          items={items}
-          displayMode={displayMode}
-          selectedItems={selectedItems}
-          onCheckItem={onCheckItem}
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onContextMenuClick={onContextMenuClick}
-          onContextMenu={onContextMenu}
-          onChangePage={setCurrentPage}
-        />
+              <th
+                style={{
+                  width: '20%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                       fontSize: '20px',
+                }}
+              >
+                {' '}
+                <IntlMessages id="field.SemesterLabel" />
+              </th>
+            </tr>
+          </thead>
+
+          <ListPageListing
+            items={items}
+            displayMode={displayMode}
+            selectedItems={selectedItems}
+            onCheckItem={onCheckItem}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onContextMenuClick={onContextMenuClick}
+            onContextMenu={onContextMenu}
+            onChangePage={setCurrentPage}
+          />
+        </table>
       </div>
     </>
   );

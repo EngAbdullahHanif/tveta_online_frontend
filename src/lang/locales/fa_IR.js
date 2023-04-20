@@ -1452,6 +1452,7 @@ module.exports = {
   'class.nameErr': 'د صنف نوم اړین دی/ نام صنف ضروری است',
   'class.semesterLabel': 'سمستر',
   'class.semesterErr': 'سمستر اړین دی/ سمستر ضروری است',
+  'class.nameList': 'نام',
 
   // Deletion flash message model
   'modal.deletion-message-title': 'تایید',

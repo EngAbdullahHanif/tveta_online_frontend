@@ -24,18 +24,20 @@ const ListPageHeading = ({
   displayMode,
   changeDisplayMode,
   handleChangeSelectAll,
-  changeOrderBy,
+  changeSemesterBy,
   changePageSize,
   selectedPageSize,
   totalItemCount,
-  selectedOrderOption,
+  selectedSemesterOption,
   match,
   startIndex,
   endIndex,
   selectedItemsLength,
   itemsLength,
   onSearchKey,
-  orderOptions,
+  semesterOptions,
+  onResetClick,
+  reset,
   pageSizes,
   // toggleModal,
   heading,
@@ -145,21 +147,24 @@ const ListPageHeading = ({
               >
                 <ImageListIcon />
               </a>
+       
             </span>
+            <br/>
+            <br/>
 
             <div className="d-block d-md-inline-block pt-1">
               <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-                <DropdownToggle caret color="outline-dark" size="xs">
-                  <IntlMessages id="pages.orderby" />
-                  {selectedOrderOption.label}
+                <DropdownToggle caret color="outline-dark" size="xs"     style={{ fontSize: '20px' }}>
+                  <IntlMessages id="filter"/>
+                  {selectedSemesterOption.label}
                 </DropdownToggle>
                 <DropdownMenu>
-                  {orderOptions.map((order, index) => {
+                  {semesterOptions.map((order, index) => {
                     return (
                       <DropdownItem
                         key={index}
-                        onClick={() => changeOrderBy(order.column)}
-                      >
+                        onClick={() => changeSemesterBy(order.column)}
+                        style={{ fontSize: '20px' }} >
                         {order.label}
                       </DropdownItem>
                     );
@@ -171,12 +176,26 @@ const ListPageHeading = ({
                   type="text"
                   name="keyword"
                   id="search"
-                  placeholder={messages['menu.search']}
+                  style={{ fontSize: '20px' }}  
+                  placeholder={messages['class.nameList']}
                   onKeyPress={(e) => onSearchKey(e)}
                 />
               </div>
+              <Button
+                color="outline-dark"
+                size="xs"
+                style={{fontSize: '18px'}}
+                className="float-md-left mb-1"
+                onClick={() => {
+                  // changeSemesterBy('all');
+                  document.getElementById('search').value = '';
+                  onResetClick(!reset);
+                }}
+              >
+                <IntlMessages id="pages.reset" />
+              </Button>
             </div>
-            <div className="float-md-right pt-1">
+            {/* <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>
               <UncontrolledDropdown className="d-inline-block">
                 <DropdownToggle caret color="outline-dark" size="xs">
@@ -195,7 +214,7 @@ const ListPageHeading = ({
                   })}
                 </DropdownMenu>
               </UncontrolledDropdown>
-            </div>
+            </div> */}
           </Collapse>
         </div>
         <Separator className="mb-5" />

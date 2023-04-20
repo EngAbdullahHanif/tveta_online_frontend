@@ -1330,6 +1330,8 @@ module.exports = {
   'class.semesterLabel': 'Semester',
   'class.semesterErr': 'Semester Is Required!',
   'teacher-list.MajorLabel': 'field',
+  'class.nameList': 'Name',
+
 
   // Group
 

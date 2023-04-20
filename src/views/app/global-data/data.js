@@ -636,3 +636,9 @@ export const subjectSystemOptions = [
   { value: '3', label: <IntlMessages id="subject.systemOption_3" /> },
   { value: '4', label: <IntlMessages id="subject.systemOption_4" /> },
 ];
+
+
+export const semesterOptions = [
+  { column: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
+  { column: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
+];

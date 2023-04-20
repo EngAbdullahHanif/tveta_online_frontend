@@ -23,14 +23,23 @@ const InstituteListBody = ({ classs, isSelect, collect, onCheckItem }) => {
             />
           </NavLink> */}
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-              <NavLink to={`${classs.id}`} className="">
+            <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row  min-width-zero align-items-lg-center">
+              <NavLink to={`${classs.id}`} className=""          style={{ width: '21%',  fontSize: '20px' }}>
                 <p className="list-item-heading mb-1 truncate">
-                  <span className="mr-5">{classs.id}</span>
-                  {classs.name}
+                  <span className="mr-5"     style={{ fontSize: '20px' }}>{classs.id}</span>
                 </p>
               </NavLink>
-              <p className="mb-1 text-small">{classs.semester}</p>
+              <NavLink to={`${classs.id}`} 
+              style={{ width: '20%',  fontSize: '20px' }}
+              >
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ fontSize: '20px' }}
+                >
+                    {classs.name}
+                </p>
+              </NavLink>
+              <p className="mb-1 text-small"     style={{ fontSize: '20px' }}>{classs.semester}</p>
             </div>
           </div>
         </Card>

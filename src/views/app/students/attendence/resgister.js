@@ -258,11 +258,7 @@ const StudentAttendance = ({ match }) => {
     selectedEducationalYear
   ) => {
     const response = await callApi(
-<<<<<<< HEAD
-      `api/student-for-marks?institute=${selectedInstitute}&classs=${selectedClass}&study_time=${selecedStudyTime}&department=${selectedDepartment}&educational_year=${selectedEducationalYear}`,
-=======
       `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
->>>>>>> 42f0ec37e53b3cca86da580557fd60ed31636dc6
       'GET',
       null
     );
@@ -283,17 +279,15 @@ const StudentAttendance = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const onSubmit = (values) => {
-    console.log(values);
-    console.log('inside the random function form new score');
-    console.log('stdPresnet', values.present);
-    setIsSubmitted(true);
-  };
-<<<<<<< HEAD
-=======
+  // const onSubmit = (values) => {
+  //   console.log(values);
+  //   console.log('inside the random function form new score');
+  //   console.log('stdPresnet', values.present);
+  
+  // };
   const onSubmit = async (values) => {
     console.log('values of the form', values);
-
+    setIsSubmitted(true);
     const educationalYear = selectedEducationalYear;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
@@ -339,7 +333,6 @@ const StudentAttendance = ({ match }) => {
       createNotification('error', 'filled');
     }
   };
->>>>>>> 42f0ec37e53b3cca86da580557fd60ed31636dc6
   console.log('isNext, isSubmitted', isNext, isSubmitted);
 
   return (

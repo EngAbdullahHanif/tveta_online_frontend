@@ -35,7 +35,7 @@ const ListPageListing = ({
     <>
       <Row>
         {items.length === 0 ? (
-          <div className="no-result">
+          <div className="no-result m-3">
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}

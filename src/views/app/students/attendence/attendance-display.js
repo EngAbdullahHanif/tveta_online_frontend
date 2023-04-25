@@ -19,7 +19,7 @@ import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { studyTimeOptions } from './../../global-data/data';
+import { studyTimeOptions } from '../../global-data/options';
 
 import {
   FormikReactSelect,

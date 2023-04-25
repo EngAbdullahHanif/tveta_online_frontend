@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
-import { provincesOptionsForList } from './../../../global-data/data';
+import { provincesOptionsForList } from '../../../global-data/options';
 
 // import { servicePath } from 'constants/defaultValues';
 import ListPageHeading from 'views/app/students/bio/kankor-students-list/KankorStudentListHeading';

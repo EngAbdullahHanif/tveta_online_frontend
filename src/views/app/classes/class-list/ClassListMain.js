@@ -7,7 +7,7 @@ import ListPageHeading from './ClassListHeading';
 
 import ListPageListing from './ClassListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
-import { semesterOptions } from 'views/app/global-data/data';
+import { semesterOptions } from 'views/app/global-data/options';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {

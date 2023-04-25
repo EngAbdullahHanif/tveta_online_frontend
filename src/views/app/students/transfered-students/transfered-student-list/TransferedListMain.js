@@ -5,7 +5,7 @@ import IntlMessages from 'helpers/IntlMessages';
 // import { servicePath } from 'constants/defaultValues';
 
 import ListPageHeading from './TransferedListHeading';
-import { provinceOptions } from './../../../global-data/data';
+import { provinceOptions } from '../../../global-data/options';
 import ListPageListing from './TransferedListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 

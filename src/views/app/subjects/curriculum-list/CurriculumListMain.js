@@ -5,7 +5,7 @@ import IntlMessages from 'helpers/IntlMessages';
 // import { servicePath } from 'constants/defaultValues';
 
 //import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
-import { educationalYearsOptionsForList } from './../../global-data/data';
+import { educationalYearsOptionsForList } from '../../global-data/options';
 //import ListPageHeadings from './workerListHeading'
 import ListPageHeading from './CurriculumListHeading';
 import callApi from 'helpers/callApi';

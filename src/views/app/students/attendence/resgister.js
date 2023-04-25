@@ -3,8 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 // import useSelector
 import { useSelector } from 'react-redux';
-import { educationalYearsOptions } from './../../global-data/data';
-import { studyTimeOptions } from './../../global-data/data';
+import { educationalYearsOptions } from '../../global-data/options';
+import { studyTimeOptions } from '../../global-data/options';
 
 // Year  and SHift
 import { useParams } from 'react-router-dom';

@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import { studyTimeOptions } from './../global-data/data';
+import { studyTimeOptions } from '../global-data/options';
 
 // Year  and SHift
 import * as Yup from 'yup';

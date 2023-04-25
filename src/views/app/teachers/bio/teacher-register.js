@@ -2,7 +2,7 @@
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import { provinceOptions,langOptions,stepOptions, gradeOptions,contractTypeOptions,genderOptions, appointmentTypeOptions } from './../../global-data/data';
+import { provinceOptions,langOptions,stepOptions, gradeOptions,contractTypeOptions,genderOptions, appointmentTypeOptions } from '../../global-data/options';
 import { NavLink } from 'react-router-dom';
 
 

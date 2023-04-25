@@ -12,13 +12,13 @@ import {
   Input,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
-import { levelOfEdcationOptions } from './../global-data/data';
-import { langOptions } from './../global-data/data';
-import { contractTypeOptions } from './../global-data/data';
-import { appointmentTypeOptions } from './../global-data/data';
-import { provinceOptions } from './../global-data/data';
-import { gradeOptions } from './../global-data/data';
-import { stepOptions } from './../global-data/data';
+import { levelOfEdcationOptions } from '../global-data/options';
+import { langOptions } from '../global-data/options';
+import { contractTypeOptions } from '../global-data/options';
+import { appointmentTypeOptions } from '../global-data/options';
+import { provinceOptions } from '../global-data/options';
+import { gradeOptions } from '../global-data/options';
+import { stepOptions } from '../global-data/options';
 
 import {
   FormikReactSelect,

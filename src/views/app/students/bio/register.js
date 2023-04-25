@@ -25,7 +25,7 @@ import {
   StdInteranceOptions,
   StudentTypeOptions,
   studyTimeOptions,
-} from './../../global-data/data';
+} from '../../global-data/options';
 
 import {
   FormikReactSelect,

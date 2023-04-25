@@ -16,10 +16,10 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-import { genderOptions } from './../../global-data/data';
-import { provinceOptions } from './../../global-data/data';
-import { educationalYearsOptions } from './../../global-data/data';
-import { studyTimeOptions } from './../../global-data/data';
+import { genderOptions } from '../../global-data/options';
+import { provinceOptions } from '../../global-data/options';
+import { educationalYearsOptions } from '../../global-data/options';
+import { studyTimeOptions } from '../../global-data/options';
 const servicePath = 'http://localhost:8000';
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
 //http://localhost:8000/api/kankorResults/?id=1

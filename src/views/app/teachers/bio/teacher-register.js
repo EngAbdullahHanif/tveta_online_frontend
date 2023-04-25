@@ -2,11 +2,9 @@
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import { genderOptions } from './../../global-data/data';
-import { contractTypeOptions } from './../../global-data/data';
-import { gradeOptions } from './../../global-data/data';
-import { stepOptions } from './../../global-data/data';
-import { provinceOptions } from './../../global-data/data';
+import { provinceOptions,langOptions,stepOptions, gradeOptions,contractTypeOptions,genderOptions, appointmentTypeOptions } from './../../global-data/data';
+import { NavLink } from 'react-router-dom';
+
 
 import {
   Row,
@@ -51,9 +49,9 @@ const dutyLocationOptions = [
   { value: '2', label: 'لیسه مسلکی نابینایان' },
 ];
 const teacherteachingfieldOptions = [
-  { value: '1', label: 'زراعت' },
-  { value: '2', label: 'کمپیوتر ساینس ' },
-  { value: '3', label: 'کمپیوتر ساینس ' },
+  { value: '1', label: 'Integrate' },
+  { value: '2', label: 'Integrate' },
+
 ];
 const StatusOptions = [
   { value: '1', label: 'فعال' },
@@ -83,31 +81,6 @@ const majorOptions = [
   { value: '4', label: 'Mechenical Engineering' },
 ];
 
-const langOptions = [
-  {
-    value: 1,
-    label: 'پښتو',
-  },
-  {
-    value: 2,
-    label: 'دری',
-  },
-  {
-    value: 3,
-    label: 'English',
-  },
-];
-
-const appointmentTypeOptions = [
-  {
-    value: '1',
-    label: 'رسمی',
-  },
-  {
-    value: '2',
-    label: 'قراردادی',
-  },
-];
 
 const TeacherRegister = ({ intl }, values) => {
   const [intialName, setInitialName] = useState('');
@@ -596,7 +569,7 @@ const TeacherRegister = ({ intl }, values) => {
                     major: initialMajor,
                   }}
                   validateOnMount
-                  validationSchema={ValidationStepOne}
+                  // validationSchema={ValidationStepOne}
                   onSubmit={() => {}}
                 >
                   {({
@@ -884,7 +857,7 @@ const TeacherRegister = ({ intl }, values) => {
                     C_Village: initialCurrentVillage,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepTwo}
+                  // validationSchema={ValidationStepTwo}
                   validateOnMount
                 >
                   {({
@@ -1231,9 +1204,11 @@ const TeacherRegister = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <Button className="mt-5 bg-primary">
-                      <IntlMessages id="button.back" />
-                    </Button>
+                    <NavLink to={'/app/teachers/register-1'}>
+                      <Button className="mt-5 bg-primary">
+                        <IntlMessages id="button.back" />
+                      </Button>
+                    </NavLink>
                   </div>
                 )}
               </div>

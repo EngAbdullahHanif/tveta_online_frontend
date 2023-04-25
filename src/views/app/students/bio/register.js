@@ -981,7 +981,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="DoB"
                                 id="DoB"
                                 value={values.educationalYear}
-                                options={educationYears}
+                                options={educationalYearsOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -1266,7 +1266,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   name="graduationYear"
                                   id="graduationYear"
                                   value={values.educationalYear}
-                                  options={educationYears}
+                                  options={educationalYearsOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                   required

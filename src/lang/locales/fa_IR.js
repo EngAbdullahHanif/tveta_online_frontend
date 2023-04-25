@@ -954,7 +954,7 @@ module.exports = {
   'teacher.langOptions_3': 'انگلسی',
   'teacher.teachingLang': 'تدریسی ژبه/ زبان تدریسی',
   'teacher.appointmentTOptions_1': 'رسمی',
-  'teacher.appointmentTOptions_2': 'قراردادی',
+  'teacher.appointmentTOptions_2': 'قرارادی',
   'teacher.appointmentTypeLabel': 'د مقررۍ بڼه/ نوع تقرری',
   'teacher.appointmentTypeErr': 'د مقرري ډول اړین دی/ نوع مقرري ضروری است',
   'teacher.contractTypeLabel': 'د قرارداد بڼه/ نوع قرارداد',

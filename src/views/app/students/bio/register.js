@@ -1,11 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-// import DatePicker from 'react-multi-date-picker';
-// import solarHijriCalender from 'react-date-object/calendars/persian';
-// import afghanDateFormat from 'react-date-object/locales/persian_en';
-//import solarHijriCalender from 'helpers/solarHijriCalender';
-//import afghanDateFormat from 'helpers/persian';
 import {
   Row,
   Card,
@@ -143,7 +138,13 @@ const ValidationStepOne = Yup.object().shape({
 
   tazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
   phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
-  DoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
+  // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
+  DoB: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdDoBErr" />),
 
   tazkiraType: Yup.object()
     .shape({
@@ -184,9 +185,16 @@ const ValidationStepTwo = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
 
-  graduationYear: Yup.date().required(
-    <IntlMessages id="forms.StdGraduationYearErr" />
-  ),
+  // graduationYear: Yup.date().required(
+  //   <IntlMessages id="forms.StdGraduationYearErr" />
+  // ),
+  graduationYear: Yup.object()
+  .shape({
+    value: Yup.string().required(),
+  })
+  .nullable()
+  .required(<IntlMessages id="forms.StdGraduationYearErr" />),
+
   province: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -263,7 +271,6 @@ const ValidationStepThree = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.batchErr" />),
-  // kankorId: Yup.string().required(<IntlMessages id="forms.kankorIdErr" />),
   studentId: Yup.string().required(<IntlMessages id="student.studentIdErr" />),
 
   field: Yup.object()
@@ -273,13 +280,11 @@ const ValidationStepThree = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.fieldErr" />),
 
-  sector: Yup.object()
-    .shape({
+  sector: Yup.object().shape({
       value: Yup.string().required(),
     })
     .nullable()
     .required(<IntlMessages id="forms.sectorErr" />),
-
   photo: Yup.string().required(<IntlMessages id="student.photoErr" />),
 });
 
@@ -382,49 +387,6 @@ const StudentRegistration = ({ intl }, values) => {
     }, []);
   }
 
-  const TestData = {
-    name1: 'Hamid',
-    LastName: 'Ahmad',
-    FatherName: 'Rabi',
-    GrandFatherName: 'Malik',
-    FatherDuty: 'Teacher',
-    LastNameEng: 'Samimn',
-    PhoneNo: '12321',
-    EnglishName: 'Mohammad',
-    FatherEngName: 'Mahdi',
-    Gender: 'Male',
-    FatherDutyLocation: 'Logar',
-    PlaceOfBirth: 'Logar',
-    TazkiraNo: '3423423',
-    DoB: '2022-08-12',
-    TazkiraType: 'Elctornic',
-    Email: '123@gmail.com',
-    IdCardPageNo: '35443',
-    IdCardJoldNo: '34',
-    Status: 'Active',
-    LevelOfEducation: 'bachelor',
-    PreSchool: 'Ghazi',
-    GraduationYear: '2022-08-12',
-    SchoolProvince: '321243sd',
-    Province: 'Kabul',
-    C_Province: 'Kabul',
-    District: 'Jabul Saraj',
-    C_District: 'C-Jabul Saraj',
-    Village: 'Karti Char',
-    C_Village: 'C-Karti Char',
-
-    Institute: 'Nima',
-    Class: '12th',
-    EducationalYear: '1201',
-    KankorId: '12-f12',
-    InteranceType: 'Kankor',
-    Department: 'biology',
-    Batch: '12',
-    MediumOfInstruction: 'Dari',
-    StudyTime: 'morning',
-    StudentType: 'morning',
-  };
-
   const [initialname1, setInitialname1] = useState('');
   const [initialLastName, setInitialLastName] = useState('');
   const [initialFatherName, setInitialFatherName] = useState('');
@@ -434,8 +396,8 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialLastNameEng, setInitialLastNameEng] = useState();
   const [initialGender, setInitialGender] = useState([]);
   const [initialEnglishName, setInitialEnglishName] = useState('');
-  const [initialPhoneNo, setInitialPhoneNo] = useState();
-  const [initialDoB, setInitialDoB] = useState();
+  const [initialPhoneNo, setInitialPhoneNo] = useState('');
+  const [initialDoB, setInitialDoB] = useState([]);
   const [initialFatherDutyLocation, setInitialFatherDutyLocation] =
     useState('');
   const [initialTazkiraType, setInitialTazkiraType] = useState([]);
@@ -447,7 +409,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('');
   const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
   const [initialPreSchool, setInitialPreSchool] = useState('');
-  const [initialGraduationYear, setInitialGraduationYear] = useState('');
+  const [initialGraduationYear, setInitialGraduationYear] = useState([]);
   const [initialSchoolProvince, setInitialSchoolProvince] = useState([]);
   const [initialProvince, setInitialProvince] = useState([]);
   const [initialC_Province, setInitialC_Province] = useState([]);
@@ -665,9 +627,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [TazkiraType, setTazkiraType] = useState('0');
   const [Province, setProvince] = useState('0');
   const [CurrentProvince, setCurrentProvince] = useState('0');
-  const [InteranceType, setInteranceType] = useState('0');
   const [SchoolProvince, setSchoolProvince] = useState('0');
-  const [StudentType, setStudentType] = useState('0');
   const [Gender, setGender] = useState('0');
 
   const onClickNext = (goToNext, steps, step, values) => {
@@ -685,12 +645,6 @@ const StudentRegistration = ({ intl }, values) => {
       setSchoolProvince(form.values.schoolProvince.value);
       setProvince(form.values.province.value);
       setCurrentProvince(form.values.C_Province.value);
-    }
-
-    if (step.id === 'step3') {
-      setInteranceType(form.values.interanceType.value);
-      setStudentType(form.values.studentType.value);
-      //console.log('forms values here', form);
     }
     form.submitForm().then(() => {
       if (!form.isDirty && form.isValid) {
@@ -772,8 +726,6 @@ const StudentRegistration = ({ intl }, values) => {
   };
 
   const { messages } = intl;
-  console.log('today date', DoB);
-
   return (
     <Card>
       <h3 className="mt-5 m-5">
@@ -812,7 +764,7 @@ const StudentRegistration = ({ intl }, values) => {
                     tazkiraType: initialTazkiraType,
                   }}
                   validateOnMount
-                  // validationSchema={ValidationStepOne}
+                  validationSchema={ValidationStepOne}
                   onSubmit={() => {}}
                 >
                   {({
@@ -954,24 +906,6 @@ const StudentRegistration = ({ intl }, values) => {
                             ) : (
                               <div></div>
                             )}
-
-                            {/* Date Of Birth */}
-
-                            {/* <Label>
-                                <IntlMessages id="teacher.DoBLabel" />
-                              </Label>
-                              <Field
-                                className="form-control"
-                                name="DoB"
-                                type="date"
-                              />
-                              {errors.DoB && touched.DoB ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.DoB}
-                                </div>
-                              ) : null} */}
-
-                            {/* <IntlMessages id="teacher.DoBLabel" /> */}
 
                             <FormGroup className="form-group has-float-label ">
                               <Label>
@@ -1203,7 +1137,7 @@ const StudentRegistration = ({ intl }, values) => {
                     C_Village: initialC_Village,
                   }}
                   onSubmit={() => {}}
-                  // validationSchema={ValidationStepTwo}
+                  validationSchema={ValidationStepTwo}
                   validateOnMount
                 >
                   {({
@@ -1233,7 +1167,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                 />
                                 {errors.levelOfEducation &&
-                                !LevelOfEducation ? (
+                                touched.levelOfEducation ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.levelOfEducation}
                                   </div>
@@ -1258,9 +1192,9 @@ const StudentRegistration = ({ intl }, values) => {
                           </Colxx>
                           <Colxx xxs="6" className="pt-3">
                             <div className="square p-3 ">
-                              <FormGroup className="form-group has-float-label ">
+                              <FormGroup className="form-group has-float-label error-l-100 ">
                                 <Label>
-                                  <IntlMessages id="teacher.DoBLabel" />
+                                  <IntlMessages id="forms.StdGraduationYearLabel" />
                                 </Label>
                                 <FormikReactSelect
                                   name="graduationYear"
@@ -1278,23 +1212,6 @@ const StudentRegistration = ({ intl }, values) => {
                                   </div>
                                 ) : null}
                               </FormGroup>
-
-                              {/* <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
-                                  <IntlMessages id="forms.StdGraduationYearLabel" />
-                                </Label>
-                                <Field
-                                  className="form-control"
-                                  name="graduationYear"
-                                  type="date"
-                                />
-                                {errors.graduationYear &&
-                                touched.graduationYear ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.graduationYear}
-                                  </div>
-                                ) : null}
-                              </FormGroup> */}
                               {/*School province*/}
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
@@ -1616,7 +1533,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
-                              {errors.interanceType && !InteranceType ? (
+                              {errors.interanceType && touched.interanceType ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
                                   {errors.interanceType}
                                 </div>
@@ -1764,7 +1681,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
-                              {errors.studentType && !StudentType ? (
+                              {errors.studentType && touched.studentType ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
                                   {errors.studentType}
                                 </div>
@@ -1795,7 +1712,8 @@ const StudentRegistration = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <NavLink to={'/app/students/register-1'}>
+                    <NavLink to={{ pathname: '/app/students/register-1',
+                     state: { data: 'STUDENT' }}}>
                       <Button className="mt-5 bg-primary">
                         <IntlMessages id="button.back" />
                       </Button>

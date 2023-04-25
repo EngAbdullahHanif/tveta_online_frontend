@@ -96,17 +96,17 @@ const TeacherRegister = ({ intl }, values) => {
   const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
   const [initialMajor, setInitialMajor] = useState([]);
   const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('');
-  const [initialStatus, setinitialStatus] = useState('');
+  const [initialStatus, setinitialStatus] = useState([]);
   const [initialGrade, setIntialGrade] = useState([]);
   const [initialTeachingField, setInitialTeachingField] = useState([]);
   const [initialAppointmentType, setInitialAppointmentType] = useState([]);
   const [initialProvince, setInitialProvince] = useState([]);
-  const [initialJobLocation, setInitialJobLocation] = useState('');
+  const [initialJobLocation, setInitialJobLocation] = useState([]);
   const [initialTeachingLang, setInitialTeachingLang] = useState([]);
   const [initialStep, setInitialStep] = useState([]);
   const [initialContractType, setInitialContractType] = useState([]);
   const [initialCurrentProvince, setInitialCurrentProvince] = useState([]);
-  const [initialCurrentDistrict, setInitialCurrentDistrict] = useState([]);
+  const [initialCurrentDistrict, setInitialCurrentDistrict] = useState();
   const [initialCurrentVillage, setInitialCurrentVillage] = useState('');
   const [initialDistrict, setInitialDistrict] = useState('');
   const [initialVillage, setInitialVillage] = useState('');
@@ -232,7 +232,6 @@ const TeacherRegister = ({ intl }, values) => {
   }
 
   // Updating Mode is through
-  const UpdatingMode = false;
   const ValidationStepOne = Yup.object().shape({
     name1: Yup.string()
       .min(3, <IntlMessages id="min.minInputValue" />)
@@ -244,14 +243,13 @@ const TeacherRegister = ({ intl }, values) => {
       .min(3, <IntlMessages id="min.minInputValue" />)
       .max(50, <IntlMessages id="max.maxInputValue" />),
 
-    gender: UpdatingMode
-      ? Yup.object()
+    gender: 
+      Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="forms.genderErr" />)
-      : '',
+          .required(<IntlMessages id="forms.genderErr" />),
 
     grandFatherName: Yup.string()
       .required(<IntlMessages id="teacher.GrandFatherNameErr" />)
@@ -264,116 +262,92 @@ const TeacherRegister = ({ intl }, values) => {
     phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
     DoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
 
-    levelOfEducation: UpdatingMode
-      ? Yup.object()
+    levelOfEducation: Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="teacher.LevelOfEducationErr" />)
-      : '',
+          .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
 
-    major: UpdatingMode
-      ? Yup.object()
+    major: Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="teacher.LevelOfEducationErr" />)
-      : '',
+          .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
 
-    tazkiraType: UpdatingMode
-      ? Yup.object()
+    tazkiraType: Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="forms.StdTazkiraTypeErr" />)
-      : '',
+          .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
 
     email: Yup.string()
       .email(<IntlMessages id="teacher.EmailRequiredErr" />)
       .required(<IntlMessages id="teacher.EmailErr" />),
   });
 
+
+
   const ValidationStepTwo = Yup.object().shape({
-    status: UpdatingMode
-      ? Yup.object()
+    status: Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="teacher.StatusErr" />)
-      : '',
+          .required(<IntlMessages id="teacher.StatusErr" />),
 
-    teachingField: UpdatingMode
-      ? Yup.object()
+    teachingField: Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="teacher.teachingFieldErr" />)
-      : '',
+          .required(<IntlMessages id="teacher.teachingFieldErr" />),
 
-    grade: UpdatingMode
-      ? Yup.object()
+    grade:Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="teacher.GradeErr" />)
-      : '',
+          .required(<IntlMessages id="teacher.GradeErr" />),
 
-    appointmentType: UpdatingMode
-      ? Yup.object()
+    appointmentType:Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="teacher.appointmentTypeErr" />)
-      : '',
+          .required(<IntlMessages id="teacher.appointmentTypeErr" />),
 
-    province: UpdatingMode
-      ? Yup.object()
+    province: Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-      : '',
+          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-    jobLocation: UpdatingMode
-      ? Yup.object()
+    jobLocation: Yup.object()
           .shape({
             value: Yup.string().required(),
           })
           .nullable()
-          .required(<IntlMessages id="teacher.jobLocationErr" />)
-      : '',
+          .required(<IntlMessages id="teacher.jobLocationErr" />),
 
-    step: UpdatingMode
-      ? Yup.object()
+    step: Yup.object()
           .shape({ value: Yup.string().required() })
           .nullable()
-          .required(<IntlMessages id="teacher.StepErr" />)
-      : '',
+          .required(<IntlMessages id="teacher.StepErr" />),
 
-    contractType: UpdatingMode
-      ? Yup.object()
+    contractType: Yup.object()
           .shape({ value: Yup.string().required() })
           .nullable()
-          .required(<IntlMessages id="teacher.contractTypeErr" />)
-      : '',
+          .required(<IntlMessages id="teacher.contractTypeErr" />),
 
-    C_Province: UpdatingMode
-      ? Yup.object()
-          .shape({ value: Yup.string().required() })
+    C_Province: Yup.object().shape({ value: Yup.string().required() })
           .nullable()
-          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-      : '',
+          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
     C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-
     district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
     village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
     C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
@@ -534,6 +508,7 @@ const TeacherRegister = ({ intl }, values) => {
   };
 
   const { messages } = intl;
+
   return (
     <Card>
       <h3 className="mt-5 m-5">
@@ -857,7 +832,7 @@ const TeacherRegister = ({ intl }, values) => {
                     C_Village: initialCurrentVillage,
                   }}
                   onSubmit={() => {}}
-                  // validationSchema={ValidationStepTwo}
+                  validationSchema={ValidationStepTwo}
                   validateOnMount
                 >
                   {({
@@ -900,7 +875,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                   required
                                 />
-                                {errors.status && !Status ? (
+                                {errors.status && touched.status ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.status}
                                   </div>
@@ -984,7 +959,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                   required
                                 />
-                                {errors.jobLocation && !JobLocation ? (
+                                {errors.jobLocation && touched.jobLocation ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.jobLocation}
                                   </div>
@@ -1204,7 +1179,8 @@ const TeacherRegister = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <NavLink to={'/app/teachers/register-1'}>
+                    <NavLink to={{ pathname: '/app/teachers/register-1',
+                     state: { data: 'TEACHER' }}}>
                       <Button className="mt-5 bg-primary">
                         <IntlMessages id="button.back" />
                       </Button>

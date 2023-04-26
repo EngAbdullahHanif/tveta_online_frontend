@@ -642,3 +642,17 @@ export const semesterOptions = [
   { column: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
   { column: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
 ];
+
+export const tazkiraOptions = [
+  { value: 'ٍ Electronic', label:<IntlMessages id="forms.StdTazkiraElectronic" /> },
+  { value: 'Paper', label:<IntlMessages id="forms.StdTazkiraPaper" /> },
+];
+
+export const educationLevelOptions = [
+  { value: 9,  label: <IntlMessages id="forms.EducationalLevel_9th" /> },
+  { value: 10, label: <IntlMessages id="forms.EducationalLevel_10th" /> },
+  { value: 11, label: <IntlMessages id="forms.EducationalLevel_11th" /> },
+  { value: 12, label: <IntlMessages id="forms.EducationalLevel_12th" />},
+  { value: 13, label: <IntlMessages id="forms.EducationalLevel_13th" /> },
+  { value: 14, label: <IntlMessages id="forms.EducationalLevel_14th" />},
+];

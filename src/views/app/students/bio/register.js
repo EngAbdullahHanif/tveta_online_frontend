@@ -25,12 +25,12 @@ import {
   StdInteranceOptions,
   StudentTypeOptions,
   studyTimeOptions,
+  tazkiraOptions,
+  educationLevelOptions,
 } from '../../global-data/options';
-
+import {studentRegisterFormStep_1, studentRegisterFormStep_2 , studentRegisterFormStep_3 } from '../../global-data/forms-validation';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
 import { Formik, Form, Field } from 'formik';
@@ -38,33 +38,14 @@ import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
 import { useParams } from 'react-router-dom';
-
-import axios from 'axios';
-import * as Yup from 'yup';
-
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import { institute } from 'lang/locales/fa_IR';
 import callApi from 'helpers/callApi';
-//import { Controller } from 'react';
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
 
 //http://localhost:8000/api/student_create
-
-const tazkiraOptions = [
-  { value: '1', label: 'الکترونیکی' },
-  { value: '2', label: 'کاغذی' },
-];
-
-const EducationLevelOptions = [
-  { value: 9, label: 'نهم صنف / صنف نهم' },
-  { value: 10, label: 'لسم ټولګی/ صنف دهم' },
-  { value: 11, label: 'یوولسم ټولګی / صنف یازدهم' },
-  { value: 12, label: 'دولسم ټولګی/ صنف دوازدهم' },
-  { value: 13, label: 'دیارلسم ټولګی صنف سیزدهم' },
-  { value: 14, label: 'چهارده هم' },
-];
 
 const studentProvince = [
   {
@@ -82,211 +63,6 @@ const studentProvince = [
   },
 ];
 
-const ValidationStepOne = Yup.object().shape({
-  name1: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="teacher.NameErr" />),
-  // idCardJoldNo: Yup.string()
-  //   .min(3, <IntlMessages id="min.minInputValue" />)
-  //   .max(50, <IntlMessages id="max.maxInputValue" />)
-  //   .required(<IntlMessages id="teacher.NameErr" />),
-
-  fatherName: Yup.string()
-    .required(<IntlMessages id="teacher.FatherNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  lastName: Yup.string()
-    .required(<IntlMessages id="forms.lastNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  lastNameEng: Yup.string()
-    .required(<IntlMessages id="forms.lastNameEngErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  grandFatherName: Yup.string()
-    .required(<IntlMessages id="forms.grandFatherNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  fatherDuty: Yup.string()
-    .required(<IntlMessages id="forms.StdFatherDutyErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  englishName: Yup.string()
-    .required(<IntlMessages id="forms.englishNameError" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  fatherEngName: Yup.string()
-    .required(<IntlMessages id="forms.FatherEnglishNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  fatherDutyLocation: Yup.string()
-    .required(<IntlMessages id="forms.StdFatherDutyLocationErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-  placeOfBirth: Yup.string()
-    .required(<IntlMessages id="forms.StdPlaceOfBirthErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  tazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
-  phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
-  // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
-  DoB: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdDoBErr" />),
-
-  tazkiraType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
-
-  gender: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.genderErr" />),
-
-  email: Yup.string()
-    .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-    .required(<IntlMessages id="teacher.EmailErr" />),
-});
-
-const ValidationStepTwo = Yup.object().shape({
-  levelOfEducation: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
-
-  preSchool: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="forms.StPreShcoolErr" />),
-
-  schoolProvince: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
-
-  // graduationYear: Yup.date().required(
-  //   <IntlMessages id="forms.StdGraduationYearErr" />
-  // ),
-  graduationYear: Yup.object()
-  .shape({
-    value: Yup.string().required(),
-  })
-  .nullable()
-  .required(<IntlMessages id="forms.StdGraduationYearErr" />),
-
-  province: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  C_Province: Yup.object()
-    .shape({ value: Yup.string().required() })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-  C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-});
-
-const ValidationStepThree = Yup.object().shape({
-  institute: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.InstituteErr" />),
-
-  studyTime: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StudyTimeErr" />),
-  class: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.ClassErr" />),
-
-  educationalYear: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.educationYearErr" />),
-
-  department: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.departmentIdErr" />),
-  interanceType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
-  studentType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StudentTypeErr" />),
-
-  mediumOfInstruction: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.mediumOfInstructionErr" />),
-  batch: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.batchErr" />),
-  studentId: Yup.string().required(<IntlMessages id="student.studentIdErr" />),
-
-  field: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.fieldErr" />),
-
-  sector: Yup.object().shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.sectorErr" />),
-  photo: Yup.string().required(<IntlMessages id="student.photoErr" />),
-});
 
 const StudentRegistration = ({ intl }, values) => {
   const { updateStudentId } = useParams();
@@ -303,7 +79,6 @@ const StudentRegistration = ({ intl }, values) => {
           null
         );
         console.log('responsasdfsadfe', data);
-        //  console.log(data[0].name, 'object of the data');
         setInitialname1(data[0].name);
         setInitialLastName(data[0].last_name);
         setInitialFatherName(data[0].father_name);
@@ -323,26 +98,23 @@ const StudentRegistration = ({ intl }, values) => {
         setInitialFatherDutyLocation(data[0].fatherـplaceـofـduty);
         if (data[0].sukuk_number) setInitialTazkiraType(tazkiraOptions[1]);
         else setInitialTazkiraType(tazkiraOptions[0]);
-
         setInitialFatherEngName(data[0].english_father_name);
         setInitialPlaceOfBirth(data[0].main_province);
         setInitialTazkiraNo(data[0].sukuk_number);
         setInitialEmail(data[0].email);
         setInitialIdCardPageNo(data[0].page_number);
         setInitialIdCardJoldNo(data[0].cover_number);
-
         setInitialPreSchool(data[0].school);
         setInitialGraduationYear(data[0].finished_grade_year);
-        setInitialLevelOfEducation(EducationLevelOptions[0]);
+        setInitialLevelOfEducation(educationLevelOptions[0]);
 
-        // const studentFinishGrade = EducationLevelOptions.map(
+        // const studentFinishGrade = educationLevelOptions.map(
         //   (finishedGrade) => {
-        //     if (EducationLevelOptions.label === data[0].finished_grade) {
-        //       setInitialLevelOfEducation(EducationLevelOptions[1]);
+        //     if (educationLevelOptions.label === data[0].finished_grade) {
+        //       setInitialLevelOfEducation(educationLevelOptions[1]);
         //     }
         //   }
         // );
-
         const studentMainProvincee = studentProvince.map((studentProvince) => {
           if (studentProvince.label === data[0].main_province) {
             setInitialProvince(studentProvince);
@@ -764,7 +536,7 @@ const StudentRegistration = ({ intl }, values) => {
                     tazkiraType: initialTazkiraType,
                   }}
                   validateOnMount
-                  validationSchema={ValidationStepOne}
+                  validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -1137,7 +909,7 @@ const StudentRegistration = ({ intl }, values) => {
                     C_Village: initialC_Village,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepTwo}
+                  validationSchema={studentRegisterFormStep_2}
                   validateOnMount
                 >
                   {({
@@ -1162,7 +934,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   name="levelOfEducation"
                                   id="levelOfEducation"
                                   value={values.levelOfEducation}
-                                  options={EducationLevelOptions}
+                                  options={educationLevelOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
@@ -1391,7 +1163,7 @@ const StudentRegistration = ({ intl }, values) => {
                     photo: initialphoto,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepThree}
+                  validationSchema={studentRegisterFormStep_3}
                   validateOnMount
                 >
                   {({

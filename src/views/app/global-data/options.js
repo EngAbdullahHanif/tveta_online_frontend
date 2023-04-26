@@ -656,3 +656,9 @@ export const educationLevelOptions = [
   { value: 13, label: <IntlMessages id="forms.EducationalLevel_13th" /> },
   { value: 14, label: <IntlMessages id="forms.EducationalLevel_14th" />},
 ];
+
+
+export const teacherCurrentStatusOptions = [
+  { value: "active",  label: <IntlMessages id="teacher.StatusOption_1" /> },
+  { value: "dismissed", label: <IntlMessages id="teacher.StatusOption_1" /> },
+];

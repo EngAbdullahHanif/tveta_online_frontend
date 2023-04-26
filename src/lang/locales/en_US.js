@@ -846,6 +846,7 @@ module.exports = {
   'teacher.langOptions_2': 'Dari',
   'teacher.langOptions_3': 'English',
   'teacher.teachingLang': 'Teaching language',
+  'teacher.teachingLangErr': 'Teaching language is Required!',
   'teacher.appointmentTOptions_1': 'formal',
   'teacher.appointmentTOptions_2': 'Contractual',
   'teacher.appointmentTypeLabel': 'Appointment Type',

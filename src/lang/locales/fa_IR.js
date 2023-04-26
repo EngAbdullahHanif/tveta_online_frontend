@@ -953,6 +953,7 @@ module.exports = {
   'teacher.langOptions_2': 'دری',
   'teacher.langOptions_3': 'انگلسی',
   'teacher.teachingLang': 'تدریسی ژبه/ زبان تدریسی',
+  'teacher.teachingLangErr': 'تدریسی ژبه اړینه ده/ زبان تدریسی ضروری است',
   'teacher.appointmentTOptions_1': 'رسمی',
   'teacher.appointmentTOptions_2': 'قرارادی',
   'teacher.appointmentTypeLabel': 'د مقررۍ بڼه/ نوع تقرری',

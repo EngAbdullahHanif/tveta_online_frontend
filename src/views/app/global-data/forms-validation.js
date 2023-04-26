@@ -338,3 +338,68 @@ export const teacherRegisterFormStep_2 = Yup.object().shape({
     C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
   });
 
+
+//   Teacher Evaluation ValiationSchema 
+export const teacherEvalautionSchema = Yup.object().shape({
+    id:Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.IdErr" />),
+  
+    department: Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.departmentIdErr" />),
+  
+    subject: Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="marks.SubjectErr" />),
+  
+    evaluator: Yup.string()
+      .min(3, <IntlMessages id="min.minInputValue" />)
+      .max(50, <IntlMessages id="max.maxInputValue" />)
+      .required(<IntlMessages id="teacher.evaluatorErr" />),
+  
+    strengthPoints: Yup.string()
+      .required(<IntlMessages id="teacher.strengthPointsErr" />),
+  
+    marks: Yup.string().required(<IntlMessages id="teacher.marksErr" />),
+    evaluationDate: Yup.string().required(
+      <IntlMessages id="teacher.evaluationDateErr" />
+    ),
+  
+    institute: Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="forms.InstituteErr" />),
+  
+    class: Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="marks.ClassErr" />),
+  
+    topic: Yup.string().required(<IntlMessages id="teacher.topicErr" />),
+  
+    evaluationType: Yup.object()
+          .shape({
+            value: Yup.string().required(),
+          })
+          .nullable()
+          .required(<IntlMessages id="teacher.evaluationTypeErr" />),
+  
+    weaknessPoints: Yup.string().required(
+      <IntlMessages id="teacher.weaknessPointsErr" />
+    ),
+  });
+  

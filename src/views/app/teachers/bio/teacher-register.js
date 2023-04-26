@@ -86,9 +86,6 @@ const TeacherRegister = ({ intl }, values) => {
           '',
           null
         );
-
-        console.log(data, 'object of the data');
-
         setInitialName(data[0].teacher_id.name);
         setInitialFatherName(data[0].teacher_id.father_name);
         setInitialGrandFatherName(data[0].teacher_id.grand_father_name);

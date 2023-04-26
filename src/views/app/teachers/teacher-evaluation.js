@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-import * as Yup from 'yup';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
+import {evaluationTypeOptions} from '../global-data/options'
+import { teacherEvalautionSchema } from '../global-data/forms-validation';
 import {
   Row,
   Card,
@@ -12,133 +11,26 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
-
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import { Router } from 'react-router-dom';
-//import TeacherEvaluation from './teacher-evaluation';
-
 const servicePath = 'http://localhost:8000';
 const teachersApiUrl = `${servicePath}/teachers/`;
 const institutesApiUrl = `${servicePath}/institute/`;
 const departmentsApiUrl = `${servicePath}/institute/department/`;
 const classesApiUrl = `${servicePath}/institute/classs/`;
 const subjectApiUrl = `${servicePath}/institute/subject/`;
-const fieldsApiUrl = `${servicePath}/institute/field/`;
+// const fieldsApiUrl = `${servicePath}/institute/field/`;
 const evaluationApiUrl = `${servicePath}/teachers/evaluation-create/`;
 const TeacherEvaluationAPI = `${servicePath}/teachers/evaluation`;
 //http://localhost:8000/teachers/evaluation/?id=1
 
-const evaluationTypeOptions = [
-  { value: '1', label: <IntlMessages id="teacher.evaluationTypeOption_1" /> },
-  { value: '2', label: <IntlMessages id="teacher.evaluationTypeOption_2" /> },
-];
 
-const ValidationSchema = Yup.object().shape({
-  id: updatingMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="teacher.IdErr" />)
-    : null,
-
-  department: updatingMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="teacher.departmentIdErr" />)
-    : null,
-
-  subject: updatingMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="marks.SubjectErr" />)
-    : null,
-
-  evaluator: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="teacher.evaluatorErr" />),
-
-  strengthPoints: Yup.string()
-    .min(10, <IntlMessages id="min.minInputValues" />)
-    .required(<IntlMessages id="teacher.strengthPointsErr" />),
-
-  marks: Yup.string().required(<IntlMessages id="teacher.marksErr" />),
-  evaluationDate: Yup.string().required(
-    <IntlMessages id="teacher.evaluationDateErr" />
-  ),
-
-  institute: updatingMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="forms.InstituteErr" />)
-    : null,
-
-  classs: updatingMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="marks.ClassErr" />)
-    : null,
-
-  topic: Yup.string().required(<IntlMessages id="teacher.topicErr" />),
-
-  evaluationType: updatingMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="teacher.evaluationTypeErr" />)
-    : null,
-
-  weaknessPoints: Yup.string().required(
-    <IntlMessages id="teacher.weaknessPointsErr" />
-  ),
-});
-
-const updatingMode = true;
 
 const TeacherEvaluation = () => {
-  const TestData = {
-    Id: 'Hamid',
-    Department: 'CS',
-    Subject: 'ICT',
-    Evalovator: 'Ahmad',
-    StrengthPoints:
-      'He Is hard working and patient while researching about the a topic',
-    Marks: '59',
-    EvaluationDate: '2022-08-12',
-    Insititute: 'Nima',
-    Class: '12th-A',
-    Topic: 'BioEconomy',
-    EvluationType: 'Goal Oriented',
-    WeaknessPoint: 'Lack of Preparation',
-    Suggestions: 'Preparation time should be improved!',
-  };
   const { teacherId } = useParams();
   console.log('teacher evaluation', teacherId);
 
@@ -201,7 +93,7 @@ const TeacherEvaluation = () => {
   const [initialId, setInitialId] = useState([]);
   const [initialDepartment, setInitialDepartment] = useState([]);
   const [initialSubject, setInitialSubject] = useState([]);
-  const [initialEvaluator, setInitialEvaluator] = useState([]);
+  const [initialEvaluator, setInitialEvaluator] = useState();
   const [initialMarks, setInitialMarks] = useState('');
   const [initialStrengthPoints, setInitialStrengthPoints] = useState('');
   const [initialEvaluationDate, setInitialEvaluationDate] = useState('');
@@ -216,8 +108,8 @@ const TeacherEvaluation = () => {
   const [departments, setDepartments] = useState([]);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [strengthPoints, setStrengthPoints] = useState([]);
-  const [weaknessPoints, setWeaknessPoints] = useState([]);
+  const [strengthPoints, setStrengthPoints] = useState('');
+  const [weaknessPoints, setWeaknessPoints] = useState('');
   const [suggestion, setSuggestion] = useState([]);
 
   const fetchTeachers = async () => {
@@ -289,8 +181,8 @@ const TeacherEvaluation = () => {
   };
 
   const onSubmit = (values) => {
+    setIsNext(true)
     console.log(values);
-
     const data = {
       teacher_id: values.teacher.value,
       institute_id: values.institute.value,
@@ -308,8 +200,6 @@ const TeacherEvaluation = () => {
       user_id: 1,
     };
 
-    console.log('data', data);
-
     axios
       .post(evaluationApiUrl, data)
       .then((response) => {
@@ -319,7 +209,7 @@ const TeacherEvaluation = () => {
         console.log('error', error);
       });
   };
-
+  const [isNext, setIsNext] = useState(false);
   return (
     <>
       <Card>
@@ -327,11 +217,12 @@ const TeacherEvaluation = () => {
           {<IntlMessages id="teacher.EvalautionTitle" />}
         </h3>
         <CardBody>
+        {!isNext ? (
           <Formik
             enableReinitialize={true}
             initialValues={initialValues}
             onSubmit={onSubmit}
-            validationSchema={ValidationSchema}
+            validationSchema={teacherEvalautionSchema}
           >
             {({ errors, touched, values, setFieldTouched, setFieldValue }) => (
               <Form className="av-tooltip tooltip-label-right error-l-150 ">
@@ -498,7 +389,6 @@ const TeacherEvaluation = () => {
                         options={classes}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                        required
                       />
                       {errors.class && touched.class ? (
                         <div className="invalid-feedback d-block bg-danger text-white">
@@ -585,9 +475,6 @@ const TeacherEvaluation = () => {
                       className="float-right m-5"
                       size="lg"
                       type="submit"
-                      onClick={() => {
-                        onSubmit;
-                      }}
                     >
                       <span className="spinner d-inline-block">
                         <span className="bounce1" />
@@ -603,10 +490,30 @@ const TeacherEvaluation = () => {
               </Form>
             )}
           </Formik>
+          ) : (
+            <div
+              className="wizard-basic-step text-center pt-3 "
+              style={{ minHeight: '400px' }}
+            >
+              <div>
+                <h1 className="mb-2">
+                  <IntlMessages id="wizard.content-thanks" />
+                </h1>
+                <h3>
+                  <IntlMessages id="wizard.registered" />
+                </h3>
+                <Button
+                  className="m-5 bg-primary"
+                  onClick={() => setIsNext(false)}
+                >
+                  <IntlMessages id="button.back" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardBody>
       </Card>
     </>
   );
 };
-
 export default TeacherEvaluation;

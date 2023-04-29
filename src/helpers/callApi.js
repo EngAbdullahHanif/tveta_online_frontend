@@ -1,11 +1,15 @@
 import axios from 'axios';
 
-const servicePath = 'http://localhost/tveta';
+// const servicePath = 'http://172.16.105.244/tveta'; #production mood
+// const servicePath = 'localhost:8000';
+const servicePath = 'http://127.0.0.1:8000';
 
 //  get the API headers
 const getHeaders = (data) => {
   const user = JSON.parse(localStorage.getItem('current_user'));
   const access_token = localStorage.getItem('access_token');
+
+  console.log('came here')
 
   if (user && access_token) {
     const headers = { Authorization: `Bearer ${access_token}` };
@@ -24,6 +28,8 @@ const getHeaders = (data) => {
 const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
+  console.log('url', url)
+  console.log('lolskdj')
 
   //add current user id to the data
   if (data && data instanceof FormData) {

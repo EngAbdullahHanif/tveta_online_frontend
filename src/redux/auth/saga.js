@@ -53,7 +53,8 @@ export function* watchLoginUser() {
 function loginWithEmailPassword(username, password) {
   console.log('came here')
   return axios
-    .post('http://172.16.105.244/tveta/user/logins/', { username, password })
+    // .post('http://172.16.105.244/tveta/user/logins/', { username, password }) #production mode
+    .post('http://127.0.0.1:8000/user/logins/', { username, password })
     .then((response) => {
       console.log('response', response.data);
       return response.data;

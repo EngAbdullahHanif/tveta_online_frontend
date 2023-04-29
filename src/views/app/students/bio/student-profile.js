@@ -440,7 +440,7 @@ const StudentProfile = () => {
                         <Label>
                           <IntlMessages id="menu.institutes" />
                         </Label>
-                        <h3>{institute[0].institute.name}</h3>
+                        <h3>{institute[0].institute_id.name}</h3>
                         <Label>
                           <IntlMessages id="field.SemesterLabel" />
                         </Label>

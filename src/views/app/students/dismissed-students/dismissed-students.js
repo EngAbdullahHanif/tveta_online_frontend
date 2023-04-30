@@ -79,6 +79,10 @@ const MarksRegistration = ({ match }) => {
         //   }
         // });
       }
+
+
+
+
       fetchStudent();
       //setUpdateMode(true);
     }, []);
@@ -102,13 +106,36 @@ const MarksRegistration = ({ match }) => {
   }, []);
 
   const fetchDismissedStudents = async (values) => {
-    const { data } = await axios.get(
-      `${dismissedStudentsAPI}/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}`
+    // const { data } = await axios.get(
+    //   `${dismissedStudentsAPI}/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}`
+    // );
+    // setDismissedStudents(data);
+    // console.log('dismissed students list', data);
+    // setIsLoaded(true);
+    // setDismissedStudentList(true);
+
+
+    const response = await callApi(
+      `api/student_institutes/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}`,
+      '',
+      null
     );
-    setDismissedStudents(data);
-    console.log('dismissed students list', data);
+    if (response.data && response.status === 200) {
+
+      setDismissedStudents(response.data);
+    console.log('dismissed students list', response.data);
     setIsLoaded(true);
     setDismissedStudentList(true);
+
+      // setItems(response.data);
+      // setSelectedItems([]);
+      // // setTotalItemCount(data);
+      // setIsLoaded(true);
+    } else {
+      console.log('dissmised students error');
+    }
+
+
   };
 
   const onSubmit = (values) => {

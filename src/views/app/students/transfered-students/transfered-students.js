@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import callApi from 'helpers/callApi';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -52,9 +53,6 @@ const ValidationSchema = Yup.object().shape({
 const initialValues = {
   institute: [],
   educationlaYear: '',
-  studyTime: [],
-  classs: [],
-  department: [],
 };
 const MarksRegistration = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -85,15 +83,27 @@ const MarksRegistration = ({ match }) => {
     }, []);
   }
 
-  const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
-  };
+  // const fetchInstitutes = async () => {
+  //   const response = await axios.get('http://localhost:8000/institute/');
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name,
+  //   }));
+  //   setInstitutes(updatedData);
+  // };
 
+  const fetchInstitutes = async () => {
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
+  };
   useEffect(() => {
     fetchInstitutes();
   }, []);
@@ -109,6 +119,7 @@ const MarksRegistration = ({ match }) => {
   };
 
   const onSubmit = (values) => {
+    setTransferedStudentList(true)
     fetchTransferedStudents(values);
   };
 
@@ -118,7 +129,7 @@ const MarksRegistration = ({ match }) => {
         <TransferedStudentList item_list={transferedStudents} />
       ) : (
         <Card>
-          <h3 className="mt-5 m-5">لست شاگردان تبدیل شده</h3>
+          <h2 className="mt-5 m-5"><IntlMessages id="student.transferred-studentList" /></h2>
           <CardBody>
             {' '}
             <Formik
@@ -134,7 +145,7 @@ const MarksRegistration = ({ match }) => {
                 setFieldValue,
               }) => (
                 <Form className="av-tooltip tooltip-label-right ">
-                  <Row className="m-5">
+                  <Row className="mr-5 ml-5 mt-5 mb-1 justify-content-center">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
                       <FormGroup className="form-group has-float-label error-l-150 ">
@@ -167,7 +178,6 @@ const MarksRegistration = ({ match }) => {
                           id="educationlaYear"
                           className="form-control"
                           name="educationlaYear"
-                          // assign value to selectedEducationalYear
                           onClick={setSelectedEducationalYear(
                             values.educationlaYear
                           )}
@@ -180,23 +190,28 @@ const MarksRegistration = ({ match }) => {
                       </FormGroup>
                     </Colxx>
                   </Row>
-                  <Row>
-                    <Button
-                      className={`mt-3 btn-shadow btn-multiple-state`}
+                  <Row className=" justify-content-center">
+                    <Colxx xxs="6" >
+            
+                    <Button 
+                    className="float-right m-3 mb-5"
                       size="lg"
                       type="submit"
-                      style={{ marginRight: '900px' }}
+                      color="primary"
                     >
-                      <span className="spinner d-inline-block">
-                        <span className="bounce1" />
-                        <span className="bounce2" />
-                        <span className="bounce3" />
-                      </span>
                       <span className="label">
-                        <IntlMessages id="button.SubmitButton" />
+                        <IntlMessages id="search.studentId" />
                       </span>
                     </Button>
+                    </Colxx>
+                    
                   </Row>
+                  <br/>  
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
                 </Form>
               )}
             </Formik>

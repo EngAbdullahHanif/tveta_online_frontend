@@ -113,8 +113,8 @@ module.exports = {
   studentTimings: 'وخت',
   department: 'دیپارتمنت',
   studentMarks: 'نمرات کانکور',
+  'student.Markslist': 'نمرې',
   studentField: 'رشته',
-  studentRegtrationDate: 'تاریخ ثبت نام',
   studentFatherName: 'نام پدر',
 
   // department
@@ -1185,6 +1185,7 @@ module.exports = {
   'student.transferTitle': 'د شاګرد تبدیلی/ تبدیلی شاگرد',
   'student.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
   'student.transferDocuments': 'د تبدیلی اسناد / اسناد تبدیلی',
+  'student.transferred-studentList': 'د تبدیل شویو شاګردانو لست/ لست شاگردان تبدلی شده',
 
   // Curriculum
   'subject.curriculum': 'د نصاب ثبت / ثبت نصاب',

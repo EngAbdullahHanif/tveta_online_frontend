@@ -835,6 +835,7 @@ module.exports = {
   'teacher.DoBErr': 'Date of Birth is Required!',
   'teacher.StatusOption_1': 'Active',
   'teacher.StatusOption_2': 'Dismissed',
+  'student.Markslist': 'Marks',
   'teacher.StatusLabel': 'Status',
   'teacher.StatusErr': 'Status is Required!',
   'teacher.Profile': 'Teacher profile',
@@ -1079,6 +1080,8 @@ module.exports = {
   'student.interenaceType': 'Enterance Type',
   'student.PhoneNo': 'Phone No',
   'study.type': 'student Type',
+  'student.transferred-studentList': 'student Type',
+
 
   // Curriculum
   'subject.curriculum': 'Curriculum',

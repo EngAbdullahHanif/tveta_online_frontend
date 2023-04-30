@@ -10,6 +10,8 @@ import { provincesOptionsForList } from '../../../global-data/options';
 import ListPageListing from './AttendanceListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import { useAsyncDebounce } from 'react-table';
+import callApi from 'helpers/callApi';
+
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -202,11 +204,26 @@ const ThumbListPages = ({ match }) => {
   // ]);
 
   const fetchAttendance = async () => {
-    const { data } = await axios.get(attendanceListAPI);
-    setAttendance(data);
-    console.log('attendance list here you can see all of them', attendance);
-    setIsLoaded(true);
+    // const { data } = await axios.get(`api/stdatten/`);
+    // setAttendance(data);
+    // console.log('attendance list here you can see all of them', attendance);
+    // setIsLoaded(true);
+
+    const response = await callApi(
+      `api/stdatten/`,
+      '',
+      null
+    );
+
+    if( response.data && response.status === 200){
+      setAttendance(response.data)
+      console.log('resonse.data', response.data)
+    } else {
+      console.log('Attendance error: ' + response.status)
+    }
   };
+
+
 
   useEffect(() => {
     fetchAttendance();

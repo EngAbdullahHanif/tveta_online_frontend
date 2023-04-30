@@ -4,9 +4,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "register" */ './bio/register')
 );
-const hijriData = React.lazy(() =>
-  import(/* webpackChunkName: "register" */ './hijriData')
-);
 
 const RegisterKankor = React.lazy(() =>
   import(/* webpackChunkName: "kankor-result" */ './bio/register-kankor')
@@ -118,11 +115,7 @@ const Students = ({ match }) => (
         path={`${match.url}/register-kankor`}
         render={(props) => <RegisterKankor {...props} />}
       />
-      <Route
-        exact
-        path={`${match.url}/hijriData`}
-        render={(props) => <hijriData {...props} />}
-      />
+
       <Route
         path={`${match.url}/register-kankor/:kankorStudentId`}
         render={(props) => <RegisterKankor {...props} />}

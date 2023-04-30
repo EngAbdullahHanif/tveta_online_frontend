@@ -1,11 +1,8 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import DatePicker from 'react-multi-date-picker';
-import solarHijriCalender from 'react-date-object/calendars/persian';
-import afghanDateFormat from 'react-date-object/locales/persian_en';
-//import solarHijriCalender from 'helpers/solarHijriCalender';
-//import afghanDateFormat from 'helpers/persian';
+import { FormControl, FormLabel } from 'react-bootstrap';
+
 import {
   Row,
   Card,
@@ -14,11 +11,6 @@ import {
   Label,
   Spinner,
   Button,
-  InputGroup,
-  InputGroupAddon,
-  CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import {
@@ -32,23 +24,17 @@ import {
   studyTimeOptions,
 } from './../../global-data/data';
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
 import { useParams } from 'react-router-dom';
 
-import axios from 'axios';
 import * as Yup from 'yup';
 
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import { institute } from 'lang/locales/fa_IR';
+import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 //import { Controller } from 'react';
 const servicePath = 'http://localhost:8000';
@@ -477,6 +463,12 @@ const StudentRegistration = ({ intl }, values) => {
   const [departments, setDepartments] = useState([]);
   const [classs, setClasss] = useState([]);
   const [sectors, setSectors] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
 
   // fetch institute lists
   const fetchInstitutes = async () => {
@@ -699,7 +691,8 @@ const StudentRegistration = ({ intl }, values) => {
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
-          console.log(newFields, 'new hirjri date');
+          const formData = { ...newFields, file: selectedFile };
+          console.log('file is attached here', formData);
 
           const data = {
             //personal info,
@@ -750,7 +743,7 @@ const StudentRegistration = ({ intl }, values) => {
             user_id: '1',
           };
 
-          console.log('the form data is converted to object', data);
+          //console.log('the form data is converted to object', data);
 
           // posting data to the server
           postStudentRecord(data);
@@ -980,8 +973,8 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormikReactSelect
                                 name="DoB"
                                 id="DoB"
-                                value={values.educationalYear}
-                                options={educationYears}
+                                value={values.educationalYearsOptions}
+                                options={educationalYearsOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -1265,8 +1258,8 @@ const StudentRegistration = ({ intl }, values) => {
                                 <FormikReactSelect
                                   name="graduationYear"
                                   id="graduationYear"
-                                  value={values.educationalYear}
-                                  options={educationYears}
+                                  value={values.educationalYearsOptions}
+                                  options={educationalYearsOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                   required
@@ -1474,7 +1467,7 @@ const StudentRegistration = ({ intl }, values) => {
                     photo: initialphoto,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepThree}
+                  // validationSchema={ValidationStepThree}
                   validateOnMount
                 >
                   {({
@@ -1624,25 +1617,41 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* Upload Photo */}
-                            <FormGroup>
-                              {/* <Label>
-                                  <IntlMessages id="student.photo" />
-                                </Label> */}
-                              <InputGroup className="mb-3">
-                                <InputGroupAddon addonType="prepend">
-                                  آپلود عکس
-                                </InputGroupAddon>
-                                <CustomInput
-                                  type="file"
-                                  id="exampleCustomFileBrowser1"
-                                  name="photo"
-                                />
-                              </InputGroup>
-                              {errors.photo && touched.photo ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.photo}
+                            <FormGroup
+                              style={{ width: '100%' }}
+                              className="row align-items-center"
+                            >
+                              <div className="col">
+                                <div className="d-flex align-items-center">
+                                  <label
+                                    id="fileSpan"
+                                    style={{
+                                      marginRight: '5px',
+                                      marginLeft: '20px',
+                                      width: '25%',
+                                    }}
+                                  >
+                                    انتخاب فایل
+                                  </label>
+                                  <FormControl
+                                    style={{ width: '90%' }}
+                                    id="file"
+                                    name="file"
+                                    type="file"
+                                    onChange={(event) => {
+                                      const fileName =
+                                        event.target.files[0].name;
+                                      handleFileChange(event, setFieldValue);
+                                      document.getElementById(
+                                        'fileSpan'
+                                      ).textContent = fileName;
+                                    }}
+                                  />
                                 </div>
-                              ) : null}
+                              </div>
+                              <div className="col">
+                                <ErrorMessage name="file" component="div" />
+                              </div>
                             </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">

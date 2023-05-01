@@ -67,6 +67,7 @@ const StudentProfile = () => {
       );
 
       const instituteData = await instituteResponse.data;
+      console.log('instituteData', instituteData);
       setInstitute(instituteData);
 
       //type =1 means current class or current continued class
@@ -440,7 +441,7 @@ const StudentProfile = () => {
                         <Label>
                           <IntlMessages id="menu.institutes" />
                         </Label>
-                        <h3>{institute[0].institute.name}</h3>
+                        <h3>{institute[0].institute_id.name}</h3>
                         <Label>
                           <IntlMessages id="field.SemesterLabel" />
                         </Label>

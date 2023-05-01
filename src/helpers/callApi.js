@@ -1,11 +1,15 @@
 import axios from 'axios';
 
-const servicePath = 'http://localhost:8000';
+// const servicePath = 'http://172.16.105.244/tveta'; #production mood
+// const servicePath = 'localhost:8000';
+const servicePath = 'http://127.0.0.1:8000';
 
 //  get the API headers
 const getHeaders = (data) => {
   const user = JSON.parse(localStorage.getItem('current_user'));
   const access_token = localStorage.getItem('access_token');
+
+  console.log('came here')
 
   if (user && access_token) {
     const headers = { Authorization: `Bearer ${access_token}` };
@@ -21,17 +25,21 @@ const getHeaders = (data) => {
 };
 
 // make API calls
+
 const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
-
+  
   //add current user id to the data
   if (data && data instanceof FormData) {
+    console.log('data', data)
+
     data.append(
       'user_id',
       JSON.parse(localStorage.getItem('current_user')).user_id
     );
   } else if (data) {
+    // data.user_id = 1
     data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
   }
 
@@ -44,7 +52,8 @@ const callApi = async (endpoint, method = 'get', data = null) => {
     });
     return response;
   } catch (error) {
-    if (error.response.status === 404) {
+    console.log('errorasdfsadf')
+    if (error.response && error.response.status === 404) {
       throw new Error('Resource not found');
     } else {
       throw error;

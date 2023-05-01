@@ -8,7 +8,8 @@ import {
   ModalFooter,
 } from 'reactstrap';
 
-import Pagination from '../../../../../containers/pages/Pagination';
+// import Pagination from '../../../../../containers/pages/Pagination';
+import Pagination from './pagination'
 import ContextMenuContainer from '../../../../../containers/pages/ContextMenuContainer';
 import DataListView from '../../../../../containers/pages/DataListView';
 // import ImageListView from '../../../../../containers/pages/ImageListView';
@@ -31,6 +32,8 @@ const ListPageListing = ({
   onChangePage,
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
+
+  console.log('total  page', totalPage)
 
   return (
     <>

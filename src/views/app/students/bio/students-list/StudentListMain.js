@@ -319,7 +319,7 @@ const ThumbListPages = ({ match }) => {
     studentTypeOptions,
   ]);
 
-  const itemsPerPage = 2;
+  const itemsPerPage = 10;
 
   useEffect(async () => {
     async function fetchData() {
@@ -360,12 +360,14 @@ const ThumbListPages = ({ match }) => {
           '',
           null
         );
-        console.log('responssdfsd', response);
+        console.log('respons', response);
         if (response.data && response.status === 200) {
           setTotalPage(Math.ceil(response.data.count / itemsPerPage));
           setItems(response.data.results);
+          console.log('response of the ', response);
           setSelectedItems([]);
           setTotalItemCount(response.data.count);
+
           setIsLoaded(true);
         } else {
           console.log('students error');

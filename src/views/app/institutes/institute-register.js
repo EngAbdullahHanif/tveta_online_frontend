@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import React, { useRef, useState, useEffect } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { dormGenderOptions } from './../global-data/data';
 import { provincesOptionsForList } from './../global-data/data';
+import { FormControl, FormLabel } from 'react-bootstrap';
 import * as Yup from 'yup';
+
 import {
   Row,
   Card,
@@ -254,7 +256,6 @@ const InstituteRegister = () => {
   };
 
   const onRegister = (values) => {
-    console.log('form values with the image', values);
     const data = {
       name: values.institute,
       address: `${values.district}, ${values.province.value}`,
@@ -317,34 +318,6 @@ const InstituteRegister = () => {
                             {errors.institute}
                           </div>
                         )}
-                      </FormGroup>
-                      <FormGroup className="form-group has-float-label">
-                        {/* <Label>
-                          <IntlMessages id="inst.name" />
-                        </Label>
-                        <Field className="form-control" name="institute" />
-                        {errors.institute && touched.institute && (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.institute}
-                          </div>
-                        )} */}
-                        <label>Image</label>
-                        {/* <ErrorMessage name="image" component="span"/> */}
-
-                        <input
-                          autoComplete="off"
-                          id="image"
-                          name="imageFile"
-                          type="file"
-                          onChange={() => {
-                            console.log('file is picked');
-                          }}
-                        />
-                        {errors.file && touched.file ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.file}
-                          </div>
-                        ) : null}
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">

@@ -9,7 +9,7 @@ const getHeaders = (data) => {
   const user = JSON.parse(localStorage.getItem('current_user'));
   const access_token = localStorage.getItem('access_token');
 
-  console.log('came here')
+  console.log('came here');
 
   if (user && access_token) {
     const headers = { Authorization: `Bearer ${access_token}` };
@@ -29,10 +29,10 @@ const getHeaders = (data) => {
 const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
-  
+
   //add current user id to the data
   if (data && data instanceof FormData) {
-    console.log('data', data)
+    console.log('data', data);
 
     data.append(
       'user_id',
@@ -52,7 +52,7 @@ const callApi = async (endpoint, method = 'get', data = null) => {
     });
     return response;
   } catch (error) {
-    console.log('errorasdfsadf')
+    console.log('errorasdfsadf');
     if (error.response && error.response.status === 404) {
       throw new Error('Resource not found');
     } else {

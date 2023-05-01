@@ -1,12 +1,8 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-// import DatePicker from 'react-multi-date-picker';
-// import solarHijriCalender from 'react-date-object/calendars/persian';
-// import afghanDateFormat from 'react-date-object/locales/persian_en';
-// //import solarHijriCalender from 'helpers/solarHijriCalender';
-// //import afghanDateFormat from 'helpers/persian';
-// import { educationalYearsOptions } from './../../global-data/data';
+import { FormControl, FormLabel } from 'react-bootstrap';
+
 import {
   Row,
   Card,
@@ -15,11 +11,6 @@ import {
   Label,
   Spinner,
   Button,
-  InputGroup,
-  InputGroupAddon,
-  CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import {
@@ -33,23 +24,17 @@ import {
   studyTimeOptions,
 } from './../../global-data/data';
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
 import { useParams } from 'react-router-dom';
 
-import axios from 'axios';
 import * as Yup from 'yup';
 
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import { institute } from 'lang/locales/fa_IR';
+import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
 
@@ -480,6 +465,12 @@ const StudentRegistration = ({ intl }, values) => {
   const [departments, setDepartments] = useState([]);
   const [classs, setClasss] = useState([]);
   const [sectors, setSectors] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
 
   // fetch institute lists
   const fetchInstitutes = async () => {
@@ -702,54 +693,56 @@ const StudentRegistration = ({ intl }, values) => {
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
-          console.log(newFields, 'new hirjri date');
+          const formData = { ...newFields, file: selectedFile };
+          console.log('file is attached here', formData);
 
           const data = {
             //personal info,
-            name: newFields.name1,
-            kankor_id: newFields.kankorId,
-            finished_grade_year: newFields.graduationYear.label,
-            school: newFields.preSchool,
-            schoolـprovince: newFields.schoolProvince.value,
-            finished_grade: newFields.levelOfEducation.value,
-            student_type: newFields.studentType.value,
-            english_name: newFields.englishName,
-            last_name: newFields.lastName,
-            english_last_name: newFields.lastNameEng,
-            father_name: newFields.fatherName,
-            english_father_name: newFields.fatherEngName,
-            phone_number: newFields.phoneNo,
-            email: newFields.email,
-            grand_father_name: newFields.grandFatherName,
-            cover_number: newFields.idCardJoldNo,
-            page_number: newFields.idCardPageNo,
-            registration_number: newFields.tazkiraNo,
-            // sukuk_number: newFields.tazkiraNo,
-            main_province: newFields.province.value,
-            main_district: newFields.district,
-            main_village: newFields.village,
-            current_province: newFields.C_Province.value,
-            current_district: newFields.C_District,
-            current_village: newFields.C_Village,
-            birth_date: newFields.DoB.label,
-            fatherـprofession: newFields.fatherDuty,
-            fatherـplaceـofـduty: newFields.fatherDutyLocation,
-            internse_type: newFields.interanceType.value,
+            name: formData.name1,
+            kankor_id: formData.kankorId,
+            finished_grade_year: formData.graduationYear.label,
+            school: formData.preSchool,
+            schoolـprovince: formData.schoolProvince.value,
+            finished_grade: formData.levelOfEducation.value,
+            student_type: formData.studentType.value,
+            english_name: formData.englishName,
+            last_name: formData.lastName,
+            english_last_name: formData.lastNameEng,
+            father_name: formData.fatherName,
+            english_father_name: formData.fatherEngName,
+            phone_number: formData.phoneNo,
+            email: formData.email,
+            grand_father_name: formData.grandFatherName,
+            cover_number: formData.idCardJoldNo,
+            page_number: formData.idCardPageNo,
+            registration_number: formData.tazkiraNo,
+            // sukuk_number: formData.tazkiraNo,
+            main_province: formData.province.value,
+            main_district: formData.district,
+            main_village: formData.village,
+            current_province: formData.C_Province.value,
+            current_district: formData.C_District,
+            current_village: formData.C_Village,
+            birth_date: formData.DoB.label,
+            fatherـprofession: formData.fatherDuty,
+            fatherـplaceـofـduty: formData.fatherDutyLocation,
+            internse_type: formData.interanceType.value,
             students_status: '2',
-            gender: newFields.gender.value,
-            //student_photo: newFields.photo,// institue info
-            institute: newFields.institute.value,
-            educational_year: newFields.educationalYear.label,
+            gender: formData.gender.value,
+            //student_photo: formData.photo,// institue info
+            institute: formData.institute.value,
+            educational_year: formData.educationalYear.label,
             type: '1',
-            language: newFields.mediumOfInstruction.value,
-            time: newFields.studyTime.value,
+            language: formData.mediumOfInstruction.value,
+            time: formData.studyTime.value,
             // is_transfer: '1',// fields info
-            department_id: newFields.department.value,
-            field: newFields.field.value, //sector: newFields.sector.value,
-            sector: newFields.sector.value,
-            batch: newFields.batch.value, //student class info,
-            class_id: newFields.class.value,
-            place_of_birth: newFields.placeOfBirth,
+            department_id: formData.department.value,
+            field: formData.field.value, //sector: formData.sector.value,
+            sector: formData.sector.value,
+            batch: formData.batch.value, //student class info,
+            class_id: formData.class.value,
+            place_of_birth: formData.placeOfBirth,
+            student_photo: formData.file,
             // user_id: '1',
 
             // kankor_id: '22',
@@ -1027,7 +1020,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormikReactSelect
                                 name="DoB"
                                 id="DoB"
-                                value={values.educationalYear}
+                                value={values.educationalYearsOptions}
                                 options={educationalYearsOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
@@ -1312,7 +1305,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 <FormikReactSelect
                                   name="graduationYear"
                                   id="graduationYear"
-                                  value={values.educationalYear}
+                                  value={values.educationalYearsOptions}
                                   options={educationalYearsOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
@@ -1521,7 +1514,7 @@ const StudentRegistration = ({ intl }, values) => {
                     photo: initialphoto,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepThree}
+                  // validationSchema={ValidationStepThree}
                   validateOnMount
                 >
                   {({
@@ -1671,25 +1664,41 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* Upload Photo */}
-                            <FormGroup>
-                              {/* <Label>
-                                  <IntlMessages id="student.photo" />
-                                </Label> */}
-                              <InputGroup className="mb-3">
-                                <InputGroupAddon addonType="prepend">
-                                  آپلود عکس
-                                </InputGroupAddon>
-                                <CustomInput
-                                  type="file"
-                                  id="exampleCustomFileBrowser1"
-                                  name="photo"
-                                />
-                              </InputGroup>
-                              {errors.photo && touched.photo ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.photo}
+                            <FormGroup
+                              style={{ width: '100%' }}
+                              className="row align-items-center"
+                            >
+                              <div className="col">
+                                <div className="d-flex align-items-center">
+                                  <label
+                                    id="fileSpan"
+                                    style={{
+                                      marginRight: '5px',
+                                      marginLeft: '20px',
+                                      width: '25%',
+                                    }}
+                                  >
+                                    انتخاب فایل
+                                  </label>
+                                  <FormControl
+                                    style={{ width: '90%' }}
+                                    id="file"
+                                    name="file"
+                                    type="file"
+                                    onChange={(event) => {
+                                      const fileName =
+                                        event.target.files[0].name;
+                                      handleFileChange(event, setFieldValue);
+                                      document.getElementById(
+                                        'fileSpan'
+                                      ).textContent = fileName;
+                                    }}
+                                  />
                                 </div>
-                              ) : null}
+                              </div>
+                              <div className="col">
+                                <ErrorMessage name="file" component="div" />
+                              </div>
                             </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">

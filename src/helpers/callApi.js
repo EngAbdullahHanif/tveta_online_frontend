@@ -25,21 +25,22 @@ const getHeaders = (data) => {
 };
 
 // make API calls
+
 const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
-  console.log('url', url)
-  console.log('lolskdj')
-
+  
   //add current user id to the data
   if (data && data instanceof FormData) {
+    console.log('data', data)
+
     data.append(
       'user_id',
       JSON.parse(localStorage.getItem('current_user')).user_id
     );
   } else if (data) {
-    data.user_id = 1
-    // data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
+    // data.user_id = 1
+    data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
   }
 
   try {
@@ -51,7 +52,8 @@ const callApi = async (endpoint, method = 'get', data = null) => {
     });
     return response;
   } catch (error) {
-    if (error.response.status === 404) {
+    console.log('errorasdfsadf')
+    if (error.response && error.response.status === 404) {
       throw new Error('Resource not found');
     } else {
       throw error;

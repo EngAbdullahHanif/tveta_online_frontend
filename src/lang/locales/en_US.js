@@ -904,6 +904,7 @@ module.exports = {
   'institute.manager': 'Manager',
   'institute.status': 'Status',
   'inst.nameList': 'Institute Name',
+  'inst.name-List': 'Institute',
   'institute.statusOption_1': 'Active',
   'institute.statusOption_2': 'Deactive',
 
@@ -1081,7 +1082,8 @@ module.exports = {
   'student.PhoneNo': 'Phone No',
   'study.type': 'student Type',
   'student.transferred-studentList': 'student Type',
-
+  'student.previousInstitute': 'Previous Institute',
+  'student.newInstitute': 'New Institute',
 
   // Curriculum
   'subject.curriculum': 'Curriculum',
@@ -1335,7 +1337,6 @@ module.exports = {
   'class.semesterErr': 'Semester Is Required!',
   'teacher-list.MajorLabel': 'field',
   'class.nameList': 'Name',
-
 
   // Group
 

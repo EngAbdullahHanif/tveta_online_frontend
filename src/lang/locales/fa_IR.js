@@ -126,7 +126,7 @@ module.exports = {
   departmentFieldErr: 'نام رشته لازم است',
   departmentNameErr: 'نام دیپارتمنت لازم است',
   departmentEnglishNameErr: 'نام انگلیسی دیپارتمنت لازم است',
-  "department.id": 'ایدی ',
+  'department.id': 'ایدی ',
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.instituteT': 'انستیتوتونه/ انستیتوتها',
@@ -884,7 +884,8 @@ module.exports = {
   'attendance.departmentLabel': 'دیپارتمنت',
   'attendance-list': 'د حاضرۍ اپدیت لست',
   'department.field': 'رشته',
-  'department.FieldEngNameLabel': 'د دیپارتمنت انګریزي نوم/ نام انگلسی دیپارتمنت',
+  'department.FieldEngNameLabel':
+    'د دیپارتمنت انګریزي نوم/ نام انگلسی دیپارتمنت',
   'department.departmentRegisterlabel': 'د دیپارتمنت ثبت/ ثبت دیپارتمنت',
 
   'marks.attendanceResult': 'وروستۍ پایله / نتیجه نهایی',
@@ -991,6 +992,7 @@ module.exports = {
   'institute.studentgenderOption_1': 'نارینه/ذکور',
   'institute.studentgenderOption_2': 'ښځینه/ اناث',
   'institute.studentgenderOption_3': 'دواړه/مختلط',
+
   // Type
   'institute.instTypeOptions_1': 'دولتی',
   'institute.instTypeOptions_2': 'خصوصی',
@@ -1185,7 +1187,10 @@ module.exports = {
   'student.transferTitle': 'د شاګرد تبدیلی/ تبدیلی شاگرد',
   'student.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
   'student.transferDocuments': 'د تبدیلی اسناد / اسناد تبدیلی',
-  'student.transferred-studentList': 'د تبدیل شویو شاګردانو لست/ لست شاگردان تبدلی شده',
+  'student.transferred-studentList':
+    'د تبدیل شویو شاګردانو لست/ لست شاگردان تبدلی شده',
+  'student.previousInstitute': 'مخکنی انستیتوت',
+  'student.newInstitute': 'نوی انستیتوت',
 
   // Curriculum
   'subject.curriculum': 'د نصاب ثبت / ثبت نصاب',
@@ -1612,6 +1617,7 @@ module.exports = {
 
   'inst.name': 'انستیتوت نوم / نام انستیتوت',
   'inst.nameList': 'نوم/ نام',
+  'inst.name-List': 'انستیتوت',
   'inst.nameErr': 'د انستیتوت نوم اړین دی/ نام انستیتوت ضروری است',
   institute: 'انستیتوت',
   // 'institute.instituteLabel': 'انستیتوت',

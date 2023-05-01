@@ -109,17 +109,24 @@ const MarksRegistration = ({ match }) => {
   }, []);
 
   const fetchTransferedStudents = async (values) => {
-    const { data } = await axios.get(
-      `${transferedStudentsAPI}/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}&is_transfer=2`
+    // const { data } = await axios.get(
+    //   `${transferedStudentsAPI}/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}&is_transfer=2`
+    // );
+    const response = await callApi(
+      `api/student_institutes/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}&is_transfer=2`,
+      '',
+      null
     );
-    setTransferedStudents(data);
+    console.log('response.data', response.data);
+    console.log('response', response);
+    setTransferedStudents(response.data);
     //console.log('transfered students list', data);
     setIsLoaded(true);
     setTransferedStudentList(true);
   };
 
   const onSubmit = (values) => {
-    setTransferedStudentList(true)
+    setTransferedStudentList(true);
     fetchTransferedStudents(values);
   };
 
@@ -129,7 +136,9 @@ const MarksRegistration = ({ match }) => {
         <TransferedStudentList item_list={transferedStudents} />
       ) : (
         <Card>
-          <h2 className="mt-5 m-5"><IntlMessages id="student.transferred-studentList" /></h2>
+          <h2 className="mt-5 m-5">
+            <IntlMessages id="student.transferred-studentList" />
+          </h2>
           <CardBody>
             {' '}
             <Formik
@@ -191,27 +200,25 @@ const MarksRegistration = ({ match }) => {
                     </Colxx>
                   </Row>
                   <Row className=" justify-content-center">
-                    <Colxx xxs="6" >
-            
-                    <Button 
-                    className="float-right m-3 mb-5"
-                      size="lg"
-                      type="submit"
-                      color="primary"
-                    >
-                      <span className="label">
-                        <IntlMessages id="search.studentId" />
-                      </span>
-                    </Button>
+                    <Colxx xxs="6">
+                      <Button
+                        className="float-right m-3 mb-5"
+                        size="lg"
+                        type="submit"
+                        color="primary"
+                      >
+                        <span className="label">
+                          <IntlMessages id="search.studentId" />
+                        </span>
+                      </Button>
                     </Colxx>
-                    
                   </Row>
-                  <br/>  
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
                 </Form>
               )}
             </Formik>

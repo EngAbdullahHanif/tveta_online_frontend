@@ -391,7 +391,7 @@ const StudentAttendance = ({ match }) => {
             <Formik
               enableReinitialize={true}
               initialValues={initialValues}
-              onSubmit={onSubmit}
+              onSubmit={fetchStudentList}
               validationSchema={ValidationSchema}
             >
               {({
@@ -641,7 +641,7 @@ const StudentAttendance = ({ match }) => {
                   </Row>
                   <Formik
                     initialValues={initialValues}
-                    onSubmit={random}
+                    onSubmit={onSubmit}
                     // validationSchema={ValidationSchema}
                   >
                     {({

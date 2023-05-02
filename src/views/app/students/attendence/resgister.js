@@ -283,7 +283,7 @@ const StudentAttendance = ({ match }) => {
   //   console.log(values);
   //   console.log('inside the random function form new score');
   //   console.log('stdPresnet', values.present);
-  
+
   // };
   const onSubmit = async (values) => {
     console.log('values of the form', values);

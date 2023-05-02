@@ -129,7 +129,7 @@ const initialValues = {
 };
 const StudentAttendance = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [inNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -291,6 +291,7 @@ const StudentAttendance = ({ match }) => {
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
+        setIsNext(false)
       });
     console.log('students', students);
   };
@@ -331,7 +332,7 @@ const StudentAttendance = ({ match }) => {
       <Card>
         <h3 className=" m-5 p-5">{<IntlMessages id="menu.attendance" />}</h3>
         <CardBody>
-          {inNext ? (
+          {isNext ? (
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}

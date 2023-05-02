@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { FormControl, FormLabel } from 'react-bootstrap';
+
 import {
   Row,
   Card,
@@ -9,11 +11,6 @@ import {
   Label,
   Spinner,
   Button,
-  InputGroup,
-  InputGroupAddon,
-  CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import {
@@ -28,19 +25,26 @@ import {
   tazkiraOptions,
   educationLevelOptions,
 } from '../../global-data/options';
-import {studentRegisterFormStep_1, studentRegisterFormStep_2 , studentRegisterFormStep_3 } from '../../global-data/forms-validation';
 import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+  studentRegisterFormStep_1,
+  studentRegisterFormStep_2,
+  studentRegisterFormStep_3,
+} from '../../global-data/forms-validation';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
 import { useParams } from 'react-router-dom';
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import { institute } from 'lang/locales/fa_IR';
+
+import * as Yup from 'yup';
+
+import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
+import currentUser from 'helpers/currentUser';
+
+//import { Controller } from 'react';
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
@@ -62,7 +66,6 @@ const studentProvince = [
     label: 'kjlkjkjlkj',
   },
 ];
-
 
 const StudentRegistration = ({ intl }, values) => {
   const { updateStudentId } = useParams();
@@ -211,6 +214,12 @@ const StudentRegistration = ({ intl }, values) => {
   const [departments, setDepartments] = useState([]);
   const [classs, setClasss] = useState([]);
   const [sectors, setSectors] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
 
   // fetch institute lists
   const fetchInstitutes = async () => {
@@ -425,55 +434,101 @@ const StudentRegistration = ({ intl }, values) => {
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
-          console.log(newFields, 'new hirjri date');
+          const formData = { ...newFields, file: selectedFile };
+          console.log('file is attached here', formData);
 
           const data = {
             //personal info,
-            name: newFields.name1,
-            kankor_id: newFields.kankorId,
-            finished_grade_year: newFields.graduationYear.label,
-            school: newFields.preSchool,
-            schoolـprovince: newFields.schoolProvince.value,
-            finished_grade: newFields.levelOfEducation.value.toString(10),
-            student_type: newFields.studentType.value,
-            english_name: newFields.englishName,
-            last_name: newFields.lastName,
-            english_last_name: newFields.lastNameEng,
-            father_name: newFields.fatherName,
-            english_father_name: newFields.fatherEngName,
-            phone_number: newFields.phoneNo.toString(10),
-            email: newFields.email,
-            grand_father_name: newFields.grandFatherName,
-            cover_number: newFields.idCardJoldNo,
-            page_number: newFields.idCardPageNo,
-            registration_number: newFields.tazkiraNo.toString(10),
-            sukuk_number: newFields.tazkiraNo.toString(10),
-            main_province: newFields.province.value,
-            main_district: newFields.district,
-            main_village: newFields.village,
-            current_province: newFields.C_Province.value,
-            current_district: newFields.C_District,
-            current_village: newFields.C_Village,
-            birth_date: newFields.DoB.label,
-            fatherـprofession: newFields.fatherDuty,
-            fatherـplaceـofـduty: newFields.fatherDutyLocation,
-            internse_type: newFields.interanceType.value,
+            name: formData.name1,
+            kankor_id: formData.kankorId,
+            finished_grade_year: formData.graduationYear.label,
+            school: formData.preSchool,
+            schoolـprovince: formData.schoolProvince.value,
+            finished_grade: formData.levelOfEducation.value,
+            student_type: formData.studentType.value,
+            english_name: formData.englishName,
+            last_name: formData.lastName,
+            english_last_name: formData.lastNameEng,
+            father_name: formData.fatherName,
+            english_father_name: formData.fatherEngName,
+            phone_number: formData.phoneNo,
+            email: formData.email,
+            grand_father_name: formData.grandFatherName,
+            cover_number: formData.idCardJoldNo,
+            page_number: formData.idCardPageNo,
+            registration_number: formData.tazkiraNo,
+            // sukuk_number: formData.tazkiraNo,
+            main_province: formData.province.value,
+            main_district: formData.district,
+            main_village: formData.village,
+            current_province: formData.C_Province.value,
+            current_district: formData.C_District,
+            current_village: formData.C_Village,
+            birth_date: formData.DoB.label,
+            fatherـprofession: formData.fatherDuty,
+            fatherـplaceـofـduty: formData.fatherDutyLocation,
+            internse_type: formData.interanceType.value,
             students_status: '2',
-            gender: newFields.gender.value,
-            //student_photo: newFields.photo,// institue info
-            institute: newFields.institute.value.toString(10),
-            educational_year: newFields.educationalYear.label,
+            gender: formData.gender.value,
+            //student_photo: formData.photo,// institue info
+            institute: formData.institute.value,
+            educational_year: formData.educationalYear.label,
             type: '1',
-            language: newFields.mediumOfInstruction.value,
-            time: newFields.studyTime.value,
+            language: formData.mediumOfInstruction.value,
+            time: formData.studyTime.value,
             // is_transfer: '1',// fields info
-            department_id: newFields.department.value.toString(10),
-            field: newFields.field.value.toString(10), //sector: newFields.sector.value.toString(10),
-            sector: newFields.sector.value.toString(10),
-            batch: newFields.batch.value.toString(10), //student class info,
-            class_id: newFields.class.value.toString(10),
-            place_of_birth: newFields.placeOfBirth,
-            user_id: '1',
+            department_id: formData.department.value,
+            field: formData.field.value, //sector: formData.sector.value,
+            sector: formData.sector.value,
+            batch: formData.batch.value, //student class info,
+            class_id: formData.class.value,
+            place_of_birth: formData.placeOfBirth,
+            student_photo: formData.file,
+            // user_id: '1',
+
+            // kankor_id: '22',
+            // name: 'dfgdfsdfsfdsfdsfdsfgfdg',
+            // english_name: 'lksd',
+            // last_name: 'ldkfj',
+            // english_last_name: 'dlkjf',
+            // father_name: 'dklfjds',
+            // english_father_name: 'dlfkjds',
+            // phone_number: '1231',
+            // email: 'man@man.com',
+            // grand_father_name: 'lsdkjfds',
+            // cover_number: '11',
+            // page_number: '23',
+            // registration_number: '2323',
+            // sukuk_number: '2323',
+            // main_province: 'lsdkfj',
+            // main_district: 'dlkfj',
+            // main_village: 'lsdkfj',
+            // current_province: 'lsdkjf',
+            // current_district: 'lsdkfj',
+            // current_village: 'lsdkfj',
+            // birth_date: '2023-03-13',
+            // place_of_birth: 'sdfasfdsf',
+            // fatherـprofession: 'dslfkj',
+            // fatherـplaceـofـduty: 'sldkfj',
+            // finished_grade: 'ldkfj',
+            // finished_grade_year: '1212',
+            // school: 'lsdkfj',
+            // schoolـprovince: 'lskdfj',
+            // student_type: '1',
+            // internse_type: '1',
+            // gender: '2',
+            // user_id: '1',
+            // class_id: '3',
+            // educational_year: '2002',
+            // type: '1',
+            // institute: '1',
+            // language: '2',
+            // time: '3',
+            // department_id: '2',
+            // field: '2',
+            // sector: '2',
+            // batch: '2',
+            // user_id: '1',
           };
 
           console.log('the form data is converted to object', data);
@@ -686,7 +741,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormikReactSelect
                                 name="DoB"
                                 id="DoB"
-                                value={values.educationalYear}
+                                value={values.educationalYearsOptions}
                                 options={educationalYearsOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
@@ -971,7 +1026,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 <FormikReactSelect
                                   name="graduationYear"
                                   id="graduationYear"
-                                  value={values.educationalYear}
+                                  value={values.educationalYearsOptions}
                                   options={educationalYearsOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
@@ -1313,25 +1368,41 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* Upload Photo */}
-                            <FormGroup>
-                              {/* <Label>
-                                  <IntlMessages id="student.photo" />
-                                </Label> */}
-                              <InputGroup className="mb-3">
-                                <InputGroupAddon addonType="prepend">
-                                  آپلود عکس
-                                </InputGroupAddon>
-                                <CustomInput
-                                  type="file"
-                                  id="exampleCustomFileBrowser1"
-                                  name="photo"
-                                />
-                              </InputGroup>
-                              {errors.photo && touched.photo ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.photo}
+                            <FormGroup
+                              style={{ width: '100%' }}
+                              className="row align-items-center"
+                            >
+                              <div className="col">
+                                <div className="d-flex align-items-center">
+                                  <label
+                                    id="fileSpan"
+                                    style={{
+                                      marginRight: '5px',
+                                      marginLeft: '20px',
+                                      width: '25%',
+                                    }}
+                                  >
+                                    انتخاب فایل
+                                  </label>
+                                  <FormControl
+                                    style={{ width: '90%' }}
+                                    id="file"
+                                    name="file"
+                                    type="file"
+                                    onChange={(event) => {
+                                      const fileName =
+                                        event.target.files[0].name;
+                                      handleFileChange(event, setFieldValue);
+                                      document.getElementById(
+                                        'fileSpan'
+                                      ).textContent = fileName;
+                                    }}
+                                  />
                                 </div>
-                              ) : null}
+                              </div>
+                              <div className="col">
+                                <ErrorMessage name="file" component="div" />
+                              </div>
                             </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">
@@ -1484,8 +1555,12 @@ const StudentRegistration = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <NavLink to={{ pathname: '/app/students/register-1',
-                     state: { data: 'STUDENT' }}}>
+                    <NavLink
+                      to={{
+                        pathname: '/app/students/register-1',
+                        state: { data: 'STUDENT' },
+                      }}
+                    >
                       <Button className="mt-5 bg-primary">
                         <IntlMessages id="button.back" />
                       </Button>

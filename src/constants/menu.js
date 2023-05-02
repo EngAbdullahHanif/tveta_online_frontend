@@ -14,12 +14,7 @@ const data = [
         to: `${adminRoot}/students/students`,
         // roles: [UserRole.Admin],
       },
-      {
-        icon: 'CG.CgUserList',
-        label: 'hijri',
-        to: `${adminRoot}/students/hijriData`,
-        // roles: [UserRole.Admin],
-      },
+
       {
         icon: 'FA.FaList',
         label: 'menu.kankor-student-list',

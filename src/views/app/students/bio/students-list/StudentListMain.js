@@ -319,6 +319,8 @@ const ThumbListPages = ({ match }) => {
     studentTypeOptions,
   ]);
 
+  const itemsPerPage = 10;
+
   useEffect(async () => {
     async function fetchData() {
       console.log('institute', institute);
@@ -326,17 +328,19 @@ const ThumbListPages = ({ match }) => {
       console.log('district', district);
       console.log('studentId', studentId);
       console.log('selectedGenderOption', selectedGenderOption);
+      console.log('currentPage', currentPage);
 
       if (institute !== '') {
         const response = await callApi(
-          `api/student_institutes/?institute_id=${institute.id}`,
+          `api/student_institutes/?institute_id=${institute.id}&page=${currentPage}`,
           '',
           null
         );
         if (response.data && response.status === 200) {
-          setItems(response.data);
+          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
+          setItems(response.data.results);
           setSelectedItems([]);
-          // setTotalItemCount(data);
+          setTotalItemCount(response.data.count);
           setIsLoaded(true);
         } else {
           console.log('students error');
@@ -352,77 +356,65 @@ const ThumbListPages = ({ match }) => {
           setRest(false);
         }
         const response = await callApi(
-          `api/?student_id=${studentId}&current_district=${district}`,
+          `api/?student_id=${studentId}&current_district=${district}&p=${currentPage}&page=${1}`,
           '',
           null
         );
-        console.log('responssdfsd', response);
+        console.log('respons', response);
         if (response.data && response.status === 200) {
-          setItems(response.data);
+          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
+          setItems(response.data.results);
+          console.log('response of the ', response);
           setSelectedItems([]);
-          // setTotalItemCount(data);
+          setTotalItemCount(response.data.count);
+
           setIsLoaded(true);
         } else {
           console.log('students error');
         }
       } else if (selectedProvinceOption.column === 'all') {
         const response = await callApi(
-          `api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`,
+          `api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}`,
           '',
           null
         );
 
         if (response.data && response.status === 200) {
-          setItems(response.data);
+          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
+          setItems(response.data.results);
           setSelectedItems([]);
-          // setTotalItemCount(data);
+          setTotalItemCount(response.data.count);
           setIsLoaded(true);
         } else {
           console.log('students error');
         }
       } else if (selectedGenderOption.column === 'all') {
         const response = await callApi(
-          `api/?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`,
+          `api/?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}`,
           '',
           null
         );
         if (response.data && response.status === 200) {
-          setItems(response.data);
+          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
+          setItems(response.data.results);
           setSelectedItems([]);
-          // setTotalItemCount(data);
+          setTotalItemCount(response.data.count);
           setIsLoaded(true);
         } else {
           console.log('students error');
         }
       } else {
-        // get data from localhost:8000/api/student
-        // axios
-        //   .get(
-        //     `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-        //     );
-        //     setItems(data);
-
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-
+        setTotalItemCount(response.data.totalItem);
         const response = await callApi(
-          `api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`,
+          `api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}`,
           '',
           null
         );
         if (response.data && response.status === 200) {
-          setItems(response.data);
+          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
+          setItems(response.data.results);
           setSelectedItems([]);
-          // setTotalItemCount(data);
+          setTotalItemCount(response.data.count);
           setIsLoaded(true);
         } else {
           console.log('students error');
@@ -536,7 +528,6 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  console.log('student data here', items);
   return !isLoaded ? (
     <div className="loading" />
   ) : (

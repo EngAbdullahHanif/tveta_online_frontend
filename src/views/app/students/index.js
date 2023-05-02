@@ -4,9 +4,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "register" */ './bio/register')
 );
-const hijriData = React.lazy(() =>
-  import(/* webpackChunkName: "register" */ './hijriData')
-);
 
 const RegisterKankor = React.lazy(() =>
   import(/* webpackChunkName: "kankor-result" */ './bio/register-kankor')
@@ -86,6 +83,10 @@ const SecondChanceMarks = React.lazy(() =>
 const SingleStudentMarksUpdate = React.lazy(() =>
   import(/* webpackChunkName: "marks-update" */ './single-student-marksUpdate')
 );
+
+const StudentUpgrade = React.lazy(() =>
+  import(/* webpackChunkName: "student-upgrade" */ './student-upgrade')
+);
 // const UpdateAttendance = React.lazy(() =>
 //   import(/* webpackChunkName: "marks-update" */ './')
 // );
@@ -118,11 +119,7 @@ const Students = ({ match }) => (
         path={`${match.url}/register-kankor`}
         render={(props) => <RegisterKankor {...props} />}
       />
-      <Route
-        exact
-        path={`${match.url}/hijriData`}
-        render={(props) => <hijriData {...props} />}
-      />
+
       <Route
         path={`${match.url}/register-kankor/:kankorStudentId`}
         render={(props) => <RegisterKankor {...props} />}
@@ -188,7 +185,7 @@ const Students = ({ match }) => (
         render={(props) => <MarksDisplay {...props} />}
       />
       <Route
-        path={`${match.url}/marks-display-allsubs`}
+        path={`${match.url}/class-marks`}
         render={(props) => <MarksDisplayAllSubs {...props} />}
       />
       <Route
@@ -223,6 +220,12 @@ const Students = ({ match }) => (
         path={`${match.url}/register-1`}
         render={(props) => <Main {...props} />}
       />
+
+      <Route
+        path={`${match.url}/student-upgrade`}
+        render={(props) => <StudentUpgrade {...props} />}
+      />
+
       {/* <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}

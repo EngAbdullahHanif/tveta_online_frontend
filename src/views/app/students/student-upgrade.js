@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
-import { studyTimeOptions } from '../global-data/options';
+import { studyTimeOptions } from './../global-data/data';
 // Year  and SHift
 
 import * as Yup from 'yup';
@@ -105,7 +105,7 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="teacher.departmentIdErr" />),
 });
 
-const AllSubjectsMarks = ({ match }) => {
+const StudentUpgrade = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -225,36 +225,36 @@ const AllSubjectsMarks = ({ match }) => {
     }
   };
   console.log('Wanted Data', header.length - 3);
-  const onSubmit = (values) => {
-    console.log('values', values);
-    const educational_year = selectedEducationalYear;
-    const institute_id = selectedInstitute.value;
-    const department = selectedDepartment.value;
-    const class_id = selectedClass.value;
-    const subject_id = selectedSubject.value;
-    students.map((student) => {
-      const examData = {
-        educational_year: educational_year,
-        student_id: student.student_id,
-        institute_id: institute_id,
-        Department: department,
-        class_id: class_id,
-      };
-      //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-      //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-      const data = {
-        subject: subject_id,
-        exam_types: 1,
-        passing_score: passingScore,
-        grad: subjectGrad,
-        Gpa: subjectGPA,
-        user_id: 1,
-        mark: values.score[student.student_id],
-      };
-      console.log('data', data);
-      // axios.post('http://localhost:8000/api/marks/', data);
-    });
-  };
+  // const onSubmit = (values) => {
+  //   console.log('values', values);
+  //   const educational_year = selectedEducationalYear;
+  //   const institute_id = selectedInstitute.value;
+  //   const department = selectedDepartment.value;
+  //   const class_id = selectedClass.value;
+  //   const subject_id = selectedSubject.value;
+  //   students.map((student) => {
+  //     const examData = {
+  //       educational_year: educational_year,
+  //       student_id: student.student_id,
+  //       institute_id: institute_id,
+  //       Department: department,
+  //       class_id: class_id,
+  //     };
+  //     //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
+  //     //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
+  //     const data = {
+  //       subject: subject_id,
+  //       exam_types: 1,
+  //       passing_score: passingScore,
+  //       grad: subjectGrad,
+  //       Gpa: subjectGPA,
+  //       user_id: 1,
+  //       mark: values.score[student.student_id],
+  //     };
+  //     console.log('data', data);
+  //     // axios.post('http://localhost:8000/api/marks/', data);
+  //   });
+  // };
 
   const initialValues = {
     institute: [],
@@ -280,11 +280,56 @@ const AllSubjectsMarks = ({ match }) => {
     setIsMasterChecked(isChecked);
   };
 
+  // const handleMasterCheckboxChange = (event) => {
+  //   const isChecked = event.target.checked;
+  //   const updatedCheckedItems = Object.keys(checkedItems).reduce(
+  //     (acc, studentId) => ({ ...acc, [studentId]: { checked: isChecked } }),
+  //     {}
+  //   );
+  //   setCheckedItems(updatedCheckedItems);
+  //   setIsMasterChecked(isChecked);
+  // };
+
   useEffect(() => {
     setIsMasterChecked(Object.values(checkedItems).every(Boolean));
   }, [checkedItems]);
 
-  console.log(checkedItems, 'Item is checked');
+  const [checkedIndexes, setCheckedIndexes] = useState([]);
+
+  const handleCheckboxChange = (index) => {
+    console.log('indexsdfsd', index);
+    // check if the index is already in the array
+    if (checkedIndexes.includes(index)) {
+      // if it is, remove it from the array
+      setCheckedIndexes(checkedIndexes.filter((i) => i !== index));
+      console.log('checkedIndexes reomved', checkedIndexes);
+    } else {
+      // if it's not, add it to the array
+      setCheckedIndexes([...checkedIndexes, index]);
+      console.log('checkedIndexes added', checkedIndexes);
+    }
+  };
+
+  const getSelectedStudents = () => {
+    const arrayLength = Array(students.map((student) => student));
+
+    // cleanedStudents.shift();
+    console.log('arrayLength', arrayLength);
+    console.log('checkedIndesdfxes', checkedIndexes);
+    // filter the students array based on the checkedIndexes array
+    const selectedStudents = students.filter((student, index) =>
+      checkedIndexes.includes(index)
+    );
+    // return the selected students
+    // return selectedStudents;
+    console.log('selectedStudents', selectedStudents);
+  };
+
+  // const checkedIndexes = Object.keys(checkedItems)
+  //   .filter((index) => checkedItems[index])
+  //   .map((index) => parseInt(index));
+
+  console.log(checkedIndexes, 'checkedIndexes');
   return (
     <>
       <Card>
@@ -505,9 +550,9 @@ const AllSubjectsMarks = ({ match }) => {
                       >
                         <IntlMessages id="marks.marksDisplayTitle" />
                       </th>{' '}
-                      {/* <th className="border text-center">
+                      <th className="border text-center">
                         <IntlMessages id="marks.resultHeader" />
-                      </th> */}
+                      </th>
                     </tr>
                   </thead>
                   <thead
@@ -520,14 +565,14 @@ const AllSubjectsMarks = ({ match }) => {
                           {item.name}
                         </th>
                       ))}
-                      {/* <th className="border text-center">
+                      <th className="border text-center">
                         <CustomInput
                           type="checkbox"
                           id="CheckAll"
                           checked={isMasterChecked}
                           onChange={handleMasterCheckboxChange}
                         />
-                      </th> */}
+                      </th>
                     </tr>
                   </thead>
 
@@ -569,19 +614,21 @@ const AllSubjectsMarks = ({ match }) => {
                                   </>
                                 );
                               })}
-                              {/* <td className="border text-center " key={index}>
+                              <td className="border text-center " key={index}>
                                 <CustomInput
                                   type="checkbox"
                                   id={`checkbox${index}`}
+                                  name={`checkbox${index}`}
                                   checked={checkedItems[index]}
-                                  onChange={(event) =>
+                                  onChange={(event) => {
                                     setCheckedItems({
                                       ...checkedItems,
                                       [index]: event.target.checked,
-                                    })
-                                  }
+                                    });
+                                    handleCheckboxChange(index + 1);
+                                  }}
                                 />
-                              </td> */}
+                              </td>
                             </>
                           ) : null}
                         </tr>
@@ -596,9 +643,9 @@ const AllSubjectsMarks = ({ match }) => {
                           {header1.name}
                         </th>
                       ))}
-                      {/* <th className="border text-center">
+                      <th className="border text-center">
                         <IntlMessages id="marks.resultHeader" />
-                      </th> */}
+                      </th>
                     </tr>
                   </tfoot>
                 </table>
@@ -609,6 +656,15 @@ const AllSubjectsMarks = ({ match }) => {
                     <IntlMessages id="button.Back" />
                   </Button>
                 </Colxx>
+                <div className="d-flex justify-content-between align-items-center m-4 float-right">
+                  <Button
+                    size="lg"
+                    color="primary"
+                    onClick={() => getSelectedStudents()}
+                  >
+                    <IntlMessages id="button.SubmitButton" />
+                  </Button>
+                </div>
               </Row>
             </>
           )}
@@ -618,4 +674,4 @@ const AllSubjectsMarks = ({ match }) => {
   );
 };
 
-export default AllSubjectsMarks;
+export default StudentUpgrade;

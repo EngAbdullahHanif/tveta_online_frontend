@@ -67,6 +67,7 @@ const StudentProfile = () => {
       );
 
       const instituteData = await instituteResponse.data;
+      console.log('instituteData', instituteData);
       setInstitute(instituteData);
 
       //type =1 means current class or current continued class

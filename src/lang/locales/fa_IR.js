@@ -738,7 +738,7 @@ module.exports = {
   'forms.StdInteranceOption_3': 'عمومی کانکور / کانکور عمومی',
   'student.studentId': 'اساس نمبر',
   'student.studentIdErr': 'اساس نمبر اړین دی/ اساس نمبر ضروری است',
-
+  'inst.file': 'عکس',
   'forms.StdInteranceTypeLabel': 'د شمولیت ډول/ نوع شمولیت',
   'forms.StdInteranceTypeErr': 'د شمولیت ډول اړین دی/ نوع شمولیت ضروری است',
   'forms.StdGraduationYearLabel': 'د فراغت کال / سال فراغت',

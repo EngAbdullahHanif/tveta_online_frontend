@@ -31,7 +31,7 @@ async function getUserDetails() {
   try {
     const accessToken = localStorage.getItem('access_token');
     return await axios
-      .get('http://localhost:8000/user/user-profile/', {
+      .get('http://localhost/tveta/user/user-profile/', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -51,8 +51,10 @@ export function* watchLoginUser() {
 }
 
 function loginWithEmailPassword(username, password) {
+  console.log('came here')
   return axios
-    .post('http://localhost:8000/user/logins/', { username, password })
+    // .post('http://172.16.105.244/tveta/user/logins/', { username, password }) #production mode
+    .post('http://localhost:8000/user/login/', { username, password })
     .then((response) => {
       console.log('response', response.data);
       return response.data;
@@ -100,7 +102,7 @@ function registerWithEmailPassword(
   province
 ) {
   return axios
-    .post('http://localhost:8000/user/register/', {
+    .post('http://localhost/tveta/user/register/', {
       username,
       last_name,
       email,

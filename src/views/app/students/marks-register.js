@@ -3,7 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import { studyTimeOptions } from '../global-data/options';
+import currentUser from 'helpers/currentUser';
+import { studyTimeOptions } from './../global-data/data';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -326,7 +327,7 @@ const MarksRegistration = ({ match }) => {
         department_id: departmentId,
         class_id: classId,
         subject_id: subjectId,
-        user_id: '',
+        user_id: currentUser,
       },
       ...newStudents,
     ];

@@ -16,8 +16,6 @@ import {
   InputGroup,
   InputGroupAddon,
   CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
@@ -33,16 +31,6 @@ const servicePath = 'http://localhost:8000';
 const instituteApiUrl = `${servicePath}/institute/`;
 const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
 const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
-
-const instituteOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-];
-
-const shifs = [
-  { value: '1', label: 'rozana' },
-  { value: '2', label: 'shabana' },
-];
 
 const StudentsDismissal = (values) => {
   const [studentId, setStudentId] = useState('');
@@ -530,7 +518,6 @@ const StudentsDismissal = (values) => {
                 </h3>
                 <Button
                   className="m-5 bg-primary"
-                  // onClick={() => window.location.reload()}
                   onClick={() => {
                     {
                       setReload(false);

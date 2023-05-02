@@ -1398,6 +1398,8 @@ module.exports = {
   'student.buttonDismissal': 'منفک',
   'studendts.dismisseds-students': 'لست شاگردان منفک ',
   'transfered-Students': 'د تبدیل شویو شاګردانو لست',
+  'student.dismissal-studentList':
+    'د منفک شویو شاګردانو لست/ لست شاگردان منفک شده',
 
   // Student Dismissal from dorm
   'student.dismissalFromDormTitle':

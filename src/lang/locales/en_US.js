@@ -1274,6 +1274,7 @@ module.exports = {
   'student.dissmissalDocumentErr': 'Dismissal Document Is Required!',
   'student.buttonDismissal': 'Dismiss',
   'studendts.dismisseds-students': 'Dismissed Students',
+  'student.dismissal-studentList': 'Dismissed Students List',
 
   // Student Dismissal from dorm
   'student.dismissalFromDormTitle': 'Dismissal from Dorm',

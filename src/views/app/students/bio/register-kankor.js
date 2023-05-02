@@ -1,109 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
-
+import callApi from 'helpers/callApi';
 import { useParams } from 'react-router-dom';
-import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-  CardTitle,
-} from 'reactstrap';
+import { kankorRegisterValidationSchema } from '../../global-data/forms-validation';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-import { genderOptions } from './../../global-data/data';
-import { provinceOptions } from './../../global-data/data';
-import { educationalYearsOptions } from './../../global-data/data';
-import { studyTimeOptions } from './../../global-data/data';
+import { genderOptions } from '../../global-data/options';
+import { provinceOptions } from '../../global-data/options';
+import { educationalYearsOptions } from '../../global-data/options';
+import { studyTimeOptions } from '../../global-data/options';
 const servicePath = 'http://localhost:8000';
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
-//http://localhost:8000/api/kankorResults/?id=1
-
-const InstituteOptions = [
-  { value: 1, label: 'Tech Afg' },
-  { value: 2, label: 'IT' },
-];
-
-const FieldOptions = [
-  { value: '1', label: 'Option1' },
-  { value: '2', label: 'Option2' },
-  { value: '3', label: 'Option3' },
-];
-
 const StudentRegistraion = ({ history }) => {
-  const ValidationSchema = Yup.object().shape({
-    name1: Yup.string()
-      .min(3, <IntlMessages id="min.minInputValue" />)
-      .max(50, <IntlMessages id="max.maxInputValue" />)
-      .required(<IntlMessages id="forms.StdKankorNameErr" />),
-
-    fatherName: Yup.string()
-      .min(3, <IntlMessages id="min.minInputValue" />)
-      .max(50, <IntlMessages id="max.maxInputValue" />)
-      .required(<IntlMessages id="teacher.FatherNameErr" />),
-
-    interanceDate: Yup.date().required(
-      <IntlMessages id="forms.KankorMarksErr" />
-    ),
-
-    // kankorId: Yup.string().required(<IntlMessages id="forms.StdKankorIdErr" />),
-
-    kankorMarks: Yup.string().required(
-      <IntlMessages id="forms.KankorMarksErr" />
-    ),
-
-    department: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="teacher.departmentIdErr" />),
-    gender: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.genderErr" />),
-    institute: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.InstituteErr" />),
-    field: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.FieldErr" />),
-    studyTime: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.StudyTimeErr" />),
-    educationalYear: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.educationYearErr" />),
-
-    province: Yup.object()
-      .shape({
-        value: Yup.string().required(),
-      })
-      .nullable()
-      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-
-    district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-  });
-
   const { kankorStudentId } = useParams();
   console.log(kankorStudentId);
   if (kankorStudentId) {
@@ -161,7 +71,6 @@ const StudentRegistraion = ({ history }) => {
 
   const [intialName, setInitialName] = useState('');
   const [initialFatherName, setInitialFatherName] = useState('');
-  const [initailInteranceDate, setInitailInteranceDate] = useState('');
   const [initialKankorMarks, setInitialKankorMarks] = useState('');
   const [initialField, setInitailField] = useState([]);
   const [initailDepartment, setInitailDepartment] = useState([]);
@@ -178,7 +87,6 @@ const StudentRegistraion = ({ history }) => {
     gender: initialGender,
     fatherName: initialFatherName,
     kankorMarks: initialKankorMarks,
-    interanceDate: initailInteranceDate,
     studyTime: initialstudyTime,
     department: initailDepartment,
     field: initialField,
@@ -190,42 +98,50 @@ const StudentRegistraion = ({ history }) => {
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
-  const [isNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(false);
   const [StudyTime, setStudyTIme] = useState('0');
 
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
   const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/field/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-
-    setFields(updatedData);
+    const response = await callApi('institute/field/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFields(updatedData);
+    } else {
+      console.log('field error');
+    }
   };
   const fetchDepartments = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/department/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDepartments(updatedData);
+    const response = await callApi('institute/department/', '', null);
+    console.log('response of department', response);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('department error');
+    }
   };
-
   const updateMode = true;
   const onRegister = (values) => {
-    console.log('values', values);
-    setIsNext(false);
-
+    setIsNext(true);
+    console.log('THis is  the inner comment');
     const data = {
       name: values.name1,
       father_name: values.fatherName,
@@ -238,10 +154,6 @@ const StudentRegistraion = ({ history }) => {
       district: 'kabul',
       gender: 1,
       user_id: 1,
-      // date: values.StdInteranceDate,
-      //uncomment this line to send data to the server
-      // kankor_id: values.StdKankorId,
-      // study_time: values.studyTime.value,
     };
     console.log('data', data);
     axios
@@ -268,12 +180,12 @@ const StudentRegistraion = ({ history }) => {
           {<IntlMessages id="forms.Kankorformstitle" />}
         </h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onRegister}
-              validationSchema={ValidationSchema}
+              validationSchema={kankorRegisterValidationSchema}
             >
               {({
                 errors,
@@ -299,7 +211,7 @@ const StudentRegistraion = ({ history }) => {
                       </FormGroup>
 
                       {/* Gender */}
-                      <FormGroup className="form-group has-float-label error-l-100">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="gender.gender" />
                         </Label>
@@ -496,23 +408,6 @@ const StudentRegistraion = ({ history }) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
-                      {/*           
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.RegistrationDateLabel" />
-                        </Label>
-                        <Field
-                          className="form-control"
-                          name="interanceDate"
-                          type="date"
-                        />
-                        {errors.interanceDate && touched.interanceDate ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.interanceDate}
-                          </div>
-                        ) : null}
-                      </FormGroup> */}
                     </Colxx>
                   </Row>
                   <Row>
@@ -522,9 +417,6 @@ const StudentRegistraion = ({ history }) => {
                         className="float-right m-5"
                         size="lg"
                         type="submit"
-                        // onClick={() => {
-                        //   handleClick(false);
-                        // }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -551,8 +443,7 @@ const StudentRegistraion = ({ history }) => {
                 </h3>
                 <Button
                   className="m-5 bg-primary"
-                  // onClick={() => window.location.reload()}
-                  onClick={() => setIsNext(true)}
+                  onClick={() => setIsNext(false)}
                 >
                   <IntlMessages id="button.back" />
                 </Button>

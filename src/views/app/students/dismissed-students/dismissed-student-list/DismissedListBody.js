@@ -25,46 +25,42 @@ const StudentListBody = ({
           })}
         >
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+            <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row  min-width-zero align-items-lg-center">
               {/* send this to localhost/transferedStudentss/:id */}
               <NavLink
                 span
-                style={{ width: '9%' }}
+                style={{ width: '11.8%', fontSize: '20px' }}
                 to={`transferedStudents/${transferedStudents.id}`}
                 className=""
               >
-                <p className="list-item-heading mb-1 truncate ">
+                <p
+                  className="list-item-heading mb-1 truncate "
+                  style={{ fontSize: '20px' }}
+                >
                   {transferedStudents.id}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small w-9 w-sm-100"
-                style={{ width: '3%' }}
+                style={{ width: '15%', fontSize: '20px' }}
               >
                 {transferedStudents.student_id.student_id}
               </p>
               <p
                 className="mb-1 text-small w-9 w-sm-100"
-                style={{ width: '6%' }}
+                style={{ width: '20%', fontSize: '20px' }}
               >
                 {transferedStudents.student_id.name}
               </p>
-
-              <p className="mb-1 text-small w-10 w-sm-100">
-                {transferedStudents.student_id.father_name}
-              </p>
-              <p className="mb-1 text-small w-10 w-sm-100">
-                {transferedStudents.institute.province}
-              </p>
               <p
-                style={{ marginLef: '0px' }}
-                className="mb-1 text-small w-10 w-sm-100"
+                className="mb-1 text-small  w-sm-100"
+                style={{ width: '25%', fontSize: '20px' }}
               >
-                {transferedStudents.institute.name}
+                {transferedStudents.institute_id.name}
               </p>
               <p
-                style={{ marginLeft: '0px' }}
                 className="mb-1 text-small w-10 w-sm-100"
+                style={{ width: '6%', fontSize: '20px' }}
               >
                 {transferedStudents.educational_year}
               </p>

@@ -26,168 +26,6 @@ const instituteApiUrl = `${servicePath}/institute/`;
 const TransferedStudentsAPI = `${servicePath}/api/student_institutes/?is_transfer=2`;
 //http://localhost:8000/api/student_institutes/?institute=&type=&language=&time=&student_id=&educational_year=&is_transfer=2
 
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-const pageSizes = [10, 20, 40, 80];
-
-const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
-];
-const genderOptions = [
-  {
-    column: 'all',
-    label: 'تول / همه',
-  },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
-];
-const provinces = [
-  {
-    column: 'all',
-    label: 'تول / همه',
-  },
-  {
-    column: '1',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
-  },
-  {
-    column: '2',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
-  },
-  {
-    column: '3',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
-  },
-  {
-    column: '4',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
-  },
-  {
-    column: '5',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
-  },
-  {
-    column: '6',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
-  },
-  {
-    column: '7',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
-  },
-  {
-    column: '8',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
-  },
-  {
-    column: '9',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
-  },
-  {
-    column: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    column: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    column: 'هرات',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    column: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    column: 'کابل',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    column: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    column: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    column: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    column: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    column: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    column: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    column: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    column: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    column: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    column: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    column: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    column: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    column: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    column: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    column: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    column: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    column: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    column: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
 const ThumbListPages = ({ match, item_list }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -208,10 +46,7 @@ const ThumbListPages = ({ match, item_list }) => {
   const [rest, setRest] = useState(0);
   const [institutes, setInstitutes] = useState();
   const [institute, setInstitute] = useState('');
-
   const [studentId, setStudentId] = useState('');
-  const [province, setProvince] = useState('');
-  const [district, setDistrict] = useState('');
   const [transferedStudents, setsetTransferedStudentsTra] = useState([]);
   const [selectedGenderOption, setSelectedGenderOption] = useState({
     column: 'all',
@@ -223,7 +58,6 @@ const ThumbListPages = ({ match, item_list }) => {
   });
 
   useEffect(() => {
-    setItems(item_list);
     setIsLoaded(true);
   }, []);
   const onCheckItem = (event, id) => {
@@ -285,7 +119,6 @@ const ThumbListPages = ({ match, item_list }) => {
     if (!selectedItems.includes(clickedProductId)) {
       setSelectedItems([clickedProductId]);
     }
-
     return true;
   };
 
@@ -307,7 +140,7 @@ const ThumbListPages = ({ match, item_list }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د تبدیل شوی شاګردانو لست/لست شاگردان تبدیل شده"
+          heading="د منفک شویو شاګردانو لست/لست شاگردان منفک شده"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -327,133 +160,74 @@ const ThumbListPages = ({ match, item_list }) => {
           endIndex={endIndex}
           selectedItemsLength={selectedItems ? selectedItems.length : 0}
           itemsLength={items ? items.length : 0}
-          onSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setSearch(e.target.value.toLowerCase());
-            }
-          }}
-          orderOptions={orderOptions}
-          pageSizes={pageSizes}
-          toggleModal={() => setModalOpen(!modalOpen)}
-          changeGenderBy={(column) => {
-            setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
-            );
-          }}
-          changeProvinceBy={(column) => {
-            setSelectedProvinceOption(
-              provinces.find((x) => x.column === column)
-            );
-          }}
-          selectedGenderOption={selectedGenderOption}
-          selectedProvinceOption={selectedProvinceOption}
-          genderOptions={genderOptions}
-          provinces={provinces}
-          onIdSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setStudentId(e.target.value.toLowerCase());
-            }
-          }}
-          onProvinceSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setProvince(e.target.value.toLowerCase());
-            }
-          }}
-          onDistrictSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setDistrict(e.target.value.toLowerCase());
-            }
-          }}
-          onResetClick={setRest}
-          reset={rest}
-          institutes={institutes}
-          onInstituteSelect={setInstitute}
         />
 
         <table className="table">
           <thead
-            className="pl-2 d-flex flex-grow-1  table-dark"
+            className="pl-2 d-flex flex-grow-1  table-dark mb-2"
             style={{ maxHeight: '55px' }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
               <th
                 style={{
-                  width: '17%',
+                  width: '12%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
-                <IntlMessages id="ایدی" />
-              </th>
-              <th
-                style={{
-                  width: '10%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="ایدی شاگرد" />
-              </th>
-              <th
-                style={{
-                  width: '14%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="نام/نوم" />
-              </th>
-
-              <th
-                style={{
-                  width: '16%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="نام پدر" />
-              </th>
-              <th
-                style={{
-                  width: '17%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="ولایت" />
-              </th>
-              <th
-                style={{
-                  width: '14%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="مکتب" />
+                <IntlMessages id="marks.No" />
               </th>
               <th
                 style={{
                   width: '15%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                <IntlMessages id="marks.ID" />
+              </th>
+              <th
+                style={{
+                  width: '20%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                <IntlMessages id="forms.StdName" />
+              </th>
+              <th
+                style={{
+                  width: '25%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                <IntlMessages id="inst.name-List" />
+              </th>
+              <th
+                style={{
+                  width: '20%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
-                <IntlMessages id="سال تعلیمی " />
+                <IntlMessages id="dorm.yearList" />
               </th>
             </tr>
           </thead>
           <ListPageListing
-            items={items}
+            items={item_list}
             displayMode={displayMode}
             selectedItems={selectedItems}
             onCheckItem={onCheckItem}

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
-import { provincesOptionsForList } from './../../../global-data/data';
+import { provincesOptionsForList } from '../../../global-data/options';
+import callApi from 'helpers/callApi';
+
 
 // import { servicePath } from 'constants/defaultValues';
 import ListPageHeading from 'views/app/students/bio/kankor-students-list/KankorStudentListHeading';
@@ -134,17 +136,31 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     console.log('studentId', studentId);
     async function fetchData() {
-      await axios
-        .get(`${kankorStudentApiUrl}`)
-        .then((res) => {
-          return res.data;
-        })
-        .then((data) => {
-          setItems(data);
+      // await axios
+      //   .get(`${kankorStudentApiUrl}`)
+      //   .then((res) => {
+      //     return res.data;
+      //   })
+      //   .then((data) => {
+      //     setItems(data);
+      //     setSelectedItems([]);
+      //     setTotalItemCount(data.totalItem);
+      //     setIsLoaded(true);
+      //   });
+
+        const response = await callApi(
+          `api/kankorResults/`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
           setSelectedItems([]);
-          setTotalItemCount(data.totalItem);
+          // setTotalItemCount(data);
           setIsLoaded(true);
-        });
+        } else {
+          console.log('Kankor students error');
+        }
     }
     fetchData();
     //console.log('items', items)
@@ -332,63 +348,58 @@ const ThumbListPages = ({ match }) => {
             style={{ maxHeight: '55px', marginRight: 2 }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+            <th
+                style={{
+                  width: '11%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize:'20px'
+                }}
+              >
+                <IntlMessages id="marks.No" />
+              </th>
               <th
                 style={{
                   width: '11%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize:'20px'
                 }}
               >
                 <IntlMessages id="kankorStudentId" />
               </th>
               <th
                 style={{
-                  width: '14%',
+                  width: '15%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize:'20px'
                 }}
               >
                 <IntlMessages id="workerName" />
               </th>
+       
               <th
                 style={{
-                  width: '14%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="studentFatherName" />
-              </th>
-              <th
-                style={{
-                  width: '15%',
+                  width: '16%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize:'20px'
                 }}
               >
                 <IntlMessages id="institute" />
               </th>
               <th
                 style={{
-                  width: '15%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="studentTimings" />
-              </th>
-              <th
-                style={{
                   width: '14%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize:'20px'
                 }}
               >
                 {' '}
@@ -396,14 +407,15 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '15%',
+                  width: '13%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize:'20px'
                 }}
               >
                 {' '}
-                <IntlMessages id="studentMarks" />
+                <IntlMessages id="student.Markslist" />
               </th>
               <th
                 style={{
@@ -411,21 +423,11 @@ const ThumbListPages = ({ match }) => {
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize:'20px'
                 }}
               >
                 {' '}
-                <IntlMessages id="studentField" />
-              </th>
-              <th
-                style={{
-                  width: '15%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="studentRegtrationDate" />
+                <IntlMessages id="dorm.yearList" />
               </th>
             </tr>
           </thead>

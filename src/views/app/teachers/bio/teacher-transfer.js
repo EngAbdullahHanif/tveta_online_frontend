@@ -3,8 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../../dorms/dorm-register.css';
 import profilePhoto from './../../../../../src/assets/img/profiles/22.jpg';
-import { appointmentTypeOptions } from './../../global-data/data';
-import { contractTypeOptions } from './../../global-data/data';
+import { appointmentTypeOptions } from '../../global-data/options';
+import { contractTypeOptions } from '../../global-data/options';
 
 import * as Yup from 'yup';
 import axios from 'axios';

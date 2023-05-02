@@ -66,15 +66,8 @@ const ListPageHeading = ({
           <h1>
             <IntlMessages id={heading} />
           </h1>
-          <div className="text-zero top-right-button-container">
-            {/* <Button
-              color="primary"
-              size="lg"
-              className="top-right-button"
-              onClick={() => toggleModal()}
-            >
-              <IntlMessages id="pages.add-new" />
-            </Button> */}
+          {/* <div className="text-zero top-right-button-container">
+
             {'  '}
             <ButtonDropdown
               isOpen={dropdownSplitOpen}
@@ -113,7 +106,7 @@ const ListPageHeading = ({
                 </DropdownItem>
               </DropdownMenu>
             </ButtonDropdown>
-          </div>
+          </div> */}
           {/* <Breadcrumb match={match} /> */}
         </div>
 
@@ -135,15 +128,6 @@ const ListPageHeading = ({
               <a
                 href="#/"
                 className={`mr-2 view-icon ${
-                  displayMode === 'list' ? 'active' : ''
-                }`}
-                onClick={() => changeDisplayMode('list')}
-              >
-                <DataListIcon />
-              </a>
-              <a
-                href="#/"
-                className={`mr-2 view-icon ${
                   displayMode === 'thumblist' ? 'active' : ''
                 }`}
                 onClick={() => changeDisplayMode('thumblist')}
@@ -160,9 +144,10 @@ const ListPageHeading = ({
                 <ImageListIcon />
               </a>
             </span>
+            <br/>
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark" size="xs">
                     <IntlMessages id="filter" />
                     {selectedGenderOption.label}
@@ -179,8 +164,8 @@ const ListPageHeading = ({
                       );
                     })}
                   </DropdownMenu>
-                </UncontrolledDropdown>
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                </UncontrolledDropdown> */}
+                {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark" size="xs">
                     <IntlMessages id="filter" />
                     {selectedProvinceOption.label}
@@ -221,19 +206,9 @@ const ListPageHeading = ({
                     placeholder={messages['search.id']}
                     onKeyPress={(e) => onIdSearchKey(e)}
                   />
-                </div>
-
-                {/* <div>
-                  <ReactAutoSugegst
-                    data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
-                    }}
-                    placeholder={messages['search.institute.name']}
-                  />
                 </div> */}
               </div>
-              <Button
+              {/* <Button
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
@@ -247,7 +222,7 @@ const ListPageHeading = ({
                 }}
               >
                 <IntlMessages id="pages.reset" />
-              </Button>
+              </Button> */}
             </div>
 
             {/* <div className="float-md-right pt-1">

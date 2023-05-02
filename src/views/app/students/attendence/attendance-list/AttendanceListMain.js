@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
-
-// import { servicePath } from 'constants/defaultValues';
-
 import ListPageHeading from './AttendanceListHeading';
-import { provincesOptionsForList } from './../../../global-data/data';
+import {
+  provincesOptionsForList,
+  genderOptionsForList,
+} from '../../../global-data/options';
 
 import ListPageListing from './AttendanceListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import { useAsyncDebounce } from 'react-table';
+import callApi from 'helpers/callApi';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -33,12 +34,6 @@ const orderOptions = [
   { column: 'status', label: 'Status' },
 ];
 const pageSizes = [10, 20, 40, 80];
-
-const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
-];
 const genderOptions = [
   {
     column: 'all',
@@ -202,10 +197,19 @@ const ThumbListPages = ({ match }) => {
   // ]);
 
   const fetchAttendance = async () => {
-    const { data } = await axios.get(attendanceListAPI);
-    setAttendance(data);
-    console.log('attendance list here you can see all of them', attendance);
-    setIsLoaded(true);
+    // const { data } = await axios.get(`api/stdatten/`);
+    // setAttendance(data);
+    // console.log('attendance list here you can see all of them', attendance);
+    // setIsLoaded(true);
+
+    const response = await callApi(`api/stdatten/`, '', null);
+
+    if (response.data && response.status === 200) {
+      setAttendance(response.data);
+      console.log('resonse.data', response.data);
+    } else {
+      console.log('Attendance error: ' + response.status);
+    }
   };
 
   useEffect(() => {
@@ -324,7 +328,7 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+              genderOptionsForList.find((x) => x.column === column)
             );
           }}
           changeProvinceBy={(column) => {
@@ -334,7 +338,7 @@ const ThumbListPages = ({ match }) => {
           }}
           selectedGenderOption={selectedGenderOption}
           selectedProvinceOption={selectedProvinceOption}
-          genderOptions={genderOptions}
+          genderOptionsForList={genderOptionsForList}
           provincesOptionsForList={provincesOptionsForList}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {

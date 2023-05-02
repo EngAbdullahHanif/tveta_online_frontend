@@ -3,8 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 // import useSelector
 import { useSelector } from 'react-redux';
-import { educationalYearsOptions } from './../../global-data/data';
-import { studyTimeOptions } from './../../global-data/data';
+import { educationalYearsOptions } from '../../global-data/options';
+import { studyTimeOptions } from '../../global-data/options';
 
 // Year  and SHift
 import { useParams } from 'react-router-dom';
@@ -31,42 +31,6 @@ import {
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
 import { getDirection, getCurrentUser } from './../../../../helpers/Utils';
-
-// const LevelOfEdcationOptions = [
-//   { value: '1', label: 'اصلی' },
-//   { value: '2', label: 'فرعی' },
-// ];
-
-// const FieldOptions = [
-//   { value: '14th', label: 'Computer Science' },
-//   { value: 'bachelor', label: 'Agriculture' },
-//   { value: 'master', label: 'BBA' },
-//   { value: 'PHD', label: 'Mechenical Engineering' },
-// ];
-
-// const SemesterOptions = [
-//   { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
-//   // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
-//   //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
-// ];
-
-// const SectionOptions = [
-//   { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-// ];
-
-// const ClassOptions = [
-//   { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-//   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-// ];
 
 const SubjectOptions = [
   { value: '14th', label: 'Computer Science' },
@@ -121,27 +85,21 @@ const ValidationSchema = Yup.object().shape({
   //   })
   //   .nullable()
   //   .required(<IntlMessages id="forms.StudyTimeErr" />),
+});
 
-  // StdPresent: Yup.number().required(
-  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
-  // ),
-  // StdAbsent: Yup.number().required(
-  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
-  // ),
-  // StdNecessaryWork: Yup.number().required(
-  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
-  // ),
-  // StdSickness: Yup.number().required(
-  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
-  // ),
-  //StdPresent number
-
-  // subject: Yup.object()
-  //   .shape({
-  //     value: Yup.string().required(),
-  //   })
-  //   .nullable()
-  //   .required(<IntlMessages id="marks.SubjectErr" />),
+const InnerInpufieldsValidation = Yup.object().shape({
+  present: Yup.number().required(
+    <IntlMessages id="forms.totolEduactionalDaysErr" />
+  ),
+  absent: Yup.number().required(
+    <IntlMessages id="forms.totolEduactionalDaysErr" />
+  ),
+  necessaryWork: Yup.number().required(
+    <IntlMessages id="forms.totolEduactionalDaysErr" />
+  ),
+  sickness: Yup.number().required(
+    <IntlMessages id="forms.totolEduactionalDaysErr" />
+  ),
 });
 
 const initialValues = {
@@ -151,6 +109,10 @@ const initialValues = {
   department: [],
   totolEducationalDays: '',
   educationalYear: [],
+  present: '',
+  absent: '',
+  necessaryWork: '',
+  sickness: '',
 };
 
 const StudentAttendance = ({ match }) => {
@@ -214,14 +176,6 @@ const StudentAttendance = ({ match }) => {
   const [initalClass, setInitialClass] = useState([]);
   const [initailDepartment, setInitialDepartment] = useState([]);
   const [initalSubject, setInitialSubject] = useState([]);
-
-  // const initialValues = {
-  //   institute: initialInstitue,
-  //   educationlaYear: initailEducationalYear,
-  //   classs: initalClass,
-  //   department: initailDepartment,
-  //   subject: initalSubject,
-  // };
 
   // fetch institute lists
   const fetchInstitutes = async () => {
@@ -311,6 +265,7 @@ const StudentAttendance = ({ match }) => {
     console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       setStudents(response.data);
+      setIsNext(true);
     } else {
       console.log('class error');
     }
@@ -324,15 +279,15 @@ const StudentAttendance = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const random = (values) => {
-    console.log(values);
-    console.log('inside the random function form new score');
-    console.log('stdPresnet', values.StdPresent);
-    setIsSubmitted(true);
-  };
+  // const onSubmit = (values) => {
+  //   console.log(values);
+  //   console.log('inside the random function form new score');
+  //   console.log('stdPresnet', values.present);
+
+  // };
   const onSubmit = async (values) => {
     console.log('values of the form', values);
-
+    setIsSubmitted(true);
     const educationalYear = selectedEducationalYear;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
@@ -517,6 +472,7 @@ const StudentAttendance = ({ match }) => {
                         className="float-right m-5"
                         size="lg"
                         type="submit"
+                        // onClick={() => fetchStudentList()}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -642,14 +598,14 @@ const StudentAttendance = ({ match }) => {
                   <Formik
                     initialValues={initialValues}
                     onSubmit={onSubmit}
-                    // validationSchema={ValidationSchema}
+                    validationSchema={InnerInpufieldsValidation}
                   >
                     {({
                       errors,
-                      // touched,
-                      // // values,
-                      // setFieldTouched,
-                      // setFieldValue,
+                      touched,
+                      values,
+                      setFieldTouched,
+                      setFieldValue,
                     }) => (
                       <Form className="av-tooltip tooltip-label-right ">
                         <Row
@@ -685,12 +641,11 @@ const StudentAttendance = ({ match }) => {
                                             type="string"
                                             className="form-control"
                                             // name={`StdPresent[${student.student_id}]`}
-                                            name="StdPresent"
+                                            name="present"
                                           />
-                                          {errors.StdPresent &&
-                                          touched.StdPresent ? (
+                                          {errors.present && touched.present ? (
                                             <div className="invalid-feedback d-block">
-                                              {errors.StdPresent}
+                                              {errors.present}
                                             </div>
                                           ) : null}
                                         </FormGroup>
@@ -706,8 +661,7 @@ const StudentAttendance = ({ match }) => {
                                             //name={`StdAbsent[${student.student_id}]`}
                                             name={`${index}`}
                                           />
-                                          {errors.StdAbsent &&
-                                          touched.StdAbsent ? (
+                                          {errors.absent && touched.absent ? (
                                             <div className="invalid-feedback d-block">
                                               {errors.StdAbsent}
                                             </div>
@@ -725,10 +679,10 @@ const StudentAttendance = ({ match }) => {
                                             //name={`StdNecessaryWork[${student.student_id}]`}
                                             name={`${index}`}
                                           />
-                                          {errors.StdNecessaryWork &&
-                                          touched.StdNecessaryWork ? (
+                                          {errors.necessaryWork &&
+                                          touched.necessaryWork ? (
                                             <div className="invalid-feedback d-block">
-                                              {errors.StdNecessaryWork}
+                                              {errors.necessaryWork}
                                             </div>
                                           ) : null}
                                         </FormGroup>
@@ -744,10 +698,10 @@ const StudentAttendance = ({ match }) => {
                                             //name={`StdSickness[${student.student_id}]`}
                                             name={`${index}`}
                                           />
-                                          {errors.StdSickness &&
-                                          touched.StdSickness ? (
+                                          {errors.sickness &&
+                                          touched.sickness ? (
                                             <div className="invalid-feedback d-block">
-                                              {errors.StdSickness}
+                                              {errors.sickness}
                                             </div>
                                           ) : null}
                                         </FormGroup>
@@ -782,7 +736,10 @@ const StudentAttendance = ({ match }) => {
                                 <th
                                   scope="col"
                                   className="border text-center "
-                                  style={{ maxWidth: '20px' }}
+                                  style={{
+                                    maxWidth: '20px ',
+                                    minWidth: '50px',
+                                  }}
                                 >
                                   <IntlMessages id="marks.No" />
                                 </th>
@@ -807,6 +764,9 @@ const StudentAttendance = ({ match }) => {
                                 </th>
                                 <th scope="col" className="border text-center">
                                   <IntlMessages id="forms.StdSicknessLabel" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="marks.eligable_Deprive" />
                                 </th>
                               </tr>
                             </tfoot>

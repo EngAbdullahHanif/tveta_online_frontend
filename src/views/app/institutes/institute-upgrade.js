@@ -4,7 +4,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import axios from 'axios';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
-import { upgradeToOption } from './../global-data/data';
+import { upgradeToOption } from '../global-data/options';
 
 import * as Yup from 'yup';
 import {

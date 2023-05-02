@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { provinceOptions } from './../global-data/data';
-import { workersGrade } from './../global-data/data';
+import { provinceOptions } from '../global-data/options';
+import { workersGrade } from '../global-data/options';
 import axios from 'axios';
 
 import * as Yup from 'yup';

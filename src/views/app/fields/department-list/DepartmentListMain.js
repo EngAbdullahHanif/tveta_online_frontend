@@ -407,17 +407,19 @@ const ThumbListPages = ({ match }) => {
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
             <th
                 style={{
-                  width: '30%',
+                  width: '15%',
+                  fontSize: '20px',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                 }}
               >
-                <IntlMessages id="departmentId" />
+                <IntlMessages id="department.id" />
               </th>
               <th
                 style={{
-                  width: '30%',
+                  width: '20%',
+                  fontSize: '20px',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -428,6 +430,7 @@ const ThumbListPages = ({ match }) => {
               <th
                 style={{
                   width: '30%',
+                  fontSize: '20px',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -437,6 +440,7 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
+                  fontSize: '20px',
                   width: '30%',
                   padding: '0%',
                   textAlign: 'right',

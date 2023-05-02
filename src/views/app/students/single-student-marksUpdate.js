@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
-import { studyTimeOptions } from './../global-data/data';
+import { studyTimeOptions } from '../global-data/options';
 
 // Year  and SHift
 import * as Yup from 'yup';

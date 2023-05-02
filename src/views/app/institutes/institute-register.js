@@ -2,9 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { dormGenderOptions } from './../global-data/data';
-import { provincesOptionsForList } from './../global-data/data';
-import { FormControl, FormLabel } from 'react-bootstrap';
+import { dormGenderOptions } from '../global-data/options';
+import { provincesOptionsForList } from '../global-data/options';
 import * as Yup from 'yup';
 
 import {

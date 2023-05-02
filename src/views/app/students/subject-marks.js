@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import './style.css';
 import callApi from 'helpers/callApi';
-import { studyTimeOptions } from './../global-data/data';
+import { studyTimeOptions } from '../global-data/options';
 
 import * as Yup from 'yup';
 import {

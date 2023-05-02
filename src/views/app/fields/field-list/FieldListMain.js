@@ -4,7 +4,7 @@ import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
 import ListPageHeading from './FieldListHeading';
-import { provincesOptionsForList } from './../../global-data/data';
+import { provincesOptionsForList } from '../../global-data/options';
 import ListPageListing from './FieldListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 

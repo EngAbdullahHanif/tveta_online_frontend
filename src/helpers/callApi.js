@@ -8,16 +8,12 @@ const servicePath = 'http://127.0.0.1:8000';
 const getHeaders = (data) => {
   const user = JSON.parse(localStorage.getItem('current_user'));
   const access_token = localStorage.getItem('access_token');
-
-  console.log('came here');
-
   if (user && access_token) {
     const headers = { Authorization: `Bearer ${access_token}` };
     console.log('data instanceof FormData', data instanceof FormData);
     if (data instanceof FormData) {
       headers['Content-Type'] = 'multipart/form-data';
     }
-    console.log('headers', headers);
     return headers;
   } else {
     return {};
@@ -25,15 +21,13 @@ const getHeaders = (data) => {
 };
 
 // make API calls
-
 const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
 
-  //add current user id to the data
+  // add current user id to the data
   if (data && data instanceof FormData) {
-    console.log('data', data);
-
+    console.log('Formdata format', data);
     data.append(
       'user_id',
       JSON.parse(localStorage.getItem('current_user')).user_id
@@ -42,7 +36,6 @@ const callApi = async (endpoint, method = 'get', data = null) => {
     // data.user_id = 1
     data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
   }
-
   try {
     const response = await axios({
       method,

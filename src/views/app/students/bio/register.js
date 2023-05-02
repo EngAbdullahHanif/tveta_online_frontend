@@ -369,50 +369,6 @@ const StudentRegistration = ({ intl }, values) => {
       //setUpdateMode(true);
     }, []);
   }
-
-  const TestData = {
-    name1: 'Hamid',
-    LastName: 'Ahmad',
-    FatherName: 'Rabi',
-    GrandFatherName: 'Malik',
-    FatherDuty: 'Teacher',
-    LastNameEng: 'Samimn',
-    PhoneNo: '12321',
-    EnglishName: 'Mohammad',
-    FatherEngName: 'Mahdi',
-    Gender: 'Male',
-    FatherDutyLocation: 'Logar',
-    PlaceOfBirth: 'Logar',
-    TazkiraNo: '3423423',
-    DoB: '2022-08-12',
-    TazkiraType: 'Elctornic',
-    Email: '123@gmail.com',
-    IdCardPageNo: '35443',
-    IdCardJoldNo: '34',
-    Status: 'Active',
-    LevelOfEducation: 'bachelor',
-    PreSchool: 'Ghazi',
-    GraduationYear: '2022-08-12',
-    SchoolProvince: '321243sd',
-    Province: 'Kabul',
-    C_Province: 'Kabul',
-    District: 'Jabul Saraj',
-    C_District: 'C-Jabul Saraj',
-    Village: 'Karti Char',
-    C_Village: 'C-Karti Char',
-
-    Institute: 'Nima',
-    Class: '12th',
-    EducationalYear: '1201',
-    KankorId: '12-f12',
-    InteranceType: 'Kankor',
-    Department: 'biology',
-    Batch: '12',
-    MediumOfInstruction: 'Dari',
-    StudyTime: 'morning',
-    StudentType: 'morning',
-  };
-
   const [initialname1, setInitialname1] = useState('');
   const [initialLastName, setInitialLastName] = useState('');
   const [initialFatherName, setInitialFatherName] = useState('');
@@ -472,7 +428,6 @@ const StudentRegistration = ({ intl }, values) => {
     setSelectedFile(file);
   };
 
-  // fetch institute lists
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
@@ -486,7 +441,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  // fetch fields
   const fetchFields = async () => {
     const response = await callApi('institute/field/', 'GET', null);
     if (response.data && response.status === 200) {
@@ -500,7 +454,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  // fetch department list
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', 'GET', null);
     if (response.data && response.status === 200) {
@@ -514,7 +467,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  //fetch class list
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', 'GET', null);
     console.log('class repspossdfsde', response);
@@ -529,7 +481,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  //fetch sector list
   const fetchSectors = async () => {
     const response = await callApi('institute/sectors/', 'GET', null);
     if (response.data && response.status === 200) {
@@ -542,6 +493,14 @@ const StudentRegistration = ({ intl }, values) => {
       console.log('class error');
     }
   };
+
+  useEffect(() => {
+    fetchInstitutes();
+    fetchFields();
+    fetchDepartments();
+    fetchClasses();
+    fetchSectors();
+  }, []);
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -574,14 +533,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  useEffect(() => {
-    fetchInstitutes();
-    fetchFields();
-    fetchDepartments();
-    fetchClasses();
-    fetchSectors();
-  }, []);
-
   // post student record to server
   const postStudentRecord = async (data) => {
     const response = await callApi('api/student_create', 'POST', data);
@@ -594,62 +545,6 @@ const StudentRegistration = ({ intl }, values) => {
       console.log('class error');
     }
   };
-  // fetch sector list
-
-  // const handleClick = (event) => {
-  //   setIsNext(event);
-  // };
-  // const onRegister = (values) => {
-  //   // if (!values) {
-  //   //   return;
-  //   // }
-  //   //send data to server
-  //   const data = {
-  //     std_id: '1',
-  //     name: values.name1,
-  //     Eng_name: values.englishName,
-  //     father_name: values.fatherName,
-  //     Eng_father_name: values.fatherEngName,
-  //     cover_number: values.idCardCover,
-  //     page_number: values.idCardPageNo,
-  //     registration_number: values.tazkiraNo,
-  //     Sukuk_number: values.idCardSakukNo,
-  //     main_province: values.province.value,
-  //     main_district: values.district,
-  //     main_village: values.dillage,
-  //     current_province: values.C_Province.value,
-  //     current_district: values.C_District,
-  //     current_village: values.C_Village,
-  //     birth_date: values.DoB,
-  //     fatherـprofession: values.fatherDuty,
-  //     fatherـplaceـofـduty: values.fatherDutyLocation,
-  //     finished_grade: values.educationLevel.value,
-  //     // finished_grade_year: values.StdGraduationYear,
-  //     finished_grade_year: 2022,
-  //     school: values.preShcool,
-  //     schoolـprovince: values.schoolProvince.value,
-  //     study_types: 1,
-  //     // study_types: add study types (فارغ، جاری، منفک)
-  //     student_type: values.studentType.value,
-  //     internse_type: values.interanceType.value,
-  //     // std_photo: values,
-  //     // Documents: 'photos/2.jpg',
-
-  //     //add student photo
-
-  //     //add more documents
-  //   };
-  //   console.log('data', data);
-
-  //   axios
-  //     .post('http://localhost:8000/api/', data)
-  //     .then((res) => {
-  //       console.log('res', res);
-  //     })
-  //     .catch((err) => {
-  //       console.log('err', err);
-  //     });
-  // };
 
   const forms = [createRef(null), createRef(null), createRef(null)];
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
@@ -693,8 +588,11 @@ const StudentRegistration = ({ intl }, values) => {
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
-          const formData = { ...newFields, file: selectedFile };
-          console.log('file is attached here', formData);
+
+          const formData = { ...newFields };
+
+          // const imageData = new FormData();
+          // imageData.append('file', formData.image);
 
           const data = {
             //personal info,
@@ -729,71 +627,38 @@ const StudentRegistration = ({ intl }, values) => {
             internse_type: formData.interanceType.value,
             students_status: '2',
             gender: formData.gender.value,
-            //student_photo: formData.photo,// institue info
             institute: formData.institute.value,
             educational_year: formData.educationalYear.label,
             type: '1',
             language: formData.mediumOfInstruction.value,
             time: formData.studyTime.value,
-            // is_transfer: '1',// fields info
+
+            // fields info
             department_id: formData.department.value,
-            field: formData.field.value, //sector: formData.sector.value,
+            field: formData.field.value,
+
+            // sector:
             sector: formData.sector.value,
-            batch: formData.batch.value, //student class info,
+            batch: formData.batch.value,
+
+            // class info,
             class_id: formData.class.value,
             place_of_birth: formData.placeOfBirth,
-            student_photo: formData.file,
-            // user_id: '1',
 
-            // kankor_id: '22',
-            // name: 'dfgdfsdfsfdsfdsfdsfgfdg',
-            // english_name: 'lksd',
-            // last_name: 'ldkfj',
-            // english_last_name: 'dlkjf',
-            // father_name: 'dklfjds',
-            // english_father_name: 'dlfkjds',
-            // phone_number: '1231',
-            // email: 'man@man.com',
-            // grand_father_name: 'lsdkjfds',
-            // cover_number: '11',
-            // page_number: '23',
-            // registration_number: '2323',
-            // sukuk_number: '2323',
-            // main_province: 'lsdkfj',
-            // main_district: 'dlkfj',
-            // main_village: 'lsdkfj',
-            // current_province: 'lsdkjf',
-            // current_district: 'lsdkfj',
-            // current_village: 'lsdkfj',
-            // birth_date: '2023-03-13',
-            // place_of_birth: 'sdfasfdsf',
-            // fatherـprofession: 'dslfkj',
-            // fatherـplaceـofـduty: 'sldkfj',
-            // finished_grade: 'ldkfj',
-            // finished_grade_year: '1212',
-            // school: 'lsdkfj',
-            // schoolـprovince: 'lskdfj',
-            // student_type: '1',
-            // internse_type: '1',
-            // gender: '2',
-            // user_id: '1',
-            // class_id: '3',
-            // educational_year: '2002',
-            // type: '1',
-            // institute: '1',
-            // language: '2',
-            // time: '3',
-            // department_id: '2',
-            // field: '2',
-            // sector: '2',
-            // batch: '2',
-            // user_id: '1',
+            // student_photo: imageData.file,
           };
+
+          const formData2 = new FormData();
+          for (let key in data) {
+            formData2.append(key, data[key]);
+          }
+          // formData2.append(...data);
+          formData2.append('student_photo', formData.image);
 
           console.log('the form data is converted to object', data);
 
           // posting data to the server
-          postStudentRecord(data);
+          postStudentRecord(formData2);
 
           setTimeout(() => {
             setLoading(false);
@@ -998,18 +863,18 @@ const StudentRegistration = ({ intl }, values) => {
                             {/* Date Of Birth */}
 
                             {/* <Label>
-                                <IntlMessages id="teacher.DoBLabel" />
-                              </Label>
-                              <Field
-                                className="form-control"
-                                name="DoB"
-                                type="date"
-                              />
-                              {errors.DoB && touched.DoB ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.DoB}
-                                </div>
-                              ) : null} */}
+                                  <IntlMessages id="teacher.DoBLabel" />
+                                </Label>
+                                <Field
+                                  className="form-control"
+                                  name="DoB"
+                                  type="date"
+                                />
+                                {errors.DoB && touched.DoB ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                    {errors.DoB}
+                                  </div>
+                                ) : null} */}
 
                             {/* <IntlMessages id="teacher.DoBLabel" /> */}
 
@@ -1682,16 +1547,23 @@ const StudentRegistration = ({ intl }, values) => {
                                   </label>
                                   <FormControl
                                     style={{ width: '90%' }}
-                                    id="file"
-                                    name="file"
+                                    id="studetn_img"
+                                    name="student_image"
                                     type="file"
+                                    // onChange={(event) => {
+                                    //   const fileName =
+                                    //     event.target.files[0].name;
+                                    //   handleFileChange(event, setFieldValue);
+                                    //   document.getElementById(
+                                    //     'fileSpan'
+                                    //   ).textContent = fileName;
+                                    // }}
+
                                     onChange={(event) => {
-                                      const fileName =
-                                        event.target.files[0].name;
-                                      handleFileChange(event, setFieldValue);
-                                      document.getElementById(
-                                        'fileSpan'
-                                      ).textContent = fileName;
+                                      setFieldValue(
+                                        'image',
+                                        event.currentTarget.files[0]
+                                      );
                                     }}
                                   />
                                 </div>

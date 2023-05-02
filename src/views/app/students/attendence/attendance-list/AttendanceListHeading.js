@@ -43,7 +43,7 @@ const ListPageHeading = ({
   onIdSearchKey,
   changeGenderBy,
   selectedGenderOption,
-  genderOptions,
+  genderOptionsForList,
   selectedProvinceOption,
   provincesOptionsForList,
   changeProvinceBy,
@@ -168,7 +168,7 @@ const ListPageHeading = ({
                     {selectedGenderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {genderOptions.map((gender, index) => {
+                    {genderOptionsForList.map((gender, index) => {
                       return (
                         <DropdownItem
                           key={index}

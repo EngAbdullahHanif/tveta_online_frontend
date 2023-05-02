@@ -34,6 +34,10 @@ const TeacherTransfer = React.lazy(() =>
   import(/* webpackChunkName: "teacher-transfer" */ './bio/teacher-transfer')
 );
 
+const Main = React.lazy(() =>
+  import(/* webpackChunkName: "register-1" */ '../main-register-route')
+);
+
 const Test = React.lazy(() =>
   import(/* webpackChunkName: "teacher-transfer" */ './test')
 );
@@ -82,6 +86,10 @@ const Teachers = ({ match }) => (
       <Route
         path={`${match.url}/teacher-transfer`}
         render={(props) => <TeacherTransfer {...props} />}
+      />
+          <Route
+        path={`${match.url}/register-1`}
+        render={(props) => <Main {...props} />}
       />
       <Route
         path={`${match.url}/test`}

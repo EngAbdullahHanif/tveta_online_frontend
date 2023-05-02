@@ -25,39 +25,50 @@ const StudentListBody = ({
           })}
         >
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+            <div
+              className="py-3 card-body align-self-center d-flex flex-column flex-lg-row  min-width-zero align-items-lg-center"
+              style={{ width: '100%' }}
+            >
               {/* send this to localhost/transferedStudentss/:id */}
               <NavLink
                 span
-                style={{ width: '8%' }}
+                style={{ width: '10%', fontSize: '20px' }}
                 to={`transferedStudents/${transferedStudents.id}`}
-                className=""
               >
-                <p className="list-item-heading mb-1 truncate ">
-                  {transferedStudents.id}
+                <p
+                  className="list-item-heading mb-1 truncate "
+                  style={{ marginRight: '-8px', fontSize: '20px' }}
+                >
+                  {/* {transferedStudents.id} */}
+                  Integrate
                 </p>
               </NavLink>
-              <p className="mb-1 text-small w-9 w-sm-100">
+              <p
+                className="mb-1  w-9 w-sm-100"
+                style={{ width: '10%', fontSize: '20px' }}
+              >
                 {transferedStudents.student_id.student_id}
               </p>
-              <p className="mb-1 text-small w-9 w-sm-100">
+              <p
+                className="mb-1 text-small w-9 w-sm-100"
+                style={{ width: '15.4%', fontSize: '20px' }}
+              >
                 {transferedStudents.student_id.name}
               </p>
 
-              <p className="mb-1 text-small w-10 w-sm-100">
-                {transferedStudents.student_id.father_name}
-              </p>
-              <p className="mb-1 text-small w-10 w-sm-100">
-                {transferedStudents.institute.province}
-              </p>
               <p
-                style={{ marginLef: '0px' }}
-                className="mb-1 text-small w-10 w-sm-100"
+                className="mb-1  "
+                style={{ width: '18.5%', fontSize: '20px' }}
               >
-                {transferedStudents.institute.name}
+                {/* {transferedStudents.student_id.father_name} */}
+                Integrate
+              </p>
+
+              <p style={{ width: '18%', fontSize: '20px' }} className="mb-1">
+                {transferedStudents.institute_id.name}
               </p>
               <p
-                style={{ marginLeft: '0px' }}
+                style={{ marginLeft: '0px', fontSize: '20px' }}
                 className="mb-1 text-small w-10 w-sm-100"
               >
                 {transferedStudents.educational_year}

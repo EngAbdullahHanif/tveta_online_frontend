@@ -37,7 +37,7 @@ const ListPageListing = ({
       <Row>
         {items.length === 0 ? (
           <div className="no-result">
-            <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
+            <h5 className='m-3'>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
         {items.map((transferedStudents) => {

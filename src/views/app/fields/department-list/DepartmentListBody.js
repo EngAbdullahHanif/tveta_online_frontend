@@ -29,7 +29,7 @@ const DepartmentListBody = ({ department, isSelect, collect, onCheckItem }) => {
                 style={{ width: '25%' }}
               >
                 <p className="list-item-heading mb-1 truncate">
-                  {department.id}
+                  {/* {department.id} */}
                 </p>
               </NavLink>
 

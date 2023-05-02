@@ -1,13 +1,28 @@
-import { NavLink } from 'react-router-dom';
-import Register from './students/bio/register';
+import { NavLink,useLocation} from 'react-router-dom';
+import { useState } from 'react';
+import StudentRegister from './students/bio/register';
+import TeacherRegister from "./teachers/bio/teacher-register";
 const Random = () => {
+  const location = useLocation();
+  const teacherRegistration = location.state.data
   return (
-    <NavLink to={'/app/students/register'}>
+  <>
+ {teacherRegistration ==='TEACHER' ?(
+   <NavLink to={'/app/teachers/register'}>
       <div>
-        <Register />
+        <TeacherRegister />
       </div>
     </NavLink>
-  );
-};
+  ):(
+     <NavLink to={'/app/students/register'}>
+      <div>
+        <StudentRegister />
+      </div>
+    </NavLink> 
+    )
+   } 
+    </>)   
+
+}; 
 
 export default Random;

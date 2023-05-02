@@ -835,6 +835,7 @@ module.exports = {
   'teacher.DoBErr': 'Date of Birth is Required!',
   'teacher.StatusOption_1': 'Active',
   'teacher.StatusOption_2': 'Dismissed',
+  'student.Markslist': 'Marks',
   'teacher.StatusLabel': 'Status',
   'teacher.StatusErr': 'Status is Required!',
   'teacher.Profile': 'Teacher profile',
@@ -846,6 +847,7 @@ module.exports = {
   'teacher.langOptions_2': 'Dari',
   'teacher.langOptions_3': 'English',
   'teacher.teachingLang': 'Teaching language',
+  'teacher.teachingLangErr': 'Teaching language is Required!',
   'teacher.appointmentTOptions_1': 'formal',
   'teacher.appointmentTOptions_2': 'Contractual',
   'teacher.appointmentTypeLabel': 'Appointment Type',
@@ -902,6 +904,7 @@ module.exports = {
   'institute.manager': 'Manager',
   'institute.status': 'Status',
   'inst.nameList': 'Institute Name',
+  'inst.name-List': 'Institute',
   'institute.statusOption_1': 'Active',
   'institute.statusOption_2': 'Deactive',
 
@@ -920,6 +923,7 @@ module.exports = {
   'marks.SectionOption_4': 'D',
   'marks.SectionOption_5': 'E',
   'marks.ClassLabel': 'Class',
+  'marks.ClassLabelList': 'Class',
   'marks.ClassErr': 'Class Is Required!',
   'marks.ClassOption_1': '9th',
   'marks.ClassOption_2': '10th',
@@ -1077,6 +1081,9 @@ module.exports = {
   'student.interenaceType': 'Enterance Type',
   'student.PhoneNo': 'Phone No',
   'study.type': 'student Type',
+  'student.transferred-studentList': 'student Type',
+  'student.previousInstitute': 'Previous Institute',
+  'student.newInstitute': 'New Institute',
 
   // Curriculum
   'subject.curriculum': 'Curriculum',
@@ -1087,6 +1094,7 @@ module.exports = {
   'curriculum.classErr': 'Class Is Required!',
   'curriculum.classLabel': 'Class',
   'curriculum.eduactionalYearLabel': 'Educational Year',
+  'curriculum.eduactionalYearList': 'Educational Year',
   'curriculum.eduactionalYearErr': 'Educational Year Is Required!',
   'menu.curriculum-list': 'Curriculums List ',
 
@@ -1328,6 +1336,7 @@ module.exports = {
   'class.semesterLabel': 'Semester',
   'class.semesterErr': 'Semester Is Required!',
   'teacher-list.MajorLabel': 'field',
+  'class.nameList': 'Name',
 
   // Group
 

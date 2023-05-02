@@ -31,7 +31,7 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
             >
               <NavLink
                 to={`subjects/${subject.code}`}
-                style={{ width: '8%', marginRight: '-5px', fontSize: '20px' }}
+                style={{ width: '9%', marginRight: '-5px', fontSize: '20px' }}
               >
                 <p
                   className="list-item-heading mb-1  truncate"
@@ -43,7 +43,7 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
               </NavLink>
               <NavLink
                 to={`subjects/${subject.code}`}
-                style={{ width: '12%', marginRight: 30, fontSize: '20px' }}
+                style={{ width: '14%', marginRight: 30, fontSize: '20px' }}
               >
                 <p
                   className="list-item-heading mb-1 truncate"
@@ -55,7 +55,7 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
               <p
                 className="mb-1 text-small"
                 style={{
-                  width: '18%',
+                  width: '20%',
                   textAlign: 'right',
                   marginRight: 55,
                   fontSize: '20px',
@@ -68,7 +68,7 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
               <p
                 className="mb-1 text-small"
                 style={{
-                  width: '6%',
+                  width: '7%',
                   textAlign: 'right',
                   marginRight: 40,
                   fontSize: '20px',

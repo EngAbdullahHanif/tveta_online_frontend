@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { provincesOptionsForList } from './../../global-data/data';
+import { provincesOptionsForList } from '../../global-data/options';
 
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';

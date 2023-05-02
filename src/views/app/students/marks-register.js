@@ -288,6 +288,7 @@ const MarksRegistration = ({ match }) => {
     if (response.data && response.status === 200) {
       console.log('response of students', response);
       setStudents(response.data);
+      setIsNext(true);
     } else {
       console.log('subject error');
     }
@@ -297,7 +298,6 @@ const MarksRegistration = ({ match }) => {
   };
 
   const onSubmit = async (values) => {
-    setIsNext(true);
     // console.log('students', students);
     console.log('values sdfs', values);
     const educationalYear = selectedEducationalYear;
@@ -327,7 +327,7 @@ const MarksRegistration = ({ match }) => {
         department_id: departmentId,
         class_id: classId,
         subject_id: subjectId,
-        user_id: currentUser,
+        user_id: currentUser(),
       },
       ...newStudents,
     ];
@@ -335,9 +335,13 @@ const MarksRegistration = ({ match }) => {
     console.log('data', data);
 
     const response = await callApi('api/create_marks/', 'POST', data);
-    if (response.status === 200) {
+    if (
+      response.status === 200 ||
+      response.status === 201 ||
+      response.status === 202
+    ) {
       console.log('response of students', response);
-      setIsSubmitted(false);
+      setIsSubmitted(true);
       createNotification('success', 'filled');
     } else {
       console.log('marks error');
@@ -398,7 +402,7 @@ const MarksRegistration = ({ match }) => {
           {!isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={onSubmit}
+              onSubmit={fechtStudens}
               validationSchema={ValidationSchema}
             >
               {({
@@ -547,7 +551,7 @@ const MarksRegistration = ({ match }) => {
                         className="float-right m-5"
                         type="submit"
                         size="lg"
-                        onClick={() => fechtStudens()}
+                        // onClick={() => fechtStudens()}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />
@@ -748,7 +752,7 @@ const MarksRegistration = ({ match }) => {
                                 type="submit"
                                 color="primary"
                                 // onSubmit={onSubmit}
-                                onClick={() => setIsSubmitted(true)}
+                                // onClick={() => setIsSubmitted(true)}
                               >
                                 <IntlMessages id="button.SubmitButton" />
                               </Button>

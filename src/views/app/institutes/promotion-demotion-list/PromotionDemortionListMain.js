@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { provincesOptionsForList } from './../../global-data/data';
+import { provincesOptionsForList } from '../../global-data/options';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
@@ -9,6 +9,7 @@ import ListPageHeading from './PromotionDemortionListHeading';
 
 import ListPageListing from './PromotionDemortionListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
+import callApi from 'helpers/callApi';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -262,11 +263,25 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     async function fetchData() {
       if (institute !== '') {
-        const res = await axios.get(`${instituteApiUrl}?id=${institute.id}`);
-        console.log('res', res.data);
-        setItems(res.data);
-        setTotalItemCount(res.data.totalItem);
-        setIsLoaded(true);
+        // const res = await axios.get(`${instituteApiUrl}?id=${institute.id}`);
+        // console.log('res', res.data);
+        // setItems(res.data);
+        // setTotalItemCount(res.data.totalItem);
+        // setIsLoaded(true);
+
+        const response = await callApi(
+          `institute/?id=${institute.id}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('1, institute error');
+        }
       } else if (
         selectedProvinceOption.column === 'all' &&
         selectedGenderOption.column === 'all'
@@ -276,77 +291,132 @@ const ThumbListPages = ({ match }) => {
           setInstituteId('');
           setRest(false);
         }
-        axios
-          .get(`${instituteApiUrl}?id=${instituteId}&district=${district}`)
-          .then((res) => {
-            console.log('res.data', res.data);
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${instituteApiUrl}?id=${instituteId}&district=${district}`
-            );
+        // axios
+        //   .get(`${instituteApiUrl}?id=${instituteId}&district=${district}`)
+        //   .then((res) => {
+        //     console.log('res.data', res.data);
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${instituteApiUrl}?id=${instituteId}&district=${district}`
+        //     );
 
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setItems(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `institute/?id=${instituteId}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('2, institute error');
+        }
       } else if (selectedProvinceOption.column === 'all') {
-        axios
-          .get(
-            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
-            );
+        // axios
+        //   .get(
+        //     `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
+        //     );
 
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setItems(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('3, institute error');
+        }
       } else if (selectedGenderOption.column === 'all') {
-        axios
-          .get(
-            `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
-            );
+        // axios
+        //   .get(
+        //     `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
+        //   )
+        //   .then((res) => {
+        //     return res.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(
+        //       `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
+        //     );
 
-            setItems(data);
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //     setItems(data);
+        //     setSelectedItems([]);
+        //     setTotalItemCount(data.totalItem);
+        //     setIsLoaded(true);
+        //   });
+
+        const response = await callApi(
+          `institute/?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('4, institute error');
+        }
       } else {
-        axios
-          // get data from localhost:8000/api/student
-          .get(
-            `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            console.log(
-              `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-            );
-            setItems(data);
+        axios;
+        // get data from localhost:8000/api/student
+        // .get(
+        //   `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+        // )
+        // .then((res) => {
+        //   return res.data;
+        // })
+        // .then((data) => {
+        //   console.log(
+        //     `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
+        //   );
+        //   setItems(data);
 
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
+        //   setSelectedItems([]);
+        //   setTotalItemCount(data.totalItem);
+        //   setIsLoaded(true);
+        // });
+        const response = await callApi(
+          `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('3, institute error');
+        }
       }
     }
     fetchData();

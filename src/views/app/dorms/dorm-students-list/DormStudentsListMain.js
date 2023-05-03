@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
+import callApi from 'helpers/callApi';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -283,16 +284,28 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedOrderOption]);
-  const fetchDorms = async () => {
-    const response = await axios.get(`${dormUrl}`);
-    const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
-    }));
-    setDormsFilterList(updatedData);
-    console.log('dormsFilterList', dormsFilterList);
-  };
 
+  // const fetchDorms = async () => {
+  //   const response = await axios.get(`${dormUrl}`);
+  //   const updatedData = await response.data.map((item) => ({
+  //     id: item.id,
+  //     name: item.name,
+  //   }));
+  //   setDormsFilterList(updatedData);
+  //   console.log('dormsFilterList', dormsFilterList);
+  // };
+  const fetchDorms = async () => {
+    const response = await callApi('institute/dorms/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDormsFilterList(updatedData);
+    } else {
+      console.log('dorms error');
+    }
+  };
   useEffect(() => {
     fetchDorms();
   }, []);
@@ -308,17 +321,40 @@ const ThumbListPages = ({ match }) => {
         });
       }
       if (dormName !== '') {
-        const response = await axios.get(
-          `${dormStudentsUrl}/?dorm_id=${dormName.id}&district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`
+        // const response = await axios.get(
+        //   `${dormStudentsUrl}/?dorm_id=${dormName.id}&district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`
+        // );
+        // setDorms(response.data);
+        // setIsLoaded(true);
+
+        const response = await callApi(
+          `api/student_dorms/?dorm_id=${dormName.id}&district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`,
+          '',
+          null
         );
-        setDorms(response.data);
-        setIsLoaded(true);
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setIsLoaded(true);
+        } else {
+          console.log('1, dorms students error');
+        }
       } else {
-        const response = await axios.get(
-          `${dormStudentsUrl}/?district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`
+        // const response = await axios.get(
+        //   `${dormStudentsUrl}/?district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`
+        // );
+        // setDorms(response.data);
+        // setIsLoaded(true);
+        const response = await callApi(
+          `api/student_dorms/?district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`,
+          '',
+          null
         );
-        setDorms(response.data);
-        setIsLoaded(true);
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setIsLoaded(true);
+        } else {
+          console.log('2, dorms students error');
+        }
       }
     }
     fetchData();

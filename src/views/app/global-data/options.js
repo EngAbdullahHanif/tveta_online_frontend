@@ -171,6 +171,49 @@ export const educationalYearsOptions = [
   { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
 ];
 
+export const educationalYearsOptionsForList = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  { column: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
+  { column: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
+  { column: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
+  { column: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
+  { column: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
+  { column: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
+  { column: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
+  { column: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
+  { column: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
+  { column: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
+  { column: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
+  { column: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
+  { column: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
+  { column: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
+  { column: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
+  { column: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
+  { column: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
+  { column: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
+  { column: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
+  { column: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
+  { column: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
+  { column: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
+  { column: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
+  { column: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
+  { column: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
+  { column: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
+  { column: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
+  { column: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
+  { column: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
+  { column: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
+  { column: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
+  { column: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
+  { column: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
+  { column: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
+  { column: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
+  { column: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+];
+
 export const batchOptions = [
   {
     value: 1,
@@ -613,3 +656,30 @@ export const subjectSystemOptions = [
   { value: '3', label: <IntlMessages id="subject.systemOption_3" /> },
   { value: '4', label: <IntlMessages id="subject.systemOption_4" /> },
 ];
+
+
+export const semesterOptions = [
+  { column: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
+  { column: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
+];
+
+export const tazkiraOptions = [
+  { value: 'ٍ Electronic', label:<IntlMessages id="forms.StdTazkiraElectronic" /> },
+  { value: 'Paper', label:<IntlMessages id="forms.StdTazkiraPaper" /> },
+];
+
+export const educationLevelOptions = [
+  { value: 9,  label: <IntlMessages id="forms.EducationalLevel_9th" /> },
+  { value: 10, label: <IntlMessages id="forms.EducationalLevel_10th" /> },
+  { value: 11, label: <IntlMessages id="forms.EducationalLevel_11th" /> },
+  { value: 12, label: <IntlMessages id="forms.EducationalLevel_12th" />},
+  { value: 13, label: <IntlMessages id="forms.EducationalLevel_13th" /> },
+  { value: 14, label: <IntlMessages id="forms.EducationalLevel_14th" />},
+];
+
+
+export const teacherCurrentStatusOptions = [
+  { value: "active",  label: <IntlMessages id="teacher.StatusOption_1" /> },
+  { value: "dismissed", label: <IntlMessages id="teacher.StatusOption_1" /> },
+];
+

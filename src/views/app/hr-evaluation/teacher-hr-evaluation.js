@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
-import { evaluationTypeOptions } from './../global-data/data';
+import { evaluationTypeOptions } from '../global-data/options';
 
 import * as Yup from 'yup';
 import {
@@ -18,8 +18,8 @@ import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { gradeOptions } from './../global-data/data';
-import { stepOptions } from './../global-data/data';
+import { gradeOptions } from '../global-data/options';
+import { stepOptions } from '../global-data/options';
 
 import {
   FormikReactSelect,

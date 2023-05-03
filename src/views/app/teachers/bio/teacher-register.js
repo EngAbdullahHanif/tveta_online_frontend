@@ -2,12 +2,10 @@
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import { genderOptions } from './../../global-data/data';
-import { contractTypeOptions } from './../../global-data/data';
-import { gradeOptions } from './../../global-data/data';
-import { stepOptions } from './../../global-data/data';
-import { provinceOptions } from './../../global-data/data';
-
+import { provinceOptions,langOptions,stepOptions, gradeOptions,contractTypeOptions,genderOptions, appointmentTypeOptions, tazkiraOptions,
+   levelOfEdcationOptions, teacherCurrentStatusOptions } from '../../global-data/options';
+import { teacherRegisterFormStep_1, teacherRegisterFormStep_2} from '../../global-data/forms-validation';
+import { NavLink } from 'react-router-dom';
 import {
   Row,
   Card,
@@ -16,99 +14,35 @@ import {
   Label,
   Spinner,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
 import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
-
-import axios from 'axios';
-import * as Yup from 'yup';
-
 import { Colxx } from 'components/common/CustomBootstrap';
-
 const servicePath = 'http://localhost:8000';
 const teacherResitgerAPIUrl = `${servicePath}/teachers/create_teachers/`;
 const gettingSingleTeacherAPI = `${servicePath}/teachers/institute`;
 // http://localhost:8000/teachers/?id=1
 
-const tazkiraOptions = [
-  { value: '1', label: 'الکترونیکی' },
-  { value: '2', label: 'کاغذی' },
-];
 
 const dutyLocationOptions = [
   { value: '1', label: 'انستیتوت نیما' },
   { value: '2', label: 'لیسه مسلکی نابینایان' },
 ];
-const teacherteachingfieldOptions = [
-  { value: '1', label: 'زراعت' },
-  { value: '2', label: 'کمپیوتر ساینس ' },
-  { value: '3', label: 'کمپیوتر ساینس ' },
-];
-const StatusOptions = [
-  { value: '1', label: 'فعال' },
-  { value: '3', label: 'منفک' },
-];
 
-const levelOfEdcationOptions = [
-  {
-    value: '1',
-    label: '14th',
-  },
-  {
-    value: '2',
-    label: 'لسانس',
-  },
-  {
-    value: '3',
-    label: 'ماستر',
-  },
-  { value: '4', label: 'PHD' },
-];
 
 const majorOptions = [
-  { value: '1', label: 'Computer Science' },
-  { value: '2', label: 'Agriculture' },
+  { value: '1', label: 'ingrate from backend' },
+  { value: '2', label: 'integrate from backend' },
   { value: '3', label: 'BBA' },
   { value: '4', label: 'Mechenical Engineering' },
 ];
-
-const langOptions = [
-  {
-    value: 1,
-    label: 'پښتو',
-  },
-  {
-    value: 2,
-    label: 'دری',
-  },
-  {
-    value: 3,
-    label: 'English',
-  },
-];
-
-const appointmentTypeOptions = [
-  {
-    value: '1',
-    label: 'رسمی',
-  },
-  {
-    value: '2',
-    label: 'قراردادی',
-  },
-];
-
 const TeacherRegister = ({ intl }, values) => {
   const [intialName, setInitialName] = useState('');
   const [intialFatherName, setInitialFatherName] = useState('');
@@ -123,17 +57,17 @@ const TeacherRegister = ({ intl }, values) => {
   const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
   const [initialMajor, setInitialMajor] = useState([]);
   const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('');
-  const [initialStatus, setinitialStatus] = useState('');
+  const [initialStatus, setinitialStatus] = useState([]);
   const [initialGrade, setIntialGrade] = useState([]);
   const [initialTeachingField, setInitialTeachingField] = useState([]);
   const [initialAppointmentType, setInitialAppointmentType] = useState([]);
   const [initialProvince, setInitialProvince] = useState([]);
-  const [initialJobLocation, setInitialJobLocation] = useState('');
+  const [initialJobLocation, setInitialJobLocation] = useState([]);
   const [initialTeachingLang, setInitialTeachingLang] = useState([]);
   const [initialStep, setInitialStep] = useState([]);
   const [initialContractType, setInitialContractType] = useState([]);
   const [initialCurrentProvince, setInitialCurrentProvince] = useState([]);
-  const [initialCurrentDistrict, setInitialCurrentDistrict] = useState([]);
+  const [initialCurrentDistrict, setInitialCurrentDistrict] = useState();
   const [initialCurrentVillage, setInitialCurrentVillage] = useState('');
   const [initialDistrict, setInitialDistrict] = useState('');
   const [initialVillage, setInitialVillage] = useState('');
@@ -152,9 +86,6 @@ const TeacherRegister = ({ intl }, values) => {
           '',
           null
         );
-
-        console.log(data, 'object of the data');
-
         setInitialName(data[0].teacher_id.name);
         setInitialFatherName(data[0].teacher_id.father_name);
         setInitialGrandFatherName(data[0].teacher_id.grand_father_name);
@@ -203,7 +134,7 @@ const TeacherRegister = ({ intl }, values) => {
             setInitialTeachingLang(teachingLangugage);
           }
         });
-        const teacherStatusOptions = StatusOptions.map((teacherStatus) => {
+        const teacherStatusOptions = teacherCurrentStatusOptions.map((teacherStatus) => {
           if (teacherStatus.value == data[0].teacher_id.status_type) {
             setinitialStatus(teacherStatus);
           }
@@ -257,154 +188,6 @@ const TeacherRegister = ({ intl }, values) => {
       //setUpdateMode(true);
     }, []);
   }
-
-  // Updating Mode is through
-  const UpdatingMode = false;
-  const ValidationStepOne = Yup.object().shape({
-    name1: Yup.string()
-      .min(3, <IntlMessages id="min.minInputValue" />)
-      .max(50, <IntlMessages id="max.maxInputValue" />)
-      .required(<IntlMessages id="teacher.NameErr" />),
-
-    fatherName: Yup.string()
-      .required(<IntlMessages id="teacher.FatherNameErr" />)
-      .min(3, <IntlMessages id="min.minInputValue" />)
-      .max(50, <IntlMessages id="max.maxInputValue" />),
-
-    gender: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.genderErr" />)
-      : '',
-
-    grandFatherName: Yup.string()
-      .required(<IntlMessages id="teacher.GrandFatherNameErr" />)
-      .min(3, <IntlMessages id="min.minInputValue" />)
-      .max(50, <IntlMessages id="max.maxInputValue" />),
-
-    tazkiraNo: Yup.string().required(
-      <IntlMessages id="teacher.TazkiraNoErr" />
-    ),
-    phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
-    DoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
-
-    levelOfEducation: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="teacher.LevelOfEducationErr" />)
-      : '',
-
-    major: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="teacher.LevelOfEducationErr" />)
-      : '',
-
-    tazkiraType: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.StdTazkiraTypeErr" />)
-      : '',
-
-    email: Yup.string()
-      .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-      .required(<IntlMessages id="teacher.EmailErr" />),
-  });
-
-  const ValidationStepTwo = Yup.object().shape({
-    status: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="teacher.StatusErr" />)
-      : '',
-
-    teachingField: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="teacher.teachingFieldErr" />)
-      : '',
-
-    grade: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="teacher.GradeErr" />)
-      : '',
-
-    appointmentType: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="teacher.appointmentTypeErr" />)
-      : '',
-
-    province: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-      : '',
-
-    jobLocation: UpdatingMode
-      ? Yup.object()
-          .shape({
-            value: Yup.string().required(),
-          })
-          .nullable()
-          .required(<IntlMessages id="teacher.jobLocationErr" />)
-      : '',
-
-    step: UpdatingMode
-      ? Yup.object()
-          .shape({ value: Yup.string().required() })
-          .nullable()
-          .required(<IntlMessages id="teacher.StepErr" />)
-      : '',
-
-    contractType: UpdatingMode
-      ? Yup.object()
-          .shape({ value: Yup.string().required() })
-          .nullable()
-          .required(<IntlMessages id="teacher.contractTypeErr" />)
-      : '',
-
-    C_Province: UpdatingMode
-      ? Yup.object()
-          .shape({ value: Yup.string().required() })
-          .nullable()
-          .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-      : '',
-
-    C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-
-    district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-    village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-    C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-  });
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -494,45 +277,12 @@ const TeacherRegister = ({ intl }, values) => {
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({});
-  const [Gender, setGender] = useState('0');
-  const [LevelOfEducation, setLevelOfEducation] = useState('0');
-  const [Major, setMajor] = useState('0');
-  const [TazkiraType, setTazkiraType] = useState('0');
-  const [Status, setStatus] = useState('0');
-  const [TeachingField, setTeachingField] = useState('0');
-  const [Grade, setGrade] = useState('0');
-  const [AppointmentType, setAppointmentType] = useState('0');
-  const [Province, setProvince] = useState('0');
-  const [JobLocation, setJobLocation] = useState('0');
-  const [TeachingLang, setTeachingLang] = useState('0');
-  const [Step1, setStep1] = useState('0');
-  const [ContractType, setContractType] = useState('0');
-  const [CurrentProvince, setCurrentProvince] = useState('0');
   const onClickNext = (goToNext, steps, step, values) => {
     if (steps.length - 1 <= steps.indexOf(step)) {
       return;
     }
     const formIndex = steps.indexOf(step);
     const form = forms[formIndex].current;
-
-    if (step.id === 'step1') {
-      setGender(form.values.gender.value);
-      setLevelOfEducation(form.values.levelOfEducation.value);
-      setMajor(form.values.major.value);
-      setTazkiraType(form.values.tazkiraType.value);
-    }
-    if (step.id === 'step2') {
-      setStatus(form.values.status.value);
-      setTeachingField(form.values.teachingField.value);
-      setGrade(form.values.grade.value);
-      setAppointmentType(form.values.appointmentType.value);
-      setProvince(form.values.province.value);
-      setJobLocation(form.values.jobLocation.value);
-      setTeachingLang(form.values.teachingLang.value);
-      setStep1(form.values.teachingLang.value);
-      setContractType(form.values.contractType.value);
-      setCurrentProvince(form.values.C_Province.value);
-    }
     console.log(step.id, 'stepoId');
     console.log('First Step (Form) Values', form.values);
     form.submitForm().then(() => {
@@ -561,6 +311,7 @@ const TeacherRegister = ({ intl }, values) => {
   };
 
   const { messages } = intl;
+
   return (
     <Card>
       <h3 className="mt-5 m-5">
@@ -582,6 +333,7 @@ const TeacherRegister = ({ intl }, values) => {
                     name1: intialName,
                     fatherName: intialFatherName,
                     grandFatherName: initialGrandFatherName,
+                
                     DoB: initialDoB,
                     tazkiraNo: initialTazkiraNo,
                     phoneNo: initialPhoneNo,
@@ -596,16 +348,13 @@ const TeacherRegister = ({ intl }, values) => {
                     major: initialMajor,
                   }}
                   validateOnMount
-                  validationSchema={ValidationStepOne}
+                  validationSchema={teacherRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
                     errors,
                     touched,
                     values,
-                    onBlur,
-                    handleChange,
-                    handleBlur,
                     setFieldTouched,
                     setFieldValue,
                     isSubmitting,
@@ -650,7 +399,7 @@ const TeacherRegister = ({ intl }, values) => {
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
                             />
-                            {errors.tazkiraType && !TazkiraType ? (
+                            {errors.tazkiraType && touched.tazkiraType ? (
                               <div className="invalid-feedback d-block   bg-danger text-white">
                                 {errors.tazkiraType}
                               </div>
@@ -729,7 +478,7 @@ const TeacherRegister = ({ intl }, values) => {
                               options={majorOptions}
                               required
                             />
-                            {errors.major && !Major ? (
+                            {errors.major && touched.major ? (
                               <div className="invalid-feedback d-block  bg-danger text-white">
                                 {errors.major}
                               </div>
@@ -767,7 +516,7 @@ const TeacherRegister = ({ intl }, values) => {
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
                             />
-                            {!Gender && errors.gender ? (
+                            {touched.gender && errors.gender ? (
                               <div className="invalid-feedback d-block bg-danger text-white">
                                 {errors.gender}
                               </div>
@@ -845,7 +594,7 @@ const TeacherRegister = ({ intl }, values) => {
                               onBlur={setFieldTouched}
                               required
                             />
-                            {errors.levelOfEducation && !LevelOfEducation ? (
+                            {errors.levelOfEducation && touched.levelOfEducation ? (
                               <div className="invalid-feedback d-block bg-danger text-white">
                                 {errors.levelOfEducation}
                               </div>
@@ -884,13 +633,14 @@ const TeacherRegister = ({ intl }, values) => {
                     C_Village: initialCurrentVillage,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={ValidationStepTwo}
+                  validationSchema={teacherRegisterFormStep_2}
                   validateOnMount
                 >
                   {({
                     errors,
                     touched,
                     values,
+                    onBlur,
                     setFieldTouched,
                     setFieldValue,
                   }) => (
@@ -922,12 +672,12 @@ const TeacherRegister = ({ intl }, values) => {
                                   name="status"
                                   id="status"
                                   value={values.status}
-                                  options={StatusOptions}
+                                  options={teacherCurrentStatusOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                   required
                                 />
-                                {errors.status && !Status ? (
+                                {errors.status && touched.status ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.status}
                                   </div>
@@ -947,7 +697,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   options={teacherteachingfieldOptions}
                                   required
                                 />
-                                {errors.teachingField && !TeachingField ? (
+                                {errors.teachingField && touched.teachingField ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.teachingField}
                                   </div>
@@ -967,7 +717,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   options={gradeOptions}
                                   required
                                 />
-                                {errors.grade && !Grade ? (
+                                {errors.grade && touched.grade ? (
                                   <div className="invalid-feedback d-block  bg-danger text-white ">
                                     {errors.grade}
                                   </div>
@@ -987,7 +737,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                   required
                                 />
-                                {errors.appointmentType && !AppointmentType ? (
+                                {errors.appointmentType && touched.appointmentType ? (
                                   <div className="invalid-feedback d-block bg-danger text-white ">
                                     {errors.appointmentType}
                                   </div>
@@ -1011,7 +761,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                   required
                                 />
-                                {errors.jobLocation && !JobLocation ? (
+                                {errors.jobLocation && touched.jobLocation ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.jobLocation}
                                   </div>
@@ -1032,7 +782,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                   required
                                 />
-                                {errors.teachingLang && !TeachingLang ? (
+                                {errors.teachingLang && touched.teachingLang ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.teachingLang}
                                   </div>
@@ -1051,7 +801,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                   required
                                 />
-                                {errors.step && !Step1 ? (
+                                {errors.step && touched.step ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.step}
                                   </div>
@@ -1071,7 +821,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                   required
                                 />
-                                {errors.contractType && !ContractType ? (
+                                {errors.contractType && touched.contractType ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.contractType}
                                   </div>
@@ -1103,7 +853,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
-                                {errors.province && !Province ? (
+                                {errors.province && touched.province ? (
                                   <div className="invalid-feedback d-block   bg-danger text-white">
                                     {errors.province}
                                   </div>
@@ -1167,7 +917,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
-                                {errors.C_Province && !CurrentProvince ? (
+                                {errors.C_Province && touched.C_Province ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.C_Province}
                                   </div>
@@ -1231,9 +981,12 @@ const TeacherRegister = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <Button className="mt-5 bg-primary">
-                      <IntlMessages id="button.back" />
-                    </Button>
+                    <NavLink to={{ pathname: '/app/teachers/register-1',
+                     state: { data: 'TEACHER' }}}>
+                      <Button className="mt-5 bg-primary">
+                        <IntlMessages id="button.back" />
+                      </Button>
+                    </NavLink>
                   </div>
                 )}
               </div>

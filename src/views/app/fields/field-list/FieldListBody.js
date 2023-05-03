@@ -24,27 +24,35 @@ const FieldListBody = ({ field, isSelect, collect, onCheckItem }) => {
               className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink to={`fields/${field.id}`} style={{ width: '25%' }}>
-                <p className="list-item-heading mb-1 truncate">{field.id}</p>
+              <NavLink
+              //  to={`fields/${field.id}`}
+               style={{ width: '25%' }}>
+                <p className="list-item-heading mb-1 truncate">
+                  {/* {field.id} */}
+                  Field Id
+                </p>
               </NavLink>
 
               <p
                 className="mb-1 text-small"
                 style={{ width: '26%', textAlign: 'right' }}
               >
-                {field.name}
+                {/* {field.name} */}
+                Name
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '25%', textAlign: 'right' }}
               >
-                {field.english_name}
+                {/* {field.english_name} */}
+                English Name
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {field.sector}
+                {/* {field.sector} */}
+                flied Sector
               </p>
             </div>
           </div>

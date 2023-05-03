@@ -22,8 +22,14 @@ import {
   StdInteranceOptions,
   StudentTypeOptions,
   studyTimeOptions,
-} from './../../global-data/data';
-
+  tazkiraOptions,
+  educationLevelOptions,
+} from '../../global-data/options';
+import {
+  studentRegisterFormStep_1,
+  studentRegisterFormStep_2,
+  studentRegisterFormStep_3,
+} from '../../global-data/forms-validation';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -45,20 +51,6 @@ const studentApi = `${servicePath}/api`;
 
 //http://localhost:8000/api/student_create
 
-const tazkiraOptions = [
-  { value: '1', label: 'الکترونیکی' },
-  { value: '2', label: 'کاغذی' },
-];
-
-const EducationLevelOptions = [
-  { value: 9, label: 'نهم صنف / صنف نهم' },
-  { value: 10, label: 'لسم ټولګی/ صنف دهم' },
-  { value: 11, label: 'یوولسم ټولګی / صنف یازدهم' },
-  { value: 12, label: 'دولسم ټولګی/ صنف دوازدهم' },
-  { value: 13, label: 'دیارلسم ټولګی صنف سیزدهم' },
-  { value: 14, label: 'چهارده هم' },
-];
-
 const studentProvince = [
   {
     value: 1,
@@ -75,202 +67,6 @@ const studentProvince = [
   },
 ];
 
-const ValidationStepOne = Yup.object().shape({
-  name1: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="teacher.NameErr" />),
-  // idCardJoldNo: Yup.string()
-  //   .min(3, <IntlMessages id="min.minInputValue" />)
-  //   .max(50, <IntlMessages id="max.maxInputValue" />)
-  //   .required(<IntlMessages id="teacher.NameErr" />),
-
-  fatherName: Yup.string()
-    .required(<IntlMessages id="teacher.FatherNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  lastName: Yup.string()
-    .required(<IntlMessages id="forms.lastNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  lastNameEng: Yup.string()
-    .required(<IntlMessages id="forms.lastNameEngErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  grandFatherName: Yup.string()
-    .required(<IntlMessages id="forms.grandFatherNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  fatherDuty: Yup.string()
-    .required(<IntlMessages id="forms.StdFatherDutyErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  englishName: Yup.string()
-    .required(<IntlMessages id="forms.englishNameError" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  fatherEngName: Yup.string()
-    .required(<IntlMessages id="forms.FatherEnglishNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  fatherDutyLocation: Yup.string()
-    .required(<IntlMessages id="forms.StdFatherDutyLocationErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-  placeOfBirth: Yup.string()
-    .required(<IntlMessages id="forms.StdPlaceOfBirthErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
-
-  tazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
-  phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
-  DoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
-
-  tazkiraType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
-
-  gender: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.genderErr" />),
-
-  email: Yup.string()
-    .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-    .required(<IntlMessages id="teacher.EmailErr" />),
-});
-
-const ValidationStepTwo = Yup.object().shape({
-  levelOfEducation: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
-
-  preSchool: Yup.string()
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required(<IntlMessages id="forms.StPreShcoolErr" />),
-
-  schoolProvince: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
-
-  graduationYear: Yup.date().required(
-    <IntlMessages id="forms.StdGraduationYearErr" />
-  ),
-  province: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  C_Province: Yup.object()
-    .shape({ value: Yup.string().required() })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-  C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-});
-
-const ValidationStepThree = Yup.object().shape({
-  institute: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.InstituteErr" />),
-
-  studyTime: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StudyTimeErr" />),
-  class: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.ClassErr" />),
-
-  educationalYear: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.educationYearErr" />),
-
-  department: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.departmentIdErr" />),
-  interanceType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
-  studentType: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StudentTypeErr" />),
-
-  mediumOfInstruction: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.mediumOfInstructionErr" />),
-  batch: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.batchErr" />),
-  // kankorId: Yup.string().required(<IntlMessages id="forms.kankorIdErr" />),
-  studentId: Yup.string().required(<IntlMessages id="student.studentIdErr" />),
-
-  field: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.fieldErr" />),
-
-  sector: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.sectorErr" />),
-
-  photo: Yup.string().required(<IntlMessages id="student.photoErr" />),
-});
-
 const StudentRegistration = ({ intl }, values) => {
   const { updateStudentId } = useParams();
   console.log('student_id', updateStudentId);
@@ -286,7 +82,6 @@ const StudentRegistration = ({ intl }, values) => {
           null
         );
         console.log('responsasdfsadfe', data);
-        //  console.log(data[0].name, 'object of the data');
         setInitialname1(data[0].name);
         setInitialLastName(data[0].last_name);
         setInitialFatherName(data[0].father_name);
@@ -306,26 +101,23 @@ const StudentRegistration = ({ intl }, values) => {
         setInitialFatherDutyLocation(data[0].fatherـplaceـofـduty);
         if (data[0].sukuk_number) setInitialTazkiraType(tazkiraOptions[1]);
         else setInitialTazkiraType(tazkiraOptions[0]);
-
         setInitialFatherEngName(data[0].english_father_name);
         setInitialPlaceOfBirth(data[0].main_province);
         setInitialTazkiraNo(data[0].sukuk_number);
         setInitialEmail(data[0].email);
         setInitialIdCardPageNo(data[0].page_number);
         setInitialIdCardJoldNo(data[0].cover_number);
-
         setInitialPreSchool(data[0].school);
         setInitialGraduationYear(data[0].finished_grade_year);
-        setInitialLevelOfEducation(EducationLevelOptions[0]);
+        setInitialLevelOfEducation(educationLevelOptions[0]);
 
-        // const studentFinishGrade = EducationLevelOptions.map(
+        // const studentFinishGrade = educationLevelOptions.map(
         //   (finishedGrade) => {
-        //     if (EducationLevelOptions.label === data[0].finished_grade) {
-        //       setInitialLevelOfEducation(EducationLevelOptions[1]);
+        //     if (educationLevelOptions.label === data[0].finished_grade) {
+        //       setInitialLevelOfEducation(educationLevelOptions[1]);
         //     }
         //   }
         // );
-
         const studentMainProvincee = studentProvince.map((studentProvince) => {
           if (studentProvince.label === data[0].main_province) {
             setInitialProvince(studentProvince);
@@ -369,50 +161,6 @@ const StudentRegistration = ({ intl }, values) => {
       //setUpdateMode(true);
     }, []);
   }
-
-  const TestData = {
-    name1: 'Hamid',
-    LastName: 'Ahmad',
-    FatherName: 'Rabi',
-    GrandFatherName: 'Malik',
-    FatherDuty: 'Teacher',
-    LastNameEng: 'Samimn',
-    PhoneNo: '12321',
-    EnglishName: 'Mohammad',
-    FatherEngName: 'Mahdi',
-    Gender: 'Male',
-    FatherDutyLocation: 'Logar',
-    PlaceOfBirth: 'Logar',
-    TazkiraNo: '3423423',
-    DoB: '2022-08-12',
-    TazkiraType: 'Elctornic',
-    Email: '123@gmail.com',
-    IdCardPageNo: '35443',
-    IdCardJoldNo: '34',
-    Status: 'Active',
-    LevelOfEducation: 'bachelor',
-    PreSchool: 'Ghazi',
-    GraduationYear: '2022-08-12',
-    SchoolProvince: '321243sd',
-    Province: 'Kabul',
-    C_Province: 'Kabul',
-    District: 'Jabul Saraj',
-    C_District: 'C-Jabul Saraj',
-    Village: 'Karti Char',
-    C_Village: 'C-Karti Char',
-
-    Institute: 'Nima',
-    Class: '12th',
-    EducationalYear: '1201',
-    KankorId: '12-f12',
-    InteranceType: 'Kankor',
-    Department: 'biology',
-    Batch: '12',
-    MediumOfInstruction: 'Dari',
-    StudyTime: 'morning',
-    StudentType: 'morning',
-  };
-
   const [initialname1, setInitialname1] = useState('');
   const [initialLastName, setInitialLastName] = useState('');
   const [initialFatherName, setInitialFatherName] = useState('');
@@ -422,8 +170,8 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialLastNameEng, setInitialLastNameEng] = useState();
   const [initialGender, setInitialGender] = useState([]);
   const [initialEnglishName, setInitialEnglishName] = useState('');
-  const [initialPhoneNo, setInitialPhoneNo] = useState();
-  const [initialDoB, setInitialDoB] = useState();
+  const [initialPhoneNo, setInitialPhoneNo] = useState('');
+  const [initialDoB, setInitialDoB] = useState([]);
   const [initialFatherDutyLocation, setInitialFatherDutyLocation] =
     useState('');
   const [initialTazkiraType, setInitialTazkiraType] = useState([]);
@@ -435,7 +183,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('');
   const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
   const [initialPreSchool, setInitialPreSchool] = useState('');
-  const [initialGraduationYear, setInitialGraduationYear] = useState('');
+  const [initialGraduationYear, setInitialGraduationYear] = useState([]);
   const [initialSchoolProvince, setInitialSchoolProvince] = useState([]);
   const [initialProvince, setInitialProvince] = useState([]);
   const [initialC_Province, setInitialC_Province] = useState([]);
@@ -472,7 +220,6 @@ const StudentRegistration = ({ intl }, values) => {
     setSelectedFile(file);
   };
 
-  // fetch institute lists
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
@@ -486,7 +233,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  // fetch fields
   const fetchFields = async () => {
     const response = await callApi('institute/field/', 'GET', null);
     if (response.data && response.status === 200) {
@@ -500,7 +246,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  // fetch department list
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', 'GET', null);
     if (response.data && response.status === 200) {
@@ -514,7 +259,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  //fetch class list
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', 'GET', null);
     console.log('class repspossdfsde', response);
@@ -529,7 +273,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  //fetch sector list
   const fetchSectors = async () => {
     const response = await callApi('institute/sectors/', 'GET', null);
     if (response.data && response.status === 200) {
@@ -542,6 +285,14 @@ const StudentRegistration = ({ intl }, values) => {
       console.log('class error');
     }
   };
+
+  useEffect(() => {
+    fetchInstitutes();
+    fetchFields();
+    fetchDepartments();
+    fetchClasses();
+    fetchSectors();
+  }, []);
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -574,14 +325,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  useEffect(() => {
-    fetchInstitutes();
-    fetchFields();
-    fetchDepartments();
-    fetchClasses();
-    fetchSectors();
-  }, []);
-
   // post student record to server
   const postStudentRecord = async (data) => {
     const response = await callApi('api/student_create', 'POST', data);
@@ -594,62 +337,6 @@ const StudentRegistration = ({ intl }, values) => {
       console.log('class error');
     }
   };
-  // fetch sector list
-
-  // const handleClick = (event) => {
-  //   setIsNext(event);
-  // };
-  // const onRegister = (values) => {
-  //   // if (!values) {
-  //   //   return;
-  //   // }
-  //   //send data to server
-  //   const data = {
-  //     std_id: '1',
-  //     name: values.name1,
-  //     Eng_name: values.englishName,
-  //     father_name: values.fatherName,
-  //     Eng_father_name: values.fatherEngName,
-  //     cover_number: values.idCardCover,
-  //     page_number: values.idCardPageNo,
-  //     registration_number: values.tazkiraNo,
-  //     Sukuk_number: values.idCardSakukNo,
-  //     main_province: values.province.value,
-  //     main_district: values.district,
-  //     main_village: values.dillage,
-  //     current_province: values.C_Province.value,
-  //     current_district: values.C_District,
-  //     current_village: values.C_Village,
-  //     birth_date: values.DoB,
-  //     fatherـprofession: values.fatherDuty,
-  //     fatherـplaceـofـduty: values.fatherDutyLocation,
-  //     finished_grade: values.educationLevel.value,
-  //     // finished_grade_year: values.StdGraduationYear,
-  //     finished_grade_year: 2022,
-  //     school: values.preShcool,
-  //     schoolـprovince: values.schoolProvince.value,
-  //     study_types: 1,
-  //     // study_types: add study types (فارغ، جاری، منفک)
-  //     student_type: values.studentType.value,
-  //     internse_type: values.interanceType.value,
-  //     // std_photo: values,
-  //     // Documents: 'photos/2.jpg',
-
-  //     //add student photo
-
-  //     //add more documents
-  //   };
-  //   console.log('data', data);
-
-  //   axios
-  //     .post('http://localhost:8000/api/', data)
-  //     .then((res) => {
-  //       console.log('res', res);
-  //     })
-  //     .catch((err) => {
-  //       console.log('err', err);
-  //     });
-  // };
 
   const forms = [createRef(null), createRef(null), createRef(null)];
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
@@ -659,9 +346,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [TazkiraType, setTazkiraType] = useState('0');
   const [Province, setProvince] = useState('0');
   const [CurrentProvince, setCurrentProvince] = useState('0');
-  const [InteranceType, setInteranceType] = useState('0');
   const [SchoolProvince, setSchoolProvince] = useState('0');
-  const [StudentType, setStudentType] = useState('0');
   const [Gender, setGender] = useState('0');
 
   const onClickNext = (goToNext, steps, step, values) => {
@@ -680,12 +365,6 @@ const StudentRegistration = ({ intl }, values) => {
       setProvince(form.values.province.value);
       setCurrentProvince(form.values.C_Province.value);
     }
-
-    if (step.id === 'step3') {
-      setInteranceType(form.values.interanceType.value);
-      setStudentType(form.values.studentType.value);
-      //console.log('forms values here', form);
-    }
     form.submitForm().then(() => {
       if (!form.isDirty && form.isValid) {
         const newFields = { ...fields, ...form.values };
@@ -693,8 +372,11 @@ const StudentRegistration = ({ intl }, values) => {
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
-          const formData = { ...newFields, file: selectedFile };
-          console.log('file is attached here', formData);
+
+          const formData = { ...newFields };
+
+          // const imageData = new FormData();
+          // imageData.append('file', formData.image);
 
           const data = {
             //personal info,
@@ -729,71 +411,38 @@ const StudentRegistration = ({ intl }, values) => {
             internse_type: formData.interanceType.value,
             students_status: '2',
             gender: formData.gender.value,
-            //student_photo: formData.photo,// institue info
             institute: formData.institute.value,
             educational_year: formData.educationalYear.label,
             type: '1',
             language: formData.mediumOfInstruction.value,
             time: formData.studyTime.value,
-            // is_transfer: '1',// fields info
+
+            // fields info
             department_id: formData.department.value,
-            field: formData.field.value, //sector: formData.sector.value,
+            field: formData.field.value,
+
+            // sector:
             sector: formData.sector.value,
-            batch: formData.batch.value, //student class info,
+            batch: formData.batch.value,
+
+            // class info,
             class_id: formData.class.value,
             place_of_birth: formData.placeOfBirth,
-            student_photo: formData.file,
-            // user_id: '1',
 
-            // kankor_id: '22',
-            // name: 'dfgdfsdfsfdsfdsfdsfgfdg',
-            // english_name: 'lksd',
-            // last_name: 'ldkfj',
-            // english_last_name: 'dlkjf',
-            // father_name: 'dklfjds',
-            // english_father_name: 'dlfkjds',
-            // phone_number: '1231',
-            // email: 'man@man.com',
-            // grand_father_name: 'lsdkjfds',
-            // cover_number: '11',
-            // page_number: '23',
-            // registration_number: '2323',
-            // sukuk_number: '2323',
-            // main_province: 'lsdkfj',
-            // main_district: 'dlkfj',
-            // main_village: 'lsdkfj',
-            // current_province: 'lsdkjf',
-            // current_district: 'lsdkfj',
-            // current_village: 'lsdkfj',
-            // birth_date: '2023-03-13',
-            // place_of_birth: 'sdfasfdsf',
-            // fatherـprofession: 'dslfkj',
-            // fatherـplaceـofـduty: 'sldkfj',
-            // finished_grade: 'ldkfj',
-            // finished_grade_year: '1212',
-            // school: 'lsdkfj',
-            // schoolـprovince: 'lskdfj',
-            // student_type: '1',
-            // internse_type: '1',
-            // gender: '2',
-            // user_id: '1',
-            // class_id: '3',
-            // educational_year: '2002',
-            // type: '1',
-            // institute: '1',
-            // language: '2',
-            // time: '3',
-            // department_id: '2',
-            // field: '2',
-            // sector: '2',
-            // batch: '2',
-            // user_id: '1',
+            // student_photo: imageData.file,
           };
+
+          const formData2 = new FormData();
+          for (let key in data) {
+            formData2.append(key, data[key]);
+          }
+          // formData2.append(...data);
+          formData2.append('student_photo', formData.image);
 
           console.log('the form data is converted to object', data);
 
           // posting data to the server
-          postStudentRecord(data);
+          postStudentRecord(formData2);
 
           setTimeout(() => {
             setLoading(false);
@@ -812,8 +461,6 @@ const StudentRegistration = ({ intl }, values) => {
   };
 
   const { messages } = intl;
-  console.log('today date', DoB);
-
   return (
     <Card>
       <h3 className="mt-5 m-5">
@@ -852,7 +499,7 @@ const StudentRegistration = ({ intl }, values) => {
                     tazkiraType: initialTazkiraType,
                   }}
                   validateOnMount
-                  // validationSchema={ValidationStepOne}
+                  validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -994,24 +641,6 @@ const StudentRegistration = ({ intl }, values) => {
                             ) : (
                               <div></div>
                             )}
-
-                            {/* Date Of Birth */}
-
-                            {/* <Label>
-                                <IntlMessages id="teacher.DoBLabel" />
-                              </Label>
-                              <Field
-                                className="form-control"
-                                name="DoB"
-                                type="date"
-                              />
-                              {errors.DoB && touched.DoB ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.DoB}
-                                </div>
-                              ) : null} */}
-
-                            {/* <IntlMessages id="teacher.DoBLabel" /> */}
 
                             <FormGroup className="form-group has-float-label ">
                               <Label>
@@ -1243,7 +872,7 @@ const StudentRegistration = ({ intl }, values) => {
                     C_Village: initialC_Village,
                   }}
                   onSubmit={() => {}}
-                  // validationSchema={ValidationStepTwo}
+                  validationSchema={studentRegisterFormStep_2}
                   validateOnMount
                 >
                   {({
@@ -1268,12 +897,12 @@ const StudentRegistration = ({ intl }, values) => {
                                   name="levelOfEducation"
                                   id="levelOfEducation"
                                   value={values.levelOfEducation}
-                                  options={EducationLevelOptions}
+                                  options={educationLevelOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
                                 {errors.levelOfEducation &&
-                                !LevelOfEducation ? (
+                                touched.levelOfEducation ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.levelOfEducation}
                                   </div>
@@ -1298,9 +927,9 @@ const StudentRegistration = ({ intl }, values) => {
                           </Colxx>
                           <Colxx xxs="6" className="pt-3">
                             <div className="square p-3 ">
-                              <FormGroup className="form-group has-float-label ">
+                              <FormGroup className="form-group has-float-label error-l-100 ">
                                 <Label>
-                                  <IntlMessages id="teacher.DoBLabel" />
+                                  <IntlMessages id="forms.StdGraduationYearLabel" />
                                 </Label>
                                 <FormikReactSelect
                                   name="graduationYear"
@@ -1318,23 +947,6 @@ const StudentRegistration = ({ intl }, values) => {
                                   </div>
                                 ) : null}
                               </FormGroup>
-
-                              {/* <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
-                                  <IntlMessages id="forms.StdGraduationYearLabel" />
-                                </Label>
-                                <Field
-                                  className="form-control"
-                                  name="graduationYear"
-                                  type="date"
-                                />
-                                {errors.graduationYear &&
-                                touched.graduationYear ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.graduationYear}
-                                  </div>
-                                ) : null}
-                              </FormGroup> */}
                               {/*School province*/}
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
@@ -1514,7 +1126,7 @@ const StudentRegistration = ({ intl }, values) => {
                     photo: initialphoto,
                   }}
                   onSubmit={() => {}}
-                  // validationSchema={ValidationStepThree}
+                  validationSchema={studentRegisterFormStep_3}
                   validateOnMount
                 >
                   {({
@@ -1656,7 +1268,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
-                              {errors.interanceType && !InteranceType ? (
+                              {errors.interanceType && touched.interanceType ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
                                   {errors.interanceType}
                                 </div>
@@ -1682,16 +1294,23 @@ const StudentRegistration = ({ intl }, values) => {
                                   </label>
                                   <FormControl
                                     style={{ width: '90%' }}
-                                    id="file"
-                                    name="file"
+                                    id="studetn_img"
+                                    name="student_image"
                                     type="file"
+                                    // onChange={(event) => {
+                                    //   const fileName =
+                                    //     event.target.files[0].name;
+                                    //   handleFileChange(event, setFieldValue);
+                                    //   document.getElementById(
+                                    //     'fileSpan'
+                                    //   ).textContent = fileName;
+                                    // }}
+
                                     onChange={(event) => {
-                                      const fileName =
-                                        event.target.files[0].name;
-                                      handleFileChange(event, setFieldValue);
-                                      document.getElementById(
-                                        'fileSpan'
-                                      ).textContent = fileName;
+                                      setFieldValue(
+                                        'image',
+                                        event.currentTarget.files[0]
+                                      );
                                     }}
                                   />
                                 </div>
@@ -1820,7 +1439,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
-                              {errors.studentType && !StudentType ? (
+                              {errors.studentType && touched.studentType ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
                                   {errors.studentType}
                                 </div>
@@ -1851,7 +1470,12 @@ const StudentRegistration = ({ intl }, values) => {
                     <h3>
                       <IntlMessages id="wizard.registered" />
                     </h3>
-                    <NavLink to={'/app/students/register-1'}>
+                    <NavLink
+                      to={{
+                        pathname: '/app/students/register-1',
+                        state: { data: 'STUDENT' },
+                      }}
+                    >
                       <Button className="mt-5 bg-primary">
                         <IntlMessages id="button.back" />
                       </Button>

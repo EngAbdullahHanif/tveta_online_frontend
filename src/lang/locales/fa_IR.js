@@ -113,8 +113,8 @@ module.exports = {
   studentTimings: 'وخت',
   department: 'دیپارتمنت',
   studentMarks: 'نمرات کانکور',
+  'student.Markslist': 'نمرې',
   studentField: 'رشته',
-  studentRegtrationDate: 'تاریخ ثبت نام',
   studentFatherName: 'نام پدر',
 
   // department
@@ -126,7 +126,7 @@ module.exports = {
   departmentFieldErr: 'نام رشته لازم است',
   departmentNameErr: 'نام دیپارتمنت لازم است',
   departmentEnglishNameErr: 'نام انگلیسی دیپارتمنت لازم است',
-  departmentId: 'ایدا دیپارتمنت',
+  'department.id': 'ایدی ',
   'menu.error': 'خطا',
   'menu.institutes': 'انستیتوت/لیسه',
   'menu.instituteT': 'انستیتوتونه/ انستیتوتها',
@@ -234,8 +234,8 @@ module.exports = {
   'menu.promotion-demotion-list': 'د ارتقا شویو انستیتونو/لیسو لست',
   'menu.subject-list': 'د مضامینو لست/ لست مضامین',
   'menu.field-list': 'د رشتو لست/ لست رشته ها',
-  'menu.department-register': 'دڅانګې ثبتول/ ثبت دیپارتمنت',
-  'menu.department-list': 'د څانګو لست/ لست دیپارتمنت ها',
+  'menu.department-register': 'ددیپارتمنت ثبتول/ ثبت دیپارتمنت',
+  'menu.department-list': 'ددیپارتمنت لست/ لست دیپارتمنت ها',
   'menu.group-label': 'گروپ',
   'menu.group-register': 'د ګروپ ثبتول/ ثبت کردن گروپ',
 
@@ -884,8 +884,9 @@ module.exports = {
   'attendance.departmentLabel': 'دیپارتمنت',
   'attendance-list': 'د حاضرۍ اپدیت لست',
   'department.field': 'رشته',
-  'department.FieldEngNameLabel': 'د څانګې انګریزي نوم/ نام انگلسی دیپارتمنت',
-  'department.departmentRegisterlabel': 'د څانګې ثبت/ ثبت دیپارتمنت',
+  'department.FieldEngNameLabel':
+    'د دیپارتمنت انګریزي نوم/ نام انگلسی دیپارتمنت',
+  'department.departmentRegisterlabel': 'د دیپارتمنت ثبت/ ثبت دیپارتمنت',
 
   'marks.attendanceResult': 'وروستۍ پایله / نتیجه نهایی',
   'marks.eligable_Deprive': 'شامل امتحان/ محرومله',
@@ -953,8 +954,9 @@ module.exports = {
   'teacher.langOptions_2': 'دری',
   'teacher.langOptions_3': 'انگلسی',
   'teacher.teachingLang': 'تدریسی ژبه/ زبان تدریسی',
+  'teacher.teachingLangErr': 'تدریسی ژبه اړینه ده/ زبان تدریسی ضروری است',
   'teacher.appointmentTOptions_1': 'رسمی',
-  'teacher.appointmentTOptions_2': 'قراردادی',
+  'teacher.appointmentTOptions_2': 'قرارادی',
   'teacher.appointmentTypeLabel': 'د مقررۍ بڼه/ نوع تقرری',
   'teacher.appointmentTypeErr': 'د مقرري ډول اړین دی/ نوع مقرري ضروری است',
   'teacher.contractTypeLabel': 'د قرارداد بڼه/ نوع قرارداد',
@@ -990,6 +992,7 @@ module.exports = {
   'institute.studentgenderOption_1': 'نارینه/ذکور',
   'institute.studentgenderOption_2': 'ښځینه/ اناث',
   'institute.studentgenderOption_3': 'دواړه/مختلط',
+
   // Type
   'institute.instTypeOptions_1': 'دولتی',
   'institute.instTypeOptions_2': 'خصوصی',
@@ -1011,6 +1014,7 @@ module.exports = {
   'marks.SectionOption_4': 'د',
   'marks.SectionOption_5': 'ح',
   'marks.ClassLabel': 'ټولګی/ صنف',
+  'marks.ClassLabelList': 'صنف',
   'marks.ClassErr': 'ټولګی اړین دی/ صنف ضروری است',
   'marks.ClassOption_1': 'نهم',
   'marks.ClassOption_2': 'لسم/ دهم',
@@ -1183,6 +1187,10 @@ module.exports = {
   'student.transferTitle': 'د شاګرد تبدیلی/ تبدیلی شاگرد',
   'student.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
   'student.transferDocuments': 'د تبدیلی اسناد / اسناد تبدیلی',
+  'student.transferred-studentList':
+    'د تبدیل شویو شاګردانو لست/ لست شاگردان تبدلی شده',
+  'student.previousInstitute': 'مخکنی انستیتوت',
+  'student.newInstitute': 'نوی انستیتوت',
 
   // Curriculum
   'subject.curriculum': 'د نصاب ثبت / ثبت نصاب',
@@ -1195,6 +1203,7 @@ module.exports = {
   'curriculum.classLabel': 'ټولګی/ صنف',
   'curriculum.classErr': 'ټولګی اړین دی/ صنف ضروری است',
   'curriculum.eduactionalYearLabel': 'تعلیمی کال/سال تعلیمی',
+  'curriculum.eduactionalYearList': 'سال تعلیمی',
   'curriculum.eduactionalYearErr': 'ټعلیمی کال اړین دی / سال تعلیمی ضروری است',
 
   //Institute Details Page
@@ -1450,6 +1459,7 @@ module.exports = {
   'class.nameErr': 'د صنف نوم اړین دی/ نام صنف ضروری است',
   'class.semesterLabel': 'سمستر',
   'class.semesterErr': 'سمستر اړین دی/ سمستر ضروری است',
+  'class.nameList': 'نام',
 
   // Deletion flash message model
   'modal.deletion-message-title': 'تایید',
@@ -1607,6 +1617,7 @@ module.exports = {
 
   'inst.name': 'انستیتوت نوم / نام انستیتوت',
   'inst.nameList': 'نوم/ نام',
+  'inst.name-List': 'انستیتوت',
   'inst.nameErr': 'د انستیتوت نوم اړین دی/ نام انستیتوت ضروری است',
   institute: 'انستیتوت',
   // 'institute.instituteLabel': 'انستیتوت',

@@ -5,7 +5,7 @@ import IntlMessages from 'helpers/IntlMessages';
 // import { servicePath } from 'constants/defaultValues';
 
 import ListPageHeading from './TransferedListHeading';
-import { provinceOptions } from './../../../global-data/data';
+import { provinceOptions } from '../../../global-data/options';
 import ListPageListing from './TransferedListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
@@ -48,6 +48,7 @@ const genderOptions = [
 ];
 
 const ThumbListPages = ({ match, item_list }) => {
+  console.log('item_list', item_list);
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,7 +83,6 @@ const ThumbListPages = ({ match, item_list }) => {
   });
 
   useEffect(() => {
-    setItems(item_list);
     setIsLoaded(true);
   }, []);
   const onCheckItem = (event, id) => {
@@ -231,88 +231,83 @@ const ThumbListPages = ({ match, item_list }) => {
 
         <table className="table">
           <thead
-            className="pl-2 d-flex flex-grow-1  table-dark"
+            className="pl-2 d-flex flex-grow-1  table-dark mb-2"
             style={{ maxHeight: '55px' }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
               <th
                 style={{
-                  width: '17%',
+                  width: '10.4%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
-                <IntlMessages id="ایدی" />
+                <IntlMessages id="marks.No" />
               </th>
               <th
                 style={{
-                  width: '10%',
+                  width: '10.1%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
-                <IntlMessages id="ایدی شاگرد" />
-              </th>
-              <th
-                style={{
-                  width: '14%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="نام/نوم" />
-              </th>
-
-              <th
-                style={{
-                  width: '16%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="نام پدر" />
-              </th>
-              <th
-                style={{
-                  width: '17%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="ولایت" />
-              </th>
-              <th
-                style={{
-                  width: '14%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="مکتب" />
+                <IntlMessages id="marks.ID" />
               </th>
               <th
                 style={{
                   width: '15%',
+                  paddingInline: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                <IntlMessages id="forms.StdName" />
+              </th>
+
+              <th
+                style={{
+                  width: '18%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                <IntlMessages id="student.previousInstitute" />
+              </th>
+              <th
+                style={{
+                  width: '18%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
                 }}
               >
                 {' '}
-                <IntlMessages id="سال تعلیمی " />
+                <IntlMessages id="student.newInstitute" />
+              </th>
+              <th
+                style={{
+                  width: '18%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                {' '}
+                <IntlMessages id="dorm.yearList" />
               </th>
             </tr>
           </thead>
           <ListPageListing
-            items={items}
+            items={item_list}
             displayMode={displayMode}
             selectedItems={selectedItems}
             onCheckItem={onCheckItem}

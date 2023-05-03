@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
-
+import callApi from 'helpers/callApi';
 // Year  and SHift
 
 import * as Yup from 'yup';
@@ -19,7 +19,7 @@ import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { studyTimeOptions } from './../../global-data/data';
+import { studyTimeOptions } from '../../global-data/options';
 
 import {
   FormikReactSelect,
@@ -146,51 +146,132 @@ const StudentAttendance = ({ match }) => {
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
 
+  // const fetchInstitutes = async () => {
+  //   const response = await axios.get('http://localhost:8000/institute/');
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name,
+  //   }));
+  //   setInstitutes(updatedData);
+  // };
+
   const fetchInstitutes = async () => {
-    const response = await axios.get('http://localhost:8000/institute/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
-  };
-  const fetchFields = async () => {
-    const response = await axios.get('http://localhost:8000/institute/filed/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setFields(updatedData);
-  };
-  const fetchDepartments = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/department/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDepartments(updatedData);
+    const response = await callApi('institute/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
   };
 
-  const fetchClasses = async () => {
-    const response = await axios.get('http://localhost:8000/institute/classs/');
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name + ' - ' + item.semester + ' - ' + item.section,
-    }));
-    setClasses(updatedData);
+
+  // const fetchFields = async () => {
+  //   const response = await axios.get('http://localhost:8000/institute/filed/');
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name,
+  //   }));
+  //   setFields(updatedData);
+  // };
+
+  // const fetchClasses = async () => {
+  //   const response = await callApi('institute/classs/', '', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name + ' - ' + item.semester + ' - ' + item.section,
+  //     }));
+  //     setClasses(updatedData);
+  //   } else {
+  //     console.log('class error');
+  //   }
+  // };
+
+  const fetchFields = async () => {
+    const response = await callApi('institute/field/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFields(updatedData);
+    } else {
+      console.log('field error');
+    }
   };
+
+  // const fetchDepartments = async () => {
+  //   const response = await axios.get(
+  //     'http://localhost:8000/institute/department/'
+  //   );
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name,
+  //   }));
+  //   setDepartments(updatedData);
+  // };
+  const fetchDepartments = async () => {
+    const response = await callApi('institute/department/', '', null);
+    console.log('response of department', response);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('department error');
+    }
+  };
+  // const fetchClasses = async () => {
+  //   const response = await axios.get('http://localhost:8000/institute/classs/');
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name + ' - ' + item.semester + ' - ' + item.section,
+  //   }));
+  //   setClasses(updatedData);
+  // };
 
   const fetchSubjects = async () => {
-    const response = await axios.get(
-      'http://localhost:8000/institute/subject/'
-    );
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setSubjects(updatedData);
+    const response = await callApi('institute/subject/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('subject error');
+    }
+  };
+
+
+  // const fetchSubjects = async () => {
+  //   const response = await axios.get(
+  //     'http://localhost:8000/institute/subject/'
+  //   );
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name,
+  //   }));
+  //   setSubjects(updatedData);
+  // };
+
+  const fetchClasses = async () => {
+    const response = await callApi('institute/classs/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setClasses(updatedData);
+    } else {
+      console.log('class error');
+    }
   };
 
   useEffect(() => {

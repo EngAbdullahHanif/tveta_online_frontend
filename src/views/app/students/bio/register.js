@@ -591,7 +591,7 @@ const StudentRegistration = ({ intl }, values) => {
                     tazkiraType: initialTazkiraType,
                   }}
                   validateOnMount
-                  validationSchema={studentRegisterFormStep_1}
+                  // validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -964,7 +964,7 @@ const StudentRegistration = ({ intl }, values) => {
                     C_Village: initialC_Village,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={studentRegisterFormStep_2}
+                  // validationSchema={studentRegisterFormStep_2}
                   validateOnMount
                 >
                   {({
@@ -1218,7 +1218,7 @@ const StudentRegistration = ({ intl }, values) => {
                     photo: initialphoto,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={studentRegisterFormStep_3}
+                  // validationSchema={studentRegisterFormStep_3}
                   validateOnMount
                 >
                   {({

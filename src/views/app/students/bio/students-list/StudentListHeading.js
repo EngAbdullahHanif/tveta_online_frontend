@@ -51,7 +51,7 @@ const ListPageHeading = ({
   // Educational Years
   selectedEducationalYearOption,
   changeEducationalYearBy,
-  educationYears,
+  educationalYearsOptionsForList,
   // Level Of Education
   studentTypeOptions,
   changeStudentTypeBy,
@@ -218,7 +218,7 @@ const ListPageHeading = ({
                         overflowX: 'hidden',
                       }}
                     >
-                      {educationYears.map((order, index) => {
+                      {educationalYearsOptionsForList.map((order, index) => {
                         return (
                           <DropdownItem
                             key={index}

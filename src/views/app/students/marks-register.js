@@ -521,73 +521,47 @@ const MarksRegistration = ({ match }) => {
                     style={{ marginInline: '16%' }}
                   >
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="forms.FieldLabel" />
                       </Label>
                       {console.log('selectedDepartment', selectedDepartment)}
-                      <h6>{selectedDepartment.label}</h6>
+                      <h5>{selectedDepartment.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.ClassLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h5>{selectedClass.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="forms.StudyTimeLabel" />
                       </Label>
-                      <h6>{selecedStudyTime.label}</h6>
+                      <h5>{selecedStudyTime.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SemesterLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h5>{selectedClass.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SectionLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h5>{selectedClass.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SubjectLabel" />
                       </Label>
-                      <h6>{selectedSubject.label}</h6>
+                      <h5>{selectedSubject.label}</h5>
                     </Colxx>
-                  </Row>
-                  <Row
-                    className="justify-content-center  border border"
-                    style={{ marginInline: '16%' }}
-                  >
-                    <table className="table">
-                      <thead className="thead-dark">
-                        <tr>
-                          <th scope="col" style={{ fontSize: '15px' }}>
-                            <IntlMessages id="marks.No" />
-                          </th>
-                          <th scope="col" style={{ fontSize: '15px' }}>
-                            <IntlMessages id="marks.FullName" />
-                          </th>
-                          <th scope="col" style={{ fontSize: '15px' }}>
-                            <IntlMessages id="marks.FatherName" />
-                          </th>
-                          <th scope="col" style={{ fontSize: '15px' }}>
-                            <IntlMessages id="marks.ID" />
-                          </th>
-                          <th scope="col" style={{ fontSize: '15px' }}>
-                            <IntlMessages id="marks.Marks" />
-                          </th>
-                        </tr>
-                      </thead>
-                    </table>
                   </Row>
                   <Formik
                     initialValues={initialValues}
@@ -606,6 +580,55 @@ const MarksRegistration = ({ match }) => {
                           }}
                         >
                           <table class="table ">
+                            <thead className="thead-dark">
+                              <tr>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.No" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.FullName" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.FatherName" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.ID" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.Marks" />
+                                </th>
+                              </tr>
+                            </thead>
                             <tbody
                               className="border border "
                               style={{
@@ -618,22 +641,34 @@ const MarksRegistration = ({ match }) => {
                                   <tr key={index}>
                                     <th
                                       scope="row"
-                                      style={{ width: '16%', fontSize: '15px' }}
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
                                     >
                                       {index + 1}
                                     </th>
                                     <td
-                                      style={{ width: '20%', fontSize: '15px' }}
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
                                     >
                                       {student.name}
                                     </td>
                                     <td
-                                      style={{ width: '29%', fontSize: '15px' }}
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
                                     >
                                       {student.father_name}
                                     </td>
                                     <td
-                                      style={{ width: '10%', fontSize: '15px' }}
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
                                     >
                                       {student.student_id}
                                     </td>
@@ -646,56 +681,70 @@ const MarksRegistration = ({ match }) => {
                                           fontSize: '15px',
                                         }}
                                       >
-                                        <FormGroup className="form-group">
-                                          <Field
-                                            type="number"
-                                            style={{ fontSize: '15pxpx' }}
-                                            className="form-control"
-                                            name={`score[${student.student_id}]`}
-                                          />
-                                          {errors.score && touched.score ? (
-                                            <div className="invalid-feedback d-block">
-                                              {errors.score}
-                                            </div>
-                                          ) : null}
-                                        </FormGroup>
+                                        <Field
+                                          type="number"
+                                          style={{
+                                            fontSize: '15px',
+                                            textAlign: 'center',
+                                          }}
+                                          className="form-control"
+                                          name={`score[${student.student_id}]`}
+                                        />
+                                        {errors.score && touched.score ? (
+                                          <div className="invalid-feedback d-block">
+                                            {errors.score}
+                                          </div>
+                                        ) : null}
                                       </div>
                                     </td>
                                   </tr>
                                 ))}
                             </tbody>
-                          </table>
-                        </Row>
-                        <Row
-                          className="justify-content-center  border border"
-                          style={{
-                            marginInline: '16%',
-                          }}
-                        >
-                          <table class="table ">
-                            <tbody>
-                              <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                            </tbody>
                             <tfoot className="thead-dark">
                               <tr>
-                                <th scope="col" style={{ fontSize: '15px' }}>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.No" />
                                 </th>
-                                <th scope="col" style={{ fontSize: '15px' }}>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.FullName" />
                                 </th>
-                                <th scope="col" style={{ fontSize: '15px' }}>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.FatherName" />
                                 </th>
-                                <th scope="col" style={{ fontSize: '15px' }}>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.ID" />
                                 </th>
-                                <th scope="col" style={{ fontSize: '15px' }}>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.Marks" />
                                 </th>
                               </tr>

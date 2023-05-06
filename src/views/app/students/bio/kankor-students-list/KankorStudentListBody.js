@@ -5,7 +5,6 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-
 const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
   return (
     <Colxx xxs="12" key={student.kankorId} className="mt-2">
@@ -28,47 +27,54 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
               className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-                 <p
+              <p
                 className="mb-1 text-small"
-                style={{ width: '12%', textAlign: 'right', fontSize:'20px' }}
+                style={{ width: '12%', textAlign: 'right', fontSize: '20px' }}
               >
                 {student.id}
               </p>
               <NavLink to={`students/${student.id}`} style={{ width: '10%' }}>
-                <p className="list-item-heading mb-1 truncate" style={{fontSize:'20px'}}>{student.id}</p>
-              </NavLink>
-              <NavLink to={`students/${student.id}`} style={{ width: '15%',fontSize:'20px' }}>
                 <p
                   className="list-item-heading mb-1 truncate"
-                  style={{ marginLeft: 5 , fontSize:'20px'}}
+                  style={{ fontSize: '20px' }}
+                >
+                  {student.id}
+                </p>
+              </NavLink>
+              <NavLink
+                to={`students/${student.id}`}
+                style={{ width: '15%', fontSize: '20px' }}
+              >
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ marginLeft: 5, fontSize: '20px' }}
                 >
                   {student.name}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small"
-                style={{ width: '17%', textAlign: 'right', fontSize:'20px' }}
+                style={{ width: '17%', textAlign: 'right', fontSize: '20px' }}
               >
                 {student.Institute.name}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '14%', textAlign: 'right' , fontSize:'20px'}}
+                style={{ width: '14%', textAlign: 'right', fontSize: '20px' }}
               >
                 {student.department_id.name}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '12%', textAlign: 'right', fontSize:'20px' }}
+                style={{ width: '12%', textAlign: 'right', fontSize: '20px' }}
               >
                 {student.score}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right', fontSize:'20px' }}
+                style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
-                {/* {student.created_date} */}
-                integrate
+                {student.educational_year}
               </p>
               {/* <p
                 className="mb-1 text-small"

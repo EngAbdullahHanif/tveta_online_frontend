@@ -22,6 +22,7 @@ import {
 } from 'reactstrap';
 import Select from 'react-select';
 import callApi from 'helpers/callApi';
+import currentUser from 'helpers/currentUser';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
@@ -31,6 +32,7 @@ import {
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
 import { getDirection, getCurrentUser } from './../../../../helpers/Utils';
+import { NotificationManager } from 'components/common/react-notifications';
 
 const SubjectOptions = [
   { value: '14th', label: 'Computer Science' },
@@ -250,13 +252,7 @@ const StudentAttendance = ({ match }) => {
   };
 
   // fetch student list for typing attendance
-  const fetchStudentList = async (
-    selectedInstitute,
-    selectedClass,
-    selecedStudyTime = [],
-    selectedDepartment,
-    selectedEducationalYear
-  ) => {
+  const fetchStudentList = async () => {
     const response = await callApi(
       `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       'GET',
@@ -279,15 +275,39 @@ const StudentAttendance = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  // const onSubmit = (values) => {
-  //   console.log(values);
-  //   console.log('inside the random function form new score');
-  //   console.log('stdPresnet', values.present);
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'حاضری په بریالیتوب سره ثبت شوه',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'حاضری ثبت نه شوه بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
 
-  // };
   const onSubmit = async (values) => {
-    console.log('values of the form', values);
-    setIsSubmitted(true);
+    // setIsSubmitted(true);
     const educationalYear = selectedEducationalYear;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
@@ -301,10 +321,12 @@ const StudentAttendance = ({ match }) => {
     //create an array which first node has exam_id and the rest of the nodes has student_id and marks
     // values.score[student.student_id]
     const newStudents = students.map((student, index) => {
-      console.log('student sadfsd', student.student_id);
       return {
         student_id: student.student_id,
-        // score: values.score[student.student_id],
+        present_hours: values.present[student.student_id],
+        absent_hours: values.absent[student.student_id],
+        necessary_work_hours: values.necessaryWork[student.student_id],
+        sickness_hours: values.sickness[student.student_id],
       };
     });
 
@@ -315,17 +337,20 @@ const StudentAttendance = ({ match }) => {
         department_id: departmentId,
         class_id: classId,
         subject_id: subjectId,
-        user_id: '',
+        user_id: currentUser(),
       },
       ...newStudents,
     ];
 
     console.log('data', data);
 
-    const response = await callApi('api/create_marks/', 'POST', data);
+    const response = await callApi(
+      'api/students-attendance-create/',
+      'POST',
+      data
+    );
     if (response.status === 200) {
-      console.log('response of students', response);
-      setIsSubmitted(false);
+      setIsSubmitted(true);
       createNotification('success', 'filled');
     } else {
       console.log('marks error');
@@ -362,7 +387,7 @@ const StudentAttendance = ({ match }) => {
                       {/* set if condition, if institutes are loaded */}
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
-                          <IntlMessages id="forms.InstituteLabel" />
+                          <IntlMessages id="forms.In         stituteLabel" />
                         </Label>
                         <FormikReactSelect
                           name="institute"
@@ -598,7 +623,7 @@ const StudentAttendance = ({ match }) => {
                   <Formik
                     initialValues={initialValues}
                     onSubmit={onSubmit}
-                    validationSchema={InnerInpufieldsValidation}
+                    // validationSchema={InnerInpufieldsValidation}
                   >
                     {({
                       errors,
@@ -640,8 +665,8 @@ const StudentAttendance = ({ match }) => {
                                           <Field
                                             type="string"
                                             className="form-control"
-                                            // name={`StdPresent[${student.student_id}]`}
-                                            name="present"
+                                            name={`present[${student.student_id}]`}
+                                            // name="present"
                                           />
                                           {errors.present && touched.present ? (
                                             <div className="invalid-feedback d-block">
@@ -658,8 +683,8 @@ const StudentAttendance = ({ match }) => {
                                           <Field
                                             type="string"
                                             className="form-control"
-                                            //name={`StdAbsent[${student.student_id}]`}
-                                            name={`${index}`}
+                                            name={`absent[${student.student_id}]`}
+                                            // name={`${index}`}
                                           />
                                           {errors.absent && touched.absent ? (
                                             <div className="invalid-feedback d-block">
@@ -676,8 +701,8 @@ const StudentAttendance = ({ match }) => {
                                           <Field
                                             type="string"
                                             className="form-control"
-                                            //name={`StdNecessaryWork[${student.student_id}]`}
-                                            name={`${index}`}
+                                            name={`necessaryWork[${student.student_id}]`}
+                                            // name={`${index}`}
                                           />
                                           {errors.necessaryWork &&
                                           touched.necessaryWork ? (
@@ -695,8 +720,8 @@ const StudentAttendance = ({ match }) => {
                                           <Field
                                             type="string"
                                             className="form-control"
-                                            //name={`StdSickness[${student.student_id}]`}
-                                            name={`${index}`}
+                                            name={`sickness[${student.student_id}]`}
+                                            // name={`${index}`}
                                           />
                                           {errors.sickness &&
                                           touched.sickness ? (

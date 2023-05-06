@@ -55,8 +55,10 @@ const StudentProfile = () => {
       // );
       const response = await callApi(`api/?student_id=${studentId}`, '', null);
       const data = await response.data;
-      setStudent(data);
+      setStudent(data.results);
       setIsLoaded(true);
+
+      console.log('studentsdf', student);
       // const instituteResponse = await axios.get(
       //   `${studentApiUrl}student_institutes/?student_id=${studentId}`
       // );
@@ -528,14 +530,14 @@ const StudentProfile = () => {
                                   <th>
                                     <IntlMessages id="marks.SubjectLabel" />
                                   </th>
-                                  <th>
+                                  {/* <th>
                                     {' '}
                                     <IntlMessages id="forms.SubjectCreditLabel" />
                                   </th>
                                   <th>
                                     {' '}
                                     <IntlMessages id="subject.type" />
-                                  </th>
+                                  </th> */}
                                   <th>
                                     {' '}
                                     <IntlMessages id="marks.Marks" />
@@ -548,10 +550,13 @@ const StudentProfile = () => {
                                     <tr>
                                       <th scope="row">{index + 1}</th>
                                       <td>{child.subject_name}</td>
+                                      {child.subject_credit > 1 && (
+                                        <>
+                                          <td>{child.subject_credit}</td>
 
-                                      <td>{child.subject_credit}</td>
-
-                                      <td>{child.subject_type}</td>
+                                          <td>{child.subject_type}</td>
+                                        </>
+                                      )}
 
                                       <td>{child.score}</td>
                                     </tr>
@@ -563,18 +568,14 @@ const StudentProfile = () => {
                               {' '}
                               <Colxx xxs="3">
                                 {' '}
-                                <span>
-                                  فیصدی سمستر
-                                  <h5>{mark.TotalPercentage}</h5>
-                                </span>
+                                <h5> فیصدی سمستر: % {mark.total_percentage}</h5>
                               </Colxx>
-                              <Colxx xxs="3">
-                                {' '}
-                                <span>
-                                  GPA
-                                  <h5>{mark.TotalGpa}</h5>
-                                </span>
-                              </Colxx>
+                              {mark.total_gpa > 0 && (
+                                <Colxx xxs="3">
+                                  {' '}
+                                  <h5>GPA: {mark.total_gpa} </h5>
+                                </Colxx>
+                              )}
                             </Row>
                           </CardBody>
                         </Card>

@@ -404,7 +404,7 @@ export const teacherEvalautionSchema = Yup.object().shape({
 
 // Kankor Registration
 export const kankorRegisterValidationSchema = Yup.object().shape({
-  name1: Yup.string()
+  studentName: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="forms.StdKankorNameErr" />),

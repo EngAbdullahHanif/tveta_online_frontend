@@ -112,32 +112,61 @@ const StudentsDismissal = (values) => {
   //   }
   // };
 
-  const handleSearch = async (event) => {
-    console.log('handle search is called');
+  const handleSearch = async (event, values) => {
     setSearchResult(event);
-    //search student in the server
     const response = await callApi(
       `api/student_accademic/?student_id=${studentId}`,
-      'GET',
-      'NULL'
+      '',
+      null
     );
-    const studentResponse = await response.data;
-    //console.log('reone', studentResponse.student_id);
-    studentId == studentResponse.student_id
-      ? setStudentIdMatch(true)
-      : setStudentIdMatch(false);
-    //console.log(studentId, 'student Response');
-    if (studentResponse) {
-      setStudent(studentResponse);
-      setData(true);
+    if (response.data && response.status === 200) {
+      studentId == response.data.student_id
+        ? setStudentIdMatch(true)
+        : setStudentIdMatch(false);
+      if (response.data) {
+        setStudent(response.data);
+        setData(true);
+      } else {
+        setMessage('Student not found');
+      }
     } else {
-      setMessage('Student not found');
+      console.log('student search error');
     }
   };
+  const onSubmit = async (values) => {
+    // setReload(true);
+    const data = {
+      student_id: studentId,
+      dismissal_date: values.dismissalDate,
+    };
 
-  const onSubmit = (values) => {
-    console.log('form values after search', values);
-    //setReload(true);
+    try {
+      const response = await callApi(`api/student-transfer/`, 'POST', data);
+      if (response.status === 200 || response.status === 201) {
+        console.log('success');
+        createNotification('success', 'filled');
+        setReload(true);
+      }
+    } catch (error) {
+      if (error.message === 'Resource not found') {
+        console.log('student not found');
+        createNotification('info', 'filled');
+      } else {
+        console.log('An error occurred:', error.message);
+        createNotification('error', 'filled');
+      }
+    }
+
+    // if (response.status === 200 || response.status === 201) {
+    //   console.log('success');
+    //   createNotification('success', 'filled');
+    // } else if (response.status === 404 || response.status === 400) {
+    //   console.log('student not found');
+    //   createNotification('info', 'filled');
+    // } else {
+    //   console.log('error');
+    //   createNotification('error', 'filled');
+    // }
   };
 
   console.log('reload, isNext, searchResult,', reload, isNext, searchResult);
@@ -413,7 +442,7 @@ const StudentsDismissal = (values) => {
                                 <Field
                                   className="form-control"
                                   name="dismissalDate"
-                                  type="date"
+                                  placeholder="1399/01/01"
                                 />
                                 {errors.dismissalDate &&
                                 touched.dismissalDate ? (

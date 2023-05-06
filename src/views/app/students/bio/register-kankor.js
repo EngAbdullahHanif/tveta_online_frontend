@@ -11,6 +11,8 @@ import { genderOptions } from '../../global-data/options';
 import { provinceOptions } from '../../global-data/options';
 import { educationalYearsOptions } from '../../global-data/options';
 import { studyTimeOptions } from '../../global-data/options';
+import { NotificationManager } from 'components/common/react-notifications';
+
 const servicePath = 'http://localhost:8000';
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
 const StudentRegistraion = ({ history }) => {
@@ -83,7 +85,7 @@ const StudentRegistraion = ({ history }) => {
   const [initialDistrict, setInitialDistrict] = useState('');
 
   const initialValues = {
-    name1: intialName,
+    studentName: intialName,
     gender: initialGender,
     fatherName: initialFatherName,
     kankorMarks: initialKankorMarks,
@@ -127,7 +129,6 @@ const StudentRegistraion = ({ history }) => {
   };
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', '', null);
-    console.log('response of department', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -139,32 +140,76 @@ const StudentRegistraion = ({ history }) => {
     }
   };
   const updateMode = true;
-  const onRegister = (values) => {
-    setIsNext(true);
+
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'د کانکور شاگرد په بریالیتوب سره ثبت شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'د کانکور شاگرد ثبت نه شو بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
+
+  const onRegister = async (values) => {
     console.log('THis is  the inner comment');
     const data = {
-      name: values.name1,
+      name: values.studentName,
       father_name: values.fatherName,
-      Institute: values.institute[0].value,
-      field_id: values.field[0].value,
-      department_id: values.department[0].value,
+      Institute: values.institute.value,
+      field_id: values.field.value,
+      department_id: values.department.value,
       score: values.kankorMarks,
-      educational_year: '2020',
-      provence: 'kabul',
-      district: 'kabul',
+      educational_year: values.educationalYear.value,
+      provence: values.province.value,
+      district: values.district,
       gender: 1,
-      user_id: 1,
     };
     console.log('data', data);
-    axios
-      .post('http://localhost:8000/api/Create_kankorResults/', data)
-      .then((response) => {
-        console.log(response);
-        setIsNext(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .post('http://localhost:8000/api/Create_kankorResults/', data)
+    //   .then((response) => {
+    //     console.log(response);
+    //     setIsNext(false);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    const response = await callApi('api/Create_kankorResults/', 'POST', data);
+    if (
+      response.status === 200 ||
+      response.status === 201 ||
+      response.status === 202
+    ) {
+      // setIsNext(false);
+      setIsNext(true);
+      createNotification('success', 'filled');
+    } else {
+      createNotification('error', 'filled');
+      console.log('kankor result error');
+    }
   };
 
   useEffect(() => {
@@ -202,10 +247,10 @@ const StudentRegistraion = ({ history }) => {
                         <Label>
                           <IntlMessages id="forms.StdName" />
                         </Label>
-                        <Field className="form-control" name="name1" />
-                        {errors.name1 && touched.name1 ? (
+                        <Field className="form-control" name="studentName" />
+                        {errors.studentName && touched.studentName ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.name1}
+                            {errors.studentName}
                           </div>
                         ) : null}
                       </FormGroup>

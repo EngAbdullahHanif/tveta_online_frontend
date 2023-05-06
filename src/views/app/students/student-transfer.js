@@ -160,21 +160,6 @@ const StudentsTransfer = (values) => {
 
   const handleSearch = async (event, values) => {
     setSearchResult(event);
-    //search student in the server
-    // const response = await axios.get(
-    //   `${studentSearchApiUrl}?student_id=${studentId}`
-    // );
-    // const studentResponse = await response.data;
-    // studentId == studentResponse.student_id
-    //   ? setStudentIdMatch(true)
-    //   : setStudentIdMatch(false);
-    // if (studentResponse) {
-    //   setStudent(studentResponse);
-    //   setData(true);
-    // } else {
-    //   setMessage('Student not found');
-    // }
-
     const response = await callApi(
       `api/student_accademic/?student_id=${studentId}`,
       '',
@@ -191,7 +176,7 @@ const StudentsTransfer = (values) => {
         setMessage('Student not found');
       }
     } else {
-      console.log('institute error');
+      console.log('student search error');
     }
   };
   // const handleChange = (event) => {
@@ -225,15 +210,10 @@ const StudentsTransfer = (values) => {
       language: values.mediumOfInstruction.value,
       type: 1, //type = 1 means this is student new institute, the old institute type is now 2 which means old institute
       is_transfer: 2, //is_transfer = 2 means transfered
-      user_id: '',
     };
 
     try {
-      const response = await callApi(
-        `api/Student_Institute_Transfer_API/`,
-        'POST',
-        data
-      );
+      const response = await callApi(`api/student-transfer/`, 'POST', data);
       if (response.status === 200 || response.status === 201) {
         console.log('success');
         createNotification('success', 'filled');
@@ -549,7 +529,7 @@ const StudentsTransfer = (values) => {
                               <Field
                                 className="form-control"
                                 name="transferDate"
-                                type="date"
+                                placeholder="1399/01/01"
                               />
                               {errors.transferDate && touched.transferDate ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">

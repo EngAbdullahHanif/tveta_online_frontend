@@ -21,7 +21,7 @@ const getHeaders = (data) => {
 };
 
 // make API calls
-const callApi = async (endpoint, method = 'get', data = null) => {
+const callApi = async (endpoint, method = 'get', data = '') => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
 

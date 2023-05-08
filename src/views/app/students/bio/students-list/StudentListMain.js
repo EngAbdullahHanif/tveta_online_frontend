@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
-import { provincesOptionsForList } from '../../../global-data/options';
+import {
+  provincesOptionsForList,
+  educationalYearsOptionsForList,
+  studentType,
+  genderOptionsForList,
+  studyTimeOptionsForList,
+} from '../../../global-data/options';
 // import { servicePath } from 'constants/defaultValues';
 import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
 import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
@@ -34,232 +40,6 @@ const categories = [
   { label: 'Cakes', value: 'Cakes', key: 0 },
   { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
   { label: 'Desserts', value: 'Desserts', key: 2 },
-];
-
-const genderOptions = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  {
-    column: '1',
-    label: <IntlMessages id="institute.studentgenderOption_1" />,
-  },
-  { column: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
-];
-
-const provinces = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  {
-    column: '1',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
-  },
-  {
-    column: '2',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
-  },
-  {
-    column: '3',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
-  },
-  {
-    column: '4',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
-  },
-  {
-    column: '5',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
-  },
-  {
-    column: '6',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
-  },
-  {
-    column: '7',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
-  },
-  {
-    column: '8',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
-  },
-  {
-    column: '9',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
-  },
-  {
-    column: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    column: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    column: 'هرات',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    column: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    column: 'کابل',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    column: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    column: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    column: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    column: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    column: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    column: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    column: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    column: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    column: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    column: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    column: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    column: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    column: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    column: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    column: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    column: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    column: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    column: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
-
-const shiftOption = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-
-  { column: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { column: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
-];
-const educationYears = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
-  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
-  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
-  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
-  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
-  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
-  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
-  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
-  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
-  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
-  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
-  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
-  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
-  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
-  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
-  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
-  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
-];
-
-const studentType = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  {
-    value: '14th',
-    label: <IntlMessages id="student.typeOption_1" />,
-  },
-  {
-    value: 'bachelor',
-    label: <IntlMessages id="student.typeOption_2" />,
-  },
-  {
-    value: 'master',
-    label: <IntlMessages id="student.typeOption_3" />,
-  },
 ];
 
 const ThumbListPages = ({ match }) => {
@@ -566,7 +346,7 @@ const ThumbListPages = ({ match }) => {
           // Gender
           changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+              genderOptionsForList.find((x) => x.column === column)
             );
           }}
           changeProvinceBy={(column) => {
@@ -579,8 +359,8 @@ const ThumbListPages = ({ match }) => {
           studentTypeOptions={studentTypeOptions}
           selectedProvinceOption={selectedProvinceOption}
           selectedShiftOption={selectedShiftOption}
-          genderOptions={genderOptions}
-          shiftOption={shiftOption}
+          genderOptionsForList={genderOptionsForList}
+          studyTimeOptionsForList={studyTimeOptionsForList}
           provincesOptionsForList={provincesOptionsForList}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
@@ -606,16 +386,16 @@ const ThumbListPages = ({ match }) => {
           // Shift
           changeShiftBy={(column) => {
             setSelectedShiftOption(
-              shiftOption.find((x) => x.column === column)
+              studyTimeOptionsForList.find((x) => x.column === column)
             );
           }}
           // Educational Year
           changeEducationalYearBy={(column) => {
             seSelectedEducationalYearOption(
-              educationYears.find((x) => x.column === column)
+              educationalYearsOptionsForList.find((x) => x.column === column)
             );
           }}
-          educationYears={educationYears}
+          educationalYearsOptionsForList={educationalYearsOptionsForList}
           // Level of Education
           changestudentTypeBy={(column) => {
             setStudentTypeOptions(studentType.find((x) => x.column === column));

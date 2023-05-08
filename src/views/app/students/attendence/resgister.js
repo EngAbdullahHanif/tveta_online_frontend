@@ -24,7 +24,7 @@ import Select from 'react-select';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
 import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
+import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
   FormikTagsInput,
@@ -519,7 +519,7 @@ const StudentAttendance = ({ match }) => {
                 <>
                   <Row
                     className="border border bg-primary me-5 p-1 "
-                    style={{ marginInline: '10%' }}
+                    style={{ marginInline: '10%', fontSize: '20px' }}
                   >
                     <Colxx xxs="2">
                       <Label>
@@ -563,63 +563,7 @@ const StudentAttendance = ({ match }) => {
                       <h6>دینامیک گردد</h6>
                     </Colxx>
                   </Row>
-                  <Row
-                    className="justify-content-center  border border"
-                    style={{ marginInline: '10%' }}
-                  >
-                    <table className="table">
-                      <thead className="thead-dark ">
-                        <tr>
-                          <th colspan="4" className="border text-center">
-                            <IntlMessages id="marks.studentChar" />
-                          </th>
-                          <th colspan="4" className="border text-center">
-                            <IntlMessages id="marks.marksDisplayTitle" />
-                          </th>
-                          <th colspan="1" className="border text-center">
-                            {' '}
-                            <IntlMessages id="marks.attendanceResult" />
-                          </th>
-                        </tr>
-                      </thead>
-                      <thead className="thead-dark">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="border text-center "
-                            style={{ maxWidth: '20px ', minWidth: '50px' }}
-                          >
-                            <IntlMessages id="marks.No" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="marks.FullName" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="marks.FatherName" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="marks.ID" />
-                          </th>
 
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="forms.StdPresentLabel" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="forms.StdAbsentLabel" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="forms.StdNecessaryWorkLabel" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="forms.StdSicknessLabel" />
-                          </th>
-                          <th scope="col" className="border text-center">
-                            <IntlMessages id="marks.eligable_Deprive" />
-                          </th>
-                        </tr>
-                      </thead>
-                    </table>
-                  </Row>
                   <Formik
                     initialValues={initialValues}
                     onSubmit={onSubmit}
@@ -637,12 +581,57 @@ const StudentAttendance = ({ match }) => {
                           className="justify-content-center  border border"
                           style={{
                             marginInline: '10%',
-                            height: '30rem',
                             overflowY: 'scroll',
                             overflowX: 'hidden',
                           }}
                         >
                           <table class="table ">
+                            <thead className="thead-dark ">
+                              <tr>
+                                <th colspan="4" className="border text-center">
+                                  <IntlMessages id="marks.studentChar" />
+                                </th>
+                                <th colspan="4" className="border text-center">
+                                  <IntlMessages id="attendance.attendaceDisplayTitle" />
+                                </th>
+                                {/* <th colspan="1" className="border text-center">
+                            {' '}
+                            <IntlMessages id="marks.attendanceResult" />
+                          </th> */}
+                              </tr>
+                            </thead>
+                            <thead className="thead-dark">
+                              <tr>
+                                <th scope="col" className="border text-center ">
+                                  <IntlMessages id="marks.No" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="marks.FullName" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="marks.FatherName" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="marks.ID" />
+                                </th>
+
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="forms.StdPresentLabel" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="forms.StdAbsentLabel" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                                </th>
+                                <th scope="col" className="border text-center">
+                                  <IntlMessages id="forms.StdSicknessLabel" />
+                                </th>
+                                {/* <th scope="col" className="border text-center">
+                            <IntlMessages id="marks.eligable_Deprive" />
+                          </th> */}
+                              </tr>
+                            </thead>
                             <tbody
                               className="border border "
                               style={{
@@ -654,107 +643,110 @@ const StudentAttendance = ({ match }) => {
                               {students.length > 0 &&
                                 students.map((student, index) => (
                                   <tr>
-                                    <th scope="row">{index}</th>
-                                    <td>{student.name}</td>
-                                    <td>{student.father_name}</td>
-                                    <td>{student.student_id}</td>
-                                    <td>
+                                    <th
+                                      style={{
+                                        fontSize: '20px',
+                                        minWidth: '50px',
+                                        textAlign: 'center',
+                                      }}
+                                      className="pt-0"
+                                    >
+                                      {index + 1}
+                                    </th>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        minWidth: '150px',
+                                        textAlign: 'center',
+                                      }}
+                                      className="pt-0"
+                                    >
+                                      {student.name}
+                                    </td>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        minWidth: '150px',
+                                        textAlign: 'center',
+                                      }}
+                                      className="pt-0"
+                                    >
+                                      {student.father_name}
+                                    </td>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                        minWidth: '100px',
+                                      }}
+                                      className="pt-0"
+                                    >
+                                      {student.student_id}
+                                    </td>
+                                    <td className="mb-2 p-0">
                                       {/* Present*/}
-                                      <div class="form-group mx-sm-3 mb-2">
-                                        <FormGroup className="form-group">
-                                          <Field
-                                            type="string"
-                                            className="form-control"
-                                            name={`present[${student.student_id}]`}
-                                            // name="present"
-                                          />
-                                          {errors.present && touched.present ? (
-                                            <div className="invalid-feedback d-block">
-                                              {errors.present}
-                                            </div>
-                                          ) : null}
-                                        </FormGroup>
-                                      </div>
+                                      <Field
+                                        type="string"
+                                        className="form-control"
+                                        name={`present[${student.student_id}]`}
+                                        // name="present"
+                                      />
+                                      {errors.present && touched.present ? (
+                                        <div className="invalid-feedback d-block">
+                                          {errors.present}
+                                        </div>
+                                      ) : null}
                                     </td>
-                                    <td>
+                                    <td className="p-0">
                                       {/* Absent */}
-                                      <div class="form-group mx-sm-3 mb-2">
-                                        <FormGroup className="form-group">
-                                          <Field
-                                            type="string"
-                                            className="form-control"
-                                            name={`absent[${student.student_id}]`}
-                                            // name={`${index}`}
-                                          />
-                                          {errors.absent && touched.absent ? (
-                                            <div className="invalid-feedback d-block">
-                                              {errors.StdAbsent}
-                                            </div>
-                                          ) : null}
-                                        </FormGroup>
-                                      </div>
+                                      <Field
+                                        type="string"
+                                        className="form-control"
+                                        name={`absent[${student.student_id}]`}
+                                        // name={`${index}`}
+                                      />
+                                      {errors.absent && touched.absent ? (
+                                        <div className="invalid-feedback d-block">
+                                          {errors.StdAbsent}
+                                        </div>
+                                      ) : null}
                                     </td>
-                                    <td>
+                                    <td className="p-0">
                                       {/* Necessary Work */}
-                                      <div class="form-group mx-sm-3 mb-2">
-                                        <FormGroup className="form-group">
-                                          <Field
-                                            type="string"
-                                            className="form-control"
-                                            name={`necessaryWork[${student.student_id}]`}
-                                            // name={`${index}`}
-                                          />
-                                          {errors.necessaryWork &&
-                                          touched.necessaryWork ? (
-                                            <div className="invalid-feedback d-block">
-                                              {errors.necessaryWork}
-                                            </div>
-                                          ) : null}
-                                        </FormGroup>
-                                      </div>
+                                      <Field
+                                        type="string"
+                                        className="form-control"
+                                        name={`necessaryWork[${student.student_id}]`}
+                                        // name={`${index}`}
+                                      />
+                                      {errors.necessaryWork &&
+                                      touched.necessaryWork ? (
+                                        <div className="invalid-feedback d-block">
+                                          {errors.necessaryWork}
+                                        </div>
+                                      ) : null}
                                     </td>
-                                    <td>
+                                    <td className="mb-2 p-0">
                                       {/* SickNess */}
-                                      <div class="form-group mx-sm-3 mb-2">
-                                        <FormGroup className="form-group">
-                                          <Field
-                                            type="string"
-                                            className="form-control"
-                                            name={`sickness[${student.student_id}]`}
-                                            // name={`${index}`}
-                                          />
-                                          {errors.sickness &&
-                                          touched.sickness ? (
-                                            <div className="invalid-feedback d-block">
-                                              {errors.sickness}
-                                            </div>
-                                          ) : null}
-                                        </FormGroup>
-                                      </div>
+
+                                      <Field
+                                        type="string"
+                                        className="form-control"
+                                        name={`sickness[${student.student_id}]`}
+                                        // name={`${index}`}
+                                      />
+                                      {errors.sickness && touched.sickness ? (
+                                        <div className="invalid-feedback d-block">
+                                          {errors.sickness}
+                                        </div>
+                                      ) : null}
                                     </td>
-                                    <td>
-                                      Mahroom or full attendance should be
-                                      displayed here
-                                    </td>
+                                    {/* <td className="mb-2">
+                                      DISPLAY MAHROOM OR FULL ATTEND
+                                    </td> */}
+                                    {/* <Separator /> */}
                                   </tr>
                                 ))}
-                            </tbody>
-                          </table>
-                        </Row>
-                        <Row
-                          className="justify-content-center  border border"
-                          style={{
-                            marginInline: '10%',
-                          }}
-                        >
-                          <table class="table ">
-                            <tbody>
-                              <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
                             </tbody>
                             <tfoot className="thead-dark">
                               <tr>
@@ -790,9 +782,9 @@ const StudentAttendance = ({ match }) => {
                                 <th scope="col" className="border text-center">
                                   <IntlMessages id="forms.StdSicknessLabel" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                {/* <th scope="col" className="border text-center">
                                   <IntlMessages id="marks.eligable_Deprive" />
-                                </th>
+                                </th> */}
                               </tr>
                             </tfoot>
                           </table>

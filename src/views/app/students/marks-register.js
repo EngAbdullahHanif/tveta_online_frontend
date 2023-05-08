@@ -34,57 +34,7 @@ import { async } from 'q';
 const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
-
-const LevelOfEdcationOptions = [
-  { value: '1', label: 'اصلی' },
-  { value: '2', label: 'فرعی' },
-];
-
-const FieldOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
-
-const SemesterOptions = [
-  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
-  // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
-  //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
-];
-
-const SectionOptions = [
-  { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-];
-
-const ClassOptions = [
-  { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-  { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-];
-
-const SubjectOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
-
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
 const pageSizes = [10, 20, 40, 80];
-
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
     .shape({
@@ -388,7 +338,7 @@ const MarksRegistration = ({ match }) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">{<IntlMessages id="marks.title" />}</h3>
+        <h2 className="mt-5 m-5">{<IntlMessages id="marks.title" />}</h2>
         <CardBody>
           {!isNext ? (
             <Formik
@@ -407,7 +357,7 @@ const MarksRegistration = ({ match }) => {
                   <Row className="m-5">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
-                      <FormGroup className="form-group has-float-label error-l-150 ">
+                      <FormGroup className="form-group has-float-label error-l-15px0 ">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
                         </Label>
@@ -428,7 +378,7 @@ const MarksRegistration = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
+                      <FormGroup className="form-group has-float-label mt-5  error-l-15px0">
                         <Label>
                           <IntlMessages id="forms.StudyTimeLabel" />
                         </Label>
@@ -448,7 +398,7 @@ const MarksRegistration = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                      <FormGroup className="form-group has-float-label mt-5 error-l-15px0">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
                         </Label>
@@ -471,7 +421,7 @@ const MarksRegistration = ({ match }) => {
                     </Colxx>
 
                     <Colxx xxs="6">
-                      <FormGroup className="form-group has-float-label error-l-150 ">
+                      <FormGroup className="form-group has-float-label error-l-15px0 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
                         </Label>
@@ -492,7 +442,7 @@ const MarksRegistration = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                      <FormGroup className="form-group has-float-label mt-5 error-l-15px0">
                         <Label>
                           <IntlMessages id="forms.studyDepartment" />
                         </Label>
@@ -513,7 +463,7 @@ const MarksRegistration = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                      <FormGroup className="form-group has-float-label mt-5 error-l-15px0">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
                         </Label>
@@ -562,86 +512,54 @@ const MarksRegistration = ({ match }) => {
                     style={{ marginInline: '16%' }}
                   >
                     <Colxx xxs="2">
-                      <Label>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="forms.FieldLabel" />
                       </Label>
                       {console.log('selectedDepartment', selectedDepartment)}
-                      <h6>{selectedDepartment.label}</h6>
+                      <h5>{selectedDepartment.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.ClassLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h5>{selectedClass.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="forms.StudyTimeLabel" />
                       </Label>
-                      <h6>{selecedStudyTime.label}</h6>
+                      <h5>{selecedStudyTime.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SemesterLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h5>{selectedClass.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SectionLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h5>{selectedClass.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SubjectLabel" />
                       </Label>
-                      <h6>{selectedSubject.label}</h6>
+                      <h5>{selectedSubject.label}</h5>
                     </Colxx>
-                  </Row>
-                  <Row
-                    className="justify-content-center  border border"
-                    style={{ marginInline: '16%' }}
-                  >
-                    <table className="table">
-                      <thead className="thead-dark">
-                        <tr>
-                          <th scope="col">
-                            <IntlMessages id="marks.No" />
-                          </th>
-                          <th scope="col">
-                            <IntlMessages id="marks.FullName" />
-                          </th>
-                          <th scope="col">
-                            <IntlMessages id="marks.FatherName" />
-                          </th>
-                          <th scope="col">
-                            <IntlMessages id="marks.ID" />
-                          </th>
-                          <th scope="col">
-                            <IntlMessages id="marks.Marks" />
-                          </th>
-                        </tr>
-                      </thead>
-                    </table>
                   </Row>
                   <Formik
                     initialValues={initialValues}
                     onSubmit={onSubmit}
                     // validationSchema={ValidationSchema}
                   >
-                    {({
-                      errors,
-                      // touched,
-                      // // values,
-                      // setFieldTouched,
-                      // setFieldValue,
-                    }) => (
+                    {({ errors }) => (
                       <Form className="av-tooltip tooltip-label-right ">
                         <Row
                           className="justify-content-center  border border"
@@ -653,10 +571,58 @@ const MarksRegistration = ({ match }) => {
                           }}
                         >
                           <table class="table ">
+                            <thead className="thead-dark">
+                              <tr>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.No" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.FullName" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.FatherName" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.ID" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.Marks" />
+                                </th>
+                              </tr>
+                            </thead>
                             <tbody
                               className="border border "
                               style={{
-                                height: '200px',
                                 overflowY: 'scroll',
                                 overflowX: 'hidden',
                               }}
@@ -664,63 +630,112 @@ const MarksRegistration = ({ match }) => {
                               {students.length > 0 &&
                                 students.map((student, index) => (
                                   <tr key={index}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{student.name}</td>
-                                    <td>{student.father_name}</td>
-                                    <td>{student.student_id}</td>
+                                    <th
+                                      scope="row"
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      {index + 1}
+                                    </th>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      {student.name}
+                                    </td>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      {student.father_name}
+                                    </td>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      {student.student_id}
+                                    </td>
 
                                     {/* Marks Entry */}
                                     <td>
-                                      <div class="form-group mx-sm-3 mb-2">
-                                        <FormGroup className="form-group">
-                                          <Field
-                                            type="number"
-                                            className="form-control"
-                                            name={`score[${student.student_id}]`}
-                                          />
-                                          {errors.score && touched.score ? (
-                                            <div className="invalid-feedback d-block">
-                                              {errors.score}
-                                            </div>
-                                          ) : null}
-                                        </FormGroup>
+                                      <div
+                                        style={{
+                                          margin: '-7px',
+                                          fontSize: '15px',
+                                        }}
+                                      >
+                                        <Field
+                                          type="number"
+                                          style={{
+                                            fontSize: '15px',
+                                            textAlign: 'center',
+                                          }}
+                                          className="form-control"
+                                          name={`score[${student.student_id}]`}
+                                        />
+                                        {errors.score && touched.score ? (
+                                          <div className="invalid-feedback d-block">
+                                            {errors.score}
+                                          </div>
+                                        ) : null}
                                       </div>
                                     </td>
                                   </tr>
                                 ))}
                             </tbody>
-                          </table>
-                        </Row>
-                        <Row
-                          className="justify-content-center  border border"
-                          style={{
-                            marginInline: '16%',
-                          }}
-                        >
-                          <table class="table ">
-                            <tbody>
-                              <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                            </tbody>
                             <tfoot className="thead-dark">
                               <tr>
-                                <th scope="col">
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.No" />
                                 </th>
-                                <th scope="col">
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.FullName" />
                                 </th>
-                                <th scope="col">
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.FatherName" />
                                 </th>
-                                <th scope="col">
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.ID" />
                                 </th>
-                                <th scope="col">
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
                                   <IntlMessages id="marks.Marks" />
                                 </th>
                               </tr>

@@ -3,6 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import { NotificationManager } from 'components/common/react-notifications';
+
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
@@ -67,51 +69,47 @@ const StudentsDismissal = (values) => {
   const [searchResult, setSearchResult] = useState(true);
   const [studentIdMatch, setStudentIdMatch] = useState(false);
 
-  // const createNotification = (type, className) => {
-  //   const cName = className || '';
-  //   switch (type) {
-  //     case 'success':
-  //       NotificationManager.success(
-  //         'شاگرد موفقانه لیلی ته رجستر شو',
-  //         'موفقیت',
-  //         3000,
-  //         null,
-  //         null,
-  //         cName
-  //       );
-  //       break;
-  //     case 'error':
-  //       NotificationManager.error(
-  //         'شاگرد ثبت نشو، بیا کوشش وکری',
-  //         'خطا',
-  //         9000,
-  //         () => {
-  //           alert('callback');
-  //         },
-  //         null,
-  //         cName
-  //       );
-  //       break;
-  //     default:
-  //       NotificationManager.info('Info message');
-  //       break;
-  //   }
-  // };
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'زده کوونکی په بریالیتوب سره منفک شو',
+          'موفقیت',
+          9000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'info':
+        NotificationManager.info(
+          'زده کوونکی په انستیوت کی شتون نلری',
+          'تیروتنه',
+          9000,
+          null,
+          null,
+          cName
+        );
+        break;
 
-  // post student record to server
-
-  // const postStudentRecord = async (data) => {
-  //   const response = await callApi('api/student_create', 'POST', data);
-  //   console.log('response of call api', response);
-  //   if (response) {
-  //     createNotification('success', 'filled');
-  //     console.log('success message', response.data);
-  //   } else {
-  //     createNotification('error', 'filled');
-  //     console.log('class error');
-  //   }
-  // };
-
+      case 'error':
+        NotificationManager.error(
+          'زده کوونکی منفک نشو بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
   const handleSearch = async (event, values) => {
     setSearchResult(event);
     const response = await callApi(
@@ -139,9 +137,8 @@ const StudentsDismissal = (values) => {
       student_id: studentId,
       dismissal_date: values.dismissalDate,
     };
-
     try {
-      const response = await callApi(`api/student-transfer/`, 'POST', data);
+      const response = await callApi(`api/student-dissmiss/`, 'POST', data);
       if (response.status === 200 || response.status === 201) {
         console.log('success');
         createNotification('success', 'filled');

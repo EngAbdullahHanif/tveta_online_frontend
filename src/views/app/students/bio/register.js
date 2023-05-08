@@ -382,6 +382,7 @@ const StudentRegistration = ({ intl }, values) => {
           const data = {
             //personal info,
             name: formData.name1,
+            student_id: formData.studentId,
             kankor_id: formData.kankorId,
             finished_grade_year: formData.graduationYear.label,
             school: formData.preSchool,
@@ -437,8 +438,12 @@ const StudentRegistration = ({ intl }, values) => {
           for (let key in data) {
             formData2.append(key, data[key]);
           }
-          // formData2.append(...data);
-          formData2.append('student_photo', formData.image);
+          //if image is selected
+          if (formData.image) {
+            formData2.append('student_photo', formData.image);
+          } else {
+            formData2.append('student_photo', '');
+          }
 
           console.log('the form data is converted to object', data);
 

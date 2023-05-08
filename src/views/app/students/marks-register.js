@@ -248,22 +248,13 @@ const MarksRegistration = ({ match }) => {
   };
 
   const onSubmit = async (values) => {
-    // console.log('students', students);
-    console.log('values sdfs', values);
     const educationalYear = selectedEducationalYear;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
     const classId = selectedClass.value;
     const subjectId = selectedSubject.value;
-    console.log('educationalYear', educationalYear);
-    console.log('instituteId', instituteId);
-    console.log('departmentId', departmentId);
-    console.log('classId', classId);
-    console.log('subjectId', subjectId);
-    // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
-    // values.score[student.student_id]
+
     const newStudents = students.map((student, index) => {
-      console.log('student sadfsd', student.student_id);
       return {
         student_id: student.student_id,
         score: values.score[student.student_id],
@@ -295,7 +286,7 @@ const MarksRegistration = ({ match }) => {
       createNotification('success', 'filled');
     } else {
       console.log('marks error');
-      // setIsSubmitted(false);
+      setIsSubmitted(false);
       createNotification('error', 'filled');
     }
 

@@ -11,6 +11,7 @@ import {
   Label,
   Spinner,
   Button,
+  InputGroupAddon,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import {
@@ -1279,48 +1280,25 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* Upload Photo */}
-                            <FormGroup
-                              style={{ width: '100%' }}
-                              className="row align-items-center"
-                            >
-                              <div className="col">
-                                <div className="d-flex align-items-center">
-                                  <label
-                                    id="fileSpan"
-                                    style={{
-                                      marginRight: '5px',
-                                      marginLeft: '20px',
-                                      width: '25%',
-                                    }}
-                                  >
-                                    انتخاب فایل
-                                  </label>
-                                  <FormControl
-                                    style={{ width: '90%' }}
-                                    id="studetn_img"
-                                    name="student_image"
-                                    type="file"
-                                    // onChange={(event) => {
-                                    //   const fileName =
-                                    //     event.target.files[0].name;
-                                    //   handleFileChange(event, setFieldValue);
-                                    //   document.getElementById(
-                                    //     'fileSpan'
-                                    //   ).textContent = fileName;
-                                    // }}
-
-                                    onChange={(event) => {
-                                      setFieldValue(
-                                        'image',
-                                        event.currentTarget.files[0]
-                                      );
-                                    }}
-                                  />
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <InputGroupAddon addonType="prepend">
+                                <IntlMessages id="student.uploadPhoto" />
+                              </InputGroupAddon>
+                              <FormControl
+                                name="file"
+                                type="file"
+                                onChange={(event) => {
+                                  setFieldValue(
+                                    'file',
+                                    event.currentTarget.files[0]
+                                  );
+                                }}
+                              />
+                              {errors.file && touched.file ? (
+                                <div className="invalid-feedback d-block bg-danger text-white">
+                                  {errors.file}
                                 </div>
-                              </div>
-                              <div className="col">
-                                <ErrorMessage name="file" component="div" />
-                              </div>
+                              ) : null}
                             </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">

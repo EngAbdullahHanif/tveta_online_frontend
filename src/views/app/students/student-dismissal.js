@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import FileUploadForm from '../global-data/uploading-file';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
-import { FormControl, FormLabel } from 'react-bootstrap';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import axios from 'axios';
@@ -55,15 +53,36 @@ const StudentsDismissal = (values) => {
     dismissalDate: Yup.string().required(
       <IntlMessages id="student.dissmissalDateErr" />
     ),
-    dismissalDocument: Yup.string().required(
-      <IntlMessages id="student.dissmissalDateErr" />
-    ),
+
+    // dismissalDocument: Yup.mixed().required(
+    //   <IntlMessages id="student.dissmissaldocErr" />
+    // ),
+    dismissalDocument: Yup.mixed()
+      .test('fileType', 'Unsupported File Format', (value) => {
+        if (value) {
+          const supportedFormats = [
+            'application/pdf',
+            'image/jpeg',
+            'image/png',
+          ];
+          return supportedFormats.includes(value.type);
+        }
+        return true; // allows undefined values
+      })
+      .test('fileSize', 'File too large', (value) => {
+        if (value) {
+          const maxSize = 1048576; // 1MB
+          return value.size <= maxSize;
+        }
+        return true; // allows undefined values
+      })
+      .required(<IntlMessages id="student.dissmissaldocErr" />),
   });
 
   const initialValues = {
     searchfield: '',
     dismissalDate: '',
-    dismissalDocument: '',
+    dismissalDocument: undefined,
   };
 
   const handleClick = (event) => {
@@ -192,14 +211,17 @@ const StudentsDismissal = (values) => {
                           validationSchema={SearchResultSchema}
                         >
                           {({
+                            values,
                             errors,
                             touched,
-                            values,
-                            setFieldTouched,
-                            setFieldValue,
+                            handleChange,
+                            handleBlur,
+                            handleSubmit,
+                            isSubmitting,
                           }) => (
                             <Form
                               className="av-tooltip tooltip-label-bottom"
+                              onSubmit={handleSubmit}
                               style={{ height: '300px' }}
                             >
                               <Label>
@@ -428,6 +450,8 @@ const StudentsDismissal = (values) => {
                       values,
                       setFieldTouched,
                       setFieldValue,
+                      onBlur,
+                      handleBlur,
                     }) => (
                       <Form
                         className="av-tooltip tooltip-label-right error-l-150 "
@@ -453,43 +477,40 @@ const StudentsDismissal = (values) => {
                                   </div>
                                 ) : null}
                               </FormGroup>
-                              {/* Upload Photo */}
-                              <FormGroup className="form-group has-float-label">
-                                <div className="d-flex align-items-center">
-                                  {/* <label
-                                      id="fileSpan"
-                                      style={{
-                                        marginRight: '5px',
-                                        marginLeft: '20px',
-                                        width: '25%',
-                                      }}
-                                    >
-                                      انتخاب فایل
-                                    </label> */}
-                                  <FormControl
-                                    style={{ width: '100%' }}
-                                    id="studetn_img"
-                                    name="student_image"
+
+                              {/* Dismissal Documents */}
+                              <FormGroup>
+                                <Label>
+                                  <IntlMessages id="student.dissmissalDocuments" />
+                                </Label>
+                                <InputGroup className="mb-3">
+                                  <InputGroupAddon addonType="prepend">
+                                    آپلود
+                                  </InputGroupAddon>
+                                  <CustomInput
                                     type="file"
+                                    name="dismissalDocument"
                                     onChange={(event) => {
                                       setFieldValue(
-                                        'image',
-                                        event.currentTarget.dismissalDocument[0]
+                                        'dismissalDocument',
+                                        event.currentTarget.files[0]
                                       );
                                     }}
+                                    onBlur={handleBlur}
+                                    invalid={
+                                      touched.dismissalDocument &&
+                                      !!errors.dismissalDocument
+                                    }
                                   />
-                                </div>
-                                <div className="col">
-                                  {errors.dismissalDocument &&
-                                  touched.dismissalDocument ? (
+                                </InputGroup>
+                                {errors.dismissalDocument &&
+                                  touched.dismissalDocument && (
                                     <div className="invalid-feedback d-block bg-danger text-white">
                                       {errors.dismissalDocument}
                                     </div>
-                                  ) : null}
-                                </div>
+                                  )}
                               </FormGroup>
                             </div>
-                            <FileUploadForm />
                           </Colxx>
                         </Row>
                         <Row>

@@ -713,6 +713,8 @@ module.exports = {
   'forms.VillageErr': 'قریه اړین ده/ قریه ضروری است',
   'forms.PlaceOfBirthLabel': 'د زیږیدو ځای /مکان تولد',
   'forms.StdPlaceOfBirthErr': 'د زیږیدو ځای اړین دی /مکان تولد ضروری است',
+  'student.uploadPhoto': ' انځور/ عکس',
+
   // Second page of student biography
   'forms.EducationalLevel_9th': 'نهم صنف / صنف نهم',
   'forms.EducationalLevel_10th': 'لسم ټولګی/ صنف دهم',

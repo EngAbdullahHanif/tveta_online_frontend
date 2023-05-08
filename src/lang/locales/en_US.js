@@ -634,6 +634,7 @@ module.exports = {
   'student.typeOption_3': 'Dismissed',
   'student.studentId': 'Student Id',
   'student.studentIdErr': 'Student Id Is Required!',
+  'student.uploadPhoto': 'Upload Photo',
 
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',

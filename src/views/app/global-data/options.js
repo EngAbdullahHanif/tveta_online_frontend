@@ -2,143 +2,143 @@ import IntlMessages from 'helpers/IntlMessages';
 
 export const provinceOptions = [
   {
-    column: 'بدخشان',
+    value: 'بدخشان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
   },
   {
-    column: 'بادغیس',
+    value: 'بادغیس',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
   },
   {
-    column: 'بغلان',
+    value: 'بغلان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
   },
   {
-    column: 'بلخ',
+    value: 'بلخ',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
   },
   {
-    column: 'بامیان',
+    value: 'بامیان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
   },
   {
-    column: 'دایکندی',
+    value: 'دایکندی',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
   },
   {
-    column: 'فراه',
+    value: 'فراه',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
   },
   {
-    column: 'فاریاب',
+    value: 'فاریاب',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
   },
   {
-    column: 'غزنی',
+    value: 'غزنی',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
   },
   {
-    column: 'غور',
+    value: 'غور',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
   },
   {
-    column: 'هلمند',
+    value: 'هلمند',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
   },
   {
-    column: 'هرات',
+    value: 'هرات',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
   },
   {
-    column: 'جوزجان',
+    value: 'جوزجان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
   },
   {
-    column: 'شهر کابل',
+    value: 'شهر کابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
   },
   {
-    column: 'کابل',
+    value: 'کابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
   },
   {
-    column: 'کندهار',
+    value: 'کندهار',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
   },
   {
-    column: 'کاپیسا',
+    value: 'کاپیسا',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
   },
   {
-    column: 'خوست',
+    value: 'خوست',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
   },
   {
-    column: 'کنر',
+    value: 'کنر',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
   },
   {
-    column: 'کندز',
+    value: 'کندز',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_20" />,
   },
   {
-    column: 'لغمان',
+    value: 'لغمان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
   },
   {
-    column: 'لوگر',
+    value: 'لوگر',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
   },
   {
-    column: 'ننگرهار',
+    value: 'ننگرهار',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
   },
   {
-    column: 'نیمروز',
+    value: 'نیمروز',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
   },
   {
-    column: 'نورستان',
+    value: 'نورستان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
   },
   {
-    column: 'پکتیا',
+    value: 'پکتیا',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
   },
   {
-    column: 'پکتیکا',
+    value: 'پکتیکا',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
   },
   {
-    column: 'پنجشیر',
+    value: 'پنجشیر',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
   },
   {
-    column: 'پروان',
+    value: 'پروان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
   },
   {
-    column: 'سمنگان',
+    value: 'سمنگان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
   },
   {
-    column: 'سرپل',
+    value: 'سرپل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
   },
   {
-    column: 'تخار',
+    value: 'تخار',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
   },
   {
-    column: 'اروزگان',
+    value: 'اروزگان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
   },
   {
-    column: 'وردگ',
+    value: 'وردگ',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
   },
   {
-    column: 'زابل',
+    value: 'زابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_35" />,
   },
 ];

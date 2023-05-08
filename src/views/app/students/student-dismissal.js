@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import FileUploadForm from '../global-data/uploading-file';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import { FormControl, FormLabel } from 'react-bootstrap';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import axios from 'axios';
@@ -51,6 +53,9 @@ const StudentsDismissal = (values) => {
 
   const dismissalSchema = Yup.object().shape({
     dismissalDate: Yup.string().required(
+      <IntlMessages id="student.dissmissalDateErr" />
+    ),
+    dismissalDocument: Yup.string().required(
       <IntlMessages id="student.dissmissalDateErr" />
     ),
   });
@@ -448,29 +453,43 @@ const StudentsDismissal = (values) => {
                                   </div>
                                 ) : null}
                               </FormGroup>
-
-                              <FormGroup>
-                                <Label>
-                                  <IntlMessages id="student.dissmissalDocuments" />
-                                </Label>
-                                <InputGroup className="mb-3">
-                                  <InputGroupAddon addonType="prepend">
-                                    آپلود
-                                  </InputGroupAddon>
-                                  <CustomInput
+                              {/* Upload Photo */}
+                              <FormGroup className="form-group has-float-label">
+                                <div className="d-flex align-items-center">
+                                  {/* <label
+                                      id="fileSpan"
+                                      style={{
+                                        marginRight: '5px',
+                                        marginLeft: '20px',
+                                        width: '25%',
+                                      }}
+                                    >
+                                      انتخاب فایل
+                                    </label> */}
+                                  <FormControl
+                                    style={{ width: '100%' }}
+                                    id="studetn_img"
+                                    name="student_image"
                                     type="file"
-                                    id="exampleCustomFileBrowser1"
-                                    name="dismissalDocument"
+                                    onChange={(event) => {
+                                      setFieldValue(
+                                        'image',
+                                        event.currentTarget.dismissalDocument[0]
+                                      );
+                                    }}
                                   />
-                                </InputGroup>
-                                {errors.dismissalDocument &&
-                                touched.dismissalDocument ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.dismissalDocument}
-                                  </div>
-                                ) : null}
+                                </div>
+                                <div className="col">
+                                  {errors.dismissalDocument &&
+                                  touched.dismissalDocument ? (
+                                    <div className="invalid-feedback d-block bg-danger text-white">
+                                      {errors.dismissalDocument}
+                                    </div>
+                                  ) : null}
+                                </div>
                               </FormGroup>
                             </div>
+                            <FileUploadForm />
                           </Colxx>
                         </Row>
                         <Row>

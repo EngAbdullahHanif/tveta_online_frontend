@@ -16,6 +16,7 @@ import { Wizard, Steps, Step } from 'react-albus';
 import {
   provinceOptions,
   educationalYearsOptions,
+  dateOfBirthOptoions,
   batchOptions,
   genderOptions,
   mediumOfInstructionOptions,
@@ -621,7 +622,7 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {values.tazkiraType.value === '2' ? (
+                            {values.tazkiraType.value === 'Paper' ? (
                               <div>
                                 {/* Safha */}
                                 <div>
@@ -654,8 +655,8 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormikReactSelect
                                 name="DoB"
                                 id="DoB"
-                                value={values.educationalYearsOptions}
-                                options={educationalYearsOptions}
+                                value={values.DoB}
+                                options={dateOfBirthOptoions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -789,7 +790,7 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {values.tazkiraType.value === '2' ? (
+                            {values.tazkiraType.value === 'Paper' ? (
                               <div>
                                 {/* Jold Number */}
                                 <div>

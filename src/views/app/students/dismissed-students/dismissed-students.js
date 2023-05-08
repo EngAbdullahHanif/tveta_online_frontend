@@ -131,7 +131,6 @@ const MarksRegistration = ({ match }) => {
     }
   };
 
-  
   const onSubmit = (values) => {
     fetchDismissedStudents(values);
     setDismissedStudentList(true);
@@ -143,7 +142,9 @@ const MarksRegistration = ({ match }) => {
         <DismissedStudents item_list={dismissedStudents} />
       ) : (
         <Card>
-          <h3 className="mt-5 m-5">لست شاگردان منفک شده</h3>
+          <h2 className="mt-5 m-5">
+            <IntlMessages id="student.dismissal-studentList" />
+          </h2>
           <CardBody>
             {' '}
             <Formik

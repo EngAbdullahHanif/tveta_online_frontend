@@ -343,11 +343,9 @@ const StudentRegistration = ({ intl }, values) => {
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({});
-  const [LevelOfEducation, setLevelOfEducation] = useState('');
   const [TazkiraType, setTazkiraType] = useState('0');
   const [Province, setProvince] = useState('0');
   const [CurrentProvince, setCurrentProvince] = useState('0');
-  const [SchoolProvince, setSchoolProvince] = useState('0');
   const [Gender, setGender] = useState('0');
 
   const onClickNext = (goToNext, steps, step, values) => {
@@ -361,8 +359,6 @@ const StudentRegistration = ({ intl }, values) => {
       setGender(form.values.gender.value);
     }
     if (step.id === 'step2') {
-      setLevelOfEducation(form.values.levelOfEducation.value);
-      setSchoolProvince(form.values.schoolProvince.value);
       setProvince(form.values.province.value);
       setCurrentProvince(form.values.C_Province.value);
     }
@@ -505,7 +501,7 @@ const StudentRegistration = ({ intl }, values) => {
                     tazkiraType: initialTazkiraType,
                   }}
                   validateOnMount
-                  validationSchema={studentRegisterFormStep_1}
+                  // validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -878,7 +874,7 @@ const StudentRegistration = ({ intl }, values) => {
                     C_Village: initialC_Village,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={studentRegisterFormStep_2}
+                  // validationSchema={studentRegisterFormStep_2}
                   validateOnMount
                 >
                   {({
@@ -966,7 +962,8 @@ const StudentRegistration = ({ intl }, values) => {
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
-                                {errors.schoolProvince && !SchoolProvince ? (
+                                {errors.schoolProvince &&
+                                touched.schoolProvince ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.schoolProvince}
                                   </div>
@@ -1129,7 +1126,7 @@ const StudentRegistration = ({ intl }, values) => {
                     batch: initialBatch,
                     field: initialField,
                     sector: initialSector,
-                    photo: initialphoto,
+                    file: initialphoto,
                   }}
                   onSubmit={() => {}}
                   validationSchema={studentRegisterFormStep_3}

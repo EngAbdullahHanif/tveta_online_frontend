@@ -42,6 +42,7 @@ const categories = [
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
 
+
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');

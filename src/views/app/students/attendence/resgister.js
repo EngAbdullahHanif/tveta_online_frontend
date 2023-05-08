@@ -349,7 +349,7 @@ const StudentAttendance = ({ match }) => {
       'POST',
       data
     );
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       setIsSubmitted(true);
       createNotification('success', 'filled');
     } else {

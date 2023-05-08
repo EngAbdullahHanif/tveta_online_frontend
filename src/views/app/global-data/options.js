@@ -302,6 +302,16 @@ export const studyTimeOptions = [
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
+export const studyTimeOptionsForList = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+
+  { column: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
+  { column: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+];
+
 export const provincesOptionsForList = [
   {
     column: 'all',
@@ -691,4 +701,23 @@ export const educationLevelOptions = [
 export const teacherCurrentStatusOptions = [
   { value: 'active', label: <IntlMessages id="teacher.StatusOption_1" /> },
   { value: 'dismissed', label: <IntlMessages id="teacher.StatusOption_1" /> },
+];
+
+export const studentType = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  {
+    value: 'registered',
+    label: <IntlMessages id="student.typeOption_1" />,
+  },
+  {
+    value: 'graduated',
+    label: <IntlMessages id="student.typeOption_2" />,
+  },
+  {
+    value: 'dismissed',
+    label: <IntlMessages id="student.typeOption_3" />,
+  },
 ];

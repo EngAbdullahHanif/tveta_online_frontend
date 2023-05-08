@@ -24,30 +24,15 @@ const ListPageHeading = ({
   intl,
   displayMode,
   changeDisplayMode,
-  handleChangeSelectAll,
-  changeOrderBy,
-  changePageSize,
-  selectedPageSize,
-  totalItemCount,
-  selectedOrderOption,
-  match,
-  startIndex,
-  endIndex,
-  selectedItemsLength,
-  itemsLength,
-  onSearchKey,
-  orderOptions,
-  pageSizes,
-  // toggleModal,
   heading,
   onIdSearchKey,
   // Gender
   selectedGenderOption,
   changeGenderBy,
-  genderOptions,
+  genderOptionsForList,
   selectedShiftOption,
   changeShiftBy,
-  shiftOption,
+  studyTimeOptionsForList,
   // Educational Years
   selectedEducationalYearOption,
   changeEducationalYearBy,
@@ -80,20 +65,7 @@ const ListPageHeading = ({
           <h1>
             <IntlMessages id={heading} />
           </h1>
-          <div className="text-zero top-right-button-container">
-            {/* <Button
-              color="primary"
-              size="lg"
-              className="top-right-button"
-              onClick={() => toggleModal()}
-            >
-              <IntlMessages id="pages.add-new" />
-            </Button> */}
-            {'  '}
-          </div>
-          {/* <Breadcrumb match={match} /> */}
         </div>
-
         <div className="mb-2">
           <Button
             color="empty"
@@ -151,7 +123,7 @@ const ListPageHeading = ({
                     {selectedGenderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {genderOptions.map((gender, index) => {
+                    {genderOptionsForList.map((gender, index) => {
                       return (
                         <DropdownItem
                           key={index}
@@ -247,7 +219,7 @@ const ListPageHeading = ({
                     {selectedShiftOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {shiftOption.map((shift, index) => {
+                    {studyTimeOptionsForList.map((shift, index) => {
                       return (
                         <DropdownItem
                           key={index}

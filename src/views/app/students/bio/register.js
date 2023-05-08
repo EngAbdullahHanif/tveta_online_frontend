@@ -505,7 +505,7 @@ const StudentRegistration = ({ intl }, values) => {
                     tazkiraType: initialTazkiraType,
                   }}
                   validateOnMount
-                  validationSchema={studentRegisterFormStep_1}
+                  // validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -878,7 +878,7 @@ const StudentRegistration = ({ intl }, values) => {
                     C_Village: initialC_Village,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={studentRegisterFormStep_2}
+                  // validationSchema={studentRegisterFormStep_2}
                   validateOnMount
                 >
                   {({

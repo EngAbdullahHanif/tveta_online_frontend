@@ -623,6 +623,8 @@ module.exports = {
   'forms.PlaceOfBirthLabel': 'Place Birth',
   'forms.StdPlaceOfBirthErr': 'Place of Birth Requiered!',
   'forms.sector': 'Sector',
+  'forms.kankorInfo': 'Information',
+
   'forms.fieldErr': 'Field Is Required!',
   'forms.sectorErr': 'Sector Is Required!',
   'student.photo': 'Image',
@@ -733,6 +735,7 @@ module.exports = {
   'forms.StudyTimeOption_2': 'Night Shift',
   'forms.SubimssionButton': 'Submit',
   'student.Profile': 'Student Profile',
+  'student.kankorProfile': 'Student Kankor Profile',
 
   // Student Attendance Register
   'forms.AttendanceTitle': 'Student Attendance',
@@ -1065,6 +1068,7 @@ module.exports = {
   'curriculum.eduactionalYearList': 'Educational Year',
   'curriculum.eduactionalYearErr': 'Educational Year Is Required!',
   'menu.curriculum-list': 'Curriculums List ',
+  'forms.studyDepartment': 'Department',
 
   //Institute Details Page
   'institute.detailsTitle': 'More Details',

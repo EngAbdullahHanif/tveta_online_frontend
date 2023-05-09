@@ -656,6 +656,7 @@ module.exports = {
   'forms.validation-formik': 'اعتبار سنجی Formik',
   'forms.default': 'پیشفرض',
   'forms.personalInfo': 'خصوصی مالومات/ معلومات شخصی',
+  'forms.kankorInfo': 'معلومات',
   'forms.firstname': 'نام',
   'forms.firstname-message': 'لطفا نام خود را وارد کنید',
   'forms.lastname': 'نام خانوادگی',
@@ -828,6 +829,7 @@ module.exports = {
   'forms.SubimssionButton': 'ثبت',
   'student.Profile': ' د شاگرد پروفایل/ پروفایل شاگرد',
   'forms.RegistrationDateLabel': 'د ثبت نام وخت/ تاریخ ثبت نام',
+  'student.kankorProfile': 'د کانکور پروفایل/ پروفایل کانکور',
 
   // Student Attendance Register
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',

@@ -1,174 +1,194 @@
 import IntlMessages from 'helpers/IntlMessages';
 
 export const provinceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" /> },
-  { value: '4', label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" /> },
-  { value: '5', label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" /> },
-  { value: '6', label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" /> },
-  { value: '7', label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" /> },
-  { value: '8', label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" /> },
-  { value: '9', label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" /> },
   {
-    value: '10',
+    value: 'بدخشان',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
+  },
+  {
+    value: 'بادغیس',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
+  },
+  {
+    value: 'بغلان',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
+  },
+  {
+    value: 'بلخ',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
+  },
+  {
+    value: 'بامیان',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
+  },
+  {
+    value: 'دایکندی',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
+  },
+  {
+    value: 'فراه',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
+  },
+  {
+    value: 'فاریاب',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
+  },
+  {
+    value: 'غزنی',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
+  },
+  {
+    value: 'غور',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
   },
   {
-    value: '11',
+    value: 'هلمند',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
   },
   {
-    value: '12',
+    value: 'هرات',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
   },
   {
-    value: '13',
+    value: 'جوزجان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
   },
   {
-    value: '14',
+    value: 'شهر کابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
   },
   {
-    value: '15',
+    value: 'کابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
   },
   {
-    value: '16',
+    value: 'کندهار',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
   },
   {
-    value: '17',
+    value: 'کاپیسا',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
   },
   {
-    value: '18',
+    value: 'خوست',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
   },
   {
-    value: '19',
+    value: 'کنر',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
   },
   {
-    value: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+    value: 'کندز',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_20" />,
   },
   {
-    value: '21',
+    value: 'لغمان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
   },
   {
-    value: '22',
+    value: 'لوگر',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
   },
   {
-    value: '23',
+    value: 'ننگرهار',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
   },
   {
-    value: '24',
+    value: 'نیمروز',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
   },
   {
-    value: '25',
+    value: 'نورستان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
   },
   {
-    value: '26',
+    value: 'پکتیا',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
   },
   {
-    value: '27',
+    value: 'پکتیکا',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
   },
   {
-    value: '28',
+    value: 'پنجشیر',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
   },
   {
-    value: '29',
+    value: 'پروان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
   },
   {
-    value: '30',
+    value: 'سمنگان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
   },
   {
-    value: '31',
+    value: 'سرپل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
   },
   {
-    value: '32',
+    value: 'تخار',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
   },
   {
-    value: '33',
+    value: 'اروزگان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
   },
   {
-    value: '34',
+    value: 'وردگ',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+  },
+  {
+    value: 'زابل',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_35" />,
   },
 ];
 
 export const educationalYearsOptions = [
-  { value: '1', label: '1370' },
-  { value: '2', label: '1371' },
-  { value: '3', label: '1372' },
-  { value: '4', label: '1373' },
-  { value: '5', label: '1374' },
-  { value: '6', label: '1375' },
-  { value: '7', label: '1376' },
-  { value: '8', label: '1377' },
-  { value: '9', label: '1378' },
-  { value: '10', label: '1379' },
-  { value: '11', label: '1380' },
-  { value: '12', label: '1381' },
-  { value: '14', label: '1382' },
-  { value: '14', label: '1383' },
-  { value: '15', label: '1384' },
-  { value: '16', label: '1385' },
-  { value: '17', label: '1386' },
-  { value: '18', label: '1387' },
-  { value: '19', label: '1388' },
-  { value: '20', label: '1389' },
-  { value: '21', label: '1390' },
-  { value: '22', label: '1391' },
-  { value: '23', label: <IntlMessages id="forms.educationalYearOption_3" /> },
-  { value: '24', label: <IntlMessages id="forms.educationalYearOption_4" /> },
-  { value: '25', label: <IntlMessages id="forms.educationalYearOption_5" /> },
-  { value: '26', label: <IntlMessages id="forms.educationalYearOption_6" /> },
-  { value: '27', label: <IntlMessages id="forms.educationalYearOption_7" /> },
-  { value: '28', label: <IntlMessages id="forms.educationalYearOption_8" /> },
-  { value: '29', label: <IntlMessages id="forms.educationalYearOption_9" /> },
-  { value: '30', label: <IntlMessages id="forms.educationalYearOption_10" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_11" /> },
-  { value: '32', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { value: '33', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { value: '34', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { value: '35', label: <IntlMessages id="forms.educationalYearOption_15" /> },
-  { value: '36', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { value: '37', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { value: '38', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { value: '39', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { value: '40', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { value: '41', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { value: '42', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { value: '43', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { value: '44', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { value: '45', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { value: '46', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { value: '47', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { value: '48', label: <IntlMessages id="forms.educationalYearOption_28" /> },
-  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
-  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
-  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
-  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
-  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
-  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+  { value: '1390', label: '1390' },
+  { value: '1391', label: '1391' },
+  { value: '1392', label: '1392' },
+  { value: '1393', label: '1393' },
+  { value: '1394', label: '1394' },
+  { value: '1395', label: '1395' },
+  { value: '1396', label: '1396' },
+  { value: '1397', label: '1397' },
+  { value: '1398', label: '1398' },
+  { value: '1399', label: '1399' },
+  { value: '1400', label: '1400' },
+  { value: '1401', label: '1401' },
+  { value: '1402', label: '1402' },
+  { value: '1403', label: '1403' },
+  { value: '1404', label: '1404' },
+  { value: '1405', label: '1405' },
+  { value: '1406', label: '1406' },
+  { value: '1407', label: '1407' },
+  { value: '1408', label: '1408' },
+  { value: '1409', label: '1409' },
+  { value: '1410', label: '1410' },
+];
+
+export const dateOfBirthOptoions = [
+  { value: '1370', label: '1370' },
+  { value: '1371', label: '1371' },
+  { value: '1372', label: '1372' },
+  { value: '1373', label: '1373' },
+  { value: '1374', label: '1374' },
+  { value: '1375', label: '1375' },
+  { value: '1376', label: '1376' },
+  { value: '1377', label: '1377' },
+  { value: '1378', label: '1378' },
+  { value: '1379', label: '1379' },
+  { value: '1380', label: '1380' },
+  { value: '1381', label: '1381' },
+  { value: '1382', label: '1382' },
+  { value: '1383', label: '1383' },
+  { value: '1384', label: '1384' },
+  { value: '1385', label: '1385' },
+  { value: '1386', label: '1386' },
+  { value: '1387', label: '1387' },
+  { value: '1388', label: '1388' },
+  { value: '1389', label: '1389' },
+  { value: '1390', label: '1390' },
 ];
 
 export const educationalYearsOptionsForList = [
@@ -176,42 +196,27 @@ export const educationalYearsOptionsForList = [
     column: 'all',
     label: <IntlMessages id="option.all" />,
   },
-  { column: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
-  { column: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
-  { column: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
-  { column: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
-  { column: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
-  { column: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
-  { column: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
-  { column: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
-  { column: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
-  { column: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
-  { column: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
-  { column: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { column: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { column: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { column: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
-  { column: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { column: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { column: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { column: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { column: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { column: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { column: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { column: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { column: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { column: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { column: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { column: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { column: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
-  { column: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
-  { column: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
-  { column: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
-  { column: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
-  { column: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
-  { column: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
-  { column: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
-  { column: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
+  { value: '1390', label: '1390' },
+  { value: '1391', label: '1391' },
+  { value: '1392', label: '1392' },
+  { value: '1393', label: '1393' },
+  { value: '1394', label: '1394' },
+  { value: '1395', label: '1395' },
+  { value: '1396', label: '1396' },
+  { value: '1397', label: '1397' },
+  { value: '1398', label: '1398' },
+  { value: '1399', label: '1399' },
+  { value: '1400', label: '1400' },
+  { value: '1401', label: '1401' },
+  { value: '1402', label: '1402' },
+  { value: '1403', label: '1403' },
+  { value: '1404', label: '1404' },
+  { value: '1405', label: '1405' },
+  { value: '1406', label: '1406' },
+  { value: '1407', label: '1407' },
+  { value: '1408', label: '1408' },
+  { value: '1409', label: '1409' },
+  { value: '1410', label: '1410' },
 ];
 
 export const batchOptions = [
@@ -297,53 +302,63 @@ export const studyTimeOptions = [
   { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
+export const studyTimeOptionsForList = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+
+  { column: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
+  { column: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+];
+
 export const provincesOptionsForList = [
   {
     column: 'all',
     label: <IntlMessages id="option.all" />,
   },
   {
-    column: '1',
+    column: 'بدخشان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
   },
   {
-    column: '2',
+    column: 'بادغیس',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
   },
   {
-    column: '3',
+    column: 'بغلان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
   },
   {
-    column: '4',
+    column: 'بلخ',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
   },
   {
-    column: '5',
+    column: 'بامیان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
   },
   {
-    column: '6',
+    column: 'دایکندی',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
   },
   {
-    column: '7',
+    column: 'فراه',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
   },
   {
-    column: '8',
+    column: 'فاریاب',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
   },
   {
-    column: '9',
+    column: 'غزنی',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
   },
   {
-    column: '10',
+    column: 'غور',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
   },
   {
-    column: '11',
+    column: 'هلمند',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
   },
   {
@@ -351,92 +366,96 @@ export const provincesOptionsForList = [
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
   },
   {
-    column: '13',
+    column: 'جوزجان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
   },
   {
-    column: 'کابل',
+    column: 'شهر کابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
   },
   {
-    column: '15',
+    column: 'کابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
   },
   {
-    column: '16',
+    column: 'کندهار',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
   },
   {
-    column: '17',
+    column: 'کاپیسا',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
   },
   {
-    column: '18',
+    column: 'خوست',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
   },
   {
-    column: '19',
+    column: 'کنر',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
   },
   {
-    column: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
+    column: 'کندز',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_20" />,
   },
   {
-    column: '21',
+    column: 'لغمان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
   },
   {
-    column: '22',
+    column: 'لوگر',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
   },
   {
-    column: '23',
+    column: 'ننگرهار',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
   },
   {
-    column: '24',
+    column: 'نیمروز',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
   },
   {
-    column: '25',
+    column: 'نورستان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
   },
   {
-    column: '26',
+    column: 'پکتیا',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
   },
   {
-    column: '27',
+    column: 'پکتیکا',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
   },
   {
-    column: '28',
+    column: 'پنجشیر',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
   },
   {
-    column: '29',
+    column: 'پروان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
   },
   {
-    column: '30',
+    column: 'سمنگان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
   },
   {
-    column: '31',
+    column: 'سرپل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
   },
   {
-    column: '32',
+    column: 'تخار',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
   },
   {
-    column: '33',
+    column: 'اروزگان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
   },
   {
-    column: '34',
+    column: 'وردگ',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
+  },
+  {
+    column: 'زابل',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_35" />,
   },
 ];
 
@@ -657,29 +676,48 @@ export const subjectSystemOptions = [
   { value: '4', label: <IntlMessages id="subject.systemOption_4" /> },
 ];
 
-
 export const semesterOptions = [
   { column: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
   { column: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
 ];
 
 export const tazkiraOptions = [
-  { value: 'ٍ Electronic', label:<IntlMessages id="forms.StdTazkiraElectronic" /> },
-  { value: 'Paper', label:<IntlMessages id="forms.StdTazkiraPaper" /> },
+  {
+    value: 'ٍ Electronic',
+    label: <IntlMessages id="forms.StdTazkiraElectronic" />,
+  },
+  { value: 'Paper', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
 ];
 
 export const educationLevelOptions = [
-  { value: 9,  label: <IntlMessages id="forms.EducationalLevel_9th" /> },
+  { value: 9, label: <IntlMessages id="forms.EducationalLevel_9th" /> },
   { value: 10, label: <IntlMessages id="forms.EducationalLevel_10th" /> },
   { value: 11, label: <IntlMessages id="forms.EducationalLevel_11th" /> },
-  { value: 12, label: <IntlMessages id="forms.EducationalLevel_12th" />},
+  { value: 12, label: <IntlMessages id="forms.EducationalLevel_12th" /> },
   { value: 13, label: <IntlMessages id="forms.EducationalLevel_13th" /> },
-  { value: 14, label: <IntlMessages id="forms.EducationalLevel_14th" />},
+  { value: 14, label: <IntlMessages id="forms.EducationalLevel_14th" /> },
 ];
-
 
 export const teacherCurrentStatusOptions = [
-  { value: "active",  label: <IntlMessages id="teacher.StatusOption_1" /> },
-  { value: "dismissed", label: <IntlMessages id="teacher.StatusOption_1" /> },
+  { value: 'active', label: <IntlMessages id="teacher.StatusOption_1" /> },
+  { value: 'dismissed', label: <IntlMessages id="teacher.StatusOption_1" /> },
 ];
 
+export const studentType = [
+  {
+    column: 'all',
+    label: <IntlMessages id="option.all" />,
+  },
+  {
+    value: 'registered',
+    label: <IntlMessages id="student.typeOption_1" />,
+  },
+  {
+    value: 'graduated',
+    label: <IntlMessages id="student.typeOption_2" />,
+  },
+  {
+    value: 'dismissed',
+    label: <IntlMessages id="student.typeOption_3" />,
+  },
+];

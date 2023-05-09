@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import FileUploadForm from '../global-data/uploading-file';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import { FormControl, FormLabel } from 'react-bootstrap';
+import { NotificationManager } from 'components/common/react-notifications';
+
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
@@ -16,8 +20,6 @@ import {
   InputGroup,
   InputGroupAddon,
   CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
@@ -33,16 +35,6 @@ const servicePath = 'http://localhost:8000';
 const instituteApiUrl = `${servicePath}/institute/`;
 const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
 const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
-
-const instituteOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
-];
-
-const shifs = [
-  { value: '1', label: 'rozana' },
-  { value: '2', label: 'shabana' },
-];
 
 const StudentsDismissal = (values) => {
   const [studentId, setStudentId] = useState('');
@@ -63,6 +55,9 @@ const StudentsDismissal = (values) => {
     dismissalDate: Yup.string().required(
       <IntlMessages id="student.dissmissalDateErr" />
     ),
+    dismissalDocument: Yup.string().required(
+      <IntlMessages id="student.dissmissalDateErr" />
+    ),
   });
 
   const initialValues = {
@@ -79,77 +74,101 @@ const StudentsDismissal = (values) => {
   const [searchResult, setSearchResult] = useState(true);
   const [studentIdMatch, setStudentIdMatch] = useState(false);
 
-  // const createNotification = (type, className) => {
-  //   const cName = className || '';
-  //   switch (type) {
-  //     case 'success':
-  //       NotificationManager.success(
-  //         'شاگرد موفقانه لیلی ته رجستر شو',
-  //         'موفقیت',
-  //         3000,
-  //         null,
-  //         null,
-  //         cName
-  //       );
-  //       break;
-  //     case 'error':
-  //       NotificationManager.error(
-  //         'شاگرد ثبت نشو، بیا کوشش وکری',
-  //         'خطا',
-  //         9000,
-  //         () => {
-  //           alert('callback');
-  //         },
-  //         null,
-  //         cName
-  //       );
-  //       break;
-  //     default:
-  //       NotificationManager.info('Info message');
-  //       break;
-  //   }
-  // };
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'زده کوونکی په بریالیتوب سره منفک شو',
+          'موفقیت',
+          9000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'info':
+        NotificationManager.info(
+          'زده کوونکی په انستیوت کی شتون نلری',
+          'تیروتنه',
+          9000,
+          null,
+          null,
+          cName
+        );
+        break;
 
-  // post student record to server
-
-  // const postStudentRecord = async (data) => {
-  //   const response = await callApi('api/student_create', 'POST', data);
-  //   console.log('response of call api', response);
-  //   if (response) {
-  //     createNotification('success', 'filled');
-  //     console.log('success message', response.data);
-  //   } else {
-  //     createNotification('error', 'filled');
-  //     console.log('class error');
-  //   }
-  // };
-
-  const handleSearch = async (event) => {
-    console.log('handle search is called');
-    setSearchResult(event);
-    //search student in the server
-    const response = await callApi(
-      `api/student_accademic/?student_id=${studentId}`,
-      'GET',
-      'NULL'
-    );
-    const studentResponse = await response.data;
-    //console.log('reone', studentResponse.student_id);
-    studentId == studentResponse.student_id
-      ? setStudentIdMatch(true)
-      : setStudentIdMatch(false);
-    //console.log(studentId, 'student Response');
-    if (studentResponse) {
-      setStudent(studentResponse);
-      setData(true);
-    } else {
-      setMessage('Student not found');
+      case 'error':
+        NotificationManager.error(
+          'زده کوونکی منفک نشو بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
     }
   };
+  const handleSearch = async (event, values) => {
+    setSearchResult(event);
+    const response = await callApi(
+      `api/student_accademic/?student_id=${studentId}`,
+      '',
+      null
+    );
+    if (response.data && response.status === 200) {
+      studentId == response.data.student_id
+        ? setStudentIdMatch(true)
+        : setStudentIdMatch(false);
+      if (response.data) {
+        setStudent(response.data);
+        setData(true);
+      } else {
+        setMessage('Student not found');
+      }
+    } else {
+      console.log('student search error');
+    }
+  };
+  const onSubmit = async (values) => {
+    // setReload(true);
+    const data = {
+      student_id: studentId,
+      dismissal_date: values.dismissalDate,
+    };
+    try {
+      const response = await callApi(`api/student-dissmiss/`, 'POST', data);
+      if (response.status === 200 || response.status === 201) {
+        console.log('success');
+        createNotification('success', 'filled');
+        setReload(true);
+      }
+    } catch (error) {
+      if (error.message === 'Resource not found') {
+        console.log('student not found');
+        createNotification('info', 'filled');
+      } else {
+        console.log('An error occurred:', error.message);
+        createNotification('error', 'filled');
+      }
+    }
 
-  const onSubmit = (values) => {
-    console.log('form values after search', values);
-    //setReload(true);
+    // if (response.status === 200 || response.status === 201) {
+    //   console.log('success');
+    //   createNotification('success', 'filled');
+    // } else if (response.status === 404 || response.status === 400) {
+    //   console.log('student not found');
+    //   createNotification('info', 'filled');
+    // } else {
+    //   console.log('error');
+    //   createNotification('error', 'filled');
+    // }
   };
 
   console.log('reload, isNext, searchResult,', reload, isNext, searchResult);
@@ -425,7 +444,7 @@ const StudentsDismissal = (values) => {
                                 <Field
                                   className="form-control"
                                   name="dismissalDate"
-                                  type="date"
+                                  placeholder="1399/01/01"
                                 />
                                 {errors.dismissalDate &&
                                 touched.dismissalDate ? (
@@ -434,29 +453,43 @@ const StudentsDismissal = (values) => {
                                   </div>
                                 ) : null}
                               </FormGroup>
-
-                              <FormGroup>
-                                <Label>
-                                  <IntlMessages id="student.dissmissalDocuments" />
-                                </Label>
-                                <InputGroup className="mb-3">
-                                  <InputGroupAddon addonType="prepend">
-                                    آپلود
-                                  </InputGroupAddon>
-                                  <CustomInput
+                              {/* Upload Photo */}
+                              <FormGroup className="form-group has-float-label">
+                                <div className="d-flex align-items-center">
+                                  {/* <label
+                                      id="fileSpan"
+                                      style={{
+                                        marginRight: '5px',
+                                        marginLeft: '20px',
+                                        width: '25%',
+                                      }}
+                                    >
+                                      انتخاب فایل
+                                    </label> */}
+                                  <FormControl
+                                    style={{ width: '100%' }}
+                                    id="studetn_img"
+                                    name="student_image"
                                     type="file"
-                                    id="exampleCustomFileBrowser1"
-                                    name="dismissalDocument"
+                                    onChange={(event) => {
+                                      setFieldValue(
+                                        'image',
+                                        event.currentTarget.dismissalDocument[0]
+                                      );
+                                    }}
                                   />
-                                </InputGroup>
-                                {errors.dismissalDocument &&
-                                touched.dismissalDocument ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.dismissalDocument}
-                                  </div>
-                                ) : null}
+                                </div>
+                                <div className="col">
+                                  {errors.dismissalDocument &&
+                                  touched.dismissalDocument ? (
+                                    <div className="invalid-feedback d-block bg-danger text-white">
+                                      {errors.dismissalDocument}
+                                    </div>
+                                  ) : null}
+                                </div>
                               </FormGroup>
                             </div>
+                            <FileUploadForm />
                           </Colxx>
                         </Row>
                         <Row>
@@ -530,7 +563,6 @@ const StudentsDismissal = (values) => {
                 </h3>
                 <Button
                   className="m-5 bg-primary"
-                  // onClick={() => window.location.reload()}
                   onClick={() => {
                     {
                       setReload(false);

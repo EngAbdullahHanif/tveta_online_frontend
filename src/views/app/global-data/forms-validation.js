@@ -207,7 +207,7 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.sectorErr" />),
-  // photo: Yup.string().required(<IntlMessages id="student.photoErr" />),
+  // student_image: Yup.mixed().required(<IntlMessages id="student.photoErr" />),
 });
 
 ////////////////////////////////
@@ -404,7 +404,7 @@ export const teacherEvalautionSchema = Yup.object().shape({
 
 // Kankor Registration
 export const kankorRegisterValidationSchema = Yup.object().shape({
-  name1: Yup.string()
+  studentName: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="forms.StdKankorNameErr" />),

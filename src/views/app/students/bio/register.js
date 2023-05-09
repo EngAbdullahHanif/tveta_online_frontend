@@ -16,6 +16,7 @@ import { Wizard, Steps, Step } from 'react-albus';
 import {
   provinceOptions,
   educationalYearsOptions,
+  dateOfBirthOptoions,
   batchOptions,
   genderOptions,
   mediumOfInstructionOptions,
@@ -342,11 +343,9 @@ const StudentRegistration = ({ intl }, values) => {
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({});
-  const [LevelOfEducation, setLevelOfEducation] = useState('');
   const [TazkiraType, setTazkiraType] = useState('0');
   const [Province, setProvince] = useState('0');
   const [CurrentProvince, setCurrentProvince] = useState('0');
-  const [SchoolProvince, setSchoolProvince] = useState('0');
   const [Gender, setGender] = useState('0');
 
   const onClickNext = (goToNext, steps, step, values) => {
@@ -360,8 +359,6 @@ const StudentRegistration = ({ intl }, values) => {
       setGender(form.values.gender.value);
     }
     if (step.id === 'step2') {
-      setLevelOfEducation(form.values.levelOfEducation.value);
-      setSchoolProvince(form.values.schoolProvince.value);
       setProvince(form.values.province.value);
       setCurrentProvince(form.values.C_Province.value);
     }
@@ -381,6 +378,7 @@ const StudentRegistration = ({ intl }, values) => {
           const data = {
             //personal info,
             name: formData.name1,
+            student_id: formData.studentId,
             kankor_id: formData.kankorId,
             finished_grade_year: formData.graduationYear.label,
             school: formData.preSchool,
@@ -436,8 +434,12 @@ const StudentRegistration = ({ intl }, values) => {
           for (let key in data) {
             formData2.append(key, data[key]);
           }
-          // formData2.append(...data);
-          formData2.append('student_photo', formData.image);
+          //if image is selected
+          if (formData.image) {
+            formData2.append('student_photo', formData.image);
+          } else {
+            formData2.append('student_photo', '');
+          }
 
           console.log('the form data is converted to object', data);
 
@@ -499,7 +501,7 @@ const StudentRegistration = ({ intl }, values) => {
                     tazkiraType: initialTazkiraType,
                   }}
                   validateOnMount
-                  validationSchema={studentRegisterFormStep_1}
+                  // validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -616,7 +618,7 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {values.tazkiraType.value === '2' ? (
+                            {values.tazkiraType.value === 'Paper' ? (
                               <div>
                                 {/* Safha */}
                                 <div>
@@ -649,8 +651,8 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormikReactSelect
                                 name="DoB"
                                 id="DoB"
-                                value={values.educationalYearsOptions}
-                                options={educationalYearsOptions}
+                                value={values.DoB}
+                                options={dateOfBirthOptoions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 required
@@ -784,7 +786,7 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {values.tazkiraType.value === '2' ? (
+                            {values.tazkiraType.value === 'Paper' ? (
                               <div>
                                 {/* Jold Number */}
                                 <div>
@@ -872,7 +874,7 @@ const StudentRegistration = ({ intl }, values) => {
                     C_Village: initialC_Village,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={studentRegisterFormStep_2}
+                  // validationSchema={studentRegisterFormStep_2}
                   validateOnMount
                 >
                   {({
@@ -960,7 +962,8 @@ const StudentRegistration = ({ intl }, values) => {
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
-                                {errors.schoolProvince && !SchoolProvince ? (
+                                {errors.schoolProvince &&
+                                touched.schoolProvince ? (
                                   <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.schoolProvince}
                                   </div>
@@ -1123,7 +1126,7 @@ const StudentRegistration = ({ intl }, values) => {
                     batch: initialBatch,
                     field: initialField,
                     sector: initialSector,
-                    photo: initialphoto,
+                    file: initialphoto,
                   }}
                   onSubmit={() => {}}
                   validationSchema={studentRegisterFormStep_3}

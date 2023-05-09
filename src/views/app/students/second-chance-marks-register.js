@@ -280,13 +280,14 @@ const MarksRegistration = ({ match }) => {
 
   const fechtStudens = async () => {
     const response = await callApi(
-      `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/second-chance-exam-students/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
       null
     );
     if (response.data && response.status === 200) {
       console.log('response of students', response);
       setStudents(response.data);
+      setIsNext(true);
     } else {
       console.log('subject error');
     }
@@ -296,9 +297,6 @@ const MarksRegistration = ({ match }) => {
   };
 
   const onSubmit = async (values) => {
-    setIsNext(true);
-    // console.log('students', students);
-    console.log('values sdfs', values);
     const educationalYear = selectedEducationalYear;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
@@ -309,10 +307,8 @@ const MarksRegistration = ({ match }) => {
     console.log('departmentId', departmentId);
     console.log('classId', classId);
     console.log('subjectId', subjectId);
-    // i want to create an array which first node has exam_id and the rest of the nodes has student_id and marks
-    // values.score[student.student_id]
+
     const newStudents = students.map((student, index) => {
-      console.log('student sadfsd', student.student_id);
       return {
         student_id: student.student_id,
         score: values.score[student.student_id],
@@ -333,59 +329,20 @@ const MarksRegistration = ({ match }) => {
 
     console.log('data', data);
 
-    const response = await callApi('api/create_marks/', 'POST', data);
+    const response = await callApi(
+      'api/second-chance-exam-create/',
+      'POST',
+      data
+    );
     if (response.status === 200) {
       console.log('response of students', response);
-      setIsSubmitted(false);
+      setIsSubmitted(true);
       createNotification('success', 'filled');
     } else {
       console.log('marks error');
       // setIsSubmitted(false);
       createNotification('error', 'filled');
     }
-
-    // axios
-    //   .post('http://localhost:8000/api/create_marks/', data)
-    //   .then((res) => {
-    //     console.log('res', res);
-    //   })
-    //   .then((err) => {
-    //     console.log('err', err);
-    //   });
-
-    // students.map(async (student, index) => {
-    //   let exam_id = '';
-    //   const examData = {
-    //     educational_year: educational_year,
-    //     student_id: student.student_id,
-    //     institute_id: institute_id,
-    //     department_id: department_id,
-    //     class_id: class_id,
-    //     semister: 1,
-    //     teacher_id: 1,
-    //     user_id: 1,
-    //     verification: 1,
-    //   };
-    //   const exam = await axios.post(
-    //     'http://localhost:8000/api/create_marks/',
-    //     examData
-    //   );
-    //   const updatedExam = await exam.data;
-    //   exam_id = updatedExam;
-
-    //   console.log('exam_id', exam_id, index);
-
-    //   const data = {
-    //     exam_marks_id: exam_id,
-    //     subject_id: subject_id,
-    //     exam_types: 1,
-    //     score: values.score[student.student_id],
-    //     passing_score: 55,
-    //     user_id: 1,
-    //   };
-    //   console.log('data', data, index);
-    //   axios.post('http://localhost:8000/api/create_marks_details/', data);
-    // });
   };
 
   console.log('condsotlsa f', students);
@@ -399,7 +356,7 @@ const MarksRegistration = ({ match }) => {
           {!isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={onSubmit}
+              onSubmit={fechtStudens}
               validationSchema={ValidationSchema}
             >
               {({
@@ -548,7 +505,7 @@ const MarksRegistration = ({ match }) => {
                         className="float-right m-5"
                         type="submit"
                         size="lg"
-                        onClick={() => fechtStudens()}
+                        // onClick={() => fechtStudens()}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />
@@ -756,7 +713,7 @@ const MarksRegistration = ({ match }) => {
                                 type="submit"
                                 color="primary"
                                 // onSubmit={onSubmit}
-                                onClick={() => setIsSubmitted(true)}
+                                // onClick={() => setIsSubmitted(true)}
                               >
                                 <IntlMessages id="button.SubmitButton" />
                               </Button>

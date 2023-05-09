@@ -129,7 +129,7 @@ const initialValues = {
 };
 const StudentAttendance = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(false);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -167,7 +167,6 @@ const StudentAttendance = ({ match }) => {
       console.log('institute error');
     }
   };
-
 
   // const fetchFields = async () => {
   //   const response = await axios.get('http://localhost:8000/institute/filed/');
@@ -249,7 +248,6 @@ const StudentAttendance = ({ match }) => {
     }
   };
 
-
   // const fetchSubjects = async () => {
   //   const response = await axios.get(
   //     'http://localhost:8000/institute/subject/'
@@ -291,9 +289,25 @@ const StudentAttendance = ({ match }) => {
       .then((response) => {
         console.log('response.data', response.data);
         setStudents(response.data);
-        setIsNext(false)
+        setIsNext(false);
       });
     console.log('students', students);
+  };
+
+  // fetch student list for typing attendance
+  const fetchStudentList = async () => {
+    const response = await callApi(
+      `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      'GET',
+      null
+    );
+    console.log('class repspossdfsde', response);
+    if (response.data && response.status === 200) {
+      setStudents(response.data);
+      setIsNext(true);
+    } else {
+      console.log('class error');
+    }
   };
 
   const onSubmit = (values) => {
@@ -332,10 +346,10 @@ const StudentAttendance = ({ match }) => {
       <Card>
         <h3 className=" m-5 p-5">{<IntlMessages id="menu.attendance" />}</h3>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={onSubmit}
+              onSubmit={fetchStudentList}
               validationSchema={ValidationSchema}
             >
               {({
@@ -483,10 +497,10 @@ const StudentAttendance = ({ match }) => {
                         className="float-right m-5"
                         size="lg"
                         type="submit"
-                        onClick={() => {
-                          onSubmit;
-                          handleClick(false);
-                        }}
+                        // onClick={() => {
+                        //   onSubmit;
+                        //   handleClick(false);
+                        // }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -616,7 +630,7 @@ const StudentAttendance = ({ match }) => {
                   >
                     {students.map((student, index) => (
                       <tr>
-                        <th scope="row">{index}</th>
+                        <th scope="row">{index + 1}</th>
                         <td>{student.name}</td>
                         <td>{student.father_name}</td>
                         <td>{student.student_id}</td>
@@ -681,7 +695,10 @@ const StudentAttendance = ({ match }) => {
               </Row>
               <Row className=" justify-content-center">
                 <Colxx xxs="9" className="m-5">
-                  <Button className=" m-4" onClick={() => handleClick(true)}>
+                  <Button
+                    className=" m-4"
+                    // onClick={() => handleClick(true)}
+                  >
                     <IntlMessages id="button.Back" />
                   </Button>
                 </Colxx>

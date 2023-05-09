@@ -58,6 +58,12 @@ const data = [
       },
 
       {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'Kankor Profille',
+        to: `${adminRoot}/students/kankor-profile`,
+        newWindow: false,
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
         to: `${adminRoot}/students/marks-register`,
@@ -103,12 +109,7 @@ const data = [
         to: `${adminRoot}/students/student-dismissal`,
         newWindow: false,
       },
-      {
-        icon: 'MD.MdOutlineTransferWithinAStation',
-        label: 'Kankor Profille',
-        to: `${adminRoot}/students/kankor-profile`,
-        newWindow: false,
-      },
+
       // {
       //   icon: 'MD.MdAddBox',
       //   label: 'menu.student-reregister',

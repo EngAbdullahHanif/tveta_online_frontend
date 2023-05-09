@@ -1,0 +1,16 @@
+.style {
+  font-size: 170%;
+}
+
+.fieldStyle {
+  font-size: 100%;
+}
+
+.messageStyle {
+  font-size: 80%;
+}
+
+.fieldStule11 {
+  z-index: 10;
+  /* background-color: blue; */
+}

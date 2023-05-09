@@ -10,7 +10,7 @@
   font-size: 80%;
 }
 
-.fieldStule11 {
-  z-index: 10;
-  /* background-color: blue; */
+.buttonStyle {
+  font-size: 100%;
+  padding-inline: 3%;
 }

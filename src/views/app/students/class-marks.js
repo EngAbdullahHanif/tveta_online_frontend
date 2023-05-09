@@ -3,6 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { studyTimeOptions } from '../global-data/options';
+import './../../../assets/css/global-css.css';
+
 // Year  and SHift
 
 import * as Yup from 'yup';
@@ -288,9 +290,11 @@ const AllSubjectsMarks = ({ match }) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
-          {<IntlMessages id="marks.marksDisplayTitle" />}
-        </h3>
+        <div className="mt-4 ml-5">
+          <h2 className="mt-5 m-5 display-4">
+            {<IntlMessages id="marks.marksDisplayTitle" />}
+          </h2>
+        </div>
         <CardBody>
           {isNext ? (
             <Formik
@@ -305,11 +309,11 @@ const AllSubjectsMarks = ({ match }) => {
                 setFieldTouched,
                 setFieldValue,
               }) => (
-                <Form className="av-tooltip tooltip-label-right ">
+                <Form className="av-tooltip tooltip-label-right  style">
                   <Row className="m-5">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
-                      <FormGroup className="form-group has-float-label error-l-150 ">
+                      <FormGroup className="form-group has-float-label error-l-150  ">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
                         </Label>

@@ -528,6 +528,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
                                 <IntlMessages id="forms.StdName" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -545,6 +546,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="forms.lastName" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -561,6 +563,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StdFatherName" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -577,6 +580,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="forms.grandFatherName" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -594,6 +598,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StdFatherDutyLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -610,6 +615,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.TazkiraType" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
 
                               <FormikReactSelect
@@ -657,6 +663,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
                                 <IntlMessages id="teacher.PhoneNoLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -672,6 +679,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
                                 <IntlMessages id="teacher.DoBLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="DoB"
@@ -696,6 +704,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.Eng_name" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -712,6 +721,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="forms.lastNameEng" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -728,6 +738,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.Std_father_Eng_Name" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -744,6 +755,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="gender.gender" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="gender"
@@ -764,6 +776,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StdFatherDutyLocationLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -781,6 +794,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="teacher.TazkiraNoLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -824,6 +838,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.PlaceOfBirthLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -840,6 +855,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="teacher.EmailLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -908,6 +924,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.ProvinceLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="province"
@@ -928,6 +945,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.DistrictLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
                                   className="form-control fieldStyle"
@@ -944,6 +962,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.VillageLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
                                   className="form-control fieldStyle"
@@ -972,6 +991,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.ProvinceLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="C_Province"
@@ -992,6 +1012,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.DistrictLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
                                   className="form-control fieldStyle"
@@ -1008,6 +1029,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.VillageLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
                                   className="form-control fieldStyle"
@@ -1029,6 +1051,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100 ">
                                 <Label>
                                   <IntlMessages id="forms.StdGraduationYearLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="graduationYear"
@@ -1050,6 +1073,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.StdSchoolProvinceLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="schoolProvince"
@@ -1074,6 +1098,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100 ">
                                 <Label>
                                   <IntlMessages id="teacher.LevelOfEducationLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="levelOfEducation"
@@ -1095,6 +1120,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.StPreShcoolLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
                                   className="form-control fieldStyle"
@@ -1156,6 +1182,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className=" has-float-label ">
                               <Label className="fieldStule11">
                                 <IntlMessages id="forms.InstituteLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="institute"
@@ -1176,6 +1203,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="marks.ClassLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="class"
@@ -1197,6 +1225,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="student.studentId" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -1233,6 +1262,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Sector */}
                             <FormGroup className="form-group has-float-label ">
+                              <span style={{ color: 'red' }}>*</span>
                               <Label>
                                 <IntlMessages id="forms.sector" />
                               </Label>
@@ -1269,6 +1299,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StdInteranceTypeLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="interanceType"
@@ -1289,6 +1320,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <InputGroupAddon addonType="prepend">
                                 <IntlMessages id="student.uploadPhoto" />
+                                <span style={{ color: 'red' }}>*</span>
                               </InputGroupAddon>
                               <FormControl
                                 name="file"
@@ -1313,6 +1345,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.studyDepartment" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="department"
@@ -1334,6 +1367,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="dash.field-1" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="field"
@@ -1355,6 +1389,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.batch" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="batch"
@@ -1376,6 +1411,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.mediumOfInstruction" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="mediumOfInstruction"
@@ -1398,6 +1434,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StudyTimeLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="studyTime"
@@ -1418,6 +1455,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StudentTypeLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="studentType"

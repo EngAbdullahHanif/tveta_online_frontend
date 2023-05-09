@@ -9,6 +9,7 @@ import { mediumOfInstructionOptions } from '../global-data/options';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
+import './../../../assets/css/global-css.css';
 
 import * as Yup from 'yup';
 import {
@@ -243,9 +244,11 @@ const StudentsTransfer = (values) => {
 
   return (
     <Card className="card">
-      <h3 className="mt-5 m-5">
-        {<IntlMessages id="student.transferTitle" />}
-      </h3>
+      <div className="mt-4 ml-5">
+        <h2 className=" m-5  display-4">
+          {<IntlMessages id="student.transferTitle" />}
+        </h2>
+      </div>
       {/* <h3 className="text-center">
         {' '}
         Mr Hanif Complete the Integration And Check Why its going to the student
@@ -273,16 +276,18 @@ const StudentsTransfer = (values) => {
                           setFieldValue,
                         }) => (
                           <Form
-                            className="av-tooltip tooltip-label-bottom"
+                            className="av-tooltip tooltip-label-bottom style"
                             style={{ height: '300px' }}
                           >
                             <Label>
                               <IntlMessages id="search.studentIdSearchLabel" />
+                              <span style={{ color: 'red' }}>*</span>
                             </Label>
                             <div class="input-group mb-3 error-l-175 ">
                               <div class="input-group-prepend">
                                 <Button
                                   size="lg"
+                                  style={{ fontSize: '80%' }}
                                   type="submit"
                                   color="primary"
                                   onClick={() => handleSearch(false)}
@@ -298,7 +303,7 @@ const StudentsTransfer = (values) => {
                                 </Button>
                               </div>
                               <Field
-                                className="form-control"
+                                className="form-control "
                                 name="searchfield"
                                 type="text"
                                 onKeyUp={() => setStudentId(values.searchfield)}
@@ -320,9 +325,9 @@ const StudentsTransfer = (values) => {
                       {studentIdMatch ? (
                         <div className="border rounded">
                           <Label>
-                            <h6 className="mt-5 m-5">
+                            <h3 className="mt-5 m-5">
                               {<IntlMessages id="dorm.SearchResult" />}
-                            </h6>
+                            </h3>
                           </Label>{' '}
                           <Row>
                             <Colxx xxs="1"></Colxx>
@@ -437,33 +442,32 @@ const StudentsTransfer = (values) => {
                           </Row>
                         </div>
                       ) : (
-                        <div style={{ height: '300px' }}>
+                        <div style={{ minHeight: '300px' }}>
                           <Label>
-                            <h6 className="mt-5 m-5">
+                            <h2 className="mt-5 m-5">
                               {<IntlMessages id="dorm.SearchResult" />}
-                            </h6>
+                            </h2>
                           </Label>
-                          <Row className="justify-content-center mb-5">
-                            <Colxx xxs="12" className="justify-content-center">
-                              <h3 className="text-center">
+                          <Row className="justify-content-left mb-5">
+                            <Colxx xxs="8" className="text-left">
+                              <h1 className="text-center">
                                 <IntlMessages id="forms.NoData" />
-                              </h3>
+                              </h1>
                             </Colxx>
                           </Row>
                           <Row>
-                            <Colxx style={{ marginLeft: '10%' }}>
+                            <Colxx>
                               <Button
-                                className=" m-5"
+                                className=" m-5 buttonStyle"
+                                style={{
+                                  fontSize: '140%',
+                                  margin: '3% 0% 17% 8%',
+                                }}
                                 size="lg"
                                 type="submit"
                                 color="primary"
                                 onClick={() => handleSearch(true)}
                               >
-                                <span className="spinner d-inline-block">
-                                  <span className="bounce1" />
-                                  <span className="bounce2" />
-                                  <span className="bounce3" />
-                                </span>
                                 <span className="label">
                                   <IntlMessages id="button.Back" />
                                 </span>

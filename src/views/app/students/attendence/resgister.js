@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { educationalYearsOptions } from '../../global-data/options';
 import { studyTimeOptions } from '../../global-data/options';
+import './../../.././../assets/css/global-css.css';
 
 // Year  and SHift
 import { useParams } from 'react-router-dom';
@@ -363,9 +364,11 @@ const StudentAttendance = ({ match }) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
-          {<IntlMessages id="forms.AttendanceTitle" />}
-        </h3>
+        <div className="mt-4 ml-5">
+          <h2 className=" m-5  display-4">
+            {<IntlMessages id="forms.AttendanceTitle" />}
+          </h2>
+        </div>
         <CardBody>
           {!isNext ? (
             <Formik
@@ -381,13 +384,14 @@ const StudentAttendance = ({ match }) => {
                 setFieldTouched,
                 setFieldValue,
               }) => (
-                <Form className="av-tooltip tooltip-label-right  ">
+                <Form className="av-tooltip tooltip-label-right style ">
                   <Row className="m-5">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
-                          <IntlMessages id="forms.In         stituteLabel" />
+                          <IntlMessages id="forms.InstituteLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="institute"
@@ -399,7 +403,7 @@ const StudentAttendance = ({ match }) => {
                           onClick={setSelectedInstitute(values.institute)}
                         />
                         {errors.institute && touched.institute ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.institute}
                           </div>
                         ) : null}
@@ -408,6 +412,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
                         <Label>
                           <IntlMessages id="curriculum.eduactionalYearLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="educationalYear"
@@ -418,7 +423,7 @@ const StudentAttendance = ({ match }) => {
                           onBlur={setFieldTouched}
                         />
                         {errors.educationalYear && touched.educationalYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.educationalYear}
                           </div>
                         ) : null}
@@ -427,11 +432,12 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.totolEducationalDays" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
                           type="number"
                           id="totolEducationalDays"
-                          className="form-control"
+                          className="form-control fieldStyle"
                           name="totolEducationalDays"
                           onClick={setSelectedEducationalYear(
                             values.totolEducationalDays
@@ -439,7 +445,7 @@ const StudentAttendance = ({ match }) => {
                         />
                         {errors.totolEducationalDays &&
                         touched.totolEducationalDays ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.totolEducationalDays}
                           </div>
                         ) : null}
@@ -450,6 +456,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="classs"
@@ -462,7 +469,7 @@ const StudentAttendance = ({ match }) => {
                           required
                         />
                         {errors.classs && touched.classs ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.classs}
                           </div>
                         ) : null}
@@ -471,6 +478,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.studyDepartment" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="department"
@@ -483,7 +491,7 @@ const StudentAttendance = ({ match }) => {
                           required
                         />
                         {errors.department && touched.department ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.department}
                           </div>
                         ) : null}
@@ -494,10 +502,10 @@ const StudentAttendance = ({ match }) => {
                     <Colxx>
                       <Button
                         color="primary"
-                        className="float-right m-5"
+                        className="float-right buttonStyle"
                         size="lg"
                         type="submit"
-                        // onClick={() => fetchStudentList()}
+                        style={{ margin: '3% 0% 10% 8%' }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />

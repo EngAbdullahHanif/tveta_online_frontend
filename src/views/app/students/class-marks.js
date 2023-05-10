@@ -28,49 +28,6 @@ import {
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
 
-// const LevelOfEdcationOptions = [
-//   { value: '1', label: 'اصلی' },
-//   { value: '2', label: 'فرعی' },
-// ];
-
-// const FieldOptions = [
-//   { value: '14th', label: 'Computer Science' },
-//   { value: 'bachelor', label: 'Agriculture' },
-//   { value: 'master', label: 'BBA' },
-//   { value: 'PHD', label: 'Mechenical Engineering' },
-// ];
-
-const SemesterOptions = [
-  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
-  // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
-  //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
-];
-
-// const SectionOptions = [
-//   { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-// ];
-
-// const ClassOptions = [
-//   { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-//   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-// ];
-
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-const pageSizes = [10, 20, 40, 80];
-
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
     .shape({
@@ -201,11 +158,11 @@ const AllSubjectsMarks = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const handleClick = async (event) => {
+  const fetchStudents = async (event) => {
     setIsNext(false);
 
     const response = await callApi(
-      `api/class_marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/class_marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&study_time=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
       null
     );
@@ -224,7 +181,6 @@ const AllSubjectsMarks = ({ match }) => {
       console.log('students error');
     }
   };
-  console.log('Wanted Data', header.length - 3);
   const onSubmit = (values) => {
     console.log('values', values);
     const educational_year = selectedEducationalYear;
@@ -296,7 +252,7 @@ const AllSubjectsMarks = ({ match }) => {
             <Formik
               initialValues={initialValues}
               validationSchema={ValidationSchema}
-              onSubmit={handleClick}
+              onSubmit={fetchStudents}
             >
               {({
                 errors,

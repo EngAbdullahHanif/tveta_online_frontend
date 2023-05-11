@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
 import { studyTimeOptions } from './../global-data/options';
-import './../../../assets/css/global-css.css';
+import './../../../assets/css/global-style.css';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -340,7 +340,7 @@ const MarksRegistration = ({ match }) => {
     <>
       <Card>
         <div className="mt-4 ml-5">
-          <h2 className="mt-5 m-5 display-4">
+          <h2 className="mt-5 m-5 titleStyle">
             {<IntlMessages id="marks.title" />}
           </h2>
         </div>

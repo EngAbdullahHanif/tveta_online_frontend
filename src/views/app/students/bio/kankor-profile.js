@@ -1,39 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import callApi from 'helpers/callApi';
-
-import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-
-import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-  CardTitle,
-  Table,
-  InputGroup,
-  InputGroupAddon,
-  Input,
-} from 'reactstrap';
+import './../../../../assets/css/global-style.css';
+import { Row, Card, CardBody, Label, Input } from 'reactstrap';
 import Select from 'react-select';
 import logo from './../../../../assets/logos/AdminLogo.png';
 import profilePhoto from './../../../../assets/img/profiles/22.jpg';
-
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-import Classes from 'views/app/classes';
-
 const servicePath = 'http://localhost:8000';
 const studentApiUrl = `${servicePath}/api/`;
 
@@ -179,31 +153,31 @@ const StudentProfile = () => {
               </Row>
               <Row className="justify-content-center   rounded ">
                 <Colxx style={{ paddingInline: '4%' }} xxs="">
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="teacher.NameLabel" />
                   </Label>
                   <h2>Arshad Rahman</h2>
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="teacher.FatherNameLabel" />
                   </Label>
                   <h2> Abdul Wakil</h2>
 
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="dash.teacherGender" />
                   </Label>
                   <h2> Male</h2>
 
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="forms.KankorMarksLabel" />
                   </Label>
                   <h2>78</h2>
 
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="forms.InstituteLabel" />
                   </Label>
                   <h2>ATVI</h2>
 
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="department.field" />
                   </Label>
                   <h2>Coputer Science</h2>
@@ -212,23 +186,23 @@ const StudentProfile = () => {
                   <br />
                 </Colxx>
                 <Colxx style={{ paddingInline: '4%' }}>
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="curriculum.eduactionalYearLabel" />
                   </Label>
                   <h2>1403</h2>
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="forms.StudyTimeLabel" />
                   </Label>
                   <h2>Morning Shift</h2>
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="forms.studyDepartment" />
                   </Label>
                   <h2>Database</h2>
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="forms.ProvinceLabel" />
                   </Label>
                   <h2>کابل </h2>
-                  <Label style={{ fontSize: '200%', fontWeight: 'bold' }}>
+                  <Label className="data-style">
                     <IntlMessages id="forms.DistrictLabel" />
                   </Label>
                   <h2>7th District</h2>

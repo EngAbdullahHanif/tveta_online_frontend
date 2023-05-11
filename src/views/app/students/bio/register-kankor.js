@@ -12,7 +12,7 @@ import { provinceOptions } from '../../global-data/options';
 import { educationalYearsOptions } from '../../global-data/options';
 import { studyTimeOptions } from '../../global-data/options';
 import { NotificationManager } from 'components/common/react-notifications';
-import './../../.././../assets/css/global-css.css';
+import './../../.././../assets/css/global-style.css';
 
 const servicePath = 'http://localhost:8000';
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
@@ -223,7 +223,7 @@ const StudentRegistraion = ({ history }) => {
     <>
       <Card>
         <div className="ml-5">
-          <h3 className="mt-5 m-5 display-4">
+          <h3 className="mt-5 m-5 titleStyle">
             {<IntlMessages id="forms.Kankorformstitle" />}
           </h3>
         </div>

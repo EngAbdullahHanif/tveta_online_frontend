@@ -1353,8 +1353,7 @@ module.exports = {
     'د استاد د ارزیابی ارقام/ ارقام ارزیابی استاد',
 
   // Student Dismissal
-  'student.dismissalTitleFromInstitute':
-    ' له انستیتوت/لیسې نه د شاګرد منفکی// منفکی شاگرد از انستیتوت/لسیه',
+  'student.dismissalTitleFromInstitute': 'د شاګرد منفکی/ منفکی شاگرد',
   'student.dismissalDateLabel': 'د منفکۍ تاریخ/ تاریخ منفکی',
   'search.studentIdsearchErr':
     'د شاګرد ایډی د ننه کړئ/ لطفا ایدی شاگرد را وارد نماید',

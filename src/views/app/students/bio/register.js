@@ -2,7 +2,7 @@
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FormControl, FormLabel } from 'react-bootstrap';
-import './../../.././../assets/css/global-css.css';
+import './../../.././../assets/css/global-style.css';
 
 import {
   Row,
@@ -467,9 +467,11 @@ const StudentRegistration = ({ intl }, values) => {
   const { messages } = intl;
   return (
     <Card>
-      <h3 className="mt-5 m-5 display-4">
-        {<IntlMessages id="forms.studentRegisterTitle" />}
-      </h3>
+      <div className="mt-4 ml-5">
+        <h2 className="mt-5 m-5 titleStyle titleStyle">
+          {<IntlMessages id="forms.studentRegisterTitle" />}
+        </h2>
+      </div>
       <CardBody className="wizard wizard-default">
         <Wizard>
           <Steps>

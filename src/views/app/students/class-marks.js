@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { studyTimeOptions } from '../global-data/options';
-import './../../../assets/css/global-css.css';
+import './../../../assets/css/global-style.css';
 
 // Year  and SHift
 
@@ -291,7 +291,7 @@ const AllSubjectsMarks = ({ match }) => {
     <>
       <Card>
         <div className="mt-4 ml-5">
-          <h2 className="mt-5 m-5 display-4">
+          <h2 className="mt-5 m-5 titleStyle">
             {<IntlMessages id="marks.marksDisplayTitle" />}
           </h2>
         </div>

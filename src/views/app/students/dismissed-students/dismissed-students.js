@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import './../../.././../assets/css/global-css.css';
+import './../../.././../assets/css/global-style.css';
 // Year  and SHift
 import * as Yup from 'yup';
 import {
@@ -144,7 +144,7 @@ const MarksRegistration = ({ match }) => {
       ) : (
         <Card>
           <div className="mt-4 ml-5">
-            <h2 className="mt-5 m-5 display-4">
+            <h2 className="mt-5 m-5 titleStyle">
               <IntlMessages id="student.dismissal-studentList" />
             </h2>
           </div>

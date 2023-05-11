@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
-import './../../.././../assets/css/global-css.css';
+import './../../.././../assets/css/global-style.css';
 
 // Year  and SHift
 
@@ -331,7 +331,7 @@ const StudentAttendance = ({ match }) => {
     <>
       <Card>
         <div className="mt-4 ml-5">
-          <h2 className=" m-5  display-4">
+          <h2 className=" m-5  titleStyle">
             {<IntlMessages id="menu.attendance" />}
           </h2>
         </div>

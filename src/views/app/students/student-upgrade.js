@@ -1,3 +1,5 @@
+// this page is for student upgrade, it is not used in the project, it might be used in the future
+
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
@@ -583,21 +585,21 @@ const StudentUpgrade = ({ match }) => {
                                               {secondIndex === 0 ||
                                               secondIndex === 1 ||
                                               secondIndex === 2 ? (
-                                                <td
-                                                  scope="col"
-                                                  className="border text-center "
-                                                >
-                                                  {student.name}
-                                                </td>
-                                              ) : (
                                                 <>
                                                   <td
                                                     scope="col"
                                                     className="border text-center "
                                                   >
-                                                    {student.score}
+                                                    {student.name}
                                                   </td>
                                                 </>
+                                              ) : (
+                                                <td
+                                                  scope="col"
+                                                  className="border text-center "
+                                                >
+                                                  {student.score}
+                                                </td>
                                               )}
                                             </>
                                           );

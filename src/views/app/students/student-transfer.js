@@ -9,6 +9,7 @@ import { mediumOfInstructionOptions } from '../global-data/options';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
+import './../../../assets/css/global-style.css';
 
 import * as Yup from 'yup';
 import {
@@ -243,9 +244,11 @@ const StudentsTransfer = (values) => {
 
   return (
     <Card className="card">
-      <h3 className="mt-5 m-5">
-        {<IntlMessages id="student.transferTitle" />}
-      </h3>
+      <div className="mt-4 ml-5">
+        <h2 className=" m-5  titleStyle">
+          {<IntlMessages id="student.transferTitle" />}
+        </h2>
+      </div>
       {/* <h3 className="text-center">
         {' '}
         Mr Hanif Complete the Integration And Check Why its going to the student
@@ -273,16 +276,18 @@ const StudentsTransfer = (values) => {
                           setFieldValue,
                         }) => (
                           <Form
-                            className="av-tooltip tooltip-label-bottom"
+                            className="av-tooltip tooltip-label-bottom style"
                             style={{ height: '300px' }}
                           >
                             <Label>
                               <IntlMessages id="search.studentIdSearchLabel" />
+                              <span style={{ color: 'red' }}>*</span>
                             </Label>
                             <div class="input-group mb-3 error-l-175 ">
                               <div class="input-group-prepend">
                                 <Button
                                   size="lg"
+                                  style={{ fontSize: '80%' }}
                                   type="submit"
                                   color="primary"
                                   onClick={() => handleSearch(false)}
@@ -298,7 +303,7 @@ const StudentsTransfer = (values) => {
                                 </Button>
                               </div>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle "
                                 name="searchfield"
                                 type="text"
                                 onKeyUp={() => setStudentId(values.searchfield)}
@@ -320,9 +325,9 @@ const StudentsTransfer = (values) => {
                       {studentIdMatch ? (
                         <div className="border rounded">
                           <Label>
-                            <h6 className="mt-5 m-5">
+                            <h3 className="mt-5 m-5 data-style">
                               {<IntlMessages id="dorm.SearchResult" />}
-                            </h6>
+                            </h3>
                           </Label>{' '}
                           <Row>
                             <Colxx xxs="1"></Colxx>
@@ -339,75 +344,70 @@ const StudentsTransfer = (values) => {
                             <Colxx>
                               <div>
                                 <Row className="justify-content-center border border-primary rounded m-5">
-                                  <Colxx
-                                    className=" p-5  border rounded"
-                                    xxs=""
-                                  >
-                                    <Label>
+                                  <Colxx className=" p-5  border rounded">
+                                    <Label className="data-style">
                                       <IntlMessages id="teacher.NameLabel" />
                                     </Label>
-                                    <h3>{student.student_name}</h3>
-                                    <Label>
+                                    <h2>{student.student_name}</h2>
+                                    <Label className="data-style">
                                       <IntlMessages id="teacher.FatherNameLabel" />
                                     </Label>
-                                    <h3>{student.father_name}</h3>
-                                    <Label>
+                                    <h2>{student.father_name}</h2>
+                                    <Label className="data-style">
                                       <IntlMessages id="teacher.PhoneNoLabel" />
                                     </Label>
-                                    <h3>{student.phone_number}</h3>
-                                    <Label>
+                                    <h2>{student.phone_number}</h2>
+                                    <Label className="data-style">
                                       <IntlMessages id="teacher.EmailLabel" />
                                     </Label>
-                                    <h3>{student.email}</h3>
+                                    <h2>{student.email}</h2>
 
-                                    <Label>
+                                    <Label className="data-style">
                                       <IntlMessages id="forms.InstituteLabel" />
                                     </Label>
-                                    <h3>{student.institute_name}</h3>
+                                    <h2>{student.institute_name}</h2>
 
-                                    <Label>
+                                    <Label className="data-style">
                                       <IntlMessages id="marks.ClassLabel" />
                                     </Label>
-                                    {/* <h3>انتگریت گردد</h3> */}
-                                    <h3>{student.class_name}</h3>
+                                    <h2>{student.class_name}</h2>
                                   </Colxx>
                                   <Colxx className="p-5 border rounded">
-                                    <Label>
+                                    <Label className="data-style">
                                       <IntlMessages id="field.SemesterLabel" />
                                     </Label>
-                                    <h3>{student.semester}</h3>
-                                    <Label>
+                                    <h2>{student.semester}</h2>
+                                    <Label className="data-style">
                                       <IntlMessages id="forms.FieldLabel" />
                                     </Label>
-                                    <h3>{student.department_name}</h3>
-                                    <Label>
+                                    <h2>{student.department_name}</h2>
+                                    <Label className="data-style">
                                       <IntlMessages id="forms.ProvinceLabel" />
                                     </Label>
-                                    <h3>{student.current_province}</h3>
-                                    <Label>
+                                    <h2>{student.current_province}</h2>
+                                    <Label className="data-style">
                                       <IntlMessages id="forms.DistrictLabel" />
                                     </Label>
-                                    <h3>{student.current_district}</h3>
-                                    <Label>
+                                    <h2>{student.current_district}</h2>
+                                    <Label className="data-style">
                                       <IntlMessages id="forms.VillageLabel" />
                                     </Label>
-                                    <h3>{student.current_village}</h3>
+                                    <h2>{student.current_village}</h2>
                                   </Colxx>
                                 </Row>
                                 <Row>
                                   <Colxx style={{ marginRight: '10%' }}>
                                     <Button
-                                      className=" mb-5 mt-5"
+                                      color="primary"
+                                      className="buttonStyle1"
                                       size="lg"
                                       type="submit"
-                                      color="primary"
+                                      style={{
+                                        margin: '5% 6% 15% 8%',
+                                        paddingInline: '10%',
+                                      }}
                                       onClick={() => handleSearch(true)}
                                     >
-                                      <span className="spinner d-inline-block">
-                                        <span className="bounce1" />
-                                        <span className="bounce2" />
-                                        <span className="bounce3" />
-                                      </span>
                                       <span className="label">
                                         <IntlMessages id="button.Back" />
                                       </span>
@@ -415,19 +415,18 @@ const StudentsTransfer = (values) => {
                                   </Colxx>
                                   <Colxx style={{ marginLeft: '10%' }}>
                                     <Button
-                                      className="float-right mb-5 mt-5  "
+                                      color="primary"
+                                      className=" float-right buttonStyle1"
                                       size="lg"
                                       type="submit"
-                                      color="primary"
+                                      style={{
+                                        margin: '5% 0% 15% 6%',
+                                        paddingInline: '10%',
+                                      }}
                                       onClick={() => handleClick(false)}
                                     >
-                                      <span className="spinner d-inline-block">
-                                        <span className="bounce1" />
-                                        <span className="bounce2" />
-                                        <span className="bounce3" />
-                                      </span>
                                       <span className="label">
-                                        <IntlMessages id="student.buttonDismissal" />
+                                        <IntlMessages id="student.buttonTransfer" />
                                       </span>
                                     </Button>
                                   </Colxx>
@@ -437,33 +436,32 @@ const StudentsTransfer = (values) => {
                           </Row>
                         </div>
                       ) : (
-                        <div style={{ height: '300px' }}>
+                        <div style={{ minHeight: '300px' }}>
                           <Label>
-                            <h6 className="mt-5 m-5">
+                            <h2 className="mt-5 m-5">
                               {<IntlMessages id="dorm.SearchResult" />}
-                            </h6>
+                            </h2>
                           </Label>
-                          <Row className="justify-content-center mb-5">
-                            <Colxx xxs="12" className="justify-content-center">
-                              <h3 className="text-center">
+                          <Row className="justify-content-left mb-5">
+                            <Colxx xxs="8" className="text-left">
+                              <h1 className="text-center">
                                 <IntlMessages id="forms.NoData" />
-                              </h3>
+                              </h1>
                             </Colxx>
                           </Row>
                           <Row>
-                            <Colxx style={{ marginLeft: '10%' }}>
+                            <Colxx>
                               <Button
-                                className=" m-5"
+                                className=" m-5 buttonStyle"
+                                style={{
+                                  fontSize: '140%',
+                                  margin: '3% 0% 17% 8%',
+                                }}
                                 size="lg"
                                 type="submit"
                                 color="primary"
                                 onClick={() => handleSearch(true)}
                               >
-                                <span className="spinner d-inline-block">
-                                  <span className="bounce1" />
-                                  <span className="bounce2" />
-                                  <span className="bounce3" />
-                                </span>
                                 <span className="label">
                                   <IntlMessages id="button.Back" />
                                 </span>
@@ -490,20 +488,21 @@ const StudentsTransfer = (values) => {
                     setFieldTouched,
                     setFieldValue,
                   }) => (
-                    <Form className="av-tooltip tooltip-label-right error-l-150 ">
+                    <Form className="av-tooltip tooltip-label-right error-l-150 style">
                       <Row className="mb-4 justify-content-center">
                         <Colxx xxs="8">
                           <div className=" p-3">
-                            <h6 className=" mb-4">
+                            <h1 className=" mb-4">
                               {
                                 <IntlMessages id="teacher.TransferNewInfoTittle" />
                               }
-                            </h6>
+                            </h1>
 
                             {/* Institute Name*/}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.InstituteLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="institute"
@@ -515,7 +514,7 @@ const StudentsTransfer = (values) => {
                               />
 
                               {errors.institute && touched.institute ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.institute}
                                 </div>
                               ) : null}
@@ -525,14 +524,15 @@ const StudentsTransfer = (values) => {
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="student.transferDateLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="transferDate"
                                 placeholder="1399/01/01"
                               />
                               {errors.transferDate && touched.transferDate ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.transferDate}
                                 </div>
                               ) : null}
@@ -542,6 +542,7 @@ const StudentsTransfer = (values) => {
                             <FormGroup className="form-group has-float-label  error-l-150 ">
                               <Label>
                                 <IntlMessages id="curriculum.eduactionalYearLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="educationalYear"
@@ -554,7 +555,7 @@ const StudentsTransfer = (values) => {
                               />
                               {errors.educationalYear &&
                               touched.educationalYear ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.educationalYear}
                                 </div>
                               ) : null}
@@ -564,6 +565,7 @@ const StudentsTransfer = (values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.mediumOfInstruction" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="mediumOfInstruction"
@@ -576,7 +578,7 @@ const StudentsTransfer = (values) => {
                               />
                               {errors.mediumOfInstruction &&
                               touched.mediumOfInstruction ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.mediumOfInstruction}
                                 </div>
                               ) : null}
@@ -586,6 +588,7 @@ const StudentsTransfer = (values) => {
                             <FormGroup className="form-group has-float-label error-l-150">
                               <Label>
                                 <IntlMessages id="forms.StudyTimeLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="studyTime"
@@ -596,7 +599,7 @@ const StudentsTransfer = (values) => {
                                 onBlur={setFieldTouched}
                               />
                               {errors.studyTime && touched.studyTime ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.studyTime}
                                 </div>
                               ) : null}
@@ -605,6 +608,7 @@ const StudentsTransfer = (values) => {
                             <FormGroup>
                               <Label>
                                 <IntlMessages id="student.transferDocuments" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <InputGroup className="mb-3">
                                 <InputGroupAddon addonType="prepend">
@@ -618,7 +622,7 @@ const StudentsTransfer = (values) => {
                               </InputGroup>
                               {errors.transferDocument &&
                               touched.transferDocument ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.transferDocument}
                                 </div>
                               ) : null}
@@ -629,17 +633,16 @@ const StudentsTransfer = (values) => {
                       <Row>
                         <Colxx style={{ marginRight: '15%' }}>
                           <Button
-                            className=" m-5"
-                            size="lg"
-                            type="button"
                             color="primary"
+                            className=" buttonStyle"
+                            size="lg"
+                            type="submit"
+                            style={{
+                              margin: '5% 10% 30% 6%',
+                              paddingInline: '10%',
+                            }}
                             onClick={() => handleClick(true)}
                           >
-                            <span className="spinner d-inline-block">
-                              <span className="bounce1" />
-                              <span className="bounce2" />
-                              <span className="bounce3" />
-                            </span>
                             <span className="label">
                               <IntlMessages id="button.Back" />
                             </span>
@@ -647,17 +650,15 @@ const StudentsTransfer = (values) => {
                         </Colxx>
                         <Colxx style={{ marginLeft: '15%' }}>
                           <Button
-                            className="float-right m-5 "
+                            color="primary"
+                            className=" float-right buttonStyle"
                             size="lg"
                             type="submit"
-                            color="primary"
-                            // onClick={() => setReload(true)}
+                            style={{
+                              margin: '5% 10% 30% 8%',
+                              paddingInline: '10%',
+                            }}
                           >
-                            <span className="spinner d-inline-block">
-                              <span className="bounce1" />
-                              <span className="bounce2" />
-                              <span className="bounce3" />
-                            </span>
                             <span className="label">
                               <IntlMessages id="forms.SubimssionButton" />
                             </span>

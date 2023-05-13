@@ -58,6 +58,12 @@ const data = [
       },
 
       {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'Kankor Profille',
+        to: `${adminRoot}/students/kankor-profile`,
+        newWindow: false,
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
         to: `${adminRoot}/students/marks-register`,
@@ -103,6 +109,7 @@ const data = [
         to: `${adminRoot}/students/student-dismissal`,
         newWindow: false,
       },
+
       // {
       //   icon: 'MD.MdAddBox',
       //   label: 'menu.student-reregister',
@@ -137,11 +144,6 @@ const data = [
       //   to: `${adminRoot}/teachers/profile`,
       // },
 
-      {
-        icon: 'MD.MdAddBox',
-        label: 'menu.teacher-evaluation',
-        to: `${adminRoot}/teachers/teacher-evalaution`,
-      },
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'menu.teacher-transfer',
@@ -341,6 +343,11 @@ const data = [
         icon: 'FA.FaList',
         label: 'evaluation.list',
         to: `${adminRoot}/evaluations/evaluations`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.teacher-evaluation',
+        to: `${adminRoot}/evaluations/teacher-evalaution`,
       },
       {
         icon: 'MD.MdAddBox',

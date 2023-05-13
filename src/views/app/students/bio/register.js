@@ -2,6 +2,7 @@
 import React, { createRef, useState, Controller, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FormControl, FormLabel } from 'react-bootstrap';
+import './../../.././../assets/css/global-style.css';
 
 import {
   Row,
@@ -11,6 +12,7 @@ import {
   Label,
   Spinner,
   Button,
+  InputGroupAddon,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import {
@@ -465,9 +467,11 @@ const StudentRegistration = ({ intl }, values) => {
   const { messages } = intl;
   return (
     <Card>
-      <h3 className="mt-5 m-5">
-        {<IntlMessages id="forms.studentRegisterTitle" />}
-      </h3>
+      <div className="mt-4 ml-5">
+        <h2 className="mt-5 m-5 titleStyle titleStyle">
+          {<IntlMessages id="forms.studentRegisterTitle" />}
+        </h2>
+      </div>
       <CardBody className="wizard wizard-default">
         <Wizard>
           <Steps>
@@ -516,20 +520,25 @@ const StudentRegistration = ({ intl }, values) => {
                     isSubmitting,
                   }) => (
                     <Form
-                      className="av-tooltip tooltip-label-right has-float-label error-l-100 "
+                      className="av-tooltip tooltip-label-right has-float-label error-l-100 style "
                       style={{ paddingInline: '3%' }}
                     >
                       <Row>
                         <Colxx xxs="6">
                           <div className="p-3">
                             {/* Name */}
-                            <FormGroup className="form-group has-float-label error-l-100">
+                            <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
                                 <IntlMessages id="forms.StdName" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
-                              <Field className="form-control" name="name1" />
+                              <Field
+                                className="form-control fieldStyle"
+                                name="name1"
+                                // style={{ fontSize: '100%' }}
+                              />
                               {errors.name1 && touched.name1 ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.name1}
                                 </div>
                               ) : null}
@@ -539,10 +548,14 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="forms.lastName" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
-                              <Field className="form-control" name="lastName" />
+                              <Field
+                                className="form-control fieldStyle"
+                                name="lastName"
+                              />
                               {errors.lastName && touched.lastName ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.lastName}
                                 </div>
                               ) : null}
@@ -552,13 +565,14 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StdFatherName" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="fatherName"
                               />
                               {errors.fatherName && touched.fatherName ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.fatherName}
                                 </div>
                               ) : null}
@@ -568,14 +582,15 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="forms.grandFatherName" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="grandFatherName"
                               />
                               {errors.grandFatherName &&
                               touched.grandFatherName ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.grandFatherName}
                                 </div>
                               ) : null}
@@ -585,13 +600,14 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StdFatherDutyLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="fatherDuty"
                               />
                               {errors.fatherDuty && touched.fatherDuty ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.fatherDuty}
                                 </div>
                               ) : null}
@@ -601,6 +617,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.TazkiraType" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
 
                               <FormikReactSelect
@@ -612,7 +629,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onBlur={setFieldTouched}
                               />
                               {errors.tazkiraType && !TazkiraType ? (
-                                <div className="invalid-feedback d-block   bg-danger text-white">
+                                <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
                                   {errors.tazkiraType}
                                 </div>
                               ) : null}
@@ -627,13 +644,13 @@ const StudentRegistration = ({ intl }, values) => {
                                       <IntlMessages id="teacher.IdCardPageNoLabel" />
                                     </Label>
                                     <Field
-                                      className="form-control"
+                                      className="form-control fieldStyle"
                                       name="idCardPageNo"
                                       type="number"
                                     />
                                     {errors.idCardPageNo &&
                                     touched.idCardPageNo ? (
-                                      <div className="invalid-feedback d-block  bg-danger text-white">
+                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
                                         {errors.idCardPageNo}
                                       </div>
                                     ) : null}
@@ -644,9 +661,27 @@ const StudentRegistration = ({ intl }, values) => {
                               <div></div>
                             )}
 
-                            <FormGroup className="form-group has-float-label ">
+                            {/* Contact No */}
+                            <FormGroup className="form-group has-float-label error-l-100 ">
+                              <Label>
+                                <IntlMessages id="teacher.PhoneNoLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="phoneNo"
+                                type="number"
+                              />
+                              {errors.phoneNo && touched.phoneNo ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.phoneNo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+                            <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
                                 <IntlMessages id="teacher.DoBLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="DoB"
@@ -658,25 +693,8 @@ const StudentRegistration = ({ intl }, values) => {
                                 required
                               />
                               {errors.DoB && touched.DoB ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.DoB}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Contact No */}
-                            <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
-                                <IntlMessages id="teacher.PhoneNoLabel" />
-                              </Label>
-                              <Field
-                                className="form-control"
-                                name="phoneNo"
-                                type="number"
-                              />
-                              {errors.phoneNo && touched.phoneNo ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.phoneNo}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -688,13 +706,14 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.Eng_name" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="englishName"
                               />
                               {errors.englishName && touched.englishName ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.englishName}
                                 </div>
                               ) : null}
@@ -704,13 +723,14 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="forms.lastNameEng" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="lastNameEng"
                               />
                               {errors.lastNameEng && touched.lastNameEng ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.lastNameEng}
                                 </div>
                               ) : null}
@@ -720,13 +740,14 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.Std_father_Eng_Name" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="fatherEngName"
                               />
                               {errors.fatherEngName && touched.fatherEngName ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.fatherEngName}
                                 </div>
                               ) : null}
@@ -736,6 +757,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="gender.gender" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="gender"
@@ -746,7 +768,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onBlur={setFieldTouched}
                               />
                               {errors.gender && !Gender ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.gender}
                                 </div>
                               ) : null}
@@ -756,14 +778,15 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StdFatherDutyLocationLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="fatherDutyLocation"
                               />
                               {errors.fatherDutyLocation &&
                               touched.fatherDutyLocation ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.fatherDutyLocation}
                                 </div>
                               ) : null}
@@ -773,14 +796,15 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="teacher.TazkiraNoLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="tazkiraNo"
                                 type="number"
                               />
                               {errors.tazkiraNo && touched.tazkiraNo ? (
-                                <div className="invalid-feedback d-block  bg-danger text-white">
+                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
                                   {errors.tazkiraNo}
                                 </div>
                               ) : null}
@@ -795,13 +819,13 @@ const StudentRegistration = ({ intl }, values) => {
                                       <IntlMessages id="teacher.IdCardJoldNoLabel" />
                                     </Label>
                                     <Field
-                                      className="form-control"
+                                      className="form-control fieldStyle"
                                       name="idCardJoldNo"
                                       type="string"
                                     />
                                     {errors.idCardJoldNo &&
                                     touched.idCardJoldNo ? (
-                                      <div className="invalid-feedback d-block  bg-danger text-white">
+                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
                                         {errors.idCardJoldNo}
                                       </div>
                                     ) : null}
@@ -816,13 +840,14 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.PlaceOfBirthLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="placeOfBirth"
                               />
                               {errors.placeOfBirth && touched.placeOfBirth ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.placeOfBirth}
                                 </div>
                               ) : null}
@@ -832,14 +857,15 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="teacher.EmailLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
-                                className="form-control"
+                                className="form-control fieldStyle"
                                 name="email"
                                 type="email"
                               />
                               {errors.email && touched.email ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.email}
                                 </div>
                               ) : null}
@@ -884,95 +910,8 @@ const StudentRegistration = ({ intl }, values) => {
                     setFieldTouched,
                     setFieldValue,
                   }) => (
-                    <Form className="av-tooltip tooltip-label-right">
+                    <Form className="av-tooltip tooltip-label-right style">
                       <>
-                        <Row style={{ marginInline: '2%' }}>
-                          {' '}
-                          <Colxx xxs="6" className="pt-3">
-                            <div className="p-3">
-                              {/* Education */}
-                              <FormGroup className="form-group has-float-label error-l-100 ">
-                                <Label>
-                                  <IntlMessages id="teacher.LevelOfEducationLabel" />
-                                </Label>
-                                <FormikReactSelect
-                                  name="levelOfEducation"
-                                  id="levelOfEducation"
-                                  value={values.levelOfEducation}
-                                  options={educationLevelOptions}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                />
-                                {errors.levelOfEducation &&
-                                touched.levelOfEducation ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.levelOfEducation}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                              {/* Student Maktab*/}
-                              <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
-                                  <IntlMessages id="forms.StPreShcoolLabel" />
-                                </Label>
-                                <Field
-                                  className="form-control"
-                                  name="preSchool"
-                                />
-                                {errors.preSchool && touched.preSchool ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.preSchool}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                          </Colxx>
-                          <Colxx xxs="6" className="pt-3">
-                            <div className="square p-3 ">
-                              <FormGroup className="form-group has-float-label error-l-100 ">
-                                <Label>
-                                  <IntlMessages id="forms.StdGraduationYearLabel" />
-                                </Label>
-                                <FormikReactSelect
-                                  name="graduationYear"
-                                  id="graduationYear"
-                                  value={values.educationalYearsOptions}
-                                  options={educationalYearsOptions}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                  required
-                                />
-                                {errors.graduationYear &&
-                                touched.graduationYear ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.graduationYear}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                              {/*School province*/}
-                              <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
-                                  <IntlMessages id="forms.StdSchoolProvinceLabel" />
-                                </Label>
-                                <FormikReactSelect
-                                  name="schoolProvince"
-                                  id="schoolProvince"
-                                  value={values.schoolProvince}
-                                  options={provinceOptions}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                />
-                                {errors.schoolProvince &&
-                                touched.schoolProvince ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
-                                    {errors.schoolProvince}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                          </Colxx>
-                        </Row>
-
                         {/* Address */}
                         <Row style={{ marginInline: '2%' }}>
                           <Colxx xxs="6">
@@ -987,6 +926,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.ProvinceLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="province"
@@ -997,7 +937,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                 />
                                 {errors.province && !Province ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.province}
                                   </div>
                                 ) : null}
@@ -1007,13 +947,14 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.DistrictLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
-                                  className="form-control"
+                                  className="form-control fieldStyle"
                                   name="district"
                                 />
                                 {errors.district && touched.district ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.district}
                                   </div>
                                 ) : null}
@@ -1023,13 +964,14 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.VillageLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
-                                  className="form-control"
+                                  className="form-control fieldStyle"
                                   name="village"
                                 />
                                 {errors.village && touched.village ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.village}
                                   </div>
                                 ) : null}
@@ -1051,6 +993,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.ProvinceLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="C_Province"
@@ -1061,7 +1004,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   onBlur={setFieldTouched}
                                 />
                                 {errors.C_Province && !CurrentProvince ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.C_Province}
                                   </div>
                                 ) : null}
@@ -1071,13 +1014,14 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.DistrictLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
-                                  className="form-control"
+                                  className="form-control fieldStyle"
                                   name="C_District"
                                 />
                                 {errors.C_District && touched.C_District ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.C_District}
                                   </div>
                                 ) : null}
@@ -1087,14 +1031,106 @@ const StudentRegistration = ({ intl }, values) => {
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label>
                                   <IntlMessages id="forms.VillageLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
-                                  className="form-control"
+                                  className="form-control fieldStyle"
                                   name="C_Village"
                                 />
                                 {errors.C_Village && touched.C_Village ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white">
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.C_Village}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+                            </div>
+                          </Colxx>
+                        </Row>
+
+                        <Row style={{ marginInline: '2%' }}>
+                          <Colxx xxs="6" className="pt-3">
+                            <div className="square p-3 ">
+                              <FormGroup className="form-group has-float-label error-l-100 ">
+                                <Label>
+                                  <IntlMessages id="forms.StdGraduationYearLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <FormikReactSelect
+                                  name="graduationYear"
+                                  id="graduationYear"
+                                  value={values.educationalYearsOptions}
+                                  options={educationalYearsOptions}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                  required
+                                />
+                                {errors.graduationYear &&
+                                touched.graduationYear ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                    {errors.graduationYear}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+                              {/*School province*/}
+                              <FormGroup className="form-group has-float-label error-l-100">
+                                <Label>
+                                  <IntlMessages id="forms.StdSchoolProvinceLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <FormikReactSelect
+                                  name="schoolProvince"
+                                  id="schoolProvince"
+                                  value={values.schoolProvince}
+                                  options={provinceOptions}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                />
+                                {errors.schoolProvince &&
+                                touched.schoolProvince ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                    {errors.schoolProvince}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+                            </div>
+                          </Colxx>{' '}
+                          <Colxx xxs="6" className="pt-3">
+                            <div className="p-3">
+                              {/* Education */}
+                              <FormGroup className="form-group has-float-label error-l-100 ">
+                                <Label>
+                                  <IntlMessages id="teacher.LevelOfEducationLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <FormikReactSelect
+                                  name="levelOfEducation"
+                                  id="levelOfEducation"
+                                  value={values.levelOfEducation}
+                                  options={educationLevelOptions}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                />
+                                {errors.levelOfEducation &&
+                                touched.levelOfEducation ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                    {errors.levelOfEducation}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+
+                              {/* Student Maktab*/}
+                              <FormGroup className="form-group has-float-label error-l-100">
+                                <Label>
+                                  <IntlMessages id="forms.StPreShcoolLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <Field
+                                  className="form-control fieldStyle"
+                                  name="preSchool"
+                                />
+                                {errors.preSchool && touched.preSchool ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                    {errors.preSchool}
                                   </div>
                                 ) : null}
                               </FormGroup>
@@ -1139,33 +1175,17 @@ const StudentRegistration = ({ intl }, values) => {
                     setFieldTouched,
                     setFieldValue,
                   }) => (
-                    <Form className="av-tooltip tooltip-label-right error-l-100">
+                    <Form className="av-tooltip tooltip-label-right error-l-100 style">
                       <>
                         <Row style={{ marginInline: '2%' }}>
                           {' '}
                           <Colxx xxs="6">
-                            {/* Student Id */}
-                            <FormGroup className="form-group has-float-label">
-                              <Label>
-                                <IntlMessages id="student.studentId" />
-                              </Label>
-                              <Field
-                                className="form-control"
-                                name="studentId"
-                              />
-                              {errors.studentId && touched.studentId ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
-                                  {errors.studentId}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
                             {/* Institute Name*/}
-                            <FormGroup className="form-group has-float-label ">
-                              <Label>
+                            <FormGroup className=" has-float-label ">
+                              <Label className="fieldStule11">
                                 <IntlMessages id="forms.InstituteLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
-
                               <FormikReactSelect
                                 name="institute"
                                 id="institute"
@@ -1175,7 +1195,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onBlur={setFieldTouched}
                               />
                               {errors.institute && touched.institute ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.institute}
                                 </div>
                               ) : null}
@@ -1185,6 +1205,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="marks.ClassLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="class"
@@ -1196,8 +1217,25 @@ const StudentRegistration = ({ intl }, values) => {
                                 required
                               />
                               {errors.class && touched.class ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.class}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/* Student Id */}
+                            <FormGroup className="form-group has-float-label">
+                              <Label>
+                                <IntlMessages id="student.studentId" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="studentId"
+                              />
+                              {errors.studentId && touched.studentId ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.studentId}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -1218,7 +1256,7 @@ const StudentRegistration = ({ intl }, values) => {
                               />
                               {errors.educationalYear &&
                               touched.educationalYear ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.educationalYear}
                                 </div>
                               ) : null}
@@ -1226,6 +1264,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Sector */}
                             <FormGroup className="form-group has-float-label ">
+                              <span style={{ color: 'red' }}>*</span>
                               <Label>
                                 <IntlMessages id="forms.sector" />
                               </Label>
@@ -1239,7 +1278,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 required
                               />
                               {errors.sector && touched.sector ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.sector}
                                 </div>
                               ) : null}
@@ -1262,6 +1301,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StdInteranceTypeLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="interanceType"
@@ -1272,55 +1312,34 @@ const StudentRegistration = ({ intl }, values) => {
                                 onBlur={setFieldTouched}
                               />
                               {errors.interanceType && touched.interanceType ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.interanceType}
                                 </div>
                               ) : null}
                             </FormGroup>
 
                             {/* Upload Photo */}
-                            <FormGroup
-                              style={{ width: '100%' }}
-                              className="row align-items-center"
-                            >
-                              <div className="col">
-                                <div className="d-flex align-items-center">
-                                  <label
-                                    id="fileSpan"
-                                    style={{
-                                      marginRight: '5px',
-                                      marginLeft: '20px',
-                                      width: '25%',
-                                    }}
-                                  >
-                                    انتخاب فایل
-                                  </label>
-                                  <FormControl
-                                    style={{ width: '90%' }}
-                                    id="studetn_img"
-                                    name="student_image"
-                                    type="file"
-                                    // onChange={(event) => {
-                                    //   const fileName =
-                                    //     event.target.files[0].name;
-                                    //   handleFileChange(event, setFieldValue);
-                                    //   document.getElementById(
-                                    //     'fileSpan'
-                                    //   ).textContent = fileName;
-                                    // }}
-
-                                    onChange={(event) => {
-                                      setFieldValue(
-                                        'image',
-                                        event.currentTarget.files[0]
-                                      );
-                                    }}
-                                  />
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <InputGroupAddon addonType="prepend">
+                                <IntlMessages id="student.uploadPhoto" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </InputGroupAddon>
+                              <FormControl
+                                name="file"
+                                type="file"
+                                className="form-control fieldStyle"
+                                onChange={(event) => {
+                                  setFieldValue(
+                                    'file',
+                                    event.currentTarget.files[0]
+                                  );
+                                }}
+                              />
+                              {errors.file && touched.file ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.file}
                                 </div>
-                              </div>
-                              <div className="col">
-                                <ErrorMessage name="file" component="div" />
-                              </div>
+                              ) : null}
                             </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">
@@ -1328,6 +1347,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.studyDepartment" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="department"
@@ -1339,7 +1359,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 required
                               />
                               {errors.department && touched.department ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.department}
                                 </div>
                               ) : null}
@@ -1349,6 +1369,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="dash.field-1" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="field"
@@ -1360,7 +1381,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 required
                               />
                               {errors.field && touched.field ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.field}
                                 </div>
                               ) : null}
@@ -1370,6 +1391,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.batch" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="batch"
@@ -1381,7 +1403,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 required
                               />
                               {errors.batch && touched.batch ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.batch}
                                 </div>
                               ) : null}
@@ -1391,6 +1413,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.mediumOfInstruction" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="mediumOfInstruction"
@@ -1403,7 +1426,7 @@ const StudentRegistration = ({ intl }, values) => {
                               />
                               {errors.mediumOfInstruction &&
                               touched.mediumOfInstruction ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.mediumOfInstruction}
                                 </div>
                               ) : null}
@@ -1413,6 +1436,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StudyTimeLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="studyTime"
@@ -1423,7 +1447,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onBlur={setFieldTouched}
                               />
                               {errors.studyTime && touched.studyTime ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.studyTime}
                                 </div>
                               ) : null}
@@ -1433,6 +1457,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.StudentTypeLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
                                 name="studentType"
@@ -1443,7 +1468,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onBlur={setFieldTouched}
                               />
                               {errors.studentType && touched.studentType ? (
-                                <div className="invalid-feedback d-block bg-danger text-white">
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.studentType}
                                 </div>
                               ) : null}

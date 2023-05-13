@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
+import './../../.././../assets/css/global-style.css';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -136,9 +137,11 @@ const MarksRegistration = ({ match }) => {
         <TransferedStudentList item_list={transferedStudents} />
       ) : (
         <Card>
-          <h2 className="mt-5 m-5">
-            <IntlMessages id="student.transferred-studentList" />
-          </h2>
+          <div className="mt-4 ml-5">
+            <h2 className="mt-5 m-5 titleStyle">
+              <IntlMessages id="student.transferred-studentList" />
+            </h2>
+          </div>
           <CardBody>
             {' '}
             <Formik
@@ -153,13 +156,14 @@ const MarksRegistration = ({ match }) => {
                 setFieldTouched,
                 setFieldValue,
               }) => (
-                <Form className="av-tooltip tooltip-label-right ">
+                <Form className="av-tooltip tooltip-label-right style ">
                   <Row className="mr-5 ml-5 mt-5 mb-1 justify-content-center">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="institute"
@@ -172,27 +176,28 @@ const MarksRegistration = ({ match }) => {
                         />
 
                         {errors.institute && touched.institute ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.institute}
                           </div>
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                      <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
                           type="number"
                           id="educationlaYear"
-                          className="form-control"
+                          className="form-control fieldStyle"
                           name="educationlaYear"
                           onClick={setSelectedEducationalYear(
                             values.educationlaYear
                           )}
                         />
                         {errors.educationlaYear && touched.educationlaYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.educationlaYear}
                           </div>
                         ) : null}
@@ -202,10 +207,11 @@ const MarksRegistration = ({ match }) => {
                   <Row className=" justify-content-center">
                     <Colxx xxs="6">
                       <Button
-                        className="float-right m-3 mb-5"
+                        color="primary"
+                        className="float-right buttonStyle"
                         size="lg"
                         type="submit"
-                        color="primary"
+                        style={{ margin: '7% 0% 8% 1%', paddingInline: '5%' }}
                       >
                         <span className="label">
                           <IntlMessages id="search.studentId" />

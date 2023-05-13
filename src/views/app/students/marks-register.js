@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
 import { studyTimeOptions } from './../global-data/options';
+import './../../../assets/css/global-style.css';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -338,7 +339,11 @@ const MarksRegistration = ({ match }) => {
   return (
     <>
       <Card>
-        <h2 className="mt-5 m-5">{<IntlMessages id="marks.title" />}</h2>
+        <div className="mt-4 ml-5">
+          <h2 className="mt-5 m-5 titleStyle">
+            {<IntlMessages id="marks.title" />}
+          </h2>
+        </div>
         <CardBody>
           {!isNext ? (
             <Formik
@@ -353,11 +358,11 @@ const MarksRegistration = ({ match }) => {
                 setFieldTouched,
                 setFieldValue,
               }) => (
-                <Form className="av-tooltip tooltip-label-right ">
+                <Form className="av-tooltip tooltip-label-right  style">
                   <Row className="m-5">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
-                      <FormGroup className="form-group has-float-label error-l-15px0 ">
+                      <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
                         </Label>
@@ -372,13 +377,13 @@ const MarksRegistration = ({ match }) => {
                         />
 
                         {errors.institute && touched.institute ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.institute}
                           </div>
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5  error-l-15px0">
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.StudyTimeLabel" />
                         </Label>
@@ -392,20 +397,20 @@ const MarksRegistration = ({ match }) => {
                           onClick={setSelectedStudyTime(values.studyTime)}
                         />
                         {errors.studyTime && touched.studyTime ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.studyTime}
                           </div>
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-15px0">
+                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
                         </Label>
                         <Field
                           type="number"
                           id="educationlaYear"
-                          className="form-control"
+                          className="form-control fieldStyle"
                           name="educationlaYear"
                           // assign value to selectedEducationalYear
                           onClick={setSelectedEducationalYear(
@@ -413,7 +418,7 @@ const MarksRegistration = ({ match }) => {
                           )}
                         />
                         {errors.educationlaYear && touched.educationlaYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.educationlaYear}
                           </div>
                         ) : null}
@@ -421,7 +426,7 @@ const MarksRegistration = ({ match }) => {
                     </Colxx>
 
                     <Colxx xxs="6">
-                      <FormGroup className="form-group has-float-label error-l-15px0 ">
+                      <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
                         </Label>
@@ -436,13 +441,13 @@ const MarksRegistration = ({ match }) => {
                           required
                         />
                         {errors.classs && touched.classs ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.classs}
                           </div>
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-15px0">
+                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.studyDepartment" />
                         </Label>
@@ -457,13 +462,13 @@ const MarksRegistration = ({ match }) => {
                           required
                         />
                         {errors.department && touched.department ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.department}
                           </div>
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-15px0">
+                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
                         </Label>
@@ -478,7 +483,7 @@ const MarksRegistration = ({ match }) => {
                           required
                         />
                         {errors.subject && touched.subject ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.subject}
                           </div>
                         ) : null}
@@ -489,10 +494,10 @@ const MarksRegistration = ({ match }) => {
                     <Colxx>
                       <Button
                         color="primary"
-                        className="float-right m-5"
-                        type="submit"
+                        className="float-right  buttonStyle"
                         size="lg"
-                        // onClick={() => fechtStudens()}
+                        type="submit"
+                        style={{ margin: '2% 0% 10% 6%' }}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />

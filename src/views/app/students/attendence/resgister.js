@@ -432,9 +432,9 @@ const StudentAttendance = ({ match }) => {
                           id="totolEducationalDays"
                           className="form-control fieldStyle"
                           name="totolEducationalDays"
-                          onClick={setSelectedEducationalYear(
-                            values.totolEducationalDays
-                          )}
+                          // onClick={setSelectedEducationalYear(
+                          //   values.totolEducationalDays
+                          // )}
                         />
                         {errors.totolEducationalDays &&
                         touched.totolEducationalDays ? (

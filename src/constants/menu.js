@@ -145,11 +145,6 @@ const data = [
       // },
 
       {
-        icon: 'MD.MdAddBox',
-        label: 'menu.teacher-evaluation',
-        to: `${adminRoot}/teachers/teacher-evalaution`,
-      },
-      {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'menu.teacher-transfer',
         to: `${adminRoot}/teachers/teacher-transfer`,
@@ -348,6 +343,11 @@ const data = [
         icon: 'FA.FaList',
         label: 'evaluation.list',
         to: `${adminRoot}/evaluations/evaluations`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.teacher-evaluation',
+        to: `${adminRoot}/evaluations/teacher-evalaution`,
       },
       {
         icon: 'MD.MdAddBox',

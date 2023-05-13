@@ -131,7 +131,7 @@ const initialValues = {
 };
 const StudentAttendance = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isNext, setIsNext] = useState(true);
+  const [isNext, setIsNext] = useState(false);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -296,6 +296,22 @@ const StudentAttendance = ({ match }) => {
     console.log('students', students);
   };
 
+  // fetch student list for typing attendance
+  const fetchStudentList = async () => {
+    const response = await callApi(
+      `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      'GET',
+      null
+    );
+    console.log('class repspossdfsde', response);
+    if (response.data && response.status === 200) {
+      setStudents(response.data);
+      setIsNext(true);
+    } else {
+      console.log('class error');
+    }
+  };
+
   const onSubmit = (values) => {
     console.log('values', values);
     const educational_year = selectedEducationalYear;
@@ -336,10 +352,10 @@ const StudentAttendance = ({ match }) => {
           </h2>
         </div>
         <CardBody>
-          {isNext ? (
+          {!isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={onSubmit}
+              onSubmit={fetchStudentList}
               validationSchema={ValidationSchema}
             >
               {({
@@ -622,7 +638,7 @@ const StudentAttendance = ({ match }) => {
                   >
                     {students.map((student, index) => (
                       <tr>
-                        <th scope="row">{index}</th>
+                        <th scope="row">{index + 1}</th>
                         <td>{student.name}</td>
                         <td>{student.father_name}</td>
                         <td>{student.student_id}</td>
@@ -687,7 +703,10 @@ const StudentAttendance = ({ match }) => {
               </Row>
               <Row className=" justify-content-center">
                 <Colxx xxs="9" className="m-5">
-                  <Button className=" m-4" onClick={() => handleClick(true)}>
+                  <Button
+                    className=" m-4"
+                    // onClick={() => handleClick(true)}
+                  >
                     <IntlMessages id="button.Back" />
                   </Button>
                 </Colxx>

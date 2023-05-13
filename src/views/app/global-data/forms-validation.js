@@ -207,7 +207,7 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.sectorErr" />),
-  file: Yup.mixed().required(<IntlMessages id="student.photoErr" />),
+  // student_image: Yup.mixed().required(<IntlMessages id="student.photoErr" />),
 });
 
 ////////////////////////////////

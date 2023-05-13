@@ -362,7 +362,7 @@ const TeacherRegister = ({ intl }, values) => {
                     major: initialMajor,
                   }}
                   validateOnMount
-                  validationSchema={teacherRegisterFormStep_1}
+                  // validationSchema={teacherRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -910,7 +910,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
-                                  className="form-control"
+                                  className="form-control fieldStyle"
                                   name="district"
                                 />
                                 {errors.district && touched.district ? (
@@ -927,7 +927,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
-                                  className="form-control"
+                                  className="form-control fieldStyle"
                                   name="village"
                                 />
                                 {errors.village && touched.village ? (
@@ -976,7 +976,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
-                                  className="form-control"
+                                  className="form-control fieldStyle"
                                   name="C_District"
                                 />
                                 {errors.C_District && touched.C_District ? (
@@ -993,7 +993,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
-                                  className="form-control"
+                                  className="form-control fieldStyle"
                                   name="C_Village"
                                 />
                                 {errors.C_Village && touched.C_Village ? (

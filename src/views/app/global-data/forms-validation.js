@@ -320,12 +320,10 @@ export const teacherRegisterFormStep_2 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="teacher.contractTypeErr" />),
 
-  // teachingLang: Yup.object()
-  // .shape({
-  //   value: Yup.string().required(),
-  // })
-  // .nullable()
-  // .required(<IntlMessages id="teacher.teachingLangErr" />),
+  teachingLang: Yup.array()
+    .min(1, <IntlMessages id="teacher.teachingLangErr" />)
+    .nullable()
+    .required(<IntlMessages id="teacher.teachingLangErr" />),
 
   C_Province: Yup.object()
     .shape({ value: Yup.string().required() })

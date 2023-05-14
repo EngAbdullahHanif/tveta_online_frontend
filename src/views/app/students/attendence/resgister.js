@@ -247,11 +247,13 @@ const StudentAttendance = ({ match }) => {
 
   // fetch student list for typing attendance
   const fetchStudentList = async () => {
+    console.log('Div Inner Side');
     const response = await callApi(
       `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       'GET',
       null
     );
+        console.log('Div Inner Side');
     console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       setStudents(response.data);

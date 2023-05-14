@@ -186,6 +186,7 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.mediumOfInstructionErr" />),
+
   batch: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -460,4 +461,117 @@ export const kankorRegisterValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
   district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+});
+
+export const teacherTransferValidationSchema = Yup.object().shape({
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.InstituteErr" />),
+  major: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
+
+  transferDate: Yup.string().required(
+    <IntlMessages id="teacher.transferDateErr" />
+  ),
+
+  language: Yup.string().required(
+    <IntlMessages id="forms.mediumOfInstructionErr" />
+  ),
+
+  appointmentType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.appointmentTypeErr" />),
+
+  contractType: Yup.object()
+    .shape({ value: Yup.string().required() })
+    .nullable()
+    .required(<IntlMessages id="teacher.contractTypeErr" />),
+
+  transferDoc: Yup.mixed()
+    .test('fileType', 'Unsupported File Format', (value) => {
+      if (value) {
+        const supportedFormats = ['application/pdf', 'image/jpeg', 'image/png'];
+        return supportedFormats.includes(value.type);
+      }
+      return true; // allows undefined values
+    })
+    .test('fileSize', 'File too large', (value) => {
+      if (value) {
+        const maxSize = 1048576; // 1MB
+        return value.size <= maxSize;
+      }
+      return true; // allows undefined values
+    })
+    .required(<IntlMessages id="teacher.transferDocumentLabel" />),
+});
+
+export const studentdismissalvalidationSchema = Yup.object().shape({
+  dismissalDate: Yup.string().required(
+    <IntlMessages id="student.dissmissalDateErr" />
+  ),
+  dismissalDocument: Yup.mixed()
+    .test('fileType', 'Unsupported File Format', (value) => {
+      if (value) {
+        const supportedFormats = ['application/pdf', 'image/jpeg', 'image/png'];
+        return supportedFormats.includes(value.type);
+      }
+      return true; // allows undefined values
+    })
+    .test('fileSize', 'File too large', (value) => {
+      if (value) {
+        const maxSize = 1048576; // 1MB
+        return value.size <= maxSize;
+      }
+      return true; // allows undefined values
+    })
+    .required(<IntlMessages id="student.dissmissaldocErr" />),
+});
+
+
+export const studentTransferValidationSchema = Yup.object().shape({
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.InstituteErr" />),
+
+  transferDate: Yup.string().required(
+    <IntlMessages id="teacher.transferDateErr" />
+  ),
+
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
+
+  mediumOfInstruction: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.mediumOfInstructionErr" />),
+
+  studyTime: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudyTimeErr" />),
+
+  // transferDocument: Yup.string().required(
+  //   <IntlMessages id="student.dissmissalDocumentErr" />
+  // ),
 });

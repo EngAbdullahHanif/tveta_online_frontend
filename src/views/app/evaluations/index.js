@@ -17,6 +17,10 @@ const EvaluationDetails = React.lazy(() =>
   import(/* webpackChunkName: "promotion-demotion" */ './evaluation-details')
 );
 
+const TeacherEvaluation = React.lazy(() =>
+  import(/* webpackChunkName: "teacher-evaluation" */ './teacher-evaluation')
+);
+
 const Evaluations = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -24,6 +28,11 @@ const Evaluations = ({ match }) => (
       <Route
         path={`${match.url}/evaluations`}
         render={(props) => <EvaluationList {...props} />}
+      />
+      <Route
+        exact
+        path={`${match.url}/teacher-evalaution`}
+        render={(props) => <TeacherEvaluation {...props} />}
       />
       <Route
         path={`${match.url}/promotion-demotion`}

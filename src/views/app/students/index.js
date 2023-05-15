@@ -101,6 +101,9 @@ const AttendanceUpdate = React.lazy(() =>
   )
 );
 
+const KankorProfile = React.lazy(() =>
+  import(/* webpackChunkName: "attendance-update" */ './bio/kankor-profile')
+);
 const Main = React.lazy(() =>
   import(/* webpackChunkName: "register-1" */ '../main-register-route')
 );
@@ -123,7 +126,6 @@ const Students = ({ match }) => (
         path={`${match.url}/register-kankor`}
         render={(props) => <RegisterKankor {...props} />}
       />
-
       <Route
         path={`${match.url}/register-kankor/:kankorStudentId`}
         render={(props) => <RegisterKankor {...props} />}
@@ -166,7 +168,6 @@ const Students = ({ match }) => (
         path={`${match.url}/second-chance`}
         render={(props) => <SecondChanceMarks {...props} />}
       />
-
       <Route
         exact
         path={`${match.url}/attendance-register`}
@@ -224,10 +225,17 @@ const Students = ({ match }) => (
         path={`${match.url}/register-1`}
         render={(props) => <Main {...props} />}
       />
-
       <Route
         path={`${match.url}/student-upgrade`}
         render={(props) => <StudentUpgrade {...props} />}
+      />
+      <Route
+        path={`${match.url}/student-upgrade`}
+        render={(props) => <StudentUpgrade {...props} />}
+      />
+      <Route
+        path={`${match.url}/kankor-profile`}
+        render={(props) => <KankorProfile {...props} />}
       />
 
       <Route

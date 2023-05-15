@@ -4,6 +4,7 @@ import axios from 'axios';
 import './style.css';
 import callApi from 'helpers/callApi';
 import { studyTimeOptions } from '../global-data/options';
+import './../../../assets/css/global-style.css';
 
 import * as Yup from 'yup';
 import {
@@ -345,9 +346,11 @@ const MarksDisplay = ({ match }) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
-          {<IntlMessages id="marks.marksDisplayTitle" />}
-        </h3>
+        <div className="mt-4 ml-5">
+          <h2 className="mt-5 ml-5 titleStyle">
+            {<IntlMessages id="marks.marksDisplayTitle" />}
+          </h2>
+        </div>
         <CardBody>
           {!isNext ? (
             <Formik
@@ -362,13 +365,14 @@ const MarksDisplay = ({ match }) => {
                 setFieldTouched,
                 setFieldValue,
               }) => (
-                <Form className="av-tooltip tooltip-label-right ">
+                <Form className="av-tooltip tooltip-label-right style ">
                   <Row className="m-5">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="institute"
@@ -381,7 +385,7 @@ const MarksDisplay = ({ match }) => {
                         />
 
                         {errors.institute && touched.institute ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.institute}
                           </div>
                         ) : null}
@@ -390,6 +394,7 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.StudyTimeLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="studyTime"
@@ -401,19 +406,20 @@ const MarksDisplay = ({ match }) => {
                           onClick={setSelectedStudyTime(values.studyTime)}
                         />
                         {errors.studyTime && touched.studyTime ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.studyTime}
                           </div>
                         ) : null}
                       </FormGroup>
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                      <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
                           type="number"
                           id="educationlaYear"
-                          className="form-control"
+                          className="form-control fieldStyle"
                           name="educationlaYear"
                           // assign value to selectedEducationalYear
                           onClick={setSelectedEducationalYear(
@@ -421,7 +427,7 @@ const MarksDisplay = ({ match }) => {
                           )}
                         />
                         {errors.educationlaYear && touched.educationlaYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.educationlaYear}
                           </div>
                         ) : null}
@@ -432,6 +438,7 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="classs"
@@ -444,7 +451,7 @@ const MarksDisplay = ({ match }) => {
                           required
                         />
                         {errors.classs && touched.classs ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.classs}
                           </div>
                         ) : null}
@@ -453,6 +460,7 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.studyDepartment" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="department"
@@ -465,7 +473,7 @@ const MarksDisplay = ({ match }) => {
                           required
                         />
                         {errors.department && touched.department ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.department}
                           </div>
                         ) : null}
@@ -474,6 +482,7 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="subject"
@@ -486,7 +495,7 @@ const MarksDisplay = ({ match }) => {
                           required
                         />
                         {errors.subject && touched.subject ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.subject}
                           </div>
                         ) : null}
@@ -497,18 +506,11 @@ const MarksDisplay = ({ match }) => {
                     <Colxx>
                       <Button
                         color="primary"
-                        className="float-right m-5"
+                        className="float-right  buttonStyle"
                         size="lg"
                         type="submit"
-                        // onClick={() => {
-                        //   onSubmit(false);
-                        // }}
+                        style={{ margin: '2% 0% 10% 6%' }}
                       >
-                        <span className="spinner d-inline-block">
-                          <span className="bounce1" />
-                          <span className="bounce2" />
-                          <span className="bounce3" />
-                        </span>
                         <span className="label">
                           <IntlMessages id="button.Next" />
                         </span>

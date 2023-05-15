@@ -656,6 +656,7 @@ module.exports = {
   'forms.validation-formik': 'اعتبار سنجی Formik',
   'forms.default': 'پیشفرض',
   'forms.personalInfo': 'خصوصی مالومات/ معلومات شخصی',
+  'forms.kankorInfo': 'معلومات',
   'forms.firstname': 'نام',
   'forms.firstname-message': 'لطفا نام خود را وارد کنید',
   'forms.lastname': 'نام خانوادگی',
@@ -713,6 +714,8 @@ module.exports = {
   'forms.VillageErr': 'قریه اړین ده/ قریه ضروری است',
   'forms.PlaceOfBirthLabel': 'د زیږیدو ځای /مکان تولد',
   'forms.StdPlaceOfBirthErr': 'د زیږیدو ځای اړین دی /مکان تولد ضروری است',
+  'student.uploadPhoto': ' انځور/ عکس',
+
   // Second page of student biography
   'forms.EducationalLevel_9th': 'نهم صنف / صنف نهم',
   'forms.EducationalLevel_10th': 'لسم ټولګی/ صنف دهم',
@@ -826,6 +829,7 @@ module.exports = {
   'forms.SubimssionButton': 'ثبت',
   'student.Profile': ' د شاگرد پروفایل/ پروفایل شاگرد',
   'forms.RegistrationDateLabel': 'د ثبت نام وخت/ تاریخ ثبت نام',
+  'student.kankorProfile': 'د کانکور پروفایل/ پروفایل کانکور',
 
   // Student Attendance Register
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',
@@ -1153,7 +1157,7 @@ module.exports = {
   'student.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
   'student.transferDocuments': 'د تبدیلی اسناد / اسناد تبدیلی',
   'student.transferred-studentList':
-    'د تبدیل شویو شاګردانو لست/ لست شاگردان تبدلی شده',
+    'د تبدیل شویو شاګردانو لست/ لست شاگردان تبدل شده',
   'student.previousInstitute': 'مخکنی انستیتوت',
   'student.newInstitute': 'نوی انستیتوت',
 
@@ -1349,8 +1353,7 @@ module.exports = {
     'د استاد د ارزیابی ارقام/ ارقام ارزیابی استاد',
 
   // Student Dismissal
-  'student.dismissalTitleFromInstitute':
-    ' له انستیتوت/لیسې نه د شاګرد منفکی// منفکی شاگرد از انستیتوت/لسیه',
+  'student.dismissalTitleFromInstitute': 'د شاګرد منفکی/ منفکی شاگرد',
   'student.dismissalDateLabel': 'د منفکۍ تاریخ/ تاریخ منفکی',
   'search.studentIdsearchErr':
     'د شاګرد ایډی د ننه کړئ/ لطفا ایدی شاگرد را وارد نماید',

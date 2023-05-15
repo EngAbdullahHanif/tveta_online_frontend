@@ -21,9 +21,13 @@ const BottomNavigation = ({
           <Colxx>
             <Button
               color="primary"
-              style={{ marginRight: '400px' }}
+              style={{
+                fontSize: '140%',
+                fontWeight: 'bold',
+                paddingInline: '7%',
+              }}
               className={`mr-1 ${
-                steps.indexOf(step) <= 0 ? 'disabled  m-4' : ' m-4'
+                steps.indexOf(step) <= 0 ? 'disabled  m-4 ml-4' : ' m-4 ml-4'
               }`}
               onClick={() => {
                 onClickPrev(previous, steps, step);
@@ -34,9 +38,12 @@ const BottomNavigation = ({
           </Colxx>
           <Colxx>
             <Button
-            
               color="primary"
-              style={{ paddingInline: '30px' }}
+              style={{
+                fontSize: '140%',
+                fontWeight: 'bold',
+                paddingInline: '7%',
+              }}
               className={
                 steps.indexOf(step) >= steps.length - 1
                   ? 'disabled float-right m-4'
@@ -44,7 +51,6 @@ const BottomNavigation = ({
               }
               onClick={() => {
                 onClickNext(next, steps, step);
-               
               }}
             >
               {steps.indexOf(step) >= steps.length - 2 ? (

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { educationalYearsOptions } from '../../global-data/options';
 import { studyTimeOptions } from '../../global-data/options';
+import './../../.././../assets/css/global-style.css';
 
 // Year  and SHift
 import { useParams } from 'react-router-dom';
@@ -80,13 +81,6 @@ const ValidationSchema = Yup.object().shape({
   totolEducationalDays: Yup.string().required(
     <IntlMessages id="forms.totolEduactionalDaysErr" />
   ),
-
-  // studyTime: Yup.object()
-  //   .shape({
-  //     value: Yup.string().required(),
-  //   })
-  //   .nullable()
-  //   .required(<IntlMessages id="forms.StudyTimeErr" />),
 });
 
 const InnerInpufieldsValidation = Yup.object().shape({
@@ -363,9 +357,11 @@ const StudentAttendance = ({ match }) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
-          {<IntlMessages id="forms.AttendanceTitle" />}
-        </h3>
+        <div className="mt-4 ml-5">
+          <h2 className=" m-5  titleStyle">
+            {<IntlMessages id="forms.AttendanceTitle" />}
+          </h2>
+        </div>
         <CardBody>
           {!isNext ? (
             <Formik
@@ -381,13 +377,14 @@ const StudentAttendance = ({ match }) => {
                 setFieldTouched,
                 setFieldValue,
               }) => (
-                <Form className="av-tooltip tooltip-label-right  ">
+                <Form className="av-tooltip tooltip-label-right style ">
                   <Row className="m-5">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
-                          <IntlMessages id="forms.In         stituteLabel" />
+                          <IntlMessages id="forms.InstituteLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="institute"
@@ -399,7 +396,7 @@ const StudentAttendance = ({ match }) => {
                           onClick={setSelectedInstitute(values.institute)}
                         />
                         {errors.institute && touched.institute ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.institute}
                           </div>
                         ) : null}
@@ -408,6 +405,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
                         <Label>
                           <IntlMessages id="curriculum.eduactionalYearLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="educationalYear"
@@ -418,7 +416,7 @@ const StudentAttendance = ({ match }) => {
                           onBlur={setFieldTouched}
                         />
                         {errors.educationalYear && touched.educationalYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.educationalYear}
                           </div>
                         ) : null}
@@ -427,19 +425,20 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.totolEducationalDays" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
                           type="number"
                           id="totolEducationalDays"
-                          className="form-control"
+                          className="form-control fieldStyle"
                           name="totolEducationalDays"
-                          onClick={setSelectedEducationalYear(
-                            values.totolEducationalDays
-                          )}
+                          // onClick={setSelectedEducationalYear(
+                          //   values.totolEducationalDays
+                          // )}
                         />
                         {errors.totolEducationalDays &&
                         touched.totolEducationalDays ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.totolEducationalDays}
                           </div>
                         ) : null}
@@ -450,6 +449,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="classs"
@@ -462,7 +462,7 @@ const StudentAttendance = ({ match }) => {
                           required
                         />
                         {errors.classs && touched.classs ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.classs}
                           </div>
                         ) : null}
@@ -471,6 +471,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.studyDepartment" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="department"
@@ -483,7 +484,7 @@ const StudentAttendance = ({ match }) => {
                           required
                         />
                         {errors.department && touched.department ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.department}
                           </div>
                         ) : null}
@@ -494,10 +495,10 @@ const StudentAttendance = ({ match }) => {
                     <Colxx>
                       <Button
                         color="primary"
-                        className="float-right m-5"
+                        className="float-right buttonStyle"
                         size="lg"
                         type="submit"
-                        // onClick={() => fetchStudentList()}
+                        style={{ margin: '3% 0% 10% 8%' }}
                       >
                         <span className="spinner d-inline-block">
                           <span className="bounce1" />
@@ -522,45 +523,45 @@ const StudentAttendance = ({ match }) => {
                     style={{ marginInline: '10%', fontSize: '20px' }}
                   >
                     <Colxx xxs="2">
-                      <Label>
+                      <Label className="data-style-1">
                         <IntlMessages id="menu.institutes" />
                       </Label>
-                      <h6>دینامیک گردد</h6>
+                      <h2>دینامیک گردد</h2>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
+                      <Label className="data-style-1">
                         <IntlMessages id="attendance.departmentLabel" />
                       </Label>
-                      <h6>{selectedDepartment.label}</h6>
+                      <h2>{selectedDepartment.label}</h2>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
+                      <Label className="data-style-1">
                         <IntlMessages id="marks.ClassLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h2>{selectedClass.label}</h2>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
+                      <Label className="data-style-1">
                         <IntlMessages id="forms.StudyTimeLabel" />
                       </Label>
-                      <h6>{selecedStudyTime.label}</h6>
+                      <h2>{selecedStudyTime.label}</h2>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
-                        <IntlMessages id="curriculum.eduactionalYearLabel" />
+                      <Label className="data-style-1">
+                        <IntlMessages id="curriculum.eduactionalYearList" />
                       </Label>
-                      <h6>دینامیک گردد</h6>
+                      <h2>دینامیک گردد</h2>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label>
+                      <Label className="data-style-1">
                         <IntlMessages id="forms.totolEducationalDays" />
                       </Label>
-                      <h6>دینامیک گردد</h6>
+                      <h2>دینامیک گردد</h2>
                     </Colxx>
                   </Row>
 
@@ -588,10 +589,16 @@ const StudentAttendance = ({ match }) => {
                           <table class="table ">
                             <thead className="thead-dark ">
                               <tr>
-                                <th colspan="4" className="border text-center">
+                                <th
+                                  colspan="4"
+                                  className="border text-center list-header-1"
+                                >
                                   <IntlMessages id="marks.studentChar" />
                                 </th>
-                                <th colspan="4" className="border text-center">
+                                <th
+                                  colspan="4"
+                                  className="border text-center list-header-1"
+                                >
                                   <IntlMessages id="attendance.attendaceDisplayTitle" />
                                 </th>
                                 {/* <th colspan="1" className="border text-center">
@@ -602,29 +609,53 @@ const StudentAttendance = ({ match }) => {
                             </thead>
                             <thead className="thead-dark">
                               <tr>
-                                <th scope="col" className="border text-center ">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2 "
+                                >
                                   <IntlMessages id="marks.No" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="marks.FullName" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="marks.FatherName" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="marks.ID" />
                                 </th>
 
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="forms.StdPresentLabel" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="forms.StdAbsentLabel" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="forms.StdNecessaryWorkLabel" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="forms.StdSicknessLabel" />
                                 </th>
                                 {/* <th scope="col" className="border text-center">
@@ -760,26 +791,47 @@ const StudentAttendance = ({ match }) => {
                                 >
                                   <IntlMessages id="marks.No" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="marks.FullName" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="marks.FatherName" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="marks.ID" />
                                 </th>
 
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="forms.StdPresentLabel" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="forms.StdAbsentLabel" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="forms.StdNecessaryWorkLabel" />
                                 </th>
-                                <th scope="col" className="border text-center">
+                                <th
+                                  scope="col"
+                                  className="border text-center list-header-2"
+                                >
                                   <IntlMessages id="forms.StdSicknessLabel" />
                                 </th>
                                 {/* <th scope="col" className="border text-center">
@@ -790,30 +842,27 @@ const StudentAttendance = ({ match }) => {
                           </table>
                         </Row>
                         <Row className=" justify-content-center">
-                          <Colxx xxs="9" className="m-5">
+                          <Colxx xxs="10" className="m-5">
                             <Button
-                              className=" m-4"
+                              color="primary"
+                              className="buttonStyle1"
+                              size="lg"
+                              type="submit"
+                              style={{ margin: '5% 6% 10% 8%' }}
                               onClick={() => setIsNext(false)}
                             >
                               <IntlMessages id="button.Back" />
                             </Button>
 
-                            <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                              <Button
-                                className={`btn-shadow btn-multiple-state `}
-                                size="lg"
-                                type="submit"
-                              >
-                                <span className="spinner d-inline-block">
-                                  <span className="bounce1" />
-                                  <span className="bounce2" />
-                                  <span className="bounce3" />
-                                </span>
-                                <span className="label">
-                                  <IntlMessages id="button.SubmitButton" />
-                                </span>
-                              </Button>
-                            </div>
+                            <Button
+                              color="primary"
+                              className=" float-right buttonStyle1"
+                              size="lg"
+                              type="submit"
+                              style={{ margin: '5% 0% 10% 6%' }}
+                            >
+                              <IntlMessages id="button.SubmitButton" />
+                            </Button>
                           </Colxx>
                         </Row>
                       </Form>

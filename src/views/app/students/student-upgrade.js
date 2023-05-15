@@ -1,7 +1,8 @@
+// this page is for student upgrade, it is not used in the project, it might be used in the future
+
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
-import callApi from 'helpers/callApi';
 import { studyTimeOptions } from '../../app/global-data/options';
 // Year  and SHift
 
@@ -27,49 +28,10 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
+import c from 'hijri-date-picker';
 
-// const LevelOfEdcationOptions = [
-//   { value: '1', label: 'اصلی' },
-//   { value: '2', label: 'فرعی' },
-// ];
-
-// const FieldOptions = [
-//   { value: '14th', label: 'Computer Science' },
-//   { value: 'bachelor', label: 'Agriculture' },
-//   { value: 'master', label: 'BBA' },
-//   { value: 'PHD', label: 'Mechenical Engineering' },
-// ];
-
-const SemesterOptions = [
-  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
-  // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
-  //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
-];
-
-// const SectionOptions = [
-//   { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-// ];
-
-// const ClassOptions = [
-//   { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-//   { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-//   { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-//   { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-//   { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-//   { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-// ];
-
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-const pageSizes = [10, 20, 40, 80];
+import currentUser from 'helpers/currentUser';
+import callApi from 'helpers/callApi';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -124,6 +86,7 @@ const StudentUpgrade = ({ match }) => {
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
+  const [checkedItems, setCheckedItems] = useState({});
 
   const [classs, setClasss] = useState();
   const [semester, setSemester] = useState();
@@ -201,11 +164,11 @@ const StudentUpgrade = ({ match }) => {
     fetchSubjects();
   }, []);
 
-  const handleClick = async (event) => {
+  const fetchStudents = async (event) => {
     setIsNext(false);
 
     const response = await callApi(
-      `api/class_marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/class_marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&study_time=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
       null
     );
@@ -224,37 +187,52 @@ const StudentUpgrade = ({ match }) => {
       console.log('students error');
     }
   };
-  console.log('Wanted Data', header.length - 3);
-  // const onSubmit = (values) => {
-  //   console.log('values', values);
-  //   const educational_year = selectedEducationalYear;
-  //   const institute_id = selectedInstitute.value;
-  //   const department = selectedDepartment.value;
-  //   const class_id = selectedClass.value;
-  //   const subject_id = selectedSubject.value;
-  //   students.map((student) => {
-  //     const examData = {
-  //       educational_year: educational_year,
-  //       student_id: student.student_id,
-  //       institute_id: institute_id,
-  //       Department: department,
-  //       class_id: class_id,
-  //     };
-  //     //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-  //     //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-  //     const data = {
-  //       subject: subject_id,
-  //       exam_types: 1,
-  //       passing_score: passingScore,
-  //       grad: subjectGrad,
-  //       Gpa: subjectGPA,
-  //       user_id: 1,
-  //       mark: values.score[student.student_id],
-  //     };
-  //     console.log('data', data);
-  //     // axios.post('http://localhost:8000/api/marks/', data);
-  //   });
-  // };
+  const handleChange = (event, index) => {
+    const { name, checked } = event.target;
+    setCheckedItems((prevState) => {
+      const newCheckedItems = [...prevState];
+      newCheckedItems[index] = checked;
+      return newCheckedItems;
+    });
+  };
+
+  const onSubmit = (values) => {
+    const checkedItemsObj = { ...checkedItems };
+    // if the index is in the checkedItemsObj, if it is, add the student to the passedStudents array,
+    const passedStudents = students.map((student, index) => {
+      if (checkedItemsObj[index]) {
+        // only returns first index of the student, becuase we only need the student id
+        return student[0].name;
+      }
+    });
+    //remove undefined values from the passedStudents array
+    const fillteredStudents = passedStudents.filter(
+      (student) => student !== undefined && student !== null
+    );
+
+    const data = [
+      {
+        class_id: selectedClass.value,
+        study_time: selecedStudyTime.value,
+        department_id: selectedDepartment.value,
+        educational_year: selectedEducationalYear,
+        user_id: currentUser(),
+      },
+      { ...fillteredStudents },
+    ];
+
+    const response = callApi('api/class_marks', 'POST', data);
+    if (
+      response.status === 200 ||
+      response.status === 201 ||
+      response.status === 202 ||
+      response.status === 203
+    ) {
+      console.log('response.data', response.data);
+    } else {
+      console.log('error');
+    }
+  };
 
   const initialValues = {
     institute: [],
@@ -263,11 +241,14 @@ const StudentUpgrade = ({ match }) => {
     classs: [],
     department: [],
   };
+  const secondFormInitialValues = {
+    passedStudents: [],
+  };
 
-  //Check Box
-  const [checkedItems, setCheckedItems] = useState(
-    students.reduce((acc, student, index) => ({ ...acc, [index]: false }), {})
-  );
+  // //Check Box
+  // const [checkedItems, setCheckedItems] = useState(
+  //   students.reduce((acc, student, index) => ({ ...acc, [index]: false }), {})
+  // );
   const [isMasterChecked, setIsMasterChecked] = useState(false);
 
   const handleMasterCheckboxChange = (event) => {
@@ -329,7 +310,6 @@ const StudentUpgrade = ({ match }) => {
   //   .filter((index) => checkedItems[index])
   //   .map((index) => parseInt(index));
 
-  console.log(checkedIndexes, 'checkedIndexes');
   return (
     <>
       <Card>
@@ -341,7 +321,7 @@ const StudentUpgrade = ({ match }) => {
             <Formik
               initialValues={initialValues}
               validationSchema={ValidationSchema}
-              onSubmit={handleClick}
+              onSubmit={fetchStudents}
             >
               {({
                 errors,
@@ -496,7 +476,6 @@ const StudentUpgrade = ({ match }) => {
                   <Label>
                     <IntlMessages id="forms.FieldLabel" />
                   </Label>
-                  {console.log('selectedDepartment', selectedDepartment)}
                   <h6>{selectedDepartment.label}</h6>
                 </Colxx>
 
@@ -528,7 +507,6 @@ const StudentUpgrade = ({ match }) => {
                   <h6>{section}</h6>
                 </Colxx>
               </Row>
-
               <Row
                 style={{
                   marginInline: '2%',
@@ -538,133 +516,192 @@ const StudentUpgrade = ({ match }) => {
                   overflowY: 'auto',
                 }}
               >
-                <table className="table" striped>
-                  <thead className="thead-dark " style={{ marginInline: '2%' }}>
-                    <tr>
-                      <th colspan="3" className="border text-center">
-                        <IntlMessages id="marks.studentChar" />
-                      </th>
-                      <th
-                        colspan={header.length - 3}
-                        className="border text-center"
-                      >
-                        <IntlMessages id="marks.marksDisplayTitle" />
-                      </th>{' '}
-                      <th className="border text-center">
-                        <IntlMessages id="marks.resultHeader" />
-                      </th>
-                    </tr>
-                  </thead>
-                  <thead
-                    className="thead-dark border  text-center"
-                    style={{ marginInline: '5%' }}
-                  >
-                    <tr>
-                      {header.map((item, index) => (
-                        <th key={index} className="border  text-center">
-                          {item.name}
-                        </th>
-                      ))}
-                      <th className="border text-center">
-                        <CustomInput
-                          type="checkbox"
-                          id="CheckAll"
-                          checked={isMasterChecked}
-                          onChange={handleMasterCheckboxChange}
-                        />
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody
-                    className="border border "
-                    style={{
-                      maxHeight: '500px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
-                  >
-                    {students.map((studentRow, index) => {
-                      return (
-                        <tr key={index}>
-                          {!index == 0 ? (
-                            <>
-                              {studentRow.map((student, secondIndex) => {
-                                return (
-                                  <>
-                                    {secondIndex === 0 ||
-                                    secondIndex === 1 ||
-                                    secondIndex === 2 ? (
-                                      <td
-                                        scope="col"
-                                        className="border text-center "
-                                      >
-                                        {student.name}
-                                      </td>
-                                    ) : (
-                                      <>
-                                        <td
-                                          scope="col"
-                                          className="border text-center "
-                                        >
-                                          {student.score}
-                                        </td>
-                                      </>
-                                    )}
-                                  </>
-                                );
-                              })}
-                              <td className="border text-center " key={index}>
-                                <CustomInput
+                <Formik
+                  initialValues={secondFormInitialValues}
+                  onSubmit={onSubmit}
+                  // validationSchema={ValidationSchema}
+                >
+                  {({ errors }) => (
+                    <Form className="table" striped>
+                      <Row>
+                        <table className="table" striped>
+                          <thead
+                            className="thead-dark "
+                            style={{ marginInline: '2%' }}
+                          >
+                            <tr>
+                              <th colspan="3" className="border text-center">
+                                <IntlMessages id="marks.studentChar" />
+                              </th>
+                              <th
+                                colspan={header.length - 3}
+                                className="border text-center"
+                              >
+                                <IntlMessages id="marks.marksDisplayTitle" />
+                              </th>{' '}
+                              <th className="border text-center">
+                                <IntlMessages id="marks.resultHeader" />
+                              </th>
+                            </tr>
+                          </thead>
+                          <thead
+                            className="thead-dark border  text-center"
+                            style={{ marginInline: '5%' }}
+                          >
+                            <tr>
+                              {header.map((item, index) => (
+                                <th key={index} className="border  text-center">
+                                  {item.name}
+                                </th>
+                              ))}
+                              <th className="border text-center">
+                                {/* <CustomInput
                                   type="checkbox"
-                                  id={`checkbox${index}`}
-                                  name={`checkbox${index}`}
-                                  checked={checkedItems[index]}
-                                  onChange={(event) => {
-                                    setCheckedItems({
-                                      ...checkedItems,
-                                      [index]: event.target.checked,
-                                    });
-                                    handleCheckboxChange(index + 1);
-                                  }}
-                                />
-                              </td>
-                            </>
-                          ) : null}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
+                                  id="CheckAll"
+                                  checked={isMasterChecked}
+                                  onChange={handleMasterCheckboxChange}
+                                /> */}
+                              </th>
+                            </tr>
+                          </thead>
 
-                  <tfoot className="thead-dark" style={{ marginInline: '5%' }}>
-                    <tr>
-                      {header.map((header1, index) => (
-                        <th key={index} className="border  text-center">
-                          {header1.name}
-                        </th>
-                      ))}
-                      <th className="border text-center">
-                        <IntlMessages id="marks.resultHeader" />
-                      </th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </Row>
-              <Row className=" justify-content-center">
-                <Colxx xxs="9" className="m-5">
-                  <Button className=" m-4" onClick={() => setIsNext(true)}>
-                    <IntlMessages id="button.Back" />
-                  </Button>
-                </Colxx>
-                <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                  <Button
-                    size="lg"
-                    color="primary"
-                    onClick={() => getSelectedStudents()}
-                  >
-                    <IntlMessages id="button.SubmitButton" />
-                  </Button>
-                </div>
+                          <tbody
+                            className="border border "
+                            style={{
+                              maxHeight: '500px',
+                              overflowY: 'scroll',
+                              overflowX: 'hidden',
+                            }}
+                          >
+                            {students.map((studentRow, index) => {
+                              return (
+                                <tr key={index}>
+                                  {!index == 0 ? (
+                                    <>
+                                      {studentRow.map(
+                                        (student, secondIndex) => {
+                                          return (
+                                            <>
+                                              {secondIndex === 0 ||
+                                              secondIndex === 1 ||
+                                              secondIndex === 2 ? (
+                                                <>
+                                                  <td
+                                                    scope="col"
+                                                    className="border text-center "
+                                                  >
+                                                    {student.name}
+                                                  </td>
+                                                </>
+                                              ) : (
+                                                <td
+                                                  scope="col"
+                                                  className="border text-center "
+                                                >
+                                                  {student.score}
+                                                </td>
+                                              )}
+                                            </>
+                                          );
+                                        }
+                                      )}
+                                      <td
+                                        className="border text-center d-flex justify-content-center"
+                                        key={index}
+                                      >
+                                        <CustomInput
+                                          type="radio"
+                                          id={`name${index}`}
+                                          name={`radio${index}`}
+                                          value={index}
+                                          // checked={checkedIndexes.includes(
+                                          //   index
+                                          // )}
+                                          onChange={() =>
+                                            setCheckedItems({
+                                              ...checkedItems,
+                                              [index]: !checkedItems[index],
+                                            })
+                                          }
+                                        />
+                                        <CustomInput
+                                          type="radio"
+                                          id={`name${index} + 1`}
+                                          name={`radio${index}`}
+                                          value={index}
+                                          // checked={checkedIndexes.includes(
+                                          //   index
+                                          // )}
+                                          onChange={() =>
+                                            setCheckedItems({
+                                              ...checkedItems,
+                                              [index]: !checkedItems[index],
+                                            })
+                                          }
+                                        />
+                                        <CustomInput
+                                          type="radio"
+                                          id={`name${index} + 2`}
+                                          name={`radio${index}`}
+                                          value={index}
+                                          // checked={checkedIndexes.includes(
+                                          //   index
+                                          // )}
+                                          onChange={() =>
+                                            setCheckedItems({
+                                              ...checkedItems,
+                                              [index]: !checkedItems[index],
+                                            })
+                                          }
+                                        />
+                                      </td>
+                                    </>
+                                  ) : null}
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+
+                          <tfoot
+                            className="thead-dark"
+                            style={{ marginInline: '5%' }}
+                          >
+                            <tr>
+                              {header.map((header1, index) => (
+                                <th key={index} className="border  text-center">
+                                  {header1.name}
+                                </th>
+                              ))}
+                              <th className="border text-center">
+                                <IntlMessages id="marks.resultHeader" />
+                              </th>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </Row>
+                      <Row className=" justify-content-center">
+                        <Colxx xxs="9" className="m-5">
+                          <Button
+                            className=" m-4"
+                            onClick={() => setIsNext(true)}
+                          >
+                            <IntlMessages id="button.Back" />
+                          </Button>
+                        </Colxx>
+                        <div className="d-flex justify-content-between align-items-center m-4 float-right">
+                          <Button
+                            size="lg"
+                            color="primary"
+                            type="submit"
+                            // onClick={() => getSelectedStudents()}
+                          >
+                            <IntlMessages id="button.SubmitButton" />
+                          </Button>
+                        </div>
+                      </Row>
+                    </Form>
+                  )}
+                </Formik>
               </Row>
             </>
           )}

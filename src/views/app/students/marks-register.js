@@ -32,10 +32,6 @@ import {
 import userEvent from '@testing-library/user-event';
 import { async } from 'q';
 
-const servicePath = 'http://localhost:8000';
-const studentApi = `${servicePath}/api`;
-// http://localhost:8000/api/?student_id=1232
-const pageSizes = [10, 20, 40, 80];
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
     .shape({
@@ -198,6 +194,7 @@ const MarksRegistration = ({ match }) => {
     fetchClasses();
     fetchSubjects();
   }, []);
+
   // notification message
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -243,9 +240,6 @@ const MarksRegistration = ({ match }) => {
     } else {
       console.log('subject error');
     }
-    // console.log(
-    //   `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-    // );
   };
 
   const onSubmit = async (values) => {
@@ -290,49 +284,6 @@ const MarksRegistration = ({ match }) => {
       setIsSubmitted(false);
       createNotification('error', 'filled');
     }
-
-    // axios
-    //   .post('http://localhost:8000/api/create_marks/', data)
-    //   .then((res) => {
-    //     console.log('res', res);
-    //   })
-    //   .then((err) => {
-    //     console.log('err', err);
-    //   });
-
-    // students.map(async (student, index) => {
-    //   let exam_id = '';
-    //   const examData = {
-    //     educational_year: educational_year,
-    //     student_id: student.student_id,
-    //     institute_id: institute_id,
-    //     department_id: department_id,
-    //     class_id: class_id,
-    //     semister: 1,
-    //     teacher_id: 1,
-    //     user_id: 1,
-    //     verification: 1,
-    //   };
-    //   const exam = await axios.post(
-    //     'http://localhost:8000/api/create_marks/',
-    //     examData
-    //   );
-    //   const updatedExam = await exam.data;
-    //   exam_id = updatedExam;
-
-    //   console.log('exam_id', exam_id, index);
-
-    //   const data = {
-    //     exam_marks_id: exam_id,
-    //     subject_id: subject_id,
-    //     exam_types: 1,
-    //     score: values.score[student.student_id],
-    //     passing_score: 55,
-    //     user_id: 1,
-    //   };
-    //   console.log('data', data, index);
-    //   axios.post('http://localhost:8000/api/create_marks_details/', data);
-    // });
   };
 
   console.log('condsotlsa f', students);

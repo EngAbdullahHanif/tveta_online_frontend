@@ -36,6 +36,7 @@ const callApi = async (endpoint, method = 'get', data = null) => {
     // data.user_id = 1
     data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
   }
+  console.log('the url is', url);
   try {
     const response = await axios({
       method,

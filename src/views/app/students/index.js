@@ -87,6 +87,10 @@ const SingleStudentMarksUpdate = React.lazy(() =>
 const StudentUpgrade = React.lazy(() =>
   import(/* webpackChunkName: "student-upgrade" */ './student-upgrade')
 );
+
+const StudentsClassUpgrade = React.lazy(() =>
+  import(/* webpackChunkName: "student-upgrade" */ './students-class-upgrade')
+);
 // const UpdateAttendance = React.lazy(() =>
 //   import(/* webpackChunkName: "marks-update" */ './')
 // );
@@ -224,6 +228,11 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/student-upgrade`}
         render={(props) => <StudentUpgrade {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/students-class-upgrade`}
+        render={(props) => <StudentsClassUpgrade {...props} />}
       />
 
       {/* <ProtectedRoute

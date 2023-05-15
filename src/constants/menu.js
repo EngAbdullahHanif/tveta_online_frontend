@@ -93,7 +93,7 @@ const data = [
       {
         icon: 'FA.FaList',
         label: 'menu.class-marks',
-        to: `${adminRoot}/students/marks-display-allsubs`,
+        to: `${adminRoot}/students/class-marks`,
         newWindow: false,
       },
 
@@ -101,6 +101,12 @@ const data = [
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'student.dismissal',
         to: `${adminRoot}/students/student-dismissal`,
+        newWindow: false,
+      },
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'upgrade/downgrade',
+        to: `${adminRoot}/students/students-class-upgrade`,
         newWindow: false,
       },
       // {

@@ -418,6 +418,7 @@ const TeacherTransfer = (values) => {
                               <FormGroup className="form-group has-float-label ">
                                 <Label>
                                   <IntlMessages id="forms.InstituteLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
 
                                 <FormikReactSelect
@@ -439,6 +440,7 @@ const TeacherTransfer = (values) => {
                               <FormGroup className="form-group has-float-label">
                                 <Label>
                                   <IntlMessages id="teacher.transferDateLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
                                   className="form-control fieldStyle"
@@ -456,6 +458,7 @@ const TeacherTransfer = (values) => {
                               <FormGroup className="form-group has-float-label">
                                 <Label>
                                   <IntlMessages id="teacher.MajorLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="major"
@@ -476,6 +479,7 @@ const TeacherTransfer = (values) => {
                               <FormGroup className="form-group has-float-label">
                                 <Label>
                                   <IntlMessages id="forms.mediumOfInstruction" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <Field
                                   className="form-control fieldStyle"
@@ -493,6 +497,7 @@ const TeacherTransfer = (values) => {
                               <FormGroup className="form-group has-float-label error-l-175">
                                 <Label>
                                   <IntlMessages id="teacher.appointmentTypeLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="appointmentType"
@@ -514,6 +519,7 @@ const TeacherTransfer = (values) => {
                               <FormGroup className="form-group has-float-label error-l-175">
                                 <Label>
                                   <IntlMessages id="teacher.contractTypeLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <FormikReactSelect
                                   name="contractType"
@@ -533,6 +539,7 @@ const TeacherTransfer = (values) => {
                               <FormGroup>
                                 <Label>
                                   <IntlMessages id="teacher.transferDocuments" />
+                                  <span style={{ color: 'red' }}>*</span>
                                 </Label>
                                 <InputGroup className="mb-3 ">
                                   <InputGroupAddon

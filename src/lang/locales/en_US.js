@@ -931,7 +931,6 @@ module.exports = {
   'dorm.BuildingTypeList': 'Building Type',
   'dorm.type': 'ُType',
   'dorm.yearList-1': 'Year',
-
   'dorm.BuildingTypeOptions_1': 'Public',
   'dorm.BuildingTypeOptions_2': ' Private',
   'dorm.PublicBuildingOwnerLabel': 'Public Building Owned By',
@@ -1029,6 +1028,7 @@ module.exports = {
   'teacher.transferDateErr': 'Transfer Date Required!',
   'teacher.fileUploadBttn': 'Upload',
   'teacher.transferDocuments': 'Transfer Documents',
+  'teacher.transferDocumentLabel': 'Teacher Transfer Document Required!',
 
   // Institute Upgrade
   'institute.UpgradeTitle': 'Institute/School Upgrade',

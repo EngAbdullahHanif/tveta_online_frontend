@@ -10,6 +10,7 @@ import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../../assets/css/global-style.css';
+import { studentTransferValidationSchema } from './../global-data/forms-validation';
 
 import * as Yup from 'yup';
 import {
@@ -50,44 +51,6 @@ const SearchResultSchema = Yup.object().shape({
     .min(4, <IntlMessages id="min.invalidId" />)
     .max(10, <IntlMessages id="max.invalidId" />)
     .required(<IntlMessages id="search.studentIdsearchErr" />),
-});
-
-const transferSchema = Yup.object().shape({
-  institute: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.InstituteErr" />),
-
-  transferDate: Yup.string().required(
-    <IntlMessages id="teacher.transferDateErr" />
-  ),
-
-  educationalYear: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.educationYearErr" />),
-
-  mediumOfInstruction: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.mediumOfInstructionErr" />),
-
-  studyTime: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StudyTimeErr" />),
-
-  // transferDocument: Yup.string().required(
-  //   <IntlMessages id="student.dissmissalDocumentErr" />
-  // ),
 });
 
 const StudentsTransfer = (values) => {
@@ -180,9 +143,6 @@ const StudentsTransfer = (values) => {
       console.log('student search error');
     }
   };
-  // const handleChange = (event) => {
-  //   setMessage(event.target.value);
-  // };
 
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
@@ -249,12 +209,6 @@ const StudentsTransfer = (values) => {
           {<IntlMessages id="student.transferTitle" />}
         </h2>
       </div>
-      {/* <h3 className="text-center">
-        {' '}
-        Mr Hanif Complete the Integration And Check Why its going to the student
-        record if we enter the correct id for first time and incorrect for the
-        second time
-      </h3> */}
       <CardBody>
         {!reload ? (
           <>
@@ -479,7 +433,7 @@ const StudentsTransfer = (values) => {
                 <Formik
                   initialValues={initialValues}
                   onSubmit={onSubmit}
-                  validationSchema={transferSchema}
+                  validationSchema={studentTransferValidationSchema}
                 >
                   {({
                     errors,

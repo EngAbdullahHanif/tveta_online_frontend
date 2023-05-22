@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Row,
   Modal,
@@ -30,11 +30,17 @@ const ListPageListing = ({
   onContextMenuClick,
   onContextMenu,
   onChangePage,
+  deletedStudent,
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
   console.log('itemsssd', items);
-
+  console.log(deletedStudent, 'THis is deleted');
+  const [receivedData, setReceivedData] = useState('');
   console.log('total  page', totalPage);
+// useEffect(()=)
+//    setItems((prevItems) =>
+//      prevItems.filter((student) => student.id !== student_id)
+//    );
 
   return (
     <>
@@ -59,7 +65,7 @@ const ListPageListing = ({
           if (displayMode === 'thumblist') {
             return (
               <StudentListBody
-                key={student.id}
+                key={student.id }
                 student={student}
                 isSelect={selectedItems.includes(student.id)}
                 collect={collect}

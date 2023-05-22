@@ -9,7 +9,7 @@ const data = [
     // roles: [UserRole.Admin, UserRole.Editor],
     subs: [
       {
-        icon: 'CG.CgUserList',
+        icon: 'FA.FaList',
         label: 'menu.student_list',
         to: `${adminRoot}/students/students`,
         // roles: [UserRole.Admin],
@@ -27,21 +27,33 @@ const data = [
         to: `${adminRoot}/students/attendance-list`,
       },
       {
-        icon: 'CG.CgUserList',
+        icon: 'FA.FaList',
         label: 'transfered-Students',
         to: `${adminRoot}/students/transfered-list`,
         // roles: [UserRole.Admin],
       },
       {
-        icon: 'CG.CgUserList',
+        icon: 'FA.FaList',
         label: 'studendts.dismisseds-students',
         to: `${adminRoot}/students/dismissed-list`,
         // roles: [UserRole.Admin],
       },
       {
-        icon: 'MD.MdAddBox',
+        icon: 'FA.FaList',
         label: 'menu.attendance',
         to: `${adminRoot}/students/attendance`,
+        newWindow: false,
+      },
+      {
+        icon: 'FA.FaList',
+        label: 'menu.marks-display',
+        to: `${adminRoot}/students/marks-display`,
+        newWindow: false,
+      },
+      {
+        icon: 'FA.FaList',
+        label: 'menu.class-marks',
+        to: `${adminRoot}/students/class-marks`,
         newWindow: false,
       },
       {
@@ -58,7 +70,7 @@ const data = [
       },
 
       {
-        icon: 'MD.MdOutlineTransferWithinAStation',
+        // icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'Kankor Profille',
         to: `${adminRoot}/students/kankor-profile`,
         newWindow: false,
@@ -85,32 +97,20 @@ const data = [
       // },
 
       {
-        icon: 'MD.MdOutlineTransferWithinAStation',
+        icon: 'MD.MdAddBox',
         label: 'menu.student-transfer',
         to: `${adminRoot}/students/student-transfer`,
         newWindow: false,
       },
-      {
-        icon: 'FA.FaList',
-        label: 'menu.marks-display',
-        to: `${adminRoot}/students/marks-display`,
-        newWindow: false,
-      },
-      {
-        icon: 'FA.FaList',
-        label: 'menu.class-marks',
-        to: `${adminRoot}/students/class-marks`,
-        newWindow: false,
-      },
 
       {
-        icon: 'MD.MdOutlineTransferWithinAStation',
+        icon: 'MD.MdAddBox',
         label: 'student.dismissal',
         to: `${adminRoot}/students/student-dismissal`,
         newWindow: false,
       },
       {
-        icon: 'MD.MdOutlineTransferWithinAStation',
+        icon: 'MD.MdAddBox',
         label: 'upgrade/downgrade',
         to: `${adminRoot}/students/students-class-upgrade`,
         newWindow: false,

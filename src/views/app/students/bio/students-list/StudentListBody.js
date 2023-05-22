@@ -11,6 +11,7 @@ import {
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import IntlMessages from 'helpers/IntlMessages';
+import callApi from 'helpers/callApi';
 
 import { BsTrashFill } from 'react-icons/bs';
 import { BsPencilSquare } from 'react-icons/bs';
@@ -18,13 +19,26 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
+const StudentListBody = (
+  { student, isSelect, collect, onCheckItem, },
+  props
+) => {
   const [modalBasic, setModalBasic] = useState(false);
-  const [dataDeletion, setDeletion] = useState(false);
+  const [Deletion, setDeletion] = useState(false);
 
-  const handleClick = (event) => {
-    setDeletion(event);
-    console.log('API should be called here');
+  const handleClick = async (event, student_id) => {
+    console.log(student_id, 'student_id');
+    const response = await callApi(
+      `api/student_delete/${student_id}/`,
+      'patch',
+      null
+    );
+    if (response.data && response.status === 200) {
+      setDeletion(event);
+      const deletedStudent = student.student_id;
+    } else {
+      console.log('student delete error');
+    }
   };
   return (
     <Colxx xxs="12" key={student.id} className="mb-3">
@@ -199,7 +213,7 @@ const StudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                     color="danger"
                     onClick={() => {
                       setModalBasic(false);
-                      handleClick(true);
+                      handleClick(true, student.student_id);
                     }}
                     style={{ marginLeft: '5%' }}
                   >

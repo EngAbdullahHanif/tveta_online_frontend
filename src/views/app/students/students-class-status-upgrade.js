@@ -26,7 +26,6 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
-import c from 'hijri-date-picker';
 
 import currentUser from 'helpers/currentUser';
 import callApi from 'helpers/callApi';

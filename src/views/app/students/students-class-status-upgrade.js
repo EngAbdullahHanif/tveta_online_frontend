@@ -1,9 +1,7 @@
-// this page is for student upgrade, it is not used in the project, it might be used in the future
-
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
-import { studyTimeOptions } from '../../app/global-data/options';
+import { studyTimeOptions } from '../global-data/options';
 // Year  and SHift
 
 import * as Yup from 'yup';
@@ -28,7 +26,6 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
-import c from 'hijri-date-picker';
 
 import currentUser from 'helpers/currentUser';
 import callApi from 'helpers/callApi';
@@ -67,7 +64,7 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="teacher.departmentIdErr" />),
 });
 
-const StudentUpgrade = ({ match }) => {
+const StudentClassStatusUpgrade = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -104,6 +101,7 @@ const StudentUpgrade = ({ match }) => {
       console.log('institute error');
     }
   };
+
   const fetchFields = async () => {
     const response = await callApi('institute/field/', '', null);
     if (response.data && response.status === 200) {
@@ -116,6 +114,7 @@ const StudentUpgrade = ({ match }) => {
       console.log('field error');
     }
   };
+
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', '', null);
     console.log('response of department', response);
@@ -209,7 +208,11 @@ const StudentUpgrade = ({ match }) => {
       { students: students },
     ];
 
-    const response = await callApi('api/students-class-upgrade/', 'POST', data);
+    const response = await callApi(
+      'api/students-class-status-upgrade/',
+      'POST',
+      data
+    );
   };
 
   const initialValues = {
@@ -627,4 +630,4 @@ const StudentUpgrade = ({ match }) => {
   );
 };
 
-export default StudentUpgrade;
+export default StudentClassStatusUpgrade;

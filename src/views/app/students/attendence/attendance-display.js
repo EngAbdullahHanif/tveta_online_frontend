@@ -299,7 +299,7 @@ const StudentAttendance = ({ match }) => {
   // fetch student list for typing attendance
   const fetchStudentList = async () => {
     const response = await callApi(
-      `api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/stdattendence_by/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       'GET',
       null
     );
@@ -510,10 +510,10 @@ const StudentAttendance = ({ match }) => {
                         size="lg"
                         type="submit"
                         style={{ margin: '3% 0% 9% 8%' }}
-                        onClick={() => {
-                          onSubmit;
-                          handleClick(false);
-                        }}
+                        // onClick={() => {
+                        //   onSubmit;
+                        //   handleClick(false);
+                        // }}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />

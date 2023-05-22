@@ -112,7 +112,14 @@ const data = [
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'upgrade/downgrade',
-        to: `${adminRoot}/students/students-class-upgrade`,
+        to: `${adminRoot}/students/students-class-status-upgrade`,
+        newWindow: false,
+      },
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        // label: 'upgrade/downgrade',
+        label: 'students list',
+        to: `${adminRoot}/students/marks-status-cheked-students`,
         newWindow: false,
       },
       // {

@@ -681,6 +681,27 @@ export const semesterOptions = [
   { column: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
 ];
 
+export const semesterValueOptions = [
+  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
+  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
+];
+
+export const classOptions = [
+  { value: '10', label: 10 },
+  { value: '11', label: 11 },
+  { value: '12', label: 12 },
+  { value: '13', label: 13 },
+  { value: '14', label: 14 },
+];
+
+export const sectionValueOptions = [
+  { value: 'a', label: 'a' },
+  { value: 'b', label: 'b' },
+  { value: 'c', label: 'c' },
+  { value: 'd', label: 'd' },
+  { value: 'e', label: 'e' },
+];
+
 export const tazkiraOptions = [
   {
     value: 'ٍ Electronic',

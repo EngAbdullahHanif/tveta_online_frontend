@@ -42,7 +42,6 @@ const categories = [
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
 
-
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -136,12 +135,15 @@ const ThumbListPages = ({ match }) => {
           setStudentId('');
           setRest(false);
         }
+
+
+        // here
         const response = await callApi(
           `api/?student_id=${studentId}&current_district=${district}&p=${currentPage}&page=${1}`,
           '',
           null
         );
-        console.log('respons', response);
+        console.table('respons', response);
         if (response.data && response.status === 200) {
           setTotalPage(Math.ceil(response.data.count / itemsPerPage));
           setItems(response.data.results);

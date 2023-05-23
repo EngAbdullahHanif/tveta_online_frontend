@@ -1436,6 +1436,9 @@ module.exports = {
   'class.nameList': 'نام',
   'section-change': 'د ټولګي/ سکشن تبدیلي',
   'new.section': 'نوی ټولګی /صنف جدید',
+  'student.upgrade-class': 'د شاګرد دټولګي ارتقا / ارتقای صنف شاګرد',
+  'menu.student.upgrade-class': 'د شاګرد دټولګي ارتقا',
+  'student.assignment-to-class': 'شاګرد ته د ټولګي تعینوول',
 
   // Deletion flash message model
   'modal.deletion-message-title': 'تایید',

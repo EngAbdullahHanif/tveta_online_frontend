@@ -111,13 +111,13 @@ const data = [
       },
       {
         icon: 'MD.MdAddBox',
-        label: 'upgrade/downgrade',
+        label: 'menu.student.upgrade-class',
         to: `${adminRoot}/students/students-class-status-upgrade`,
         newWindow: false,
       },
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
-        label: 'Class/Section Assignment after result',
+        label: 'student.assignment-to-class',
         to: `${adminRoot}/students/marks-status-cheked-students`,
         newWindow: false,
       },

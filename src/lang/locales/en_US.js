@@ -1314,6 +1314,9 @@ module.exports = {
   'class.nameList': 'Name',
   'section-change': 'Section Change',
   'new.section': 'New Section',
+  'student.upgrade-class': 'Students Upgrade Class',
+  'menu.student.upgrade-class': 'Students Upgrade Class',
+  'student.assignment-to-class': 'Student Assignment To Class',
 
   // Group
   'groug.register.title': 'Group Registration',

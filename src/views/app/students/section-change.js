@@ -160,13 +160,6 @@ const DepartmentChange = (values) => {
     setReload(true);
     const data = {
       student_id: studentId,
-      institute_id: values.institute.value,
-      transfer_date: values.transferDate,
-      educational_year: values.educationalYear.value,
-      shift: values.studyTime.value, //shift
-      language: values.mediumOfInstruction.value,
-      type: 1, //type = 1 means this is student new institute, the old institute type is now 2 which means old institute
-      is_transfer: 2, //is_transfer = 2 means transfered
     };
 
     // try {
@@ -522,7 +515,6 @@ const DepartmentChange = (values) => {
               </h3>
               <Button
                 className="m-5 bg-primary"
-                // onClick={() => window.location.reload()}
                 onClick={() => {
                   {
                     setReload(false);
@@ -540,5 +532,4 @@ const DepartmentChange = (values) => {
     </Card>
   );
 };
-
 export default DepartmentChange;

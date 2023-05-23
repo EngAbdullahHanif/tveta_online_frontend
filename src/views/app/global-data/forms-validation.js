@@ -537,7 +537,6 @@ export const studentdismissalvalidationSchema = Yup.object().shape({
     .required(<IntlMessages id="student.dissmissaldocErr" />),
 });
 
-
 export const studentTransferValidationSchema = Yup.object().shape({
   institute: Yup.object()
     .shape({
@@ -574,4 +573,22 @@ export const studentTransferValidationSchema = Yup.object().shape({
   // transferDocument: Yup.string().required(
   //   <IntlMessages id="student.dissmissalDocumentErr" />
   // ),
+});
+
+export const departmentChangeValidationSchema = Yup.object().shape({
+  department: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="department.nameErr" />),
+});
+
+export const classChangeValidationSchema = Yup.object().shape({
+  class: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.ClassErr" />),
 });

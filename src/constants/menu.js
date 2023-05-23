@@ -117,9 +117,22 @@ const data = [
       },
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
-        // label: 'upgrade/downgrade',
-        label: 'students list',
+        label: 'Class/Section Assignment after result',
         to: `${adminRoot}/students/marks-status-cheked-students`,
+        newWindow: false,
+      },
+
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'department-change',
+        to: `${adminRoot}/students/department-change`,
+        newWindow: false,
+      },
+
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'section-change',
+        to: `${adminRoot}/students/section-change`,
         newWindow: false,
       },
       // {

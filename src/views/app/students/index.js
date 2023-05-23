@@ -113,6 +113,14 @@ const AttendanceUpdate = React.lazy(() =>
 const KankorProfile = React.lazy(() =>
   import(/* webpackChunkName: "attendance-update" */ './bio/kankor-profile')
 );
+
+const DepartmentChange = React.lazy(() =>
+  import(/* webpackChunkName: "attendance-update" */ './department-change')
+);
+
+const SectionChange = React.lazy(() =>
+  import(/* webpackChunkName: "attendance-update" */ './section-change')
+);
 const Main = React.lazy(() =>
   import(/* webpackChunkName: "register-1" */ '../main-register-route')
 );
@@ -246,15 +254,22 @@ const Students = ({ match }) => (
         path={`${match.url}/kankor-profile`}
         render={(props) => <KankorProfile {...props} />}
       />
-
       <Route
         path={`${match.url}/students-class-status-upgrade`}
         render={(props) => <StudentClassStatusUpgrade {...props} />}
       />
-
       <Route
         path={`${match.url}/marks-status-cheked-students`}
         render={(props) => <MarkStatusCheckedStudents {...props} />}
+      />
+      <Route
+        path={`${match.url}/department-change`}
+        render={(props) => <DepartmentChange {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/section-change`}
+        render={(props) => <SectionChange {...props} />}
       />
 
       {/* <ProtectedRoute

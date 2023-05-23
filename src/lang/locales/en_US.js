@@ -629,7 +629,7 @@ module.exports = {
   'forms.sectorErr': 'Sector Is Required!',
   'student.photo': 'Image',
   'student.photoErr': 'Student Photo Is Required!',
-  'department.nameErr': 'Department Name Is Required!',
+  'department.nameErr': 'Department Is Required!',
   'department.englishNameErr': 'Department English Name Is Required!',
   'student.typeOption_1': 'Registered',
   'student.typeOption_2': 'Greduated',
@@ -637,6 +637,7 @@ module.exports = {
   'student.studentId': 'Student Id',
   'student.studentIdErr': 'Student Id Is Required!',
   'student.uploadPhoto': 'Upload Photo',
+  'department-change': 'Department Change',
 
   // Second page of student biography
   'forms.EducationalLevel_9th': 'Ninth Grade',
@@ -1055,6 +1056,7 @@ module.exports = {
   'student.transferred-studentList': 'student Type',
   'student.previousInstitute': 'Previous Institute',
   'student.newInstitute': 'New Institute',
+  'student.newDepartment': 'New Department',
 
   // Curriculum
   'subject.curriculum': 'Curriculum',
@@ -1310,9 +1312,10 @@ module.exports = {
   'class.semesterErr': 'Semester Is Required!',
   'teacher-list.MajorLabel': 'field',
   'class.nameList': 'Name',
+  'section-change': 'Section Change',
+  'new.section': 'New Section',
 
   // Group
-
   'groug.register.title': 'Group Registration',
   'group.groupName': 'Group Name',
   'group.groupNameErr': 'Group Name Required!',

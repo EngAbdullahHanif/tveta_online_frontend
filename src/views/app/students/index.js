@@ -173,6 +173,10 @@ const Students = ({ match }) => (
         render={(props) => <KankorStudentList {...props} />}
       />
       <Route
+        path={`${match.url}/kankor-student/:kankorId`}
+        render={(props) => <KankorProfile {...props} />}
+      />
+      <Route
         exact
         path={`${match.url}/marks-register`}
         render={(props) => <MarksRegistration {...props} />}
@@ -250,10 +254,10 @@ const Students = ({ match }) => (
         path={`${match.url}/student-upgrade`}
         render={(props) => <StudentUpgrade {...props} />}
       />
-      <Route
+      {/* <Route
         path={`${match.url}/kankor-profile`}
         render={(props) => <KankorProfile {...props} />}
-      />
+      /> */}
       <Route
         path={`${match.url}/students-class-status-upgrade`}
         render={(props) => <StudentClassStatusUpgrade {...props} />}

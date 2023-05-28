@@ -1127,7 +1127,6 @@ module.exports = {
 
   // Teacher Transfer
   'teacher.Transfer': 'داستاد تبدیلي/ تبدیلی استاد',
-  'treacher.TansferTitle': 'تبدیلی',
   'search.teacherIdSearchLabel':
     'د استاد آیډی ولیکئ/ لطفا آیدی استاد را وارد نماید',
   'button.Teacher-transfer': 'تبدیل',
@@ -1156,6 +1155,8 @@ module.exports = {
   'student.transferTitle': 'د شاګرد تبدیلی/ تبدیلی شاگرد',
   'student.transferDateLabel': 'د تبدیلۍ نیټه/ تاریخ تبدیلی',
   'student.transferDocuments': 'د تبدیلی اسناد / اسناد تبدیلی',
+  'teacher.transferDocumentLabel':
+    ' د تبدیلی اسناد اړین دي / اسناد تبدیلی ضروری است',
   'student.transferred-studentList':
     'د تبدیل شویو شاګردانو لست/ لست شاگردان تبدل شده',
   'student.previousInstitute': 'مخکنی انستیتوت',

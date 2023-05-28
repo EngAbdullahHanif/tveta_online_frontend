@@ -5,6 +5,7 @@ import callApi from 'helpers/callApi';
 
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
+import { NavLink } from 'react-router-dom';
 
 import * as Yup from 'yup';
 import {
@@ -152,7 +153,22 @@ const StudentProfile = () => {
             <Colxx xxs="1"></Colxx>
             {student.length > 0 && (
               <Colxx>
-                <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
+                {/* <img src={student.student_photo} alt="Photo" width={'10%'} />{' '} */}
+                <NavLink
+                  to={`?p=${student.student_id}`}
+                  className="w-40 w-sm-100"
+                >
+                  <img
+                    top
+                    alt={student.name}
+                    src={`${student[0].student_photo}`}
+                    style={{
+                      maxWidth: '12%',
+                      maxHeight: '130%',
+                      borderRadius: '5px',
+                    }}
+                  />
+                </NavLink>
               </Colxx>
             )}
           </Row>

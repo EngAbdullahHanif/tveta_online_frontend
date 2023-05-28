@@ -91,6 +91,19 @@ const SingleStudentMarksUpdate = React.lazy(() =>
 const StudentUpgrade = React.lazy(() =>
   import(/* webpackChunkName: "student-upgrade" */ './student-upgrade')
 );
+
+const StudentClassStatusUpgrade = React.lazy(() =>
+  import(
+    /* webpackChunkName: "student-upgrade" */ './students-class-status-upgrade'
+  )
+);
+
+const MarkStatusCheckedStudents = React.lazy(() =>
+  import(
+    /* webpackChunkName: "student-upgrade" */ './marks-status-checked-students'
+  )
+);
+
 // const UpdateAttendance = React.lazy(() =>
 //   import(/* webpackChunkName: "marks-update" */ './')
 // );
@@ -240,6 +253,16 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/kankor-profile`}
         render={(props) => <KankorProfile {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/students-class-status-upgrade`}
+        render={(props) => <StudentClassStatusUpgrade {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/marks-status-cheked-students`}
+        render={(props) => <MarkStatusCheckedStudents {...props} />}
       />
 
       {/* <ProtectedRoute

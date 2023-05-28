@@ -5,7 +5,7 @@ import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../../assets/css/global-style.css';
-
+import { studentdismissalvalidationSchema } from './../global-data/forms-validation';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
@@ -48,36 +48,6 @@ const StudentsDismissal = (values) => {
       .min(4, <IntlMessages id="min.invalidId" />)
       .max(10, <IntlMessages id="max.invalidId" />)
       .required(<IntlMessages id="search.studentIdsearchErr" />),
-  });
-
-  const dismissalSchema = Yup.object().shape({
-    dismissalDate: Yup.string().required(
-      <IntlMessages id="student.dissmissalDateErr" />
-    ),
-
-    // dismissalDocument: Yup.mixed().required(
-    //   <IntlMessages id="student.dissmissaldocErr" />
-    // ),
-    dismissalDocument: Yup.mixed()
-      .test('fileType', 'Unsupported File Format', (value) => {
-        if (value) {
-          const supportedFormats = [
-            'application/pdf',
-            'image/jpeg',
-            'image/png',
-          ];
-          return supportedFormats.includes(value.type);
-        }
-        return true; // allows undefined values
-      })
-      .test('fileSize', 'File too large', (value) => {
-        if (value) {
-          const maxSize = 1048576; // 1MB
-          return value.size <= maxSize;
-        }
-        return true; // allows undefined values
-      })
-      .required(<IntlMessages id="student.dissmissaldocErr" />),
   });
 
   const initialValues = {
@@ -211,7 +181,7 @@ const StudentsDismissal = (values) => {
                         <Formik
                           initialValues={initialValues}
                           onSubmit={handleSearch}
-                          validationSchema={SearchResultSchema}
+                          // validationSchema={studentdismissalvalidationSchema}
                         >
                           {({
                             values,
@@ -441,7 +411,7 @@ const StudentsDismissal = (values) => {
                   <Formik
                     initialValues={initialValues}
                     onSubmit={onSubmit}
-                    validationSchema={dismissalSchema}
+                    validationSchema={studentdismissalvalidationSchema}
                   >
                     {({
                       errors,
@@ -498,7 +468,7 @@ const StudentsDismissal = (values) => {
                                     onBlur={handleBlur}
                                     invalid={
                                       touched.dismissalDocument &&
-                                      !!errors.dismissalDocument
+                                      errors.dismissalDocument
                                     }
                                   />
                                 </InputGroup>

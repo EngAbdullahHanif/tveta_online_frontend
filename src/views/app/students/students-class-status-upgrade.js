@@ -1,9 +1,7 @@
-// this page is for student upgrade, it is not used in the project, it might be used in the future
-
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
-import { studyTimeOptions } from '../../app/global-data/options';
+import { studyTimeOptions } from '../global-data/options';
 // Year  and SHift
 
 import * as Yup from 'yup';
@@ -66,7 +64,7 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="teacher.departmentIdErr" />),
 });
 
-const StudentUpgrade = ({ match }) => {
+const StudentClassStatusUpgrade = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
@@ -103,6 +101,7 @@ const StudentUpgrade = ({ match }) => {
       console.log('institute error');
     }
   };
+
   const fetchFields = async () => {
     const response = await callApi('institute/field/', '', null);
     if (response.data && response.status === 200) {
@@ -115,6 +114,7 @@ const StudentUpgrade = ({ match }) => {
       console.log('field error');
     }
   };
+
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', '', null);
     console.log('response of department', response);
@@ -167,7 +167,7 @@ const StudentUpgrade = ({ match }) => {
     setIsNext(false);
 
     const response = await callApi(
-      `api/class_marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&study_time=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/class_marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift_id=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&upgrade=1`,
       '',
       null
     );
@@ -195,42 +195,24 @@ const StudentUpgrade = ({ match }) => {
     });
   };
 
-  const onSubmit = (values) => {
-    const checkedItemsObj = { ...checkedItems };
-    // if the index is in the checkedItemsObj, if it is, add the student to the passedStudents array,
-    const passedStudents = students.map((student, index) => {
-      if (checkedItemsObj[index]) {
-        // only returns first index of the student, becuase we only need the student id
-        return student[0].name;
-      }
-    });
-    //remove undefined values from the passedStudents array
-    const fillteredStudents = passedStudents.filter(
-      (student) => student !== undefined && student !== null
-    );
-
+  const onSubmit = async (values) => {
     const data = [
       {
+        institute_id: selectedInstitute.value,
         class_id: selectedClass.value,
-        study_time: selecedStudyTime.value,
+        shift: selecedStudyTime.value,
         department_id: selectedDepartment.value,
         educational_year: selectedEducationalYear,
         user_id: currentUser(),
       },
-      { ...fillteredStudents },
+      { students: students },
     ];
 
-    const response = callApi('api/class_marks', 'POST', data);
-    if (
-      response.status === 200 ||
-      response.status === 201 ||
-      response.status === 202 ||
-      response.status === 203
-    ) {
-      console.log('response.data', response.data);
-    } else {
-      console.log('error');
-    }
+    const response = await callApi(
+      'api/students-class-status-upgrade/',
+      'POST',
+      data
+    );
   };
 
   const initialValues = {
@@ -244,10 +226,6 @@ const StudentUpgrade = ({ match }) => {
     passedStudents: [],
   };
 
-  // //Check Box
-  // const [checkedItems, setCheckedItems] = useState(
-  //   students.reduce((acc, student, index) => ({ ...acc, [index]: false }), {})
-  // );
   const [isMasterChecked, setIsMasterChecked] = useState(false);
 
   const handleMasterCheckboxChange = (event) => {
@@ -313,7 +291,8 @@ const StudentUpgrade = ({ match }) => {
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {<IntlMessages id="marks.marksDisplayTitle" />}
+          {/* {<IntlMessages id="marks.marksDisplayTitle" />} */}
+          Upgrade Students Class
         </h3>
         <CardBody>
           {isNext ? (
@@ -538,9 +517,9 @@ const StudentUpgrade = ({ match }) => {
                               >
                                 <IntlMessages id="marks.marksDisplayTitle" />
                               </th>{' '}
-                              <th className="border text-center">
+                              {/* <th className="border text-center">
                                 <IntlMessages id="marks.resultHeader" />
-                              </th>
+                              </th> */}
                             </tr>
                           </thead>
                           <thead
@@ -553,14 +532,6 @@ const StudentUpgrade = ({ match }) => {
                                   {item.name}
                                 </th>
                               ))}
-                              <th className="border text-center">
-                                {/* <CustomInput
-                                  type="checkbox"
-                                  id="CheckAll"
-                                  checked={isMasterChecked}
-                                  onChange={handleMasterCheckboxChange}
-                                /> */}
-                              </th>
                             </tr>
                           </thead>
 
@@ -584,14 +555,12 @@ const StudentUpgrade = ({ match }) => {
                                               {secondIndex === 0 ||
                                               secondIndex === 1 ||
                                               secondIndex === 2 ? (
-                                                <>
-                                                  <td
-                                                    scope="col"
-                                                    className="border text-center "
-                                                  >
-                                                    {student.name}
-                                                  </td>
-                                                </>
+                                                <td
+                                                  scope="col"
+                                                  className="border text-center "
+                                                >
+                                                  {student.name}
+                                                </td>
                                               ) : (
                                                 <td
                                                   scope="col"
@@ -604,56 +573,6 @@ const StudentUpgrade = ({ match }) => {
                                           );
                                         }
                                       )}
-                                      <td
-                                        className="border text-center d-flex justify-content-center"
-                                        key={index}
-                                      >
-                                        <CustomInput
-                                          type="radio"
-                                          id={`name${index}`}
-                                          name={`radio${index}`}
-                                          value={index}
-                                          // checked={checkedIndexes.includes(
-                                          //   index
-                                          // )}
-                                          onChange={() =>
-                                            setCheckedItems({
-                                              ...checkedItems,
-                                              [index]: !checkedItems[index],
-                                            })
-                                          }
-                                        />
-                                        <CustomInput
-                                          type="radio"
-                                          id={`name${index} + 1`}
-                                          name={`radio${index}`}
-                                          value={index}
-                                          // checked={checkedIndexes.includes(
-                                          //   index
-                                          // )}
-                                          onChange={() =>
-                                            setCheckedItems({
-                                              ...checkedItems,
-                                              [index]: !checkedItems[index],
-                                            })
-                                          }
-                                        />
-                                        <CustomInput
-                                          type="radio"
-                                          id={`name${index} + 2`}
-                                          name={`radio${index}`}
-                                          value={index}
-                                          // checked={checkedIndexes.includes(
-                                          //   index
-                                          // )}
-                                          onChange={() =>
-                                            setCheckedItems({
-                                              ...checkedItems,
-                                              [index]: !checkedItems[index],
-                                            })
-                                          }
-                                        />
-                                      </td>
                                     </>
                                   ) : null}
                                 </tr>
@@ -671,9 +590,9 @@ const StudentUpgrade = ({ match }) => {
                                   {header1.name}
                                 </th>
                               ))}
-                              <th className="border text-center">
+                              {/* <th className="border text-center">
                                 <IntlMessages id="marks.resultHeader" />
-                              </th>
+                              </th> */}
                             </tr>
                           </tfoot>
                         </table>
@@ -689,12 +608,13 @@ const StudentUpgrade = ({ match }) => {
                         </Colxx>
                         <div className="d-flex justify-content-between align-items-center m-4 float-right">
                           <Button
-                            size="lg"
+                            // size="lg"
                             color="primary"
                             type="submit"
                             // onClick={() => getSelectedStudents()}
                           >
-                            <IntlMessages id="button.SubmitButton" />
+                            {/* <IntlMessages id="button.SubmitButton" /> */}
+                            ارتقا / ترفيع
                           </Button>
                         </div>
                       </Row>
@@ -710,4 +630,4 @@ const StudentUpgrade = ({ match }) => {
   );
 };
 
-export default StudentUpgrade;
+export default StudentClassStatusUpgrade;

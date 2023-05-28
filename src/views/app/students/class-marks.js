@@ -207,7 +207,7 @@ const AllSubjectsMarks = ({ match }) => {
     setIsNext(false);
 
     const response = await callApi(
-      `api/class_marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/class_marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&study_time=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
       null
     );

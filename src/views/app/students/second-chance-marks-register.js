@@ -280,8 +280,9 @@ const MarksRegistration = ({ match }) => {
   };
 
   const fechtStudens = async () => {
+    console.log('subject', selectedSubject.value);
     const response = await callApi(
-      `api/second-chance-exam-students/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/second-chance-exam-students/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&subject=${selectedSubject.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
       null
     );

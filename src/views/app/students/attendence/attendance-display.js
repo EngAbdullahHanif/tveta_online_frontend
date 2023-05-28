@@ -642,7 +642,7 @@ const StudentAttendance = ({ match }) => {
                         <td>{student.name}</td>
                         <td>{student.father_name}</td>
                         <td>{student.student_id}</td>
-                        <td>Present</td>
+                        <td>89</td>
                         <td>Absent</td>
                         <td>NecessaryWork</td>
                         <td>IllNess</td>

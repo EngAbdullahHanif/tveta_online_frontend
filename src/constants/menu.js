@@ -99,7 +99,7 @@ const data = [
       {
         icon: 'FA.FaList',
         label: 'menu.class-marks',
-        to: `${adminRoot}/students/marks-display-allsubs`,
+        to: `${adminRoot}/students/class-marks`,
         newWindow: false,
       },
 

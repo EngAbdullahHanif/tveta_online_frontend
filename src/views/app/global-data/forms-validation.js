@@ -57,7 +57,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
   tazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
-  phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
+
   // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
   DoB: Yup.object()
     .shape({
@@ -80,9 +80,12 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.genderErr" />),
 
-  email: Yup.string()
-    .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-    .required(<IntlMessages id="teacher.EmailErr" />),
+    // TEMPORARY COMMENTED
+  // email: Yup.string()
+  //   .email(<IntlMessages id="teacher.EmailRequiredErr" />)
+  //   .required(<IntlMessages id="teacher.EmailErr" />),
+
+  // phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
 });
 
 //  Student Registration form validation step two

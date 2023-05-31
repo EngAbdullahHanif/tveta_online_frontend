@@ -499,7 +499,7 @@ const StudentRegistration = ({ intl }, values) => {
   return (
     <Card>
       <div className="mt-4 ml-5">
-        <h2 className="mt-5 m-5 titleStyle titleStyle">
+        <h2 className="mt-5 m-5 titleStyle">
           {<IntlMessages id="forms.studentRegisterTitle" />}
         </h2>
       </div>

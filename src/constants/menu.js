@@ -69,12 +69,12 @@ const data = [
         // roles: [UserRole.Admin],
       },
 
-      {
-        // icon: 'MD.MdOutlineTransferWithinAStation',
-        label: 'Kankor Profille',
-        to: `${adminRoot}/students/kankor-profile`,
-        newWindow: false,
-      },
+      // {
+      //   // icon: 'MD.MdOutlineTransferWithinAStation',
+      //   label: 'Kankor Profille',
+      //   to: `${adminRoot}/students/kankor-profile`,
+      //   newWindow: false,
+      // },
       {
         icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',

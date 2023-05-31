@@ -34,7 +34,7 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                 {student.id}
               </p>
               <NavLink
-                to={`students/kankor-student${student.id}`}
+                to={`kankor-student/${student.id}`}
                 style={{ width: '10%' }}
               >
                 <p

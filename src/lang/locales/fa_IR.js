@@ -835,6 +835,7 @@ module.exports = {
   // Student Attendance Register
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',
   'forms.StdIdLabel': ' د شاګرد ایډي/ ایدی شاگرد',
+  'forms.studentIdLabel': 'آیډي',
   'forms.StdIdErr': 'د شاګرد ایډي اړین دی/ ایدی شاگرد ضروری است',
   'forms.StdPresentLabel': 'حاضر/ سوب',
   'forms.StdPresentErr': 'دا ارقام اړین دي/ این ارقام ضروی است',

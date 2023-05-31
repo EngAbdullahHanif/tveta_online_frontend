@@ -741,6 +741,7 @@ module.exports = {
   // Student Attendance Register
   'forms.AttendanceTitle': 'Student Attendance',
   'forms.StdIdLabel': 'Student Id',
+  'forms.studentIdLabel': 'Student Id',
   'forms.StdIdErr': 'Student Id Required!',
   'forms.StdPresentLabel': 'Present',
   'forms.StdPresentErr': 'this field is required!',

@@ -12,91 +12,46 @@ const servicePath = 'http://localhost:8000';
 const studentApiUrl = `${servicePath}/api/`;
 
 const StudentProfile = () => {
-  const { studentId } = useParams();
+  const { kankorId } = useParams();
   const [isNext, setIsNext] = useState(true);
   const [student, setStudent] = useState([]);
-  const [institute, setInstitute] = useState([]);
-  const [classs, setClasss] = useState([]); //classs is used because class is a reserved word
-  const [dorm, setDorm] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]); //classs is used because class is a reserved word
+  const [kankorStudent, setKankorStudent] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   //load data of student from database
   useEffect(() => {
-    async function fetchStudent() {
-      // const response = await axios.get(
-      //   `${studentApiUrl}?student_id=${studentId}`
-      // );
-      const response = await callApi(`api/?student_id=${studentId}`, '', null);
-      const data = await response.data;
-      setStudent(data.results);
-      setIsLoaded(true);
-
-      console.log('studentsdf', student);
-      // const instituteResponse = await axios.get(
-      //   `${studentApiUrl}student_institutes/?student_id=${studentId}`
-      // );
-      const instituteResponse = await callApi(
-        `api/student_institutes/?student_id=${studentId}`,
-        '',
+    console.log('id', kankorId);
+    async function fetchData() {
+      const response = await callApi(
+        `api/kankorResults/?id=${kankorId}`,
+        'GET',
         null
       );
-
-      const instituteData = await instituteResponse.data;
-      console.log('instituteData', instituteData);
-      setInstitute(instituteData);
-
-      //type =1 means current class or current continued class
-      // const classResponse = await axios.get(
-      //   `${studentApiUrl}student_class/?student_id=${studentId}&type=1`
-      // );
-      const classResponse = await callApi(
-        `api/student_class/?student_id=${studentId}&type=1`,
-        '',
-        null
-      );
-
-      const classData = await classResponse.data;
-      setClasss(classData);
-
-      // const dormResponse = await axios.get(
-      //   `${studentApiUrl}student_dorms/?student_id=${studentId}`
-      // );
-      const dormResponse = await callApi(
-        `api/student_dorms/?student_id=${studentId}`,
-        '',
-        null
-      );
-
-      const dormData = await dormResponse.data;
-      setDorm(dormData);
-
-      const marksResponse = await callApi(
-        `api/TranscriptData/?student_id=${studentId}`,
-        '',
-        null
-      );
-
-      console.log(`${studentApiUrl}TranscriptData/?student_id=${studentId}`);
-      const marksData = await marksResponse.data;
-      console.log('marksData', marksData);
-      setMarks(marksData);
+      if (response.data && response.status === 200) {
+        setKankorStudent(response.data);
+        console.log('RespOnseData', response.data);
+        setSelectedItems([]);
+        // setTotalItemCount(data);
+      } else {
+        console.log('Kankor students error');
+      }
     }
-    fetchStudent();
+    fetchData();
   }, []);
 
-  console.log('marks', marks);
-
-  const handleClick = (event) => {
-    setIsNext(event);
-  };
-
-  const style2 = {
-    padding: '',
-  };
-  const style1 = {
-    backgroungColor: 'blue',
-  };
+  console.log('KankorStudent', kankorStudent[0]);
+  // Destructuring the kankor student field, institute, and department names.
+  let field_name, institute_name, department_name;
+  if (kankorStudent[0]) {
+    const { name: fieldName } = kankorStudent[0].field_id;
+    const { name: instituteName } = kankorStudent[0].Institute;
+    const { name: departmentName } = kankorStudent[0].department_id;
+    field_name = fieldName;
+    institute_name = instituteName;
+    department_name = departmentName;
+  }
 
   return (
     <>
@@ -115,104 +70,110 @@ const StudentProfile = () => {
           </div>
         </Colxx>
       </Row>
-      {!isLoaded ? (
-        <div className="loading" />
-      ) : (
-        <div>
-          <Row>
-            <Colxx xxs="1"></Colxx>
-            {student.length > 0 && (
-              <Colxx>
-                <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
-              </Colxx>
-            )}
-          </Row>
-        </div>
-      )}
       <>
-        <Card className="rounded m-4">
-          <CardBody>
-            <div>
-              <Row>
-                <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                  {' '}
-                  <h2
-                    className="bg-primary "
-                    style={{
-                      padding: '8px',
-                      paddingInline: '40px',
-                      borderRadius: '10px',
-                      fontSize: '250%',
-                      fontWeight: 'bold',
-                    }}
-                  >
+        {kankorStudent.length > 0 ? (
+          <Card className="rounded m-4">
+            <CardBody>
+              <div>
+                <Row>
+                  <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
                     {' '}
-                    <IntlMessages id="forms.kankorInfo" />
-                  </h2>
-                </Colxx>
-              </Row>
-              <Row className="justify-content-center   rounded ">
-                <Colxx style={{ paddingInline: '4%' }} xxs="">
-                  <Label className="data-style">
-                    <IntlMessages id="teacher.NameLabel" />
-                  </Label>
-                  <h2>Arshad Rahman</h2>
-                  <Label className="data-style">
-                    <IntlMessages id="teacher.FatherNameLabel" />
-                  </Label>
-                  <h2> Abdul Wakil</h2>
+                    <h2
+                      className="bg-primary "
+                      style={{
+                        padding: '8px',
+                        paddingInline: '40px',
+                        borderRadius: '10px',
+                        fontSize: '250%',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {' '}
+                      <IntlMessages id="forms.kankorInfo" />
+                    </h2>
+                  </Colxx>
+                </Row>
+                <Row className="justify-content-center   rounded ">
+                  <Colxx style={{ paddingInline: '4%' }} xxs="">
+                    <Label className="data-style">
+                      <IntlMessages id="teacher.NameLabel" />
+                    </Label>
+                    <h2>{kankorStudent[0].name}</h2>
+                    <Label className="data-style">
+                      <IntlMessages id="teacher.FatherNameLabel" />
+                    </Label>
+                    <h2>{kankorStudent[0].father_name}</h2>
 
-                  <Label className="data-style">
-                    <IntlMessages id="dash.teacherGender" />
-                  </Label>
-                  <h2> Male</h2>
+                    <Label className="data-style">
+                      <IntlMessages id="dash.teacherGender" />
+                    </Label>
+                    {kankorStudent[0].gender === '1' ? (
+                      <h2>
+                        {' '}
+                        <IntlMessages id="institute.totalStudentsMale" />
+                      </h2>
+                    ) : (
+                      <IntlMessages id="institute.totalStudentsFemale" />
+                    )}
+                    <Label className="data-style">
+                      <IntlMessages id="forms.KankorMarksLabel" />
+                    </Label>
+                    <h2>{kankorStudent[0].score}</h2>
 
-                  <Label className="data-style">
-                    <IntlMessages id="forms.KankorMarksLabel" />
-                  </Label>
-                  <h2>78</h2>
+                    <Label className="data-style">
+                      <IntlMessages id="forms.InstituteLabel" />
+                    </Label>
+                    <h2>{institute_name}</h2>
 
-                  <Label className="data-style">
-                    <IntlMessages id="forms.InstituteLabel" />
-                  </Label>
-                  <h2>ATVI</h2>
+                    <Label className="data-style">
+                      <IntlMessages id="department.field" />
+                    </Label>
+                    <h2>{field_name}</h2>
 
-                  <Label className="data-style">
-                    <IntlMessages id="department.field" />
-                  </Label>
-                  <h2>Coputer Science</h2>
-
-                  <br />
-                  <br />
-                </Colxx>
-                <Colxx style={{ paddingInline: '4%' }}>
-                  <Label className="data-style">
-                    <IntlMessages id="curriculum.eduactionalYearLabel" />
-                  </Label>
-                  <h2>1403</h2>
-                  <Label className="data-style">
-                    <IntlMessages id="forms.StudyTimeLabel" />
-                  </Label>
-                  <h2>Morning Shift</h2>
-                  <Label className="data-style">
-                    <IntlMessages id="forms.studyDepartment" />
-                  </Label>
-                  <h2>Database</h2>
-                  <Label className="data-style">
-                    <IntlMessages id="forms.ProvinceLabel" />
-                  </Label>
-                  <h2>کابل </h2>
-                  <Label className="data-style">
-                    <IntlMessages id="forms.DistrictLabel" />
-                  </Label>
-                  <h2>7th District</h2>
-                  <br />
-                  <br />
-                </Colxx>
-              </Row>
-            </div>
-          </CardBody>
-        </Card>
+                    <br />
+                    <br />
+                  </Colxx>
+                  <Colxx style={{ paddingInline: '4%' }}>
+                    <Label className="data-style">
+                      <IntlMessages id="curriculum.eduactionalYearLabel" />
+                    </Label>
+                    <h2>{kankorStudent[0].educational_year}</h2>
+                    <Label className="data-style">
+                      <IntlMessages id="forms.StudyTimeLabel" />
+                    </Label>
+                    {kankorStudent[0].shift === '1' ? (
+                      <h2>
+                        {' '}
+                        <IntlMessages id="forms.StudyTimeOption_1" />{' '}
+                      </h2>
+                    ) : (
+                      <h2>
+                        {' '}
+                        <IntlMessages id="forms.StudyTimeOption_2" />{' '}
+                      </h2>
+                    )}
+                    <Label className="data-style">
+                      <IntlMessages id="forms.studyDepartment" />
+                    </Label>
+                    <h2>{department_name}</h2>
+                    <Label className="data-style">
+                      <IntlMessages id="forms.ProvinceLabel" />
+                    </Label>
+                    <h2>{kankorStudent[0].provence} </h2>
+                    <Label className="data-style">
+                      <IntlMessages id="forms.DistrictLabel" />
+                    </Label>
+                    <h2>{kankorStudent[0].district}</h2>
+                    <br />
+                    <br />
+                  </Colxx>
+                </Row>
+              </div>
+            </CardBody>
+          </Card>
+        ) : (
+          'No Data Available'
+        )}
       </>
     </>
   );

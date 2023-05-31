@@ -344,11 +344,50 @@ const StudentRegistration = ({ intl }, values) => {
   const forms = [createRef(null), createRef(null), createRef(null)];
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [fields, setFields] = useState({});
-  const [TazkiraType, setTazkiraType] = useState('0');
-  const [Province, setProvince] = useState('0');
-  const [CurrentProvince, setCurrentProvince] = useState('0');
-  const [Gender, setGender] = useState('0');
+  const [fields, setFields] = useState({
+    name1: initialname1,
+    fatherName: initialFatherName,
+    lastName: initialLastName,
+    lastNameEng: initialLastNameEng,
+    fatherDuty: initialFatherDuty,
+    englishName: initialEnglishName,
+    fatherEngName: initialFatherEngName,
+    grandFatherName: initialGrandFatherName,
+    fatherDutyLocation: initialFatherDutyLocation,
+    placeOfBirth: initialPlaceOfBirth,
+    DoB: initialDoB,
+    gender: initialGender,
+    tazkiraNo: initialTazkiraNo,
+    phoneNo: initialPhoneNo,
+    email: initialEmail,
+    idCardPageNo: initialIdCardPageNo,
+    idCardJoldNo: initialIdCardJoldNo,
+    tazkiraType: initialTazkiraType,
+    levelOfEducation: initialLevelOfEducation,
+    preSchool: initialPreSchool,
+    graduationYear: initialGraduationYear,
+    schoolProvince: initialSchoolProvince,
+    province: initialProvince,
+    C_Province: initialC_Province,
+    C_District: initialC_District,
+    district: initialDistrict,
+    village: initialVillage,
+    C_Village: initialC_Village,
+    institute: initialInstitute,
+    class: initialClass,
+    educationalYear: initialEducationalYear,
+    department: initialDepartment,
+    mediumOfInstruction: initialMediumOfInstruction,
+    // kankorId: initialKankorId,
+    studentId: initialStudentId,
+    studyTime: initialStudyTime,
+    interanceType: initialInteranceType,
+    studentType: initialStudentType,
+    batch: initialBatch,
+    field: initialField,
+    sector: initialSector,
+    file: initialphoto,
+  });
 
   const onClickNext = (goToNext, steps, step, values) => {
     if (steps.length - 1 <= steps.indexOf(step)) {
@@ -356,14 +395,6 @@ const StudentRegistration = ({ intl }, values) => {
     }
     const formIndex = steps.indexOf(step);
     const form = forms[formIndex].current;
-    if (step.id === 'step1') {
-      setTazkiraType(form.values.tazkiraType.value);
-      setGender(form.values.gender.value);
-    }
-    if (step.id === 'step2') {
-      setProvince(form.values.province.value);
-      setCurrentProvince(form.values.C_Province.value);
-    }
     form.submitForm().then(() => {
       if (!form.isDirty && form.isValid) {
         const newFields = { ...fields, ...form.values };
@@ -373,9 +404,9 @@ const StudentRegistration = ({ intl }, values) => {
           setLoading(true);
 
           const formData = { ...newFields };
-
-          // const imageData = new FormData();
-          // imageData.append('file', formData.image);
+          console.log('FormData', formData);
+          const imageData = new FormData();
+          imageData.append('file', formData.image);
 
           const data = {
             //personal info,
@@ -468,7 +499,7 @@ const StudentRegistration = ({ intl }, values) => {
   return (
     <Card>
       <div className="mt-4 ml-5">
-        <h2 className="mt-5 m-5 titleStyle titleStyle">
+        <h2 className="mt-5 m-5 titleStyle">
           {<IntlMessages id="forms.studentRegisterTitle" />}
         </h2>
       </div>
@@ -485,27 +516,27 @@ const StudentRegistration = ({ intl }, values) => {
                   innerRef={forms[0]}
                   enableReinitialize={true}
                   initialValues={{
-                    name1: initialname1,
-                    fatherName: initialFatherName,
-                    lastName: initialLastName,
-                    lastNameEng: initialLastNameEng,
-                    fatherDuty: initialFatherDuty,
-                    englishName: initialEnglishName,
-                    fatherEngName: initialFatherEngName,
-                    grandFatherName: initialGrandFatherName,
-                    fatherDutyLocation: initialFatherDutyLocation,
-                    placeOfBirth: initialPlaceOfBirth,
-                    DoB: initialDoB,
-                    gender: initialGender,
-                    tazkiraNo: initialTazkiraNo,
-                    phoneNo: initialPhoneNo,
-                    email: initialEmail,
-                    idCardPageNo: initialIdCardPageNo,
-                    idCardJoldNo: initialIdCardJoldNo,
-                    tazkiraType: initialTazkiraType,
+                    name1: fields.name1,
+                    fatherName: fields.fatherName,
+                    lastName: fields.lastName,
+                    lastNameEng: fields.lastNameEng,
+                    fatherDuty: fields.fatherDuty,
+                    englishName: fields.englishName,
+                    fatherEngName: fields.fatherEngName,
+                    grandFatherName: fields.grandFatherName,
+                    fatherDutyLocation: fields.fatherDutyLocation,
+                    placeOfBirth: fields.placeOfBirth,
+                    DoB: fields.DoB,
+                    gender: fields.gender,
+                    tazkiraNo: fields.tazkiraNo,
+                    phoneNo: fields.phoneNo,
+                    email: fields.email,
+                    idCardPageNo: fields.idCardPageNo,
+                    idCardJoldNo: fields.idCardJoldNo,
+                    tazkiraType: fields.tazkiraType,
                   }}
                   validateOnMount
-                  // validationSchema={studentRegisterFormStep_1}
+                  validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -628,7 +659,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
-                              {errors.tazkiraType && !TazkiraType ? (
+                              {errors.tazkiraType && touched.tazkiraType ? (
                                 <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
                                   {errors.tazkiraType}
                                 </div>
@@ -665,7 +696,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
                                 <IntlMessages id="teacher.PhoneNoLabel" />
-                                <span style={{ color: 'red' }}>*</span>
+                                {/* <span style={{ color: 'red' }}>*</span> */}
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -767,7 +798,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
-                              {errors.gender && !Gender ? (
+                              {errors.gender && touched.gender ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.gender}
                                 </div>
@@ -857,7 +888,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="teacher.EmailLabel" />
-                                <span style={{ color: 'red' }}>*</span>
+                                {/* <span style={{ color: 'red' }}>*</span> */}
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -888,19 +919,19 @@ const StudentRegistration = ({ intl }, values) => {
                 <Formik
                   innerRef={forms[1]}
                   initialValues={{
-                    levelOfEducation: initialLevelOfEducation,
-                    preSchool: initialPreSchool,
-                    graduationYear: initialGraduationYear,
-                    schoolProvince: initialSchoolProvince,
-                    province: initialProvince,
-                    C_Province: initialC_Province,
-                    C_District: initialC_District,
-                    district: initialDistrict,
-                    village: initialVillage,
-                    C_Village: initialC_Village,
+                    levelOfEducation: fields.levelOfEducation,
+                    preSchool: fields.preSchool,
+                    graduationYear: fields.graduationYear,
+                    schoolProvince: fields.schoolProvince,
+                    province: fields.province,
+                    C_Province: fields.C_Province,
+                    C_District: fields.C_District,
+                    district: fields.district,
+                    village: fields.village,
+                    C_Village: fields.C_Village,
                   }}
                   onSubmit={() => {}}
-                  // validationSchema={studentRegisterFormStep_2}
+                  validationSchema={studentRegisterFormStep_2}
                   validateOnMount
                 >
                   {({
@@ -936,7 +967,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
-                                {errors.province && !Province ? (
+                                {errors.province && touched.province ? (
                                   <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.province}
                                   </div>
@@ -1003,7 +1034,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />
-                                {errors.C_Province && !CurrentProvince ? (
+                                {errors.C_Province && touched.C_Province ? (
                                   <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.C_Province}
                                   </div>
@@ -1058,7 +1089,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 <FormikReactSelect
                                   name="graduationYear"
                                   id="graduationYear"
-                                  value={values.educationalYearsOptions}
+                                  value={values.graduationYear}
                                   options={educationalYearsOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
@@ -1149,20 +1180,20 @@ const StudentRegistration = ({ intl }, values) => {
                 <Formik
                   innerRef={forms[2]}
                   initialValues={{
-                    institute: initialInstitute,
-                    class: initialClass,
-                    educationalYear: initialEducationalYear,
-                    department: initialDepartment,
-                    mediumOfInstruction: initialMediumOfInstruction,
+                    institute: fields.institute,
+                    class: fields.class,
+                    educationalYear: fields.educationalYear,
+                    department: fields.department,
+                    mediumOfInstruction: fields.mediumOfInstruction,
                     // kankorId: initialKankorId,
-                    studentId: initialStudentId,
-                    studyTime: initialStudyTime,
-                    interanceType: initialInteranceType,
-                    studentType: initialStudentType,
-                    batch: initialBatch,
-                    field: initialField,
-                    sector: initialSector,
-                    file: initialphoto,
+                    studentId: fields.studentId,
+                    studyTime: fields.studyTime,
+                    interanceType: fields.interanceType,
+                    studentType: fields.studentType,
+                    batch: fields.batch,
+                    field: fields.field,
+                    sector: fields.sector,
+                    file: fields.file,
                   }}
                   onSubmit={() => {}}
                   validationSchema={studentRegisterFormStep_3}

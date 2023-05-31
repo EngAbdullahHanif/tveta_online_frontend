@@ -307,7 +307,7 @@ const StudentsDismissal = (values) => {
                                       </Label>
                                       <h2>{student.semester}</h2>
                                       <Label className="data-style">
-                                        <IntlMessages id="forms.FieldLabel" />
+                                        <IntlMessages id="forms.studyDepartment" />
                                       </Label>
                                       <h2>{student.department_name}</h2>
                                       <Label className="data-style">

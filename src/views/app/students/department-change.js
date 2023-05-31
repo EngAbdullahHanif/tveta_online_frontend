@@ -10,7 +10,7 @@ import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../../assets/css/global-style.css';
-import { studentTransferValidationSchema } from './../global-data/forms-validation';
+import { departmentChangeValidationSchema } from './../global-data/forms-validation';
 
 import * as Yup from 'yup';
 import {
@@ -35,15 +35,16 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
+import { department } from 'lang/locales/fa_IR';
 
 const servicePath = 'http://localhost:8000';
 const instituteApiUrl = `${servicePath}/institute/`;
 const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
 const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
 
-const instituteOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" /> },
+const departmentOptions = [
+  { value: '1', label: <IntlMessages id="NetWorking" /> },
+  { value: '2', label: <IntlMessages id="DataBase" /> },
 ];
 
 const SearchResultSchema = Yup.object().shape({
@@ -53,7 +54,7 @@ const SearchResultSchema = Yup.object().shape({
     .required(<IntlMessages id="search.studentIdsearchErr" />),
 });
 
-const StudentsTransfer = (values) => {
+const DepartmentChange = (values) => {
   const [studentId, setStudentId] = useState('');
   const [student, setStudent] = useState('');
   const [data, setData] = useState(false);
@@ -63,13 +64,8 @@ const StudentsTransfer = (values) => {
   const [isLoad, SetIsLoad] = useState();
 
   const initialValues = {
-    institute: [],
+    department: [],
     searchfield: '',
-    transferDate: '',
-    educationalYear: [],
-    mediumOfInstruction: [],
-    studyTime: [],
-    transferDocument: '',
   };
 
   const handleClick = (event) => {
@@ -161,7 +157,7 @@ const StudentsTransfer = (values) => {
     fetchInstitutes();
   }, []);
   const onSubmit = async (values) => {
-    // setReload(true);
+    setReload(true);
     const data = {
       student_id: studentId,
       institute_id: values.institute.value,
@@ -173,22 +169,22 @@ const StudentsTransfer = (values) => {
       is_transfer: 2, //is_transfer = 2 means transfered
     };
 
-    try {
-      const response = await callApi(`api/student-transfer/`, 'POST', data);
-      if (response.status === 200 || response.status === 201) {
-        console.log('success');
-        createNotification('success', 'filled');
-        setReload(true);
-      }
-    } catch (error) {
-      if (error.message === 'Resource not found') {
-        console.log('student not found');
-        createNotification('info', 'filled');
-      } else {
-        console.log('An error occurred:', error.message);
-        createNotification('error', 'filled');
-      }
-    }
+    // try {
+    //   const response = await callApi(`api/student-transfer/`, 'POST', data);
+    //   if (response.status === 200 || response.status === 201) {
+    //     console.log('success');
+    //     createNotification('success', 'filled');
+    //     setReload(true);
+    //   }
+    // } catch (error) {
+    //   if (error.message === 'Resource not found') {
+    //     console.log('student not found');
+    //     createNotification('info', 'filled');
+    //   } else {
+    //     console.log('An error occurred:', error.message);
+    //     createNotification('error', 'filled');
+    //   }
+    // }
 
     // if (response.status === 200 || response.status === 201) {
     //   console.log('success');
@@ -206,7 +202,7 @@ const StudentsTransfer = (values) => {
     <Card className="card">
       <div className="mt-4 ml-5">
         <h2 className=" m-5  titleStyle">
-          {<IntlMessages id="student.transferTitle" />}
+          {<IntlMessages id="department-change" />}
         </h2>
       </div>
       <CardBody>
@@ -332,7 +328,7 @@ const StudentsTransfer = (values) => {
                                     </Label>
                                     <h2>{student.semester}</h2>
                                     <Label className="data-style">
-                                       <IntlMessages id="forms.studyDepartment" />
+                                      <IntlMessages id="forms.studyDepartment" />
                                     </Label>
                                     <h2>{student.department_name}</h2>
                                     <Label className="data-style">
@@ -433,7 +429,7 @@ const StudentsTransfer = (values) => {
                 <Formik
                   initialValues={initialValues}
                   onSubmit={onSubmit}
-                  validationSchema={studentTransferValidationSchema}
+                  validationSchema={departmentChangeValidationSchema}
                 >
                   {({
                     errors,
@@ -447,137 +443,27 @@ const StudentsTransfer = (values) => {
                         <Colxx xxs="8">
                           <div className=" p-3">
                             <h1 className=" mb-4">
-                              {
-                                <IntlMessages id="teacher.TransferNewInfoTittle" />
-                              }
+                              <IntlMessages id="student.newDepartment" />
                             </h1>
 
                             {/* Institute Name*/}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
-                                <IntlMessages id="forms.InstituteLabel" />
+                                <IntlMessages id="attendance.departmentLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <FormikReactSelect
-                                name="institute"
-                                id="institute"
-                                value={values.institute}
-                                options={institutes}
+                                name="department"
+                                id="department"
+                                value={values.department}
+                                options={departmentOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
 
-                              {errors.institute && touched.institute ? (
+                              {errors.department && touched.department ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.institute}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* transferDate */}
-                            <FormGroup className="form-group has-float-label">
-                              <Label>
-                                <IntlMessages id="student.transferDateLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="transferDate"
-                                placeholder="1399/01/01"
-                              />
-                              {errors.transferDate && touched.transferDate ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.transferDate}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* educationalYear */}
-                            <FormGroup className="form-group has-float-label  error-l-150 ">
-                              <Label>
-                                <IntlMessages id="curriculum.eduactionalYearLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <FormikReactSelect
-                                name="educationalYear"
-                                id="educationalYear"
-                                value={values.educationalYear}
-                                options={educationalYearsOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                required
-                              />
-                              {errors.educationalYear &&
-                              touched.educationalYear ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.educationalYear}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* medium OfInstruction (Teaching Language) */}
-                            <FormGroup className="form-group has-float-label ">
-                              <Label>
-                                <IntlMessages id="forms.mediumOfInstruction" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <FormikReactSelect
-                                name="mediumOfInstruction"
-                                id="mediumOfInstruction"
-                                value={values.mediumOfInstruction}
-                                options={mediumOfInstructionOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                required
-                              />
-                              {errors.mediumOfInstruction &&
-                              touched.mediumOfInstruction ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.mediumOfInstruction}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Study Time */}
-                            <FormGroup className="form-group has-float-label error-l-150">
-                              <Label>
-                                <IntlMessages id="forms.StudyTimeLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <FormikReactSelect
-                                name="studyTime"
-                                id="studyTime"
-                                value={values.studyTime}
-                                options={studyTimeOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                              />
-                              {errors.studyTime && touched.studyTime ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.studyTime}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            <FormGroup>
-                              <Label>
-                                <IntlMessages id="student.transferDocuments" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <InputGroup className="mb-3">
-                                <InputGroupAddon addonType="prepend">
-                                  آپلود
-                                </InputGroupAddon>
-                                <CustomInput
-                                  type="file"
-                                  id="exampleCustomFileBrowser1"
-                                  name="transferDocument"
-                                />
-                              </InputGroup>
-                              {errors.transferDocument &&
-                              touched.transferDocument ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.transferDocument}
+                                  {errors.department}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -655,4 +541,4 @@ const StudentsTransfer = (values) => {
   );
 };
 
-export default StudentsTransfer;
+export default DepartmentChange;

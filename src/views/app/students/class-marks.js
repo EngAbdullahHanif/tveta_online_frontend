@@ -386,11 +386,6 @@ const AllSubjectsMarks = ({ match }) => {
                         //   handleClick(false);
                         // }}
                       >
-                        <span className="spinner d-inline-block">
-                          <span className="bounce1" />
-                          <span className="bounce2" />
-                          <span className="bounce3" />
-                        </span>
                         <span className="label">
                           <IntlMessages id="button.Next" />
                         </span>

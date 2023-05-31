@@ -767,9 +767,10 @@ module.exports = {
   'student.interenaceType': 'د جذب نوعیت',
   'student.PhoneNo': 'د تلفن نمبر',
   'study.type': 'د شاګرد ډول',
-  'department.nameErr': 'د دیپارتمنت نوم اړین دی/ نام دیپارتمنت ضروری است',
+  'department.nameErr': 'د دیپارتمنت اړین دی/دیپارتمنت ضروری است',
   'department.englishNameErr':
     'د دیپارتمنت انګریزی نوم اړین دی/ نام انګلسی دیپارتمنت ضروری است',
+  'student.newDepartment': 'نوی ډیپارتمنت/ دیپارتمنت جدید',
 
   // ولایات
   'forms.StdSchoolProvinceOptions_1': 'بدخشان',
@@ -834,6 +835,7 @@ module.exports = {
   // Student Attendance Register
   'forms.AttendanceTitle': 'د حاضری ثبت/ درج حاضری',
   'forms.StdIdLabel': ' د شاګرد ایډي/ ایدی شاگرد',
+  'forms.studentIdLabel': 'آیډي',
   'forms.StdIdErr': 'د شاګرد ایډي اړین دی/ ایدی شاگرد ضروری است',
   'forms.StdPresentLabel': 'حاضر/ سوب',
   'forms.StdPresentErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
@@ -1051,7 +1053,7 @@ module.exports = {
   'dorm.StudentRegisterTitle': 'د شاګرد ثبت/ ثبت شاگرد در لیلیه',
   'search.studentId': 'لټون/ جستجو',
   'search.studentIdSearchLabel':
-    'د شاګرد  دننه کړئ / لطفا آیدی شاگرد را وراد نماید',
+    'د شاګرد آیډي دننه کړئ / لطفا آیدی شاگرد را وراد نماید',
   'dorm.SearchResult': 'د لټون پایله/ نتیجه جستجو...',
   'dorm.search.name': 'نوم',
   'dorm.search.dorm.name': 'د لیلې نوم',
@@ -1369,6 +1371,7 @@ module.exports = {
   'transfered-Students': 'د تبدیل شویو شاګردانو لست',
   'student.dismissal-studentList':
     'د منفک شویو شاګردانو لست/ لست شاگردان منفک شده',
+  'department-change': 'د ډیپارتمنت تبدیلي',
 
   // Student Dismissal from dorm
   'student.dismissalFromDormTitle':
@@ -1432,6 +1435,11 @@ module.exports = {
   'class.semesterLabel': 'سمستر',
   'class.semesterErr': 'سمستر اړین دی/ سمستر ضروری است',
   'class.nameList': 'نام',
+  'section-change': 'د ټولګي/ سکشن تبدیلي',
+  'new.section': 'نوی ټولګی /صنف جدید',
+  'student.upgrade-class': 'د شاګرد دټولګي ارتقا / ارتقای صنف شاګرد',
+  'menu.student.upgrade-class': 'د شاګرد دټولګي ارتقا',
+  'student.assignment-to-class': 'شاګرد ته د ټولګي تعینوول',
 
   // Deletion flash message model
   'modal.deletion-message-title': 'تایید',

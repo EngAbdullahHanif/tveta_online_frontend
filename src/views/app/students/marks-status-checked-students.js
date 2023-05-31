@@ -77,8 +77,7 @@ const ValidationSchema = Yup.object().shape({
       value: Yup.string().required(),
     })
     .nullable()
-    // .required(<IntlMessages id="marks.SubjectErr" />),
-    .required('semester error'),
+    .required(<IntlMessages id="class.semesterErr" />),
 });
 
 const initialValues = {
@@ -226,6 +225,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
   };
 
   const fechtStudens = async () => {
+    setIsNext(true);
     console.log('selectedSemester', selectedSemester);
     const response = await callApi(
       `api/marks-status-checked-students/?institute_id=${selectedInstitute.value}&class=${selectedClass.value}&semester=${selectedSemester.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
@@ -293,8 +293,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
       <Card>
         <div className="mt-4 ml-5">
           <h2 className="mt-5 m-5 titleStyle">
-            {/* {<IntlMessages id="marks.title" />} */}
-            student class assigment
+            {<IntlMessages id="student.assignment-to-class" />}
           </h2>
         </div>
         <CardBody>
@@ -423,8 +422,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
 
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
-                          {/* <IntlMessages id="marks.SubjectLabel" /> */}
-                          semester
+                          <IntlMessages id="class.semesterLabel" />
                         </Label>
                         <FormikReactSelect
                           name="semester"

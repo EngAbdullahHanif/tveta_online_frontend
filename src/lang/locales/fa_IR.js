@@ -542,6 +542,7 @@ module.exports = {
   'button.dark': 'تیره',
   'button.Next': 'مخته/ بعدی',
   'button.Back': 'شاته/ قبلی',
+  'button.verify': 'تایید',
   'button.TeacherBackround': 'سوانح',
   'button.Teacherprofile': 'پروفایل',
   'button.back': 'بیرته گرځیدل/ برگشت',
@@ -1422,6 +1423,7 @@ module.exports = {
   'marks.studentIdErr': 'د شاګرد ایډي ضروری دی/ ایدی شاگرد ضروری است',
   'marks.chance': 'چانس',
   'marks.chanceErr': 'د چانس ټاکل اړین دی/ انتخاب چانس ضروری است',
+  'marks.verify': 'تایید',
   'forms.chanceOne': 'لومړی چانس/ چانس اول',
   'forms.chanceTwo': 'دوهم چانس/ چانس دوم',
 

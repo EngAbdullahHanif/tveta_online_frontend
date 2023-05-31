@@ -46,6 +46,9 @@ const StudentTransfer = React.lazy(() =>
 const MarksDisplay = React.lazy(() =>
   import(/* webpackChunkName: "marks-display" */ './subject-marks')
 );
+const MarksVerification = React.lazy(() =>
+  import(/* webpackChunkName: "marks-display" */ './subject-marks-verification')
+);
 const MarksDisplayAllSubs = React.lazy(() =>
   import(/* webpackChunkName: "marks-display-allsubs" */ './class-marks')
 );
@@ -197,6 +200,10 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/marks-display`}
         render={(props) => <MarksDisplay {...props} />}
+      />
+      <Route
+        path={`${match.url}/marks-verification`}
+        render={(props) => <MarksVerification {...props} />}
       />
       <Route
         path={`${match.url}/class-marks`}

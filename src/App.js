@@ -14,7 +14,7 @@ import { NotificationContainer } from './components/common/react-notifications';
 import {
   isMultiColorActive,
   adminRoot,
-  UserRole,
+  userRole,
 } from './constants/defaultValues';
 import { getDirection, getCurrentUser } from './helpers/Utils';
 import { ProtectedRoute } from './helpers/authHelper';
@@ -65,7 +65,7 @@ const App = ({ locale }) => {
                 {/* <ProtectedRoute
                   path={adminRoot}
                   component={ViewApp}
-                  roles={[UserRole.provincial]}
+                  roles={[userRole.provincial]}
                 /> */}
                 <Route
                   path={adminRoot}

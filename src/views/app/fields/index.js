@@ -1,11 +1,11 @@
+import { userRole } from 'constants/defaultValues';
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-
 
 const FieldRegister = React.lazy(() =>
   import(/* webpackChunkName: "field-register" */ './field-register')
 );
-
 
 const InstituteFieldDepartmentRegister = React.lazy(() =>
   import(
@@ -13,44 +13,78 @@ const InstituteFieldDepartmentRegister = React.lazy(() =>
   )
 );
 const FieldList = React.lazy(() =>
-  import(/* webpackChunkName: "subject-register" */ './field-list/FieldListMain')
+  import(
+    /* webpackChunkName: "subject-register" */ './field-list/FieldListMain'
+  )
 );
 
 const DepartmentRegister = React.lazy(() =>
   import(/* webpackChunkName: "subject-register" */ './department-register')
 );
 const DepartmentList = React.lazy(() =>
-  import(/* webpackChunkName: "subject-register" */ './department-list/DepartmentListMain')
+  import(
+    /* webpackChunkName: "subject-register" */ './department-list/DepartmentListMain'
+  )
 );
 
-
-
-
-
-
-const Fields = ({ match }) => (
+const Fields = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/fields`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/register`}
-        render={(props) => <FieldRegister {...props} />}
+        component={FieldRegister}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/field-list`}
-        render={(props) => <FieldList {...props} />}
+        component={FieldList}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/institute-field-department-register`}
-        render={(props) => <InstituteFieldDepartmentRegister {...props} />}
+        component={InstituteFieldDepartmentRegister}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-        <Route
+      <ProtectedRoute
         path={`${match.url}/department-register`}
-        render={(props) => <DepartmentRegister {...props} />}
+        component={DepartmentRegister}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-        <Route
+      <ProtectedRoute
         path={`${match.url}/department-list`}
-        render={(props) => <DepartmentList {...props} />}
+        component={DepartmentList}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
 
       <Redirect to="/error" />

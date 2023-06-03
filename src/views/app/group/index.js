@@ -1,3 +1,5 @@
+import { userRole } from 'constants/defaultValues';
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -9,17 +11,31 @@ const GroupPremssions = React.lazy(() =>
   import(/* webpackChunkName: "premissions" */ './group-premissions')
 );
 
-const Groups = ({ match }) => (
+const Groups = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/groups`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/register`}
-        render={(props) => <GroupRegister {...props} />}
+        component={GroupRegister}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/premissions`}
-        render={(props) => <GroupPremssions {...props} />}
+        component={GroupPremssions}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
 
       <Redirect to="/error" />

@@ -6,13 +6,13 @@ const data = [
     icon: 'FA.FaUserGraduate',
     label: 'menu.students',
     to: `${adminRoot}/students`,
-    // roles: [UserRole.Admin, UserRole.Editor],
+    // roles: [userRole.Admin, userRole.Editor],
     subs: [
       {
         icon: 'FA.FaList',
         label: 'menu.student_list',
         to: `${adminRoot}/students/students`,
-        // roles: [UserRole.Admin],
+        // roles: [userRole.Admin],
       },
 
       {
@@ -30,13 +30,13 @@ const data = [
         icon: 'FA.FaList',
         label: 'transfered-Students',
         to: `${adminRoot}/students/transfered-list`,
-        // roles: [UserRole.Admin],
+        // roles: [userRole.Admin],
       },
       {
         icon: 'FA.FaList',
         label: 'studendts.dismisseds-students',
         to: `${adminRoot}/students/dismissed-list`,
-        // roles: [UserRole.Admin],
+        // roles: [userRole.Admin],
       },
       {
         icon: 'FA.FaList',
@@ -66,7 +66,7 @@ const data = [
         icon: 'GR.GrUserAdd',
         label: 'menu.student_register_kankor',
         to: `${adminRoot}/students/register-kankor`,
-        // roles: [UserRole.Admin],
+        // roles: [userRole.Admin],
       },
 
       // {
@@ -183,7 +183,7 @@ const data = [
     // label: 'menu.students',
     label: 'menu.workers',
     to: `${adminRoot}/workers`,
-    // roles: [UserRole.Admin, UserRole.Editor],
+    // roles: [userRole.Admin, userRole.Editor],
     subs: [
       {
         icon: 'CG.CgUserList',

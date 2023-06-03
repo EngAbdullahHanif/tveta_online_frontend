@@ -609,6 +609,41 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
+                            {/* Father Duty */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="forms.StdFatherDutyLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="fatherDuty"
+                              />
+                              {errors.fatherDuty && touched.fatherDuty ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.fatherDuty}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/* Father duty place */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="forms.StdFatherDutyLocationLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="fatherDutyLocation"
+                              />
+                              {errors.fatherDutyLocation &&
+                              touched.fatherDutyLocation ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.fatherDutyLocation}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
                             {/* grandFatherName */}
                             <FormGroup className="form-group has-float-label">
                               <Label>
@@ -623,23 +658,6 @@ const StudentRegistration = ({ intl }, values) => {
                               touched.grandFatherName ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.grandFatherName}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Father Duty */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.StdFatherDutyLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="fatherDuty"
-                              />
-                              {errors.fatherDuty && touched.fatherDuty ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.fatherDuty}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -668,6 +686,32 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {values.tazkiraType.value === 'Paper' ? (
                               <div>
+                                {/* Jold Number */}
+                                <div>
+                                  <FormGroup className="form-group has-float-label error-l-100">
+                                    <Label>
+                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                                    </Label>
+                                    <Field
+                                      className="form-control fieldStyle"
+                                      name="idCardJoldNo"
+                                      type="string"
+                                    />
+                                    {errors.idCardJoldNo &&
+                                    touched.idCardJoldNo ? (
+                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                        {errors.idCardJoldNo}
+                                      </div>
+                                    ) : null}
+                                  </FormGroup>
+                                </div>
+                              </div>
+                            ) : (
+                              <div></div>
+                            )}
+
+                            {values.tazkiraType.value === 'Paper' ? (
+                              <div>
                                 {/* Safha */}
                                 <div>
                                   <FormGroup className="form-group has-float-label error-l-100">
@@ -692,40 +736,20 @@ const StudentRegistration = ({ intl }, values) => {
                               <div></div>
                             )}
 
-                            {/* Contact No */}
-                            <FormGroup className="form-group has-float-label error-l-100 ">
+                            {/* Tazkira Number */}
+                            <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
-                                <IntlMessages id="teacher.PhoneNoLabel" />
-                                {/* <span style={{ color: 'red' }}>*</span> */}
+                                <IntlMessages id="teacher.TazkiraNoLabel" />
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
-                                name="phoneNo"
+                                name="tazkiraNo"
                                 type="number"
                               />
-                              {errors.phoneNo && touched.phoneNo ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.phoneNo}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-                            <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
-                                <IntlMessages id="teacher.DoBLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <FormikReactSelect
-                                name="DoB"
-                                id="DoB"
-                                value={values.DoB}
-                                options={dateOfBirthOptoions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                required
-                              />
-                              {errors.DoB && touched.DoB ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.DoB}
+                              {errors.tazkiraNo && touched.tazkiraNo ? (
+                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                  {errors.tazkiraNo}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -784,6 +808,45 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
+                            {/* Date of Birth */}
+                            <FormGroup className="form-group has-float-label error-l-100 ">
+                              <Label>
+                                <IntlMessages id="teacher.DoBLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <FormikReactSelect
+                                name="DoB"
+                                id="DoB"
+                                value={values.DoB}
+                                options={dateOfBirthOptoions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                required
+                              />
+                              {errors.DoB && touched.DoB ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.DoB}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/* Place of birth */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="forms.PlaceOfBirthLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="placeOfBirth"
+                              />
+                              {errors.placeOfBirth && touched.placeOfBirth ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.placeOfBirth}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
                             {/* Gender */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
@@ -805,85 +868,6 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {/* Father duty place */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.StdFatherDutyLocationLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="fatherDutyLocation"
-                              />
-                              {errors.fatherDutyLocation &&
-                              touched.fatherDutyLocation ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.fatherDutyLocation}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Tazkira Number */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="teacher.TazkiraNoLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="tazkiraNo"
-                                type="number"
-                              />
-                              {errors.tazkiraNo && touched.tazkiraNo ? (
-                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                  {errors.tazkiraNo}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {values.tazkiraType.value === 'Paper' ? (
-                              <div>
-                                {/* Jold Number */}
-                                <div>
-                                  <FormGroup className="form-group has-float-label error-l-100">
-                                    <Label>
-                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                    </Label>
-                                    <Field
-                                      className="form-control fieldStyle"
-                                      name="idCardJoldNo"
-                                      type="string"
-                                    />
-                                    {errors.idCardJoldNo &&
-                                    touched.idCardJoldNo ? (
-                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                        {errors.idCardJoldNo}
-                                      </div>
-                                    ) : null}
-                                  </FormGroup>
-                                </div>
-                              </div>
-                            ) : (
-                              <div></div>
-                            )}
-
-                            {/* Place of birth */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.PlaceOfBirthLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="placeOfBirth"
-                              />
-                              {errors.placeOfBirth && touched.placeOfBirth ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.placeOfBirth}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
                             {/* Email Address */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
@@ -898,6 +882,24 @@ const StudentRegistration = ({ intl }, values) => {
                               {errors.email && touched.email ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.email}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/* Contact No */}
+                            <FormGroup className="form-group has-float-label error-l-100 ">
+                              <Label>
+                                <IntlMessages id="teacher.PhoneNoLabel" />
+                                {/* <span style={{ color: 'red' }}>*</span> */}
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="phoneNo"
+                                type="text"
+                              />
+                              {errors.phoneNo && touched.phoneNo ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.phoneNo}
                                 </div>
                               ) : null}
                             </FormGroup>

@@ -298,20 +298,16 @@ const MarksRegistration = ({ match }) => {
 
   const fechtStudens = async () => {
     const response = await callApi(
-      `api/second-chance-exam-students/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/second-chance-exam-students/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
       '',
       null
     );
     if (response.data && response.status === 200) {
-      // console.log('response of students', response);
       setStudents(response.data);
       setIsNext(true);
     } else {
       console.log('subject error');
     }
-    // console.log(
-    //   `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-    // );
   };
 
   const onSubmit = async (values) => {

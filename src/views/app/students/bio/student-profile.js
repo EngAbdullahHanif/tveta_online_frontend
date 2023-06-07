@@ -158,6 +158,7 @@ const StudentProfile = () => {
             <Colxx xxs="1"></Colxx>
             {student.length > 0 && (
               <Colxx>
+                {console.log('here', `${student[0].student_photo}`)}
                 {/* <img src={student.student_photo} alt="Photo" width={'10%'} />{' '} */}
                 <NavLink
                   to={`?p=${student.student_id}`}
@@ -577,6 +578,8 @@ const StudentProfile = () => {
                                     <tr>
                                       <th scope="row">{index + 1}</th>
                                       <td>{child.subject_name}</td>
+
+                                      <td>{child.score}</td>
                                       {child.subject_credit > 1 && (
                                         <>
                                           <td>{child.subject_credit}</td>
@@ -584,8 +587,6 @@ const StudentProfile = () => {
                                           <td>{child.subject_type}</td>
                                         </>
                                       )}
-
-                                      <td>{child.score}</td>
                                     </tr>
                                   </>
                                 ))}

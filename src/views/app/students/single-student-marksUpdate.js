@@ -402,7 +402,7 @@ const MarksUpdate = ({ match }) => {
                             ) : null}
                           </FormGroup>
 
-                          <FormGroup className="form-group has-float-label mt-5  error-l-150">
+                          {/* <FormGroup className="form-group has-float-label mt-5  error-l-150">
                             <Label>
                               <IntlMessages id="marks.studentId" />
                             </Label>
@@ -420,7 +420,7 @@ const MarksUpdate = ({ match }) => {
                                 {errors.studentId}
                               </div>
                             ) : null}
-                          </FormGroup>
+                          </FormGroup> */}
                         </Colxx>
 
                         <Colxx xxs="6">

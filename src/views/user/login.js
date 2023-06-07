@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import logo from '../../assets/img/logo2.png';
-import { Formik, Form, Field } from 'formik';
-import { NotificationManager } from 'components/common/react-notifications';
+import React, { useState, useEffect } from "react";
+import { Row, Card, CardTitle, Label, FormGroup, Button } from "reactstrap";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import logo from "../../assets/img/logo2.png";
+import { Formik, Form, Field } from "formik";
+import { NotificationManager } from "components/common/react-notifications";
 
-import { Colxx } from 'components/common/CustomBootstrap';
-import IntlMessages from 'helpers/IntlMessages';
-import { loginUser } from 'redux/actions';
+import { Colxx } from "components/common/CustomBootstrap";
+import IntlMessages from "helpers/IntlMessages";
+import { loginUser } from "redux/actions";
 
 const validatePassword = (value) => {
   let error;
@@ -31,8 +31,8 @@ const validateEmail = (value) => {
 };
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  const [email] = useState('');
-  const [password] = useState('');
+  const [email] = useState("");
+  const [password] = useState("");
 
   useEffect(() => {
     if (error) {
@@ -43,7 +43,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         9000,
         null,
         null,
-        ''
+        ""
       );
     }
   }, [error]);
@@ -51,7 +51,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
   const onUserLogin = (values) => {
     loginUserAction(values, history);
     if (!loading) {
-      if (values.email !== '' && values.password !== '') {
+      if (values.email !== "" && values.password !== "") {
       }
     }
   };
@@ -70,10 +70,10 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             <p className=" mb-0">
               برای ورود به سیستم نام کاربری و رمز خود را وارد کنید
               <br />
-              اگه حساب کاربری نداری نگران نباش، از{' '}
+              اگه حساب کاربری نداری نگران نباش، از{" "}
               <NavLink to="/user/register" className="">
                 اینجا
-              </NavLink>{' '}
+              </NavLink>{" "}
               میتونی تو سایت اسمتو بویسی
             </p>
           </div>
@@ -81,9 +81,9 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             <CardTitle className="mb-4">
               {error && (
                 <div className="alert alert-danger">
-                  <h2>{'یوزر یا پسورد اشتباهست'}</h2>
+                  <h2>{"یوزر یا پسورد اشتباهست"}</h2>
 
-                  <h6>{'دوباره کوشش کنید'}</h6>
+                  <h6>{"دوباره کوشش کنید"}</h6>
                 </div>
               )}
               <IntlMessages id="user.login-title" />
@@ -129,11 +129,11 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                     </NavLink> */}
                   <Row>
                     <Colxx className="text-left">
-                      {' '}
+                      {" "}
                       <Button
                         color="primary"
                         className={`btn-shadow btn-multiple-state ${
-                          loading ? 'show-spinner' : ''
+                          loading ? "show-spinner" : ""
                         }`}
                         size="lg"
                       >

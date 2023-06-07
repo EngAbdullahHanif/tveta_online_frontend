@@ -1,20 +1,20 @@
-import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { auth } from 'helpers/Firebase';
-import { adminRoot, currentUser } from 'constants/defaultValues';
-import { setCurrentUser } from 'helpers/Utils';
+import { all, call, fork, put, takeEvery } from "redux-saga/effects";
+import { auth } from "helpers/Firebase";
+import { adminRoot, currentUser } from "constants/defaultValues";
+import { setCurrentUser } from "helpers/Utils";
 // import { browserHistory } from 'react-router';
-import { push } from 'react-router-redux';
-import { NotificationManager } from 'components/common/react-notifications';
+import { push } from "react-router-redux";
+import { NotificationManager } from "components/common/react-notifications";
 
-import axios from 'axios';
-
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 import {
   LOGIN_USER,
   REGISTER_USER,
   LOGOUT_USER,
   FORGOT_PASSWORD,
   RESET_PASSWORD,
-} from '../actions';
+} from "../actions";
 
 import {
   loginUserSuccess,
@@ -25,19 +25,21 @@ import {
   forgotPasswordError,
   resetPasswordSuccess,
   resetPasswordError,
-} from './actions';
+} from "./actions";
+import { useContext } from "react";
+import { AuthCentext } from "context/AuthContext";
 
 async function getUserDetails() {
   try {
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem("access_token");
     return await axios
-      .get('http://localhost/tveta/user/user-profile/', {
+      .get("http://localhost/tveta/user/user-profile/", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       })
       .then((response) => {
-        console.log('user info response', response.data);
+        console.log("user info response", response.data);
         return response.data;
       });
   } catch (error) {
@@ -51,36 +53,41 @@ export function* watchLoginUser() {
 }
 
 function loginWithEmailPassword(username, password) {
-  console.log('came here')
-  return axios
-    // .post('http://172.16.105.244/tveta/user/logins/', { username, password }) #production mode
-    .post('http://localhost:8000/user/login/', { username, password })
-    .then((response) => {
-      console.log('response', response.data);
-      return response.data;
-    })
-    .catch((error) => {
-      // history.push('/user/login');
-      console.log('error of response', error);
-      // throw error;
-    });
+  // const { setUser } = useContext(AuthCentext);
+  console.log("came here");
+  return (
+    axios
+      // .post('http://172.16.105.244/tveta/user/logins/', { username, password }) #production mode
+      .post("http://localhost:8000/user/login/", { username, password })
+      .then((response) => {
+        console.log("response: ", response.data);
+        let loggedUser = jwt_decode(response.token);
+        console.warn("Logged User: ", loggedUser);
+        return response.data;
+      })
+      .catch((error) => {
+        // history.push('/user/login');
+        console.log("error of response", error);
+        // throw error;
+      })
+  );
 }
 
 export function* loginWithEmailPasswordAsync(action) {
   const { username, password } = action.payload.user;
   const { history } = action.payload;
-  console.log('username, password, history', username, password, history);
+  console.log("username, password, history", username, password, history);
   try {
     const data = yield call(loginWithEmailPassword, username, password);
-    console.log('data', data);
+    console.log("data", data);
     if (data) {
-      localStorage.setItem('access_token', data.token.access);
-      localStorage.setItem('refresh_token', data.token.refresh);
+      localStorage.setItem("access_token", data.token.access);
+      localStorage.setItem("refresh_token", data.token.refresh);
       setCurrentUser(data.data); // set the current user details
       yield put(loginUserSuccess(data.token));
-      history.push('/app');
+      history.push("/app");
     } else {
-      yield put(loginUserError('error'));
+      yield put(loginUserError("error"));
     }
   } catch (error) {
     yield put(loginUserError(error));
@@ -102,7 +109,7 @@ function registerWithEmailPassword(
   province
 ) {
   return axios
-    .post('http://localhost/tveta/user/register/', {
+    .post("http://localhost/tveta/user/register/", {
       username,
       last_name,
       email,
@@ -115,17 +122,24 @@ function registerWithEmailPassword(
       return response;
     })
     .catch((error) => {
-      console.log('error of response', error);
+      console.log("error of response", error);
     });
 }
 
 export function* registerWithEmailPasswordAsync(action) {
-  console.log('action', action);
-  const { username, last_name, email, password, role, institute_id, province } =
-    action.payload.user;
+  console.log("action", action);
+  const {
+    username,
+    last_name,
+    email,
+    password,
+    role,
+    institute_id,
+    province,
+  } = action.payload.user;
   const { history } = action.payload;
   console.log(
-    'username, email, password, role, institute',
+    "username, email, password, role, institute",
     username,
     email,
     password,
@@ -146,12 +160,12 @@ export function* registerWithEmailPasswordAsync(action) {
     );
     if (data) {
       yield put(registerUserSuccess(data));
-      NotificationManager.success('success', 'done', 9000, null, null, '');
-      history.push('/user/register');
+      NotificationManager.success("success", "done", 9000, null, null, "");
+      history.push("/user/register");
     } else {
-      NotificationManager.success('error', 'done', 9000, null, null, '');
-      yield put(registerUserError('error'));
-      history.push('/user/register');
+      NotificationManager.success("error", "done", 9000, null, null, "");
+      yield put(registerUserError("error"));
+      history.push("/user/register");
     }
   } catch (error) {
     yield put(registerUserError(error));
@@ -179,10 +193,10 @@ export function* registerWithEmailPasswordAsync(action) {
 
 function* logout({ payload }) {
   const { history } = payload;
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('refresh_token');
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
   setCurrentUser(null); // clear the current user details
-  history.push('');
+  history.push("");
 }
 
 export function* watchLogoutUser() {
@@ -207,7 +221,7 @@ function* forgotPassword({ payload }) {
   try {
     const forgotPasswordStatus = yield call(forgotPasswordAsync, email);
     if (!forgotPasswordStatus) {
-      yield put(forgotPasswordSuccess('success'));
+      yield put(forgotPasswordSuccess("success"));
     } else {
       yield put(forgotPasswordError(forgotPasswordStatus.message));
     }
@@ -238,7 +252,7 @@ function* resetPassword({ payload }) {
       newPassword
     );
     if (!resetPasswordStatus) {
-      yield put(resetPasswordSuccess('success'));
+      yield put(resetPasswordSuccess("success"));
     } else {
       yield put(resetPasswordError(resetPasswordStatus.message));
     }

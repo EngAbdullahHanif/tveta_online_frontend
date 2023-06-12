@@ -1,27 +1,28 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { isAuthGuardActive } from "constants/defaultValues";
-import { getCurrentUser } from "./Utils";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { isAuthGuardActive } from 'constants/defaultValues';
+import { getCurrentUser } from './Utils';
 
 const ProtectedRoute = ({
   component: Component,
   roles = undefined,
   ...rest
 }) => {
+
   const setComponent = (props) => {
     if (isAuthGuardActive) {
       const currentUser = getCurrentUser();
-      console.log("currentUser of protected", currentUser.role);
+      console.log('currentUser of protected', currentUser.role)
       if (currentUser) {
         if (roles) {
-          console.log("roles of protected", roles);
+          console.log('roles of protected', roles)
           if (roles.includes(Number(currentUser.role))) {
             return <Component {...props} />;
           }
           return (
             <Redirect
               to={{
-                pathname: "/unauthorized",
+                pathname: '/unauthorized',
                 state: { from: props.location },
               }}
             />
@@ -32,7 +33,7 @@ const ProtectedRoute = ({
       return (
         <Redirect
           to={{
-            pathname: "/user/login",
+            pathname: '/user/login',
             state: { from: props.location },
           }}
         />

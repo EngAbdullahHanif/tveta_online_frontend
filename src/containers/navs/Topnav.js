@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-use-before-define */
-import React, { useState } from 'react';
-import { injectIntl } from 'react-intl';
+import React, { useContext, useState } from "react";
+import { injectIntl } from "react-intl";
 
 import {
   UncontrolledDropdown,
@@ -10,10 +10,10 @@ import {
   DropdownToggle,
   DropdownMenu,
   // Input,
-} from 'reactstrap';
+} from "reactstrap";
 
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 
 // JHON comment
 // import IntlMessages from 'helpers/IntlMessages';
@@ -24,22 +24,22 @@ import {
   isDarkSwitchActive,
   // buyUrl,
   // adminRoot,
-} from 'constants/defaultValues';
-import { MobileMenuIcon, MenuIcon } from 'components/svg';
-import { getDirection, setDirection } from 'helpers/Utils';
+} from "constants/defaultValues";
+import { MobileMenuIcon, MenuIcon } from "components/svg";
+import { getDirection, setDirection } from "helpers/Utils";
 import {
   setContainerClassnames,
   clickOnMobileMenu,
   logoutUser,
   changeLocale,
-} from 'redux/actions';
-
+} from "redux/actions";
+import { AuthContext } from "context/AuthContext";
 // jhon Comments
 // import TopnavEasyAccess from './Topnav.EasyAccess';
 // import TopnavNotifications from './Topnav.Notifications';
-import TopnavDarkSwitch from './Topnav.DarkSwitch';
+import TopnavDarkSwitch from "./Topnav.DarkSwitch";
 // import logo from '../../assets/img/logo2.png';
-
+const storage = window.sessionStorage;
 const TopNav = ({
   // intl,
   history,
@@ -52,12 +52,13 @@ const TopNav = ({
   logoutUserAction,
   changeLocaleAction,
 }) => {
+  const { user, setUser } = useContext(AuthContext);
   const [isInFullScreen, setIsInFullScreen] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const search = () => {
     history.push(`${searchPath}?key=${searchKeyword}`);
-    setSearchKeyword('');
+    setSearchKeyword("");
   };
 
   const handleChangeLocale = (_locale, direction) => {
@@ -115,31 +116,31 @@ const TopNav = ({
     if (
       e.target &&
       e.target.classList &&
-      (e.target.classList.contains('navbar') ||
-        e.target.classList.contains('simple-icon-magnifier'))
+      (e.target.classList.contains("navbar") ||
+        e.target.classList.contains("simple-icon-magnifier"))
     ) {
       isSearchClick = true;
-      if (e.target.classList.contains('simple-icon-magnifier')) {
+      if (e.target.classList.contains("simple-icon-magnifier")) {
         search();
       }
     } else if (
       e.target.parentElement &&
       e.target.parentElement.classList &&
-      e.target.parentElement.classList.contains('search')
+      e.target.parentElement.classList.contains("search")
     ) {
       isSearchClick = true;
     }
 
     if (!isSearchClick) {
-      const input = document.querySelector('.mobile-view');
-      if (input && input.classList) input.classList.remove('mobile-view');
+      const input = document.querySelector(".mobile-view");
+      if (input && input.classList) input.classList.remove("mobile-view");
       removeEventsSearch();
-      setSearchKeyword('');
+      setSearchKeyword("");
     }
   };
 
   const removeEventsSearch = () => {
-    document.removeEventListener('click', handleDocumentClickSearch, true);
+    document.removeEventListener("click", handleDocumentClickSearch, true);
   };
 
   // const addEventsSearch = () => {
@@ -179,15 +180,18 @@ const TopNav = ({
   };
 
   const handleLogout = () => {
-    logoutUserAction(history);
+    // logoutUserAction(history);
+    setUser(null);
+    window.location.href = window.location.origin;
+    storage.clear();
   };
 
   const menuButtonClick = (e, _clickCount, _conClassnames) => {
     e.preventDefault();
 
     setTimeout(() => {
-      const event = document.createEvent('HTMLEvents');
-      event.initEvent('resize', false, false);
+      const event = document.createEvent("HTMLEvents");
+      event.initEvent("resize", false, false);
       window.dispatchEvent(event);
     }, 350);
     setContainerClassnamesAction(
@@ -304,7 +308,7 @@ const TopNav = ({
         <div className="user d-inline-block">
           <UncontrolledDropdown className="dropdown-menu-right">
             <DropdownToggle className="p-0" color="empty">
-              <span className="name mr-1">سمیع الله رحیمی</span>
+              <span className="name mr-1">{user.username}</span>
               <span>
                 <img alt="Profile" src="/assets/img/profiles/l-2.jpg" />
               </span>

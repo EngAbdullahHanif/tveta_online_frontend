@@ -1,3 +1,3 @@
 const { createContext } = require("react");
 
-export const AuthCentext = createContext();
+export const AuthContext = createContext();

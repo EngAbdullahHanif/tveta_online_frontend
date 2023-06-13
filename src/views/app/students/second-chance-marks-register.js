@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, isEmptyArray } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
@@ -154,8 +154,25 @@ const MarksRegistration = ({ match }) => {
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
   const [examId, setExamId] = useState();
-
   const { markId } = useParams();
+  // separate and set labels for classes
+  const [selectedClassLabel, setselectedClassLabel] = useState({
+    classs: '',
+    semester: '',
+    section: '',
+  });
+
+  useEffect(() => {
+    console.log(
+      selectedClass,
+      typeof selectedClass,
+      'fjkdsjfkjsdafkjsdalkfjlsa'
+    );
+    if (!isEmptyArray(selectedClass) && selectedClass !== '') {
+      const [semester, classs, section] = selectedClass.label.split('-');
+      setselectedClassLabel({ classs, semester, section });
+    }
+  }, [selectedClass]);
 
   if (markId) {
     useEffect(() => {
@@ -163,7 +180,7 @@ const MarksRegistration = ({ match }) => {
         const { data } = await axios.get(
           `${studentMarkId}/?student_id=${markId}`
         );
-        console.log(data, 'object of the data');
+        // console.log(data, 'object of the data');
 
         // const instGender = genderOptions.map((studentGender) => {
         //   if (studentGender.value === data[0].gender) {
@@ -202,7 +219,7 @@ const MarksRegistration = ({ match }) => {
   };
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', '', null);
-    console.log('response of department', response);
+    // console.log('response of department', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -282,20 +299,16 @@ const MarksRegistration = ({ match }) => {
   const fechtStudens = async () => {
     console.log('subject', selectedSubject.value);
     const response = await callApi(
-      `api/second-chance-exam-students/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&subject=${selectedSubject.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/second-chance-exam-students/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
       '',
       null
     );
     if (response.data && response.status === 200) {
-      console.log('response of students', response);
       setStudents(response.data);
       setIsNext(true);
     } else {
       console.log('subject error');
     }
-    // console.log(
-    //   `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-    // );
   };
 
   const onSubmit = async (values) => {
@@ -304,11 +317,11 @@ const MarksRegistration = ({ match }) => {
     const departmentId = selectedDepartment.value;
     const classId = selectedClass.value;
     const subjectId = selectedSubject.value;
-    console.log('educationalYear', educationalYear);
-    console.log('instituteId', instituteId);
-    console.log('departmentId', departmentId);
-    console.log('classId', classId);
-    console.log('subjectId', subjectId);
+    // console.log('educationalYear', educationalYear);
+    // console.log('instituteId', instituteId);
+    // console.log('departmentId', departmentId);
+    // console.log('classId', classId);
+    // console.log('subjectId', subjectId);
 
     const newStudents = students.map((student, index) => {
       return {
@@ -329,7 +342,7 @@ const MarksRegistration = ({ match }) => {
       ...newStudents,
     ];
 
-    console.log('data', data);
+    // console.log('data', data);
 
     const response = await callApi(
       'api/second-chance-exam-create/',
@@ -337,7 +350,7 @@ const MarksRegistration = ({ match }) => {
       data
     );
     if (response.status === 200) {
-      console.log('response of students', response);
+      // console.log('response of students', response);
       setIsSubmitted(true);
       createNotification('success', 'filled');
     } else {
@@ -347,7 +360,7 @@ const MarksRegistration = ({ match }) => {
     }
   };
 
-  console.log('condsotlsa f', students);
+  // console.log('condsotlsa f', students);
   return (
     <>
       <Card>
@@ -539,7 +552,7 @@ const MarksRegistration = ({ match }) => {
                       <Label>
                         <IntlMessages id="forms.FieldLabel" />
                       </Label>
-                      {console.log('selectedDepartment', selectedDepartment)}
+                      {/* {console.log('selectedDepartment', selectedDepartment)} */}
                       <h6>{selectedDepartment.label}</h6>
                     </Colxx>
 
@@ -547,7 +560,7 @@ const MarksRegistration = ({ match }) => {
                       <Label>
                         <IntlMessages id="marks.ClassLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h6>{selectedClassLabel.classs}</h6>
                     </Colxx>
 
                     <Colxx xxs="2">
@@ -561,14 +574,14 @@ const MarksRegistration = ({ match }) => {
                       <Label>
                         <IntlMessages id="marks.SemesterLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h6>{selectedClassLabel.semester}</h6>
                     </Colxx>
 
                     <Colxx xxs="2">
                       <Label>
                         <IntlMessages id="marks.SectionLabel" />
                       </Label>
-                      <h6>{selectedClass.label}</h6>
+                      <h6>{selectedClassLabel.section}</h6>
                     </Colxx>
 
                     <Colxx xxs="2">
@@ -629,7 +642,7 @@ const MarksRegistration = ({ match }) => {
                             overflowX: 'hidden',
                           }}
                         >
-                          <table class="table ">
+                          <table className="table ">
                             <tbody
                               className="border border "
                               style={{

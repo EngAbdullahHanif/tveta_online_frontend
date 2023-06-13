@@ -250,7 +250,7 @@ const StudentAttendance = ({ match }) => {
     console.log('educatinll yera', selectedEducationalYear);
     console.log('Div Inner Side');
     const response = await callApi(
-      `api/student-for-marks/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}`,
+      `api/student-for-marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       'GET',
       null
     );

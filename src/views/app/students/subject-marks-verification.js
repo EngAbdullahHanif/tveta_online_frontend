@@ -104,7 +104,6 @@ const MarksDisplay = ({ match }) => {
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
-
   // separate and set labels for classes
   const [selectedClassLabel, setselectedClassLabel] = useState({
     classs: '',
@@ -161,7 +160,7 @@ const MarksDisplay = ({ match }) => {
   //fetch class list
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', 'GET', null);
-    console.log('class repspossdfsde', response);
+    // console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -198,81 +197,159 @@ const MarksDisplay = ({ match }) => {
 
   const tbodies = students.map((student, index) => {
     const scores = Object.values(student.subject_id);
-    const studentRows = scores.map((score, i) => {
-      const student_name =
-        i === 0 ? (
-          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-            {student.student_name}
+    // console.log(scores, 'scoressssssssssssssssssss');
+    const scoreDetails = scores[0];
+    const student_name = (
+      <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+        {student.student_name}
+      </td>
+    );
+    const student_father_name = (
+      <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+        {student.student_father_name}
+      </td>
+    );
+    const student_id = (
+      <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+        {student.student_id}
+      </td>
+    );
+    const index_no = (
+      <td rowSpan={index + 1} style={{ borderStyle: 'hidden' }}>
+        {index + 1}
+      </td>
+    );
+    // console.log(index, 'indexxxxxxxxxxxxxxxx');
+    const studentRows = (
+      <>
+        <tr key={index} className="red-background">
+          <td className="red-background">{index_no}</td>
+          <td className="red-background"> {student_name}</td>
+          <td className="red-background">{student_father_name}</td>
+          <td className="red-background">{student_id}</td>
+          <td className="red-background">
+            {<td style={{ borderStyle: 'hidden' }}>{scoreDetails.score}</td>}
           </td>
-        ) : null;
-      const student_father_name =
-        i === 0 ? (
-          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-            {student.student_father_name}
+          <td className="red-background">
+            {scoreDetails.exam_type == 1 && (
+              <td style={{ borderStyle: 'hidden' }}>اول</td>
+            )}
+            {scoreDetails.exam_type == 2 && (
+              <td style={{ borderStyle: 'hidden', color: '#de0a26' }}>دوم</td>
+            )}
           </td>
-        ) : null;
-      const student_id =
-        i === 0 ? (
-          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-            {student.student_id}
+          {scoreDetails.grad
+            ? (grad = scoreDetails.grad) && (
+                <td className="red-background">
+                  {' '}
+                  {scoreDetails.grad && (
+                    <td style={{ borderStyle: 'hidden' }}>
+                      {scoreDetails.grad}
+                    </td>
+                  )}
+                </td>
+              )
+            : null}
+          {scoreDetails.Gpa
+            ? (gpa = scoreDetails.Gpa) && (
+                <td className="red-background">
+                  {' '}
+                  {scoreDetails.Gpa && (
+                    <td style={{ borderStyle: 'hidden' }}>
+                      {scoreDetails.Gpa}
+                    </td>
+                  )}
+                </td>
+              )
+            : null}
+          <td className="red-background">
+            {scoreDetails.score >= 55 ? (
+              <div className="text-success pt-3">کامیاب </div>
+            ) : (
+              <div className="text-danger pt-3">ناکام </div>
+            )}
           </td>
-        ) : null;
-      const index_no =
-        i === 0 ? (
-          <td rowSpan={index.length + 1} style={{ borderStyle: 'hidden' }}>
-            {index + 1}
+          <td className="red-background d-flex justify-content-center pt-4 ">
+            <Input type="checkbox" />
           </td>
-        ) : null;
+        </tr>
+      </>
+    );
+    // const studentRows = scores.map((score, i) => {
+    //   const student_name =
+    //     i === 0 ? (
+    //       <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+    //         {student.student_name}
+    //       </td>
+    //     ) : null;
+    //   const student_father_name =
+    //     i === 0 ? (
+    //       <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+    //         {student.student_father_name}
+    //       </td>
+    //     ) : null;
+    //   const student_id =
+    //     i === 0 ? (
+    //       <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+    //         {student.student_id}
+    //       </td>
+    //     ) : null;
+    //   const index_no =
+    //     i === 0 ? (
+    //       <td rowSpan={index.length + 1} style={{ borderStyle: 'hidden' }}>
+    //         {index + 1}
+    //       </td>
+    //     ) : null;
 
-      return (
-        <>
-          <tr key={i} className="red-background">
-            <td className="red-background">{index_no}</td>
-            <td className="red-background"> {student_name}</td>
-            <td className="red-background">{student_father_name}</td>
-            <td className="red-background">{student_id}</td>
-            <td className="red-background">
-              {<td style={{ borderStyle: 'hidden' }}>{score.score}</td>}
-            </td>
-            <td className="red-background">
-              {score.exam_type == 1 && (
-                <td style={{ borderStyle: 'hidden' }}>اول</td>
-              )}
-              {score.exam_type == 2 && (
-                <td style={{ borderStyle: 'hidden', color: '#de0a26' }}>دوم</td>
-              )}
-            </td>
-            {score.grad
-              ? (grad = score.grad) && (
-                  <td className="red-background">
-                    {' '}
-                    {score.grad && (
-                      <td style={{ borderStyle: 'hidden' }}>{score.grad}</td>
-                    )}
-                  </td>
-                )
-              : null}
-            {score.Gpa
-              ? (gpa = score.Gpa) && (
-                  <td className="red-background">
-                    {' '}
-                    {score.Gpa && (
-                      <td style={{ borderStyle: 'hidden' }}>{score.Gpa}</td>
-                    )}
-                  </td>
-                )
-              : null}
-            <td className="red-background">
-              {score.score >= 55 ? (
-                <div className="text-success pt-3">کامیاب </div>
-              ) : (
-                <div className="text-danger pt-3">ناکام </div>
-              )}
-            </td>
-          </tr>
-        </>
-      );
-    });
+    //   return (
+    //     <>
+    //       <tr key={i} className="red-background">
+    //         <td className="red-background">{index_no}</td>
+    //         <td className="red-background"> {student_name}</td>
+    //         <td className="red-background">{student_father_name}</td>
+    //         <td className="red-background">{student_id}</td>
+    //         <td className="red-background">
+    //           {<td style={{ borderStyle: 'hidden' }}>{score.score}</td>}
+    //         </td>
+    //         <td className="red-background">
+    //           {score.exam_type == 1 && (
+    //             <td style={{ borderStyle: 'hidden' }}>اول</td>
+    //           )}
+    //           {score.exam_type == 2 && (
+    //             <td style={{ borderStyle: 'hidden', color: '#de0a26' }}>دوم</td>
+    //           )}
+    //         </td>
+    //         {score.grad
+    //           ? (grad = score.grad) && (
+    //               <td className="red-background">
+    //                 {' '}
+    //                 {score.grad && (
+    //                   <td style={{ borderStyle: 'hidden' }}>{score.grad}</td>
+    //                 )}
+    //               </td>
+    //             )
+    //           : null}
+    //         {score.Gpa
+    //           ? (gpa = score.Gpa) && (
+    //               <td className="red-background">
+    //                 {' '}
+    //                 {score.Gpa && (
+    //                   <td style={{ borderStyle: 'hidden' }}>{score.Gpa}</td>
+    //                 )}
+    //               </td>
+    //             )
+    //           : null}
+    //         <td className="red-background">
+    //           {score.score >= 55 ? (
+    //             <div className="text-success pt-3">کامیاب </div>
+    //           ) : (
+    //             <div className="text-danger pt-3">ناکام </div>
+    //           )}
+    //         </td>
+    //       </tr>
+    //     </>
+    //   );
+    // });
     return (
       <>
         <tbody key={index} className={student.name + ' ' + ' border border '}>
@@ -305,15 +382,19 @@ const MarksDisplay = ({ match }) => {
 
     if (response.data && response.status === 200) {
       setStudents(response.data);
-      console.log('response.data', response.data);
-      console.log('response', response);
+      //   console.log('response.data', response.data);
+      //   console.log('response', response);
       setIsNext(true);
-      console.log('students', students);
+      //   console.log('students', students);
     } else {
       console.log('students error');
     }
 
     // split selected class to get semester and section
+    // const classArray = selectedClass.label.split(' - ');
+    // setClasss(classArray[0]);
+    // setSemester(classArray[1]);
+    // setSection(classArray[2]);
 
     // console.log('values', values);
     // const educational_year = selectedEducationalYear;
@@ -573,7 +654,7 @@ const MarksDisplay = ({ match }) => {
               </Row>
 
               <Row
-                className="justify-content-center  border border"
+                className="justify-content-center border"
                 style={{ marginInline: '6%' }}
               >
                 <table className="table ">
@@ -609,6 +690,9 @@ const MarksDisplay = ({ match }) => {
                       ) : null}
                       <th scope="col">
                         <IntlMessages id="marks.result" />
+                      </th>{' '}
+                      <th scope="col">
+                        <IntlMessages id="marks.verify" />
                       </th>{' '}
                     </tr>
                   </thead>
@@ -678,14 +762,23 @@ const MarksDisplay = ({ match }) => {
                       <th scope="col">
                         <IntlMessages id="marks.result" />
                       </th>{' '}
+                      <th scope="col">
+                        <IntlMessages id="marks.verify" />
+                      </th>{' '}
                     </tr>
                   </tfoot>
                 </table>
               </Row>
-              <Row className=" justify-content-center">
-                <Colxx xxs="9" className="m-5">
-                  <Button className=" m-4" onClick={() => setIsNext(false)}>
+              <Row className="justify-content-center ">
+                <Colxx
+                  xxs="9"
+                  className="d-flex justify-content-between my-5 col-10"
+                >
+                  <Button className="" onClick={() => setIsNext(false)}>
                     <IntlMessages id="button.Back" />
+                  </Button>
+                  <Button className="" onClick={() => setIsNext(false)}>
+                    <IntlMessages id="button.verify" />
                   </Button>
                 </Colxx>
               </Row>

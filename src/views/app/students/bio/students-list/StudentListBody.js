@@ -20,7 +20,7 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const StudentListBody = (
-  { student, isSelect, collect, onCheckItem, },
+  { student, isSelect, collect, onCheckItem },
   props
 ) => {
   const [modalBasic, setModalBasic] = useState(false);

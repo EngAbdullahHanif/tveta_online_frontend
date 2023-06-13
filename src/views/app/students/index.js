@@ -50,6 +50,9 @@ const StudentTransfer = React.lazy(() =>
 const MarksDisplay = React.lazy(() =>
   import(/* webpackChunkName: "marks-display" */ './subject-marks')
 );
+const MarksVerification = React.lazy(() =>
+  import(/* webpackChunkName: "marks-display" */ './subject-marks-verification')
+);
 const MarksDisplayAllSubs = React.lazy(() =>
   import(/* webpackChunkName: "marks-display-allsubs" */ './class-marks')
 );
@@ -117,6 +120,14 @@ const AttendanceUpdate = React.lazy(() =>
 const KankorProfile = React.lazy(() =>
   import(/* webpackChunkName: "attendance-update" */ './bio/kankor-profile')
 );
+
+const DepartmentChange = React.lazy(() =>
+  import(/* webpackChunkName: "attendance-update" */ './department-change')
+);
+
+const SectionChange = React.lazy(() =>
+  import(/* webpackChunkName: "attendance-update" */ './section-change')
+);
 const Main = React.lazy(() =>
   import(/* webpackChunkName: "register-1" */ '../main-register-route')
 );
@@ -173,6 +184,10 @@ const Students = ({ match }) => (
         render={(props) => <KankorStudentList {...props} />}
       />
       <Route
+        path={`${match.url}/kankor-student/:kankorId`}
+        render={(props) => <KankorProfile {...props} />}
+      />
+      <Route
         exact
         path={`${match.url}/marks-register`}
         render={(props) => <MarksRegistration {...props} />}
@@ -205,6 +220,10 @@ const Students = ({ match }) => (
       <Route
         path={`${match.url}/marks-display`}
         render={(props) => <MarksDisplay {...props} />}
+      />
+      <Route
+        path={`${match.url}/marks-verification`}
+        render={(props) => <MarksVerification {...props} />}
       />
       <Route
         path={`${match.url}/class-marks`}
@@ -250,19 +269,26 @@ const Students = ({ match }) => (
         path={`${match.url}/student-upgrade`}
         render={(props) => <StudentUpgrade {...props} />}
       />
-      <Route
+      {/* <Route
         path={`${match.url}/kankor-profile`}
         render={(props) => <KankorProfile {...props} />}
-      />
-
+      /> */}
       <Route
         path={`${match.url}/students-class-status-upgrade`}
         render={(props) => <StudentClassStatusUpgrade {...props} />}
       />
-
       <Route
         path={`${match.url}/marks-status-cheked-students`}
         render={(props) => <MarkStatusCheckedStudents {...props} />}
+      />
+      <Route
+        path={`${match.url}/department-change`}
+        render={(props) => <DepartmentChange {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/section-change`}
+        render={(props) => <SectionChange {...props} />}
       />
 
       {/* <ProtectedRoute

@@ -57,7 +57,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
   tazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
-  phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
+
   // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
   DoB: Yup.object()
     .shape({
@@ -80,9 +80,12 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.genderErr" />),
 
-  email: Yup.string()
-    .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-    .required(<IntlMessages id="teacher.EmailErr" />),
+    // TEMPORARY COMMENTED
+  // email: Yup.string()
+  //   .email(<IntlMessages id="teacher.EmailRequiredErr" />)
+  //   .required(<IntlMessages id="teacher.EmailErr" />),
+
+  // phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
 });
 
 //  Student Registration form validation step two
@@ -537,7 +540,6 @@ export const studentdismissalvalidationSchema = Yup.object().shape({
     .required(<IntlMessages id="student.dissmissaldocErr" />),
 });
 
-
 export const studentTransferValidationSchema = Yup.object().shape({
   institute: Yup.object()
     .shape({
@@ -574,4 +576,22 @@ export const studentTransferValidationSchema = Yup.object().shape({
   // transferDocument: Yup.string().required(
   //   <IntlMessages id="student.dissmissalDocumentErr" />
   // ),
+});
+
+export const departmentChangeValidationSchema = Yup.object().shape({
+  department: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="department.nameErr" />),
+});
+
+export const classChangeValidationSchema = Yup.object().shape({
+  class: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.ClassErr" />),
 });

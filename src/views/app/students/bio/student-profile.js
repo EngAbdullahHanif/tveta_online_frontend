@@ -6,6 +6,7 @@ import callApi from 'helpers/callApi';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { NavLink } from 'react-router-dom';
+import './../../.././../assets/css/global-style.css';
 
 import * as Yup from 'yup';
 import {
@@ -114,8 +115,12 @@ const StudentProfile = () => {
   return (
     <>
       <Row className="position-static">
-        <Colxx className="mt-5 m-5" xxs="8">
-          <h3>{<IntlMessages id="student.Profile" />}</h3>
+        <Colxx className="m-5" xxs="8">
+          <div className=" ml-5">
+            <h2 className=" mt-3 titleStyle">
+              {<IntlMessages id="student.Profile" />}
+            </h2>
+          </div>
         </Colxx>
         <Colxx className="mt-4 " style={{ paddingRight: '10%' }}>
           <div className=" align-items-center flex-column ">
@@ -136,6 +141,7 @@ const StudentProfile = () => {
             <Colxx xxs="1"></Colxx>
             {student.length > 0 && (
               <Colxx>
+                {console.log('here', `${student[0].student_photo}`)}
                 {/* <img src={student.student_photo} alt="Photo" width={'10%'} />{' '} */}
                 <NavLink
                   to={`?p=${student[0].student_id}`}
@@ -163,38 +169,32 @@ const StudentProfile = () => {
               {' '}
               <div className="d-inline-block">
                 <Button
-                  style={{ backgroundColor: isNext ? 'blue' : '' }}
-                  size="lg"
+                  style={{
+                    backgroundColor: isNext ? 'blue' : '',
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                  }}
                   className="m-2"
                   onClick={() => {
                     handleClick(true);
                   }}
                 >
-                  <span className="spinner d-inline-block">
-                    <span className="bounce1" />
-                    <span className="bounce2" />
-                    <span className="bounce3" />
-                  </span>
                   <span className="label">
                     <IntlMessages id="button.Teacherprofile" />
                   </span>
                 </Button>
                 <Button
-                  style={{ backgroundColor: !isNext ? 'blue' : '' }}
-                  size="lg"
-                  className="m-2"
+                  style={{
+                    backgroundColor: !isNext ? 'blue' : '',
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                  }}
+                  className="m-2 "
                   onClick={() => {
                     handleClick(false);
                   }}
                 >
-                  <span className="spinner d-inline-block">
-                    <span className="bounce1" />
-                    <span className="bounce2" />
-                    <span className="bounce3" />
-                  </span>
-                  <span className="label">
-                    <IntlMessages id="student.results" />
-                  </span>
+                  <IntlMessages id="student.results" />
                 </Button>{' '}
               </div>
             </Colxx>
@@ -214,7 +214,7 @@ const StudentProfile = () => {
                       <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
                         {' '}
                         <h2
-                          className="bg-primary "
+                          className="bg-primary data-style "
                           style={{
                             padding: '8px',
                             paddingInline: '30px',
@@ -228,42 +228,42 @@ const StudentProfile = () => {
                     </Row>
                     <Row className="justify-content-center   rounded ">
                       <Colxx style={{ paddingInline: '4%' }} xxs="">
-                        <Label>
+                        <Label className="data-style">
                           <IntlMessages id="teacher.NameLabel" />
                         </Label>
-                        <h3>
+                        <h2>
                           {student[0].name + '  "' + student[0].last_name + '"'}
-                        </h3>
-                        <Label>
+                        </h2>
+                        <Label className="data-style">
                           <IntlMessages id="forms.Eng_name" />
                         </Label>
-                        <h3>
+                        <h2>
                           {student[0].english_name +
                             ' ' +
                             student[0].english_last_name}{' '}
-                        </h3>
-                        <Label>
+                        </h2>
+                        <Label className="data-style">
                           <IntlMessages id="teacher.FatherNameLabel" />
                         </Label>
-                        <h3>{student[0].father_name}</h3>
+                        <h2>{student[0].father_name}</h2>
 
-                        <Label>
+                        <Label className="data-style">
                           <IntlMessages id="forms.Std_father_Eng_Name" />
                         </Label>
-                        <h3>{student[0].english_father_name}</h3>
+                        <h2>{student[0].english_father_name}</h2>
 
-                        <Label>
+                        <Label className="data-style">
                           <IntlMessages id="teacher.PhoneNoLabel" />
                         </Label>
-                        <h3>{student[0].phone_number}</h3>
-                        <Label>
+                        <h2>{student[0].phone_number}</h2>
+                        <Label className="data-style">
                           <IntlMessages id="teacher.EmailLabel" />
                         </Label>
-                        <h3>{student[0].email}</h3>
-                        <Label>
+                        <h2>{student[0].email}</h2>
+                        <Label className="data-style">
                           <IntlMessages id="forms.StdTazkiraNoLabel" />
                         </Label>
-                        <h3>{student[0].registration_number}</h3>
+                        <h2>{student[0].registration_number}</h2>
                         <br />
                         <br />
                       </Colxx>
@@ -271,32 +271,32 @@ const StudentProfile = () => {
                         {/* if person has paper-based ID card, not electronic */}
                         {student[0].cover_number && (
                           <>
-                            <Label>
+                            <Label className="data-style">
                               <IntlMessages id="forms.StdIdCardCoverLabel" />
                             </Label>
-                            <h3>{student[0].cover_number}</h3>
-                            <Label>
+                            <h2>{student[0].cover_number}</h2>
+                            <Label className="data-style">
                               <IntlMessages id="forms.StdIdCardPageNoLabel" />
                             </Label>
-                            <h3>{student[0].page_number}</h3>
+                            <h2>{student[0].page_number}</h2>
                           </>
                         )}
-                        <Label>
+                        <Label className="data-style">
                           <IntlMessages id="forms.StdDoBLabel" />
                         </Label>
-                        <h3>{student[0].birth_date}</h3>
-                        <Label>
+                        <h2>{student[0].birth_date}</h2>
+                        <Label className="data-style">
                           <IntlMessages id="forms.PlaceOfBirthLabel" />
                         </Label>
-                        <h3>کابل</h3>
-                        <Label>
+                        <h2>کابل</h2>
+                        <Label className="data-style">
                           <IntlMessages id="forms.StdFatherDutyLabel" />
                         </Label>
-                        <h3>{student[0].fatherـprofession}</h3>
-                        <Label>
+                        <h2>{student[0].fatherـprofession}</h2>
+                        <Label className="data-style">
                           <IntlMessages id="forms.StdFatherDutyLocationLabel" />
                         </Label>
-                        <h3>{student[0].fatherـplaceـofـduty}</h3>
+                        <h2>{student[0].fatherـplaceـofـduty}</h2>
 
                         <br />
                         <br />
@@ -305,71 +305,71 @@ const StudentProfile = () => {
                     <Row>
                       <Colxx style={{ paddingInline: '4%' }}>
                         {' '}
-                        <h3
-                          className="bg-primary rounded "
+                        <h2
+                          className="bg-primary rounded  data-style "
                           style={{ padding: '1%', paddingInline: '3%' }}
                         >
                           {' '}
                           <IntlMessages id="forms.PermanentAddressLabel" />
-                        </h3>
+                        </h2>
                         <Separator />
                         <br />
                         <Row>
                           <Colxx>
                             {' '}
-                            <Label>
+                            <Label className="data-style">
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>{student[0].main_province}</h3>
+                            <h2>{student[0].main_province}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
-                            <Label>
+                            <Label className="data-style">
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>{student[0].main_district}</h3>
+                            <h2>{student[0].main_district}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
-                            <Label>
+                            <Label className="data-style">
                               <IntlMessages id="forms.VillageLabel" />
                             </Label>
-                            <h3>{student[0].main_village}</h3>
+                            <h2>{student[0].main_village}</h2>
                           </Colxx>
                         </Row>
                       </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
                         {' '}
-                        <h3
-                          className="bg-primary rounded "
+                        <h2
+                          className="bg-primary rounded data-style "
                           style={{ padding: '1%', paddingInline: '3%' }}
                         >
                           {' '}
                           <IntlMessages id="forms.CurrentAddresslabel" />
-                        </h3>
+                        </h2>
                         <Separator />
                         <br />
                         <Row>
                           <Colxx>
                             {' '}
-                            <Label>
+                            <Label className="data-style">
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>{student[0].current_province}</h3>
+                            <h2>{student[0].current_province}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
-                            <Label>
+                            <Label className="data-style">
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>{student[0].current_district}</h3>
+                            <h2>{student[0].current_district}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
-                            <Label>
+                            <Label className="data-style">
                               <IntlMessages id="forms.VillageLabel" />
                             </Label>
-                            <h3>{student[0].current_village}</h3>
+                            <h2>{student[0].current_village}</h2>
                           </Colxx>
                         </Row>
                       </Colxx>
@@ -399,74 +399,74 @@ const StudentProfile = () => {
                     </Row>
                     <Row className="justify-content-center   rounded ">
                       <Colxx style={{ paddingInline: '4%' }} xxs="">
-                        <Label>
+                        <Label className="data-style">
                           <IntlMessages id="forms.EducationLevelLabel" />
                         </Label>
-                        <h3>{student[0].finished_grade}</h3>
-                        <Label>
+                        <h2>{student[0].finished_grade}</h2>
+                        <Label className="data-style">
                           <IntlMessages id="forms.StdGraduationYearLabel" />
                         </Label>
-                        <h3>{student[0].finished_grade_year}</h3>
-                        <Label>
+                        <h2>{student[0].finished_grade_year}</h2>
+                        <Label className="data-style">
                           <IntlMessages id="forms.StPreShcoolLabel" />
                         </Label>
-                        <h3>{student[0].school}</h3>
+                        <h2>{student[0].school}</h2>
 
-                        <Label>
+                        <Label className="data-style">
                           <IntlMessages id="forms.StdSchoolProvinceLabel" />
                         </Label>
-                        <h3>{student[0].schoolـprovince}</h3>
+                        <h2>{student[0].schoolـprovince}</h2>
 
-                        <Label>
+                        <Label className="data-style">
                           <IntlMessages id="forms.StdInteranceTypeLabel" />
                         </Label>
                         {student[0].internse_type === '1' ? (
-                          <h3>حکمی</h3>
+                          <h2>حکمی</h2>
                         ) : student[0].internse_type === '2' ? (
-                          <h3>کانکور اختصاصی</h3>
+                          <h2>کانکور اختصاصی</h2>
                         ) : (
-                          <h3>کانکور عمومی</h3>
+                          <h2>کانکور عمومی</h2>
                         )}
-                        <Label>
+                        <Label className="data-style">
                           <IntlMessages id="student.educationType" />
                         </Label>
                         {student[0].education_type === '1' ? (
-                          <h3>پیوسته</h3>
+                          <h2>پیوسته</h2>
                         ) : (
-                          <h3>غیر پیوسته</h3>
+                          <h2>غیر پیوسته</h2>
                         )}
                         <br />
                         <br />
                       </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
-                        <Label>
+                        <Label className="data-style">
                           <IntlMessages id="menu.institutes" />
                         </Label>
-                        <h3>{institute[0].institute_id.name}</h3>
-                        <Label>
+                        <h2>{institute[0].institute_id.name}</h2>
+                        <Label className="data-style">
                           <IntlMessages id="field.SemesterLabel" />
                         </Label>
-                        <h3>{classs[0].class_id.semester}</h3>
-                        <Label>
+                        <h2>{classs[0].class_id.semester}</h2>
+                        <Label className="data-style">
                           <IntlMessages id="curriculum.classLabel" />
                         </Label>
-                        <h3>{classs[0].class_id.name}</h3>
-                        <Label>
+                        <h2>{classs[0].class_id.name}</h2>
+                        <Label className="data-style">
                           <IntlMessages id="field.SectionLabel" />
                         </Label>
-                        <h3>{classs[0].class_id.section}</h3>
+                        <h2>{classs[0].class_id.section}</h2>
                         {dorm[0] && (
                           <>
-                            <Label>
+                            <Label className="data-style">
                               <IntlMessages id="menu.dorms" />
                             </Label>
-                            <h3>{dorm[0].dorm_id.name}</h3>
+                            <h2>{dorm[0].dorm_id.name}</h2>
                             <Label>نوعیت</Label>
 
                             {dorm[0].dorm_type == 1 ? (
-                              <h3> بدل عاشه</h3>
+                              <h2> بدل عاشه</h2>
                             ) : (
-                              <h3> بدیل عاشه</h3>
+                              <h2> بدیل عاشه</h2>
                             )}
                           </>
                         )}
@@ -504,28 +504,40 @@ const StudentProfile = () => {
                               }}
                             >
                               <Colxx>
-                                <span>
-                                  <IntlMessages id="forms.StdIdLabel" />
-                                  <h6>{mark.student_id}</h6>
+                                <span className="data-style">
+                                  <IntlMessages id="forms.studentIdLabel" />
+                                  <h3 style={{ fontWeight: 'bold' }}>
+                                    {mark.student_id}
+                                  </h3>
                                 </span>
                               </Colxx>
                               <Colxx>
-                                <span>
+                                <span className="data-style">
                                   <IntlMessages id="marks.ClassLabel" />
-                                  <h6>{mark.class_name}</h6>
+                                  <h3 style={{ fontWeight: 'bold' }}>
+                                    {mark.class_name}
+                                  </h3>
                                 </span>
                               </Colxx>
                               <Colxx>
-                                <span>
+                                <span className="data-style">
                                   <IntlMessages id="field.SemesterLabel" />
-                                  <h6>{mark.semester}</h6>
+                                  <h3 style={{ fontWeight: 'bold' }}>
+                                    {mark.semester}
+                                  </h3>
                                 </span>
                               </Colxx>
                             </div>
-                            <Table bordered>
-                              <thead>
+                            <Separator />
+                            <Separator />
+
+                            <Table>
+                              <thead className="data-style">
                                 <tr>
-                                  <th>#</th>
+                                  <th>
+                                    {' '}
+                                    <IntlMessages id="marks.No" />
+                                  </th>
                                   <th>
                                     <IntlMessages id="marks.SubjectLabel" />
                                   </th>
@@ -543,12 +555,14 @@ const StudentProfile = () => {
                                   </th>
                                 </tr>
                               </thead>
-                              <tbody>
+                              <tbody className="body-style">
                                 {mark.children.map((child, index) => (
                                   <>
                                     <tr>
                                       <th scope="row">{index + 1}</th>
                                       <td>{child.subject_name}</td>
+
+                                      <td>{child.score}</td>
                                       {child.subject_credit > 1 && (
                                         <>
                                           <td>{child.subject_credit}</td>
@@ -556,23 +570,21 @@ const StudentProfile = () => {
                                           <td>{child.subject_type}</td>
                                         </>
                                       )}
-
-                                      <td>{child.score}</td>
                                     </tr>
                                   </>
                                 ))}
                               </tbody>
                             </Table>
+                            <Separator />
+                            <Separator />
+                            <br />
                             <Row>
-                              {' '}
                               <Colxx xxs="3">
-                                {' '}
-                                <h5> فیصدی سمستر: % {mark.total_percentage}</h5>
+                                <h3> فیصدی سمستر: % {mark.total_percentage}</h3>
                               </Colxx>
                               {mark.total_gpa > 0 && (
                                 <Colxx xxs="3">
-                                  {' '}
-                                  <h5>GPA: {mark.total_gpa} </h5>
+                                  <h3>GPA: {mark.total_gpa} </h3>
                                 </Colxx>
                               )}
                             </Row>

@@ -4,16 +4,21 @@ import axios from 'axios';
 // const servicePath = 'localhost:8000';
 const servicePath = 'http://127.0.0.1:8000';
 
+const start_date = '2023-06-01';
+const end_date = '2023-06-30';
+
 //  get the API headers
 const getHeaders = (data) => {
   const user = JSON.parse(localStorage.getItem('current_user'));
   const access_token = localStorage.getItem('access_token');
+
   if (user && access_token) {
     const headers = { Authorization: `Bearer ${access_token}` };
     console.log('data instanceof FormData', data instanceof FormData);
     if (data instanceof FormData) {
       headers['Content-Type'] = 'multipart/form-data';
     }
+
     return headers;
   } else {
     return {};
@@ -32,10 +37,19 @@ const callApi = async (endpoint, method = 'get', data = '') => {
       'user_id',
       JSON.parse(localStorage.getItem('current_user')).user_id
     );
+    data.append('role', JSON.parse(localStorage.getItem('current_user')).role);
   } else if (data) {
     // data.user_id = 1
     data.user_id = JSON.parse(localStorage.getItem('current_user')).user_id;
+    data.role = JSON.parse(localStorage.getItem('current_user')).role;
   }
+
+  // Add start_date and end_date to the data
+  if (data) {
+    data.start_date = start_date;
+    data.end_date = end_date;
+  }
+
   console.log('the url is', url);
   try {
     const response = await axios({

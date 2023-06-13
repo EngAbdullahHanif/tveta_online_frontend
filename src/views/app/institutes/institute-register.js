@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { dormGenderOptions } from '../global-data/options';
-import { provincesOptionsForList } from '../global-data/options';
-import * as Yup from 'yup';
+import React, { useRef, useState, useEffect } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { dormGenderOptions } from "../global-data/options";
+import { provincesOptionsForList } from "../global-data/options";
+import * as Yup from "yup";
 
 import {
   Row,
@@ -16,49 +16,50 @@ import {
   Button,
   CardTitle,
   Input,
-} from 'reactstrap';
+} from "reactstrap";
 
-import callApi from 'helpers/callApi';
-import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
-import { NotificationManager } from 'components/common/react-notifications';
-import { institute } from 'lang/locales/fa_IR';
+import callApi from "helpers/callApi";
+import IntlMessages from "helpers/IntlMessages";
+import { Colxx } from "components/common/CustomBootstrap";
+import { NotificationManager } from "components/common/react-notifications";
+import { institute } from "lang/locales/fa_IR";
 
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
+} from "containers/form-validations/FormikFields";
+import { message } from "antd";
 
 const options = [
-  { value: 'Electronic', label: 'الکترونیکی' },
-  { value: 'paper', label: 'کاغذی' },
+  { value: "Electronic", label: "الکترونیکی" },
+  { value: "paper", label: "کاغذی" },
 ];
 
 const instTypeOptions = [
-  { value: '1', label: 'دولتی' },
-  { value: '1', label: 'شخصی' },
+  { value: "1", label: "دولتی" },
+  { value: "1", label: "شخصی" },
 ];
 
 const instituteCityOptions = [
-  { value: '1', label: 'شهری' },
-  { value: '2', label: 'دهاتی' },
+  { value: "1", label: "شهری" },
+  { value: "2", label: "دهاتی" },
 ];
 const instituteLanguageOptions = [
-  { value: '1', label: 'پښتو' },
-  { value: '2', label: 'دری' },
+  { value: "1", label: "پښتو" },
+  { value: "2", label: "دری" },
 ];
 const instituteClimateOptions = [
-  { value: '1', label: 'سرد سیر' },
-  { value: '2', label: 'گرم سیر' },
-  { value: '3', label: 'زیاد سرد سیر' },
+  { value: "1", label: "سرد سیر" },
+  { value: "2", label: "گرم سیر" },
+  { value: "3", label: "زیاد سرد سیر" },
 ];
 const instituteTypeOptions = [
-  { value: '1', label: 'انستیتوت' },
-  { value: '2', label: 'لیسه' },
+  { value: "1", label: "انستیتوت" },
+  { value: "2", label: "لیسه" },
 ];
 
-const servicePath = 'http://localhost:8000';
+const servicePath = "http://localhost:8000";
 const instituteApiUrl = `${servicePath}/institute/institute_create`;
 //http://localhost:8000/institute/institute_create
 
@@ -66,12 +67,12 @@ const InstituteRegister = () => {
   const [updateMode, setUpdateMode] = useState(false);
   const { instituteId } = useParams();
   const [institute, setInstitute] = useState([]);
-  const [initialInstituteName, setInitialInstituteName] = useState('');
+  const [initialInstituteName, setInitialInstituteName] = useState("");
 
-  const [initialProvince, setInitialProvince] = useState('');
-  const [initialDistrict, setInitialDistrict] = useState('');
+  const [initialProvince, setInitialProvince] = useState("");
+  const [initialDistrict, setInitialDistrict] = useState("");
   const [initialInstType, setInitialInstType] = useState([]);
-  const [initialVillage, setInitialVillage] = useState('');
+  const [initialVillage, setInitialVillage] = useState("");
 
   const [initialGender, setInitialGender] = useState([]);
 
@@ -79,14 +80,14 @@ const InstituteRegister = () => {
   const [province, setProvince] = useState({});
   const [instType, setInstType] = useState({});
   const [gender, setGender] = useState({});
-  const [] = useState('وتاکئ / انتخاب کنید');
+  const [] = useState("وتاکئ / انتخاب کنید");
 
   if (instituteId) {
     useEffect(() => {
       async function fetchInstitute() {
         const { data } = await axios.get(`${instituteApiUrl}/${instituteId}`);
         setInstitute(data);
-        console.log(data, 'object of the data');
+        console.log(data, "object of the data");
         setInitialInstituteName(data.name);
         setInitialDistrict(data.district);
         setInitialVillage(data.village);
@@ -112,32 +113,32 @@ const InstituteRegister = () => {
   }
 
   const createNotification = (type, className) => {
-    const cName = className || '';
+    const cName = className || "";
     switch (type) {
-      case 'success':
+      case "success":
         NotificationManager.success(
-          'شاگرد موفقانه لیلی ته رجستر شو',
-          'موفقیت',
+          "شاگرد موفقانه لیلی ته رجستر شو",
+          "موفقیت",
           3000,
           null,
           null,
           cName
         );
         break;
-      case 'error':
+      case "error":
         NotificationManager.error(
-          'شاگرد ثبت نشو، بیا کوشش وکری',
-          'خطا',
+          "شاگرد ثبت نشو، بیا کوشش وکری",
+          "خطا",
           9000,
           () => {
-            alert('callback');
+            alert("callback");
           },
           null,
           cName
         );
         break;
       default:
-        NotificationManager.info('Info message');
+        NotificationManager.info("Info message");
         break;
     }
   };
@@ -241,35 +242,60 @@ const InstituteRegister = () => {
   // };
 
   // post student record to server
+
   const postInstituteRecord = async (data) => {
-    const response = await callApi('institute/institute_create', 'POST', data);
+    message.success("Post");
+    const response = await callApi("institute/institute_create/", "POST", data);
     if (response) {
-      createNotification('success', 'filled');
+      console.warn("success message from backend", response);
+      createNotification("success", "filled");
       resetForm();
       setIsNext(true);
-      console.log('success message from backend', response);
     } else {
-      createNotification('error', 'filled');
-      console.log('class error');
+      createNotification("error", "filled");
+      console.log("class error");
     }
   };
+  // const postInstituteRecord = async (data) => {
+  //   // const access_token = localStorage.getItem("access_token");
+  //   const headers = {
+  //     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+  //   };
+  //   console.log(headers);
+  //   await axios
+  //     .post("http://localhost:8000/institute/institute_create/", {
+  //       data,
+  //       headers,
+  //     })
+  //     .then((response) => {
+  //       createNotification("success", "filled");
+  //       resetForm();
+  //       setIsNext(true);
+  //       console.ward("success message from backend", response);
+  //     })
+  //     .catch((error) => {
+  //       createNotification("error", "filled");
+  //       console.log("class error", error);
+  //     });
+  // };
 
   const onRegister = (values) => {
     const data = {
       name: values.institute,
-      address: `${values.district}, ${values.province.value}`,
-      province: values.province.value,
+      address: `${values.district}, Kabul`,
+      province: "kabul",
       district: values.district,
       village: values.village,
       type: values.instType.value,
       inst_city_type: values.institueCityType.value,
-      inst_status: '1', //as it is registered for the first time so it is considered to be active
-      inst_climaty: values.instituteClimate.value,
+      inst_status: "1", //as it is registered for the first time so it is considered to be active
+      inst_climat: values.instituteClimate.value, //attribute name changed from inst_climaty to inst_climat
       school_type: values.instituteType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
-      user_id: '1',
+      user_id: 27,
     };
+    console.log("VALUES: ", data);
     //console.log('data of the form', data);
     postInstituteRecord(data);
   };
@@ -302,6 +328,7 @@ const InstituteRegister = () => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                handleChange,
                 resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right  error-l-200">
@@ -507,7 +534,7 @@ const InstituteRegister = () => {
           ) : (
             <div
               className="wizard-basic-step text-center pt-3 "
-              style={{ minHeight: '400px' }}
+              style={{ minHeight: "400px" }}
             >
               <div>
                 <h1 className="mb-2">

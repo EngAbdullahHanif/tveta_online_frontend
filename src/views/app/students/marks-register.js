@@ -34,6 +34,7 @@ import {
 } from "containers/form-validations/FormikFields";
 import userEvent from "@testing-library/user-event";
 import { async } from "q";
+import Institues from "../institutes";
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -86,7 +87,7 @@ const initialValues = {
 
 const MarksRegistration = ({ match }) => {
   const [isNext, setIsNext] = useState(false);
-
+  const [counter, setCounter] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
@@ -111,7 +112,28 @@ const MarksRegistration = ({ match }) => {
     semester: "",
     section: "",
   });
-
+  const int = [
+    {
+      label: "Dept 1",
+      value: "1",
+      institute: "8",
+    },
+    {
+      label: "Dept 2",
+      value: "2",
+      institute: "8",
+    },
+    {
+      label: "Dept 3",
+      value: "3",
+      institute: "Some Other Institute",
+    },
+    {
+      label: "Dept 4",
+      value: "4",
+      institute: "انستیتوت تکنالوژی افغان",
+    },
+  ];
   useEffect(() => {
     if (!isEmptyArray(selectedClass) && selectedClass !== "") {
       const [semester, classs, section] = selectedClass.label.split("-");
@@ -140,11 +162,13 @@ const MarksRegistration = ({ match }) => {
 
   const fetchInstitutes = async () => {
     const response = await callApi("institute/", "", null);
+    console.warn("Reponse Institutes: ", response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.name,
       }));
+      console.warn("Updated Institutes: ", updatedData);
       setInstitutes(updatedData);
     } else {
       console.log("institute error");
@@ -164,6 +188,7 @@ const MarksRegistration = ({ match }) => {
     }
   };
   const fetchDepartments = async () => {
+    setDepartments(int);
     const response = await callApi("institute/department/", "", null);
     // console.log('response of department', response);
     if (response.data && response.status === 200) {
@@ -211,6 +236,14 @@ const MarksRegistration = ({ match }) => {
     fetchSubjects();
   }, []);
 
+  useEffect(() => {
+    const filtered = int.filter(
+      (dep) => dep.institute == selectedInstitute.value
+    );
+    console.log("Filter: ", filtered);
+    setDepartments(filtered);
+  }, [selectedInstitute]);
+
   // notification message
   const createNotification = (type, className) => {
     const cName = className || "";
@@ -243,7 +276,8 @@ const MarksRegistration = ({ match }) => {
     }
   };
 
-  const fechtStudents = async (formData) => {
+  const fetchStudents = async (formData) => {
+    console.log("Form Data:", formData);
     const response = await callApi(
       `api/student-for-marks/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       "",
@@ -315,7 +349,7 @@ const MarksRegistration = ({ match }) => {
           {!isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={fechtStudents}
+              onSubmit={fetchStudents}
               validationSchema={ValidationSchema}
             >
               {({
@@ -456,7 +490,6 @@ const MarksRegistration = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
@@ -482,12 +515,12 @@ const MarksRegistration = ({ match }) => {
                   <Row>
                     <Colxx>
                       <Button
+                        onClick={handleSubmit}
                         color="primary"
                         className="float-right  buttonStyle"
                         size="lg"
                         type="submit"
                         style={{ margin: "2% 0% 10% 6%" }}
-                        onClick={handleSubmit}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />

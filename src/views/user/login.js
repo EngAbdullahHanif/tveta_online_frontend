@@ -61,6 +61,8 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         console.log("Logged User in Token: ", loggedUser);
         authContext.setUser(response.data.data);
         localStorage.setItem("user", response.data.data);
+        localStorage.setItem("current_user", response.data.data);
+        localStorage.setItem("access_token", response.data.token.access);
         // return response.data;
       })
       .then(() => console.log("AUth User: ", authContext.user))

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, isEmptyArray } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
@@ -101,8 +101,20 @@ const MarksRegistration = ({ match }) => {
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
   const [examId, setExamId] = useState();
-
   const { markId } = useParams();
+  // separate and set labels for classes
+  const [selectedClassLabel, setselectedClassLabel] = useState({
+    classs: '',
+    semester: '',
+    section: '',
+  });
+
+  useEffect(() => {
+    if (!isEmptyArray(selectedClass) && selectedClass !== '') {
+      const [semester, classs, section] = selectedClass.label.split('-');
+      setselectedClassLabel({ classs, semester, section });
+    }
+  }, [selectedClass]);
 
   if (markId) {
     useEffect(() => {
@@ -110,7 +122,7 @@ const MarksRegistration = ({ match }) => {
         const { data } = await axios.get(
           `${studentMarkId}/?student_id=${markId}`
         );
-        console.log(data, 'object of the data');
+        // console.log(data, 'object of the data');
 
         // const instGender = genderOptions.map((studentGender) => {
         //   if (studentGender.value === data[0].gender) {
@@ -149,7 +161,7 @@ const MarksRegistration = ({ match }) => {
   };
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', '', null);
-    console.log('response of department', response);
+    // console.log('response of department', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -234,7 +246,7 @@ const MarksRegistration = ({ match }) => {
       null
     );
     if (response.data && response.status === 200) {
-      console.log('response of students', response);
+      // console.log('response of students', response);
       setStudents(response.data);
       setIsNext(true);
     } else {
@@ -268,7 +280,7 @@ const MarksRegistration = ({ match }) => {
       ...newStudents,
     ];
 
-    console.log('data', data);
+    // console.log('data', data);
 
     const response = await callApi('api/create_marks/', 'POST', data);
     if (
@@ -276,7 +288,7 @@ const MarksRegistration = ({ match }) => {
       response.status === 201 ||
       response.status === 202
     ) {
-      console.log('response of students', response);
+      // console.log('response of students', response);
       setIsSubmitted(true);
       createNotification('success', 'filled');
     } else {
@@ -286,7 +298,7 @@ const MarksRegistration = ({ match }) => {
     }
   };
 
-  console.log('condsotlsa f', students);
+  // console.log('condsotlsa f', students);
   return (
     <>
       <Card>
@@ -471,7 +483,7 @@ const MarksRegistration = ({ match }) => {
                       <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="forms.FieldLabel" />
                       </Label>
-                      {console.log('selectedDepartment', selectedDepartment)}
+                      {/* {console.log('selectedDepartment', selectedDepartment)} */}
                       <h5>{selectedDepartment.label}</h5>
                     </Colxx>
 
@@ -479,7 +491,7 @@ const MarksRegistration = ({ match }) => {
                       <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.ClassLabel" />
                       </Label>
-                      <h5>{selectedClass.label}</h5>
+                      <h5>{selectedClassLabel.classs}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
@@ -493,14 +505,14 @@ const MarksRegistration = ({ match }) => {
                       <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SemesterLabel" />
                       </Label>
-                      <h5>{selectedClass.label}</h5>
+                      <h5>{selectedClassLabel.semester}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
                       <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SectionLabel" />
                       </Label>
-                      <h5>{selectedClass.label}</h5>
+                      <h5>{selectedClassLabel.section}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
@@ -526,7 +538,7 @@ const MarksRegistration = ({ match }) => {
                             overflowX: 'hidden',
                           }}
                         >
-                          <table class="table ">
+                          <table className="table ">
                             <thead className="thead-dark">
                               <tr>
                                 <th

@@ -8,12 +8,14 @@ const servicePath = 'http://127.0.0.1:8000';
 const getHeaders = (data) => {
   const user = JSON.parse(localStorage.getItem('current_user'));
   const access_token = localStorage.getItem('access_token');
+
   if (user && access_token) {
     const headers = { Authorization: `Bearer ${access_token}` };
     console.log('data instanceof FormData', data instanceof FormData);
     if (data instanceof FormData) {
       headers['Content-Type'] = 'multipart/form-data';
     }
+
     return headers;
   } else {
     return {};

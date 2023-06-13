@@ -111,15 +111,28 @@ const data = [
       },
       {
         icon: 'MD.MdAddBox',
-        label: 'upgrade/downgrade',
+        label: 'menu.student.upgrade-class',
         to: `${adminRoot}/students/students-class-status-upgrade`,
         newWindow: false,
       },
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
-        // label: 'upgrade/downgrade',
-        label: 'students list',
+        label: 'student.assignment-to-class',
         to: `${adminRoot}/students/marks-status-cheked-students`,
+        newWindow: false,
+      },
+
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'department-change',
+        to: `${adminRoot}/students/department-change`,
+        newWindow: false,
+      },
+
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'section-change',
+        to: `${adminRoot}/students/section-change`,
         newWindow: false,
       },
       // {

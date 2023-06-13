@@ -12,7 +12,7 @@ import Application from "context/Application";
 import Authentication from "context/Authentication";
 const win = window.sessionStorage;
 const App = ({ locale }) => {
-  const [user, setUser] = useState(win.getItem("user"));
+  const [user, setUser] = useState(localStorage.getItem("user"));
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
   useEffect(() => {

@@ -39,7 +39,7 @@ import { AuthContext } from "context/AuthContext";
 // import TopnavNotifications from './Topnav.Notifications';
 import TopnavDarkSwitch from "./Topnav.DarkSwitch";
 // import logo from '../../assets/img/logo2.png';
-const storage = window.sessionStorage;
+
 const TopNav = ({
   // intl,
   history,
@@ -183,7 +183,7 @@ const TopNav = ({
     // logoutUserAction(history);
     setUser(null);
     window.location.href = window.location.origin;
-    storage.clear();
+    localStorage.clear();
   };
 
   const menuButtonClick = (e, _clickCount, _conClassnames) => {
@@ -314,6 +314,10 @@ const TopNav = ({
               </span>
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
+              <DropdownItem>
+                {user.username} {user.lastName}
+              </DropdownItem>
+              <DropdownItem divider />
               <DropdownItem>حساب کاربری</DropdownItem>
               <DropdownItem>ویژگی ها</DropdownItem>
               <DropdownItem>تاریخچه</DropdownItem>

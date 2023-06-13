@@ -60,8 +60,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         let loggedUser = jwt_decode(response.data.token.access);
         console.log("Logged User in Token: ", loggedUser);
         authContext.setUser(response.data.data);
-        win.setItem("user", response.data.data);
-        // window.location.href = window.location.origin;
+        localStorage.setItem("user", response.data.data);
         // return response.data;
       })
       .then(() => console.log("AUth User: ", authContext.user))

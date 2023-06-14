@@ -10,7 +10,6 @@ import { getDirection, getCurrentUser } from "./helpers/Utils";
 import { AuthContext } from "./context/AuthContext";
 import Application from "context/Application";
 import Authentication from "context/Authentication";
-const win = window.sessionStorage;
 const App = ({ locale }) => {
   const [user, setUser] = useState(localStorage.getItem("user"));
   const direction = getDirection();
@@ -47,7 +46,7 @@ const App = ({ locale }) => {
 
 const mapStateToProps = ({ authUser, settings }) => {
   // const { currentUser } = authUser;
-  const { currentUser } = getCurrentUser();
+  const currentUser = getCurrentUser();
 
   // const { currentUser } = '';
 

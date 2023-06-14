@@ -29,8 +29,14 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from "containers/form-validations/FormikFields";
-import { message } from "antd";
-
+import { message, Spin } from "antd";
+message.config({
+  top: 100,
+  duration: 2,
+  maxCount: 3,
+  rtl: true,
+  prefixCls: "my-message",
+});
 const options = [
   { value: "Electronic", label: "الکترونیکی" },
   { value: "paper", label: "کاغذی" },
@@ -64,6 +70,7 @@ const instituteApiUrl = `${servicePath}/institute/institute_create`;
 //http://localhost:8000/institute/institute_create
 
 const InstituteRegister = () => {
+  const [loader, setLoader] = useState(false);
   const [updateMode, setUpdateMode] = useState(false);
   const { instituteId } = useParams();
   const [institute, setInstitute] = useState([]);
@@ -87,7 +94,7 @@ const InstituteRegister = () => {
       async function fetchInstitute() {
         const { data } = await axios.get(`${instituteApiUrl}/${instituteId}`);
         setInstitute(data);
-        console.log(data, "object of the data");
+        console.log("object of the data", data);
         setInitialInstituteName(data.name);
         setInitialDistrict(data.district);
         setInitialVillage(data.village);
@@ -243,43 +250,22 @@ const InstituteRegister = () => {
 
   // post student record to server
 
-  const postInstituteRecord = async (data) => {
-    message.success("Post");
-    const response = await callApi("institute/institute_create/", "POST", data);
-    if (response) {
-      console.warn("success message from backend", response);
-      createNotification("success", "filled");
-      resetForm();
-      setIsNext(true);
-    } else {
-      createNotification("error", "filled");
-      console.log("class error");
-    }
-  };
   // const postInstituteRecord = async (data) => {
-  //   // const access_token = localStorage.getItem("access_token");
-  //   const headers = {
-  //     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-  //   };
-  //   console.log(headers);
-  //   await axios
-  //     .post("http://localhost:8000/institute/institute_create/", {
-  //       data,
-  //       headers,
-  //     })
-  //     .then((response) => {
-  //       createNotification("success", "filled");
-  //       resetForm();
-  //       setIsNext(true);
-  //       console.ward("success message from backend", response);
-  //     })
-  //     .catch((error) => {
-  //       createNotification("error", "filled");
-  //       console.log("class error", error);
-  //     });
+  //   const response = await callApi("institute/institute_create/", "POST", data);
+  //   if (response) {
+  //     console.warn("success message from backend", response);
+  //     message.success("Institute Added");
+  //     createNotification("success", "filled");
+  //     resetForm();
+  //     setIsNext(true);
+  //   } else {
+  //     createNotification("error", "filled");
+  //     console.log("class error");
+  //   }
   // };
 
-  const onRegister = (values) => {
+  const onRegister = async (values) => {
+    setLoader(true);
     const data = {
       name: values.institute,
       address: `${values.district}, Kabul`,
@@ -293,11 +279,21 @@ const InstituteRegister = () => {
       school_type: values.instituteType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
-      user_id: 27,
+      user_id: 1,
     };
     console.log("VALUES: ", data);
-    //console.log('data of the form', data);
-    postInstituteRecord(data);
+    const response = await callApi("institute/institute_create/", "POST", data);
+    if (response) {
+      setLoader(false);
+      message.success("Institute Added");
+      console.warn("success message from backend", response.data);
+      createNotification("success", "filled");
+      resetForm();
+      setIsNext(true);
+    } else {
+      createNotification("error", "filled");
+      console.log("class error");
+    }
   };
 
   return (
@@ -516,6 +512,7 @@ const InstituteRegister = () => {
                           type="submit"
                           color="primary"
                         >
+                          <Spin color="#fff" spinning={loader} />
                           <span className="spinner d-inline-block ">
                             <span className="bounce1" />
                             <span className="bounce2" />

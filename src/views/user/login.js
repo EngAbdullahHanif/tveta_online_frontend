@@ -17,7 +17,6 @@ import axios from "axios";
 const productionURL = "http://172.16.105.244/tveta";
 const localURL = "http://localhost:8000";
 
-const win = window.sessionStorage;
 const Login = ({ history, loading, error, loginUserAction }) => {
   const authContext = useContext(AuthContext);
   const [email] = useState("");
@@ -37,16 +36,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
     }
   }, [error]);
 
-  // const onUserLogin = (values) => {
-  //   loginUserAction(values, history);
-  //   if (!loading) {
-  //     if (values.email !== "" && values.password !== "") {
-  //     }
-  //   }
-  // };
   const onUserLogin = (values) => {
-    // alert("logged");
-    console.log(values);
     axios
       .post(`${localURL}/user/login/`, {
         username: values.username,
@@ -61,11 +51,10 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         console.log("Logged User in Token: ", loggedUser);
         authContext.setUser(response.data.data);
         localStorage.setItem("user", response.data.data);
-        localStorage.setItem("current_user", response.data.data);
+        localStorage.setItem("current_user", response.data.data); //this should be removed after conflict resolved
         localStorage.setItem("access_token", response.data.token.access);
         // return response.data;
       })
-      .then(() => console.log("AUth User: ", authContext.user))
       .catch((err) => {
         console.log("error of response", err);
         message.error("Network Error");

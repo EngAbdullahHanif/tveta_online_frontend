@@ -1,3 +1,11 @@
+import { message } from "antd";
+message.config({
+  top: 100,
+  duration: 2,
+  maxCount: 3,
+  rtl: true,
+  prefixCls: "my-message",
+});
 import axios from "axios";
 
 // const servicePath = 'http://172.16.105.244/tveta'; #production mood
@@ -45,6 +53,8 @@ const callApi = async (endpoint, method = "get", data = null) => {
       headers,
       data,
     });
+    console.log("CALL API Response:", response.data);
+    message.success("Task Accomplished");
     return response;
   } catch (error) {
     console.log("Error in API: ", error);

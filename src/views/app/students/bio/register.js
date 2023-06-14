@@ -72,7 +72,7 @@ const studentProvince = [
 
 const StudentRegistration = ({ intl }, values) => {
   const { studentId } = useParams();
-  var initialValues = {};
+
   console.log('student_id', studentId);
   if (studentId) {
     useEffect(() => {
@@ -85,79 +85,40 @@ const StudentRegistration = ({ intl }, values) => {
           '',
           null
         );
-        console.log('the backend server data', data.results[0].name);
-        initialValues = {
-          name1: ' data.results[0].name',
-          fatherName: 'hgfhgh',
-          lastName: 'initialLastName',
-          lastNameEng: 'initialLastNameEng',
-          fatherDuty: 'initialFatherDuty',
-          englishName: 'initialEnglishName',
-          fatherEngName: 'initialFatherEngName',
-          grandFatherName: 'initialGrandFatherName',
-          fatherDutyLocation: 'initialFatherDutyLocation',
-          placeOfBirth: 'initialPlaceOfBirth',
-          DoB: 'initialDoB',
-          gender: 'initialGender',
-          tazkiraNo: 'initialTazkiraNo',
-          phoneNo: 'initialPhoneNo',
-          email: 'initialEmail',
-          idCardPageNo: 'initialIdCardPageNo',
-          idCardJoldNo: 'initialIdCardJoldNo',
-          tazkiraType: { label: 'sdfgfdg', value: 'lsdjfld' },
-          levelOfEducation: 'initialLevelOfEducation',
-          preSchool: 'initialPreSchool',
-          graduationYear: 'initialGraduationYear',
-          schoolProvince: 'initialSchoolProvince',
-          province: 'initialProvince',
-          C_Province: 'initialC_Province',
-          C_District: 'initialC_District',
-          district: 'initialDistrict',
-          village: 'initialVillage',
-          C_Village: 'initialC_Village',
-          institute: 'initialInstitute',
-          class: 'initialClass',
-          educationalYear: 'initialEducationalYear',
-          department: 'initialDepartment',
-          mediumOfInstruction: 'initialMediumOfInstruction',
-          // kankorId: initialKankorId,
-          studentId: 'initialStudentId',
-          studyTime: 'initialStudyTime',
-          interanceType: 'initialInteranceType',
-          studentType: 'initialStudentType',
-          batch: 'initialBatch',
-          field: 'initialField',
-          sector: 'ghjhj',
-          file: 'fdghh',
-        };
-        // setInitialname1(data.results[0].name);
-        // setInitialLastName(data.results[0].last_name);
-        // setInitialFatherName(data.results[0].father_name);
-        // setInitialGrandFatherName(data.results[0].grand_father_name);
-        // setInitialFatherDuty(data.results[0].fatherـprofession);
-        // setInitialLastNameEng(data.results[0].english_last_name);
+        console.log('the backend server data', data.results[0]);
 
-        // const instGender = genderOptions.map((studentGender) => {
-        //   if (studentGender.value === data[0].gender) {
-        //     setInitialGender(studentGender);
-        //   }
-        // });
+        setInitialname1(data.results[0].name);
+        setInitialLastName(data.results[0].last_name);
+        setInitialFatherName(data.results[0].father_name);
+        setInitialGrandFatherName(data.results[0].grand_father_name);
+        setInitialFatherDuty(data.results[0].fatherـprofession);
+        setInitialLastNameEng(data.results[0].english_last_name);
+        const instGender = genderOptions.map((studentGender) => {
+          if (studentGender.value === data.results[0].gender) {
+            setInitialGender(studentGender);
+          }
+        });
+        const dateOfBirthOptions = dateOfBirthOptoions.map((yearOptions) => {
+          if (yearOptions.value === data.results[0].birth_date) {
+            setInitialDoB(yearOptions);
+          }
+        });
+        setInitialEnglishName(data.results[0].english_name);
+        setInitialPhoneNo(data.results[0].phone_number);
+        setInitialFatherDutyLocation(data.results[0].fatherـplaceـofـduty);
+        if (data.results[0].sukuk_number)
+          setInitialTazkiraType(tazkiraOptions[1]);
+        else setInitialTazkiraType(tazkiraOptions[0]);
+        setInitialFatherEngName(data.results[0].english_father_name);
+        setInitialPlaceOfBirth(data.results[0].main_province);
+        setInitialTazkiraNo(data.results[0].sukuk_number);
+        setInitialEmail(data.results[0].email);
+        setInitialIdCardPageNo(data.results[0].page_number);
+        setInitialIdCardJoldNo(data.results[0].cover_number);
+        setInitialPreSchool(data.results[0].school);
+        setInitialGraduationYear(data.results[0].finished_grade_year);
 
-        // setInitialEnglishName(data[0].english_name);
-        // setInitialPhoneNo(data[0].phone_number);
-        // setInitialDoB(data[0].birth_date);
-        // setInitialFatherDutyLocation(data[0].fatherـplaceـofـduty);
-        // if (data[0].sukuk_number) setInitialTazkiraType(tazkiraOptions[1]);
-        // else setInitialTazkiraType(tazkiraOptions[0]);
-        // setInitialFatherEngName(data[0].english_father_name);
-        // setInitialPlaceOfBirth(data[0].main_province);
-        // setInitialTazkiraNo(data[0].sukuk_number);
-        // setInitialEmail(data[0].email);
-        // setInitialIdCardPageNo(data[0].page_number);
-        // setInitialIdCardJoldNo(data[0].cover_number);
-        // setInitialPreSchool(data[0].school);
-        // setInitialGraduationYear(data[0].finished_grade_year);
-        // setInitialLevelOfEducation(educationLevelOptions[0]);
+        //setInitialLevelOfEducation(educationLevelOptions[0]);
 
         // // const studentFinishGrade = educationLevelOptions.map(
         // //   (finishedGrade) => {
@@ -208,51 +169,6 @@ const StudentRegistration = ({ intl }, values) => {
       fetchStudent();
       //setUpdateMode(true);
     }, []);
-  } else {
-    initialValues = {
-      name1: 'without data',
-      fatherName: '',
-      lastName: '',
-      lastNameEng: '',
-      fatherDuty: '',
-      englishName: '',
-      fatherEngName: '',
-      grandFatherName: '',
-      fatherDutyLocation: '',
-      placeOfBirth: '',
-      DoB: '',
-      gender: '',
-      tazkiraNo: '',
-      phoneNo: '',
-      email: '',
-      idCardPageNo: '',
-      idCardJoldNo: '',
-      tazkiraType: { label: 'tazkiraler', value: 'djflkdjslfjkd' },
-      levelOfEducation: '',
-      preSchool: '',
-      graduationYear: '',
-      schoolProvince: '',
-      province: '',
-      C_Province: '',
-      C_District: '',
-      district: '',
-      village: '',
-      C_Village: '',
-      institute: '',
-      class: '',
-      educationalYear: '',
-      department: '',
-      mediumOfInstruction: '',
-      // kankorId: initialKankorId,
-      studentId: '',
-      studyTime: '',
-      interanceType: '',
-      studentType: '',
-      batch: '',
-      field: '',
-      sector: '',
-      file: '',
-    };
   }
 
   const [initialname1, setInitialname1] = useState('');
@@ -309,6 +225,50 @@ const StudentRegistration = ({ intl }, values) => {
   const [sectors, setSectors] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const initialValues = {
+    name1: initialname1,
+    fatherName: initialFatherName,
+    lastName: initialLastName,
+    lastNameEng: initialLastNameEng,
+    fatherDuty: initialFatherDuty,
+    englishName: initialEnglishName,
+    fatherEngName: initialFatherEngName,
+    grandFatherName: initialGrandFatherName,
+    fatherDutyLocation: initialFatherDutyLocation,
+    placeOfBirth: initialPlaceOfBirth,
+    DoB: initialDoB,
+    gender: initialGender,
+    tazkiraNo: initialTazkiraNo,
+    phoneNo: initialPhoneNo,
+    email: initialEmail,
+    idCardPageNo: initialIdCardPageNo,
+    idCardJoldNo: initialIdCardJoldNo,
+    tazkiraType: initialTazkiraType,
+    levelOfEducation: initialLevelOfEducation,
+    preSchool: initialPreSchool,
+    graduationYear: initialGraduationYear,
+    schoolProvince: initialSchoolProvince,
+    province: initialProvince,
+    C_Province: initialC_Province,
+    C_District: initialC_District,
+    district: initialDistrict,
+    village: initialVillage,
+    C_Village: initialC_Village,
+    institute: initialInstitute,
+    class: initialClass,
+    educationalYear: initialEducationalYear,
+    department: initialDepartment,
+    mediumOfInstruction: initialMediumOfInstruction,
+    // kankorId: initialKankorId,
+    studentId: initialStudentId,
+    studyTime: initialStudyTime,
+    interanceType: initialInteranceType,
+    studentType: initialStudentType,
+    batch: initialBatch,
+    field: initialField,
+    sector: initialSector,
+    file: initialphoto,
+  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);

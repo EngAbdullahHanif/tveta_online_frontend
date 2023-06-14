@@ -165,6 +165,7 @@ export const educationalYearsOptions = [
   { value: '1408', label: '1408' },
   { value: '1409', label: '1409' },
   { value: '1410', label: '1410' },
+  { value: '2023', label: '2023' },
 ];
 
 export const dateOfBirthOptoions = [
@@ -189,6 +190,7 @@ export const dateOfBirthOptoions = [
   { value: '1388', label: '1388' },
   { value: '1389', label: '1389' },
   { value: '1390', label: '1390' },
+  { value: '2022', label: '2022' },
 ];
 
 export const educationalYearsOptionsForList = [

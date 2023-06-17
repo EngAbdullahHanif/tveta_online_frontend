@@ -1,6 +1,9 @@
 import React, { Suspense } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import DummyPage from "./dummy-page";
+import { getCurrentUser } from "helpers/Utils";
+import { ProtectedRoute } from "helpers/authHelper";
+import { userRole } from "constants/defaultValues";
+
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "register" */ "./bio/register")
 );
@@ -128,175 +131,418 @@ const Main = React.lazy(() =>
   import(/* webpackChunkName: "register-1" */ "../main-register-route")
 );
 
-const Students = ({ match }) => (
-  <Suspense fallback={<div className="loading" />}>
-    <Switch>
-      <Redirect exact from={`${match.url}/`} to={`${match.url}/register`} />
-      <Route
-        exact
-        path={`${match.url}/register`}
-        render={(props) => <Register {...props} />}
-      />
-      <Route
-        path={`${match.url}/register/:studentId`}
-        render={(props) => <Register {...props} />}
-      />
-      <Route
-        exact
-        path={`${match.url}/register-kankor`}
-        render={(props) => <RegisterKankor {...props} />}
-      />
-      <Route
-        path={`${match.url}/register-kankor/:kankorStudentId`}
-        render={(props) => <RegisterKankor {...props} />}
-      />
-      <Route
-        path={`${match.url}/students`}
-        render={(props) => <StudentList {...props} />}
-      />
-      {/* Dummy Page */}
-      <Route
-        path={`${match.url}/dummy`}
-        render={(props) => <DummyPage {...props} />}
-      />
-      {/* Dummy Route \ends */}
-      <Route
-        exact
-        path={`${match.url}/attendance-list`}
-        render={(props) => <AttendanceList {...props} />}
-      />
-      <Route
-        path={`${match.url}/attendance-list/:attendance_id`}
-        render={(props) => <AttendanceUpdate {...props} />}
-      />
-      <Route
-        path={`${match.url}/dismissed-list`}
-        render={(props) => <DismissedStudentList {...props} />}
-      />
-      <Route
-        path={`${match.url}/transfered-list`}
-        render={(props) => <TransferedStudentList {...props} />}
-      />
-      <Route
-        path={`${match.url}/kankor-students`}
-        render={(props) => <KankorStudentList {...props} />}
-      />
-      <Route
-        path={`${match.url}/kankor-student/:kankorId`}
-        render={(props) => <KankorProfile {...props} />}
-      />
-      <Route
-        exact
-        path={`${match.url}/marks-register`}
-        render={(props) => <MarksRegistration {...props} />}
-      />
-      <Route
-        path={`${match.url}/marks-register/:id`}
-        render={(props) => <MarksRegistration {...props} />}
-      />
-      <Route
-        path={`${match.url}/second-chance`}
-        render={(props) => <SecondChanceMarks {...props} />}
-      />
-      <Route
-        exact
-        path={`${match.url}/attendance-register`}
-        render={(props) => <AttendanceRegistration {...props} />}
-      />
-      <Route
-        path={`${match.url}/attendance-register/:studentAttendanceId`}
-        render={(props) => <AttendanceRegistration {...props} />}
-      />
-      <Route
-        path={`${match.url}/student/:studentId`}
-        render={(props) => <StudentProfile {...props} />}
-      />
-      <Route
-        path={`${match.url}/student-transfer`}
-        render={(props) => <StudentTransfer {...props} />}
-      />
-      <Route
-        path={`${match.url}/marks-display`}
-        render={(props) => <MarksDisplay {...props} />}
-      />
-      <Route
-        path={`${match.url}/marks-verification`}
-        render={(props) => <MarksVerification {...props} />}
-      />
-      <Route
-        path={`${match.url}/class-marks`}
-        render={(props) => <MarksDisplayAllSubs {...props} />}
-      />
-      <Route
-        path={`${match.url}/attendance`}
-        render={(props) => <AttendanceDisplay {...props} />}
-      />
-      <Route
-        path={`${match.url}/reports`}
-        render={(props) => <Reports {...props} />}
-      />
-      <Route
-        path={`${match.url}/test`}
-        render={(props) => <Test {...props} />}
-      />
-      <Route
-        path={`${match.url}/student-dismissal`}
-        render={(props) => <Dismissal {...props} />}
-      />
-      <Route
-        path={`${match.url}/reregister`}
-        render={(props) => <Reregister {...props} />}
-      />
-      <Route
-        path={`${match.url}/marks-update`}
-        render={(props) => <SingleStudentMarksUpdate {...props} />}
-      />
-      <Route
-        path={`${match.url}/attendance-update`}
-        render={(props) => <AttendanceUpdate {...props} />}
-      />
-      <Route
-        path={`${match.url}/register-1`}
-        render={(props) => <Main {...props} />}
-      />
-      <Route
-        path={`${match.url}/student-upgrade`}
-        render={(props) => <StudentUpgrade {...props} />}
-      />
-      <Route
-        path={`${match.url}/student-upgrade`}
-        render={(props) => <StudentUpgrade {...props} />}
-      />
-      {/* <Route
+const Students = ({ match, props }) => {
+  const currentUser = getCurrentUser();
+  return (
+    <Suspense fallback={<div className="loading" />}>
+      <Switch>
+        <Redirect exact from={`${match.url}/`} to={`${match.url}/register`} />
+        <ProtectedRoute
+          path={`${match.url}/register`}
+          component={Register}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+
+        <ProtectedRoute
+          path={`${match.url}/register/:studentId`}
+          component={Register}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          exact
+          path={`${match.url}/register-kankor`}
+          component={RegisterKankor}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/register-kankor/:kankorStudentId`}
+          component={RegisterKankor}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/students`}
+          component={StudentList}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          exact
+          path={`${match.url}/attendance-list`}
+          component={AttendanceList}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/attendance-list/:attendance_id`}
+          component={AttendanceUpdate}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/dismissed-list`}
+          component={DismissedStudentList}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/transfered-list`}
+          component={TransferedStudentList}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/kankor-students`}
+          component={KankorStudentList}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/kankor-student/:kankorId`}
+          component={KankorProfile}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          exact
+          path={`${match.url}/marks-register`}
+          component={MarksRegistration}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/marks-register/:id`}
+          component={MarksRegistration}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/second-chance`}
+          component={SecondChanceMarks}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          exact
+          path={`${match.url}/attendance-register`}
+          component={AttendanceRegistration}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/attendance-register/:studentAttendanceId`}
+          component={AttendanceRegistration}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/student/:studentId`}
+          component={StudentProfile}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/student-transfer`}
+          component={StudentTransfer}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/marks-display`}
+          component={MarksDisplay}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/marks-verification`}
+          component={MarksVerification}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/class-marks`}
+          component={MarksDisplayAllSubs}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/attendance`}
+          component={AttendanceDisplay}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/reports`}
+          component={Reports}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/test`}
+          component={Test}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/student-dismissal`}
+          component={Dismissal}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/reregister`}
+          component={Reregister}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/marks-update`}
+          component={SingleStudentMarksUpdate}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/attendance-update`}
+          component={AttendanceUpdate}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/register-1`}
+          component={Main}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/student-upgrade`}
+          component={StudentUpgrade}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/student-upgrade`}
+          component={StudentUpgrade}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        {/* <ProtectedRoute
         path={`${match.url}/kankor-profile`}
-        render={(props) => <KankorProfile {...props} />}
+        component={KankorProfile}
+        roles={[userRole.admin, userRole.institute, userRole.superUser, userRole.provincial]}
+          props={props}
       /> */}
-      <Route
-        path={`${match.url}/students-class-status-upgrade`}
-        render={(props) => <StudentClassStatusUpgrade {...props} />}
-      />
-      <Route
-        path={`${match.url}/marks-status-cheked-students`}
-        render={(props) => <MarkStatusCheckedStudents {...props} />}
-      />
-      <Route
-        path={`${match.url}/department-change`}
-        render={(props) => <DepartmentChange {...props} />}
-      />
+        <ProtectedRoute
+          path={`${match.url}/students-class-status-upgrade`}
+          component={StudentClassStatusUpgrade}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/marks-status-cheked-students`}
+          component={MarkStatusCheckedStudents}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          path={`${match.url}/department-change`}
+          component={DepartmentChange}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
 
-      <Route
-        path={`${match.url}/section-change`}
-        render={(props) => <SectionChange {...props} />}
-      />
+        <ProtectedRoute
+          path={`${match.url}/section-change`}
+          component={SectionChange}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
 
-      {/* <ProtectedRoute
+        {/* <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}
-        roles={[UserRole.Admin]}
-      />
-       */}
-      <Redirect to="/error" />
-    </Switch>
-  </Suspense>
-);
+        roles={[userRole.Admin]}
+      />*/}
+        <Redirect to="/error" />
+      </Switch>
+    </Suspense>
+  );
+};
 export default Students;

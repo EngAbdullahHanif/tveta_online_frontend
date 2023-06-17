@@ -1,6 +1,8 @@
+import { userRole } from 'constants/defaultValues';
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-// import { ProtectedRoute, UserRole } from 'helpers/authHelper';
+// import { ProtectedRoute, userRole } from 'helpers/authHelper';
 
 const Admin = React.lazy(() =>
   import(/* webpackChunkName: "dashboard-default" */ './admin')
@@ -18,50 +20,85 @@ const EcommerceDefault = React.lazy(() =>
   import(/* webpackChunkName: "dashboard-ecommerce" */ './ecommerce')
 );
 
-const Dashboards = ({ match }) => (
+const Dashboards = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/admin`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/admin`}
-        render={(props) => <Admin {...props} />}
+        component={Admin}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/content`}
-        render={(props) => <ContentDefault {...props} />}
+        component={ContentDefault}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/ecommerce`}
-        render={(props) => <EcommerceDefault {...props} />}
+        component={EcommerceDefault}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/analytics`}
-        render={(props) => <AnalyticsDefault {...props} />}
+        component={AnalyticsDefault}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/provincial`}
-        render={(props) => <Provincial {...props} />}
+        component={Provincial}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
       {/* 
       <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}
-        roles={[UserRole.Admin]}
+        roles={[userRole.Admin]}
       />
       <ProtectedRoute
         path={`${match.url}/content`}
         component={ContentDefault}
-        roles={[UserRole.Admin]}
+        roles={[userRole.Admin]}
       />
       <ProtectedRoute
         path={`${match.url}/ecommerce`}
         component={EcommerceDefault}
-        roles={[UserRole.Editor]}
+        roles={[userRole.Editor]}
       />
       <ProtectedRoute
         path={`${match.url}/analytics`}
         component={AnalyticsDefault}
-        roles={[UserRole.Editor]}
+        roles={[userRole.Editor]}
       />
       */}
 

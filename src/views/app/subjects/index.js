@@ -1,3 +1,5 @@
+import { userRole } from 'constants/defaultValues';
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -15,40 +17,86 @@ const AdminDashboard = React.lazy(() =>
   import(/* webpackChunkName: "admin-dashboard" */ './admin-dashboard')
 );
 const SubjectList = React.lazy(() =>
-  import(/* webpackChunkName: "admin-dashboard" */ './subject-list/SubjectListMain')
+  import(
+    /* webpackChunkName: "admin-dashboard" */ './subject-list/SubjectListMain'
+  )
 );
 const CurriculumList = React.lazy(() =>
-  import(/* webpackChunkName: "admin-dashboard" */ './curriculum-list/CurriculumListMain')
+  import(
+    /* webpackChunkName: "admin-dashboard" */ './curriculum-list/CurriculumListMain'
+  )
 );
 
-const Subjects = ({ match }) => (
+const Subjects = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/subjects`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/register`}
-        render={(props) => <SubjectRegister {...props} />}
+        component={SubjectRegister}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
 
-      <Route
+      <ProtectedRoute
         path={`${match.url}/curriculum`}
-        render={(props) => <Curriculum {...props} />}
+        component={Curriculum}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/provincial-dash`}
-        render={(props) => <ProvincialDashboard {...props} />}
+        component={ProvincialDashboard}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/admin-dashboard`}
-        render={(props) => <AdminDashboard {...props} />}
+        component={AdminDashboard}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-        <Route
+      <ProtectedRoute
         path={`${match.url}/subject-list`}
-        render={(props) => <SubjectList {...props} />}
+        component={SubjectList}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-         <Route
+      <ProtectedRoute
         path={`${match.url}/curriculum-list`}
-        render={(props) => <CurriculumList {...props} />}
+        component={CurriculumList}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
 
       <Redirect to="/error" />

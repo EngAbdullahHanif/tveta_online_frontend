@@ -1,27 +1,27 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Row, Card, CardTitle, Label, FormGroup, Button } from "reactstrap";
-import { NavLink } from "react-router-dom";
-import { connect } from "react-redux";
-import logo from "../../assets/img/logo2.png";
-import { Formik, Form, Field } from "formik";
-import { message } from "antd";
-import { NotificationManager } from "components/common/react-notifications";
+import React, { useState, useEffect, useContext } from 'react';
+import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import logo from '../../assets/img/logo2.png';
+import { Formik, Form, Field } from 'formik';
+import { message } from 'antd';
+import { NotificationManager } from 'components/common/react-notifications';
 
-import { Colxx } from "components/common/CustomBootstrap";
-import IntlMessages from "helpers/IntlMessages";
-import { loginUser } from "redux/actions";
-import { AuthContext } from "context/AuthContext";
-import jwt_decode from "jwt-decode";
-import axios from "axios";
+import { Colxx } from 'components/common/CustomBootstrap';
+import IntlMessages from 'helpers/IntlMessages';
+import { loginUser } from 'redux/actions';
+import { AuthContext } from 'context/AuthContext';
+import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 
-const productionURL = "http://172.16.105.244/tveta";
-const localURL = "http://localhost:8000";
+const productionURL = 'http://172.16.105.244/tveta';
+const localURL = 'http://localhost:8000';
 
 const win = window.sessionStorage;
 const Login = ({ history, loading, error, loginUserAction }) => {
   const authContext = useContext(AuthContext);
-  const [email] = useState("");
-  const [password] = useState("");
+  const [email] = useState('');
+  const [password] = useState('');
 
   useEffect(() => {
     if (error) {
@@ -32,7 +32,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         9000,
         null,
         null,
-        ""
+        ''
       );
     }
   }, [error]);
@@ -55,22 +55,22 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       .then((response) => {
         // alert("User Logged");
         message.success(response.data.msg);
-        console.log("Data: ", response.data);
-        console.log("Token: ", response.data.token);
+        console.log('Data: ', response.data);
+        console.log('Token: ', response.data.token);
         let loggedUser = jwt_decode(response.data.token.access);
-        console.log("Logged User in Token: ", loggedUser);
+        console.log('Logged User in Token: ', loggedUser);
         authContext.setUser(response.data.data);
-        win.setItem("user", response.data.data);
+        win.setItem('user', response.data.data);
         // window.location.href = window.location.origin;
         // return response.data;
       })
-      .then(() => console.log("AUth User: ", authContext.user))
+      .then(() => console.log('AUth User: ', authContext.user))
       .catch((err) => {
-        console.log("error of response", err);
-        message.error("Network Error");
+        console.log('error of response', err);
+        message.error('Network Error');
       });
     if (!loading) {
-      if (values.username !== "" && values.password !== "") {
+      if (values.username !== '' && values.password !== '') {
       }
     }
   };
@@ -89,10 +89,10 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             <p className=" mb-0">
               برای ورود به سیستم نام کاربری و رمز خود را وارد کنید
               <br />
-              اگه حساب کاربری نداری نگران نباش، از{" "}
+              اگه حساب کاربری نداری نگران نباش، از{' '}
               <NavLink to="/user/register" className="">
                 اینجا
-              </NavLink>{" "}
+              </NavLink>{' '}
               میتونی تو سایت اسمتو بویسی
             </p>
           </div>
@@ -100,9 +100,9 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             <CardTitle className="mb-4">
               {error && (
                 <div className="alert alert-danger">
-                  <h2>{"یوزر یا پسورد اشتباهست"}</h2>
+                  <h2>{'یوزر یا پسورد اشتباهست'}</h2>
 
-                  <h6>{"دوباره کوشش کنید"}</h6>
+                  <h6>{'دوباره کوشش کنید'}</h6>
                 </div>
               )}
               <IntlMessages id="user.login-title" />
@@ -143,11 +143,11 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                     </NavLink> */}
                   <Row>
                     <Colxx className="text-left">
-                      {" "}
+                      {' '}
                       <Button
                         color="primary"
                         className={`btn-shadow btn-multiple-state ${
-                          loading ? "show-spinner" : ""
+                          loading ? 'show-spinner' : ''
                         }`}
                         size="lg"
                       >

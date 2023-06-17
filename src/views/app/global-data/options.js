@@ -141,10 +141,14 @@ export const provinceOptions = [
     value: 'زابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_35" />,
   },
+  {
+    value: 'Lahore',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_35" />,
+  },
 ];
 
 export const educationalYearsOptions = [
-  { value: '1390', label: '1390' },
+  { value: 2022, label: '1390' },
   { value: '1391', label: '1391' },
   { value: '1392', label: '1392' },
   { value: '1393', label: '1393' },
@@ -713,12 +717,12 @@ export const tazkiraOptions = [
 ];
 
 export const educationLevelOptions = [
-  { value: 9, label: <IntlMessages id="forms.EducationalLevel_9th" /> },
-  { value: 10, label: <IntlMessages id="forms.EducationalLevel_10th" /> },
-  { value: 11, label: <IntlMessages id="forms.EducationalLevel_11th" /> },
-  { value: 12, label: <IntlMessages id="forms.EducationalLevel_12th" /> },
-  { value: 13, label: <IntlMessages id="forms.EducationalLevel_13th" /> },
-  { value: 14, label: <IntlMessages id="forms.EducationalLevel_14th" /> },
+  { value: '9', label: <IntlMessages id="forms.EducationalLevel_9th" /> },
+  { value: '10', label: <IntlMessages id="forms.EducationalLevel_10th" /> },
+  { value: '11', label: <IntlMessages id="forms.EducationalLevel_11th" /> },
+  { value: '12', label: <IntlMessages id="forms.EducationalLevel_12th" /> },
+  { value: '13', label: <IntlMessages id="forms.EducationalLevel_13th" /> },
+  { value: '14', label: <IntlMessages id="forms.EducationalLevel_14th" /> },
 ];
 
 export const teacherCurrentStatusOptions = [

@@ -32,8 +32,6 @@ const getHeaders = (data) => {
 // make API calls
 const callApi = async (endpoint, method = "get", data = null) => {
   const headers = getHeaders(data);
-  // const access_token = localStorage.getItem("access_token");
-  // const headers = { Authorization: `Bearer ${access_token}` };
   console.log("HEaders: ", headers);
   const url = `${servicePath}/${endpoint}`;
   console.log("DATA in API Call: ", data);
@@ -54,7 +52,6 @@ const callApi = async (endpoint, method = "get", data = null) => {
       data,
     });
     console.log("CALL API Response:", response.data);
-    message.success("Task Accomplished");
     return response;
   } catch (error) {
     console.log("Error in API: ", error);

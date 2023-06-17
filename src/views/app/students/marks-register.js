@@ -33,7 +33,7 @@ import {
   FormikDatePicker,
 } from "containers/form-validations/FormikFields";
 import userEvent from "@testing-library/user-event";
-import { async } from "q";
+
 import Institues from "../institutes";
 
 const ValidationSchema = Yup.object().shape({
@@ -43,10 +43,12 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
-
-  educationalYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
-  ),
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
 
   studyTime: Yup.object()
     .shape({
@@ -54,21 +56,18 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.StudyTimeErr" />),
-
   classs: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
     .required(<IntlMessages id="marks.ClassErr" />),
-
   department: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
     .required(<IntlMessages id="teacher.departmentIdErr" />),
-
   subject: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -116,7 +115,7 @@ const MarksRegistration = ({ match }) => {
     {
       label: "Dept 1",
       value: "1",
-      institute: "8",
+      institute: "1",
     },
     {
       label: "Dept 2",
@@ -126,7 +125,7 @@ const MarksRegistration = ({ match }) => {
     {
       label: "Dept 3",
       value: "3",
-      institute: "Some Other Institute",
+      institute: "1",
     },
     {
       label: "Dept 4",
@@ -196,7 +195,7 @@ const MarksRegistration = ({ match }) => {
         value: item.id,
         label: item.name,
       }));
-      setDepartments(updatedData);
+      // setDepartments(updatedData); //Set it up when data in Backend is ready
     } else {
       console.log("department error");
     }
@@ -237,11 +236,13 @@ const MarksRegistration = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    const filtered = int.filter(
-      (dep) => dep.institute == selectedInstitute.value
-    );
-    console.log("Filter: ", filtered);
-    setDepartments(filtered);
+    if (selectedInstitute.value) {
+      const filtered = int.filter(
+        (dep) => dep.institute == selectedInstitute.value
+      );
+      console.log("Filter: ", filtered);
+      setDepartments(filtered);
+    }
   }, [selectedInstitute]);
 
   // notification message
@@ -284,7 +285,7 @@ const MarksRegistration = ({ match }) => {
       null
     );
     if (response.data && response.status === 200) {
-      // console.log('response of students', response);
+      console.log("response of students", response);
       setStudents(response.data);
       setIsNext(true);
     } else {
@@ -519,7 +520,7 @@ const MarksRegistration = ({ match }) => {
                         color="primary"
                         className="float-right  buttonStyle"
                         size="lg"
-                        type="submit"
+                        // type="submit"
                         style={{ margin: "2% 0% 10% 6%" }}
                       >
                         <span className="label">

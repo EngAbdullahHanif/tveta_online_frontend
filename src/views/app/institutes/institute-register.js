@@ -90,9 +90,30 @@ const InstituteRegister = () => {
   const [] = useState("وتاکئ / انتخاب کنید");
 
   if (instituteId) {
+    const access_token = localStorage.getItem("access_token");
+
+    const headers = { Authorization: `Bearer ${access_token}` };
     useEffect(() => {
       async function fetchInstitute() {
-        const { data } = await axios.get(`${instituteApiUrl}/${instituteId}`);
+        // const { data } = await axios.get(
+        //   `${servicePath}/institute/${instituteId}`
+        // );
+        const response = await callApi("institute/", "", null);
+        if (response.data && response.status === 200) {
+          console.log("RESPONSE: ", response.data[0].id);
+          const updatedData = await response.data.filter((item) => {
+            if (item.id === instituteId) return item;
+          });
+          console.log("UPDATED DATA: ", updatedData);
+          setInstitute(updatedData[0]);
+          setInitialInstituteName(institute.name);
+          setInitialDistrict(institute.district);
+          setInitialVillage(institute.village);
+        } else {
+          console.log("institute error");
+        }
+        let data = institute;
+        //end
         setInstitute(data);
         console.log("object of the data", data);
         setInitialInstituteName(data.name);
@@ -118,6 +139,14 @@ const InstituteRegister = () => {
       setUpdateMode(true);
     }, []);
   }
+  const initialState = {
+    institute: initialInstituteName,
+    province: initialProvince,
+    district: initialDistrict,
+    village: initialVillage,
+    instType: initialInstType,
+    gender: initialGender,
+  };
 
   const createNotification = (type, className) => {
     const cName = className || "";
@@ -232,44 +261,12 @@ const InstituteRegister = () => {
   // }),
   // });
 
-  // const onRegister = (values, { resetForm }) => {
-  //   console.log(values, 'Values ');
-  //   resetForm();
-  //   setIsNext(true);
-  //   // if (!values.province || values.province.value === '0') {
-  //   //   return;
-  //   // }
-  //   // if (!values.instType || values.instType.value === '0') {
-  //   //   return;
-  //   // }
-
-  //   // insert the data to the API with Axios here and redirect to the current page
-  // const handleClick = (event) => {
-  //   // setIsNext(event);
-  // };
-
-  // post student record to server
-
-  // const postInstituteRecord = async (data) => {
-  //   const response = await callApi("institute/institute_create/", "POST", data);
-  //   if (response) {
-  //     console.warn("success message from backend", response);
-  //     message.success("Institute Added");
-  //     createNotification("success", "filled");
-  //     resetForm();
-  //     setIsNext(true);
-  //   } else {
-  //     createNotification("error", "filled");
-  //     console.log("class error");
-  //   }
-  // };
-
   const onRegister = async (values) => {
     setLoader(true);
     const data = {
       name: values.institute,
       address: `${values.district}, Kabul`,
-      province: "kabul",
+      province: "kabul", //Check the
       district: values.district,
       village: values.village,
       type: values.instType.value,
@@ -279,7 +276,7 @@ const InstituteRegister = () => {
       school_type: values.instituteType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
-      user_id: 1,
+      user_id: 1, //Make this id Dynamic of the user logged in
     };
     console.log("VALUES: ", data);
     const response = await callApi("institute/institute_create/", "POST", data);
@@ -307,14 +304,7 @@ const InstituteRegister = () => {
             <Formik
               enableReinitialize={true}
               validateOnMount
-              initialValues={{
-                institute: initialInstituteName,
-                province: initialProvince,
-                district: initialDistrict,
-                village: initialVillage,
-                instType: initialInstType,
-                gender: initialGender,
-              }}
+              initialValues={initialState}
               // validationSchema={ValidationSchema}
               onSubmit={onRegister}
             >

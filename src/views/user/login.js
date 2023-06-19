@@ -50,7 +50,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         let loggedUser = jwt_decode(response.data.token.access);
         console.log("Logged User in Token: ", loggedUser);
         authContext.setUser(response.data.data);
-        localStorage.setItem("user", response.data.data);
+        localStorage.setItem("user", JSON.stringify(response.data.data));
         localStorage.setItem("current_user", response.data.data); //this should be removed after conflict resolved
         localStorage.setItem("access_token", response.data.token.access);
         // return response.data;

@@ -54,13 +54,17 @@ import { useContext } from "react";
 import { useEffect } from "react";
 
 const Admin = (values, { className = "", displayRate = false }) => {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(true);
   const handleClick = (event) => {
     setIsNext(event);
   };
   useEffect(() => {
     console.log("Auth User in Dashboard: ", user);
+    console.log(
+      "Auth User in Dashboard Local Storage: ",
+      JSON.parse(localStorage.getItem("user"))
+    );
   });
   const onRegister = (values) => {
     console.log(" The Values", values);

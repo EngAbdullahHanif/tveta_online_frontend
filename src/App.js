@@ -11,7 +11,7 @@ import { AuthContext } from "./context/AuthContext";
 import Application from "context/Application";
 import Authentication from "context/Authentication";
 const App = ({ locale }) => {
-  const [user, setUser] = useState(localStorage.getItem("user"));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
   useEffect(() => {

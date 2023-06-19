@@ -3,7 +3,8 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { getCurrentUser } from "helpers/Utils";
 import { ProtectedRoute } from "helpers/authHelper";
 import { userRole } from "constants/defaultValues";
-
+import singleStudentSingleSubjectMarks from "./single-student-single-subject-marks";
+import singleStudentAttendace from "./attendence/single-student-attendace";
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "register" */ "./bio/register")
 );
@@ -172,6 +173,32 @@ const Students = ({ match, props }) => {
           ]}
           props={props}
         />
+        {/* Changes Started */}
+        <ProtectedRoute
+          exact
+          path={`${match.url}/single-subject`}
+          component={singleStudentSingleSubjectMarks}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          exact
+          path={`${match.url}/single-student-attendance`}
+          component={singleStudentAttendace}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        {/* Changes Ended */}
         <ProtectedRoute
           path={`${match.url}/register-kankor/:kankorStudentId`}
           component={RegisterKankor}

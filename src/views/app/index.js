@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import AppLayout from "layout/AppLayout";
 import { ProtectedRoute } from "helpers/authHelper";
 import { userRole } from "constants/defaultValues";
-
+import UsersList from "./users/users-list";
 const Dashboards = React.lazy(() =>
   import(/* webpackChunkName: "dashboards" */ "./dashboards")
 );
@@ -85,7 +85,17 @@ const App = ({ match, props }) => {
               ]}
               props={props}
             />
-
+            <ProtectedRoute
+              path={`${match.url}/users`}
+              component={UsersList}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
+            />
             <ProtectedRoute
               path={`${match.url}/applications`}
               component={Applications}

@@ -36,19 +36,19 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="marks.ClassErr" />),
 
-  subject: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.SubjectErr" />),
+  // subject: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="marks.SubjectErr" />),
 });
 
 const initialValues = {
   studentID: "",
   educationalYear: [],
   classs: [],
-  subject: [],
+  // subject: [],
 };
 function singleStudentAttendace(props) {
   const [isNext, setIsNext] = useState(false);
@@ -119,7 +119,7 @@ function singleStudentAttendace(props) {
       studentID: values.studentID,
       class: values.classs.value,
       educationalYear: values.educationalYear.value,
-      subject: values.subject.value,
+      // subject: values.subject.value,
     };
     if (data.studentID) setIsNext(true);
 
@@ -272,7 +272,7 @@ function singleStudentAttendace(props) {
                             ) : null}
                           </FormGroup> */}
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                      {/* <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
                           <span style={{ color: "red" }}>*</span>
@@ -292,7 +292,7 @@ function singleStudentAttendace(props) {
                             {errors.subject}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
                     </Colxx>
                   </Row>
                   <Row>
@@ -334,165 +334,6 @@ function singleStudentAttendace(props) {
               )}
             </Formik>
           ) : (
-            // <>
-            //   <Row
-            //     className="border border bg-primary me-5 p-1 "
-            //     style={{ marginInline: "6%" }}
-            //   >
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="forms.FieldLabel" />
-            //       </Label>
-            //       {/* {console.log('selectedDepartment', selectedDepartment)} */}
-            //       <h6>{"selectedDepartment.label"}</h6>
-            //     </Colxx>
-
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="forms.StudyTimeLabel" />
-            //       </Label>
-            //       <h6>{"selecedStudyTime.label"}</h6>
-            //     </Colxx>
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="marks.ClassLabel" />
-            //       </Label>
-            //       <h6>{"selectedClassLabel.classs"}</h6>
-            //     </Colxx>
-
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="marks.SectionLabel" />
-            //       </Label>
-            //       <h6>{"selectedClassLabel.section"}</h6>
-            //     </Colxx>
-
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="marks.SubjectLabel" />
-            //       </Label>
-            //       <h6>{"selectedSubject.label"}</h6>
-            //     </Colxx>
-            //   </Row>
-
-            //   <Row
-            //     className="justify-content-center  border border"
-            //     style={{ marginInline: "6%" }}
-            //   >
-            //     <table className="table ">
-            //       <thead className="thead-dark">
-            //         <tr>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.No" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.FullName" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.FatherName" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.ID" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.Marks" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.type" />
-            //           </th>{" "}
-            //           {grad ? (
-            //             <th scope="col">
-            //               <IntlMessages id="marks.grade" />
-            //             </th>
-            //           ) : null}
-            //           {gpa ? (
-            //             <th scope="col">
-            //               <IntlMessages id="marks.gpa" />
-            //             </th>
-            //           ) : null}
-            //           <th scope="col">
-            //             <IntlMessages id="marks.result" />
-            //           </th>{" "}
-            //         </tr>
-            //       </thead>
-            //       {/* </table>
-            //       </Row>
-
-            //       <Row
-            //         className="justify-content-center  border border"
-            //         style={{
-            //           marginInline: '16%',
-            //           height: '30rem',
-            //           overflowY: 'scroll',
-            //           overflowX: 'hidden',
-            //         }}
-            //       >
-            //         <table class="table"> */}
-            //       {/* <tbody
-            //             className="border border "
-            //             style={{
-            //               height: '200px',
-            //               overflowY: 'scroll',
-            //               overflowX: 'hidden',
-            //             }}
-            //           >
-            //             {students.map((student, index) => (
-            //               <tr>
-            //                 <th scope="row">{index}</th>
-            //                 <td>{student.name}</td>
-            //                 <td>{student.father_name}</td>
-            //                 <td>{student.student_id}</td>
-            //                 <td>{student.marks}</td>
-            //               </tr>
-            //             ))}
-            //           </tbody> */}
-
-            //       {tbodies}
-            //       {/* <tfoot className="thead-dark">
-            //         <tr>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.No" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.FullName" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.FatherName" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.ID" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.Marks" />
-            //           </th>
-            //           {grad ? (
-            //             <th scope="col">
-            //               <IntlMessages id="marks.grade" />
-            //             </th>
-            //           ) : null}
-            //           {gpa ? (
-            //             <th scope="col">
-            //               <IntlMessages id="marks.gpa" />
-            //             </th>
-            //           ) : null}
-            //           <th scope="col">
-            //             <IntlMessages id="marks.type" />
-            //           </th>{" "}
-            //           <th scope="col">
-            //             <IntlMessages id="marks.result" />
-            //           </th>{" "}
-            //         </tr>
-            //       </tfoot> */}
-            //     </table>
-            //   </Row>
-            //   <Row className=" justify-content-center">
-            //     <Colxx xxs="9" className="m-5">
-            //       <Button className=" m-4" onClick={() => setIsNext(false)}>
-            //         <IntlMessages id="button.Back" />
-            //       </Button>
-            //     </Colxx>
-            //   </Row>
-            // </>
             <>
               <Row
                 className="border border bg-primary me-5 p-1 "
@@ -512,20 +353,11 @@ function singleStudentAttendace(props) {
                   <h5>{selectedClassLabel.semester}</h5>
                 </Colxx>
 
-                {/* <Colxx xxs="2">
-                      <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
-                        <IntlMessages id="forms.StudyTimeLabel" />
-                      </Label>
-                      <h5>{selecedStudyTime.label}</h5>
-                    </Colxx> */}
-
                 <Colxx xxs="2">
                   <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
                     <IntlMessages id="marks.SemesterLabel" />
                   </Label>
-                  <h5>
-                    {selectedEducationalYear.value}_{selectedClassLabel.classs}
-                  </h5>
+                  <h5>{selectedClassLabel.classs}</h5>
                 </Colxx>
 
                 <Colxx xxs="2">
@@ -537,118 +369,140 @@ function singleStudentAttendace(props) {
 
                 <Colxx xxs="3">
                   <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
-                    <IntlMessages id="marks.SubjectLabel" />
+                    <IntlMessages id="کال/سال" />
                   </Label>
-                  <h5>{selectedSubject.label}</h5>
+                  <h5>{selectedEducationalYear.value}</h5>
                 </Colxx>
               </Row>
               <Formik
                 initialValues={initialValues}
                 onSubmit={onSubmit}
-                // validationSchema={ValidationSchema}
+                // validationSchema={InnerInpufieldsValidation}
               >
-                {({ errors }) => (
+                {({
+                  errors,
+                  touched,
+                  values,
+                  setFieldTouched,
+                  setFieldValue,
+                }) => (
                   <Form className="av-tooltip tooltip-label-right ">
                     <Row
                       className="justify-content-center  border border"
                       style={{
-                        marginInline: "16%",
-                        height: "30rem",
+                        marginInline: "10%",
                         overflowY: "scroll",
                         overflowX: "hidden",
                       }}
                     >
-                      <table className="table ">
+                      <table class="table ">
+                        <thead className="thead-dark ">
+                          <tr>
+                            <th
+                              colspan="4"
+                              className="border text-center list-header-1"
+                            >
+                              <IntlMessages id="marks.studentChar" />
+                            </th>
+                            <th
+                              colspan="4"
+                              className="border text-center list-header-1"
+                            >
+                              <IntlMessages id="attendance.attendaceDisplayTitle" />
+                            </th>
+                          </tr>
+                        </thead>
                         <thead className="thead-dark">
                           <tr>
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2 "
                             >
                               <IntlMessages id="marks.No" />
                             </th>
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
                               <IntlMessages id="marks.FullName" />
                             </th>
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
                               <IntlMessages id="marks.FatherName" />
                             </th>
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
                               <IntlMessages id="marks.ID" />
                             </th>
+
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
-                              <IntlMessages id="پخوانی نمری" />
+                              <IntlMessages id="forms.StdPresentLabel" />
                             </th>
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
-                              <IntlMessages id="نوی نمری" />
+                              <IntlMessages id="forms.StdAbsentLabel" />
+                            </th>
+                            <th
+                              scope="col"
+                              className="border text-center list-header-2"
+                            >
+                              <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                            </th>
+                            <th
+                              scope="col"
+                              className="border text-center list-header-2"
+                            >
+                              <IntlMessages id="forms.StdSicknessLabel" />
                             </th>
                           </tr>
                         </thead>
                         <tbody
                           className="border border "
                           style={{
+                            height: "200px",
                             overflowY: "scroll",
                             overflowX: "hidden",
                           }}
                         >
                           {students.length > 0 &&
                             students.map((student, index) => (
-                              <tr key={index}>
+                              <tr>
                                 <th
-                                  scope="row"
                                   style={{
                                     fontSize: "20px",
+                                    minWidth: "50px",
                                     textAlign: "center",
                                   }}
+                                  className="pt-0"
                                 >
                                   {index + 1}
                                 </th>
                                 <td
                                   style={{
                                     fontSize: "20px",
+                                    minWidth: "150px",
                                     textAlign: "center",
                                   }}
+                                  className="pt-0"
                                 >
                                   {student.name}
                                 </td>
                                 <td
                                   style={{
                                     fontSize: "20px",
+                                    minWidth: "150px",
                                     textAlign: "center",
                                   }}
+                                  className="pt-0"
                                 >
                                   {student.father_name}
                                 </td>
@@ -656,43 +510,74 @@ function singleStudentAttendace(props) {
                                   style={{
                                     fontSize: "20px",
                                     textAlign: "center",
+                                    minWidth: "100px",
                                   }}
+                                  className="pt-0"
                                 >
                                   {student.id}
                                 </td>
-                                <td
-                                  style={{
-                                    fontSize: "20px",
-                                    textAlign: "center",
-                                  }}
-                                >
-                                  {student.oldMarks}
+                                <td className="mb-2 p-0">
+                                  {/* Present*/}
+                                  <Field
+                                    type="string"
+                                    className="form-control"
+                                    name={`present[${student.student_id}]`}
+                                    // name="present"
+                                  />
+                                  {errors.present && touched.present ? (
+                                    <div className="invalid-feedback d-block">
+                                      {errors.present}
+                                    </div>
+                                  ) : null}
                                 </td>
+                                <td className="p-0">
+                                  {/* Absent */}
+                                  <Field
+                                    type="string"
+                                    className="form-control"
+                                    name={`absent[${student.student_id}]`}
+                                    // name={`${index}`}
+                                  />
+                                  {errors.absent && touched.absent ? (
+                                    <div className="invalid-feedback d-block">
+                                      {errors.StdAbsent}
+                                    </div>
+                                  ) : null}
+                                </td>
+                                <td className="p-0">
+                                  {/* Necessary Work */}
+                                  <Field
+                                    type="string"
+                                    className="form-control"
+                                    name={`necessaryWork[${student.student_id}]`}
+                                    // name={`${index}`}
+                                  />
+                                  {errors.necessaryWork &&
+                                  touched.necessaryWork ? (
+                                    <div className="invalid-feedback d-block">
+                                      {errors.necessaryWork}
+                                    </div>
+                                  ) : null}
+                                </td>
+                                <td className="mb-2 p-0">
+                                  {/* SickNess */}
 
-                                {/* Marks Entry */}
-                                <td>
-                                  <div
-                                    style={{
-                                      margin: "-7px",
-                                      fontSize: "15px",
-                                    }}
-                                  >
-                                    <Field
-                                      type="number"
-                                      style={{
-                                        fontSize: "15px",
-                                        textAlign: "center",
-                                      }}
-                                      className="form-control"
-                                      name={`score[${student.student_id}]`}
-                                    />
-                                    {errors.score && touched.score ? (
-                                      <div className="invalid-feedback d-block">
-                                        {errors.score}
-                                      </div>
-                                    ) : null}
-                                  </div>
+                                  <Field
+                                    type="string"
+                                    className="form-control"
+                                    name={`sickness[${student.student_id}]`}
+                                    // name={`${index}`}
+                                  />
+                                  {errors.sickness && touched.sickness ? (
+                                    <div className="invalid-feedback d-block">
+                                      {errors.sickness}
+                                    </div>
+                                  ) : null}
                                 </td>
+                                {/* <td className="mb-2">
+                                DISPLAY MAHROOM OR FULL ATTEND
+                              </td> */}
+                                {/* <Separator /> */}
                               </tr>
                             ))}
                         </tbody>
@@ -700,83 +585,86 @@ function singleStudentAttendace(props) {
                           <tr>
                             <th
                               scope="col"
+                              className="border text-center "
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                maxWidth: "20px ",
+                                minWidth: "50px",
                               }}
                             >
                               <IntlMessages id="marks.No" />
                             </th>
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
                               <IntlMessages id="marks.FullName" />
                             </th>
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
                               <IntlMessages id="marks.FatherName" />
                             </th>
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
                               <IntlMessages id="marks.ID" />
                             </th>
+
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
-                              <IntlMessages id="پخوانی نمری" />
+                              <IntlMessages id="forms.StdPresentLabel" />
                             </th>
                             <th
                               scope="col"
-                              style={{
-                                fontSize: "15px",
-                                textAlign: "center",
-                              }}
+                              className="border text-center list-header-2"
                             >
-                              <IntlMessages id="نوی نمری" />
+                              <IntlMessages id="forms.StdAbsentLabel" />
                             </th>
+                            <th
+                              scope="col"
+                              className="border text-center list-header-2"
+                            >
+                              <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                            </th>
+                            <th
+                              scope="col"
+                              className="border text-center list-header-2"
+                            >
+                              <IntlMessages id="forms.StdSicknessLabel" />
+                            </th>
+                            {/* <th scope="col" className="border text-center">
+                            <IntlMessages id="marks.eligable_Deprive" />
+                          </th> */}
                           </tr>
                         </tfoot>
                       </table>
                     </Row>
                     <Row className=" justify-content-center">
-                      <Colxx xxs="9" className="m-5">
+                      <Colxx xxs="10" className="m-5">
                         <Button
-                          className=" m-4 "
                           color="primary"
+                          className="buttonStyle1"
+                          size="lg"
+                          type="submit"
+                          style={{ margin: "5% 6% 10% 8%" }}
                           onClick={() => setIsNext(false)}
                         >
                           <IntlMessages id="button.Back" />
                         </Button>
 
-                        <div className="d-flex justify-content-between align-items-center m-4 float-right">
-                          <Button
-                            size="lg"
-                            type="submit"
-                            color="primary"
-                            // onSubmit={onSubmit}
-                            // onClick={() => setIsSubmitted(true)}
-                          >
-                            <IntlMessages id="button.SubmitButton" />
-                          </Button>
-                        </div>
+                        <Button
+                          color="primary"
+                          className=" float-right buttonStyle1"
+                          size="lg"
+                          type="submit"
+                          style={{ margin: "5% 0% 10% 6%" }}
+                        >
+                          <IntlMessages id="button.SubmitButton" />
+                        </Button>
                       </Colxx>
                     </Row>
                   </Form>

@@ -73,7 +73,8 @@ const InstituteRegister = () => {
   const [loader, setLoader] = useState(false);
   const [updateMode, setUpdateMode] = useState(false);
   const { instituteId } = useParams();
-  const [institute, setInstitute] = useState([]);
+  const [institute, setInstitute] = useState({});
+  console.log("INSTITUTE: ", institute);
   const [initialInstituteName, setInitialInstituteName] = useState("");
 
   const [initialProvince, setInitialProvince] = useState("");
@@ -88,10 +89,22 @@ const InstituteRegister = () => {
   const [instType, setInstType] = useState({});
   const [gender, setGender] = useState({});
   const [] = useState("وتاکئ / انتخاب کنید");
+  const initialState = {
+    institute: instituteId ? institute.name : "",
+    province: instituteId ? institute.province : "",
+    district: instituteId ? institute.district : "",
+    village: instituteId ? institute.village : "",
+    instType: instituteId ? institute.type : "",
+    instituteType: instituteId ? institute.school_type : "",
+    institueCityType: instituteId ? institute.inst_city_type : "",
+    gender: instituteId ? institute.gender : "",
+    instituteClimate: instituteId ? institute.inst_climat : "",
+    institueLanguage: instituteId ? institute.language : "",
+  };
 
   if (instituteId) {
     const access_token = localStorage.getItem("access_token");
-
+    let data;
     const headers = { Authorization: `Bearer ${access_token}` };
     useEffect(() => {
       async function fetchInstitute() {
@@ -100,25 +113,25 @@ const InstituteRegister = () => {
         // );
         const response = await callApi("institute/", "", null);
         if (response.data && response.status === 200) {
-          console.log("RESPONSE: ", response.data[0].id);
-          const updatedData = await response.data.filter((item) => {
-            if (item.id === instituteId) return item;
-          });
-          console.log("UPDATED DATA: ", updatedData);
+          console.log(
+            "RESPONSE in Fetch Institute for update: ",
+            response.data
+          );
+          const updatedData = await response.data.filter(
+            (item) => item.id == instituteId
+          );
+          data = updatedData[0];
+          console.log("UPDATED DATA: ", updatedData[0]);
           setInstitute(updatedData[0]);
-          setInitialInstituteName(institute.name);
-          setInitialDistrict(institute.district);
-          setInitialVillage(institute.village);
+          // setInitialInstituteName(updatedData[0].name);
+          // setInitialDistrict(updatedData[0].district);
+          // setInitialVillage(updatedData[0].village);
+          // setInitialProvince(updatedData[0].province);
+          console.log("UPDATED Institute DATA: ", institute);
         } else {
           console.log("institute error");
         }
-        let data = institute;
         //end
-        setInstitute(data);
-        console.log("object of the data", data);
-        setInitialInstituteName(data.name);
-        setInitialDistrict(data.district);
-        setInitialVillage(data.village);
         const Instprovince = provincesOptionsForList.map((provName) => {
           if (provName.label === data.province) {
             setInitialProvince([provName]);
@@ -139,14 +152,6 @@ const InstituteRegister = () => {
       setUpdateMode(true);
     }, []);
   }
-  const initialState = {
-    institute: initialInstituteName,
-    province: initialProvince,
-    district: initialDistrict,
-    village: initialVillage,
-    instType: initialInstType,
-    gender: initialGender,
-  };
 
   const createNotification = (type, className) => {
     const cName = className || "";
@@ -297,7 +302,12 @@ const InstituteRegister = () => {
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {<IntlMessages id="inst.register.title" />}
+          {instituteId ? (
+            <IntlMessages id="ده انستیتوت اپډیډ" />
+          ) : (
+            <IntlMessages id="inst.register.title" />
+          )}
+          {institute.institute}
         </h3>
         <CardBody>
           {!isNext ? (

@@ -34,7 +34,7 @@ const callApi = async (endpoint, method = "get", data = null) => {
   const headers = getHeaders(data);
   console.log("HEaders: ", headers);
   const url = `${servicePath}/${endpoint}`;
-  console.log("DATA in API Call: ", data);
+  console.log("DATA in API Call: " + endpoint, data);
   // add current user id to the data
   // if (data && data instanceof FormData) {
   //   console.log("Formdata format", data);
@@ -51,7 +51,7 @@ const callApi = async (endpoint, method = "get", data = null) => {
       headers,
       data,
     });
-    console.log("CALL API Response:", response.data);
+    console.log("CALL API Response: on " + endpoint, response.data);
     return response;
   } catch (error) {
     console.log("Error in API: ", error);

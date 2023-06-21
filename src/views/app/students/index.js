@@ -5,6 +5,7 @@ import { ProtectedRoute } from "helpers/authHelper";
 import { userRole } from "constants/defaultValues";
 import singleStudentSingleSubjectMarks from "./single-student-single-subject-marks";
 import singleStudentAttendace from "./attendence/single-student-attendace";
+import ClassTransfer from "./transfered-students/class-transfer";
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "register" */ "./bio/register")
 );
@@ -190,6 +191,18 @@ const Students = ({ match, props }) => {
           exact
           path={`${match.url}/single-student-attendance`}
           component={singleStudentAttendace}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+        <ProtectedRoute
+          exact
+          path={`${match.url}/class-transfer`}
+          component={ClassTransfer}
           roles={[
             userRole.admin,
             userRole.institute,

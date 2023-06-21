@@ -73,7 +73,7 @@ const InstituteRegister = () => {
   const [loader, setLoader] = useState(false);
   const [updateMode, setUpdateMode] = useState(false);
   const { instituteId } = useParams();
-  const [institute, setInstitute] = useState({});
+  const [institute, setInstitute] = useState();
   console.log("INSTITUTE: ", institute);
   const [initialInstituteName, setInitialInstituteName] = useState("");
 
@@ -85,32 +85,40 @@ const InstituteRegister = () => {
   const [initialGender, setInitialGender] = useState([]);
 
   const [isNext, setIsNext] = useState(false);
-  const [province, setProvince] = useState({});
-  const [instType, setInstType] = useState({});
-  const [gender, setGender] = useState({});
+  const [instituteTypeGVT, setInstituteTypeGVT] = useState([]);
+  const [cityType, setCityType] = useState([]);
+  const [climate, setClimate] = useState([]);
+  const [language, setLanguage] = useState([]);
   const [] = useState("وتاکئ / انتخاب کنید");
+  // const initialState = {
+  //   institute: instituteId ? institute.name : "",
+  //   province: instituteId ? institute.province : "",
+  //   district: instituteId ? institute.district : "",
+  //   village: instituteId ? institute.village : "",
+  //   instType: instituteId ? institute.type : "",
+  //   instituteType: instituteId ? institute.school_type : "",
+  //   institueCityType: instituteId ? institute.inst_city_type : "",
+  //   gender: instituteId ? institute.gender : "",
+  //   instituteClimate: instituteId ? institute.inst_climat : "",
+  //   institueLanguage: instituteId ? institute.language : "",
+  // };
   const initialState = {
-    institute: instituteId ? institute.name : "",
-    province: instituteId ? institute.province : "",
-    district: instituteId ? institute.district : "",
-    village: instituteId ? institute.village : "",
-    instType: instituteId ? institute.type : "",
-    instituteType: instituteId ? institute.school_type : "",
-    institueCityType: instituteId ? institute.inst_city_type : "",
-    gender: instituteId ? institute.gender : "",
-    instituteClimate: instituteId ? institute.inst_climat : "",
-    institueLanguage: instituteId ? institute.language : "",
+    institute: initialInstituteName,
+    province: initialProvince,
+    district: initialDistrict,
+    village: initialVillage,
+    instType: initialInstType,
+    instituteType: instituteTypeGVT,
+    institueCityType: cityType,
+    gender: initialGender,
+    instituteClimate: climate,
+    institueLanguage: language,
   };
-
+  console.log("InITIAL State: ", initialState);
   if (instituteId) {
-    const access_token = localStorage.getItem("access_token");
     let data;
-    const headers = { Authorization: `Bearer ${access_token}` };
     useEffect(() => {
       async function fetchInstitute() {
-        // const { data } = await axios.get(
-        //   `${servicePath}/institute/${instituteId}`
-        // );
         const response = await callApi("institute/", "", null);
         if (response.data && response.status === 200) {
           console.log(
@@ -123,23 +131,47 @@ const InstituteRegister = () => {
           data = updatedData[0];
           console.log("UPDATED DATA: ", updatedData[0]);
           setInstitute(updatedData[0]);
-          // setInitialInstituteName(updatedData[0].name);
-          // setInitialDistrict(updatedData[0].district);
-          // setInitialVillage(updatedData[0].village);
-          // setInitialProvince(updatedData[0].province);
+          setInitialInstituteName(updatedData[0].name);
+          setInitialDistrict(updatedData[0].district);
+          setInitialVillage(updatedData[0].village);
+          setInitialProvince(updatedData[0].province);
+          setInstituteTypeGVT(updatedData[0].school_type);
+          setCityType(updatedData[0].inst_city_type);
+          setClimate(updatedData[0].inst_climat);
+
           console.log("UPDATED Institute DATA: ", institute);
         } else {
           console.log("institute error");
         }
         //end
         const Instprovince = provincesOptionsForList.map((provName) => {
-          if (provName.label === data.province) {
+          if (provName.value === data.province) {
             setInitialProvince([provName]);
+          }
+        });
+        const instClimat = instituteClimateOptions.map((provName) => {
+          if (provName.value === data.inst_climat) {
+            setClimate([provName]);
+          }
+        });
+        const instType = instituteTypeOptions.map((provName) => {
+          if (provName.value === data.school_type) {
+            setInstituteTypeGVT([provName]);
+          }
+        });
+        const cityType = instituteCityOptions.map((provName) => {
+          if (provName.value === data.inst_city_type) {
+            setCityType([provName]);
           }
         });
         const instTypee = instTypeOptions.map((instType) => {
           if (instType.value === data.type) {
             setInitialInstType([instType]);
+          }
+        });
+        const languageType = instituteLanguageOptions.map((lang) => {
+          if (lang.value === data.language) {
+            setLanguage([lang]);
           }
         });
         const instGender = dormGenderOptions.map((instGender) => {
@@ -284,7 +316,11 @@ const InstituteRegister = () => {
       user_id: 1, //Make this id Dynamic of the user logged in
     };
     console.log("VALUES: ", data);
-    const response = await callApi("institute/institute_create/", "POST", data);
+    const response = await callApi(
+      instituteId ? `institute/${instituteId}/` : "institute/institute_create/",
+      instituteId ? "PUT" : "POST",
+      data
+    );
     if (response) {
       setLoader(false);
       message.success("Institute Added");
@@ -307,7 +343,6 @@ const InstituteRegister = () => {
           ) : (
             <IntlMessages id="inst.register.title" />
           )}
-          {institute.institute}
         </h3>
         <CardBody>
           {!isNext ? (

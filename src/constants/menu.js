@@ -85,6 +85,12 @@ const data = [
         to: `${adminRoot}/students/single-student-attendance`,
         newWindow: false,
       },
+      {
+        icon: "MD.MdAddBox",
+        label: "ده شاګرد تبدیلی صنف",
+        to: `${adminRoot}/students/class-transfer`,
+        newWindow: false,
+      },
       //Changes ended
       {
         icon: "GR.GrUserAdd",

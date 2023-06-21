@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import callApi from 'helpers/callApi';
-import IntlMessages from 'helpers/IntlMessages';
+import React, { useState, useEffect } from "react";
+import callApi from "helpers/callApi";
+import IntlMessages from "helpers/IntlMessages";
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './ClassListHeading';
+import ListPageHeading from "./ClassListHeading";
 
-import ListPageListing from './ClassListCatagory';
-import useMousetrap from 'hooks/use-mousetrap';
-import { semesterOptions } from 'views/app/global-data/options';
+import ListPageListing from "./ClassListCatagory";
+import useMousetrap from "hooks/use-mousetrap";
+import { semesterOptions } from "views/app/global-data/options";
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -18,29 +18,27 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-
-const servicePath = 'http://localhost:8000';
+const servicePath = "http://localhost:8000";
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const instituteApiUrl = `${servicePath}/institute/classs/`;
 
 const pageSizes = [4, 8, 12, 20];
 
-
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [displayMode, setDisplayMode] = useState('thumblist');
+  const [displayMode, setDisplayMode] = useState("thumblist");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedSemesterOption, setSelectedSemesterOption] = useState({
-    column: 'all',
-    label: <IntlMessages id="field.SemesterLabel"/>,
+    column: "all",
+    label: <IntlMessages id="field.SemesterLabel" />,
   });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
@@ -80,14 +78,14 @@ const ThumbListPages = ({ match }) => {
       // setTotalItemCount(data.totalItem);
       // setIsLoaded(true);
       // });
-      const response = await callApi(`institute/classs/`, '', null);
+      const response = await callApi(`institute/classs/`, "", null);
       if (response.data && response.status === 200) {
         setItems(response.data);
         setSelectedItems([]);
         // setTotalItemCount(data.totalItem);
         setIsLoaded(true);
       } else {
-        console.log('3, institute error');
+        console.log("3, institute error");
       }
     }
     fetchData();
@@ -95,8 +93,8 @@ const ThumbListPages = ({ match }) => {
 
   const onCheckItem = (event, id) => {
     if (
-      event.target.tagName === 'A' ||
-      (event.target.parentElement && event.target.parentElement.tagName === 'A')
+      event.target.tagName === "A" ||
+      (event.target.parentElement && event.target.parentElement.tagName === "A")
     ) {
       return true;
     }
@@ -114,8 +112,8 @@ const ThumbListPages = ({ match }) => {
 
     if (event.shiftKey) {
       let newItems = [...items];
-      const start = getIndex(id, newItems, 'id');
-      const end = getIndex(lastChecked, newItems, 'id');
+      const start = getIndex(id, newItems, "id");
+      const end = getIndex(lastChecked, newItems, "id");
       newItems = newItems.slice(Math.min(start, end), Math.max(start, end) + 1);
       selectedItems.push(
         ...newItems.map((item) => {
@@ -143,8 +141,8 @@ const ThumbListPages = ({ match }) => {
 
   const onContextMenuClick = (e, data) => {
     // params : (e,data,target)
-    console.log('onContextMenuClick - selected items', selectedItems);
-    console.log('onContextMenuClick - action : ', data.action);
+    console.log("onContextMenuClick - selected items", selectedItems);
+    console.log("onContextMenuClick - action : ", data.action);
   };
 
   const onContextMenu = (e, data) => {
@@ -156,11 +154,11 @@ const ThumbListPages = ({ match }) => {
     return true;
   };
 
-  useMousetrap(['ctrl+a', 'command+a'], () => {
+  useMousetrap(["ctrl+a", "command+a"], () => {
     handleChangeSelectAll(false);
   });
 
-  useMousetrap(['ctrl+d', 'command+d'], () => {
+  useMousetrap(["ctrl+d", "command+d"], () => {
     setSelectedItems([]);
     return false;
   });
@@ -168,7 +166,7 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  console.log('Data displayed on the table', items);
+  console.log("Data displayed on the table", items);
 
   return !isLoaded ? (
     <div className="loading" />
@@ -202,34 +200,34 @@ const ThumbListPages = ({ match }) => {
             // }
           }}
           onResetClick={setRest}
-        semesterOptions={semesterOptions}
+          semesterOptions={semesterOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
         />
-           <table className="table">
+        <table className="table">
           <thead
             className="pl-2 d-flex flex-grow-1  table-dark"
-            style={{ maxHeight: '55px', marginRight: 2 }}
+            style={{ maxHeight: "55px", marginRight: 2 }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
               <th
                 style={{
-                  width: '20%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "20%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
                 <IntlMessages id="marks.ID" />
               </th>
               <th
                 style={{
-                  width: '20%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "20%",
+                  paddingInline: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
                 <IntlMessages id="curriculum.classLabel" />
@@ -237,14 +235,14 @@ const ThumbListPages = ({ match }) => {
 
               <th
                 style={{
-                  width: '20%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                       fontSize: '20px',
+                  width: "20%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
-                {' '}
+                {" "}
                 <IntlMessages id="field.SemesterLabel" />
               </th>
             </tr>

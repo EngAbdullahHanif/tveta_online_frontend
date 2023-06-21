@@ -16,23 +16,30 @@ import {
   Button,
   CardTitle,
   Input,
-} from 'reactstrap';
+} from "reactstrap";
 
-import callApi from 'helpers/callApi';
-import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
-import { NotificationManager } from 'components/common/react-notifications';
-import { institute } from 'lang/locales/fa_IR';
+import callApi from "helpers/callApi";
+import IntlMessages from "helpers/IntlMessages";
+import { Colxx } from "components/common/CustomBootstrap";
+import { NotificationManager } from "components/common/react-notifications";
+import { institute } from "lang/locales/fa_IR";
 
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-
+} from "containers/form-validations/FormikFields";
+import { message, Spin } from "antd";
+message.config({
+  top: 100,
+  duration: 2,
+  maxCount: 3,
+  rtl: true,
+  prefixCls: "my-message",
+});
 const options = [
-  { value: 'Electronic', label: 'الکترونیکی' },
-  { value: 'paper', label: 'کاغذی' },
+  { value: "Electronic", label: "الکترونیکی" },
+  { value: "paper", label: "کاغذی" },
 ];
 
 const instTypeOptions = [
@@ -60,11 +67,12 @@ const instituteTypeOptions = [
 
 ];
 
-const servicePath = 'http://localhost:8000';
+const servicePath = "http://localhost:8000";
 const instituteApiUrl = `${servicePath}/institute/institute_create`;
 //http://localhost:8000/institute/institute_create
 
 const InstituteRegister = () => {
+  const [loader, setLoader] = useState(false);
   const [updateMode, setUpdateMode] = useState(false);
   const { instituteId } = useParams();
   const [institute, setInstitute] = useState([]);
@@ -83,28 +91,93 @@ const InstituteRegister = () => {
   const [initialGender, setInitialGender] = useState([]);
 
   const [isNext, setIsNext] = useState(false);
-  const [province, setProvince] = useState({});
-  const [instType, setInstType] = useState({});
-  const [gender, setGender] = useState({});
-  const [] = useState('وتاکئ / انتخاب کنید');
-
+  const [instituteTypeGVT, setInstituteTypeGVT] = useState([]);
+  const [cityType, setCityType] = useState([]);
+  const [climate, setClimate] = useState([]);
+  const [language, setLanguage] = useState([]);
+  const [] = useState("وتاکئ / انتخاب کنید");
+  // const initialState = {
+  //   institute: instituteId ? institute.name : "",
+  //   province: instituteId ? institute.province : "",
+  //   district: instituteId ? institute.district : "",
+  //   village: instituteId ? institute.village : "",
+  //   instType: instituteId ? institute.type : "",
+  //   instituteType: instituteId ? institute.school_type : "",
+  //   institueCityType: instituteId ? institute.inst_city_type : "",
+  //   gender: instituteId ? institute.gender : "",
+  //   instituteClimate: instituteId ? institute.inst_climat : "",
+  //   institueLanguage: instituteId ? institute.language : "",
+  // };
+  const initialState = {
+    institute: initialInstituteName,
+    province: initialProvince,
+    district: initialDistrict,
+    village: initialVillage,
+    instType: initialInstType,
+    instituteType: instituteTypeGVT,
+    institueCityType: cityType,
+    gender: initialGender,
+    instituteClimate: climate,
+    institueLanguage: language,
+  };
+  console.log("InITIAL State: ", initialState);
   if (instituteId) {
+    let data;
     useEffect(() => {
       async function fetchInstitute() {
-        const { data } = await axios.get(`${instituteApiUrl}/${instituteId}`);
-        setInstitute(data);
-        console.log(data, 'object of the data');
-        setInitialInstituteName(data.name);
-        setInitialDistrict(data.district);
-        setInitialVillage(data.village);
+        const response = await callApi("institute/", "", null);
+        if (response.data && response.status === 200) {
+          console.log(
+            "RESPONSE in Fetch Institute for update: ",
+            response.data
+          );
+          const updatedData = await response.data.filter(
+            (item) => item.id == instituteId
+          );
+          data = updatedData[0];
+          console.log("UPDATED DATA: ", updatedData[0]);
+          setInstitute(updatedData[0]);
+          setInitialInstituteName(updatedData[0].name);
+          setInitialDistrict(updatedData[0].district);
+          setInitialVillage(updatedData[0].village);
+          setInitialProvince(updatedData[0].province);
+          setInstituteTypeGVT(updatedData[0].school_type);
+          setCityType(updatedData[0].inst_city_type);
+          setClimate(updatedData[0].inst_climat);
+
+          console.log("UPDATED Institute DATA: ", institute);
+        } else {
+          console.log("institute error");
+        }
+        //end
         const Instprovince = provincesOptionsForList.map((provName) => {
-          if (provName.label === data.province) {
+          if (provName.value === data.province) {
             setInitialProvince([provName]);
+          }
+        });
+        const instClimat = instituteClimateOptions.map((provName) => {
+          if (provName.value === data.inst_climat) {
+            setClimate([provName]);
+          }
+        });
+        const instType = instituteTypeOptions.map((provName) => {
+          if (provName.value === data.school_type) {
+            setInstituteTypeGVT([provName]);
+          }
+        });
+        const cityType = instituteCityOptions.map((provName) => {
+          if (provName.value === data.inst_city_type) {
+            setCityType([provName]);
           }
         });
         const instTypee = instTypeOptions.map((instType) => {
           if (instType.value === data.type) {
             setInitialInstType([instType]);
+          }
+        });
+        const languageType = instituteLanguageOptions.map((lang) => {
+          if (lang.value === data.language) {
+            setLanguage([lang]);
           }
         });
         const instGender = dormGenderOptions.map((instGender) => {
@@ -151,32 +224,32 @@ const InstituteRegister = () => {
   }, []);
 
   const createNotification = (type, className) => {
-    const cName = className || '';
+    const cName = className || "";
     switch (type) {
-      case 'success':
+      case "success":
         NotificationManager.success(
-          'شاگرد موفقانه لیلی ته رجستر شو',
-          'موفقیت',
+          "شاگرد موفقانه لیلی ته رجستر شو",
+          "موفقیت",
           3000,
           null,
           null,
           cName
         );
         break;
-      case 'error':
+      case "error":
         NotificationManager.error(
-          'شاگرد ثبت نشو، بیا کوشش وکری',
-          'خطا',
+          "شاگرد ثبت نشو، بیا کوشش وکری",
+          "خطا",
           9000,
           () => {
-            alert('callback');
+            alert("callback");
           },
           null,
           cName
         );
         break;
       default:
-        NotificationManager.info('Info message');
+        NotificationManager.info("Info message");
         break;
     }
   };
@@ -318,7 +391,11 @@ const InstituteRegister = () => {
     <>
       <Card>
         <h3 className="mt-5 m-5">
-          {<IntlMessages id="inst.register.title" />}
+          {instituteId ? (
+            <IntlMessages id="ده انستیتوت اپډیډ" />
+          ) : (
+            <IntlMessages id="inst.register.title" />
+          )}
         </h3>
         <CardBody>
           {!isNext ? (
@@ -346,6 +423,7 @@ const InstituteRegister = () => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                handleChange,
                 resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right  error-l-200">
@@ -596,6 +674,7 @@ const InstituteRegister = () => {
                           type="submit"
                           color="primary"
                         >
+                          <Spin color="#fff" spinning={loader} />
                           <span className="spinner d-inline-block ">
                             <span className="bounce1" />
                             <span className="bounce2" />
@@ -614,7 +693,7 @@ const InstituteRegister = () => {
           ) : (
             <div
               className="wizard-basic-step text-center pt-3 "
-              style={{ minHeight: '400px' }}
+              style={{ minHeight: "400px" }}
             >
               <div>
                 <h1 className="mb-2">

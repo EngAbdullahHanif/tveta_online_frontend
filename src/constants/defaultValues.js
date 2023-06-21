@@ -1,10 +1,9 @@
-export const UserRole = {
+export const userRole = {
   superUser: 1,
-  Admin: 2,
+  admin: 2,
   provincial: 3,
   institute: 4,
-  User: 5,
-  
+  user: 5,
 };
 
 /* 
@@ -38,7 +37,7 @@ export const currentUser = {
   title: 'سمیع الله رحیمی',
   img: '/assets/img/profiles/l-1.jpg',
   date: 'آخرین بازدید امروز 15:24',
-  role: [UserRole.Admin, UserRole.Editor],
+  role: [userRole.Admin, userRole.Editor],
 };
 
 export const adminRoot = '/app';

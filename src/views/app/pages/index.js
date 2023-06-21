@@ -1,3 +1,5 @@
+import { userRole } from 'constants/defaultValues';
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -14,25 +16,53 @@ const Blog = React.lazy(() =>
   import(/* webpackChunkName: "pages-blog" */ './blog')
 );
 
-const Pages = ({ match }) => (
+const Pages = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/product`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/product`}
-        render={(props) => <Product {...props} />}
+        component={Product}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/profile`}
-        render={(props) => <Profile {...props} />}
+        component={Profile}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/blog`}
-        render={(props) => <Blog {...props} />}
+        component={Blog}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/miscellaneous`}
-        render={(props) => <Miscellaneous {...props} />}
+        component={Miscellaneous}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
       <Redirect to="/error" />
     </Switch>

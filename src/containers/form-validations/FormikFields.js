@@ -3,18 +3,20 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable max-classes-per-file */
-import React from 'react';
-import Select from 'react-select';
-import { CustomInput } from 'reactstrap';
-import IntlMessages from 'helpers/IntlMessages';
+import React from "react";
+import Select from "react-select";
+import { CustomInput } from "reactstrap";
+import IntlMessages from "helpers/IntlMessages";
 
-import TagsInput from 'react-tagsinput';
-import 'react-tagsinput/react-tagsinput.css';
-import Switch from 'rc-switch';
-import 'rc-switch/assets/index.css';
+import TagsInput from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
+import Switch from "rc-switch";
+import "rc-switch/assets/index.css";
 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Field } from "formik";
+import { Input } from "antd";
 
 const FormikReactSelect = ({
   name,
@@ -78,7 +80,7 @@ const FormikCheckboxGroup = ({
           <div
             key={`${name}_${child.value}_${index}`}
             className={`position-relative form-check ${
-              inline ? 'form-check-inline' : ''
+              inline ? "form-check-inline" : ""
             }`}
           >
             <input
@@ -217,7 +219,7 @@ const FormikRadioButtonGroup = ({
           <div
             key={`${name}_${child.value}_${index}`}
             className={`position-relative form-check ${
-              inline ? 'form-check-inline' : ''
+              inline ? "form-check-inline" : ""
             }`}
           >
             <input
@@ -285,6 +287,22 @@ const FormikTagsInput = ({ name, value, onChange, onBlur }) => {
   return <TagsInput name={name} value={value} onChange={handleChange} />;
 };
 
+const FormikInputText = ({ name, value, onChange, onBlur, ...otherProps }) => {
+  // const handleChange = (val) => {
+  //   onBlur(name, true);
+  //   onChange(name, val);
+  // };
+  return (
+    <Input
+      name={name}
+      value={value}
+      onChange={onChange}
+      style={{ height: 48, borderRadius: 0 }}
+      {...otherProps}
+    />
+  );
+};
+
 const FormikSwitch = ({ name, value, className, onChange, onBlur }) => {
   const handleChange = (val) => {
     onBlur(name, true);
@@ -330,6 +348,7 @@ export {
   FormikRadioButtonGroup,
   FormikCustomRadioGroup,
   FormikTagsInput,
+  FormikInputText,
   FormikSwitch,
   FormikDatePicker,
 };

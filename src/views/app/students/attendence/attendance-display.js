@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
-import callApi from 'helpers/callApi';
-import './../../.././../assets/css/global-style.css';
+import React, { useState, useEffect } from "react";
+import { Formik, Form, Field } from "formik";
+import axios from "axios";
+import callApi from "helpers/callApi";
+import "./../../.././../assets/css/global-style.css";
 
 // Year  and SHift
 
-import * as Yup from 'yup';
+import * as Yup from "yup";
 import {
   Row,
   Card,
@@ -16,67 +16,68 @@ import {
   Button,
   CardTitle,
   Input,
-} from 'reactstrap';
-import Select from 'react-select';
+} from "reactstrap";
+import Select from "react-select";
 
-import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
-import { studyTimeOptions } from '../../global-data/options';
+import IntlMessages from "helpers/IntlMessages";
+import { Colxx } from "components/common/CustomBootstrap";
+import { studyTimeOptions } from "../../global-data/options";
 
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
+} from "containers/form-validations/FormikFields";
+import userEvent from "@testing-library/user-event";
+import DisplayMessage from "components/messages/DisplayMessage";
 
 const LevelOfEdcationOptions = [
-  { value: '1', label: 'اصلی' },
-  { value: '2', label: 'فرعی' },
+  { value: "1", label: "اصلی" },
+  { value: "2", label: "فرعی" },
 ];
 
 const FieldOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
+  { value: "14th", label: "Computer Science" },
+  { value: "bachelor", label: "Agriculture" },
+  { value: "master", label: "BBA" },
+  { value: "PHD", label: "Mechenical Engineering" },
 ];
 
 const SemesterOptions = [
-  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
+  { value: "1", label: <IntlMessages id="marks.SemesterOption_1" /> },
+  { value: "2", label: <IntlMessages id="marks.SemesterOption_2" /> },
   // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
   //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
 ];
 
 const SectionOptions = [
-  { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
+  { value: "1", label: <IntlMessages id="marks.SectionOption_1" /> },
+  { value: "2", label: <IntlMessages id="marks.SectionOption_2" /> },
+  { value: "3", label: <IntlMessages id="marks.SectionOption_3" /> },
+  { value: "4", label: <IntlMessages id="marks.SectionOption_4" /> },
+  { value: "5", label: <IntlMessages id="marks.SectionOption_5" /> },
 ];
 
 const ClassOptions = [
-  { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-  { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
+  { value: "1", label: <IntlMessages id="marks.ClassOption_1" /> },
+  { value: "2", label: <IntlMessages id="marks.ClassOption_2" /> },
+  { value: "3", label: <IntlMessages id="marks.ClassOption_3" /> },
+  { value: "4", label: <IntlMessages id="marks.ClassOption_4" /> },
+  { value: "5", label: <IntlMessages id="marks.ClassOption_5" /> },
+  { value: "6", label: <IntlMessages id="marks.ClassOption_6" /> },
 ];
 
 const SubjectOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
+  { value: "14th", label: "Computer Science" },
+  { value: "bachelor", label: "Agriculture" },
+  { value: "master", label: "BBA" },
+  { value: "PHD", label: "Mechenical Engineering" },
 ];
 
 const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
+  { column: "title", label: "Product Name" },
+  { column: "category", label: "Category" },
+  { column: "status", label: "Status" },
 ];
 const pageSizes = [10, 20, 40, 80];
 
@@ -123,7 +124,7 @@ const ValidationSchema = Yup.object().shape({
 
 const initialValues = {
   institute: [],
-  educationlaYear: '',
+  educationlaYear: "",
   studyTime: [],
   classs: [],
   department: [],
@@ -138,12 +139,12 @@ const StudentAttendance = ({ match }) => {
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([]);
-  const [selectedInstitute, setSelectedInstitute] = useState('');
-  const [selectedDepartment, setSelectedDepartment] = useState('');
-  const [selectedClass, setSelectedClass] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState('');
-  const [selecedStudyTime, setSelectedStudyTime] = useState('');
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
+  const [selectedInstitute, setSelectedInstitute] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedClass, setSelectedClass] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [selecedStudyTime, setSelectedStudyTime] = useState("");
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState("");
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
@@ -158,7 +159,7 @@ const StudentAttendance = ({ match }) => {
   // };
 
   const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
+    const response = await callApi("institute/", "", null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -166,7 +167,7 @@ const StudentAttendance = ({ match }) => {
       }));
       setInstitutes(updatedData);
     } else {
-      console.log('institute error');
+      console.log("institute error");
     }
   };
 
@@ -193,7 +194,7 @@ const StudentAttendance = ({ match }) => {
   // };
 
   const fetchFields = async () => {
-    const response = await callApi('institute/field/', '', null);
+    const response = await callApi("institute/field/", "", null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -201,7 +202,7 @@ const StudentAttendance = ({ match }) => {
       }));
       setFields(updatedData);
     } else {
-      console.log('field error');
+      console.log("field error");
     }
   };
 
@@ -216,8 +217,8 @@ const StudentAttendance = ({ match }) => {
   //   setDepartments(updatedData);
   // };
   const fetchDepartments = async () => {
-    const response = await callApi('institute/department/', '', null);
-    console.log('response of department', response);
+    const response = await callApi("institute/department/", "", null);
+    console.log("response of department", response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -225,7 +226,7 @@ const StudentAttendance = ({ match }) => {
       }));
       setDepartments(updatedData);
     } else {
-      console.log('department error');
+      console.log("department error");
     }
   };
   // const fetchClasses = async () => {
@@ -238,7 +239,7 @@ const StudentAttendance = ({ match }) => {
   // };
 
   const fetchSubjects = async () => {
-    const response = await callApi('institute/subject/', '', null);
+    const response = await callApi("institute/subject/", "", null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -246,7 +247,7 @@ const StudentAttendance = ({ match }) => {
       }));
       setSubjects(updatedData);
     } else {
-      console.log('subject error');
+      console.log("subject error");
     }
   };
 
@@ -262,15 +263,15 @@ const StudentAttendance = ({ match }) => {
   // };
 
   const fetchClasses = async () => {
-    const response = await callApi('institute/classs/', '', null);
+    const response = await callApi("institute/classs/", "", null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+        label: item.name + " - " + item.semester + " - " + item.section,
       }));
       setClasses(updatedData);
     } else {
-      console.log('class error');
+      console.log("class error");
     }
   };
 
@@ -289,32 +290,32 @@ const StudentAttendance = ({ match }) => {
         `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
       )
       .then((response) => {
-        console.log('response.data', response.data);
+        console.log("response.data", response.data);
         setStudents(response.data);
         setIsNext(false);
       });
-    console.log('students', students);
+    console.log("students", students);
   };
 
   // fetch student list for typing attendance
   const fetchStudentList = async () => {
     const response = await callApi(
       `api/stdattendence_by/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
-      'GET',
+      "GET",
       null
     );
-    console.log('class repspossdfsde', response);
+    console.log("attendance repspossdfsde", response);
     if (response.data && response.status === 200) {
       setStudents(response.data);
       console.log('response.data.students', response.data);
       setIsNext(true);
     } else {
-      console.log('class error');
+      console.log("attendance error");
     }
   };
 
   const onSubmit = (values) => {
-    console.log('values', values);
+    console.log("values", values);
     const educational_year = selectedEducationalYear;
     const institute_id = selectedInstitute.value;
     const department = selectedDepartment.value;
@@ -330,7 +331,7 @@ const StudentAttendance = ({ match }) => {
       };
       //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
       //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-      console.log('exam', examData);
+      console.log("exam", examData);
       const data = {
         subject: subject_id,
         exam_types: 1,
@@ -340,7 +341,7 @@ const StudentAttendance = ({ match }) => {
         user_id: 1,
         mark: values.score[student.student_id],
       };
-      console.log('data', data);
+      console.log("data", data);
       // axios.post('http://localhost:8000/api/marks/', data);
     });
   };
@@ -373,7 +374,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
-                          <span style={{ color: 'red' }}>*</span>
+                          <span style={{ color: "red" }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="institute"
@@ -395,7 +396,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.StudyTimeLabel" />
-                          <span style={{ color: 'red' }}>*</span>
+                          <span style={{ color: "red" }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="studyTime"
@@ -415,10 +416,12 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
-                          <span style={{ color: 'red' }}>*</span>
+                          <span style={{ color: "red" }}>*</span>
                         </Label>
                         <Field
                           type="number"
+                          min="1350"
+                          max="1499"
                           id="educationlaYear"
                           className="form-control fieldStyle"
                           name="educationlaYear"
@@ -439,7 +442,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
-                          <span style={{ color: 'red' }}>*</span>
+                          <span style={{ color: "red" }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="classs"
@@ -461,7 +464,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.studyDepartment" />
-                          <span style={{ color: 'red' }}>*</span>
+                          <span style={{ color: "red" }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="department"
@@ -483,7 +486,7 @@ const StudentAttendance = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
-                          <span style={{ color: 'red' }}>*</span>
+                          <span style={{ color: "red" }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="subject"
@@ -510,7 +513,7 @@ const StudentAttendance = ({ match }) => {
                         className="float-right buttonStyle"
                         size="lg"
                         type="submit"
-                        style={{ margin: '3% 0% 9% 8%' }}
+                        style={{ margin: "3% 0% 9% 8%" }}
                         // onClick={() => {
                         //   onSubmit;
                         //   handleClick(false);
@@ -529,13 +532,13 @@ const StudentAttendance = ({ match }) => {
             <>
               <Row
                 className="border border bg-primary me-5 p-1 "
-                style={{ marginInline: '10%' }}
+                style={{ marginInline: "10%" }}
               >
                 <Colxx xxs="2">
                   <Label>
                     <IntlMessages id="forms.FieldLabel" />
                   </Label>
-                  {console.log('selectedDepartment', selectedDepartment)}
+                  {console.log("selectedDepartment", selectedDepartment)}
                   <h6>{selectedDepartment.label}</h6>
                 </Colxx>
 
@@ -570,71 +573,75 @@ const StudentAttendance = ({ match }) => {
 
               <Row
                 className="justify-content-center  border border"
-                style={{ marginInline: '10%' }}
+                style={{ marginInline: "10%" }}
               >
-                <table className="table">
-                  <thead className="thead-dark ">
-                    <tr>
-                      <th colspan="4" className="border text-center">
-                        <IntlMessages id="marks.studentChar" />
-                      </th>
-                      <th colspan="4" className="border text-center">
-                        <IntlMessages id="marks.marksDisplayTitle" />
-                      </th>
-                    </tr>
-                  </thead>
-                  <thead className="thead-dark">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="border text-center "
-                        style={{ maxWidth: '20px ', minWidth: '50px' }}
-                      >
-                        <IntlMessages id="marks.No" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FullName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FatherName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.ID" />
-                      </th>
+                {students.length > 0 ? (
+                  <table className="table">
+                    <thead className="thead-dark ">
+                      <tr>
+                        <th colspan="4" className="border text-center">
+                          <IntlMessages id="marks.studentChar" />
+                        </th>
+                        <th colspan="4" className="border text-center">
+                          <IntlMessages id="marks.marksDisplayTitle" />
+                        </th>
+                      </tr>
+                    </thead>
+                    <thead className="thead-dark">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="border text-center "
+                          style={{ maxWidth: "20px ", minWidth: "50px" }}
+                        >
+                          <IntlMessages id="marks.No" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="marks.FullName" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="marks.FatherName" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="marks.ID" />
+                        </th>
 
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="forms.StdPresentLabel" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="forms.StdAbsentLabel" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="forms.StdNecessaryWorkLabel" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="forms.StdSicknessLabel" />
-                      </th>
-                    </tr>
-                  </thead>
-                </table>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="forms.StdPresentLabel" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="forms.StdAbsentLabel" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="forms.StdSicknessLabel" />
+                        </th>
+                      </tr>
+                    </thead>
+                  </table>
+                ) : (
+                  <DisplayMessage type="error" message="معلومات شتون نلری" />
+                )}
               </Row>
 
               <Row
                 className="justify-content-center  border border"
                 style={{
-                  marginInline: '10%',
-                  height: '30rem',
-                  overflowY: 'scroll',
-                  overflowX: 'hidden',
+                  marginInline: "10%",
+                  height: "30rem",
+                  overflowY: "scroll",
+                  overflowX: "hidden",
                 }}
               >
                 <table class="table ">
                   <tbody
                     className="border border "
                     style={{
-                      height: '200px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
+                      height: "200px",
+                      overflowY: "scroll",
+                      overflowX: "hidden",
                     }}
                   >
                     {students.map((student, index) => (
@@ -656,7 +663,7 @@ const StudentAttendance = ({ match }) => {
               <Row
                 className="justify-content-center  border border"
                 style={{
-                  marginInline: '10%',
+                  marginInline: "10%",
                 }}
               >
                 <table class="table ">
@@ -673,7 +680,7 @@ const StudentAttendance = ({ match }) => {
                       <th
                         scope="col"
                         className="border text-center "
-                        style={{ maxWidth: '20px ', minWidth: '50px' }}
+                        style={{ maxWidth: "20px ", minWidth: "50px" }}
                       >
                         <IntlMessages id="marks.No" />
                       </th>

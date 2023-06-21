@@ -112,7 +112,7 @@ const FieldRegister = () => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
+        <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {<IntlMessages id="field.FieldRegisterTitle" />}
         </h3>
         <CardBody>
@@ -143,7 +143,7 @@ const FieldRegister = () => {
                     <Colxx xxs="10">
                       {/* Field Name */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="field.FieldNameLabel" />
                         </Label>
 
@@ -157,7 +157,7 @@ const FieldRegister = () => {
 
                       {/* Field Name In English */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="field.FieldEngNameLabel" />
                         </Label>
                         <Field
@@ -173,7 +173,7 @@ const FieldRegister = () => {
 
                       {/* sector*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.sector" />
                         </Label>
                         <FormikReactSelect
@@ -206,7 +206,10 @@ const FieldRegister = () => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span className="label">
+                        <span
+                          className="label"
+                          style={{ fontSize: 18, fontWeight: 'bold' }}
+                        >
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

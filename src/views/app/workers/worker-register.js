@@ -17,6 +17,7 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { studyTimeOptionsForList } from './../global-data/options';
 
 const ValidationSchema = Yup.object().shape({
   workerName: Yup.string()
@@ -206,7 +207,7 @@ const StudentRegistraion = () => {
                     <Colxx xxs="6">
                       {/* Name */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerName" />
                         </Label>
                         <Field className="form-control" name="workerName" />
@@ -219,10 +220,11 @@ const StudentRegistraion = () => {
 
                       {/* province  */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerProvince" />
                         </Label>
                         <FormikReactSelect
+                          style={{ fontSize: 15, fontWeight: 'bold' }}
                           name="workerProvince"
                           id="workerProvince"
                           value={values.workerProvince}
@@ -239,7 +241,7 @@ const StudentRegistraion = () => {
 
                       {/* Institutes  now appointedType*/}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerAppointedType" />
                         </Label>
                         <FormikReactSelect
@@ -260,7 +262,7 @@ const StudentRegistraion = () => {
 
                       {/*worker qualifications  */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerQualification" />
                         </Label>
                         <Field
@@ -278,7 +280,7 @@ const StudentRegistraion = () => {
                       {/* worker field*/}
 
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerField" />
                         </Label>
                         <Field className="form-control" name="workerField" />
@@ -292,7 +294,7 @@ const StudentRegistraion = () => {
                       {/* worker Gender */}
 
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerGender" />
                         </Label>
                         <FormikReactSelect
@@ -312,7 +314,7 @@ const StudentRegistraion = () => {
 
                       {/* worker Tazkera */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerTazkera" />
                         </Label>
                         <Field className="form-control" name="workerTazkera" />
@@ -325,7 +327,7 @@ const StudentRegistraion = () => {
 
                       {/* worker date of birth*/}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerDateOfBirth" />
                         </Label>
                         <Field
@@ -346,7 +348,7 @@ const StudentRegistraion = () => {
                       {/* worker position title*/}
 
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerPosition" />
                         </Label>
                         <Field className="form-control" name="workerPosition" />
@@ -359,7 +361,7 @@ const StudentRegistraion = () => {
 
                       {/* wroker step */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerStep" />
                         </Label>
                         <Field className="form-control" name="workerStep" />
@@ -372,7 +374,7 @@ const StudentRegistraion = () => {
 
                       {/* worker ID */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerId" />
                         </Label>
                         <Field className="form-control" name="workerId" />
@@ -385,7 +387,7 @@ const StudentRegistraion = () => {
 
                       {/* worker grade */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerGrade" />
                         </Label>
                         <FormikReactSelect
@@ -405,7 +407,7 @@ const StudentRegistraion = () => {
 
                       {/* worker tashkil grade */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerTashkeilGrade" />
                         </Label>
                         <FormikReactSelect
@@ -425,7 +427,7 @@ const StudentRegistraion = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerGradeType" />
                         </Label>
                         <FormikReactSelect
@@ -444,7 +446,7 @@ const StudentRegistraion = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerAppointedDate" />
                         </Label>
                         <Field
@@ -461,7 +463,7 @@ const StudentRegistraion = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="workerStartDate" />
                         </Label>
                         <Field
@@ -490,7 +492,10 @@ const StudentRegistraion = () => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span className="label">
+                        <span
+                          className="label"
+                          style={{ fontSize: 15, fontWeight: 'bold' }}
+                        >
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

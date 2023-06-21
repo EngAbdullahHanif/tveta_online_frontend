@@ -277,7 +277,7 @@ const InstituteRegister = () => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
+        <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {<IntlMessages id="inst.register.title" />}
         </h3>
         <CardBody>
@@ -308,7 +308,7 @@ const InstituteRegister = () => {
                   <Row className="justify-content-center">
                     <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="inst.name" />
                         </Label>
                         <Field className="form-control" name="institute" />
@@ -320,7 +320,7 @@ const InstituteRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.ProvinceLabel" />
                         </Label>
                         <FormikReactSelect
@@ -339,7 +339,7 @@ const InstituteRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.DistrictLabel" />
                         </Label>
                         <Field className="form-control" name="district" />
@@ -352,7 +352,7 @@ const InstituteRegister = () => {
 
                       {/* village permanent */}
                       <FormGroup className="form-group has-float-label ">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.VillageLabel" />
                         </Label>
                         <Field className="form-control" name="village" />
@@ -363,7 +363,7 @@ const InstituteRegister = () => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="inst.type" />
                         </Label>
                         <FormikReactSelect
@@ -383,7 +383,7 @@ const InstituteRegister = () => {
                     </Colxx>
                     <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="gender" />
                         </Label>
                         <FormikReactSelect
@@ -404,7 +404,7 @@ const InstituteRegister = () => {
                       {/* institute type */}
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="institue type" />
                         </Label>
                         <FormikReactSelect
@@ -424,7 +424,7 @@ const InstituteRegister = () => {
 
                       {/* institue city options */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="City Type" />
                         </Label>
                         <FormikReactSelect
@@ -444,7 +444,7 @@ const InstituteRegister = () => {
 
                       {/* institute language  */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="institute langugage" />
                         </Label>
                         <FormikReactSelect
@@ -465,7 +465,7 @@ const InstituteRegister = () => {
                       {/* institute climate*/}
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="institute climate" />
                         </Label>
                         <FormikReactSelect
@@ -494,7 +494,10 @@ const InstituteRegister = () => {
                             <span className="bounce2" />
                             <span className="bounce3" />
                           </span>
-                          <span className="label">
+                          <span
+                            className="label"
+                            style={{ fontSize: 18, fontWeight: 'bold' }}
+                          >
                             <IntlMessages id="forms.SubimssionButton" />
                           </span>
                         </Button>

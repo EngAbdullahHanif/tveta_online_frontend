@@ -1,68 +1,69 @@
-import React, { Suspense } from 'react';
-import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { Suspense, useEffect } from "react";
+import { Route, withRouter, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
-import AppLayout from 'layout/AppLayout';
-// import { ProtectedRoute, UserRole } from 'helpers/authHelper';
-
+import AppLayout from "layout/AppLayout";
+import { ProtectedRoute } from "helpers/authHelper";
+import { userRole } from "constants/defaultValues";
+import UsersList from "./users/users-list";
 const Dashboards = React.lazy(() =>
-  import(/* webpackChunkName: "dashboards" */ './dashboards')
+  import(/* webpackChunkName: "dashboards" */ "./dashboards")
 );
 const Pages = React.lazy(() =>
-  import(/* webpackChunkName: "pages" */ './pages')
+  import(/* webpackChunkName: "pages" */ "./pages")
 );
 const Applications = React.lazy(() =>
-  import(/* webpackChunkName: "applications" */ './applications')
+  import(/* webpackChunkName: "applications" */ "./applications")
 );
 const Students = React.lazy(() =>
-  import(/* webpackChunkName: "students" */ './students')
+  import(/* webpackChunkName: "students" */ "./students")
 );
 
 const Teachers = React.lazy(() =>
-  import(/* webpackChunkName: "teachers" */ './teachers')
+  import(/* webpackChunkName: "teachers" */ "./teachers")
 );
 
 const Institutes = React.lazy(() =>
-  import(/* webpackChunkName: "institues" */ './institutes')
+  import(/* webpackChunkName: "institues" */ "./institutes")
 );
 
 const Subjects = React.lazy(() =>
-  import(/* webpackChunkName: "subjects" */ './subjects')
+  import(/* webpackChunkName: "subjects" */ "./subjects")
 );
 
 const Classes = React.lazy(() =>
-  import(/* webpackChunkName: "classes" */ './classes')
+  import(/* webpackChunkName: "classes" */ "./classes")
 );
 
 const Fields = React.lazy(() =>
-  import(/* webpackChunkName: "fields" */ './fields')
+  import(/* webpackChunkName: "fields" */ "./fields")
 );
 const Evaluations = React.lazy(() =>
-  import(/* webpackChunkName: "evaluation" */ './evaluations')
+  import(/* webpackChunkName: "evaluation" */ "./evaluations")
 );
 const HREvaluations = React.lazy(() =>
-  import(/* webpackChunkName: "hr-evaluation" */ './hr-evaluation')
+  import(/* webpackChunkName: "hr-evaluation" */ "./hr-evaluation")
 );
 
 const Dorms = React.lazy(() =>
-  import(/* webpackChunkName: "dorms" */ './dorms')
+  import(/* webpackChunkName: "dorms" */ "./dorms")
 );
 
 const Workers = React.lazy(() =>
-  import(/* webpackChunkName: "workers" */ './workers')
+  import(/* webpackChunkName: "workers" */ "./workers")
 );
 
 const Groups = React.lazy(() =>
-  import(/* webpackChunkName: "group" */ './group')
+  import(/* webpackChunkName: "group" */ "./group")
 );
 
-const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
-const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
+const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ "./ui"));
+const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ "./menu"));
 const BlankPage = React.lazy(() =>
-  import(/* webpackChunkName: "blank-page" */ './blank-page')
+  import(/* webpackChunkName: "blank-page" */ "./blank-page")
 );
 
-const App = ({ match }) => {
+const App = ({ match, props }) => {
   return (
     <AppLayout>
       <div className="dashboard-wrapper">
@@ -73,83 +74,218 @@ const App = ({ match }) => {
               from={`${match.url}/`}
               to={`${match.url}/dashboards`}
             />
-            <Route
+            <ProtectedRoute
               path={`${match.url}/dashboards`}
-              render={(props) => <Dashboards {...props} />}
+              component={Dashboards}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            <Route
+            <ProtectedRoute
+              path={`${match.url}/users`}
+              component={UsersList}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
+            />
+            <ProtectedRoute
               path={`${match.url}/applications`}
-              render={(props) => <Applications {...props} />}
+              component={Applications}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            {/* <ProtectedRoute
-                    path={`${match.url}/applications`}
-                    component={Applications}
-                    roles={[UserRole.Admin]}
-            /> */}
-            <Route
+
+            <ProtectedRoute
               path={`${match.url}/pages`}
-              render={(props) => <Pages {...props} />}
+              component={Pages}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            <Route
+
+            <ProtectedRoute
               path={`${match.url}/ui`}
-              render={(props) => <Ui {...props} />}
+              component={Ui}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            <Route
+
+            <ProtectedRoute
               path={`${match.url}/menu`}
-              render={(props) => <Menu {...props} />}
+              component={Menu}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            <Route
+
+            <ProtectedRoute
               path={`${match.url}/students`}
-              render={(props) => <Students {...props} />}
+              component={Students}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            <Route
+
+            <ProtectedRoute
               path={`${match.url}/dorms`}
-              render={(props) => <Dorms {...props} />}
+              component={Dorms}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            <Route
+
+            <ProtectedRoute
               path={`${match.url}/teachers`}
-              render={(props) => <Teachers {...props} />}
+              component={Teachers}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
 
-            <Route
+            <ProtectedRoute
               path={`${match.url}/institutes`}
-              render={(props) => <Institutes {...props} />}
+              component={Institutes}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            <Route
+
+            <ProtectedRoute
               path={`${match.url}/subjects`}
-              render={(props) => <Subjects {...props} />}
+              component={Subjects}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
 
-            <Route
+            <ProtectedRoute
               path={`${match.url}/classes`}
-              render={(props) => <Classes {...props} />}
+              component={Classes}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
 
-            <Route
+            <ProtectedRoute
               path={`${match.url}/fields`}
-              render={(props) => <Fields {...props} />}
+              component={Fields}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            <Route
+
+            <ProtectedRoute
               path={`${match.url}/evaluations`}
-              render={(props) => <Evaluations {...props} />}
+              component={Evaluations}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
-            <Route
+
+            <ProtectedRoute
               path={`${match.url}/hr-evaluations`}
-              render={(props) => <HREvaluations {...props} />}
-            />
-            <Route
-              path={`${match.url}/blank-page`}
-              render={(props) => <BlankPage {...props} />}
+              component={HREvaluations}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
 
-            <Route
+            <ProtectedRoute
+              path={`${match.url}/black-page`}
+              component={BlankPage}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
+            />
+
+            <ProtectedRoute
               path={`${match.url}/workers`}
-              render={(props) => <Workers {...props} />}
+              component={Workers}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
 
-            <Route
+            <ProtectedRoute
               path={`${match.url}/groups`}
-              render={(props) => <Groups {...props} />}
+              component={Groups}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.institute,
+                userRole.provincial,
+              ]}
+              props={props}
             />
 
             <Redirect to="/error" />

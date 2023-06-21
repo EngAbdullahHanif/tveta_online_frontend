@@ -1,3 +1,5 @@
+import { userRole } from 'constants/defaultValues';
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -14,27 +16,55 @@ const Chat = React.lazy(() =>
   import(/* webpackChunkName: "application-chat" */ './chat')
 );
 
-const Applications = ({ match }) => (
+const Applications = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/todo`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/todo`}
-        render={(props) => <Todo {...props} />}
+        component={Todo}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.institute,
+          userRole.provincial,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/survey/:surveyid`}
-        render={(props) => <SurveyDetail {...props} />}
+        component={SurveyDetail}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.institute,
+          userRole.provincial,
+        ]}
+        props={props}
         isExact
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/survey`}
-        render={(props) => <Survey {...props} />}
+        component={Survey}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.institute,
+          userRole.provincial,
+        ]}
+        props={props}
         isExact
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/chat`}
-        render={(props) => <Chat {...props} />}
+        component={Chat}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.institute,
+          userRole.provincial,
+        ]}
+        props={props}
       />
       <Redirect to="/error" />
     </Switch>

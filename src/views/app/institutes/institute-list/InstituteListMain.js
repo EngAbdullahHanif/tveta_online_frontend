@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { provincesOptionsForList } from '../../global-data/options';
-import axios from 'axios';
-import IntlMessages from 'helpers/IntlMessages';
-import callApi from 'helpers/callApi';
+import React, { useState, useEffect } from "react";
+import { provincesOptionsForList } from "../../global-data/options";
+import axios from "axios";
+import IntlMessages from "helpers/IntlMessages";
+import callApi from "helpers/callApi";
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './InstituteListHeading';
+import ListPageHeading from "./InstituteListHeading";
 
-import ListPageListing from './InstituteListCatagory';
-import useMousetrap from 'hooks/use-mousetrap';
+import ListPageListing from "./InstituteListCatagory";
+import useMousetrap from "hooks/use-mousetrap";
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -20,90 +20,90 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+const servicePath = "http://localhost:8000";
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const instituteApiUrl = `${servicePath}/institute/`;
 
 const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
+  { column: "title", label: "Product Name" },
+  { column: "category", label: "Category" },
+  { column: "status", label: "Status" },
 ];
 
 const genderOptions = [
   {
-    column: 'all',
+    column: "all",
     label: <IntlMessages id="option.all" />,
   },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
+  { column: "1", label: "ذکور" },
+  { column: "2", label: "اناث" },
 ];
 const statusOptions = [
   {
-    column: 'all',
+    column: "all",
     label: <IntlMessages id="option.all" />,
   },
-  { column: '1', label: <IntlMessages id="institute.statusOption_1" /> },
-  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+  { column: "1", label: <IntlMessages id="institute.statusOption_1" /> },
+  { column: "2", label: <IntlMessages id="institute.statusOption_2" /> },
 ];
 
 const instituteTypeOptions = [
   {
-    column: 'all',
+    column: "all",
     label: <IntlMessages id="option.all" />,
   },
-  { column: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
-  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+  { column: "1", label: <IntlMessages id="institute.instTypeOptions_1" /> },
+  { column: "2", label: <IntlMessages id="institute.statusOption_2" /> },
 ];
 
 const pageSizes = [4, 8, 12, 20];
 
 const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
+  { label: "Cakes", value: "Cakes", key: 0 },
+  { label: "Cupcakes", value: "Cupcakes", key: 1 },
+  { label: "Desserts", value: "Desserts", key: 2 },
 ];
 
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [displayMode, setDisplayMode] = useState('thumblist');
+  const [displayMode, setDisplayMode] = useState("thumblist");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'title',
-    label: 'Product Name',
+    column: "title",
+    label: "Product Name",
   });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
   // const [institutes, setInstitutes] = useState([]);
-  const [instituteId, setInstituteId] = useState('');
-  const [province, setProvince] = useState('');
-  const [district, setDistrict] = useState('');
+  const [instituteId, setInstituteId] = useState("");
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
   const [institutes, setInstitutes] = useState([]);
-  const [institute, setInstitute] = useState('');
+  const [institute, setInstitute] = useState("");
   const [selectedGenderOption, setSelectedGenderOption] = useState({
-    column: 'all',
-    label: 'جنیست',
+    column: "all",
+    label: "جنیست",
   });
   const [selectedProvinceOption, setSelectedProvinceOption] = useState({
-    column: 'all',
-    label: 'ولایت',
+    column: "all",
+    label: "ولایت",
   });
   const [selectedStatusOptions, setSelectedStatusOptions] = useState({
-    column: 'all',
-    label: 'حالت',
+    column: "all",
+    label: "حالت",
   });
   const [selectedInstituteType, setSelectedInstituteType] = useState({
-    column: 'all',
-    label: 'ډول/ نوعیت',
+    column: "all",
+    label: "ډول/ نوعیت",
   });
 
   useEffect(() => {
@@ -120,7 +120,7 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     async function fetchData() {
-      if (institute !== '') {
+      if (institute !== "") {
         // const res = await axios.get(`institute/?id=${institute.id}`);
         // console.log('res', response.data);
         // setItems(response.data);
@@ -129,7 +129,7 @@ const ThumbListPages = ({ match }) => {
 
         const response = await callApi(
           `institute/?id=${institute.id}`,
-          '',
+          "",
           null
         );
         if (response.data && response.status === 200) {
@@ -138,15 +138,15 @@ const ThumbListPages = ({ match }) => {
           // setTotalItemCount(data);
           setIsLoaded(true);
         } else {
-          console.log('students error');
+          console.log("students error");
         }
       } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
+        selectedProvinceOption.column === "all" &&
+        selectedGenderOption.column === "all"
       ) {
         if (rest == true) {
-          setDistrict('');
-          setInstituteId('');
+          setDistrict("");
+          setInstituteId("");
           setRest(false);
         }
         // axios
@@ -167,7 +167,7 @@ const ThumbListPages = ({ match }) => {
         //   });
         const response = await callApi(
           `institute/?id=${instituteId}&district=${district}`,
-          '',
+          "",
           null
         );
         if (response.data && response.status === 200) {
@@ -176,9 +176,9 @@ const ThumbListPages = ({ match }) => {
           // setTotalItemCount(data);
           setIsLoaded(true);
         } else {
-          console.log('students error');
+          console.log("students error");
         }
-      } else if (selectedProvinceOption.column === 'all') {
+      } else if (selectedProvinceOption.column === "all") {
         // axios
         //   .get(
         //     `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
@@ -199,7 +199,7 @@ const ThumbListPages = ({ match }) => {
 
         const response = await callApi(
           `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`,
-          '',
+          "",
           null
         );
         if (response.data && response.status === 200) {
@@ -208,9 +208,9 @@ const ThumbListPages = ({ match }) => {
           // setTotalItemCount(data);
           setIsLoaded(true);
         } else {
-          console.log('students error');
+          console.log("students error");
         }
-      } else if (selectedGenderOption.column === 'all') {
+      } else if (selectedGenderOption.column === "all") {
         // axios
         //   .get(
         //     `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
@@ -231,7 +231,7 @@ const ThumbListPages = ({ match }) => {
 
         const response = await callApi(
           `institute/?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`,
-          '',
+          "",
           null
         );
         if (response.data && response.status === 200) {
@@ -240,7 +240,7 @@ const ThumbListPages = ({ match }) => {
           // setTotalItemCount(data);
           setIsLoaded(true);
         } else {
-          console.log('students error');
+          console.log("students error");
         }
       } else {
         axios;
@@ -263,7 +263,7 @@ const ThumbListPages = ({ match }) => {
         // });
         const response = await callApi(
           `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`,
-          '',
+          "",
           null
         );
         if (response.data && response.status === 200) {
@@ -272,7 +272,7 @@ const ThumbListPages = ({ match }) => {
           // setTotalItemCount(data);
           setIsLoaded(true);
         } else {
-          console.log('students error');
+          console.log("students error");
         }
       }
     }
@@ -292,7 +292,7 @@ const ThumbListPages = ({ match }) => {
     institute,
   ]);
   const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
+    const response = await callApi("institute/", "", null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -300,7 +300,7 @@ const ThumbListPages = ({ match }) => {
       }));
       setInstitutes(updatedData);
     } else {
-      console.log('institute error');
+      console.log("institute error");
     }
   };
 
@@ -310,8 +310,8 @@ const ThumbListPages = ({ match }) => {
 
   const onCheckItem = (event, id) => {
     if (
-      event.target.tagName === 'A' ||
-      (event.target.parentElement && event.target.parentElement.tagName === 'A')
+      event.target.tagName === "A" ||
+      (event.target.parentElement && event.target.parentElement.tagName === "A")
     ) {
       return true;
     }
@@ -329,8 +329,8 @@ const ThumbListPages = ({ match }) => {
 
     if (event.shiftKey) {
       let newItems = [...items];
-      const start = getIndex(id, newItems, 'id');
-      const end = getIndex(lastChecked, newItems, 'id');
+      const start = getIndex(id, newItems, "id");
+      const end = getIndex(lastChecked, newItems, "id");
       newItems = newItems.slice(Math.min(start, end), Math.max(start, end) + 1);
       selectedItems.push(
         ...newItems.map((item) => {
@@ -358,8 +358,8 @@ const ThumbListPages = ({ match }) => {
 
   const onContextMenuClick = (e, data) => {
     // params : (e,data,target)
-    console.log('onContextMenuClick - selected items', selectedItems);
-    console.log('onContextMenuClick - action : ', data.action);
+    console.log("onContextMenuClick - selected items", selectedItems);
+    console.log("onContextMenuClick - action : ", data.action);
   };
 
   const onContextMenu = (e, data) => {
@@ -371,11 +371,11 @@ const ThumbListPages = ({ match }) => {
     return true;
   };
 
-  useMousetrap(['ctrl+a', 'command+a'], () => {
+  useMousetrap(["ctrl+a", "command+a"], () => {
     handleChangeSelectAll(false);
   });
 
-  useMousetrap(['ctrl+d', 'command+d'], () => {
+  useMousetrap(["ctrl+d", "command+d"], () => {
     setSelectedItems([]);
     return false;
   });
@@ -446,17 +446,17 @@ const ThumbListPages = ({ match }) => {
           instituteTypeOptions={instituteTypeOptions}
           provincesOptionsForList={provincesOptionsForList}
           onIdSearchKey={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               setInstituteId(e.target.value.toLowerCase());
             }
           }}
           onProvinceSearchKey={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               setProvince(e.target.value.toLowerCase());
             }
           }}
           onDistrictSearchKey={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               setDistrict(e.target.value.toLowerCase());
             }
           }}
@@ -469,80 +469,80 @@ const ThumbListPages = ({ match }) => {
         <table className="table">
           <thead
             className="pl-2 d-flex flex-grow-1  table-dark "
-            style={{ maxHeight: '55px' }}
+            style={{ maxHeight: "55px" }}
           >
             <tr
               className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center"
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             >
               <th
                 style={{
-                  width: '10%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "10%",
+                  paddingInline: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
                 <IntlMessages id="student.ID" />
               </th>
               <th
                 style={{
-                  width: '16%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "16%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
                 <IntlMessages id="inst.nameList" />
               </th>
               <th
                 style={{
-                  width: '13%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "13%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
-                {' '}
+                {" "}
                 <IntlMessages id="forms.ProvinceLabel" />
               </th>
               <th
                 style={{
-                  width: '13%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "13%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
-                {' '}
+                {" "}
                 <IntlMessages id="inst.type" />
               </th>
               <th
                 style={{
-                  width: '13%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "13%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
-                {' '}
+                {" "}
                 <IntlMessages id="gender" />
               </th>
               <th
                 style={{
-                  width: '13%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "13%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
-                {' '}
+                {" "}
                 <IntlMessages id="institute.status" />
               </th>
             </tr>

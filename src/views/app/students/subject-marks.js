@@ -292,8 +292,8 @@ const MarksDisplay = ({ match }) => {
     //   null
     // );
     const response = await callApi(
-      `/api/students-marks?institute=${values.institute.value}&classs=${values.classs.value}&study_time=${values.studyTime.value}&department=${values.department.value}&educational_year=${educationlaYear}&subject=${values.subject.value}`,
-      "",
+      `/api/students-marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
+      '',
       null
     );
     console.log("responseeeeeeeeeeeeeeE", response.data);

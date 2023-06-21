@@ -277,11 +277,10 @@ const MarksRegistration = ({ match }) => {
     }
   };
 
-  const fetchStudents = async (formData) => {
-    console.log("Form Data:", formData);
+  const fechtStudens = async (values) => {
     const response = await callApi(
-      `api/student-for-marks/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
-      "",
+      `api/class-marks/list/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
+      '',
       null
     );
     if (response.data && response.status === 200) {
@@ -303,7 +302,7 @@ const MarksRegistration = ({ match }) => {
     const newStudents = students.map((student, index) => {
       return {
         student_id: student.student_id,
-        score: values.score[student.student_id],
+        marks: values.score[student.student_id],
       };
     });
 
@@ -319,9 +318,9 @@ const MarksRegistration = ({ match }) => {
       ...newStudents,
     ];
 
-    // console.log('data', data);
+    console.log('data', data);
 
-    const response = await callApi("api/create_marks/", "POST", data);
+    const response = await callApi('api/class-marks/create/', 'POST', data);
     if (
       response.status === 200 ||
       response.status === 201 ||

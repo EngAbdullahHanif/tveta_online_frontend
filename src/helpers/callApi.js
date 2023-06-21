@@ -12,6 +12,9 @@ import axios from "axios";
 // const servicePath = "localhost:8000";
 const servicePath = "http://127.0.0.1:8000";
 
+const start_date = '2023-06-01';
+const end_date = '2023-06-30';
+
 //  get the API headers
 const getHeaders = (data) => {
   const user = localStorage.getItem("user");

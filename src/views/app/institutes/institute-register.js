@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { dormGenderOptions } from "../global-data/options";
-import { provincesOptionsForList } from "../global-data/options";
-import * as Yup from "yup";
+import React, { useRef, useState, useEffect } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { dormGenderOptions } from '../global-data/options';
+import { provincesOptionsForList,  dateOfBirthOptoions, studyTimeOptions } from '../global-data/options';
+import * as Yup from 'yup';
 
 import {
   Row,
@@ -43,26 +43,28 @@ const options = [
 ];
 
 const instTypeOptions = [
-  { value: "1", label: "دولتی" },
-  { value: "1", label: "شخصی" },
+  { value: 'governmental', label: 'دولتی' },
+  { value: 'private', label: 'شخصی' },
 ];
 
 const instituteCityOptions = [
-  { value: "1", label: "شهری" },
-  { value: "2", label: "دهاتی" },
+  { value: 'urban', label: 'شهری' },
+  { value: 'rural', label: 'دهاتی' },
 ];
 const instituteLanguageOptions = [
-  { value: "1", label: "پښتو" },
-  { value: "2", label: "دری" },
+  { value: 'pashto', label: 'پښتو' },
+  { value: 'dari', label: 'دری' },
 ];
 const instituteClimateOptions = [
-  { value: "1", label: "سرد سیر" },
-  { value: "2", label: "گرم سیر" },
-  { value: "3", label: "زیاد سرد سیر" },
+  { value: 'cold', label: 'سرد سیر' },
+  { value: 'warm', label: 'گرم سیر' },
+  { value: 'very_cold', label: 'زیاد سرد سیر' },
 ];
 const instituteTypeOptions = [
-  { value: "1", label: "انستیتوت" },
-  { value: "2", label: "لیسه" },
+  { value: 'institute', label: 'انستیتوت' },
+  { value: 'high_school', label: 'لیسه' },
+  { value: 'special_education', label:'تعلیمات خاص'},
+
 ];
 
 const servicePath = "http://localhost:8000";
@@ -73,14 +75,18 @@ const InstituteRegister = () => {
   const [loader, setLoader] = useState(false);
   const [updateMode, setUpdateMode] = useState(false);
   const { instituteId } = useParams();
-  const [institute, setInstitute] = useState();
-  console.log("INSTITUTE: ", institute);
-  const [initialInstituteName, setInitialInstituteName] = useState("");
-
-  const [initialProvince, setInitialProvince] = useState("");
-  const [initialDistrict, setInitialDistrict] = useState("");
+  const [institute, setInstitute] = useState([]);
+  const [initialInstituteName, setInitialInstituteName] = useState('');
+  const [initialCode, setInitialCode] = useState('');
+  const [initialProvince, setInitialProvince] = useState('');
+  const [initialDistrict, setInitialDistrict] = useState('');
   const [initialInstType, setInitialInstType] = useState([]);
-  const [initialVillage, setInitialVillage] = useState("");
+  const [initialVillage, setInitialVillage] = useState('');
+  const [initialFoundationYear, setInitialFoundationYear] = useState('');
+  const [initialShift, setInitialShift] = useState('');
+
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
 
   const [initialGender, setInitialGender] = useState([]);
 
@@ -184,6 +190,38 @@ const InstituteRegister = () => {
       setUpdateMode(true);
     }, []);
   }
+
+  const fetchProvinces = async () => {
+    const response = await callApi('core/province/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name 
+      }));
+      setProvinces(updatedData);
+    } else {
+      console.log('province error');
+    }
+  };
+
+  const fetchDistricts = async (provinceId) => {
+    console.log('provinceId', provinceId)
+    const response = await callApi(`core/district/?province=${provinceId}`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDistricts(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+
+  useEffect(() => {
+    fetchProvinces();
+  }, []);
 
   const createNotification = (type, className) => {
     const cName = className || "";
@@ -298,40 +336,55 @@ const InstituteRegister = () => {
   // }),
   // });
 
-  const onRegister = async (values) => {
-    setLoader(true);
+  // const onRegister = (values, { resetForm }) => {
+  //   console.log(values, 'Values ');
+  //   resetForm();
+  //   setIsNext(true);
+  //   // if (!values.province || values.province.value === '0') {
+  //   //   return;
+  //   // }
+  //   // if (!values.instType || values.instType.value === '0') {
+  //   //   return;
+  //   // }
+
+  //   // insert the data to the API with Axios here and redirect to the current page
+  // const handleClick = (event) => {
+  //   // setIsNext(event);
+  // };
+
+  // post student record to server
+  const postInstituteRecord = async (data) => {
+    const response = await callApi('institute/create/', 'POST', data);
+    if (response) {
+      createNotification('success', 'filled');
+      // resetForm();
+      // setIsNext(true);
+      console.log('success message from backend', response);
+    } else {
+      createNotification('error', 'filled');
+    }
+  };
+
+  const onRegister = (values) => {
     const data = {
       name: values.institute,
-      address: `${values.district}, Kabul`,
-      province: "kabul", //Check the
+      code: values.code,
+      province: values.province.column,
       district: values.district,
       village: values.village,
-      type: values.instType.value,
-      inst_city_type: values.institueCityType.value,
-      inst_status: "1", //as it is registered for the first time so it is considered to be active
-      inst_climat: values.instituteClimate.value, //attribute name changed from inst_climaty to inst_climat
-      school_type: values.instituteType.value,
+      ownership: values.instType.value,
+      location_type: values.institueCityType.value,
+      status: 'active', //as it is registered for the first time so it is considered to be active
+      climate: values.instituteClimate.value,
+      institute_type: values.instituteType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
-      user_id: 1, //Make this id Dynamic of the user logged in
+      foundation_year: values.foundationYear,
+      shift: values.shift.value,
+      created_by: '1',
     };
-    console.log("VALUES: ", data);
-    const response = await callApi(
-      instituteId ? `institute/${instituteId}/` : "institute/institute_create/",
-      instituteId ? "PUT" : "POST",
-      data
-    );
-    if (response) {
-      setLoader(false);
-      message.success("Institute Added");
-      console.warn("success message from backend", response.data);
-      createNotification("success", "filled");
-      resetForm();
-      setIsNext(true);
-    } else {
-      createNotification("error", "filled");
-      console.log("class error");
-    }
+    console.log('data of the form', data);
+    postInstituteRecord(data);
   };
 
   return (
@@ -349,7 +402,18 @@ const InstituteRegister = () => {
             <Formik
               enableReinitialize={true}
               validateOnMount
-              initialValues={initialState}
+              initialValues={{
+                institute: initialInstituteName,
+                code: initialCode,
+                province: initialProvince,
+                district: initialDistrict,
+                village: initialVillage,
+                instType: initialInstType,
+                foundationYear: initialFoundationYear,
+                gender: initialGender,
+                shift: initialShift,
+
+              }}
               // validationSchema={ValidationSchema}
               onSubmit={onRegister}
             >
@@ -376,6 +440,19 @@ const InstituteRegister = () => {
                           </div>
                         )}
                       </FormGroup>
+                      
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="inst.name" /> */}
+                          code
+                        </Label>
+                        <Field className="form-control" name="code" />
+                        {errors.code && touched.code && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.code}
+                          </div>
+                        )}
+                      </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
                         <Label>
@@ -385,9 +462,10 @@ const InstituteRegister = () => {
                           name="province"
                           id="province"
                           value={values.province}
-                          options={provincesOptionsForList}
-                          onChange={setFieldValue}
+                          options={provinces}
+                          onChange={() => {setFieldValue; fetchDistricts(values.province.column)}}
                           onBlur={setFieldTouched}
+                          // onSelect={() => fetchDistricts(values.province.column)}
                         />
                         {errors.province && touched.province ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -395,12 +473,19 @@ const InstituteRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-
-                      <FormGroup className="form-group has-float-label error-l-175">
+                      
+                        <FormGroup className="form-group has-float-label">
                         <Label>
                           <IntlMessages id="forms.DistrictLabel" />
                         </Label>
-                        <Field className="form-control" name="district" />
+                        <FormikReactSelect
+                          name="district"
+                          id="district"
+                          value={values.district}
+                          options={districts}
+                          onChange={() => {setFieldValue; fetchDistricts(values.district.column)}}
+                          onBlur={setFieldTouched}
+                        />
                         {errors.district && touched.district ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.district}
@@ -417,6 +502,25 @@ const InstituteRegister = () => {
                         {errors.village && touched.village ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.village}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="forms.StudyTimeLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="shift"
+                          id="shift"
+                          value={values.shift}
+                          options={studyTimeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.shift && touched.shift ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.shift}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -540,6 +644,29 @@ const InstituteRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
+                      <FormGroup className="form-group has-float-label error-l-100 ">
+                                <Label>
+                                  {/* <IntlMessages id="forms.StdGraduationYearLabel" /> */}
+                                  foundation year
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <FormikReactSelect
+                                  name="foundationYear"
+                                  id="foundationYear"
+                                  value={values.foundationYear}
+                                  // later create years options and then pass it here
+                                  options={dateOfBirthOptoions}  
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                  required
+                                />
+                                {errors.foundationYear &&
+                                touched.foundationYear ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                    {errors.foundationYear}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
                       <div className="d-flex justify-content-between align-items-center float-right mb-5 mt-3">
                         <Button
                           className="m-4"

@@ -298,8 +298,8 @@ export const StudentTypeOptions = [
 ];
 
 export const studyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+  { value: 'morning', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
+  { value: 'night', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
 export const studyTimeOptionsForList = [

@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { dormGenderOptions } from '../global-data/options';
-import { provincesOptionsForList,  dateOfBirthOptoions, } from '../global-data/options';
+import { provincesOptionsForList,  dateOfBirthOptoions, studyTimeOptions } from '../global-data/options';
 import * as Yup from 'yup';
 
 import {
@@ -75,6 +75,10 @@ const InstituteRegister = () => {
   const [initialInstType, setInitialInstType] = useState([]);
   const [initialVillage, setInitialVillage] = useState('');
   const [initialFoundationYear, setInitialFoundationYear] = useState('');
+  const [initialShift, setInitialShift] = useState('');
+
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
 
   const [initialGender, setInitialGender] = useState([]);
 
@@ -113,6 +117,38 @@ const InstituteRegister = () => {
       setUpdateMode(true);
     }, []);
   }
+
+  const fetchProvinces = async () => {
+    const response = await callApi('core/province/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name 
+      }));
+      setProvinces(updatedData);
+    } else {
+      console.log('province error');
+    }
+  };
+
+  const fetchDistricts = async (provinceId) => {
+    console.log('provinceId', provinceId)
+    const response = await callApi(`core/district/?province=${provinceId}`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDistricts(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+
+  useEffect(() => {
+    fetchProvinces();
+  }, []);
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -245,15 +281,14 @@ const InstituteRegister = () => {
 
   // post student record to server
   const postInstituteRecord = async (data) => {
-    const response = await callApi('institute/institute_create', 'POST', data);
+    const response = await callApi('institute/create/', 'POST', data);
     if (response) {
       createNotification('success', 'filled');
-      resetForm();
-      setIsNext(true);
+      // resetForm();
+      // setIsNext(true);
       console.log('success message from backend', response);
     } else {
       createNotification('error', 'filled');
-      console.log('class error');
     }
   };
 
@@ -272,10 +307,11 @@ const InstituteRegister = () => {
       language: values.institueLanguage.value,
       gender: values.gender.value,
       foundation_year: values.foundationYear,
-      user_id: '1',
+      shift: values.shift.value,
+      created_by: '1',
     };
     console.log('data of the form', data);
-    // postInstituteRecord(data);
+    postInstituteRecord(data);
   };
 
   return (
@@ -298,6 +334,8 @@ const InstituteRegister = () => {
                 instType: initialInstType,
                 foundationYear: initialFoundationYear,
                 gender: initialGender,
+                shift: initialShift,
+
               }}
               // validationSchema={ValidationSchema}
               onSubmit={onRegister}
@@ -346,9 +384,10 @@ const InstituteRegister = () => {
                           name="province"
                           id="province"
                           value={values.province}
-                          options={provincesOptionsForList}
-                          onChange={setFieldValue}
+                          options={provinces}
+                          onChange={() => {setFieldValue; fetchDistricts(values.province.column)}}
                           onBlur={setFieldTouched}
+                          // onSelect={() => fetchDistricts(values.province.column)}
                         />
                         {errors.province && touched.province ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -356,12 +395,19 @@ const InstituteRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-
-                      <FormGroup className="form-group has-float-label error-l-175">
+                      
+                        <FormGroup className="form-group has-float-label">
                         <Label>
                           <IntlMessages id="forms.DistrictLabel" />
                         </Label>
-                        <Field className="form-control" name="district" />
+                        <FormikReactSelect
+                          name="district"
+                          id="district"
+                          value={values.district}
+                          options={districts}
+                          onChange={() => {setFieldValue; fetchDistricts(values.district.column)}}
+                          onBlur={setFieldTouched}
+                        />
                         {errors.district && touched.district ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.district}
@@ -378,6 +424,25 @@ const InstituteRegister = () => {
                         {errors.village && touched.village ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.village}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="forms.StudyTimeLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="shift"
+                          id="shift"
+                          value={values.shift}
+                          options={studyTimeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.shift && touched.shift ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.shift}
                           </div>
                         ) : null}
                       </FormGroup>

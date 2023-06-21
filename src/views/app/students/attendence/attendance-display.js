@@ -29,6 +29,7 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
+import DisplayMessage from 'components/messages/DisplayMessage';
 
 const LevelOfEdcationOptions = [
   { value: '1', label: 'اصلی' },
@@ -303,12 +304,13 @@ const StudentAttendance = ({ match }) => {
       'GET',
       null
     );
-    console.log('class repspossdfsde', response);
+    console.log('attendance repspossdfsde', response);
     if (response.data && response.status === 200) {
       setStudents(response.data);
+      console.log('response.data.students', response.data);
       setIsNext(true);
     } else {
-      console.log('class error');
+      console.log('attendance error');
     }
   };
 
@@ -418,6 +420,8 @@ const StudentAttendance = ({ match }) => {
                         </Label>
                         <Field
                           type="number"
+                          min="1350"
+                          max="1499"
                           id="educationlaYear"
                           className="form-control fieldStyle"
                           name="educationlaYear"
@@ -571,51 +575,55 @@ const StudentAttendance = ({ match }) => {
                 className="justify-content-center  border border"
                 style={{ marginInline: '10%' }}
               >
-                <table className="table">
-                  <thead className="thead-dark ">
-                    <tr>
-                      <th colspan="4" className="border text-center">
-                        <IntlMessages id="marks.studentChar" />
-                      </th>
-                      <th colspan="4" className="border text-center">
-                        <IntlMessages id="marks.marksDisplayTitle" />
-                      </th>
-                    </tr>
-                  </thead>
-                  <thead className="thead-dark">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="border text-center "
-                        style={{ maxWidth: '20px ', minWidth: '50px' }}
-                      >
-                        <IntlMessages id="marks.No" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FullName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.FatherName" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="marks.ID" />
-                      </th>
+                {students.length > 0 ? (
+                  <table className="table">
+                    <thead className="thead-dark ">
+                      <tr>
+                        <th colspan="4" className="border text-center">
+                          <IntlMessages id="marks.studentChar" />
+                        </th>
+                        <th colspan="4" className="border text-center">
+                          <IntlMessages id="marks.marksDisplayTitle" />
+                        </th>
+                      </tr>
+                    </thead>
+                    <thead className="thead-dark">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="border text-center "
+                          style={{ maxWidth: '20px ', minWidth: '50px' }}
+                        >
+                          <IntlMessages id="marks.No" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="marks.FullName" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="marks.FatherName" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="marks.ID" />
+                        </th>
 
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="forms.StdPresentLabel" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="forms.StdAbsentLabel" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="forms.StdNecessaryWorkLabel" />
-                      </th>
-                      <th scope="col" className="border text-center">
-                        <IntlMessages id="forms.StdSicknessLabel" />
-                      </th>
-                    </tr>
-                  </thead>
-                </table>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="forms.StdPresentLabel" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="forms.StdAbsentLabel" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="forms.StdNecessaryWorkLabel" />
+                        </th>
+                        <th scope="col" className="border text-center">
+                          <IntlMessages id="forms.StdSicknessLabel" />
+                        </th>
+                      </tr>
+                    </thead>
+                  </table>
+                ) : (
+                  <DisplayMessage type="error" message="معلومات شتون نلری" />
+                )}
               </Row>
 
               <Row
@@ -639,13 +647,13 @@ const StudentAttendance = ({ match }) => {
                     {students.map((student, index) => (
                       <tr>
                         <th scope="row">{index + 1}</th>
-                        <td>{student.name}</td>
-                        <td>{student.father_name}</td>
-                        <td>{student.student_id}</td>
-                        <td>89</td>
-                        <td>Absent</td>
-                        <td>NecessaryWork</td>
-                        <td>IllNess</td>
+                        <td>{student.student.name}</td>
+                        <td>{student.student.father_name}</td>
+                        <td>{student.student.student_id}</td>
+                        <td>{student.present_hours}</td>
+                        <td>{student.absent_hours}</td>
+                        <td>{student.necessary_work_hours}</td>
+                        <td>{student.sickness_hours}</td>
                       </tr>
                     ))}
                   </tbody>

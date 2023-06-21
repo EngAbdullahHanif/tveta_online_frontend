@@ -304,8 +304,8 @@ export const StudentTypeOptions = [
 ];
 
 export const studyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+  { value: 'morning', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
+  { value: 'night', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
 export const studyTimeOptionsForList = [
@@ -602,9 +602,9 @@ export const BuildingTypeOptions = [
 ];
 
 export const dormGenderOptions = [
-  { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
-  { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
-  { value: '3', label: <IntlMessages id="dorm.GenderOptions_3" /> },
+  { value: 'male', label: <IntlMessages id="dorm.GenderOptions_1" /> },
+  { value: 'female', label: <IntlMessages id="dorm.GenderOptions_2" /> },
+  { value: 'coed', label: <IntlMessages id="dorm.GenderOptions_3" /> },
 ];
 
 export const evaluationTypeOptions = [

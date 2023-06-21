@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { isAuthGuardActive } from 'constants/defaultValues';
-import { getCurrentUser } from './Utils';
+import { AuthContext } from 'context/AuthContext';
 
 const ProtectedRoute = ({
   component: Component,
   roles = undefined,
   ...rest
 }) => {
-
+  const { user } = useContext(AuthContext);
   const setComponent = (props) => {
+    console.log(props, 'propssssssssssssssssssssssssssssssssssssssssss');
     if (isAuthGuardActive) {
-      const currentUser = getCurrentUser();
-      console.log('currentUser of protected', currentUser.role)
-      if (currentUser) {
+      if (user) {
         if (roles) {
-          console.log('roles of protected', roles)
-          if (roles.includes(Number(currentUser.role))) {
-            return <Component {...props} />;
+          // console.log('roles of protected', roles)
+          const userRoles = user.groups;
+          for (let i = 0; i <= userRoles.length; i++) {
+            if (roles.includes(userRoles[i].name)) {
+              return <Component {...props} />;
+            }
           }
           return (
             <Redirect

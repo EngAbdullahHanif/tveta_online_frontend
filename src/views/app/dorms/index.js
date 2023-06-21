@@ -1,5 +1,7 @@
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { userRole } from 'constants/defaultValues';
 
 const DormList = React.lazy(() =>
   import(/* webpackChunkName: "dorm-list" */ './dorm-list/DormListMain')
@@ -29,38 +31,87 @@ const DormStudentDismissal = React.lazy(() =>
   import(/* webpackChunkName: "student-dismissal" */ './dorm-student-dismissal')
 );
 
-const Dorms = ({ match }) => (
+const Dorms = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/dorms`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/dorms`}
-        render={(props) => <DormList {...props} />}
+        component={DormList}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         exact
         path={`${match.url}/register`}
-        render={(props) => <DormRegister {...props} />}
+        component={DormRegister}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/register/:dormId`}
-        render={(props) => <DormRegister {...props} />}
+        component={DormRegister}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/students`}
-        render={(props) => <StudentDormList {...props} />}
+        component={StudentDormList}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/student-register`}
-        render={(props) => <StudentRegistrationInDorm {...props} />}
+        component={StudentRegistrationInDorm}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/dorm/:dormId`}
-        render={(props) => <DormProfile {...props} />}
+        component={DormProfile}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/student-dismissal`}
-        render={(props) => <DormStudentDismissal {...props} />}
+        component={DormStudentDismissal}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
       <Redirect to="/error" />
     </Switch>

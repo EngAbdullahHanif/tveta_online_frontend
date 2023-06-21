@@ -1,3 +1,5 @@
+import { userRole } from 'constants/defaultValues';
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -8,17 +10,31 @@ const Components = React.lazy(() =>
   import(/* webpackChunkName: "ui-components" */ './components')
 );
 
-const UI = ({ match }) => (
+const UI = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/forms`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/forms`}
-        render={(props) => <Forms {...props} />}
+        component={Forms}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/components`}
-        render={(props) => <Components {...props} />}
+        component={Components}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
       <Redirect to="/error" />
     </Switch>

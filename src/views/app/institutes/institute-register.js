@@ -3,7 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { dormGenderOptions } from '../global-data/options';
-import { provincesOptionsForList } from '../global-data/options';
+import {
+  provincesOptionsForList,
+  dateOfBirthOptoions,
+  studyTimeOptions,
+} from '../global-data/options';
 import * as Yup from 'yup';
 
 import {
@@ -29,33 +33,41 @@ import {
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-
+import { message, Spin } from 'antd';
+message.config({
+  top: 100,
+  duration: 2,
+  maxCount: 3,
+  rtl: true,
+  prefixCls: 'my-message',
+});
 const options = [
   { value: 'Electronic', label: 'الکترونیکی' },
   { value: 'paper', label: 'کاغذی' },
 ];
 
 const instTypeOptions = [
-  { value: '1', label: 'دولتی' },
-  { value: '1', label: 'شخصی' },
+  { value: 'governmental', label: 'دولتی' },
+  { value: 'private', label: 'شخصی' },
 ];
 
 const instituteCityOptions = [
-  { value: '1', label: 'شهری' },
-  { value: '2', label: 'دهاتی' },
+  { value: 'urban', label: 'شهری' },
+  { value: 'rural', label: 'دهاتی' },
 ];
 const instituteLanguageOptions = [
-  { value: '1', label: 'پښتو' },
-  { value: '2', label: 'دری' },
+  { value: 'pashto', label: 'پښتو' },
+  { value: 'dari', label: 'دری' },
 ];
 const instituteClimateOptions = [
-  { value: '1', label: 'سرد سیر' },
-  { value: '2', label: 'گرم سیر' },
-  { value: '3', label: 'زیاد سرد سیر' },
+  { value: 'cold', label: 'سرد سیر' },
+  { value: 'warm', label: 'گرم سیر' },
+  { value: 'very_cold', label: 'زیاد سرد سیر' },
 ];
 const instituteTypeOptions = [
-  { value: '1', label: 'انستیتوت' },
-  { value: '2', label: 'لیسه' },
+  { value: 'institute', label: 'انستیتوت' },
+  { value: 'high_school', label: 'لیسه' },
+  { value: 'special_education', label: 'تعلیمات خاص' },
 ];
 
 const servicePath = 'http://localhost:8000';
@@ -63,41 +75,112 @@ const instituteApiUrl = `${servicePath}/institute/institute_create`;
 //http://localhost:8000/institute/institute_create
 
 const InstituteRegister = () => {
+  const [loader, setLoader] = useState(false);
   const [updateMode, setUpdateMode] = useState(false);
   const { instituteId } = useParams();
   const [institute, setInstitute] = useState([]);
   const [initialInstituteName, setInitialInstituteName] = useState('');
-
+  const [initialCode, setInitialCode] = useState('');
   const [initialProvince, setInitialProvince] = useState('');
   const [initialDistrict, setInitialDistrict] = useState('');
   const [initialInstType, setInitialInstType] = useState([]);
   const [initialVillage, setInitialVillage] = useState('');
+  const [initialFoundationYear, setInitialFoundationYear] = useState('');
+  const [initialShift, setInitialShift] = useState('');
+
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
 
   const [initialGender, setInitialGender] = useState([]);
 
   const [isNext, setIsNext] = useState(false);
-  const [province, setProvince] = useState({});
-  const [instType, setInstType] = useState({});
-  const [gender, setGender] = useState({});
+  const [instituteTypeGVT, setInstituteTypeGVT] = useState([]);
+  const [cityType, setCityType] = useState([]);
+  const [climate, setClimate] = useState([]);
+  const [language, setLanguage] = useState([]);
   const [] = useState('وتاکئ / انتخاب کنید');
-
+  // const initialState = {
+  //   institute: instituteId ? institute.name : "",
+  //   province: instituteId ? institute.province : "",
+  //   district: instituteId ? institute.district : "",
+  //   village: instituteId ? institute.village : "",
+  //   instType: instituteId ? institute.type : "",
+  //   instituteType: instituteId ? institute.school_type : "",
+  //   institueCityType: instituteId ? institute.inst_city_type : "",
+  //   gender: instituteId ? institute.gender : "",
+  //   instituteClimate: instituteId ? institute.inst_climat : "",
+  //   institueLanguage: instituteId ? institute.language : "",
+  // };
+  const initialState = {
+    institute: initialInstituteName,
+    province: initialProvince,
+    district: initialDistrict,
+    village: initialVillage,
+    instType: initialInstType,
+    instituteType: instituteTypeGVT,
+    institueCityType: cityType,
+    gender: initialGender,
+    instituteClimate: climate,
+    institueLanguage: language,
+  };
+  console.log('InITIAL State: ', initialState);
   if (instituteId) {
+    let data;
     useEffect(() => {
       async function fetchInstitute() {
-        const { data } = await axios.get(`${instituteApiUrl}/${instituteId}`);
-        setInstitute(data);
-        console.log(data, 'object of the data');
-        setInitialInstituteName(data.name);
-        setInitialDistrict(data.district);
-        setInitialVillage(data.village);
+        const response = await callApi('institute/', '', null);
+        if (response.data && response.status === 200) {
+          console.log(
+            'RESPONSE in Fetch Institute for update: ',
+            response.data
+          );
+          const updatedData = await response.data.filter(
+            (item) => item.id == instituteId
+          );
+          data = updatedData[0];
+          console.log('UPDATED DATA: ', updatedData[0]);
+          setInstitute(updatedData[0]);
+          setInitialInstituteName(updatedData[0].name);
+          setInitialDistrict(updatedData[0].district);
+          setInitialVillage(updatedData[0].village);
+          setInitialProvince(updatedData[0].province);
+          setInstituteTypeGVT(updatedData[0].school_type);
+          setCityType(updatedData[0].inst_city_type);
+          setClimate(updatedData[0].inst_climat);
+
+          console.log('UPDATED Institute DATA: ', institute);
+        } else {
+          console.log('institute error');
+        }
+        //end
         const Instprovince = provincesOptionsForList.map((provName) => {
-          if (provName.label === data.province) {
+          if (provName.value === data.province) {
             setInitialProvince([provName]);
+          }
+        });
+        const instClimat = instituteClimateOptions.map((provName) => {
+          if (provName.value === data.inst_climat) {
+            setClimate([provName]);
+          }
+        });
+        const instType = instituteTypeOptions.map((provName) => {
+          if (provName.value === data.school_type) {
+            setInstituteTypeGVT([provName]);
+          }
+        });
+        const cityType = instituteCityOptions.map((provName) => {
+          if (provName.value === data.inst_city_type) {
+            setCityType([provName]);
           }
         });
         const instTypee = instTypeOptions.map((instType) => {
           if (instType.value === data.type) {
             setInitialInstType([instType]);
+          }
+        });
+        const languageType = instituteLanguageOptions.map((lang) => {
+          if (lang.value === data.language) {
+            setLanguage([lang]);
           }
         });
         const instGender = dormGenderOptions.map((instGender) => {
@@ -110,6 +193,41 @@ const InstituteRegister = () => {
       setUpdateMode(true);
     }, []);
   }
+
+  const fetchProvinces = async () => {
+    const response = await callApi('core/province/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setProvinces(updatedData);
+    } else {
+      console.log('province error');
+    }
+  };
+
+  const fetchDistricts = async (provinceId) => {
+    console.log('provinceId', provinceId);
+    const response = await callApi(
+      `core/district/?province=${provinceId}`,
+      'GET',
+      null
+    );
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDistricts(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+  useEffect(() => {
+    fetchProvinces();
+  }, []);
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -242,35 +360,36 @@ const InstituteRegister = () => {
 
   // post student record to server
   const postInstituteRecord = async (data) => {
-    const response = await callApi('institute/institute_create', 'POST', data);
+    const response = await callApi('institute/create/', 'POST', data);
     if (response) {
       createNotification('success', 'filled');
-      resetForm();
-      setIsNext(true);
+      // resetForm();
+      // setIsNext(true);
       console.log('success message from backend', response);
     } else {
       createNotification('error', 'filled');
-      console.log('class error');
     }
   };
 
   const onRegister = (values) => {
     const data = {
       name: values.institute,
-      address: `${values.district}, ${values.province.value}`,
-      province: values.province.value,
+      code: values.code,
+      province: values.province.column,
       district: values.district,
       village: values.village,
-      type: values.instType.value,
-      inst_city_type: values.institueCityType.value,
-      inst_status: '1', //as it is registered for the first time so it is considered to be active
-      inst_climaty: values.instituteClimate.value,
-      school_type: values.instituteType.value,
+      ownership: values.instType.value,
+      location_type: values.institueCityType.value,
+      status: 'active', //as it is registered for the first time so it is considered to be active
+      climate: values.instituteClimate.value,
+      institute_type: values.instituteType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
-      user_id: '1',
+      foundation_year: values.foundationYear,
+      shift: values.shift.value,
+      created_by: '1',
     };
-    //console.log('data of the form', data);
+    console.log('data of the form', data);
     postInstituteRecord(data);
   };
 
@@ -278,7 +397,11 @@ const InstituteRegister = () => {
     <>
       <Card>
         <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
-          {<IntlMessages id="inst.register.title" />}
+          {instituteId ? (
+            <IntlMessages id="ده انستیتوت اپډیډ" />
+          ) : (
+            <IntlMessages id="inst.register.title" />
+          )}
         </h3>
         <CardBody>
           {!isNext ? (
@@ -287,11 +410,14 @@ const InstituteRegister = () => {
               validateOnMount
               initialValues={{
                 institute: initialInstituteName,
+                code: initialCode,
                 province: initialProvince,
                 district: initialDistrict,
                 village: initialVillage,
                 instType: initialInstType,
+                foundationYear: initialFoundationYear,
                 gender: initialGender,
+                shift: initialShift,
               }}
               // validationSchema={ValidationSchema}
               onSubmit={onRegister}
@@ -302,6 +428,7 @@ const InstituteRegister = () => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                handleChange,
                 resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right  error-l-200">
@@ -320,6 +447,19 @@ const InstituteRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
+                        <Label>
+                          {/* <IntlMessages id="inst.name" /> */}
+                          code
+                        </Label>
+                        <Field className="form-control" name="code" />
+                        {errors.code && touched.code && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.code}
+                          </div>
+                        )}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.ProvinceLabel" />
                         </Label>
@@ -327,9 +467,13 @@ const InstituteRegister = () => {
                           name="province"
                           id="province"
                           value={values.province}
-                          options={provincesOptionsForList}
-                          onChange={setFieldValue}
+                          options={provinces}
+                          onChange={() => {
+                            setFieldValue;
+                            fetchDistricts(values.province.column);
+                          }}
                           onBlur={setFieldTouched}
+                          // onSelect={() => fetchDistricts(values.province.column)}
                         />
                         {errors.province && touched.province ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -342,7 +486,17 @@ const InstituteRegister = () => {
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.DistrictLabel" />
                         </Label>
-                        <Field className="form-control" name="district" />
+                        <FormikReactSelect
+                          name="district"
+                          id="district"
+                          value={values.district}
+                          options={districts}
+                          onChange={() => {
+                            setFieldValue;
+                            fetchDistricts(values.district.column);
+                          }}
+                          onBlur={setFieldTouched}
+                        />
                         {errors.district && touched.district ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.district}
@@ -359,6 +513,25 @@ const InstituteRegister = () => {
                         {errors.village && touched.village ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.village}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="forms.StudyTimeLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="shift"
+                          id="shift"
+                          value={values.shift}
+                          options={studyTimeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.shift && touched.shift ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.shift}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -482,6 +655,28 @@ const InstituteRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
+                      <FormGroup className="form-group has-float-label error-l-100 ">
+                        <Label>
+                          {/* <IntlMessages id="forms.StdGraduationYearLabel" /> */}
+                          foundation year
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="foundationYear"
+                          id="foundationYear"
+                          value={values.foundationYear}
+                          // later create years options and then pass it here
+                          options={dateOfBirthOptoions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.foundationYear && touched.foundationYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.foundationYear}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                       <div className="d-flex justify-content-between align-items-center float-right mb-5 mt-3">
                         <Button
                           className="m-4"
@@ -489,6 +684,7 @@ const InstituteRegister = () => {
                           type="submit"
                           color="primary"
                         >
+                          <Spin color="#fff" spinning={loader} />
                           <span className="spinner d-inline-block ">
                             <span className="bounce1" />
                             <span className="bounce2" />

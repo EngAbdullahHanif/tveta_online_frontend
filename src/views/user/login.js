@@ -17,7 +17,6 @@ import axios from 'axios';
 const productionURL = 'http://172.16.105.244/tveta';
 const localURL = 'http://localhost:8000';
 
-const win = window.sessionStorage;
 const Login = ({ history, loading, error, loginUserAction }) => {
   const authContext = useContext(AuthContext);
   const [email] = useState('');
@@ -37,34 +36,25 @@ const Login = ({ history, loading, error, loginUserAction }) => {
     }
   }, [error]);
 
-  // const onUserLogin = (values) => {
-  //   loginUserAction(values, history);
-  //   if (!loading) {
-  //     if (values.email !== "" && values.password !== "") {
-  //     }
-  //   }
-  // };
   const onUserLogin = (values) => {
-    // alert("logged");
-    console.log(values);
     axios
-      .post(`${localURL}/user/login/`, {
+      .post(`${localURL}/auth/login/`, {
         username: values.username,
         password: values.password,
       })
       .then((response) => {
         // alert("User Logged");
-        message.success(response.data.msg);
+        // message.success(response.data.msg);
         console.log('Data: ', response.data);
-        console.log('Token: ', response.data.token);
-        let loggedUser = jwt_decode(response.data.token.access);
+        console.log('Token: ', response.data.access);
+        let loggedUser = jwt_decode(response.data.access);
         console.log('Logged User in Token: ', loggedUser);
-        authContext.setUser(response.data.data);
-        win.setItem('user', response.data.data);
-        // window.location.href = window.location.origin;
+        authContext.setUser(response.data.user);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('current_user', response.data.user); //this should be removed after conflict resolved
+        localStorage.setItem('access_token', response.data.access);
         // return response.data;
       })
-      .then(() => console.log('AUth User: ', authContext.user))
       .catch((err) => {
         console.log('error of response', err);
         message.error('Network Error');

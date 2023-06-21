@@ -299,7 +299,7 @@ const MarksRegistration = ({ match }) => {
   const fechtStudens = async () => {
     console.log('subject', selectedSubject.value);
     const response = await callApi(
-      `api/second-chance-exam-students/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
+      `api/class-marks/list/second-chance/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
       '',
       null
     );
@@ -326,7 +326,7 @@ const MarksRegistration = ({ match }) => {
     const newStudents = students.map((student, index) => {
       return {
         student_id: student.student_id,
-        score: values.score[student.student_id],
+        marks: values.score[student.student_id],
       };
     });
 

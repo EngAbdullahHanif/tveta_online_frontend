@@ -25,7 +25,7 @@ function Authentication(props) {
         render={(props) => <ViewUnauthorized {...props} />}
       />
       <Route path="/" exact render={(props) => <ViewHome {...props} />} />
-      <Redirect to="/error" />
+      <Redirect to="/" />
     </Switch>
   );
 }

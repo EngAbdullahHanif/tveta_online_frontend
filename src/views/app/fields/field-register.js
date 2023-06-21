@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import callApi from 'helpers/callApi';
-import { NotificationManager } from 'components/common/react-notifications';
-import * as Yup from 'yup';
-import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
-import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
-import { FormikReactSelect } from '../../../containers/form-validations/FormikFields';
+import React, { useState, useEffect } from "react";
+import { Formik, Form, Field } from "formik";
+import callApi from "helpers/callApi";
+import { NotificationManager } from "components/common/react-notifications";
+import * as Yup from "yup";
+import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
+import IntlMessages from "helpers/IntlMessages";
+import { Colxx } from "components/common/CustomBootstrap";
+import { FormikReactSelect } from "../../../containers/form-validations/FormikFields";
 
 const SignupSchema = Yup.object().shape({
   fieldId: Yup.string().required(<IntlMessages id="field.FieldIdErr" />),
@@ -39,7 +39,7 @@ const FieldRegister = () => {
 
   //fetch sector list
   const fetchSectors = async () => {
-    const response = await callApi('institute/sectors/', 'GET', null);
+    const response = await callApi("institute/sectors/", "GET", null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -47,7 +47,7 @@ const FieldRegister = () => {
       }));
       setSectorOptions(updatedData);
     } else {
-      console.log('class error');
+      console.log("class error");
     }
   };
   useEffect(() => {
@@ -55,56 +55,56 @@ const FieldRegister = () => {
   }, []);
 
   const createNotification = (type, className) => {
-    const cName = className || '';
+    const cName = className || "";
     switch (type) {
-      case 'success':
+      case "success":
         NotificationManager.success(
-          'رشته موفقانه ثبت شوو',
-          'موفقیت',
+          "رشته موفقانه ثبت شوو",
+          "موفقیت",
           3000,
           null,
           null,
           cName
         );
         break;
-      case 'error':
+      case "error":
         NotificationManager.error(
-          'رشته ثبت نشو، بیا کوشش وکری',
-          'خطا',
+          "رشته ثبت نشو، بیا کوشش وکری",
+          "خطا",
           9000,
           () => {
-            alert('callback');
+            alert("callback");
           },
           null,
           cName
         );
         break;
       default:
-        NotificationManager.info('Info message');
+        NotificationManager.info("Info message");
         break;
     }
   };
 
   // post student record to server
   const postStudentRecord = async (data) => {
-    const response = await callApi('institute/field-create/', 'POST', data);
+    const response = await callApi("institute/field-create/", "POST", data);
     if (response) {
-      createNotification('success', 'filled');
+      createNotification("success", "filled");
       setIsNext(true);
-      console.log('success message', response.data);
+      console.log("success message", response.data);
     } else {
-      createNotification('error', 'filled');
-      console.log('class error');
+      createNotification("error", "filled");
+      console.log("class error");
     }
   };
   const onSubmit = (values, { resetForm }) => {
     resetForm();
     //remove the user_id after authentication is done
     const data = {
-      name: values.name,
-      english_name: values.english_name,
+      name: values.fieldName,
+      english_name: values.fieldEnglishName,
       sector: values.sector.value,
-      user_id: '1',
+      user_id: 1,
     };
     postStudentRecord(data);
   };
@@ -119,9 +119,9 @@ const FieldRegister = () => {
           {!isNext ? (
             <Formik
               initialValues={{
-                fieldId: '',
-                fieldName: '',
-                fieldEnglishName: '',
+                fieldId: "",
+                fieldName: "",
+                fieldEnglishName: "",
                 sector: [],
               }}
               // validationSchema={SignupSchema}
@@ -193,8 +193,8 @@ const FieldRegister = () => {
                     </Colxx>
                   </Row>
                   <Row>
-                    {' '}
-                    <Colxx style={{ marginLeft: '5%', marginBottom: '8%' }}>
+                    {" "}
+                    <Colxx style={{ marginLeft: "5%", marginBottom: "8%" }}>
                       <Button
                         className="float-right m-5 "
                         size="lg"
@@ -221,7 +221,7 @@ const FieldRegister = () => {
           ) : (
             <div
               className="wizard-basic-step text-center pt-3 "
-              style={{ minHeight: '400px' }}
+              style={{ minHeight: "400px" }}
             >
               <div>
                 <h1 className="mb-2">

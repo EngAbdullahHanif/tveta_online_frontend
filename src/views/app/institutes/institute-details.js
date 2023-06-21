@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-import './../dorms/dorm-register.css';
+import React, { useState } from "react";
+import { Formik, Form, Field } from "formik";
+import CustomSelectInput from "components/common/CustomSelectInput";
+import "./../dorms/dorm-register.css";
 
-import * as Yup from 'yup';
+import * as Yup from "yup";
 import {
   Row,
   Card,
@@ -13,18 +13,18 @@ import {
   Button,
   CardTitle,
   Input,
-} from 'reactstrap';
-import Select from 'react-select';
+} from "reactstrap";
+import Select from "react-select";
 
-import IntlMessages from 'helpers/IntlMessages';
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import IntlMessages from "helpers/IntlMessages";
+import { Colxx, Separator } from "components/common/CustomBootstrap";
 
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-import { useEffect } from 'react';
+} from "containers/form-validations/FormikFields";
+import { useEffect } from "react";
 
 const InstituteDetails = (values) => {
   const [isNext, setIsNext] = useState(true);
@@ -33,7 +33,7 @@ const InstituteDetails = (values) => {
   };
 
   const onRegister = (values) => {
-    console.log(' The Values', values);
+    console.log(" The Values", values);
   };
 
   return (
@@ -55,7 +55,7 @@ const InstituteDetails = (values) => {
               <Row className="">
                 <Colxx>
                   <b>
-                    {' '}
+                    {" "}
                     <IntlMessages id="institute.totalStudentsMale" />
                   </b>
                   <p>58 نفر</p>
@@ -81,7 +81,7 @@ const InstituteDetails = (values) => {
               <Row className="">
                 <Colxx>
                   <b>
-                    {' '}
+                    {" "}
                     <IntlMessages id="institute.totalStudentsMale" />
                   </b>
                   <p>58 نفر</p>
@@ -107,7 +107,7 @@ const InstituteDetails = (values) => {
               <Row className="">
                 <Colxx>
                   <b>
-                    {' '}
+                    {" "}
                     <IntlMessages id="institute.totalStudentsMale" />
                   </b>
                   <p>58 نفر</p>
@@ -133,7 +133,7 @@ const InstituteDetails = (values) => {
               <Row className="">
                 <Colxx>
                   <b>
-                    {' '}
+                    {" "}
                     <IntlMessages id="institute.totalStudentsMale" />
                   </b>
                   <p>58 نفر</p>

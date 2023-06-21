@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import './../dorms/dorm-register.css';
 import './provincail-dashboard.css';
@@ -6,6 +6,7 @@ import Calendar from 'containers/dashboards/Calendar';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { NavLink } from 'react-router-dom';
 import { adminRoot } from 'constants/defaultValues';
+import { AuthContext } from 'context/AuthContext';
 import {
   DoughnutChart,
   LineChart,
@@ -52,11 +53,18 @@ import Rating from 'components/common/Rating';
 import { studyTimeOptionsForList } from './../global-data/options';
 
 const Admin = (values, { className = '', displayRate = false }) => {
+  const { user, setUser } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(true);
   const handleClick = (event) => {
     setIsNext(event);
   };
-
+  useEffect(() => {
+    console.log('Auth User in Dashboard: ', user);
+    console.log(
+      'Auth User in Dashboard Local Storage: ',
+      JSON.parse(localStorage.getItem('user'))
+    );
+  });
   const onRegister = (values) => {
     console.log(' The Values', values);
   };

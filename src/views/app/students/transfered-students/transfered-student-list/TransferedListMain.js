@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import IntlMessages from 'helpers/IntlMessages';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import IntlMessages from "helpers/IntlMessages";
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './TransferedListHeading';
-import { provinceOptions } from '../../../global-data/options';
-import ListPageListing from './TransferedListCatagory';
-import useMousetrap from 'hooks/use-mousetrap';
+import ListPageHeading from "./TransferedListHeading";
+import { provinceOptions } from "../../../global-data/options";
+import ListPageListing from "./TransferedListCatagory";
+import useMousetrap from "hooks/use-mousetrap";
+import DisplayMessage from "components/messages/DisplayMessage";
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -18,7 +19,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+const servicePath = "http://localhost:8000";
 const apiUrl = `${servicePath}/cakes/paging`;
 const studentApiUrl = `${servicePath}/api/`;
 const studentInstituteApiUrl = `${servicePath}/api/student_institutes/`;
@@ -27,59 +28,59 @@ const TransferedStudentsAPI = `${servicePath}/api/student_institutes/?is_transfe
 //http://localhost:8000/api/student_institutes/?institute=&type=&language=&time=&student_id=&educational_year=&is_transfer=2
 
 const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
+  { column: "title", label: "Product Name" },
+  { column: "category", label: "Category" },
+  { column: "status", label: "Status" },
 ];
 const pageSizes = [10, 20, 40, 80];
 
 const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
+  { label: "Cakes", value: "Cakes", key: 0 },
+  { label: "Cupcakes", value: "Cupcakes", key: 1 },
+  { label: "Desserts", value: "Desserts", key: 2 },
 ];
 const genderOptions = [
   {
-    column: 'all',
-    label: 'تول / همه',
+    column: "all",
+    label: "تول / همه",
   },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
+  { column: "1", label: "ذکور" },
+  { column: "2", label: "اناث" },
 ];
 
 const ThumbListPages = ({ match, item_list }) => {
-  console.log('item_list', item_list);
+  console.log("item_list", item_list);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [displayMode, setDisplayMode] = useState('thumblist');
+  const [displayMode, setDisplayMode] = useState("thumblist");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'title',
-    label: 'Product Name',
+    column: "title",
+    label: "Product Name",
   });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
   const [institutes, setInstitutes] = useState();
-  const [institute, setInstitute] = useState('');
+  const [institute, setInstitute] = useState("");
 
-  const [studentId, setStudentId] = useState('');
-  const [province, setProvince] = useState('');
-  const [district, setDistrict] = useState('');
+  const [studentId, setStudentId] = useState("");
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
   const [transferedStudents, setsetTransferedStudentsTra] = useState([]);
   const [selectedGenderOption, setSelectedGenderOption] = useState({
-    column: 'all',
-    label: 'جنیست',
+    column: "all",
+    label: "جنیست",
   });
   const [selectedProvinceOption, setSelectedProvinceOption] = useState({
-    column: 'all',
-    label: 'ولایت',
+    column: "all",
+    label: "ولایت",
   });
 
   useEffect(() => {
@@ -87,8 +88,8 @@ const ThumbListPages = ({ match, item_list }) => {
   }, []);
   const onCheckItem = (event, id) => {
     if (
-      event.target.tagName === 'A' ||
-      (event.target.parentElement && event.target.parentElement.tagName === 'A')
+      event.target.tagName === "A" ||
+      (event.target.parentElement && event.target.parentElement.tagName === "A")
     ) {
       return true;
     }
@@ -106,8 +107,8 @@ const ThumbListPages = ({ match, item_list }) => {
 
     if (event.shiftKey) {
       let newItems = [...items];
-      const start = getIndex(id, newItems, 'id');
-      const end = getIndex(lastChecked, newItems, 'id');
+      const start = getIndex(id, newItems, "id");
+      const end = getIndex(lastChecked, newItems, "id");
       newItems = newItems.slice(Math.min(start, end), Math.max(start, end) + 1);
       selectedItems.push(
         ...newItems.map((item) => {
@@ -135,8 +136,8 @@ const ThumbListPages = ({ match, item_list }) => {
 
   const onContextMenuClick = (e, data) => {
     // params : (e,data,target)
-    console.log('onContextMenuClick - selected items', selectedItems);
-    console.log('onContextMenuClick - action : ', data.action);
+    console.log("onContextMenuClick - selected items", selectedItems);
+    console.log("onContextMenuClick - action : ", data.action);
   };
 
   const onContextMenu = (e, data) => {
@@ -148,18 +149,18 @@ const ThumbListPages = ({ match, item_list }) => {
     return true;
   };
 
-  useMousetrap(['ctrl+a', 'command+a'], () => {
+  useMousetrap(["ctrl+a", "command+a"], () => {
     handleChangeSelectAll(false);
   });
 
-  useMousetrap(['ctrl+d', 'command+d'], () => {
+  useMousetrap(["ctrl+d", "command+d"], () => {
     setSelectedItems([]);
     return false;
   });
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
-  console.log('item data', items);
+  console.log("item data", items);
   return !isLoaded ? (
     <div className="loading" />
   ) : (
@@ -187,7 +188,7 @@ const ThumbListPages = ({ match, item_list }) => {
           selectedItemsLength={selectedItems ? selectedItems.length : 0}
           itemsLength={items ? items.length : 0}
           onSearchKey={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               setSearch(e.target.value.toLowerCase());
             }
           }}
@@ -209,17 +210,17 @@ const ThumbListPages = ({ match, item_list }) => {
           genderOptions={genderOptions}
           provinceOptions={provinceOptions}
           onIdSearchKey={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               setStudentId(e.target.value.toLowerCase());
             }
           }}
           onProvinceSearchKey={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               setProvince(e.target.value.toLowerCase());
             }
           }}
           onDistrictSearchKey={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               setDistrict(e.target.value.toLowerCase());
             }
           }}
@@ -232,38 +233,38 @@ const ThumbListPages = ({ match, item_list }) => {
         <table className="table">
           <thead
             className="pl-2 d-flex flex-grow-1  table-dark mb-2"
-            style={{ maxHeight: '55px' }}
+            style={{ maxHeight: "55px" }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
               <th
                 style={{
-                  width: '10.4%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "10.4%",
+                  paddingInline: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
                 <IntlMessages id="marks.No" />
               </th>
               <th
                 style={{
-                  width: '10.1%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "10.1%",
+                  paddingInline: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
                 <IntlMessages id="marks.ID" />
               </th>
               <th
                 style={{
-                  width: '15%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "15%",
+                  paddingInline: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
                 <IntlMessages id="forms.StdName" />
@@ -271,52 +272,56 @@ const ThumbListPages = ({ match, item_list }) => {
 
               <th
                 style={{
-                  width: '18%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "18%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
                 <IntlMessages id="student.previousInstitute" />
               </th>
               <th
                 style={{
-                  width: '18%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "18%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
-                {' '}
+                {" "}
                 <IntlMessages id="student.newInstitute" />
               </th>
               <th
                 style={{
-                  width: '18%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
+                  width: "18%",
+                  padding: "0%",
+                  textAlign: "right",
+                  borderStyle: "hidden",
+                  fontSize: "20px",
                 }}
               >
-                {' '}
+                {" "}
                 <IntlMessages id="dorm.yearList" />
               </th>
             </tr>
           </thead>
-          <ListPageListing
-            items={item_list}
-            displayMode={displayMode}
-            selectedItems={selectedItems}
-            onCheckItem={onCheckItem}
-            currentPage={currentPage}
-            totalPage={totalPage}
-            onContextMenuClick={onContextMenuClick}
-            onContextMenu={onContextMenu}
-            onChangePage={setCurrentPage}
-          />
+          {item_list.length > 0 ? (
+            <ListPageListing
+              items={item_list}
+              displayMode={displayMode}
+              selectedItems={selectedItems}
+              onCheckItem={onCheckItem}
+              currentPage={currentPage}
+              totalPage={totalPage}
+              onContextMenuClick={onContextMenuClick}
+              onContextMenu={onContextMenu}
+              onChangePage={setCurrentPage}
+            />
+          ) : (
+            <DisplayMessage type="error" message="معلومات شتون نلری" />
+          )}
         </table>
       </div>
     </>

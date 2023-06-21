@@ -306,6 +306,7 @@ const StudentAttendance = ({ match }) => {
     console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       setStudents(response.data);
+      console.log('response.data.students', response.data);
       setIsNext(true);
     } else {
       console.log('class error');
@@ -639,13 +640,14 @@ const StudentAttendance = ({ match }) => {
                     {students.map((student, index) => (
                       <tr>
                         <th scope="row">{index + 1}</th>
-                        <td>{student.name}</td>
-                        <td>{student.father_name}</td>
-                        <td>{student.student_id}</td>
-                        <td>Present</td>
-                        <td>Absent</td>
-                        <td>NecessaryWork</td>
-                        <td>IllNess</td>
+                        <td>{student.student.name}</td>
+                        <td>{student.student.father_name}</td>
+                        <td>{student.student.student_id}</td>
+                        <td>{student.present_hours}</td>
+                        <td>{student.absent_hours}</td>
+                        <td>{student.necessary_work_hours
+}</td>
+                        <td>{student.sickness_hours}</td>
                       </tr>
                     ))}
                   </tbody>

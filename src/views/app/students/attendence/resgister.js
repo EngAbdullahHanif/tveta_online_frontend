@@ -249,11 +249,11 @@ const StudentAttendance = ({ match }) => {
   const fetchStudentList = async () => {
     console.log('Div Inner Side');
     const response = await callApi(
-      `api/student-for-marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/class-students-list/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}`,
       'GET',
       null
     );
-    console.log('Div Inner Side');
+    console.log('Div Inner Side', selectedEducationalYear.value);
     console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       setStudents(response.data);
@@ -304,7 +304,7 @@ const StudentAttendance = ({ match }) => {
 
   const onSubmit = async (values) => {
     // setIsSubmitted(true);
-    const educationalYear = selectedEducationalYear;
+    const educationalYear = selectedEducationalYear.value;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
     const classId = selectedClass.value;
@@ -333,7 +333,6 @@ const StudentAttendance = ({ match }) => {
         department_id: departmentId,
         class_id: classId,
         subject_id: subjectId,
-        user_id: currentUser(),
       },
       ...newStudents,
     ];
@@ -341,7 +340,7 @@ const StudentAttendance = ({ match }) => {
     console.log('data', data);
 
     const response = await callApi(
-      'api/students-attendance-create/',
+      'api/class-attendance/create/',
       'POST',
       data
     );
@@ -416,6 +415,9 @@ const StudentAttendance = ({ match }) => {
                           options={educationalYearsOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
+                          onClick={setSelectedEducationalYear(
+                            values.educationalYear
+                          )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">

@@ -90,7 +90,7 @@ const StudentsDismissal = (values) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
+        <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {<IntlMessages id="student.dismissalFromDormTitle" />}
         </h3>
         <CardBody>
@@ -115,7 +115,7 @@ const StudentsDismissal = (values) => {
                           className="av-tooltip tooltip-label-bottom"
                           style={{ height: '300px' }}
                         >
-                          <Label>
+                          <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                             <IntlMessages id="search.studentIdSearchLabel" />
                           </Label>
                           <div class="input-group mb-3 error-l-175 ">
@@ -135,7 +135,10 @@ const StudentsDismissal = (values) => {
                                   <span className="bounce2" />
                                   <span className="bounce3" />
                                 </span>
-                                <span className="label">
+                                <span
+                                  className="label"
+                                  style={{ fontSize: 20, fontWeight: 'bold' }}
+                                >
                                   <IntlMessages id="search.studentId" />
                                 </span>
                               </Button>
@@ -162,7 +165,7 @@ const StudentsDismissal = (values) => {
                   <Colxx style={{ paddingInline: '3%' }}>
                     {studentIdMatch ? (
                       <div className="border rounded">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <h6 className="mt-5 m-5">
                             {<IntlMessages id="dorm.SearchResult" />}
                           </h6>

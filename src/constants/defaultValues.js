@@ -1,9 +1,9 @@
 export const userRole = {
-  superUser: 1,
-  admin: 2,
-  provincial: 3,
-  institute: 4,
-  user: 5,
+  superUser: 'super_admin',
+  admin: 'admin',
+  provincial: 'provincial',
+  institute: 'institute',
+  user: 'user',
 };
 
 /* 

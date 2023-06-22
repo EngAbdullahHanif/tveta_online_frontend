@@ -1,76 +1,80 @@
-import React, { Suspense } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-import { getCurrentUser } from "helpers/Utils";
-import { ProtectedRoute } from "helpers/authHelper";
-import { userRole } from "constants/defaultValues";
-import singleStudentSingleSubjectMarks from "./single-student-single-subject-marks";
-import singleStudentAttendace from "./attendence/single-student-attendace";
-import ClassTransfer from "./transfered-students/class-transfer";
+import React, { Suspense } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { getCurrentUser } from 'helpers/Utils';
+import { ProtectedRoute } from 'helpers/authHelper';
+import { userRole } from 'constants/defaultValues';
+import singleStudentSingleSubjectMarks from './single-student-single-subject-marks';
+import singleStudentAttendace from './attendence/single-student-attendace';
+import ClassTransfer from './transfered-students/class-transfer';
 const Register = React.lazy(() =>
-  import(/* webpackChunkName: "register" */ "./bio/register")
+  import(/* webpackChunkName: "register" */ './bio/register')
 );
 
 const RegisterKankor = React.lazy(() =>
-  import(/* webpackChunkName: "kankor-result" */ "./bio/register-kankor")
+  import(/* webpackChunkName: "kankor-result" */ './bio/register-kankor')
 );
 
 const StudentList = React.lazy(() =>
   import(
-    /* webpackChunkName: "student-list" */ "./bio/students-list/StudentListMain"
+    /* webpackChunkName: "student-list" */ './bio/students-list/StudentListMain'
   )
 );
 
 const KankorStudentList = React.lazy(() =>
   import(
-    /* webpackChunkName: "kankor-student-list" */ "./bio/kankor-students-list/KankorStudentListMain"
+    /* webpackChunkName: "kankor-student-list" */ './bio/kankor-students-list/KankorStudentListMain'
   )
 );
 const DismissedStudentList = React.lazy(() =>
   import(
-    /* webpackChunkName: "kankor-student-list" */ "./dismissed-students/dismissed-students"
+    /* webpackChunkName: "kankor-student-list" */ './dismissed-students/dismissed-students'
   )
 );
 const TransferedStudentList = React.lazy(() =>
   import(
-    /* webpackChunkName: "kankor-student-list" */ "./transfered-students/transfered-students"
+    /* webpackChunkName: "kankor-student-list" */ './transfered-students/transfered-students'
   )
 );
-
+const DTStudentProfile = React.lazy(() =>
+  import(
+    /* webpackChunkName: "kankor-student-list" */ './dissmised-and-transfered-student-profile'
+  )
+);
 const MarksRegistration = React.lazy(() =>
-  import(/* webpackChunkName: "marks-register" */ "./marks-register")
+  import(/* webpackChunkName: "marks-register" */ './marks-register')
 );
 const AttendanceRegistration = React.lazy(() =>
-  import(/* webpackChunkName: "attendance-register" */ "./attendence/resgister")
+  import(/* webpackChunkName: "attendance-register" */ './attendence/resgister')
 );
 const StudentProfile = React.lazy(() =>
-  import(/* webpackChunkName: "student-profile" */ "./bio/student-profile")
+  import(/* webpackChunkName: "student-profile" */ './bio/student-profile')
 );
 const StudentTransfer = React.lazy(() =>
-  import(/* webpackChunkName: "student-transfer" */ "./student-transfer")
+  import(/* webpackChunkName: "student-transfer" */ './student-transfer')
 );
 const MarksDisplay = React.lazy(() =>
-  import(/* webpackChunkName: "marks-display" */ "./subject-marks")
+  import(/* webpackChunkName: "marks-display" */ './subject-marks')
 );
 const MarksVerification = React.lazy(() =>
-  import(/* webpackChunkName: "marks-display" */ "./subject-marks-verification")
+  import(/* webpackChunkName: "marks-display" */ './subject-marks-verification')
 );
 const MarksDisplayAllSubs = React.lazy(() =>
-  import(/* webpackChunkName: "marks-display-allsubs" */ "./class-marks")
+  import(/* webpackChunkName: "marks-display-allsubs" */ './class-marks')
 );
 const AttendanceDisplay = React.lazy(() =>
-  import(/* webpackChunkName: "attendance" */ "./attendence/attendance-display")
+  import(/* webpackChunkName: "attendance" */ './attendence/attendance-display')
 );
 const AttendanceList = React.lazy(() =>
   import(
-    /* webpackChunkName: "student-list" */ "./attendence/attendance-list/AttendanceListMain"
+    /* webpackChunkName: "student-list" */ './attendence/attendance-list/AttendanceListMain'
   )
 );
 const Reports = React.lazy(() =>
-  import(/* webpackChunkName: "reports" */ "./reports")
+  import(/* webpackChunkName: "reports" */ './reports')
 );
-const Test = React.lazy(() => import(/* webpackChunkName: "test" */ "./test"));
+const Test = React.lazy(() => import(/* webpackChunkName: "test" */ './test'));
 const Dismissal = React.lazy(() =>
-  import(/* webpackChunkName: "dismissal" */ "./student-dismissal")
+  import(/* webpackChunkName: "dismissal" */ './student-dismissal')
 );
 // const Dismissal = React.lazy(() =>
 //   import(
@@ -79,32 +83,32 @@ const Dismissal = React.lazy(() =>
 // );
 
 const Reregister = React.lazy(() =>
-  import(/* webpackChunkName: "reregister" */ "./reregister")
+  import(/* webpackChunkName: "reregister" */ './reregister')
 );
 
 const SecondChanceMarks = React.lazy(() =>
   import(
-    /* webpackChunkName: "second-chance-marks register" */ "./second-chance-marks-register"
+    /* webpackChunkName: "second-chance-marks register" */ './second-chance-marks-register'
   )
 );
 
 const SingleStudentMarksUpdate = React.lazy(() =>
-  import(/* webpackChunkName: "marks-update" */ "./single-student-marksUpdate")
+  import(/* webpackChunkName: "marks-update" */ './single-student-marksUpdate')
 );
 
 const StudentUpgrade = React.lazy(() =>
-  import(/* webpackChunkName: "student-upgrade" */ "./student-upgrade")
+  import(/* webpackChunkName: "student-upgrade" */ './student-upgrade')
 );
 
 const StudentClassStatusUpgrade = React.lazy(() =>
   import(
-    /* webpackChunkName: "student-upgrade" */ "./students-class-status-upgrade"
+    /* webpackChunkName: "student-upgrade" */ './students-class-status-upgrade'
   )
 );
 
 const MarkStatusCheckedStudents = React.lazy(() =>
   import(
-    /* webpackChunkName: "student-upgrade" */ "./marks-status-checked-students"
+    /* webpackChunkName: "student-upgrade" */ './marks-status-checked-students'
   )
 );
 
@@ -114,23 +118,23 @@ const MarkStatusCheckedStudents = React.lazy(() =>
 
 const AttendanceUpdate = React.lazy(() =>
   import(
-    /* webpackChunkName: "attendance-update" */ "./attendence/update-attendance"
+    /* webpackChunkName: "attendance-update" */ './attendence/update-attendance'
   )
 );
 
 const KankorProfile = React.lazy(() =>
-  import(/* webpackChunkName: "attendance-update" */ "./bio/kankor-profile")
+  import(/* webpackChunkName: "attendance-update" */ './bio/kankor-profile')
 );
 
 const DepartmentChange = React.lazy(() =>
-  import(/* webpackChunkName: "attendance-update" */ "./department-change")
+  import(/* webpackChunkName: "attendance-update" */ './department-change')
 );
 
 const SectionChange = React.lazy(() =>
-  import(/* webpackChunkName: "attendance-update" */ "./section-change")
+  import(/* webpackChunkName: "attendance-update" */ './section-change')
 );
 const Main = React.lazy(() =>
-  import(/* webpackChunkName: "register-1" */ "../main-register-route")
+  import(/* webpackChunkName: "register-1" */ '../main-register-route')
 );
 
 const Students = ({ match, props }) => {

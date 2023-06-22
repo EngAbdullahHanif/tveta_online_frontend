@@ -1,30 +1,30 @@
-import { message } from "antd";
+import { message } from 'antd';
 message.config({
   top: 100,
   duration: 2,
   maxCount: 3,
   rtl: true,
-  prefixCls: "my-message",
+  prefixCls: 'my-message',
 });
-import axios from "axios";
+import axios from 'axios';
 
 // const servicePath = 'http://172.16.105.244/tveta'; #production mood
 // const servicePath = "localhost:8000";
-const servicePath = "http://127.0.0.1:8000";
+const servicePath = 'http://127.0.0.1:8000';
 
 const start_date = '2023-06-01';
 const end_date = '2023-06-30';
 
 //  get the API headers
 const getHeaders = (data) => {
-  const user = localStorage.getItem("user");
-  const access_token = localStorage.getItem("access_token");
+  const user = localStorage.getItem('user');
+  const access_token = localStorage.getItem('access_token');
 
   if (user && access_token) {
     const headers = { Authorization: `Bearer ${access_token}` };
     if (data instanceof FormData) {
-      console.log("data instanceof FormData", data instanceof FormData);
-      headers["Content-Type"] = "multipart/form-data";
+      console.log('data instanceof FormData', data instanceof FormData);
+      headers['Content-Type'] = 'multipart/form-data';
     }
     return headers;
   } else {
@@ -33,11 +33,11 @@ const getHeaders = (data) => {
 };
 
 // make API calls
-const callApi = async (endpoint, method = "get", data = null) => {
+const callApi = async (endpoint, method = 'get', data = null) => {
   const headers = getHeaders(data);
-  console.log("HEaders: ", headers);
+  console.log('HEaders: ', headers);
   const url = `${servicePath}/${endpoint}`;
-  console.log("DATA in API Call: " + endpoint, data);
+  console.log('DATA in API Call: ' + endpoint, data);
   // add current user id to the data
   // if (data && data instanceof FormData) {
   //   console.log("Formdata format", data);
@@ -46,7 +46,7 @@ const callApi = async (endpoint, method = "get", data = null) => {
   //   data.user_id = 1;
   //   // data.user_id = localStorage.getItem("user").user_id;
   // }
-  console.log("the url is", url);
+  console.log('the url is', url);
   try {
     const response = await axios({
       method,
@@ -54,12 +54,12 @@ const callApi = async (endpoint, method = "get", data = null) => {
       headers,
       data,
     });
-    console.log("CALL API Response: on " + endpoint, response.data);
+    console.log('CALL API Response: on ' + endpoint, response.data);
     return response;
   } catch (error) {
-    console.log("Error in API: ", error);
+    console.log('Error in API: ', error);
     if (error.response && error.response.status === 404) {
-      throw new Error("Resource not found");
+      throw new Error('Resource not found');
     } else {
       throw error;
     }

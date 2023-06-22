@@ -16,7 +16,9 @@ import CarPhoto3 from '../assets/img/blog/45.png';
 import Shahamat from '../assets/img/blog/9090.JPG';
 import Photo55 from '../assets/img/blog/img1000.jpeg';
 import mansoor from '../assets/img/blog/mansoor.jpeg';
-import rasikh from '../assets/img/blog/rasikh.JPG';
+import rasikh from '../assets/img/blog/rasikh1.jpg';
+import sartaj from '../assets/img/blog/sartaj.jpg';
+import suhaib from '../assets/img/blog/suhaib.jpeg';
 
 import hanif from '../assets/img/blog/hanif.jpeg';
 import CarPhoto22 from '../assets/img/blog/Car22.png';
@@ -769,10 +771,19 @@ const Home = () => {
                           </span>
                         </h4>
                         <div className="text-center">
-                          <a href="#" class="fa fa-facebook" id="fa"></a>
-                          <a href="#" class="fa fa-twitter"></a>
-                          <a href="#" class="fa fa-linkedin"></a>
-                          <a href="#" class="fa fa-youtube"></a>
+                          {/* <a href="#" class="fa fa-twitter"></a> */}
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://www.linkedin.com/in/sharif-rasekh"
+                            class="fa fa-linkedin-square"
+                            target="_blank"
+                          ></a>
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://github.com/SharifRasekh"
+                            class="fa fa-github-square"
+                            target="_blank"
+                          ></a>
                         </div>
                       </div>
                     </Card>
@@ -808,15 +819,23 @@ const Home = () => {
                           </span>
                         </h4>
                         <div className="text-center">
-                          <a href="#" class="fa fa-facebook" id="fa"></a>
-                          <a href="#" class="fa fa-twitter"></a>
-                          <a href="#" class="fa fa-linkedin"></a>
-                          <a href="#" class="fa fa-youtube"></a>
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://www.linkedin.com/in/engabdullahhanif/"
+                            class="fa fa-linkedin-square"
+                            target="_blank"
+                          ></a>
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://github.com/EngAbdullahHanif"
+                            class="fa fa-github-square"
+                            target="_blank"
+                          ></a>
                         </div>
                       </div>
                     </Card>
                   </Colxx>
-
+                  {/* samiullah Rahimi */}
                   <Colxx
                     xxs="12"
                     sm="4"
@@ -847,53 +866,24 @@ const Home = () => {
                           </span>
                         </h4>
                         <div className="text-center">
-                          <a href="#" class="fa fa-facebook" id="fa"></a>
-                          <a href="#" class="fa fa-twitter"></a>
-                          <a href="#" class="fa fa-linkedin"></a>
-                          <a href="#" class="fa fa-youtube"></a>
+                          {/* <a href="#" class="fa fa-twitter"></a> */}
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="linkedin.com/in/samiullah-rahimi-64974a20b"
+                            class="fa fa-linkedin-square"
+                            target="_blank"
+                          ></a>
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://github.com/sami643"
+                            class="fa fa-github-square"
+                            target="_blank"
+                          ></a>
                         </div>
                       </div>
                     </Card>
                   </Colxx>
-                  {/* Mansoor AhmadZai */}
-                  <Colxx
-                    xxs="12"
-                    sm="4"
-                    md="2"
-                    style={{
-                      minWidth: '300px',
-                      maxWidth: '300px',
-                      marginBottom: '3%',
-                    }}
-                  >
-                    <Card
-                      style={{ borderRadius: '10px' }}
-                      className="containerCard"
-                    >
-                      {' '}
-                      <img
-                        src={mansoor}
-                        class="developers-member-img"
-                        id="img1"
-                        style={{ margin: '', width: 'auto' }}
-                      />
-                      <div className="p-3">
-                        <h4 class="developers-member-name text-left pr-4">
-                          Mansoor Ahmadzai
-                          <span>
-                            <br />
-                            Backend Developer
-                          </span>
-                        </h4>
-                        <div className="text-center">
-                          <a href="#" class="fa fa-facebook" id="fa"></a>
-                          <a href="#" class="fa fa-twitter"></a>
-                          <a href="#" class="fa fa-linkedin"></a>
-                          <a href="#" class="fa fa-youtube"></a>
-                        </div>
-                      </div>
-                    </Card>
-                  </Colxx>
+
                   {/* Noman Ahmadi */}
                   <Colxx
                     xxs="12"
@@ -925,10 +915,164 @@ const Home = () => {
                           </span>
                         </h4>
                         <div className="text-center">
-                          <a href="#" class="fa fa-facebook" id="fa"></a>
-                          <a href="#" class="fa fa-twitter"></a>
-                          <a href="#" class="fa fa-linkedin"></a>
-                          <a href="#" class="fa fa-youtube"></a>
+                          {/* <a href="#" class="fa fa-twitter"></a> */}
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://www.linkedin.com/in/noman-ahmadi-690490248/"
+                            class="fa fa-linkedin-square"
+                            target="_blank"
+                          ></a>
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://github.com/Noman-Ahmadi"
+                            class="fa fa-github-square"
+                            target="_blank"
+                          ></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                </Row>
+                <Row className="justify-content-center m-4 d-flex-block ">
+                  {/* Mansoor AhmadZai */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={mansoor}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Mansoor Ahmadzai
+                          <span>
+                            <br />
+                            Backend Developer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          {/* <a href="#" class="fa fa-twitter"></a> */}
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="linkedin.com/in/mansoor-ahmadzai-a5364417b"
+                            class="fa fa-linkedin-square"
+                            target="_blank"
+                          ></a>
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://github.com/ManAhmadzai"
+                            class="fa fa-github-square"
+                            target="_blank"
+                          ></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Sartaj Ahmad */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={sartaj}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Sartaj Ahmad
+                          <span>
+                            <br />
+                            Software Security Engineer
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          {/* <a href="#" class="fa fa-twitter"></a> */}
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://www.linkedin.com/in/sartajahmad01/"
+                            class="fa fa-linkedin-square"
+                            target="_blank"
+                          ></a>
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://github.com/SeSartaj"
+                            class="fa fa-github-square"
+                            target="_blank"
+                          ></a>
+                        </div>
+                      </div>
+                    </Card>
+                  </Colxx>
+                  {/* Suhaib Qanooni */}
+                  <Colxx
+                    xxs="12"
+                    sm="4"
+                    md="2"
+                    style={{
+                      minWidth: '300px',
+                      maxWidth: '300px',
+                      marginBottom: '3%',
+                    }}
+                  >
+                    <Card
+                      style={{ borderRadius: '10px' }}
+                      className="containerCard"
+                    >
+                      {' '}
+                      <img
+                        src={suhaib}
+                        class="developers-member-img"
+                        id="img1"
+                        style={{ margin: '', width: 'auto' }}
+                      />
+                      <div className="p-3">
+                        <h4 class="developers-member-name text-left pr-4">
+                          Suhaib Qanooni
+                          <span>
+                            <br />
+                            Software Quality Assurance
+                          </span>
+                        </h4>
+                        <div className="text-center">
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://www.linkedin.com/in/suhaibqanooni/"
+                            class="fa fa-linkedin-square"
+                            target="_blank"
+                          ></a>
+                          <a
+                            style={{ fontSize: 30 }}
+                            href="https://github.com/suhaibqanooni"
+                            class="fa fa-github-square"
+                            target="_blank"
+                          ></a>
                         </div>
                       </div>
                     </Card>

@@ -10,7 +10,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
     "@trendyol-js/react-carousel": "^3.0.2",
-    "antd": "^5.6.1",
+    "antd": "^5.6.2",
     "availity-reactstrap-validation": "^2.7.1",
     "axios": "^0.21.4",
     "canvasjs": "^1.8.3",

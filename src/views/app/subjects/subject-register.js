@@ -124,7 +124,7 @@ const SubjectRegister = () => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
+        <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {<IntlMessages id="subject.register.title" />}
         </h3>
         <CardBody>
@@ -146,7 +146,7 @@ const SubjectRegister = () => {
                   <Row className="justify-content-center">
                     <Colxx xxs="10">
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="subject.name" />
                         </Label>
                         <Field className="form-control" name="name1" />
@@ -158,7 +158,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="subject.english_name" />
                         </Label>
                         <Field
@@ -174,7 +174,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="subject.code" />
                         </Label>
                         <Field
@@ -191,7 +191,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="subject.credits" />
                         </Label>
                         <Field
@@ -208,7 +208,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="subject.type" />
                         </Label>
                         <FormikReactSelect
@@ -227,7 +227,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="subject.system_type" />
                         </Label>
                         <FormikReactSelect
@@ -260,7 +260,10 @@ const SubjectRegister = () => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span className="label">
+                        <span
+                          className="label"
+                          style={{ fontSize: 18, fontWeight: 'bold' }}
+                        >
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

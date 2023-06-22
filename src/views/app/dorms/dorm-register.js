@@ -268,7 +268,9 @@ const DormRegistration = (values) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">{<IntlMessages id="dorm.RegisterTitle" />}</h3>
+        <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
+          {<IntlMessages id="dorm.RegisterTitle" />}
+        </h3>
         <CardBody>
           {!isNext ? (
             <Formik
@@ -290,7 +292,7 @@ const DormRegistration = (values) => {
                     <Colxx xxs="">
                       {/* Dorm Name */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.NameLabel" />
                         </Label>
                         <Field className="form-control" name="name1" />
@@ -303,7 +305,7 @@ const DormRegistration = (values) => {
 
                       {/* Dorm Capicity */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.CapicityLabel" />
                         </Label>
                         <Field
@@ -320,7 +322,7 @@ const DormRegistration = (values) => {
 
                       {/* Building Type */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.BuildingTypeLabel" />
                         </Label>
                         <FormikReactSelect
@@ -343,7 +345,7 @@ const DormRegistration = (values) => {
                         <div>
                           {/* DormOwner */}
                           <FormGroup className="form-group has-float-label">
-                            <Label>
+                            <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                               <IntlMessages id="dorm.PublicBuildingOwnerLabel" />
                             </Label>
                             <FormikReactSelect
@@ -367,7 +369,7 @@ const DormRegistration = (values) => {
                         <div>
                           {/* Private Building Students */}
                           <FormGroup className="form-group has-float-label">
-                            <Label>
+                            <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                               <IntlMessages id="dorm.PrivateBuildingTypeLabel" />
                             </Label>
                             <FormikReactSelect
@@ -391,7 +393,7 @@ const DormRegistration = (values) => {
 
                       {/* Total Number of Kitchen*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.TotalKitchensLabel" />
                         </Label>
                         <Field
@@ -408,7 +410,7 @@ const DormRegistration = (values) => {
 
                       {/* province permanent*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.ProvinceLabel" />
                         </Label>
                         <FormikReactSelect
@@ -430,7 +432,7 @@ const DormRegistration = (values) => {
                     <Colxx xxs="">
                       {/* Dorm Gender*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.Gender" />
                         </Label>
                         <FormikReactSelect
@@ -451,7 +453,7 @@ const DormRegistration = (values) => {
 
                       {/* Dorm Quota(Sahmiya) */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.QuotaLabel" />
                         </Label>
                         <Field
@@ -468,7 +470,7 @@ const DormRegistration = (values) => {
 
                       {/* Total Number of Buildings*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.TotalBuildingNoLabel" />
                         </Label>
                         <Field
@@ -485,7 +487,7 @@ const DormRegistration = (values) => {
 
                       {/* Total Number of Rooms*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.TotalRoomsLabel" />
                         </Label>
                         <Field
@@ -502,7 +504,7 @@ const DormRegistration = (values) => {
 
                       {/* Total Number of Toilet*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.ToiletLabel" />
                         </Label>
                         <Field
@@ -519,7 +521,7 @@ const DormRegistration = (values) => {
 
                       {/* District  permanent*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.DistrictLabel" />
                         </Label>
                         <Field className="form-control" name="district" />
@@ -545,7 +547,10 @@ const DormRegistration = (values) => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span className="label">
+                        <span
+                          className="label"
+                          style={{ fontSize: 18, fontWeight: 'bold' }}
+                        >
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

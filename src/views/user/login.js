@@ -38,21 +38,20 @@ const Login = ({ history, loading, error, loginUserAction }) => {
 
   const onUserLogin = (values) => {
     axios
-      .post(`${localURL}/user/login/`, {
+      .post(`${localURL}/auth/login/`, {
         username: values.username,
         password: values.password,
       })
       .then((response) => {
-        // alert("User Logged");
-        message.success(response.data.msg);
+        message.success(" شه راغلاست / خوش امدید");
         console.log("Data: ", response.data);
-        console.log("Token: ", response.data.token);
-        let loggedUser = jwt_decode(response.data.token.access);
+        console.log("Token: ", response.data.access);
+        let loggedUser = jwt_decode(response.data.access);
         console.log("Logged User in Token: ", loggedUser);
-        authContext.setUser(response.data.data);
-        localStorage.setItem("user", JSON.stringify(response.data.data));
-        localStorage.setItem("current_user", response.data.data); //this should be removed after conflict resolved
-        localStorage.setItem("access_token", response.data.token.access);
+        authContext.setUser(response.data.user);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("current_user", response.data.user); //this should be removed after conflict resolved
+        localStorage.setItem("access_token", response.data.access);
         // return response.data;
       })
       .catch((err) => {

@@ -8,11 +8,9 @@ message.config({
 });
 import axios from 'axios';
 
-import config from '../config';
-
 // const servicePath = 'http://172.16.105.244/tveta'; #production mood
 // const servicePath = "localhost:8000";
-const servicePath = config.API_URL;
+const servicePath = 'http://127.0.0.1:8000';
 
 const start_date = '2023-06-01';
 const end_date = '2023-06-30';

@@ -247,6 +247,7 @@ const StudentAttendance = ({ match }) => {
 
   // fetch student list for typing attendance
   const fetchStudentList = async () => {
+    console.log('educatinll yera', selectedEducationalYear);
     console.log('Div Inner Side');
     const response = await callApi(
       `api/class-students-list/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}`,
@@ -414,6 +415,9 @@ const StudentAttendance = ({ match }) => {
                           value={values.educationalYear}
                           options={educationalYearsOptions}
                           onChange={setFieldValue}
+                          onClick={setSelectedEducationalYear(
+                            values.educationalYear
+                          )}
                           onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
                             values.educationalYear

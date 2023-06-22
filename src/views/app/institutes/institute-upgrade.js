@@ -107,7 +107,7 @@ const InstituteUpgrade = (values) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
+        <h3 className="mt-5 m-5" style={{ fontSize: 25, fontWeight: 'bold' }}>
           {<IntlMessages id="institute.UpgradeTitle" />}
         </h3>
         <CardBody>
@@ -122,7 +122,7 @@ const InstituteUpgrade = (values) => {
                   <div>
                     {' '}
                     <Row className="justify-content-center inlineBlock">
-                      <Label>
+                      <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                         <IntlMessages id="search.instituteIdSearchLabel" />
                       </Label>
                       <div class="input-group mb-3">

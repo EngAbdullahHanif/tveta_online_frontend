@@ -18,9 +18,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-import config from '../../../../../config';
-
-const servicePath = config.API_URL;
+const servicePath = 'http://localhost:8000';
 const kankorStudentApiUrl = `${servicePath}/api/kankorResults/`;
 const instituteApiUrl = `${servicePath}/institute/`;
 
@@ -46,7 +44,7 @@ const genderOptions = [
 ];
 
 const ThumbListPages = ({ match }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
@@ -150,6 +148,8 @@ const ThumbListPages = ({ match }) => {
       //   });
 
       const response = await callApi(`api/kankorResults/`, '', null);
+      setItems(response.data);
+      console.log('fetching data from the server', response);
       if (response.data && response.status === 200) {
         setItems(response.data);
         setSelectedItems([]);

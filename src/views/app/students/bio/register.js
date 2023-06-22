@@ -46,10 +46,10 @@ import * as Yup from 'yup';
 import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
-import config from '../../../../config';
+import { async } from 'q';
 
 //import { Controller } from 'react';
-const servicePath = config.API_URL;
+const servicePath = 'http://localhost:8000';
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
 
@@ -72,99 +72,115 @@ const studentProvince = [
 ];
 
 const StudentRegistration = ({ intl }, values) => {
-  const { updateStudentId } = useParams();
-  console.log('student_id', updateStudentId);
-  if (updateStudentId) {
+  const { studentId } = useParams();
+
+  console.log('student_id', studentId);
+  if (studentId) {
     useEffect(() => {
       async function fetchStudent() {
         // const { data } = await axios.get(
         //   `api/?student_id=${updateStudentId}`
         // );
         const { data } = await callApi(
-          `api/?student_id=${updateStudentId}`,
+          `api/?student_id=${studentId}`,
           '',
           null
         );
-        console.log('responsasdfsadfe', data);
-        setInitialname1(data[0].name);
-        setInitialLastName(data[0].last_name);
-        setInitialFatherName(data[0].father_name);
-        setInitialGrandFatherName(data[0].grand_father_name);
-        setInitialFatherDuty(data[0].fatherـprofession);
-        setInitialLastNameEng(data[0].english_last_name);
+        console.log('the backend server data', data.results[0]);
 
+        setInitialname1(data.results[0].name);
+        setInitialLastName(data.results[0].last_name);
+        setInitialFatherName(data.results[0].father_name);
+        setInitialGrandFatherName(data.results[0].grand_father_name);
+        setInitialFatherDuty(data.results[0].fatherـprofession);
+        setInitialLastNameEng(data.results[0].english_last_name);
         const instGender = genderOptions.map((studentGender) => {
-          if (studentGender.value === data[0].gender) {
+          if (studentGender.value === data.results[0].gender) {
             setInitialGender(studentGender);
           }
         });
-
-        setInitialEnglishName(data[0].english_name);
-        setInitialPhoneNo(data[0].phone_number);
-        setInitialDoB(data[0].birth_date);
-        setInitialFatherDutyLocation(data[0].fatherـplaceـofـduty);
-        if (data[0].sukuk_number) setInitialTazkiraType(tazkiraOptions[1]);
+        const dateOfBirthOptions = dateOfBirthOptoions.map((yearOptions) => {
+          if (yearOptions.value === data.results[0].birth_date) {
+            setInitialDoB(yearOptions);
+          }
+        });
+        const graduationYear = educationalYearsOptions.map((yearOptions) => {
+          if (yearOptions.value === data.results[0].finished_grade_year) {
+            setInitialGraduationYear(yearOptions);
+          }
+        });
+        setInitialEnglishName(data.results[0].english_name);
+        setInitialPhoneNo(data.results[0].phone_number);
+        setInitialFatherDutyLocation(data.results[0].fatherـplaceـofـduty);
+        if (data.results[0].sukuk_number)
+          setInitialTazkiraType(tazkiraOptions[1]);
         else setInitialTazkiraType(tazkiraOptions[0]);
-        setInitialFatherEngName(data[0].english_father_name);
-        setInitialPlaceOfBirth(data[0].main_province);
-        setInitialTazkiraNo(data[0].sukuk_number);
-        setInitialEmail(data[0].email);
-        setInitialIdCardPageNo(data[0].page_number);
-        setInitialIdCardJoldNo(data[0].cover_number);
-        setInitialPreSchool(data[0].school);
-        setInitialGraduationYear(data[0].finished_grade_year);
-        setInitialLevelOfEducation(educationLevelOptions[0]);
-
-        // const studentFinishGrade = educationLevelOptions.map(
-        //   (finishedGrade) => {
-        //     if (educationLevelOptions.label === data[0].finished_grade) {
-        //       setInitialLevelOfEducation(educationLevelOptions[1]);
-        //     }
-        //   }
-        // );
-        const studentMainProvincee = studentProvince.map((studentProvince) => {
-          if (studentProvince.label === data[0].main_province) {
+        setInitialFatherEngName(data.results[0].english_father_name);
+        setInitialPlaceOfBirth(data.results[0].main_province);
+        setInitialTazkiraNo(data.results[0].registration_number);
+        setInitialEmail(data.results[0].email);
+        setInitialIdCardPageNo(data.results[0].page_number);
+        setInitialStudentId(data.results[0].cover_number);
+        setInitialPreSchool(data.results[0].school);
+        const studentFinishGrade = educationLevelOptions.map(
+          (finishedGrade) => {
+            if (finishedGrade.value === data.results[0].finished_grade) {
+              setInitialLevelOfEducation(finishedGrade);
+            }
+          }
+        );
+        const studentMainProvincee = provinceOptions.map((studentProvince) => {
+          if (studentProvince.value === data.results[0].main_province) {
             setInitialProvince(studentProvince);
           }
         });
-
-        const studentCurrentProvince = studentProvince.map(
+        const studentCurrentProvince = provinceOptions.map(
           (studentProvince) => {
-            if (studentProvince.label === data[0].current_province) {
+            if (studentProvince.value === data.results[0].current_province) {
               setInitialC_Province(studentProvince);
             }
           }
         );
-
-        const studentSchoolProvince = studentProvince.map((studentProvince) => {
-          if (studentProvince.label === data[0].schoolـprovince) {
+        const studentSchoolProvince = provinceOptions.map((studentProvince) => {
+          if (studentProvince.value === data.results[0].schoolـprovince) {
             setInitialSchoolProvince(studentProvince);
           }
         });
-
-        setInitialDistrict(data[0].main_district);
-        setInitialVillage(data[0].main_village);
-        setInitialC_District(data[0].current_district);
-        setInitialC_Village(data[0].current_village);
-        setInitialInstitute(data[0].school);
-        setInitialEducationalYear(data[0].finished_grade_year);
+        setInitialDistrict(data.results[0].main_district);
+        setInitialVillage(data.results[0].main_village);
+        setInitialC_District(data.results[0].current_district);
+        setInitialC_Village(data.results[0].current_village);
+        setInitialIdCardPageNo(data.results[0].page_number);
+        setInitialIdCardJoldNo(data.results[0].cover_number);
+        // setInitialInstitute(data[0].school);
+        // setInitialEducationalYear(data[0].finished_grade_year);
         // setInitialKankorId(data[0].kankor_id);
-        setInitialStudentId(data[0].student_id);
-        setInitialClass(data[0].graduat_12_types);
-        setInitialInteranceType(data[0].internse_type);
-        setInitialDepartment(data[0].kankor_id);
-        setInitialBatch(data[0].kankor_id);
-        setInitialMediumOfInstruction(data[0].kankor_id);
-        setInitialStudyTime(data[0].kankor_id);
-        setInitialStudentType(data[0].student_type);
-        setInitialField(data[0].field);
-        setInitialSector(data[0].sector);
-        setInitialphoto(data[0].photo);
+        // setInitialStudentId(data[0].student_id);
+        // setInitialClass(data[0].graduat_12_types);
+        // setInitialInteranceType(data[0].internse_type);
+        // setInitialDepartment(data[0].kankor_id);
+        // setInitialBatch(data[0].kankor_id);
+        // setInitialMediumOfInstruction(data[0].kankor_id);
+        // setInitialStudyTime(data[0].kankor_id);
+        // setInitialStudentType(data[0].student_type);
+        // setInitialField(data[0].field);
+        // setInitialSector(data[0].sector);
+        // setInitialphoto(data[0].photo);
+      }
+      async function fetchStudentDepartment() {
+        const { data } = await callApi(
+          `api/student_institutes/?student_id=${studentId}`,
+          '',
+          null
+        );
+        console.log('student department data', data);
       }
       fetchStudent();
+      fetchStudentDepartment();
       //setUpdateMode(true);
     }, []);
   }
+
   const [initialname1, setInitialname1] = useState('');
   const [initialLastName, setInitialLastName] = useState('');
   const [initialFatherName, setInitialFatherName] = useState('');
@@ -218,7 +234,95 @@ const StudentRegistration = ({ intl }, values) => {
   const [classs, setClasss] = useState([]);
   const [sectors, setSectors] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [fields, setFields] = useState({
+    name1: initialname1,
+    fatherName: initialFatherName,
+    lastName: initialLastName,
+    lastNameEng: initialLastNameEng,
+    fatherDuty: initialFatherDuty,
+    englishName: initialEnglishName,
+    fatherEngName: initialFatherEngName,
+    grandFatherName: initialGrandFatherName,
+    fatherDutyLocation: initialFatherDutyLocation,
+    placeOfBirth: initialPlaceOfBirth,
+    DoB: initialDoB,
+    gender: initialGender,
+    tazkiraNo: initialTazkiraNo,
+    phoneNo: initialPhoneNo,
+    email: initialEmail,
+    idCardPageNo: initialIdCardPageNo,
+    idCardJoldNo: initialIdCardJoldNo,
+    tazkiraType: initialTazkiraType,
+    levelOfEducation: initialLevelOfEducation,
+    preSchool: initialPreSchool,
+    graduationYear: initialGraduationYear,
+    schoolProvince: initialSchoolProvince,
+    province: initialProvince,
+    C_Province: initialC_Province,
+    C_District: initialC_District,
+    district: initialDistrict,
+    village: initialVillage,
+    C_Village: initialC_Village,
+    institute: initialInstitute,
+    class: initialClass,
+    educationalYear: initialEducationalYear,
+    department: initialDepartment,
+    mediumOfInstruction: initialMediumOfInstruction,
+    // kankorId: initialKankorId,
+    studentId: initialStudentId,
+    studyTime: initialStudyTime,
+    interanceType: initialInteranceType,
+    studentType: initialStudentType,
+    batch: initialBatch,
+    field: initialField,
+    sector: initialSector,
+    file: initialphoto,
+  });
 
+  const initialValues = {
+    name1: initialname1,
+    fatherName: initialFatherName,
+    lastName: initialLastName,
+    lastNameEng: initialLastNameEng,
+    fatherDuty: initialFatherDuty,
+    englishName: initialEnglishName,
+    fatherEngName: initialFatherEngName,
+    grandFatherName: initialGrandFatherName,
+    fatherDutyLocation: initialFatherDutyLocation,
+    placeOfBirth: initialPlaceOfBirth,
+    DoB: initialDoB,
+    gender: initialGender,
+    tazkiraNo: initialTazkiraNo,
+    phoneNo: initialPhoneNo,
+    email: initialEmail,
+    idCardPageNo: initialIdCardPageNo,
+    idCardJoldNo: initialIdCardJoldNo,
+    tazkiraType: initialTazkiraType,
+    levelOfEducation: initialLevelOfEducation,
+    preSchool: initialPreSchool,
+    graduationYear: initialGraduationYear,
+    schoolProvince: initialSchoolProvince,
+    province: initialProvince,
+    C_Province: initialC_Province,
+    C_District: initialC_District,
+    district: initialDistrict,
+    village: initialVillage,
+    C_Village: initialC_Village,
+    institute: initialInstitute,
+    class: initialClass,
+    educationalYear: initialEducationalYear,
+    department: initialDepartment,
+    mediumOfInstruction: initialMediumOfInstruction,
+    // kankorId: initialKankorId,
+    studentId: initialStudentId,
+    studyTime: initialStudyTime,
+    interanceType: initialInteranceType,
+    studentType: initialStudentType,
+    batch: initialBatch,
+    field: initialField,
+    sector: initialSector,
+    file: initialphoto,
+  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -345,50 +449,6 @@ const StudentRegistration = ({ intl }, values) => {
   const forms = [createRef(null), createRef(null), createRef(null)];
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [fields, setFields] = useState({
-    name1: initialname1,
-    fatherName: initialFatherName,
-    lastName: initialLastName,
-    lastNameEng: initialLastNameEng,
-    fatherDuty: initialFatherDuty,
-    englishName: initialEnglishName,
-    fatherEngName: initialFatherEngName,
-    grandFatherName: initialGrandFatherName,
-    fatherDutyLocation: initialFatherDutyLocation,
-    placeOfBirth: initialPlaceOfBirth,
-    DoB: initialDoB,
-    gender: initialGender,
-    tazkiraNo: initialTazkiraNo,
-    phoneNo: initialPhoneNo,
-    email: initialEmail,
-    idCardPageNo: initialIdCardPageNo,
-    idCardJoldNo: initialIdCardJoldNo,
-    tazkiraType: initialTazkiraType,
-    levelOfEducation: initialLevelOfEducation,
-    preSchool: initialPreSchool,
-    graduationYear: initialGraduationYear,
-    schoolProvince: initialSchoolProvince,
-    province: initialProvince,
-    C_Province: initialC_Province,
-    C_District: initialC_District,
-    district: initialDistrict,
-    village: initialVillage,
-    C_Village: initialC_Village,
-    institute: initialInstitute,
-    class: initialClass,
-    educationalYear: initialEducationalYear,
-    department: initialDepartment,
-    mediumOfInstruction: initialMediumOfInstruction,
-    // kankorId: initialKankorId,
-    studentId: initialStudentId,
-    studyTime: initialStudyTime,
-    interanceType: initialInteranceType,
-    studentType: initialStudentType,
-    batch: initialBatch,
-    field: initialField,
-    sector: initialSector,
-    file: initialphoto,
-  });
 
   const onClickNext = (goToNext, steps, step, values) => {
     if (steps.length - 1 <= steps.indexOf(step)) {
@@ -516,28 +576,9 @@ const StudentRegistration = ({ intl }, values) => {
                 <Formik
                   innerRef={forms[0]}
                   enableReinitialize={true}
-                  initialValues={{
-                    name1: fields.name1,
-                    fatherName: fields.fatherName,
-                    lastName: fields.lastName,
-                    lastNameEng: fields.lastNameEng,
-                    fatherDuty: fields.fatherDuty,
-                    englishName: fields.englishName,
-                    fatherEngName: fields.fatherEngName,
-                    grandFatherName: fields.grandFatherName,
-                    fatherDutyLocation: fields.fatherDutyLocation,
-                    placeOfBirth: fields.placeOfBirth,
-                    DoB: fields.DoB,
-                    gender: fields.gender,
-                    tazkiraNo: fields.tazkiraNo,
-                    phoneNo: fields.phoneNo,
-                    email: fields.email,
-                    idCardPageNo: fields.idCardPageNo,
-                    idCardJoldNo: fields.idCardJoldNo,
-                    tazkiraType: fields.tazkiraType,
-                  }}
+                  initialValues={initialValues}
                   validateOnMount
-                  validationSchema={studentRegisterFormStep_1}
+                  // validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -919,18 +960,7 @@ const StudentRegistration = ({ intl }, values) => {
               <div className="wizard-basic-step">
                 <Formik
                   innerRef={forms[1]}
-                  initialValues={{
-                    levelOfEducation: fields.levelOfEducation,
-                    preSchool: fields.preSchool,
-                    graduationYear: fields.graduationYear,
-                    schoolProvince: fields.schoolProvince,
-                    province: fields.province,
-                    C_Province: fields.C_Province,
-                    C_District: fields.C_District,
-                    district: fields.district,
-                    village: fields.village,
-                    C_Village: fields.C_Village,
-                  }}
+                  initialValues={initialValues}
                   onSubmit={() => {}}
                   validationSchema={studentRegisterFormStep_2}
                   validateOnMount
@@ -1180,22 +1210,7 @@ const StudentRegistration = ({ intl }, values) => {
               <div className="wizard-basic-step">
                 <Formik
                   innerRef={forms[2]}
-                  initialValues={{
-                    institute: fields.institute,
-                    class: fields.class,
-                    educationalYear: fields.educationalYear,
-                    department: fields.department,
-                    mediumOfInstruction: fields.mediumOfInstruction,
-                    // kankorId: initialKankorId,
-                    studentId: fields.studentId,
-                    studyTime: fields.studyTime,
-                    interanceType: fields.interanceType,
-                    studentType: fields.studentType,
-                    batch: fields.batch,
-                    field: fields.field,
-                    sector: fields.sector,
-                    file: fields.file,
-                  }}
+                  initialValues={initialValues}
                   onSubmit={() => {}}
                   validationSchema={studentRegisterFormStep_3}
                   validateOnMount

@@ -312,7 +312,7 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  return !isLoaded ? (
+  return isLoaded ? (
     <div className="loading" />
   ) : (
     <>

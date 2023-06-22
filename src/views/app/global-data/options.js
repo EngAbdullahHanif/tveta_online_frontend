@@ -141,10 +141,14 @@ export const provinceOptions = [
     value: 'زابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_35" />,
   },
+  {
+    value: 'Lahore',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_35" />,
+  },
 ];
 
 export const educationalYearsOptions = [
-  { value: '1390', label: '1390' },
+  { value: 2022, label: '1390' },
   { value: '1391', label: '1391' },
   { value: '1392', label: '1392' },
   { value: '1393', label: '1393' },
@@ -165,6 +169,7 @@ export const educationalYearsOptions = [
   { value: '1408', label: '1408' },
   { value: '1409', label: '1409' },
   { value: '1410', label: '1410' },
+  { value: '2023', label: '2023' },
 ];
 
 export const dateOfBirthOptoions = [
@@ -189,6 +194,7 @@ export const dateOfBirthOptoions = [
   { value: '1388', label: '1388' },
   { value: '1389', label: '1389' },
   { value: '1390', label: '1390' },
+  { value: '2022', label: '2022' },
 ];
 
 export const educationalYearsOptionsForList = [
@@ -711,12 +717,12 @@ export const tazkiraOptions = [
 ];
 
 export const educationLevelOptions = [
-  { value: 9, label: <IntlMessages id="forms.EducationalLevel_9th" /> },
-  { value: 10, label: <IntlMessages id="forms.EducationalLevel_10th" /> },
-  { value: 11, label: <IntlMessages id="forms.EducationalLevel_11th" /> },
-  { value: 12, label: <IntlMessages id="forms.EducationalLevel_12th" /> },
-  { value: 13, label: <IntlMessages id="forms.EducationalLevel_13th" /> },
-  { value: 14, label: <IntlMessages id="forms.EducationalLevel_14th" /> },
+  { value: '9', label: <IntlMessages id="forms.EducationalLevel_9th" /> },
+  { value: '10', label: <IntlMessages id="forms.EducationalLevel_10th" /> },
+  { value: '11', label: <IntlMessages id="forms.EducationalLevel_11th" /> },
+  { value: '12', label: <IntlMessages id="forms.EducationalLevel_12th" /> },
+  { value: '13', label: <IntlMessages id="forms.EducationalLevel_13th" /> },
+  { value: '14', label: <IntlMessages id="forms.EducationalLevel_14th" /> },
 ];
 
 export const teacherCurrentStatusOptions = [

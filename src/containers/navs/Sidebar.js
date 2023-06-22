@@ -370,6 +370,7 @@ class Sidebar extends Component {
                     const iconn = `< ${item.icon} />`;
                     return (
                       <NavItem
+                        style={{ margin: 10 }}
                         key={item.id}
                         className={classnames({
                           active:
@@ -396,7 +397,14 @@ class Sidebar extends Component {
                             {/* Main Menu icons here */}
                             {/* <i className={item.icon } /> */}
                             <DisplayIcons icon={item.icon} size="2.5rem" />{' '}
-                            <p style={{ fontSize: '19px' }}>
+                            <p
+                              style={{
+                                fontSize: 25,
+                                fontWeight: 'bold',
+                                marginTop: 6,
+                                textAlign: 'center',
+                              }}
+                            >
                               <IntlMessages id={item.label} />
                             </p>
                           </NavLink>
@@ -528,7 +536,12 @@ class Sidebar extends Component {
                                       size="1.5rem"
                                     />{' '}
                                   </label>{' '}
-                                  <p style={{ fontSize: '16px' }}>
+                                  <p
+                                    style={{
+                                      fontSize: 20,
+                                      fontWeight: 'bold',
+                                    }}
+                                  >
                                     <IntlMessages id={sub.label} />
                                   </p>
                                 </NavLink>

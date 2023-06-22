@@ -13,48 +13,42 @@ import { educationalYearsOptions } from '../../global-data/options';
 import { studyTimeOptions } from '../../global-data/options';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../.././../assets/css/global-style.css';
+import axios from 'axios';
 
 const servicePath = 'http://localhost:8000';
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
 const StudentRegistraion = ({ history }) => {
   const { kankorStudentId } = useParams();
-  console.log(kankorStudentId);
+  console.log('Kankor ID', kankorStudentId);
   if (kankorStudentId) {
     useEffect(() => {
       async function fetchStudent() {
-        const { data } = await axios.get(
-          `${KankorstudentAPI}/?id=${kankorStudentId}`
+        const { data } = await callApi(
+          `api/kankorResults/?id=${kankorStudentId}`,
+          '',
+          null
         );
-        console.log(data, 'kaknor student data');
+        console.log('data of the kankor student', data[0]);
         setInitialName(data[0].name);
-        //setInitailKankorId(data[0].user_id);
         setInitialFatherName(data[0].father_name);
-        setInitailInteranceDate('04/23/1995');
         setInitialDistrict(data[0].district);
-
         const educationYearsOptions = educationalYearsOptions.map((year) => {
           if (year.value == data[0].educational_year) {
             setInitialEducationalYear(year);
           }
         });
-        const provinceOptions = provinceOptions.map((province) => {
-          if (province.value == data[0].provence) {
-            setInitialProvince(province);
-          }
-        });
-
+        setInitialProvince({ value: '1', label: data[0].provence });
         setInitailDepartment([
           {
             value: data[0].department_id.id,
             label: data[0].department_id.name,
           },
         ]);
-        setInitialGender([
-          {
-            value: data[0].department_id.id,
-            label: data[0].department_id.name,
-          },
-        ]);
+        const genderOption = genderOptions.map((gender) => {
+          if (gender.value === data[0].gender) {
+            setInitialGender(gender);
+          }
+        });
         setInitailField([
           {
             value: data[0].field_id.id,
@@ -62,13 +56,16 @@ const StudentRegistraion = ({ history }) => {
           },
         ]);
         setInitialKankorMarks(data[0].score);
-        setInitialstudyTime([{ value: 1, label: 'سهار' }]);
+        const shiftOptions = studyTimeOptions.map((timeOptions) => {
+          if (timeOptions.value === data[0].shift) {
+            setInitialstudyTime(timeOptions);
+          }
+        });
         setInitialInstitute([
           { value: data[0].Institute.id, label: data[0].Institute.name },
         ]);
       }
       fetchStudent();
-      //setUpdateMode(true);
     }, []);
   }
 

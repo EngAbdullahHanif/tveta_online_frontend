@@ -297,6 +297,7 @@ const MarksRegistration = ({ match }) => {
   };
 
   const fechtStudens = async () => {
+    console.log('subject', selectedSubject.value);
     const response = await callApi(
       `api/class-marks/list/second-chance/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
       '',

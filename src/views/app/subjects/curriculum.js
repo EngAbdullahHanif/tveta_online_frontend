@@ -165,7 +165,7 @@ const Curriculum = (values) => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
+        <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {<IntlMessages id="curriculum.curriculumTittle" />}
         </h3>
         <CardBody>
@@ -188,7 +188,7 @@ const Curriculum = (values) => {
                     <Colxx xxs="11">
                       {/* Department Id */}
                       <FormGroup className="form-group has-float-label ">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="curriculum.departmentIdLabel" />
                         </Label>
                         <FormikReactSelect
@@ -209,7 +209,7 @@ const Curriculum = (values) => {
 
                       {/* Subject */}
                       <FormGroup className="form-group has-float-label ">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="curriculum.subjectdLabel" />
                         </Label>
                         <FormikReactSelect
@@ -230,7 +230,7 @@ const Curriculum = (values) => {
 
                       {/* Class */}
                       <FormGroup className="form-group has-float-label ">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="curriculum.classLabel" />
                         </Label>
                         <FormikReactSelect
@@ -249,7 +249,7 @@ const Curriculum = (values) => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.educationYear" />
                         </Label>
                         <Field
@@ -280,7 +280,10 @@ const Curriculum = (values) => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span className="label">
+                        <span
+                          className="label"
+                          style={{ fontSize: 18, fontWeight: 'bold' }}
+                        >
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

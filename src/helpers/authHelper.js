@@ -10,14 +10,16 @@ const ProtectedRoute = ({
 }) => {
   const { user } = useContext(AuthContext);
   const setComponent = (props) => {
-    console.log(props, "propssssssssssssssssssssssssssssssssssssssssss");
     if (isAuthGuardActive) {
       if (user) {
         if (roles) {
-          // console.log('roles of protected', roles)
-          if (roles.includes(Number(user.role))) {
-            return <Component {...props} />;
+          const userRoles = user.groups;
+          for (let i = 0; i <= userRoles.length; i++) {
+            if (roles.includes(userRoles[i].name)) {
+              return <Component {...props} />;
+            }
           }
+
           return (
             <Redirect
               to={{
@@ -32,7 +34,7 @@ const ProtectedRoute = ({
       return (
         <Redirect
           to={{
-            pathname: "/user/login",
+            pathname: "/auth/login",
             state: { from: props.location },
           }}
         />

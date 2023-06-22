@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { isAuthGuardActive } from 'constants/defaultValues';
-import { AuthContext } from 'context/AuthContext';
+import React, { useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
+import { isAuthGuardActive } from "constants/defaultValues";
+import { AuthContext } from "context/AuthContext";
 
 const ProtectedRoute = ({
   component: Component,
@@ -10,21 +10,20 @@ const ProtectedRoute = ({
 }) => {
   const { user } = useContext(AuthContext);
   const setComponent = (props) => {
-    console.log(props, 'propssssssssssssssssssssssssssssssssssssssssss');
     if (isAuthGuardActive) {
       if (user) {
         if (roles) {
-          // console.log('roles of protected', roles)
           const userRoles = user.groups;
           for (let i = 0; i <= userRoles.length; i++) {
             if (roles.includes(userRoles[i].name)) {
               return <Component {...props} />;
             }
           }
+
           return (
             <Redirect
               to={{
-                pathname: '/unauthorized',
+                pathname: "/unauthorized",
                 state: { from: props.location },
               }}
             />
@@ -35,7 +34,7 @@ const ProtectedRoute = ({
       return (
         <Redirect
           to={{
-            pathname: '/user/login',
+            pathname: "/auth/login",
             state: { from: props.location },
           }}
         />

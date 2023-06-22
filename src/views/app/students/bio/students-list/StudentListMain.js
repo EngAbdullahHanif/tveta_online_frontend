@@ -136,7 +136,6 @@ const ThumbListPages = ({ match }) => {
           setRest(false);
         }
 
-
         // here
         const response = await callApi(
           `api/?student_id=${studentId}&current_district=${district}&p=${currentPage}&page=${1}`,
@@ -311,7 +310,7 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  return !isLoaded ? (
+  return isLoaded ? (
     <div className="loading" />
   ) : (
     <>

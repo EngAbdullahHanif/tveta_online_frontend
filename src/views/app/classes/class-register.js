@@ -130,7 +130,7 @@ const SubjcetRegister = () => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
+        <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {<IntlMessages id="class.register.title" />}
         </h3>
         <CardBody>
@@ -152,7 +152,7 @@ const SubjcetRegister = () => {
                   <Row className="justify-content-center">
                     <Colxx xxs="10">
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="class.nameLabel" />
                         </Label>
                         <Field className="form-control" name="className" />
@@ -164,7 +164,7 @@ const SubjcetRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="class.semesterLabel" />
                         </Label>
                         <Field
@@ -229,7 +229,10 @@ const SubjcetRegister = () => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span className="label">
+                        <span
+                          className="label"
+                          style={{ fontSize: 18, fontWeight: 'bold' }}
+                        >
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

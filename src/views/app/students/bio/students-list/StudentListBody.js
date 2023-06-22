@@ -166,6 +166,7 @@ const StudentListBody = (
               )}
             </div>
             <>
+              {/* the update and delete buttons */}
               <div
                 style={{ display: 'flex', flexDirection: 'row' }}
                 className="align-self-center pr-4"

@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
+import { BsPencilSquare } from 'react-icons/bs';
+import { BsTrashFill } from 'react-icons/bs';
 
 const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
   return (
@@ -79,30 +81,32 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
               >
                 {student.educational_year}
               </p>
-              {/* <p
-                className="mb-1 text-small"
-                style={{ width: '14%', textAlign: 'right' }}
+              <div
+                style={{ display: 'flex', flexDirection: 'row' }}
+                className="align-self-center pr-4"
               >
-                {teacher.grade}
-              </p>
-              {teacher.status_type === '2' && (
-                <div className="mb-1 text-small">
-                  <Badge color="danger" pill>
-                    منفک
-                  </Badge>
+                <NavLink
+                  to={`/app/students/register-kankor/${student.id}`}
+                  // style={{ width: '10%' }}
+                >
+                  <div>
+                    <BsPencilSquare
+                      outline
+                      style={{ fontSize: '20px' }}
+                      id="updateIcon"
+                    />
+                  </div>
+                </NavLink>
+                <div className="ml-2">
+                  <BsTrashFill
+                    id="deleteIcon"
+                    outline
+                    onClick={() => setModalBasic(true)}
+                    style={{ fontSize: '20px' }}
+                  />
                 </div>
-              )} */}
+              </div>
             </div>
-            {/* <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
-              <CustomInput
-                className="item-check mb-0"
-                type="checkbox"
-                id={`check_${teacher.id}`}
-                checked={isSelect}
-                onChange={() => {}}
-                label=""
-              />
-            </div> */}
           </div>
         </Card>
       </ContextMenuTrigger>

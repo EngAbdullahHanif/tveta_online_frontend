@@ -107,7 +107,7 @@ const DepartmentRegister = () => {
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
+        <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {<IntlMessages id="department.departmentRegisterlabel" />}
         </h3>
         <CardBody>
@@ -133,7 +133,7 @@ const DepartmentRegister = () => {
                     <Colxx xxs="10">
                       {/* field*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           {/* <IntlMessages id="forms.field" /> */}
                           field
                         </Label>
@@ -154,7 +154,7 @@ const DepartmentRegister = () => {
 
                       {/* Department Name */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           {/* <IntlMessages id="field.FieldNameLabel" /> */}
                           Department Name
                         </Label>
@@ -169,7 +169,7 @@ const DepartmentRegister = () => {
 
                       {/* Department Name In English */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           {/* <IntlMessages id="field.FieldEngNameLabel" /> */}
                           Department English Name
                         </Label>
@@ -198,7 +198,10 @@ const DepartmentRegister = () => {
                               <span className="bounce2" />
                               <span className="bounce3" />
                             </span>
-                            <span className="label">
+                            <span
+                              className="label"
+                              style={{ fontSize: 18, fontWeight: 'bold' }}
+                            >
                               <IntlMessages id="forms.SubimssionButton" />
                             </span>
                           </Button>

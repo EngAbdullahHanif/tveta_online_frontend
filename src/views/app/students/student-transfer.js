@@ -36,7 +36,8 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;
 const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
 const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
@@ -332,7 +333,7 @@ const StudentsTransfer = (values) => {
                                     </Label>
                                     <h2>{student.semester}</h2>
                                     <Label className="data-style">
-                                       <IntlMessages id="forms.studyDepartment" />
+                                      <IntlMessages id="forms.studyDepartment" />
                                     </Label>
                                     <h2>{student.department_name}</h2>
                                     <Label className="data-style">

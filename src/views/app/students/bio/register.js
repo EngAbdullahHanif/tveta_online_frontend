@@ -46,9 +46,10 @@ import * as Yup from 'yup';
 import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
+import config from '../../../../config';
 
 //import { Controller } from 'react';
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
 

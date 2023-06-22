@@ -8,7 +8,9 @@ import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+
+const servicePath = config.API_URL;
 const teachersApiUrl = `${servicePath}/teachers/`;
 const institutesApiUrl = `${servicePath}/institute/`;
 const departmentsApiUrl = `${servicePath}/institute/department/`;

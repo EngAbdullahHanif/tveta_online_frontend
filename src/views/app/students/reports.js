@@ -19,10 +19,11 @@ import ReactQuill from 'react-quill';
 
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
+import config from '../../../config';
 
 const colors = ThemeColors();
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 const teachersInstituteApiUrl = `${servicePath}/teachers/schoole_teachers_province/`;
 const studentsApiUrl = `${servicePath}/api/province_student_statistics/`;
 const sectorsInstitutesApiUrl = `${servicePath}/institutes/sectors-institutes`; //api not developed

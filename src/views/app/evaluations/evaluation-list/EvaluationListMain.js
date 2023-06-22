@@ -11,6 +11,8 @@ import ListPageHeading from './EvaluationListHeading';
 import ListPageListing from './EvaluationListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
+import config from '../../../../config';
+
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -20,7 +22,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const evaluationApiUrl = `${servicePath}/teachers/evaluation/`;
@@ -311,7 +313,7 @@ const ThumbListPages = ({ match }) => {
 
         <table className="table">
           <thead
-            style={{ maxHeight: '55px '}}
+            style={{ maxHeight: '55px ' }}
             className="pl-2 d-flex flex-grow-1  table-dark mb-2"
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">

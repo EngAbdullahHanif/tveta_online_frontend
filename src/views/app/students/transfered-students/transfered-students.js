@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form, Field } from "formik";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import callApi from "helpers/callApi";
-import "./../../.././../assets/css/global-style.css";
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import callApi from 'helpers/callApi';
+import './../../.././../assets/css/global-style.css';
 
 // Year  and SHift
-import * as Yup from "yup";
+import * as Yup from 'yup';
 import {
   Row,
   Card,
@@ -16,26 +16,27 @@ import {
   Button,
   CardTitle,
   Input,
-} from "reactstrap";
-import Select from "react-select";
+} from 'reactstrap';
+import Select from 'react-select';
 
-import IntlMessages from "helpers/IntlMessages";
-import { Colxx } from "components/common/CustomBootstrap";
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
-} from "containers/form-validations/FormikFields";
-import userEvent from "@testing-library/user-event";
-import TransferedStudentList from "./transfered-student-list/TransferedListMain";
-const servicePath = "http://localhost:8000";
+} from 'containers/form-validations/FormikFields';
+import userEvent from '@testing-library/user-event';
+import TransferedStudentList from './transfered-student-list/TransferedListMain';
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const studentApi = `${servicePath}/api`;
 const transferedStudentsAPI = `${servicePath}/api/student_institutes`;
 // http://localhost:8000/api/student_institutes/?institute=&type=&language=&time=&student_id=&educational_year=&is_transfer=2
 
 const StudyTimeOptions = [
-  { value: "1", label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: "2", label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
+  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
 const ValidationSchema = Yup.object().shape({
@@ -53,13 +54,13 @@ const ValidationSchema = Yup.object().shape({
 
 const initialValues = {
   institute: [],
-  educationlaYear: "",
+  educationlaYear: '',
 };
 const MarksRegistration = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [institutes, setInstitutes] = useState([]);
-  const [selectedInstitute, setSelectedInstitute] = useState("");
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState("");
+  const [selectedInstitute, setSelectedInstitute] = useState('');
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
   const [transferedStudents, setTransferedStudents] = useState([]);
   const [transferedStudentList, setTransferedStudentList] = useState(false);
 
@@ -71,7 +72,7 @@ const MarksRegistration = ({ match }) => {
         const { data } = await axios.get(
           `${studentMarkId}/?student_id=${markId}`
         );
-        console.log(data, "object of the data");
+        console.log(data, 'object of the data');
 
         // const instGender = genderOptions.map((studentGender) => {
         //   if (studentGender.value === data[0].gender) {
@@ -94,7 +95,7 @@ const MarksRegistration = ({ match }) => {
   // };
 
   const fetchInstitutes = async () => {
-    const response = await callApi("institute/", "", null);
+    const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -102,7 +103,7 @@ const MarksRegistration = ({ match }) => {
       }));
       setInstitutes(updatedData);
     } else {
-      console.log("institute error");
+      console.log('institute error');
     }
   };
   useEffect(() => {
@@ -115,11 +116,11 @@ const MarksRegistration = ({ match }) => {
     // );
     const response = await callApi(
       `api/student_institutes/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}&is_transfer=2`,
-      "",
+      '',
       null
     );
-    console.log("response.data", response.data);
-    console.log("response", response);
+    console.log('response.data', response.data);
+    console.log('response', response);
     setTransferedStudents(response.data);
     //console.log('transfered students list', data);
     setIsLoaded(true);
@@ -143,7 +144,7 @@ const MarksRegistration = ({ match }) => {
             </h2>
           </div>
           <CardBody>
-            {" "}
+            {' '}
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}
@@ -163,7 +164,7 @@ const MarksRegistration = ({ match }) => {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="institute"
@@ -185,7 +186,7 @@ const MarksRegistration = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
                           type="number"
@@ -211,7 +212,7 @@ const MarksRegistration = ({ match }) => {
                         className="float-right buttonStyle"
                         size="lg"
                         type="submit"
-                        style={{ margin: "7% 0% 8% 1%", paddingInline: "5%" }}
+                        style={{ margin: '7% 0% 8% 1%', paddingInline: '5%' }}
                       >
                         <span className="label">
                           <IntlMessages id="search.studentId" />

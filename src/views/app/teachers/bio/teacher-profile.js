@@ -6,7 +6,6 @@ import axios from 'axios';
 
 import callApi from 'helpers/callApi';
 
-
 import * as Yup from 'yup';
 import {
   Row,
@@ -34,7 +33,8 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import Classes from 'views/app/classes';
-const servicePath = 'http://localhost:8000';
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const teacherApiUrl = `${servicePath}/teachers/`;
 const teacherEvaluationApiUrl = `${servicePath}/teachers/evaluation`;
 const teacherHREvaluationApiUrl = `${servicePath}/teachers/hr-evaluation`;
@@ -48,8 +48,7 @@ const TeacherProfile = () => {
   const [teacherEvaluation, setTeacherEvaluation] = useState([]);
   const [teacherHREvaluation, setTeacherHREvaluation] = useState([]);
   const [teacherTransfer, setTeacherTransfer] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false)
-  
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     async function fetchTeacher() {
@@ -58,11 +57,15 @@ const TeacherProfile = () => {
 
       const data = response.data;
       setTeacher(data);
-      setIsLoaded(true)
+      setIsLoaded(true);
       // const instituteResponse = await axios.get(
       //   `${teacherApiUrl}institute/?teacher_id=${teacherId}`
       // );
-      const instituteResponse = await callApi(`teachers/institute/?id=${teacherId}`, '', null);
+      const instituteResponse = await callApi(
+        `teachers/institute/?id=${teacherId}`,
+        '',
+        null
+      );
 
       const instituteData = await instituteResponse.data;
       setInstitute(instituteData);
@@ -72,7 +75,11 @@ const TeacherProfile = () => {
       // const response = await axios.get(
       //   `${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`
       // );
-      const response = await callApi(`teachers/evaluation/?teacher_id=${teacherId}`, '', null);
+      const response = await callApi(
+        `teachers/evaluation/?teacher_id=${teacherId}`,
+        '',
+        null
+      );
 
       console.log(`${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`);
       const data = response.data;
@@ -82,7 +89,11 @@ const TeacherProfile = () => {
       // const response = await axios.get(
       //   `${teacherHREvaluationApiUrl}/?teacher_id=${teacherId}`
       // );
-      const response = await callApi(`teachers/hr-evaluation/?teacher_id=${teacherId}`, '', null);
+      const response = await callApi(
+        `teachers/hr-evaluation/?teacher_id=${teacherId}`,
+        '',
+        null
+      );
 
       const data = response.data;
       setTeacherHREvaluation(data);
@@ -91,7 +102,11 @@ const TeacherProfile = () => {
       // const response = await axios.get(
       //   `${teacherTransferApiUrl}/?teacher_id=${teacherId}`
       // );
-      const response = await callApi(`teachers/institute/?teacher_id=${teacherId}`, '', null);
+      const response = await callApi(
+        `teachers/institute/?teacher_id=${teacherId}`,
+        '',
+        null
+      );
 
       const data = response.data;
       console.log(`${teacherTransferApiUrl}/?teacher_id=${teacherId}`);
@@ -102,8 +117,6 @@ const TeacherProfile = () => {
     fetchTeacherHREvaluation();
     fetchTeacherTransfer();
   }, []);
-
-
 
   const handleClick = (event) => {
     setIsNext(event);

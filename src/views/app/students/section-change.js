@@ -37,7 +37,9 @@ import {
 } from 'containers/form-validations/FormikFields';
 import { department } from 'lang/locales/fa_IR';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+
+const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;
 const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
 const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;

@@ -20,7 +20,9 @@ import {
   FormikDatePicker,
 } from '../../../containers/form-validations/FormikFields';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+
+const servicePath = config.API_URL;
 const fieldsApiUrl = `${servicePath}/institute/field/`;
 const departmentRegisterationApiUrl = `${servicePath}/institute/department-create/`;
 

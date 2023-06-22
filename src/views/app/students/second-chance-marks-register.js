@@ -31,7 +31,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import { async } from 'q';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+
+const servicePath = config.API_URL;
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
 

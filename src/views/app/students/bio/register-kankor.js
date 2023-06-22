@@ -14,7 +14,8 @@ import { studyTimeOptions } from '../../global-data/options';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../.././../assets/css/global-style.css';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
 const StudentRegistraion = ({ history }) => {
   const { kankorStudentId } = useParams();

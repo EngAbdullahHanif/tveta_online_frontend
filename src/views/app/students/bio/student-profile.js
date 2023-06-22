@@ -28,6 +28,7 @@ import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import config from '../../../../config';
 
 import {
   FormikReactSelect,
@@ -36,7 +37,7 @@ import {
 } from 'containers/form-validations/FormikFields';
 import Classes from 'views/app/classes';
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
 
 const StudentProfile = () => {

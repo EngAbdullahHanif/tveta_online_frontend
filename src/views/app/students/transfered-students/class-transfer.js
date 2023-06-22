@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form, Field } from "formik";
-import CustomSelectInput from "components/common/CustomSelectInput";
-import "../../dorms/dorm-register.css";
-import profilePhoto from "../../../../assets/img/profiles/22.jpg";
-import { NotificationManager } from "components/common/react-notifications";
-import "../../../../assets/css/global-style.css";
-import { studentdismissalvalidationSchema } from "../../global-data/forms-validation";
-import axios from "axios";
-import callApi from "helpers/callApi";
-import * as Yup from "yup";
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
+import CustomSelectInput from 'components/common/CustomSelectInput';
+import '../../dorms/dorm-register.css';
+import profilePhoto from '../../../../assets/img/profiles/22.jpg';
+import { NotificationManager } from 'components/common/react-notifications';
+import '../../../../assets/css/global-style.css';
+import { studentdismissalvalidationSchema } from '../../global-data/forms-validation';
+import axios from 'axios';
+import callApi from 'helpers/callApi';
+import * as Yup from 'yup';
 import {
   Row,
   Card,
@@ -19,28 +19,29 @@ import {
   InputGroup,
   InputGroupAddon,
   CustomInput,
-} from "reactstrap";
+} from 'reactstrap';
 
-import IntlMessages from "helpers/IntlMessages";
-import { Colxx } from "components/common/CustomBootstrap";
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx } from 'components/common/CustomBootstrap';
 
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
-} from "containers/form-validations/FormikFields";
-import DisplayMessage from "components/messages/DisplayMessage";
+} from 'containers/form-validations/FormikFields';
+import DisplayMessage from 'components/messages/DisplayMessage';
 
-const servicePath = "http://localhost:8000";
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;
 const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
 const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
 
 const ClassTransfer = (values) => {
-  const [studentId, setStudentId] = useState("");
-  const [student, setStudent] = useState("");
+  const [studentId, setStudentId] = useState('');
+  const [student, setStudent] = useState('');
   const [data, setData] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [isNext, setIsNext] = useState(true);
   const [institutes, setInstitutes] = useState();
   const [reload, setReload] = useState(false);
@@ -52,8 +53,8 @@ const ClassTransfer = (values) => {
   });
 
   const initialValues = {
-    searchfield: "",
-    dismissalDate: "",
+    searchfield: '',
+    dismissalDate: '',
     dismissalDocument: undefined,
   };
 
@@ -66,22 +67,22 @@ const ClassTransfer = (values) => {
   const [studentIdMatch, setStudentIdMatch] = useState(false);
 
   const createNotification = (type, className) => {
-    const cName = className || "";
+    const cName = className || '';
     switch (type) {
-      case "success":
+      case 'success':
         NotificationManager.success(
-          "زده کوونکی په بریالیتوب سره منفک شو",
-          "موفقیت",
+          'زده کوونکی په بریالیتوب سره منفک شو',
+          'موفقیت',
           9000,
           null,
           null,
           cName
         );
         break;
-      case "info":
+      case 'info':
         NotificationManager.info(
-          "زده کوونکی په انستیوت کی شتون نلری",
-          "تیروتنه",
+          'زده کوونکی په انستیوت کی شتون نلری',
+          'تیروتنه',
           9000,
           null,
           null,
@@ -89,20 +90,20 @@ const ClassTransfer = (values) => {
         );
         break;
 
-      case "error":
+      case 'error':
         NotificationManager.error(
-          "زده کوونکی منفک نشو بیا کوشش وکری",
-          "خطا",
+          'زده کوونکی منفک نشو بیا کوشش وکری',
+          'خطا',
           9000,
           () => {
-            alert("callback");
+            alert('callback');
           },
           null,
           cName
         );
         break;
       default:
-        NotificationManager.info("Info message");
+        NotificationManager.info('Info message');
         break;
     }
   };
@@ -110,7 +111,7 @@ const ClassTransfer = (values) => {
     setSearchResult(event);
     const response = await callApi(
       `api/student_accademic/?student_id=${studentId}`,
-      "",
+      '',
       null
     );
     if (response.data && response.status === 200) {
@@ -121,10 +122,10 @@ const ClassTransfer = (values) => {
         setStudent(response.data);
         setData(true);
       } else {
-        setMessage("Student not found");
+        setMessage('Student not found');
       }
     } else {
-      console.log("student search error");
+      console.log('student search error');
     }
   };
   const onSubmit = async (values) => {
@@ -134,19 +135,19 @@ const ClassTransfer = (values) => {
       dismissal_date: values.dismissalDate,
     };
     try {
-      const response = await callApi(`api/student-dissmiss/`, "POST", data);
+      const response = await callApi(`api/student-dissmiss/`, 'POST', data);
       if (response.status === 200 || response.status === 201) {
-        console.log("success");
-        createNotification("success", "filled");
+        console.log('success');
+        createNotification('success', 'filled');
         setReload(true);
       }
     } catch (error) {
-      if (error.message === "Resource not found") {
-        console.log("student not found");
-        createNotification("info", "filled");
+      if (error.message === 'Resource not found') {
+        console.log('student not found');
+        createNotification('info', 'filled');
       } else {
-        console.log("An error occurred:", error.message);
-        createNotification("error", "filled");
+        console.log('An error occurred:', error.message);
+        createNotification('error', 'filled');
       }
     }
 
@@ -162,7 +163,7 @@ const ClassTransfer = (values) => {
     // }
   };
 
-  console.log("reload, isNext, searchResult,", reload, isNext, searchResult);
+  console.log('reload, isNext, searchResult,', reload, isNext, searchResult);
   return (
     <>
       <Card>
@@ -198,17 +199,17 @@ const ClassTransfer = (values) => {
                             <Form
                               className="av-tooltip tooltip-label-bottom style"
                               onSubmit={handleSubmit}
-                              style={{ minHeight: "300px" }}
+                              style={{ minHeight: '300px' }}
                             >
                               <Label>
                                 <IntlMessages id="search.studentIdSearchLabel" />
-                                <span style={{ color: "red" }}>*</span>
+                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <div class="input-group mb-3 error-l-175 ">
                                 <div class="input-group-prepend">
                                   <Button
                                     size="lg"
-                                    style={{ fontSize: "80%" }}
+                                    style={{ fontSize: '80%' }}
                                     type="submit"
                                     color="primary"
                                     onClick={
@@ -249,14 +250,14 @@ const ClassTransfer = (values) => {
                     </Row>
                   ) : (
                     <Row className="justify-content-center inlineBlock">
-                      <Colxx style={{ paddingInline: "3%" }}>
+                      <Colxx style={{ paddingInline: '3%' }}>
                         {studentIdMatch ? (
                           <div className="border rounded">
                             <Label>
                               <h3 className="mt-5 m-5 data-style">
                                 {<IntlMessages id="dorm.SearchResult" />}
                               </h3>
-                            </Label>{" "}
+                            </Label>{' '}
                             <Row>
                               <Colxx xxs="1"></Colxx>
 
@@ -264,8 +265,8 @@ const ClassTransfer = (values) => {
                                 <img
                                   src={student.student_photo}
                                   alt="Photo"
-                                  width={"10%"}
-                                />{" "}
+                                  width={'10%'}
+                                />{' '}
                               </Colxx>
                             </Row>
                             <Row>
@@ -328,15 +329,15 @@ const ClassTransfer = (values) => {
                                     </Colxx>
                                   </Row>
                                   <Row>
-                                    <Colxx style={{ marginRight: "10%" }}>
+                                    <Colxx style={{ marginRight: '10%' }}>
                                       <Button
                                         color="primary"
                                         className="buttonStyle1"
                                         size="lg"
                                         type="submit"
                                         style={{
-                                          margin: "5% 6% 15% 8%",
-                                          paddingInline: "10%",
+                                          margin: '5% 6% 15% 8%',
+                                          paddingInline: '10%',
                                         }}
                                         onClick={() => {
                                           handleSearch(true);
@@ -348,15 +349,15 @@ const ClassTransfer = (values) => {
                                         </span>
                                       </Button>
                                     </Colxx>
-                                    <Colxx style={{ marginLeft: "10%" }}>
+                                    <Colxx style={{ marginLeft: '10%' }}>
                                       <Button
                                         color="primary"
                                         className=" float-right buttonStyle1"
                                         size="lg"
                                         type="submit"
                                         style={{
-                                          margin: "5% 0% 15% 6%",
-                                          paddingInline: "10%",
+                                          margin: '5% 0% 15% 6%',
+                                          paddingInline: '10%',
                                         }}
                                         onClick={() => handleClick(false)}
                                       >
@@ -371,7 +372,7 @@ const ClassTransfer = (values) => {
                             </Row>
                           </div>
                         ) : (
-                          <div style={{ minHeight: "300px" }}>
+                          <div style={{ minHeight: '300px' }}>
                             <Label>
                               <h2 className="mt-5 m-5">
                                 {<IntlMessages id="dorm.SearchResult" />}
@@ -392,8 +393,8 @@ const ClassTransfer = (values) => {
                                 <Button
                                   className=" m-5 buttonStyle"
                                   style={{
-                                    fontSize: "140%",
-                                    margin: "3% 0% 17% 8%",
+                                    fontSize: '140%',
+                                    margin: '3% 0% 17% 8%',
                                   }}
                                   size="lg"
                                   type="submit"
@@ -430,7 +431,7 @@ const ClassTransfer = (values) => {
                     }) => (
                       <Form
                         className="av-tooltip tooltip-label-right error-l-150 style "
-                        style={{ height: "500px" }}
+                        style={{ height: '500px' }}
                       >
                         <Row className="mb-4 justify-content-center">
                           <Colxx xxs="8">
@@ -467,7 +468,7 @@ const ClassTransfer = (values) => {
                                     name="dismissalDocument"
                                     onChange={(event) => {
                                       setFieldValue(
-                                        "dismissalDocument",
+                                        'dismissalDocument',
                                         event.currentTarget.files[0]
                                       );
                                     }}
@@ -489,15 +490,15 @@ const ClassTransfer = (values) => {
                           </Colxx>
                         </Row>
                         <Row>
-                          <Colxx style={{ marginRight: "15%" }}>
+                          <Colxx style={{ marginRight: '15%' }}>
                             <Button
                               color="primary"
                               className=" buttonStyle"
                               size="lg"
                               type="submit"
                               style={{
-                                margin: "5% 10% 30% 6%",
-                                paddingInline: "10%",
+                                margin: '5% 10% 30% 6%',
+                                paddingInline: '10%',
                               }}
                               onClick={() => handleClick(true)}
                             >
@@ -506,15 +507,15 @@ const ClassTransfer = (values) => {
                               </span>
                             </Button>
                           </Colxx>
-                          <Colxx style={{ marginLeft: "15%" }}>
+                          <Colxx style={{ marginLeft: '15%' }}>
                             <Button
                               color="primary"
                               className=" float-right buttonStyle"
                               size="lg"
                               type="submit"
                               style={{
-                                margin: "5% 10% 30% 8%",
-                                paddingInline: "10%",
+                                margin: '5% 10% 30% 8%',
+                                paddingInline: '10%',
                               }}
                             >
                               <span className="label">

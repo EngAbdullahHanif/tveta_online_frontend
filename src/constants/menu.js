@@ -254,21 +254,21 @@ const data = [
         label: "menu.institute_list",
         to: `${adminRoot}/institutes/institutes`,
       },
-      {
-        icon: "FA.FaList",
-        label: "menu.promotion-demotion-list",
-        to: `${adminRoot}/institutes/promotion-demotion-list`,
-      },
+      // {
+      //   icon: "FA.FaList",
+      //   label: "menu.promotion-demotion-list",
+      //   to: `${adminRoot}/institutes/promotion-demotion-list`,
+      // },
       {
         icon: "MD.MdAddBox",
         label: "menu.institute_register",
         to: `${adminRoot}/institutes/register`,
       },
-      {
-        icon: "FA.FaLevelUpAlt",
-        label: "menu.institute-upgrade",
-        to: `${adminRoot}/institutes/institute-upgrade`,
-      },
+      // {
+      //   icon: "FA.FaLevelUpAlt",
+      //   label: "menu.institute-upgrade",
+      //   to: `${adminRoot}/institutes/institute-upgrade`,
+      // },
 
       // {
       //   icon: 'BI.BiMessageAltDetail',

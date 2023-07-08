@@ -81,8 +81,8 @@ const InstituteRegister = () => {
   const [institute, setInstitute] = useState([]);
   const [initialInstituteName, setInitialInstituteName] = useState('');
   const [initialCode, setInitialCode] = useState('');
-  const [initialProvince, setInitialProvince] = useState('');
-  const [initialDistrict, setInitialDistrict] = useState('');
+  const [initialProvince, setInitialProvince] = useState([]);
+  const [initialDistrict, setInitialDistrict] = useState([]);
   const [initialInstType, setInitialInstType] = useState([]);
   const [initialVillage, setInitialVillage] = useState('');
   const [initialFoundationYear, setInitialFoundationYear] = useState('');
@@ -90,6 +90,7 @@ const InstituteRegister = () => {
 
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState('');
 
   const [initialGender, setInitialGender] = useState([]);
 
@@ -201,7 +202,9 @@ const InstituteRegister = () => {
         value: item.id,
         label: item.name,
       }));
+
       setProvinces(updatedData);
+
     } else {
       console.log('province error');
     }
@@ -228,6 +231,13 @@ const InstituteRegister = () => {
   useEffect(() => {
     fetchProvinces();
   }, []);
+
+  useEffect(() => {
+    console.log('selectedProvince', selectedProvince);
+    if (selectedProvince) {
+      fetchDistricts(selectedProvince);
+    }
+  }, [selectedProvince]);
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -342,21 +352,7 @@ const InstituteRegister = () => {
   // }),
   // });
 
-  // const onRegister = (values, { resetForm }) => {
-  //   console.log(values, 'Values ');
-  //   resetForm();
-  //   setIsNext(true);
-  //   // if (!values.province || values.province.value === '0') {
-  //   //   return;
-  //   // }
-  //   // if (!values.instType || values.instType.value === '0') {
-  //   //   return;
-  //   // }
 
-  //   // insert the data to the API with Axios here and redirect to the current page
-  // const handleClick = (event) => {
-  //   // setIsNext(event);
-  // };
 
   // post student record to server
   const postInstituteRecord = async (data) => {
@@ -372,11 +368,12 @@ const InstituteRegister = () => {
   };
 
   const onRegister = (values) => {
+    console.log('values of the form', values)
     const data = {
       name: values.institute,
       code: values.code,
-      province: values.province.column,
-      district: values.district,
+      province: values.province.value,
+      district: values.district.value,
       village: values.village,
       ownership: values.instType.value,
       location_type: values.institueCityType.value,
@@ -385,9 +382,9 @@ const InstituteRegister = () => {
       institute_type: values.instituteType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
-      foundation_year: values.foundationYear,
+      foundation_year: values.foundationYear.value,
       shift: values.shift.value,
-      created_by: '1',
+      // created_by: '1',
     };
     console.log('data of the form', data);
     postInstituteRecord(data);
@@ -466,14 +463,11 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="province"
                           id="province"
-                          value={values.province}
+                          // value={values.province.value}
                           options={provinces}
-                          onChange={() => {
-                            setFieldValue;
-                            fetchDistricts(values.province.column);
-                          }}
+                          onChange={setFieldValue} //onChange should conatain single line
                           onBlur={setFieldTouched}
-                          // onSelect={() => fetchDistricts(values.province.column)}
+                          onClick={setSelectedProvince(values.province.value)}
                         />
                         {errors.province && touched.province ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -489,12 +483,9 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="district"
                           id="district"
-                          value={values.district}
+                          value={values.district.value}
                           options={districts}
-                          onChange={() => {
-                            setFieldValue;
-                            fetchDistricts(values.district.column);
-                          }}
+                          onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
                         {errors.district && touched.district ? (

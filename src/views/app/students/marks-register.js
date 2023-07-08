@@ -277,7 +277,7 @@ const MarksRegistration = ({ match }) => {
     }
   };
 
-  const fechtStudens = async (values) => {
+  const fetchStudents = async (values) => {
     const response = await callApi(
       `api/class-marks/list/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
       '',

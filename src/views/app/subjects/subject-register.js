@@ -18,15 +18,19 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const subjectOptions = [
-  { value: '1', label: 'عمومی' },
-  { value: '2', label: 'فرعی' },
+  { value: 'general', label: 'عمومی' },
+  { value: 'supporting', label: 'فرعی' },
+  { value: 'core', label: 'اصلی' },
+  { value: 'specialized', label: 'مسلکی' },
+  { value: 'practical', label: 'عملی' },
+  { value: 'elective', label: 'اختیاری' },
 ];
 
 const systemOption = [
-  { value: '1', label: 'عمومی' },
-  { value: '2', label: 'NIMA' },
-  { value: '3', label: 'GITZ' },
-  { value: '4', label: 'تعلیمات خاص' },
+  { value: 'general', label: 'عمومی' },
+  { value: 'nima', label: 'NIMA' },
+  { value: 'giz', label: 'GITZ' },
+  { value: 'special_ed', label: 'تعلیمات خاص' },
 ];
 
 const SignupSchema = Yup.object().shape({
@@ -109,15 +113,15 @@ const SubjectRegister = () => {
 
   const onRegister = async (values) => {
     const data = {
+      code: values.code,
       name: values.name1,
       english_name: values.englishName,
-      system: values.systemType.value,
-      sub_type: values.type.value,
-      sub_credit: values.credit,
-      sub_passingScore: 55, // this field is temporarly, sub_passingScore should be deleted from both front and back
-      user_id: '1',
-      code: values.code,
+      system_type: values.systemType.value,
+      type: values.type.value,
+      credit: values.credit,
+      passing_marks: 50, // this field is temporarly, sub_passingScore should be deleted from both front and back
     };
+    console.log('data', data);
     postStudentRecord(data);
   };
 
@@ -198,6 +202,8 @@ const SubjectRegister = () => {
                           type="number"
                           className="form-control"
                           name="credit"
+                          max="10"
+                          min="1"
                           // validate={validatecredits}
                         />
                         {errors.credit && touched.credit && (

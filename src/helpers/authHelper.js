@@ -14,6 +14,8 @@ const ProtectedRoute = ({
       if (user) {
         if (roles) {
           const userRoles = user.groups;
+ 
+          console.log("USER ROLES:", userRoles)
           for (let i = 0; i <= userRoles.length; i++) {
             if (roles.includes(userRoles[i].name)) {
               return <Component {...props} />;

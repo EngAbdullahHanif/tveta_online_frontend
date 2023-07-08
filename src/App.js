@@ -1,26 +1,26 @@
-import React, { Suspense, useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
-import { IntlProvider } from "react-intl";
-import AppLocale from "./lang";
-import ColorSwitcher from "./components/common/ColorSwitcher";
-import { NotificationContainer } from "./components/common/react-notifications";
-import { isMultiColorActive } from "./constants/defaultValues";
-import { getDirection, getCurrentUser } from "./helpers/Utils";
-import { AuthContext } from "./context/AuthContext";
-import Application from "context/Application";
-import Authentication from "context/Authentication";
+import React, { Suspense, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { IntlProvider } from 'react-intl';
+import AppLocale from './lang';
+import ColorSwitcher from './components/common/ColorSwitcher';
+import { NotificationContainer } from './components/common/react-notifications';
+import { isMultiColorActive } from './constants/defaultValues';
+import { getDirection, getCurrentUser } from './helpers/Utils';
+import { AuthContext } from './context/AuthContext';
+import Application from 'context/Application';
+import Authentication from 'context/Authentication';
 const App = ({ locale }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
   useEffect(() => {
     if (direction.isRtl) {
-      document.body.classList.add("rtl");
-      document.body.classList.remove("ltr");
+      document.body.classList.add('rtl');
+      document.body.classList.remove('ltr');
     } else {
-      document.body.classList.add("ltr");
-      document.body.classList.remove("rtl");
+      document.body.classList.add('ltr');
+      document.body.classList.remove('rtl');
     }
   }, [direction]);
 

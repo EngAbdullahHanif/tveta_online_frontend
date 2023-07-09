@@ -255,6 +255,7 @@ const StudentRegistration = ({ intl }, values) => {
       phoneNo: '',
       email: '',
       placeOfBirth: '',
+      disability: [],
     },
     {
       levelOfEducation: '',

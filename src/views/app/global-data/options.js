@@ -506,18 +506,19 @@ export const appointmentTypeOptions = [
 
 export const levelOfEdcationOptions = [
   {
-    value: '14th',
+    value: 'Associate',
     label: <IntlMessages id="teacher.EducationLevelOption_1" />,
   },
   {
-    value: 'bachelor',
+    value: 'Bachelor',
     label: <IntlMessages id="teacher.EducationLevelOption_2" />,
   },
   {
-    value: 'master',
+    value: 'Master',
     label: <IntlMessages id="teacher.EducationLevelOption_3" />,
   },
-  { value: 'PHD', label: <IntlMessages id="teacher.EducationLevelOption_4" /> },
+  { value: 'PhD', label: <IntlMessages id="teacher.EducationLevelOption_4" /> },
+  { value: 'other', label: 'Other' },
 ];
 
 export const langOptions = [
@@ -596,7 +597,10 @@ export const privateBuildingTypeOptions = [
   },
 ];
 export const BuildingTypeOptions = [
-  { value: 'governmental', label: <IntlMessages id="dorm.BuildingTypeOptions_1" /> },
+  {
+    value: 'governmental',
+    label: <IntlMessages id="dorm.BuildingTypeOptions_1" />,
+  },
   { value: 'private', label: <IntlMessages id="dorm.BuildingTypeOptions_2" /> },
 ];
 

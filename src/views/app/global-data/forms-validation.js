@@ -80,7 +80,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.genderErr" />),
 
-    // TEMPORARY COMMENTED
+  // TEMPORARY COMMENTED
   // email: Yup.string()
   //   .email(<IntlMessages id="teacher.EmailRequiredErr" />)
   //   .required(<IntlMessages id="teacher.EmailErr" />),
@@ -218,13 +218,33 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
 
 //Teacher Registration form validation step one
 export const teacherRegisterFormStep_1 = Yup.object().shape({
-  name1: Yup.string()
+  name: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="teacher.NameErr" />),
 
+  lastName: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required('last name is required'),
+
+  englishName: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required('english name is required'),
+
+  englishLastName: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required('english last name is required'),
+
   fatherName: Yup.string()
     .required(<IntlMessages id="teacher.FatherNameErr" />)
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  englishFatherName: Yup.string()
+    .required('english father name is required')
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
@@ -240,9 +260,16 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
-  tazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
-  phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
-  DoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
+  registrationNumber: Yup.string().required(
+    <IntlMessages id="teacher.TazkiraNoErr" />
+  ),
+  phoneNumber: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
+  yearOfBirth: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdDoBErr" />),
 
   levelOfEducation: Yup.object()
     .shape({
@@ -251,13 +278,9 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
 
-  major: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
-
+  major: Yup.string().required(
+    <IntlMessages id="teacher.LevelOfEducationErr" />
+  ),
   tazkiraType: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -265,9 +288,16 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
 
-  email: Yup.string()
-    .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-    .required(<IntlMessages id="teacher.EmailErr" />),
+  email: Yup.string().email(<IntlMessages id="teacher.EmailRequiredErr" />),
+  // .required(<IntlMessages id="teacher.EmailErr" />),
+  placeOfBirth: Yup.string().required('place of birth is required'),
+  institution: Yup.string().required('institution is required'),
+  yearCompleted: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('year completion is required'),
 });
 
 //   teacher  form validation step Two
@@ -300,13 +330,6 @@ export const teacherRegisterFormStep_2 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="teacher.appointmentTypeErr" />),
 
-  province: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-
   jobLocation: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -328,15 +351,27 @@ export const teacherRegisterFormStep_2 = Yup.object().shape({
     .min(1, <IntlMessages id="teacher.teachingLangErr" />)
     .nullable()
     .required(<IntlMessages id="teacher.teachingLangErr" />),
-
-  C_Province: Yup.object()
+  mainProvince: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  mainDistrict: Yup.object()
+    .shape({ value: Yup.string().required() })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
+  mainVillage: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+  currentProvince: Yup.object()
     .shape({ value: Yup.string().required() })
     .nullable()
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-  C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+  currentDistrict: Yup.object()
+    .shape({ value: Yup.string().required() })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
+
+  currentVillage: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 });
 
 //   Teacher Evaluation ValiationSchema

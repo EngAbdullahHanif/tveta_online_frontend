@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form, Field, isEmptyArray } from "formik";
-import axios from "axios";
-import "./style.css";
-import callApi from "helpers/callApi";
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field, isEmptyArray } from 'formik';
+import axios from 'axios';
+import './style.css';
+import callApi from 'helpers/callApi';
 import {
   studyTimeOptions,
   educationalYearsOptions,
-} from "../global-data/options";
-import "./../../../assets/css/global-style.css";
+} from '../global-data/options';
+import './../../../assets/css/global-style.css';
 
-import * as Yup from "yup";
-import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
+import * as Yup from 'yup';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
-import IntlMessages from "helpers/IntlMessages";
-import { Colxx } from "components/common/CustomBootstrap";
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
   FormikInputText,
-} from "containers/form-validations/FormikFields";
+} from 'containers/form-validations/FormikFields';
 
 const ValidationSchema = Yup.object().shape({
   studentID: Yup.string().required(<IntlMessages id="student.studentId" />),
@@ -45,7 +45,7 @@ const ValidationSchema = Yup.object().shape({
 });
 
 const initialValues = {
-  studentID: "",
+  studentID: '',
   educationalYear: [],
   classs: [],
   subject: [],
@@ -56,48 +56,48 @@ function singleStudentSingleSubjectMarks(props) {
   const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([
     {
-      id: "414",
-      name: "Sohaib",
-      father_name: "Khan",
+      id: '414',
+      name: 'Sohaib',
+      father_name: 'Khan',
       oldMarks: 59,
     },
   ]);
-  const [selectedStudentID, setSelectedStudentID] = useState("");
-  const [selectedClass, setSelectedClass] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState("");
+  const [selectedStudentID, setSelectedStudentID] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
 
   // separate and set labels for classes
   const [selectedClassLabel, setselectedClassLabel] = useState({
-    classs: "",
-    semester: "",
-    section: "",
+    classs: '',
+    semester: '',
+    section: '',
   });
 
   useEffect(() => {
-    if (!isEmptyArray(selectedClass) && selectedClass !== "") {
-      const [semester, classs, section] = selectedClass.label.split("-");
+    if (!isEmptyArray(selectedClass) && selectedClass !== '') {
+      const [semester, classs, section] = selectedClass.label.split('-');
       setselectedClassLabel({ classs, semester, section });
     }
   }, [selectedClass]);
 
   //fetch class list
   const fetchClasses = async () => {
-    const response = await callApi("institute/classs/", "GET", null);
-    console.log("class repspossdfsde", response);
+    const response = await callApi('institute/classs/', 'GET', null);
+    console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name + " - " + item.semester + " - " + item.section,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
       }));
       setClasses(updatedData);
     } else {
-      console.log("class error");
+      console.log('class error');
     }
   };
 
   const fetchSubjects = async () => {
-    const response = await callApi("institute/subject/", "", null);
+    const response = await callApi('institute/subject/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -105,7 +105,7 @@ function singleStudentSingleSubjectMarks(props) {
       }));
       setSubjects(updatedData);
     } else {
-      console.log("subject error");
+      console.log('subject error');
     }
   };
 
@@ -115,8 +115,8 @@ function singleStudentSingleSubjectMarks(props) {
   }, []);
 
   const onSubmit = async (values) => {
-    console.log("Selected Class:", selectedClassLabel);
-    console.log("VALUES in Single Subject Marks display: ", values);
+    console.log('Selected Class:', selectedClassLabel);
+    console.log('VALUES in Single Subject Marks display: ', values);
     const data = {
       studentID: values.studentID,
       class: values.classs.value,
@@ -171,12 +171,12 @@ function singleStudentSingleSubjectMarks(props) {
                       <FormGroup className="form-group has-float-label error-l-150">
                         <Label>
                           <IntlMessages id="شاګرد ایډی" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikInputText
                           name="studentID"
                           id="studentID"
-                          onChange={handleChange("studentID")}
+                          onChange={handleChange('studentID')}
                           onBlur={setFieldTouched}
                           onClick={setSelectedStudentID(values.studentID)}
                         />
@@ -233,7 +233,7 @@ function singleStudentSingleSubjectMarks(props) {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="classs"
@@ -277,7 +277,7 @@ function singleStudentSingleSubjectMarks(props) {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="subject"
@@ -324,7 +324,7 @@ function singleStudentSingleSubjectMarks(props) {
                         className="float-right  buttonStyle"
                         size="lg"
                         type="submit"
-                        style={{ margin: "2% 0% 10% 6%" }}
+                        style={{ margin: '2% 0% 10% 6%' }}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />
@@ -498,17 +498,17 @@ function singleStudentSingleSubjectMarks(props) {
             <>
               <Row
                 className="border border bg-primary me-5 p-1 "
-                style={{ marginInline: "16%" }}
+                style={{ marginInline: '16%' }}
               >
                 <Colxx xxs="2">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="شاګرد ایډی" />
                   </Label>
                   <h5>{selectedStudentID}</h5>
                 </Colxx>
 
                 <Colxx xxs="3">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="marks.ClassLabel" />
                   </Label>
                   <h5>{selectedClassLabel.semester}</h5>
@@ -522,7 +522,7 @@ function singleStudentSingleSubjectMarks(props) {
                 </Colxx> */}
 
                 <Colxx xxs="2">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="marks.SemesterLabel" />
                   </Label>
                   <h5>
@@ -531,14 +531,14 @@ function singleStudentSingleSubjectMarks(props) {
                 </Colxx>
 
                 <Colxx xxs="2">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="marks.SectionLabel" />
                   </Label>
                   <h5>{selectedClassLabel.section}</h5>
                 </Colxx>
 
                 <Colxx xxs="3">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="marks.SubjectLabel" />
                   </Label>
                   <h5>{selectedSubject.label}</h5>
@@ -554,10 +554,10 @@ function singleStudentSingleSubjectMarks(props) {
                     <Row
                       className="justify-content-center  border border"
                       style={{
-                        marginInline: "16%",
-                        height: "30rem",
-                        overflowY: "scroll",
-                        overflowX: "hidden",
+                        marginInline: '16%',
+                        height: '30rem',
+                        overflowY: 'scroll',
+                        overflowX: 'hidden',
                       }}
                     >
                       <table className="table ">
@@ -566,8 +566,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="marks.No" />
@@ -575,8 +575,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="marks.FullName" />
@@ -584,8 +584,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="marks.FatherName" />
@@ -593,8 +593,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="marks.ID" />
@@ -602,8 +602,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="پخوانی نمری" />
@@ -611,8 +611,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="نوی نمری" />
@@ -622,8 +622,8 @@ function singleStudentSingleSubjectMarks(props) {
                         <tbody
                           className="border border "
                           style={{
-                            overflowY: "scroll",
-                            overflowX: "hidden",
+                            overflowY: 'scroll',
+                            overflowX: 'hidden',
                           }}
                         >
                           {students.length > 0 &&
@@ -632,40 +632,40 @@ function singleStudentSingleSubjectMarks(props) {
                                 <th
                                   scope="row"
                                   style={{
-                                    fontSize: "20px",
-                                    textAlign: "center",
+                                    fontSize: '20px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   {index + 1}
                                 </th>
                                 <td
                                   style={{
-                                    fontSize: "20px",
-                                    textAlign: "center",
+                                    fontSize: '20px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   {student.name}
                                 </td>
                                 <td
                                   style={{
-                                    fontSize: "20px",
-                                    textAlign: "center",
+                                    fontSize: '20px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   {student.father_name}
                                 </td>
                                 <td
                                   style={{
-                                    fontSize: "20px",
-                                    textAlign: "center",
+                                    fontSize: '20px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   {student.id}
                                 </td>
                                 <td
                                   style={{
-                                    fontSize: "20px",
-                                    textAlign: "center",
+                                    fontSize: '20px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   {student.oldMarks}
@@ -675,15 +675,15 @@ function singleStudentSingleSubjectMarks(props) {
                                 <td>
                                   <div
                                     style={{
-                                      margin: "-7px",
-                                      fontSize: "15px",
+                                      margin: '-7px',
+                                      fontSize: '15px',
                                     }}
                                   >
                                     <Field
                                       type="number"
                                       style={{
-                                        fontSize: "15px",
-                                        textAlign: "center",
+                                        fontSize: '15px',
+                                        textAlign: 'center',
                                       }}
                                       className="form-control"
                                       name={`score[${student.student_id}]`}
@@ -703,8 +703,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="marks.No" />
@@ -712,8 +712,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="marks.FullName" />
@@ -721,8 +721,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="marks.FatherName" />
@@ -730,8 +730,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="marks.ID" />
@@ -739,8 +739,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="پخوانی نمری" />
@@ -748,8 +748,8 @@ function singleStudentSingleSubjectMarks(props) {
                             <th
                               scope="col"
                               style={{
-                                fontSize: "15px",
-                                textAlign: "center",
+                                fontSize: '15px',
+                                textAlign: 'center',
                               }}
                             >
                               <IntlMessages id="نوی نمری" />

@@ -90,6 +90,7 @@ const FieldRegister = () => {
     const response = await callApi('institute/field-create/', 'POST', data);
     if (response) {
       createNotification('success', 'filled');
+      resetForm();
       setIsNext(true);
       console.log('success message', response.data);
     } else {
@@ -98,8 +99,6 @@ const FieldRegister = () => {
     }
   };
   const onSubmit = (values, { resetForm }) => {
-    // resetForm();
-    //remove the user_id after authentication is done
     const data = {
       name: values.fieldName,
       english_name: values.fieldEnglishName,

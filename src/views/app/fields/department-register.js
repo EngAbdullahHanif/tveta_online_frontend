@@ -77,7 +77,7 @@ const DepartmentRegister = () => {
   };
 
   // post student record to server
-  const postStudentRecord = async (data) => {
+  const postStudentRecord = async (data, resetForm) => {
     const response = await callApi(
       'institute/department-create/',
       'POST',
@@ -85,6 +85,7 @@ const DepartmentRegister = () => {
     );
     if (response) {
       createNotification('success', 'filled');
+      resetForm();
       setIsNext(false);
       console.log('success message', response.data);
     } else {
@@ -93,15 +94,15 @@ const DepartmentRegister = () => {
     }
   };
 
-  const onSubmit = (values) => {
+  const onSubmit = (values, { resetForm }) => {
     //remove the user_id after authentication is done
     const data = {
-      filed: values.field.value,
+      field_of_study: values.field.value,
       name: values.departmentName,
       english_name: values.departmentEnglishName,
-      user_id: 1,
     };
-    postStudentRecord(data);
+    console.log('data', data);
+    postStudentRecord(data, resetForm);
   };
 
   return (

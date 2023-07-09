@@ -1,4 +1,7 @@
 import { message } from 'antd';
+
+import { NotificationManager } from 'components/common/react-notifications';
+
 message.config({
   top: 100,
   duration: 2,
@@ -61,7 +64,7 @@ const callApi = async (endpoint, method = 'get', data = null) => {
     if (error.response && error.response.status === 404) {
       throw new Error('Resource not found');
     } else {
-      throw error;
+      console.log(error.response);
     }
   }
 };

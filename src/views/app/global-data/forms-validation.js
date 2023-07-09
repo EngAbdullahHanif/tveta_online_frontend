@@ -80,12 +80,16 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.genderErr" />),
 
-    // TEMPORARY COMMENTED
-  // email: Yup.string()
-  //   .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-  //   .required(<IntlMessages id="teacher.EmailErr" />),
+  email: Yup.string()
+    .email(<IntlMessages id="teacher.EmailRequiredErr" />)
+    .required(<IntlMessages id="teacher.EmailErr" />),
+  disability: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable(),
 
-  // phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
+  phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
 });
 
 //  Student Registration form validation step two
@@ -129,8 +133,8 @@ export const studentRegisterFormStep_2 = Yup.object().shape({
     .shape({ value: Yup.string().required() })
     .nullable()
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  C_District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+  C_District: Yup.object().required(<IntlMessages id="forms.DistrictErr" />),
+  district: Yup.object().required(<IntlMessages id="forms.DistrictErr" />),
   village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
   C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 });

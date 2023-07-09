@@ -1,31 +1,19 @@
-import { userRole } from "constants/defaultValues";
-import { ProtectedRoute } from "helpers/authHelper";
-import React, { Suspense } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { userRole } from 'constants/defaultValues';
+import { ProtectedRoute } from 'helpers/authHelper';
+import React, { Suspense } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 const InstituteList = React.lazy(() =>
-  import(
-    // /* webpackChunkName: "institue-list" */ './bio/institute-list/InstituteListMain'
-    "./institute-list/InstituteListMain"
-  )
+  import('./institute-list/InstituteListMain')
 );
 const PromotionDemotionList = React.lazy(() =>
-  import(
-    // /* webpackChunkName: "institue-list" */ './bio/institute-list/InstituteListMain'
-    "./promotion-demotion-list/PromotionDemortionListMain"
-  )
+  import('./promotion-demotion-list/PromotionDemortionListMain')
 );
-const InstituteRegister = React.lazy(() => import("./institute-register.js"));
+const InstituteRegister = React.lazy(() => import('./institute-register.js'));
 
-const InstitueCreate = React.lazy(() =>
-  import(/* webpackChunkName: "institue-create" */ "./institute-create")
-);
-const InstituteUpgrade = React.lazy(() =>
-  import(/* webpackChunkName: "institute-upgrade" */ "./institute-upgrade")
-);
-const InstituteProfile = React.lazy(() =>
-  import(/* webpackChunkName: "institute-details" */ "./institute-profile")
-);
+const InstitueCreate = React.lazy(() => import('./institute-create'));
+const InstituteUpgrade = React.lazy(() => import('./institute-upgrade'));
+const InstituteProfile = React.lazy(() => import('./institute-profile'));
 const Institues = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>

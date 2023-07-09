@@ -1,8 +1,16 @@
 /* eslint-disable no-param-reassign */
-import React, { createRef, useState, Controller, useEffect } from 'react';
+import React, {
+  createRef,
+  useState,
+  Controller,
+  useEffect,
+  useRef,
+} from 'react';
 import { NavLink } from 'react-router-dom';
 import { FormControl, FormLabel } from 'react-bootstrap';
 import './../../.././../assets/css/global-style.css';
+
+import { fetchProvinces, fetchDistricts } from '../../global-data/options';
 
 import {
   Row,
@@ -16,7 +24,6 @@ import {
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import {
-  provinceOptions,
   educationalYearsOptions,
   dateOfBirthOptoions,
   batchOptions,
@@ -27,6 +34,7 @@ import {
   studyTimeOptions,
   tazkiraOptions,
   educationLevelOptions,
+  disabilityOptions,
 } from '../../global-data/options';
 import {
   studentRegisterFormStep_1,
@@ -35,7 +43,15 @@ import {
 } from '../../global-data/forms-validation';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {
+  Formik,
+  Form,
+  Field,
+  ErrorMessage,
+  useField,
+  useFormikContext,
+  useFormik,
+} from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
@@ -46,187 +62,118 @@ import * as Yup from 'yup';
 import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
-import { async } from 'q';
-
-//import { Controller } from 'react';
-const servicePath = 'http://localhost:8000';
-const studentApi = `${servicePath}/api`;
-// http://localhost:8000/api/?student_id=1232
-
-//http://localhost:8000/api/student_create
-
-const studentProvince = [
-  {
-    value: 1,
-    label: 'Nanagarhar',
-  },
-  {
-    value: 2,
-    label: 'Kabul',
-  },
-  ,
-  {
-    value: 3,
-    label: 'kjlkjkjlkj',
-  },
-];
 
 const StudentRegistration = ({ intl }, values) => {
   const { studentId } = useParams();
 
-  console.log('student_id', studentId);
-  if (studentId) {
-    useEffect(() => {
-      async function fetchStudent() {
-        // const { data } = await axios.get(
-        //   `api/?student_id=${updateStudentId}`
-        // );
-        const { data } = await callApi(
-          `api/?student_id=${studentId}`,
-          '',
-          null
-        );
-        console.log('the backend server data', data.results[0]);
+  // if student id is provided, fetch student data from backend
+  // if (studentId) {
+  //   useEffect(() => {
+  //     async function fetchStudent() {
+  //       // const { data } = await axios.get(
+  //       //   `api/?student_id=${updateStudentId}`
+  //       // );
+  //       const { data } = await callApi(
+  //         `api/?student_id=${studentId}`,
+  //         '',
+  //         null
+  //       );
+  //       console.log('the backend server data', data.results[0]);
 
-        setInitialname1(data.results[0].name);
-        setInitialLastName(data.results[0].last_name);
-        setInitialFatherName(data.results[0].father_name);
-        setInitialGrandFatherName(data.results[0].grand_father_name);
-        setInitialFatherDuty(data.results[0].fatherـprofession);
-        setInitialLastNameEng(data.results[0].english_last_name);
-        const instGender = genderOptions.map((studentGender) => {
-          if (studentGender.value === data.results[0].gender) {
-            setInitialGender(studentGender);
-          }
-        });
-        const dateOfBirthOptions = dateOfBirthOptoions.map((yearOptions) => {
-          if (yearOptions.value === data.results[0].birth_date) {
-            setInitialDoB(yearOptions);
-          }
-        });
-        const graduationYear = educationalYearsOptions.map((yearOptions) => {
-          if (yearOptions.value === data.results[0].finished_grade_year) {
-            setInitialGraduationYear(yearOptions);
-          }
-        });
-        setInitialEnglishName(data.results[0].english_name);
-        setInitialPhoneNo(data.results[0].phone_number);
-        setInitialFatherDutyLocation(data.results[0].fatherـplaceـofـduty);
-        if (data.results[0].sukuk_number)
-          setInitialTazkiraType(tazkiraOptions[1]);
-        else setInitialTazkiraType(tazkiraOptions[0]);
-        setInitialFatherEngName(data.results[0].english_father_name);
-        setInitialPlaceOfBirth(data.results[0].main_province);
-        setInitialTazkiraNo(data.results[0].registration_number);
-        setInitialEmail(data.results[0].email);
-        setInitialIdCardPageNo(data.results[0].page_number);
-        setInitialStudentId(data.results[0].cover_number);
-        setInitialPreSchool(data.results[0].school);
-        const studentFinishGrade = educationLevelOptions.map(
-          (finishedGrade) => {
-            if (finishedGrade.value === data.results[0].finished_grade) {
-              setInitialLevelOfEducation(finishedGrade);
-            }
-          }
-        );
-        const studentMainProvincee = provinceOptions.map((studentProvince) => {
-          if (studentProvince.value === data.results[0].main_province) {
-            setInitialProvince(studentProvince);
-          }
-        });
-        const studentCurrentProvince = provinceOptions.map(
-          (studentProvince) => {
-            if (studentProvince.value === data.results[0].current_province) {
-              setInitialC_Province(studentProvince);
-            }
-          }
-        );
-        const studentSchoolProvince = provinceOptions.map((studentProvince) => {
-          if (studentProvince.value === data.results[0].schoolـprovince) {
-            setInitialSchoolProvince(studentProvince);
-          }
-        });
-        setInitialDistrict(data.results[0].main_district);
-        setInitialVillage(data.results[0].main_village);
-        setInitialC_District(data.results[0].current_district);
-        setInitialC_Village(data.results[0].current_village);
-        setInitialIdCardPageNo(data.results[0].page_number);
-        setInitialIdCardJoldNo(data.results[0].cover_number);
-        // setInitialInstitute(data[0].school);
-        // setInitialEducationalYear(data[0].finished_grade_year);
-        // setInitialKankorId(data[0].kankor_id);
-        // setInitialStudentId(data[0].student_id);
-        // setInitialClass(data[0].graduat_12_types);
-        // setInitialInteranceType(data[0].internse_type);
-        // setInitialDepartment(data[0].kankor_id);
-        // setInitialBatch(data[0].kankor_id);
-        // setInitialMediumOfInstruction(data[0].kankor_id);
-        // setInitialStudyTime(data[0].kankor_id);
-        // setInitialStudentType(data[0].student_type);
-        // setInitialField(data[0].field);
-        // setInitialSector(data[0].sector);
-        // setInitialphoto(data[0].photo);
-      }
-      async function fetchStudentDepartment() {
-        const { data } = await callApi(
-          `api/student_institutes/?student_id=${studentId}`,
-          '',
-          null
-        );
-        console.log('student department data', data);
-      }
-      fetchStudent();
-      fetchStudentDepartment();
-      //setUpdateMode(true);
-    }, []);
-  }
+  //       // get already existing student data from backend
+  //       setInitialname1(data.results[0].name);
+  //       setInitialLastName(data.results[0].last_name);
+  //       setInitialFatherName(data.results[0].father_name);
+  //       setInitialGrandFatherName(data.results[0].grand_father_name);
+  //       setInitialFatherDuty(data.results[0].fatherـprofession);
+  //       setInitialLastNameEng(data.results[0].english_last_name);
+  //       const instGender = genderOptions.map((studentGender) => {
+  //         if (studentGender.value === data.results[0].gender) {
+  //           setInitialGender(studentGender);
+  //         }
+  //       });
+  //       const dateOfBirthOptions = dateOfBirthOptoions.map((yearOptions) => {
+  //         if (yearOptions.value === data.results[0].birth_date) {
+  //           setInitialDoB(yearOptions);
+  //         }
+  //       });
+  //       const graduationYear = educationalYearsOptions.map((yearOptions) => {
+  //         if (yearOptions.value === data.results[0].finished_grade_year) {
+  //           setInitialGraduationYear(yearOptions);
+  //         }
+  //       });
+  //       setInitialEnglishName(data.results[0].english_name);
+  //       setInitialPhoneNo(data.results[0].phone_number);
+  //       setInitialFatherDutyLocation(data.results[0].fatherـplaceـofـduty);
+  //       if (data.results[0].sukuk_number)
+  //         setInitialTazkiraType(tazkiraOptions[1]);
+  //       else setInitialTazkiraType(tazkiraOptions[0]);
+  //       setInitialFatherEngName(data.results[0].english_father_name);
+  //       setInitialPlaceOfBirth(data.results[0].main_province);
+  //       setInitialTazkiraNo(data.results[0].registration_number);
+  //       setInitialEmail(data.results[0].email);
+  //       setInitialIdCardPageNo(data.results[0].page_number);
+  //       setInitialStudentId(data.results[0].cover_number);
+  //       setInitialPreSchool(data.results[0].school);
+  //       const studentFinishGrade = educationLevelOptions.map(
+  //         (finishedGrade) => {
+  //           if (finishedGrade.value === data.results[0].finished_grade) {
+  //             setInitialLevelOfEducation(finishedGrade);
+  //           }
+  //         }
+  //       );
+  //       const studentMainProvincee = provinceOptions.map((studentProvince) => {
+  //         if (studentProvince.value === data.results[0].main_province) {
+  //           setInitialProvince(studentProvince);
+  //         }
+  //       });
+  //       const studentCurrentProvince = provinceOptions.map(
+  //         (studentProvince) => {
+  //           if (studentProvince.value === data.results[0].current_province) {
+  //             setInitialC_Province(studentProvince);
+  //           }
+  //         }
+  //       );
+  //       const studentSchoolProvince = provinceOptions.map((studentProvince) => {
+  //         if (studentProvince.value === data.results[0].schoolـprovince) {
+  //           setInitialSchoolProvince(studentProvince);
+  //         }
+  //       });
+  //       setInitialDistrict(data.results[0].main_district);
+  //       setInitialVillage(data.results[0].main_village);
+  //       setInitialC_District(data.results[0].current_district);
+  //       setInitialC_Village(data.results[0].current_village);
+  //       setInitialIdCardPageNo(data.results[0].page_number);
+  //       setInitialIdCardJoldNo(data.results[0].cover_number);
+  //       // setInitialInstitute(data[0].school);
+  //       // setInitialEducationalYear(data[0].finished_grade_year);
+  //       // setInitialKankorId(data[0].kankor_id);
+  //       // setInitialStudentId(data[0].student_id);
+  //       // setInitialClass(data[0].graduat_12_types);
+  //       // setInitialInteranceType(data[0].internse_type);
+  //       // setInitialDepartment(data[0].kankor_id);
+  //       // setInitialBatch(data[0].kankor_id);
+  //       // setInitialMediumOfInstruction(data[0].kankor_id);
+  //       // setInitialStudyTime(data[0].kankor_id);
+  //       // setInitialStudentType(data[0].student_type);
+  //       // setInitialField(data[0].field);
+  //       // setInitialSector(data[0].sector);
+  //       // setInitialphoto(data[0].photo);
+  //     }
+  //     async function fetchStudentDepartment() {
+  //       const { data } = await callApi(
+  //         `api/student_institutes/?student_id=${studentId}`,
+  //         '',
+  //         null
+  //       );
+  //       console.log('student department data', data);
+  //     }
+  //     fetchStudent();
+  //     fetchStudentDepartment();
+  //     //setUpdateMode(true);
+  //   }, []);
+  // }
 
-  const [initialname1, setInitialname1] = useState('');
-  const [initialLastName, setInitialLastName] = useState('');
-  const [initialFatherName, setInitialFatherName] = useState('');
-  const [DoB, setDoB] = useState();
-  const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
-  const [initialFatherDuty, setInitialFatherDuty] = useState('');
-  const [initialLastNameEng, setInitialLastNameEng] = useState();
-  const [initialGender, setInitialGender] = useState([]);
-  const [initialEnglishName, setInitialEnglishName] = useState('');
-  const [initialPhoneNo, setInitialPhoneNo] = useState('');
-  const [initialDoB, setInitialDoB] = useState([]);
-  const [initialFatherDutyLocation, setInitialFatherDutyLocation] =
-    useState('');
-  const [initialTazkiraType, setInitialTazkiraType] = useState([]);
-  const [initialFatherEngName, setInitialFatherEngName] = useState('');
-  const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState('');
-  const [initialTazkiraNo, setInitialTazkiraNo] = useState('');
-  const [initialEmail, setInitialEmail] = useState('');
-  const [initialIdCardPageNo, setInitialIdCardPageNo] = useState('');
-  const [initialIdCardJoldNo, setInitialIdCardJoldNo] = useState('');
-  const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
-  const [initialPreSchool, setInitialPreSchool] = useState('');
-  const [initialGraduationYear, setInitialGraduationYear] = useState([]);
-  const [initialSchoolProvince, setInitialSchoolProvince] = useState([]);
-  const [initialProvince, setInitialProvince] = useState([]);
-  const [initialC_Province, setInitialC_Province] = useState([]);
-  const [initialDistrict, setInitialDistrict] = useState();
-  const [initialVillage, setInitialVillage] = useState();
-  const [initialC_District, setInitialC_District] = useState('');
-  const [initialC_Village, setInitialC_Village] = useState('');
-  const [initialInstitute, setInitialInstitute] = useState([]);
-  const [initialClass, setInitialClass] = useState([]);
-  const [initialEducationalYear, setInitialEducationalYear] = useState([]);
-  // const [initialKankorId, setInitialKankorId] = useState('');
-  const [initialStudentId, setInitialStudentId] = useState('');
-  const [initialInteranceType, setInitialInteranceType] = useState([]);
-  const [initialDepartment, setInitialDepartment] = useState([]);
-  const [initialBatch, setInitialBatch] = useState([]);
-  const [initialMediumOfInstruction, setInitialMediumOfInstruction] = useState(
-    []
-  );
-  const [initialStudyTime, setInitialStudyTime] = useState([]);
-  const [initialStudentType, setInitialStudentType] = useState([]);
-  const [initialField, setInitialField] = useState([]);
-  const [initialSector, setInitialSector] = useState([]);
-  const [initialphoto, setInitialphoto] = useState('');
   const [isNext, setIsNext] = useState(false);
   const [institutes, setInstitutes] = useState([]);
   const [fieldList, setFieldList] = useState([]);
@@ -235,135 +182,153 @@ const StudentRegistration = ({ intl }, values) => {
   const [sectors, setSectors] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [fields, setFields] = useState({
-    name1: initialname1,
-    fatherName: initialFatherName,
-    lastName: initialLastName,
-    lastNameEng: initialLastNameEng,
-    fatherDuty: initialFatherDuty,
-    englishName: initialEnglishName,
-    fatherEngName: initialFatherEngName,
-    grandFatherName: initialGrandFatherName,
-    fatherDutyLocation: initialFatherDutyLocation,
-    placeOfBirth: initialPlaceOfBirth,
-    DoB: initialDoB,
-    gender: initialGender,
-    tazkiraNo: initialTazkiraNo,
-    phoneNo: initialPhoneNo,
-    email: initialEmail,
-    idCardPageNo: initialIdCardPageNo,
-    idCardJoldNo: initialIdCardJoldNo,
-    tazkiraType: initialTazkiraType,
-    levelOfEducation: initialLevelOfEducation,
-    preSchool: initialPreSchool,
-    graduationYear: initialGraduationYear,
-    schoolProvince: initialSchoolProvince,
-    province: initialProvince,
-    C_Province: initialC_Province,
-    C_District: initialC_District,
-    district: initialDistrict,
-    village: initialVillage,
-    C_Village: initialC_Village,
-    institute: initialInstitute,
-    class: initialClass,
-    educationalYear: initialEducationalYear,
-    department: initialDepartment,
-    mediumOfInstruction: initialMediumOfInstruction,
+    name1: '',
+    fatherName: '',
+    lastName: '',
+    lastNameEng: '',
+    fatherDuty: '',
+    englishName: '',
+    fatherEngName: '',
+    grandFatherName: '',
+    fatherDutyLocation: '',
+    placeOfBirth: '',
+    DoB: '',
+    gender: '',
+    tazkiraNo: '',
+    phoneNo: '',
+    email: '',
+    idCardPageNo: '',
+    idCardJoldNo: '',
+    tazkiraType: '',
+    levelOfEducation: '',
+    preSchool: '',
+    graduationYear: '',
+    schoolProvince: '',
+    province: '',
+    C_Province: '',
+    C_District: '',
+    district: '',
+    village: '',
+    C_Village: '',
+    institute: '',
+    class: '',
+    educationalYear: '',
+    department: '',
+    mediumOfInstruction: '',
     // kankorId: initialKankorId,
-    studentId: initialStudentId,
-    studyTime: initialStudyTime,
-    interanceType: initialInteranceType,
-    studentType: initialStudentType,
-    batch: initialBatch,
-    field: initialField,
-    sector: initialSector,
-    file: initialphoto,
+    studentId: '',
+    studyTime: '',
+    interanceType: '',
+    studentType: '',
+    batch: '',
+    field: '',
+    sector: '',
+    file: '',
   });
+  const [stepOneData, setStepOneData] = useState({});
 
-  const initialValues = {
-    name1: initialname1,
-    fatherName: initialFatherName,
-    lastName: initialLastName,
-    lastNameEng: initialLastNameEng,
-    fatherDuty: initialFatherDuty,
-    englishName: initialEnglishName,
-    fatherEngName: initialFatherEngName,
-    grandFatherName: initialGrandFatherName,
-    fatherDutyLocation: initialFatherDutyLocation,
-    placeOfBirth: initialPlaceOfBirth,
-    DoB: initialDoB,
-    gender: initialGender,
-    tazkiraNo: initialTazkiraNo,
-    phoneNo: initialPhoneNo,
-    email: initialEmail,
-    idCardPageNo: initialIdCardPageNo,
-    idCardJoldNo: initialIdCardJoldNo,
-    tazkiraType: initialTazkiraType,
-    levelOfEducation: initialLevelOfEducation,
-    preSchool: initialPreSchool,
-    graduationYear: initialGraduationYear,
-    schoolProvince: initialSchoolProvince,
-    province: initialProvince,
-    C_Province: initialC_Province,
-    C_District: initialC_District,
-    district: initialDistrict,
-    village: initialVillage,
-    C_Village: initialC_Village,
-    institute: initialInstitute,
-    class: initialClass,
-    educationalYear: initialEducationalYear,
-    department: initialDepartment,
-    mediumOfInstruction: initialMediumOfInstruction,
-    // kankorId: initialKankorId,
-    studentId: initialStudentId,
-    studyTime: initialStudyTime,
-    interanceType: initialInteranceType,
-    studentType: initialStudentType,
-    batch: initialBatch,
-    field: initialField,
-    sector: initialSector,
-    file: initialphoto,
-  };
+  const [provinceOptions, setProvinceOptions] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [currentProvince, setCurrentProvince] = useState('');
+  const [mainProvince, setMainProvince] = useState('');
+
+  const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
+  const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
+
+  const [initialValues, setInitialValues] = useState([
+    {
+      name1: '',
+      englishName: '',
+      lastName: '',
+      lastNameEng: '',
+      fatherName: '',
+      fatherDuty: '',
+      fatherEngName: '',
+      grandFatherName: '',
+      fatherDutyLocation: '',
+      DoB: [],
+      gender: [],
+      tazkiraNo: '',
+      idCardPageNo: '',
+      idCardJoldNo: '',
+      tazkiraType: [],
+      phoneNo: '',
+      email: '',
+      placeOfBirth: '',
+    },
+    {
+      levelOfEducation: '',
+      preSchool: '',
+      graduationYear: '',
+      schoolProvince: '',
+      province: '',
+      C_Province: '',
+      C_District: '',
+      district: '',
+      village: '',
+      C_Village: '',
+    },
+    {
+      institute: [],
+      class: [],
+      educationalYear: [],
+      department: [],
+      mediumOfInstruction: [],
+      // kankorId: initialKankorId,
+      studentId: '',
+      studyTime: '',
+      interanceType: [],
+      studentType: [],
+      batch: '',
+      field: [],
+      sector: [],
+      file: '',
+    },
+  ]);
+
+  const forms = [createRef(null), createRef(null), createRef(null)];
+
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
+    const file = event.currentTarget.files[0];
     setSelectedFile(file);
   };
 
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
+      const institutes = await response.data.map((item) => ({
         value: item.id,
         label: item.name,
       }));
-      setInstitutes(updatedData);
+      setInstitutes(institutes);
     } else {
-      console.log('institute error');
+      console.log('Could not fetch list of institutes from server');
     }
   };
 
   const fetchFields = async () => {
     const response = await callApi('institute/field/', 'GET', null);
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
+      const fields = await response.data.map((item) => ({
         value: item.id,
         label: item.name,
       }));
-      setFieldList(updatedData);
+      setFieldList(fields);
     } else {
-      console.log('field error');
+      console.log('Could not fetch field of studies from server');
     }
   };
 
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', 'GET', null);
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
+      const departments = await response.data.map((item) => ({
         value: item.id,
         label: item.name,
       }));
-      setDepartments(updatedData);
+      setDepartments(departments);
     } else {
-      console.log('department error');
+      console.log('Could not fetch departments from server');
     }
   };
 
@@ -371,36 +336,56 @@ const StudentRegistration = ({ intl }, values) => {
     const response = await callApi('institute/classs/', 'GET', null);
     console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
+      const listOfClasses = await response.data.map((item) => ({
         value: item.id,
         label: item.name + ' - ' + item.semester + ' - ' + item.section,
       }));
-      setClasss(updatedData);
+      setClasss(listOfClasses);
     } else {
-      console.log('class error');
+      console.log('Could not fetch list of classes from server');
     }
   };
 
   const fetchSectors = async () => {
     const response = await callApi('institute/sectors/', 'GET', null);
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
+      const sectors = await response.data.map((item) => ({
         value: item.id,
         label: item.sector,
       }));
-      setSectors(updatedData);
+      setSectors(sectors);
     } else {
-      console.log('class error');
+      console.log('Could not fetch list of sectors from server');
     }
   };
 
-  useEffect(() => {
+  const fetchProvincesList = async () => {
+    const provinces = await fetchProvinces();
+    setProvinceOptions(provinces);
+  };
+
+  // fetch the following when the component is first loaded
+  useEffect(async () => {
     fetchInstitutes();
     fetchFields();
     fetchDepartments();
     fetchClasses();
     fetchSectors();
+    fetchProvincesList();
   }, []);
+
+  const handleProvinceChange = async (name, value, setFieldValue) => {
+    console.log('name is ', name);
+    console.log('value is ', value);
+    const districts = await fetchDistricts(value.value);
+    if (name === 'C_Province') {
+      setCurrentDistrictOptions(districts);
+      setFieldValue('C_District', '');
+    } else {
+      setMainDistrictOptions(districts);
+      setFieldValue('district', '');
+    }
+  };
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -435,9 +420,10 @@ const StudentRegistration = ({ intl }, values) => {
 
   // post student record to server
   const postStudentRecord = async (data) => {
-    const response = await callApi('api/student_create', 'POST', data);
-    console.log('response of call api', response);
-    if (response) {
+    // const response = await callApi('api/student_create', 'POST', data);
+    const response = await callApi('students/register', 'POST', data);
+    // console.log('response of call api', response);
+    if (response.status >= 200 && response.status < 300) {
       createNotification('success', 'filled');
       console.log('success message', response.data);
     } else {
@@ -446,96 +432,120 @@ const StudentRegistration = ({ intl }, values) => {
     }
   };
 
-  const forms = [createRef(null), createRef(null), createRef(null)];
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const handleInitialValues = (steps, step) => {
+    console.log('steps is ', steps);
+    const formIndex = steps.indexOf(step);
+    if (formIndex > 2) return;
+    const form = forms[formIndex].current;
+
+    console.log('step is ', step);
+    const initialValuesCopy = [
+      { ...initialValues[0] },
+      { ...initialValues[1] },
+      { ...initialValues[2] },
+    ];
+    initialValuesCopy[steps.indexOf(step)] = form.values;
+    setInitialValues(initialValuesCopy);
+  };
+
+  // handle when user clicks on next button
   const onClickNext = (goToNext, steps, step, values) => {
-    if (steps.length - 1 <= steps.indexOf(step)) {
+    console.log('inside goToNext function');
+    // if last step, do nothing
+    const isLastStep = steps.length - 1 <= steps.indexOf(step);
+    if (isLastStep) {
+      console.log('last step, do nothing');
       return;
     }
+
     const formIndex = steps.indexOf(step);
     const form = forms[formIndex].current;
+    console.log('ref form value: ', form);
+    console.log('form values of index ${formIndex}: ', form.values);
+    // submitForm() only triggers formik validation
     form.submitForm().then(() => {
       if (!form.isDirty && form.isValid) {
+        // add step's data into fields state
+        // add fields of this step to the fields state
+        console.log('form values: ', form.values);
         const newFields = { ...fields, ...form.values };
+        handleInitialValues(steps, step);
         setFields(newFields);
+        // if last step, submit the form
+        // if next on last step is clicked, call the api to register student
         if (steps.length - 2 <= steps.indexOf(step)) {
-          setBottomNavHidden(true);
+          // setBottomNavHidden(true);
           setLoading(true);
-
-          const formData = { ...newFields };
-          console.log('FormData', formData);
-          const imageData = new FormData();
-          imageData.append('file', formData.image);
+          console.log('new fields', newFields);
 
           const data = {
             //personal info,
-            name: formData.name1,
-            student_id: formData.studentId,
-            kankor_id: formData.kankorId,
-            finished_grade_year: formData.graduationYear.label,
-            school: formData.preSchool,
-            schoolـprovince: formData.schoolProvince.value,
-            finished_grade: formData.levelOfEducation.value,
-            student_type: formData.studentType.value,
-            english_name: formData.englishName,
-            last_name: formData.lastName,
-            english_last_name: formData.lastNameEng,
-            father_name: formData.fatherName,
-            english_father_name: formData.fatherEngName,
-            phone_number: formData.phoneNo,
-            email: formData.email,
-            grand_father_name: formData.grandFatherName,
-            cover_number: formData.idCardJoldNo,
-            page_number: formData.idCardPageNo,
-            registration_number: formData.tazkiraNo,
-            // sukuk_number: formData.tazkiraNo,
-            main_province: formData.province.value,
-            main_district: formData.district,
-            main_village: formData.village,
-            current_province: formData.C_Province.value,
-            current_district: formData.C_District,
-            current_village: formData.C_Village,
-            birth_date: formData.DoB.label,
-            fatherـprofession: formData.fatherDuty,
-            fatherـplaceـofـduty: formData.fatherDutyLocation,
-            internse_type: formData.interanceType.value,
-            students_status: '2',
-            gender: formData.gender.value,
-            institute: formData.institute.value,
-            educational_year: formData.educationalYear.label,
-            type: '1',
-            language: formData.mediumOfInstruction.value,
-            time: formData.studyTime.value,
+            name: newFields.name1,
+            student_id: newFields.studentId,
+            kankor_id: newFields.kankorId,
+            previous_grade_year: newFields.graduationYear.label,
+            previous_grade_school_name: newFields.preSchool,
+            previous_school_province: newFields.schoolProvince.value,
+            previous_grade: newFields.levelOfEducation.value,
+            student_type: newFields.studentType.value,
+            english_name: newFields.englishName,
+            last_name: newFields.lastName,
+            english_last_name: newFields.lastNameEng,
+            father_name: newFields.fatherName,
+            english_father_name: newFields.fatherEngName,
+            phone_number: newFields.phoneNo,
+            email: newFields.email,
+            grandfather_name: newFields.grandFatherName,
+            cover_number: newFields.idCardJoldNo,
+            page_number: newFields.idCardPageNo,
+            registration_number: newFields.tazkiraNo,
+            sukuk_number: newFields.tazkiraNo,
+            main_province: newFields.province.value,
+            main_district: newFields.district.value,
+            main_village: newFields.village,
+            current_province: newFields.C_Province.value,
+            current_district: newFields.C_District.value,
+            current_village: newFields.C_Village,
+            year_of_birth: newFields.DoB.label,
+            father_profession: newFields.fatherDuty,
+            father_place_of_duty: newFields.fatherDutyLocation,
+            admission_method: newFields.interanceType.value,
+            // students_status: 'active',
+            gender: newFields.gender.value,
+            institute: newFields.institute.value,
+            educational_year: newFields.educationalYear.label,
+            student_type: 'continuous',
+            teaching_language: newFields.mediumOfInstruction.value,
+            shift: newFields.studyTime.value,
 
             // fields info
-            department_id: formData.department.value,
-            field: formData.field.value,
+            department: newFields.department.value,
+            field_of_study: newFields.field.value,
 
             // sector:
-            sector: formData.sector.value,
-            batch: formData.batch.value,
+            sector: newFields.sector.value,
+            batch: newFields.batch.value,
 
             // class info,
-            class_id: formData.class.value,
-            place_of_birth: formData.placeOfBirth,
-
-            // student_photo: imageData.file,
+            classs: newFields.class.value,
+            place_of_birth: newFields.placeOfBirth,
           };
+          if (selectedFile) {
+            data['photo'] = selectedFile;
+          }
+          if (newFields.disability) {
+            data['disability'] = newFields.disability.value;
+          }
 
           const formData2 = new FormData();
           for (let key in data) {
             formData2.append(key, data[key]);
           }
-          //if image is selected
-          if (formData.image) {
-            formData2.append('student_photo', formData.image);
-          } else {
-            formData2.append('student_photo', '');
-          }
 
-          console.log('the form data is converted to object', data);
+          console.log('formdata', formData2.entries());
 
           // posting data to the server
           postStudentRecord(formData2);
@@ -549,7 +559,11 @@ const StudentRegistration = ({ intl }, values) => {
       }
     });
   };
+
+  // handle when user clicks on previous button
   const onClickPrev = (goToPrev, steps, step) => {
+    handleInitialValues(steps, step);
+    console.log('initialValues: ', initialValues);
     if (steps.indexOf(step) <= 0) {
       return;
     }
@@ -557,6 +571,7 @@ const StudentRegistration = ({ intl }, values) => {
   };
 
   const { messages } = intl;
+
   return (
     <Card>
       <div className="mt-4 ml-5">
@@ -576,9 +591,9 @@ const StudentRegistration = ({ intl }, values) => {
                 <Formik
                   innerRef={forms[0]}
                   enableReinitialize={true}
-                  initialValues={initialValues}
+                  initialValues={initialValues[0]}
                   validateOnMount
-                  // validationSchema={studentRegisterFormStep_1}
+                  validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -669,23 +684,6 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {/* Father Duty */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.StdFatherDutyLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="fatherDuty"
-                              />
-                              {errors.fatherDuty && touched.fatherDuty ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.fatherDuty}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
                             {/* Tazkira Type */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
@@ -697,9 +695,11 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="tazkiraType"
                                 id="tazkiraType"
                                 value={values.tazkiraType}
+                                // defaultValue={tazkiraOptions[0]}
                                 options={tazkiraOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                               />
                               {errors.tazkiraType && touched.tazkiraType ? (
                                 <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
@@ -707,8 +707,24 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
-
-                            {values.tazkiraType.value === 'Paper' ? (
+                            {/* Tazkira Number */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="teacher.TazkiraNoLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="tazkiraNo"
+                                type="number"
+                              />
+                              {errors.tazkiraNo && touched.tazkiraNo ? (
+                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                  {errors.tazkiraNo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+                            {values.tazkiraType.value === 'paper' ? (
                               <div>
                                 {/* Safha */}
                                 <div>
@@ -734,23 +750,32 @@ const StudentRegistration = ({ intl }, values) => {
                               <div></div>
                             )}
 
-                            {/* Contact No */}
-                            <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
-                                <IntlMessages id="teacher.PhoneNoLabel" />
-                                {/* <span style={{ color: 'red' }}>*</span> */}
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="phoneNo"
-                                type="number"
-                              />
-                              {errors.phoneNo && touched.phoneNo ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.phoneNo}
+                            {values.tazkiraType.value === 'paper' ? (
+                              <div>
+                                {/* Jold Number */}
+                                <div>
+                                  <FormGroup className="form-group has-float-label error-l-100">
+                                    <Label>
+                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                                    </Label>
+                                    <Field
+                                      className="form-control fieldStyle"
+                                      name="idCardJoldNo"
+                                      type="string"
+                                    />
+                                    {errors.idCardJoldNo &&
+                                    touched.idCardJoldNo ? (
+                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                        {errors.idCardJoldNo}
+                                      </div>
+                                    ) : null}
+                                  </FormGroup>
                                 </div>
-                              ) : null}
-                            </FormGroup>
+                              </div>
+                            ) : (
+                              <div></div>
+                            )}
+
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
                                 <IntlMessages id="teacher.DoBLabel" />
@@ -763,11 +788,29 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={dateOfBirthOptoions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                                 required
                               />
                               {errors.DoB && touched.DoB ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.DoB}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/* Place of birth */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="forms.PlaceOfBirthLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="placeOfBirth"
+                              />
+                              {errors.placeOfBirth && touched.placeOfBirth ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.placeOfBirth}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -839,10 +882,48 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={genderOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                               />
                               {errors.gender && touched.gender ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.gender}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            <FormGroup className="form-group has-float-label error-l-100 ">
+                              <Label>disability</Label>
+                              <FormikReactSelect
+                                name="disability"
+                                id="disability"
+                                value={values.disability}
+                                options={disabilityOptions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                isSearchable={false}
+                                isClearable={true}
+                                // style={{ fontSize: '100%' }}
+                              />
+                              {errors.disability && touched.disability ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.disability}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/* Father Duty */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="forms.StdFatherDutyLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="fatherDuty"
+                              />
+                              {errors.fatherDuty && touched.fatherDuty ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.fatherDuty}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -865,63 +946,20 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {/* Tazkira Number */}
-                            <FormGroup className="form-group has-float-label error-l-100">
+                            {/* Contact No */}
+                            <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
-                                <IntlMessages id="teacher.TazkiraNoLabel" />
-                                <span style={{ color: 'red' }}>*</span>
+                                <IntlMessages id="teacher.PhoneNoLabel" />
+                                {/* <span style={{ color: 'red' }}>*</span> */}
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
-                                name="tazkiraNo"
+                                name="phoneNo"
                                 type="number"
                               />
-                              {errors.tazkiraNo && touched.tazkiraNo ? (
-                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                  {errors.tazkiraNo}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {values.tazkiraType.value === 'Paper' ? (
-                              <div>
-                                {/* Jold Number */}
-                                <div>
-                                  <FormGroup className="form-group has-float-label error-l-100">
-                                    <Label>
-                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                    </Label>
-                                    <Field
-                                      className="form-control fieldStyle"
-                                      name="idCardJoldNo"
-                                      type="string"
-                                    />
-                                    {errors.idCardJoldNo &&
-                                    touched.idCardJoldNo ? (
-                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                        {errors.idCardJoldNo}
-                                      </div>
-                                    ) : null}
-                                  </FormGroup>
-                                </div>
-                              </div>
-                            ) : (
-                              <div></div>
-                            )}
-
-                            {/* Place of birth */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.PlaceOfBirthLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="placeOfBirth"
-                              />
-                              {errors.placeOfBirth && touched.placeOfBirth ? (
+                              {errors.phoneNo && touched.phoneNo ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.placeOfBirth}
+                                  {errors.phoneNo}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -960,7 +998,8 @@ const StudentRegistration = ({ intl }, values) => {
               <div className="wizard-basic-step">
                 <Formik
                   innerRef={forms[1]}
-                  initialValues={initialValues}
+                  enableReinitialize={true}
+                  initialValues={initialValues[1]}
                   onSubmit={() => {}}
                   validationSchema={studentRegisterFormStep_2}
                   validateOnMount
@@ -995,7 +1034,15 @@ const StudentRegistration = ({ intl }, values) => {
                                   id="province"
                                   value={values.province}
                                   options={provinceOptions}
-                                  onChange={setFieldValue}
+                                  onChange={(name, value) => {
+                                    handleProvinceChange(
+                                      name,
+                                      value,
+                                      setFieldValue
+                                    );
+                                    setFieldValue(name, value);
+                                  }}
+                                  isSearchable={false}
                                   onBlur={setFieldTouched}
                                 />
                                 {errors.province && touched.province ? (
@@ -1011,9 +1058,14 @@ const StudentRegistration = ({ intl }, values) => {
                                   <IntlMessages id="forms.DistrictLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
-                                <Field
-                                  className="form-control fieldStyle"
+                                <FormikReactSelect
                                   name="district"
+                                  id="district"
+                                  value={values.district}
+                                  options={mainDistrictOptions}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                  isSearchable={false}
                                 />
                                 {errors.district && touched.district ? (
                                   <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -1062,7 +1114,15 @@ const StudentRegistration = ({ intl }, values) => {
                                   id="C_Province"
                                   value={values.C_Province}
                                   options={provinceOptions}
-                                  onChange={setFieldValue}
+                                  isSearchable={false}
+                                  onChange={(name, value) => {
+                                    handleProvinceChange(
+                                      name,
+                                      value,
+                                      setFieldValue
+                                    );
+                                    setFieldValue(name, value);
+                                  }}
                                   onBlur={setFieldTouched}
                                 />
                                 {errors.C_Province && touched.C_Province ? (
@@ -1078,9 +1138,14 @@ const StudentRegistration = ({ intl }, values) => {
                                   <IntlMessages id="forms.DistrictLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
-                                <Field
-                                  className="form-control fieldStyle"
+                                <FormikReactSelect
                                   name="C_District"
+                                  id="C_District"
+                                  value={values.C_District}
+                                  options={currentDistrictOptions}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                  isSearchable={false}
                                 />
                                 {errors.C_District && touched.C_District ? (
                                   <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -1124,6 +1189,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   options={educationalYearsOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
+                                  isSearchable={false}
                                   required
                                 />
                                 {errors.graduationYear &&
@@ -1146,6 +1212,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   options={provinceOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
+                                  isSearchable={false}
                                 />
                                 {errors.schoolProvince &&
                                 touched.schoolProvince ? (
@@ -1171,6 +1238,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   options={educationLevelOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
+                                  isSearchable={false}
                                 />
                                 {errors.levelOfEducation &&
                                 touched.levelOfEducation ? (
@@ -1210,7 +1278,8 @@ const StudentRegistration = ({ intl }, values) => {
               <div className="wizard-basic-step">
                 <Formik
                   innerRef={forms[2]}
-                  initialValues={initialValues}
+                  enableReinitialize={true}
+                  initialValues={initialValues[2]}
                   onSubmit={() => {}}
                   validationSchema={studentRegisterFormStep_3}
                   validateOnMount
@@ -1240,6 +1309,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={institutes}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                               />
                               {errors.institute && touched.institute ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -1261,6 +1331,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={classs}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                                 required
                               />
                               {errors.class && touched.class ? (
@@ -1299,6 +1370,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={educationalYearsOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                                 required
                               />
                               {errors.educationalYear &&
@@ -1322,6 +1394,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={sectors}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                                 required
                               />
                               {errors.sector && touched.sector ? (
@@ -1357,6 +1430,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={StdInteranceOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                               />
                               {errors.interanceType && touched.interanceType ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -1369,18 +1443,12 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <InputGroupAddon addonType="prepend">
                                 <IntlMessages id="student.uploadPhoto" />
-                                <span style={{ color: 'red' }}>*</span>
                               </InputGroupAddon>
                               <FormControl
                                 name="file"
                                 type="file"
                                 className="form-control fieldStyle"
-                                onChange={(event) => {
-                                  setFieldValue(
-                                    'file',
-                                    event.currentTarget.files[0]
-                                  );
-                                }}
+                                onChange={handleFileChange}
                               />
                               {errors.file && touched.file ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -1403,6 +1471,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={departments}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                                 required
                               />
                               {errors.department && touched.department ? (
@@ -1425,6 +1494,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={fieldList}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                                 required
                               />
                               {errors.field && touched.field ? (
@@ -1447,6 +1517,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={batchOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                                 required
                               />
                               {errors.batch && touched.batch ? (
@@ -1469,6 +1540,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={mediumOfInstructionOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                                 required
                               />
                               {errors.mediumOfInstruction &&
@@ -1492,6 +1564,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={studyTimeOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                               />
                               {errors.studyTime && touched.studyTime ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -1513,6 +1586,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={StudentTypeOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
+                                isSearchable={false}
                               />
                               {errors.studentType && touched.studentType ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -1569,6 +1643,9 @@ const StudentRegistration = ({ intl }, values) => {
           />
         </Wizard>
       </CardBody>
+      <button type="submit" onClick={postStudentRecord}>
+        Admit Student
+      </button>
     </Card>
   );
 };

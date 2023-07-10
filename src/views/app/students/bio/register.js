@@ -296,67 +296,77 @@ const StudentRegistration = ({ intl }, values) => {
 
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const institutes = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(institutes);
-    } else {
-      console.log('Could not fetch list of institutes from server');
+    if (response) {
+      if (response.data && response.status === 200) {
+        const institutes = await response.data.map((item) => ({
+          value: item.id,
+          label: item.name,
+        }));
+        setInstitutes(institutes);
+      } else {
+        console.log('Could not fetch list of institutes from server');
+      }
     }
   };
 
   const fetchFields = async () => {
     const response = await callApi('institute/field/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const fields = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setFieldList(fields);
-    } else {
-      console.log('Could not fetch field of studies from server');
+    if (response) {
+      if (response.data && response.status === 200) {
+        const fields = await response.data.map((item) => ({
+          value: item.id,
+          label: item.name,
+        }));
+        setFieldList(fields);
+      } else {
+        console.log('Could not fetch field of studies from server');
+      }
     }
   };
 
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const departments = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setDepartments(departments);
-    } else {
-      console.log('Could not fetch departments from server');
+    if (response) {
+      if (response.data && response.status === 200) {
+        const departments = await response.data.map((item) => ({
+          value: item.id,
+          label: item.name,
+        }));
+        setDepartments(departments);
+      } else {
+        console.log('Could not fetch departments from server');
+      }
     }
   };
 
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', 'GET', null);
     console.log('class repspossdfsde', response);
-    if (response.data && response.status === 200) {
-      const listOfClasses = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name + ' - ' + item.semester + ' - ' + item.section,
-      }));
-      setClasss(listOfClasses);
-    } else {
-      console.log('Could not fetch list of classes from server');
+    if (response) {
+      if (response.data && response.status === 200) {
+        const listOfClasses = await response.data.map((item) => ({
+          value: item.id,
+          label: item.name + ' - ' + item.semester + ' - ' + item.section,
+        }));
+        setClasss(listOfClasses);
+      } else {
+        console.log('Could not fetch list of classes from server');
+      }
     }
   };
 
   const fetchSectors = async () => {
     const response = await callApi('institute/sectors/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const sectors = await response.data.map((item) => ({
-        value: item.id,
-        label: item.sector,
-      }));
-      setSectors(sectors);
-    } else {
-      console.log('Could not fetch list of sectors from server');
+    if (response) {
+      if (response.data && response.status === 200) {
+        const sectors = await response.data.map((item) => ({
+          value: item.id,
+          label: item.sector,
+        }));
+        setSectors(sectors);
+      } else {
+        console.log('Could not fetch list of sectors from server');
+      }
     }
   };
 

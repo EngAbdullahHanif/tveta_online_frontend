@@ -3,15 +3,17 @@ import callApi from 'helpers/callApi';
 
 export const fetchProvinces = async () => {
   const response = await callApi('core/provinces');
-  console.log(response);
-  if (response.status === 200) {
-    return response.data.map((province) => ({
-      value: province.id,
-      label: province.native_name,
-    }));
-  } else {
-    throw new Error(response.problem);
+  if (response) {
+    if (response.status === 200) {
+      return response.data.map((province) => ({
+        value: province.id,
+        label: province.native_name,
+      }));
+    } else {
+      throw new Error(response.problem);
+    }
   }
+  console.log(response);
 };
 export const fetchDistricts = async (province_id) => {
   console.log('getting districts of province with id: ', province_id);

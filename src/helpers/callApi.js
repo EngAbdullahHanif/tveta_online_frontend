@@ -41,14 +41,7 @@ const callApi = async (endpoint, method = 'get', data = null) => {
   console.log('HEaders: ', headers);
   const url = `${servicePath}/${endpoint}`;
   console.log('DATA in API Call: ' + endpoint, data);
-  // add current user id to the data
-  // if (data && data instanceof FormData) {
-  //   console.log("Formdata format", data);
-  //   data.append("user_id", localStorage.getItem("user").user_id);
-  // } else if (data) {
-  //   data.user_id = 1;
-  //   // data.user_id = localStorage.getItem("user").user_id;
-  // }
+
   console.log('the url is', url);
   try {
     const response = await axios({
@@ -60,12 +53,26 @@ const callApi = async (endpoint, method = 'get', data = null) => {
     console.log('CALL API Response: on ' + endpoint, response.data);
     return response;
   } catch (error) {
+    NotificationManager.error(
+      'an error occured while connecting to server at ' + endpoint,
+      error?.response?.status + ': Server Error',
+      5000
+    );
     console.log('Error in API: ', error);
     if (error.response && error.response.status === 404) {
-      throw new Error('Resource not found');
+      // throw new Error('Resource not found');
+      NotificationManager.warning(
+        'Resource not found',
+        'Error',
+        10000,
+        null,
+        null,
+        ''
+      );
     } else {
       console.log(error.response);
     }
+    return false;
   }
 };
 

@@ -29,10 +29,10 @@ const App = ({ locale }) => {
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     console.log('token is: ', token);
-    const data = JSON.stringify({ token: token });
     if (token) {
       const response = callApi('auth/token/verify/', 'POST', { token: token });
-      if (response && response.status !== 200) {
+      if ((response && response.status < 200) || response.status > 299) {
+        console.log('toekn is invalid. removing it from local storage');
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
         setUser(null);

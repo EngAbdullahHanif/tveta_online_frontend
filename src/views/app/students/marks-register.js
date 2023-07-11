@@ -94,7 +94,7 @@ const MarksRegistration = ({ match }) => {
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([]);
-  const [selectedInstitute, setSelectedInstitute] = useState('');
+  const [selectedInstitute, setSelectedInstitute] = useState();
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
@@ -187,8 +187,11 @@ const MarksRegistration = ({ match }) => {
     }
   };
   const fetchDepartments = async (instituteId) => {
+    if (!instituteId || !instituteId.value) {
+      return;
+    }
     const response = await callApi(
-      `institute/institite-department/?institute=${instituteId}`,
+      `institute/institite-department/?institute=${instituteId.value}`,
       '',
       null
     );
@@ -235,13 +238,13 @@ const MarksRegistration = ({ match }) => {
   useEffect(() => {
     fetchInstitutes();
     fetchFields();
-    fetchDepartments();
     fetchClasses();
     fetchSubjects();
   }, []);
 
   useEffect(() => {
     if (selectedInstitute) {
+      console.log('selectedInstitute', selectedInstitute);
       fetchDepartments(selectedInstitute);
     }
   }, [selectedInstitute]);

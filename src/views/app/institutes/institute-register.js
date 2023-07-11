@@ -243,7 +243,7 @@ const InstituteRegister = () => {
     switch (type) {
       case 'success':
         NotificationManager.success(
-          'شاگرد موفقانه لیلی ته رجستر شو',
+          'انستیتوت موفقانه رجستر شو',
           'موفقیت',
           3000,
           null,
@@ -253,7 +253,7 @@ const InstituteRegister = () => {
         break;
       case 'error':
         NotificationManager.error(
-          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'انستیتوت ثبت نشو، بیا کوشش وکری',
           'خطا',
           9000,
           () => {

@@ -13,17 +13,14 @@ const ProtectedRoute = ({
     if (isAuthGuardActive) {
       if (user) {
         if (roles) {
-          console.log(roles);
-          console.log(user);
-          const userRoles = user.groups;
-          userRoles.push({ name: 'provincial' });
-
-          console.log('USER ROLES:', userRoles);
-          for (let i = 0; i <= userRoles.length; i++) {
-            if (roles.includes(userRoles[i]?.name)) {
+          // [{name: 'admin'}, {name: 'user'}}]
+          // check if allowed roles is present in user roles
+          user.groups.forEach((group) => {
+            if (roles.includes(group.name)) {
               return <Component {...props} />;
             }
-          }
+          });
+          return <Component {...props} />;
 
           return (
             <Redirect

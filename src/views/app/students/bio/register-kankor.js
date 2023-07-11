@@ -15,7 +15,8 @@ import { NotificationManager } from 'components/common/react-notifications';
 import './../../.././../assets/css/global-style.css';
 import axios from 'axios';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
 const StudentRegistraion = ({ history }) => {
   const { kankorStudentId } = useParams();

@@ -10,6 +10,7 @@ import { getDirection, getCurrentUser } from './helpers/Utils';
 import { AuthContext } from './context/AuthContext';
 import Application from 'context/Application';
 import Authentication from 'context/Authentication';
+import callApi from 'helpers/callApi';
 const App = ({ locale }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const direction = getDirection();
@@ -23,6 +24,21 @@ const App = ({ locale }) => {
       document.body.classList.remove('rtl');
     }
   }, [direction]);
+
+  // check if token is still valid
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    console.log('token is: ', token);
+    const data = JSON.stringify({ token: token });
+    if (token) {
+      const response = callApi('auth/token/verify/', 'POST', { token: token });
+      if (response && response.status !== 200) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user');
+        setUser(null);
+      }
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

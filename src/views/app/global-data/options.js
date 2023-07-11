@@ -1,4 +1,37 @@
 import IntlMessages from 'helpers/IntlMessages';
+import callApi from 'helpers/callApi';
+
+export const fetchProvinces = async () => {
+  const response = await callApi('core/provinces');
+  if (response) {
+    if (response.status === 200) {
+      return response.data.map((province) => ({
+        value: province.id,
+        label: province.native_name,
+      }));
+    } else {
+      throw new Error(response.problem);
+    }
+  }
+  console.log(response);
+};
+export const fetchDistricts = async (province_id) => {
+  console.log('getting districts of province with id: ', province_id);
+  let url = 'core/districts/';
+  if (province_id) {
+    url = url + `?province=${province_id}`;
+  }
+  const response = await callApi(url);
+
+  if (response.status === 200) {
+    return response.data.map((district) => ({
+      value: district.id,
+      label: district.native_name,
+    }));
+  } else {
+    throw new Error(response.problem);
+  }
+};
 
 export const provinceOptions = [
   {
@@ -298,14 +331,41 @@ export const mediumOfInstructionOptions = [
 ];
 
 export const StdInteranceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdInteranceOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdInteranceOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdInteranceOption_3" /> },
+  { value: 'decree', label: <IntlMessages id="forms.StdInteranceOption_1" /> },
+  {
+    value: 'institute_kankor',
+    label: <IntlMessages id="forms.StdInteranceOption_2" />,
+  },
+  {
+    value: 'general_kankor',
+    label: <IntlMessages id="forms.StdInteranceOption_3" />,
+  },
+];
+
+export const disabilityOptions = [
+  {
+    value: 'deaf',
+    label: 'ناشنوا/کوڼ',
+  },
+  {
+    value: 'blind',
+    label: 'نابینا/ړوند',
+  },
+  {
+    value: 'mute',
+    label: 'گنگ/ګنګ',
+  },
 ];
 
 export const StudentTypeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudentTypeContiniues" /> },
-  { value: '2', label: <IntlMessages id="forms.StudentTypeNonContiniues" /> },
+  {
+    value: 'continuous',
+    label: <IntlMessages id="forms.StudentTypeContiniues" />,
+  },
+  {
+    value: 'noncontinuous',
+    label: <IntlMessages id="forms.StudentTypeNonContiniues" />,
+  },
 ];
 
 export const studyTimeOptions = [
@@ -720,10 +780,10 @@ export const sectionValueOptions = [
 
 export const tazkiraOptions = [
   {
-    value: 'ٍ Electronic',
+    value: 'ٍ electronic',
     label: <IntlMessages id="forms.StdTazkiraElectronic" />,
   },
-  { value: 'Paper', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
+  { value: 'paper', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
 ];
 
 export const educationLevelOptions = [

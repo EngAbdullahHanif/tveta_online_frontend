@@ -28,7 +28,9 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { useParams } from 'react-router-dom';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+
+const servicePath = config.API_URL;
 const dormCreateAPI = `${servicePath}/institute/dorms_create/`;
 const dormAPI = `${servicePath}/institute/dorms`;
 //http://localhost:8000/institute/dorms/?id=1

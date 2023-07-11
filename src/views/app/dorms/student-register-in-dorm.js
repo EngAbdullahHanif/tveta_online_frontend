@@ -27,7 +27,8 @@ const SignupSchema = Yup.object().shape({
   Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 });
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+const servicePath = config.API_URL;
 const studentAPIUrl = `${servicePath}/api/`;
 const dormsApiUrl = `${servicePath}/institute/dorms/`;
 const studentDormsApiUrl = `${servicePath}/api/student_dorms_create/`;

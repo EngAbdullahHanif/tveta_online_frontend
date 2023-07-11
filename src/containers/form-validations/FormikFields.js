@@ -3,20 +3,20 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable max-classes-per-file */
-import React from "react";
-import Select from "react-select";
-import { CustomInput } from "reactstrap";
-import IntlMessages from "helpers/IntlMessages";
+import React from 'react';
+import Select from 'react-select';
+import { CustomInput } from 'reactstrap';
+import IntlMessages from 'helpers/IntlMessages';
 
-import TagsInput from "react-tagsinput";
-import "react-tagsinput/react-tagsinput.css";
-import Switch from "rc-switch";
-import "rc-switch/assets/index.css";
+import TagsInput from 'react-tagsinput';
+import 'react-tagsinput/react-tagsinput.css';
+import Switch from 'rc-switch';
+import 'rc-switch/assets/index.css';
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Field } from "formik";
-import { Input } from "antd";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Field } from 'formik';
+import { Input } from 'antd';
 
 const FormikReactSelect = ({
   name,
@@ -27,6 +27,12 @@ const FormikReactSelect = ({
   onChange,
   onBlur,
   onClick,
+  defaultValue,
+  isDisabled,
+  isLoading,
+  isClearable,
+  isRtl,
+  isSearchable,
 }) => {
   const handleChange = (val) => {
     onChange(name, val);
@@ -47,6 +53,12 @@ const FormikReactSelect = ({
       onChange={handleChange}
       onBlur={handleBlur}
       value={value}
+      defaultValue={defaultValue}
+      isDisabled={isDisabled}
+      isLoading={isLoading}
+      isClearable={isClearable}
+      isRtl={isRtl}
+      isSearchable={isSearchable}
     />
   );
 };
@@ -80,7 +92,7 @@ const FormikCheckboxGroup = ({
           <div
             key={`${name}_${child.value}_${index}`}
             className={`position-relative form-check ${
-              inline ? "form-check-inline" : ""
+              inline ? 'form-check-inline' : ''
             }`}
           >
             <input
@@ -219,7 +231,7 @@ const FormikRadioButtonGroup = ({
           <div
             key={`${name}_${child.value}_${index}`}
             className={`position-relative form-check ${
-              inline ? "form-check-inline" : ""
+              inline ? 'form-check-inline' : ''
             }`}
           >
             <input

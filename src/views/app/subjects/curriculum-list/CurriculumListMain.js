@@ -11,6 +11,7 @@ import ListPageHeading from './CurriculumListHeading';
 import callApi from 'helpers/callApi';
 import ListPageListing from './CurriculumListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
+import config from '../../../../config';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -21,7 +22,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const teacherApiUrl = `${servicePath}/teachers/`;
@@ -92,7 +93,6 @@ const classes = [
     column: '1',
     label: <IntlMessages id="Integrate" />,
   },
- 
 ];
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(true);
@@ -107,11 +107,12 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: <IntlMessages id="marks.ClassLabelList" />,
   });
-  
-  const [selectedEducationalYearOption, setSelectedEducationalYearOption] = useState({
-    column: 'all',
-    label: <IntlMessages id="curriculum.eduactionalYearList"/>,
-  });
+
+  const [selectedEducationalYearOption, setSelectedEducationalYearOption] =
+    useState({
+      column: 'all',
+      label: <IntlMessages id="curriculum.eduactionalYearList" />,
+    });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
@@ -148,7 +149,12 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedPageSize, selectedDepartmentOption, selectedClassOption ,selectedEducationalYearOption]);
+  }, [
+    selectedPageSize,
+    selectedDepartmentOption,
+    selectedClassOption,
+    selectedEducationalYearOption,
+  ]);
 
   // useEffect(() => {
   //   console.log('institute', institute);
@@ -365,9 +371,7 @@ const ThumbListPages = ({ match }) => {
             );
           }}
           changeClassBy={(column) => {
-            setSelectedClassOption(
-              classes.find((x) => x.column === column)
-            );
+            setSelectedClassOption(classes.find((x) => x.column === column));
           }}
           changeEducationalYearBy={(column) => {
             setSelectedEducationalYearOption(
@@ -457,7 +461,7 @@ const ThumbListPages = ({ match }) => {
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
-                       fontSize: '20px',
+                  fontSize: '20px',
                 }}
               >
                 {' '}

@@ -40,7 +40,8 @@ import * as Yup from 'yup';
 
 import { Colxx } from 'components/common/CustomBootstrap';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+const servicePath = config.API_URL;
 const teacherResitgerAPIUrl = `${servicePath}/teachers/`;
 
 const TazkiraOptions = [

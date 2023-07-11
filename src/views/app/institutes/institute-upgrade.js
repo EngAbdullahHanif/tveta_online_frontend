@@ -34,7 +34,9 @@ import {
 import { useEffect } from 'react';
 import { institute } from 'lang/locales/fa_IR';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+
+const servicePath = config.API_URL;
 const instituteSearchApiUrl = `${servicePath}/institute/`;
 const instituteUpgradeApiUrl = `${servicePath}/institute/upgrade-institute/`;
 

@@ -38,7 +38,9 @@ import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
 import { Colxx } from 'components/common/CustomBootstrap';
-const servicePath = 'http://localhost:8000';
+
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const teacherResitgerAPIUrl = `${servicePath}/teachers/create_teachers/`;
 const gettingSingleTeacherAPI = `${servicePath}/teachers/institute`;
 // http://localhost:8000/teachers/?id=1

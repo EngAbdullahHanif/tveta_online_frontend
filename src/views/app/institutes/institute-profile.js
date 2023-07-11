@@ -20,6 +20,7 @@ import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import config from '../../../config';
 
 import {
   FormikReactSelect,
@@ -27,7 +28,7 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/institute-teachers-students-statistics`;
 
 const InstituteDetails = (values) => {

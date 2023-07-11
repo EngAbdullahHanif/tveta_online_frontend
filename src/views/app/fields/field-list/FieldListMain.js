@@ -8,6 +8,8 @@ import { provincesOptionsForList } from '../../global-data/options';
 import ListPageListing from './FieldListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
+import config from '../../../../config';
+
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -17,7 +19,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const FieldApiUrl = `${servicePath}/institute/field/`;

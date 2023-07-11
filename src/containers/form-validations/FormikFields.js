@@ -15,6 +15,8 @@ import 'rc-switch/assets/index.css';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Field } from 'formik';
+import { Input } from 'antd';
 
 const FormikReactSelect = ({
   name,
@@ -25,6 +27,12 @@ const FormikReactSelect = ({
   onChange,
   onBlur,
   onClick,
+  defaultValue,
+  isDisabled,
+  isLoading,
+  isClearable,
+  isRtl,
+  isSearchable,
 }) => {
   const handleChange = (val) => {
     onChange(name, val);
@@ -45,6 +53,12 @@ const FormikReactSelect = ({
       onChange={handleChange}
       onBlur={handleBlur}
       value={value}
+      defaultValue={defaultValue}
+      isDisabled={isDisabled}
+      isLoading={isLoading}
+      isClearable={isClearable}
+      isRtl={isRtl}
+      isSearchable={isSearchable}
     />
   );
 };
@@ -285,6 +299,22 @@ const FormikTagsInput = ({ name, value, onChange, onBlur }) => {
   return <TagsInput name={name} value={value} onChange={handleChange} />;
 };
 
+const FormikInputText = ({ name, value, onChange, onBlur, ...otherProps }) => {
+  // const handleChange = (val) => {
+  //   onBlur(name, true);
+  //   onChange(name, val);
+  // };
+  return (
+    <Input
+      name={name}
+      value={value}
+      onChange={onChange}
+      style={{ height: 48, borderRadius: 0 }}
+      {...otherProps}
+    />
+  );
+};
+
 const FormikSwitch = ({ name, value, className, onChange, onBlur }) => {
   const handleChange = (val) => {
     onBlur(name, true);
@@ -330,6 +360,7 @@ export {
   FormikRadioButtonGroup,
   FormikCustomRadioGroup,
   FormikTagsInput,
+  FormikInputText,
   FormikSwitch,
   FormikDatePicker,
 };

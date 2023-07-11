@@ -8,7 +8,8 @@ import logo from './../../../../assets/logos/AdminLogo.png';
 import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-const servicePath = 'http://localhost:8000';
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
 
 const StudentProfile = () => {

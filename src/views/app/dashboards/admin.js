@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import './../dorms/dorm-register.css';
 import './provincail-dashboard.css';
@@ -6,6 +6,7 @@ import Calendar from 'containers/dashboards/Calendar';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { NavLink } from 'react-router-dom';
 import { adminRoot } from 'constants/defaultValues';
+import { AuthContext } from 'context/AuthContext';
 import {
   DoughnutChart,
   LineChart,
@@ -49,13 +50,21 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import { comments } from 'data/comments';
 import Rating from 'components/common/Rating';
+import { studyTimeOptionsForList } from './../global-data/options';
 
 const Admin = (values, { className = '', displayRate = false }) => {
+  const { user, setUser } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(true);
   const handleClick = (event) => {
     setIsNext(event);
   };
-
+  useEffect(() => {
+    console.log('Auth User in Dashboard: ', user);
+    console.log(
+      'Auth User in Dashboard Local Storage: ',
+      JSON.parse(localStorage.getItem('user'))
+    );
+  });
   const onRegister = (values) => {
     console.log(' The Values', values);
   };
@@ -64,7 +73,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
 
   return (
     <>
-      <h1 className="mt-5 m-1">{<IntlMessages id="dashboard.national" />}</h1>
+      <h1 style={{ fontSize: 50 }} className="mt-5 m-1">
+        {<IntlMessages id="dashboard.national" />}
+      </h1>
       <Separator className="mb-5" />
 
       <Row>
@@ -74,7 +85,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
           {/* we commented this line because we wanna stop howering*/}{' '}
           <Card style={{ minHeight: '530px', marginBottom: '7% ' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 35 }}>
                 <IntlMessages id="dash.totalNumberOfTeachers" />
               </CardTitle>
               <Separator />
@@ -82,94 +93,94 @@ const Admin = (values, { className = '', displayRate = false }) => {
               {loaded ? (
                 <Colxx>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="institute.totalStudentsMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>90</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>90</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="institute.totalStudentsFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>500</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>500</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="dash.14YearsGreduatedMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>25</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>25</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="dash.14YearsGreduatedFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>32</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>32</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="dash.bachelorMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>45</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>45</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="dash.bachelorFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>58</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>58</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="dash.phdMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>23</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>23</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="dash.phdFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>78</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>78</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="teacher.EvaluatedMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>54</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>54</p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <p>
+                    <p style={{ fontSize: 20 }}>
                       <b>
                         {' '}
                         <IntlMessages id="teacher.EvaluatedFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%' }}>78</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>78</p>
                   </div>
                   <br />
                   <br />
@@ -177,7 +188,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
               ) : (
                 <Row className="p-5 m-5">
                   <Colxx className="d-flex justify-content-center">
-                    <CardTitle>
+                    <CardTitle style={{ fontSize: 35 }}>
                       {' '}
                       <IntlMessages id="dash.loading" />
                     </CardTitle>
@@ -192,35 +203,39 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="8" sm="4" md="8">
           <Card>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 35 }}>
                 <IntlMessages id="charts.Teachers.chart" />
               </CardTitle>
               <Row>
                 <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>
+                  <CardSubtitle style={{ fontSize: 20, fontWeight: 'bold' }}>
                     <IntlMessages id="dash.teacherGender" />
                   </CardSubtitle>
 
-                  <CustomePieChart
-                    data={[90, 50]}
-                    labels={['ذکور', 'اناث']}
-                    backgroundColor={['#FF6384', '#36A2EB']}
-                  />
+                  <div style={{ fontSize: 20, fontWeight: 'bold' }}>
+                    <CustomePieChart
+                      data={[90, 50]}
+                      labels={['ذکور', 'اناث']}
+                      backgroundColor={['#FF6384', '#36A2EB']}
+                    />
+                  </div>
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>
+                  <CardSubtitle style={{ fontSize: 20, fontWeight: 'bold' }}>
                     <IntlMessages id="forms.EducationLevelLabel" />
                   </CardSubtitle>
-                  <CustomeBarChart
-                    data={[30, 20, 40, 50]}
-                    labels={['چهارده پاس', 'لیسانس', 'ماستر', 'دوکتور']}
-                    backgroundColor={[
-                      '#FF6384',
-                      '#36A2EB',
-                      '#FFCE56',
-                      '#FF6333',
-                    ]}
-                  />
+                  <div style={{ fontSize: 20, fontWeight: 'bold' }}>
+                    <CustomeBarChart
+                      data={[30, 20, 40, 50]}
+                      labels={['چهارده پاس', 'لیسانس', 'ماستر', 'دوکتور']}
+                      backgroundColor={[
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                        '#FF6333',
+                      ]}
+                    />
+                  </div>
                 </Colxx>
               </Row>
             </CardBody>
@@ -236,159 +251,159 @@ const Admin = (values, { className = '', displayRate = false }) => {
           {/* commented because of stoping hower*/}
           <Card style={{ minHeight: '180px' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.totalStudentsInst" />
               </CardTitle>
               <Separator />
               <Row className="mt-3 mb-2 m-1">
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>7867</p>
+                  <p style={{ fontSize: 20 }}>7867</p>
                   <br />
                 </Colxx>
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>1576</p>
+                  <p style={{ fontSize: 20 }}>1576</p>
                   <br />
                 </Colxx>
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>2543</p>
+                  <p style={{ fontSize: 20 }}>2543</p>
                   <br />
                 </Colxx>
               </Row>
 
-              <CardTitle>
+              <CardTitle style={{ fontSize: 26 }}>
                 <IntlMessages id="dash.specialEducationStudents" />
               </CardTitle>
               <Separator />
               <Row className="mt-3 mb-2 m-1">
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>1232</p>
+                  <p style={{ fontSize: 20 }}>1232</p>
                   <br />
                 </Colxx>
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>5646</p>
+                  <p style={{ fontSize: 20 }}>5646</p>
                   <br />
                 </Colxx>
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>7865</p>
+                  <p style={{ fontSize: 20 }}>7865</p>
                   <br />
                 </Colxx>
               </Row>
 
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.totalStudentsScool" />
               </CardTitle>
               <Separator />
 
               <Row className="mt-3 mb-2 m-1">
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>3453</p>
+                  <p style={{ fontSize: 20 }}>3453</p>
                   <br />
                 </Colxx>
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>654</p>
+                  <p style={{ fontSize: 20 }}>654</p>
                 </Colxx>
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>3453</p>
+                  <p style={{ fontSize: 20 }}>3453</p>
                   <br />
                 </Colxx>
               </Row>
 
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.totalStudentsDorm" />
               </CardTitle>
               <Separator />
               <Row className="mt-3 mb-2 m-1">
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>76856</p>
+                  <p style={{ fontSize: 20 }}>76856</p>
                 </Colxx>
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>3453</p>
+                  <p style={{ fontSize: 20 }}>3453</p>
                   <br />
                 </Colxx>
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="dash.DormStudentType_1" />
                     </b>
                   </p>
-                  <p>23454</p>
+                  <p style={{ fontSize: 20 }}>23454</p>
                   <br />
                 </Colxx>
                 <Colxx>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="dash.DormStudentType_2" />
                     </b>
                   </p>
-                  <p>456456</p>
+                  <p style={{ fontSize: 20 }}>456456</p>
                   <br />
                 </Colxx>
               </Row>
@@ -406,50 +421,57 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="8" sm="4" md="8">
           <Card>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30, fontWeight: 'bold' }}>
                 <IntlMessages id="charts.studentChart" />
               </CardTitle>
               <Row>
                 <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>
+                  <CardSubtitle style={{ fontSize: 25, fontWeight: 'bold' }}>
                     <IntlMessages id="charts.ّInstituteStudentGenderChart" />
                   </CardSubtitle>
-
-                  <CustomePieChart
-                    data={[876, 552]}
-                    labels={['ذکور', 'اناث']}
-                    backgroundColor={['#FF6384', '#36A2EB']}
-                  />
+                  <div style={{ fontSize: 20, fontWeight: 'bold' }}>
+                    <CustomePieChart
+                      data={[876, 552]}
+                      labels={['ذکور', 'اناث']}
+                      backgroundColor={['#FF6384', '#36A2EB']}
+                    />
+                  </div>
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>
+                  <CardSubtitle style={{ fontSize: 25, fontWeight: 'bold' }}>
                     <IntlMessages id="dash.totalStudentsDorm" />
                   </CardSubtitle>
-                  <CustomePieChart
-                    data={[467, 789]}
-                    labels={['ذکور', 'اناث']}
-                    backgroundColor={['#FFCE56', '#FF6333']}
-                  />
+                  <div style={{ fontSize: 20, fontWeight: 'bold' }}>
+                    <CustomePieChart
+                      data={[467, 789]}
+                      labels={['ذکور', 'اناث']}
+                      backgroundColor={['#FFCE56', '#FF6333']}
+                    />{' '}
+                  </div>
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>
+                  <CardSubtitle style={{ fontSize: 25, fontWeight: 'bold' }}>
                     <IntlMessages id="charts.schoolStudentGenderChart" />
                   </CardSubtitle>
-                  <CustomePieChart
-                    data={[534, 876]}
-                    labels={['ذکور', 'اناث']}
-                    backgroundColor={['#f062ba', '#34eb77']}
-                  />
+                  <div style={{ fontSize: 20, fontWeight: 'bold' }}>
+                    <CustomePieChart
+                      data={[534, 876]}
+                      labels={['ذکور', 'اناث']}
+                      backgroundColor={['#f062ba', '#34eb77']}
+                    />{' '}
+                  </div>
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
-                  <CardSubtitle>
+                  <CardSubtitle style={{ fontSize: 25, fontWeight: 'bold' }}>
                     <IntlMessages id="charts.schoolStudentGenderChart" />
                   </CardSubtitle>
-                  <CustomePieChart
-                    data={[376, 267]}
-                    labels={['ذکور', 'اناث']}
-                    backgroundColor={['#f0e80c', '#FF6333']}
-                  />
+                  <div style={{ fontSize: 20, fontWeight: 'bold' }}>
+                    <CustomePieChart
+                      data={[376, 267]}
+                      labels={['ذکور', 'اناث']}
+                      backgroundColor={['#f0e80c', '#FF6333']}
+                    />{' '}
+                  </div>
                 </Colxx>
               </Row>
             </CardBody>
@@ -462,13 +484,13 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="6">
           <Card className="mb-4">
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.institutesSchoolsandSpecialEducationStatistics" />
               </CardTitle>
 
               <Table striped>
                 <thead>
-                  <tr>
+                  <tr style={{ fontSize: 20 }}>
                     <th>
                       {' '}
                       <IntlMessages id="marks.No" />{' '}
@@ -491,7 +513,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style={{ fontSize: 20 }}>
                   <tr>
                     <th scope="row">1</th>
                     <td>
@@ -593,11 +615,11 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="6">
           <Card className="mb-4">
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 28 }}>
                 <IntlMessages id="dash.institutesSchoolsBasedOnSector" />
               </CardTitle>
 
-              <Table striped>
+              <Table striped style={{ fontSize: 20 }}>
                 <thead>
                   <tr>
                     <th>
@@ -711,7 +733,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="8" className="mb-4">
           <Card className={className} style={{ minHeight: '900px' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.insituteField" />
               </CardTitle>
               <div
@@ -721,7 +743,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
-                  <Table>
+                  <Table style={{ fontSize: 20 }}>
                     <thead>
                       <tr>
                         <th>
@@ -1351,7 +1373,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '900px' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.instituteList" />
               </CardTitle>
               <div
@@ -1361,7 +1383,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
-                  <ol>
+                  <ol style={{ fontSize: 20 }}>
                     <li>Nima</li>
                     <li>کثیر الرشتوی بغلان</li>
                     <li>تکنالوژی بغلان</li>
@@ -1405,7 +1427,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="12" className="mb-4">
           <Card className={className} style={{ minHeight: '900px' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.statisticsBasedOnProvinces" />
               </CardTitle>
               <div
@@ -1415,7 +1437,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
-                  <Table>
+                  <Table style={{ fontSize: 20 }}>
                     <thead className="thead-dark ">
                       <tr>
                         <th colspan="6" className="border text-center"></th>
@@ -1945,7 +1967,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '700px' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.schoolsList" />
               </CardTitle>
               <div
@@ -1955,7 +1977,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
-                  <ol>
+                  <ol style={{ fontSize: 20 }}>
                     <li>Nima</li>
                     <li>کثیر الرشتوی بغلان</li>
                     <li>تکنالوژی بغلان</li>
@@ -1983,7 +2005,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '700px' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.dormsList" />
               </CardTitle>
               <div
@@ -1993,7 +2015,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
-                  <ol>
+                  <ol style={{ fontSize: 20 }}>
                     <li>Nima</li>
                     <li>کثیر الرشتوی بغلان</li>
                     <li>تکنالوژی بغلان</li>
@@ -2021,7 +2043,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '700px' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.fieldsList" />
               </CardTitle>
               <div
@@ -2031,7 +2053,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
-                  <ol>
+                  <ol style={{ fontSize: 20 }}>
                     <li>Nima</li>
                     <li>کثیر الرشتوی بغلان</li>
                     <li>تکنالوژی بغلان</li>
@@ -2059,12 +2081,12 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '600px' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.notifcation" />
               </CardTitle>
               <div
                 className="dashboard-list-with-user"
-                style={{ minHeight: '500px' }}
+                style={{ minHeight: '500px', fontSize: 20 }}
               >
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
@@ -2083,12 +2105,18 @@ const Admin = (values, { className = '', displayRate = false }) => {
                           />
                         </NavLink>
 
-                        <div className="pl-3 pr-2">
+                        <div style={{ fontSize: 20 }} className="pl-3 pr-2">
                           <NavLink to={`${adminRoot}/pages/product/details`}>
-                            <p className="font-weight-medium mb-0">
+                            <p
+                              style={{ fontSize: 20 }}
+                              className="font-weight-medium mb-0"
+                            >
                               {item.title}
                             </p>
-                            <p className="text-muted mb-0 text-small">
+                            <p
+                              style={{ fontSize: 15 }}
+                              className="text-muted mb-0 text-small"
+                            >
                               {item.detail}
                             </p>
                             {displayRate && (
@@ -2118,47 +2146,47 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
           <Card style={{ minHeight: '180px', marginBottom: '7%' }}>
             <CardBody>
-              <CardTitle>
+              <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.totalStatistics" />
               </CardTitle>
               <Separator />
               <br />
               <Colxx>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="dash.totalNumberOfInstitute" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>2700</p>
+                  <p style={{ marginRight: '10%', fontSize: 20 }}>2700</p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="dash.totalNumberOfSchool" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>67989</p>
+                  <p style={{ marginRight: '10%', fontSize: 20 }}>67989</p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="dash.totalNumberOfDorms" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>234345</p>
+                  <p style={{ marginRight: '10%', fontSize: 20 }}>234345</p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <p>
+                  <p style={{ fontSize: 20 }}>
                     <b>
                       {' '}
                       <IntlMessages id="dash.totalNumberOfTeachers" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%' }}>234</p>
+                  <p style={{ marginRight: '10%', fontSize: 20 }}>234</p>
                 </div>
               </Colxx>
             </CardBody>

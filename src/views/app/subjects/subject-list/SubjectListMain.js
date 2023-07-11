@@ -18,6 +18,8 @@ import ListPageHeading from 'views/app/subjects/subject-list/SubjectListHeading'
 import ListPageListing from 'views/app/subjects/subject-list/SubjectListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
+import config from '../../../../config';
+
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -265,7 +267,14 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     console.log('institute', institute);
     console.log('current page', currentPage);
+    console.log('current page Size', selectedPageSize);
+    const accessToken = localStorage.getItem('access_token');
+    const headers = { Authorization: `Bearer ${accessToken}` };
     async function fetchData() {
+      // const res = axios.get("http://localhost:8000/subjects/", {
+      //   headers,
+      // });
+      // console.log("ALL Subjects: ", res.data);
       if (institute !== '') {
         // const res = await axios.get(
         //   `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
@@ -544,7 +553,7 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  return !isLoaded ? (
+  return isLoaded ? (
     <div className="loading" />
   ) : (
     <>
@@ -688,7 +697,7 @@ const ThumbListPages = ({ match }) => {
           </thead>
 
           <ListPageListing
-            items={items}
+            items={roughData}
             displayMode={displayMode}
             selectedItems={selectedItems}
             onCheckItem={onCheckItem}

@@ -12,7 +12,8 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { CgInsertBefore } from 'react-icons/cg';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const StudentAttendanceAPI = `${servicePath}/api/stdatten`;
 const UpdateStudentAttendanceAPI =
   'http://localhost:8000/api/update_student_atten';

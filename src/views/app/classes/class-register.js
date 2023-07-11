@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-import axios from 'axios';
-
-import * as Yup from 'yup';
+import React, { useState } from "react";
+import { Formik, Form, Field } from "formik";
+import CustomSelectInput from "components/common/CustomSelectInput";
+import axios from "axios";
+import callApi from "helpers/callApi";
+import * as Yup from "yup";
 import {
   Row,
   Card,
@@ -14,26 +14,27 @@ import {
   Button,
   CardTitle,
   Input,
-} from 'reactstrap';
-import Select from 'react-select';
+} from "reactstrap";
+import Select from "react-select";
 
-import IntlMessages from 'helpers/IntlMessages';
-import { Colxx } from 'components/common/CustomBootstrap';
+import IntlMessages from "helpers/IntlMessages";
+import { Colxx } from "components/common/CustomBootstrap";
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
+} from "containers/form-validations/FormikFields";
+import { message } from "antd";
 
 const subjectOptions = [
-  { value: '1', label: 'اصلی' },
-  { value: '2', label: 'فرعی' },
+  { value: "1", label: "اصلی" },
+  { value: "2", label: "فرعی" },
 ];
 
 const systemOption = [
-  { value: '1', label: 'عمومی' },
-  { value: '2', label: 'GIZ' },
-  { value: '3', label: 'نیما' },
+  { value: "1", label: "عمومی" },
+  { value: "2", label: "GIZ" },
+  { value: "3", label: "نیما" },
 ];
 
 const ValidationSchema = Yup.object().shape({
@@ -44,42 +45,61 @@ const ValidationSchema = Yup.object().shape({
 const updateMode = true;
 const SubjcetRegister = () => {
   const TestData = {
-    ClassName: '13th',
-    Semester: '1',
+    ClassName: "10th A",
+    Semester: "1",
   };
   const [initialClassName, setInitialClassName] = useState(
-    TestData.ClassName ? TestData.ClassName : ''
+    TestData.ClassName ? TestData.ClassName : ""
   );
   const [initialSemester, setInitialSemester] = useState(
-    TestData.Semester ? TestData.Semester : ''
+    TestData.Semester ? TestData.Semester : ""
   );
+  const [initialSeason, setInitialSeason] = useState([]);
+  const [initialSection, setInitialSection] = useState([]);
+
   const [isNext, setIsNext] = useState(false);
 
   const initialValues = {
     className: initialClassName,
     semester: initialSemester,
+    season: initialSeason,
+    section: initialSection,
   };
-  const onRegister = (values, { resetForm }) => {
-    console.log(values, 'Value');
+  const onRegister = async (values, { resetForm }) => {
+    console.log(values, "Value");
     setIsNext(true);
     resetForm();
 
     const data = {
       name: values.className,
       semester: values.semester,
+      season: values.season.value,
+      section: values.section.value,
+      user_id: 1,
     };
-    console.log('data', data);
-
-    axios
-      .post('http://localhost:8000/institute/classs/', data)
-      .then((response) => {
-        console.log(response);
-        console.log('data sent to the server2');
-      })
-      .catch((error) => {
-        console.log('data sent to the server4');
-        console.log(error);
-      });
+    console.log("data", data);
+    const response = await callApi("institute/classs_create/", "POST", data);
+    if (response) {
+      setLoader(false);
+      message.success("Class Added");
+      console.warn("success message from backend", response.data);
+      createNotification("success", "filled");
+      resetForm();
+      setIsNext(true);
+    } else {
+      createNotification("error", "filled");
+      console.log("class error");
+    }
+    // await axios
+    //   .post("http://localhost:8000/institute/classs/", data)
+    //   .then((response) => {
+    //     console.log(response);
+    //     console.log("data sent to the server2");
+    //   })
+    //   .catch((error) => {
+    //     console.log("data sent to the server4");
+    //     console.log(error);
+    //   });
 
     if (!loading) {
       // if (values.email !== '' && values.password !== '') {
@@ -87,10 +107,30 @@ const SubjcetRegister = () => {
       // }
     }
   };
+  const seasonOptions = [
+    {
+      label: "Bahari",
+      value: "1",
+    },
+    {
+      label: "Khazani",
+      value: "2",
+    },
+  ];
+  const sectionOptions = [
+    {
+      label: "A",
+      value: "A",
+    },
+    {
+      label: "B",
+      value: "B",
+    },
+  ];
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
+        <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {<IntlMessages id="class.register.title" />}
         </h3>
         <CardBody>
@@ -112,7 +152,7 @@ const SubjcetRegister = () => {
                   <Row className="justify-content-center">
                     <Colxx xxs="10">
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="class.nameLabel" />
                         </Label>
                         <Field className="form-control" name="className" />
@@ -124,7 +164,7 @@ const SubjcetRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="class.semesterLabel" />
                         </Label>
                         <Field
@@ -138,11 +178,46 @@ const SubjcetRegister = () => {
                           </div>
                         )}
                       </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="season" />
+                        </Label>
+                        <FormikReactSelect
+                          name="season"
+                          id="season"
+                          value={values.season}
+                          options={seasonOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.season && touched.season ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.season}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="section" />
+                        </Label>
+                        <FormikReactSelect
+                          name="section"
+                          id="section"
+                          value={values.section}
+                          options={sectionOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.section && touched.section ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.section}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                     </Colxx>
                   </Row>
                   <Row>
-                    {' '}
-                    <Colxx style={{ marginLeft: '5%', marginBottom: '8%' }}>
+                    <Colxx style={{ marginLeft: "5%", marginBottom: "8%" }}>
                       <Button
                         className="float-right m-5 "
                         size="lg"
@@ -154,7 +229,10 @@ const SubjcetRegister = () => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span className="label">
+                        <span
+                          className="label"
+                          style={{ fontSize: 18, fontWeight: 'bold' }}
+                        >
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>
@@ -166,7 +244,7 @@ const SubjcetRegister = () => {
           ) : (
             <div
               className="wizard-basic-step text-center pt-3 "
-              style={{ minHeight: '400px' }}
+              style={{ minHeight: "400px" }}
             >
               <div>
                 <h1 className="mb-2">

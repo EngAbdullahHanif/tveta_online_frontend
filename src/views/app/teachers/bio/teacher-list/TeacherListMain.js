@@ -20,7 +20,8 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../../../config';
+const servicePath = config.API_URL;
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const teacherApiUrl = `${servicePath}/teachers/`;

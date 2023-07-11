@@ -1,43 +1,18 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
-// import './helpers/Firebase';
 import AppLocale from './lang';
 import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
-import {
-  isMultiColorActive,
-  adminRoot,
-  UserRole,
-} from './constants/defaultValues';
+import { isMultiColorActive } from './constants/defaultValues';
 import { getDirection, getCurrentUser } from './helpers/Utils';
-import { ProtectedRoute } from './helpers/authHelper';
-
-const ViewHome = React.lazy(() =>
-  import(/* webpackChunkName: "views" */ './views/home')
-);
-const ViewApp = React.lazy(() =>
-  import(/* webpackChunkName: "views-app" */ './views/app')
-);
-const ViewUser = React.lazy(() =>
-  import(/* webpackChunkName: "views-user" */ './views/user')
-);
-const ViewError = React.lazy(() =>
-  import(/* webpackChunkName: "views-error" */ './views/error')
-);
-const ViewUnauthorized = React.lazy(() =>
-  import(/* webpackChunkName: "views-error" */ './views/unauthorized')
-);
-
-// import StudentRegistrationBio from './Student/Registraion‌Bio';
-
+import { AuthContext } from './context/AuthContext';
+import Application from 'context/Application';
+import Authentication from 'context/Authentication';
+import callApi from 'helpers/callApi';
 const App = ({ locale }) => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
   useEffect(() => {
@@ -50,67 +25,44 @@ const App = ({ locale }) => {
     }
   }, [direction]);
 
+  // check if token is still valid
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    console.log('token is: ', token);
+    const data = JSON.stringify({ token: token });
+    if (token) {
+      const response = callApi('auth/token/verify/', 'POST', { token: token });
+      if (response && response.status !== 200) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user');
+        setUser(null);
+      }
+    }
+  }, []);
+
   return (
-    <div className="h-100">
-      <IntlProvider
-        locale={currentAppLocale.locale}
-        messages={currentAppLocale.messages}
-      >
-        <>
-          <NotificationContainer />
-          {isMultiColorActive && <ColorSwitcher />}
-          <Suspense fallback={<div className="loading" />}>
-            <Router>
-              <Switch>
-                {/* <ProtectedRoute
-                  path={adminRoot}
-                  component={ViewApp}
-                  roles={[UserRole.provincial]}
-                /> */}
-                <Route
-                  path={adminRoot}
-                  render={(props) => <ViewApp {...props} />}
-                />
-                <Route
-                  path="/user"
-                  render={(props) => <ViewUser {...props} />}
-                />
-                <Route
-                  path="/error"
-                  exact
-                  render={(props) => <ViewError {...props} />}
-                />
-                <Route
-                  path="/unauthorized"
-                  exact
-                  render={(props) => <ViewUnauthorized {...props} />}
-                />
-                <Route
-                  path="/"
-                  exact
-                  render={(props) => <ViewHome {...props} />}
-                />
-                <Route
-                  path="/std"
-                  exact
-                  render={(props) => <StudentRegistrationBio />}
-                />
-                {/*
-                <Redirect exact from="/" to={adminRoot} />
-                */}
-                <Redirect to="/error" />
-              </Switch>
-            </Router>
-          </Suspense>
-        </>
-      </IntlProvider>
-    </div>
+    <AuthContext.Provider value={{ user, setUser }}>
+      <div className="h-100">
+        <IntlProvider
+          locale={currentAppLocale.locale}
+          messages={currentAppLocale.messages}
+        >
+          <>
+            <NotificationContainer />
+            {isMultiColorActive && <ColorSwitcher />}
+            <Suspense fallback={<div className="loading" />}>
+              <Router>{!user ? <Authentication /> : <Application />}</Router>
+            </Suspense>
+          </>
+        </IntlProvider>
+      </div>
+    </AuthContext.Provider>
   );
 };
 
 const mapStateToProps = ({ authUser, settings }) => {
   // const { currentUser } = authUser;
-  const { currentUser } = getCurrentUser();
+  const currentUser = getCurrentUser();
 
   // const { currentUser } = '';
 

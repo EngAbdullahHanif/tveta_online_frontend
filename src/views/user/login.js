@@ -1,38 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import logo from '../../assets/img/logo2.png';
-import { Formik, Form, Field } from 'formik';
-import { NotificationManager } from 'components/common/react-notifications';
+import React, { useState, useEffect, useContext } from "react";
+import { Row, Card, CardTitle, Label, FormGroup, Button } from "reactstrap";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import logo from "../../assets/img/logo2.png";
+import { Formik, Form, Field } from "formik";
+import { message } from "antd";
+import { NotificationManager } from "components/common/react-notifications";
 
-import { Colxx } from 'components/common/CustomBootstrap';
-import IntlMessages from 'helpers/IntlMessages';
-import { loginUser } from 'redux/actions';
+import { Colxx } from "components/common/CustomBootstrap";
+import IntlMessages from "helpers/IntlMessages";
+import { loginUser } from "redux/actions";
+import { AuthContext } from "context/AuthContext";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
-const validatePassword = (value) => {
-  let error;
-  // if (!value) {
-  //   error = <IntlMessages id="login.passwordErr" />;
-  // } else if (value.length < 6) {
-  //   error = <IntlMessages id="login.passwordErr-1" />;
-  // }
-  return error;
-};
-
-const validateEmail = (value) => {
-  let error;
-  if (!value) {
-    error = <IntlMessages id="login.email-addressErr" />;
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = <IntlMessages id="login.email-addressErr-1" />;
-  }
-  return error;
-};
+const productionURL = "http://172.16.105.244/tveta";
+const localURL = "http://localhost:8000";
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  const [email] = useState('');
-  const [password] = useState('');
+  const authContext = useContext(AuthContext);
+  const [email] = useState("");
+  const [password] = useState("");
 
   useEffect(() => {
     if (error) {
@@ -43,15 +31,35 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         9000,
         null,
         null,
-        ''
+        ""
       );
     }
   }, [error]);
 
   const onUserLogin = (values) => {
-    loginUserAction(values, history);
+    axios
+      .post(`${localURL}/auth/login/`, {
+        username: values.username,
+        password: values.password,
+      })
+      .then((response) => {
+        message.success(" شه راغلاست / خوش امدید");
+        console.log("Data: ", response.data);
+        console.log("Token: ", response.data.access);
+        let loggedUser = jwt_decode(response.data.access);
+        console.log("Logged User in Token: ", loggedUser);
+        authContext.setUser(response.data.user);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("current_user", response.data.user); //this should be removed after conflict resolved
+        localStorage.setItem("access_token", response.data.access);
+        // return response.data;
+      })
+      .catch((err) => {
+        console.log("error of response", err);
+        message.error("Network Error");
+      });
     if (!loading) {
-      if (values.email !== '' && values.password !== '') {
+      if (values.username !== "" && values.password !== "") {
       }
     }
   };
@@ -70,10 +78,10 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             <p className=" mb-0">
               برای ورود به سیستم نام کاربری و رمز خود را وارد کنید
               <br />
-              اگه حساب کاربری نداری نگران نباش، از{' '}
+              اگه حساب کاربری نداری نگران نباش، از{" "}
               <NavLink to="/user/register" className="">
                 اینجا
-              </NavLink>{' '}
+              </NavLink>{" "}
               میتونی تو سایت اسمتو بویسی
             </p>
           </div>
@@ -81,9 +89,9 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             <CardTitle className="mb-4">
               {error && (
                 <div className="alert alert-danger">
-                  <h2>{'یوزر یا پسورد اشتباهست'}</h2>
+                  <h2>{"یوزر یا پسورد اشتباهست"}</h2>
 
-                  <h6>{'دوباره کوشش کنید'}</h6>
+                  <h6>{"دوباره کوشش کنید"}</h6>
                 </div>
               )}
               <IntlMessages id="user.login-title" />
@@ -96,11 +104,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                     <Label>
                       <IntlMessages id="user.email-Id" />
                     </Label>
-                    <Field
-                      className="form-control"
-                      name="username"
-                      // validate={validateEmail}
-                    />
+                    <Field className="form-control" name="username" />
                     {errors.username && touched.username && (
                       <div className="invalid-feedback d-block">
                         {errors.username}
@@ -115,7 +119,6 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       className="form-control"
                       type="password"
                       name="password"
-                      validate={validatePassword}
                     />
                     {errors.password && touched.password && (
                       <div className="invalid-feedback d-block">
@@ -129,11 +132,11 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                     </NavLink> */}
                   <Row>
                     <Colxx className="text-left">
-                      {' '}
+                      {" "}
                       <Button
                         color="primary"
                         className={`btn-shadow btn-multiple-state ${
-                          loading ? 'show-spinner' : ''
+                          loading ? "show-spinner" : ""
                         }`}
                         size="lg"
                       >

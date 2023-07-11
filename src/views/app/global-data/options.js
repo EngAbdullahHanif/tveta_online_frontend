@@ -1,4 +1,37 @@
 import IntlMessages from 'helpers/IntlMessages';
+import callApi from 'helpers/callApi';
+
+export const fetchProvinces = async () => {
+  const response = await callApi('core/provinces');
+  if (response) {
+    if (response.status === 200) {
+      return response.data.map((province) => ({
+        value: province.id,
+        label: province.native_name,
+      }));
+    } else {
+      throw new Error(response.problem);
+    }
+  }
+  console.log(response);
+};
+export const fetchDistricts = async (province_id) => {
+  console.log('getting districts of province with id: ', province_id);
+  let url = 'core/districts/';
+  if (province_id) {
+    url = url + `?province=${province_id}`;
+  }
+  const response = await callApi(url);
+
+  if (response.status === 200) {
+    return response.data.map((district) => ({
+      value: district.id,
+      label: district.native_name,
+    }));
+  } else {
+    throw new Error(response.problem);
+  }
+};
 
 export const provinceOptions = [
   {
@@ -141,10 +174,14 @@ export const provinceOptions = [
     value: 'زابل',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_35" />,
   },
+  {
+    value: 'Lahore',
+    label: <IntlMessages id="forms.StdSchoolProvinceOptions_35" />,
+  },
 ];
 
 export const educationalYearsOptions = [
-  { value: '1390', label: '1390' },
+  { value: 2022, label: '1390' },
   { value: '1391', label: '1391' },
   { value: '1392', label: '1392' },
   { value: '1393', label: '1393' },
@@ -165,6 +202,7 @@ export const educationalYearsOptions = [
   { value: '1408', label: '1408' },
   { value: '1409', label: '1409' },
   { value: '1410', label: '1410' },
+  { value: '2023', label: '2023' },
 ];
 
 export const dateOfBirthOptoions = [
@@ -189,6 +227,7 @@ export const dateOfBirthOptoions = [
   { value: '1388', label: '1388' },
   { value: '1389', label: '1389' },
   { value: '1390', label: '1390' },
+  { value: '2022', label: '2022' },
 ];
 
 export const educationalYearsOptionsForList = [
@@ -263,8 +302,14 @@ export const batchOptions = [
 ];
 
 export const genderOptions = [
-  { value: '1', label: <IntlMessages id="institute.studentgenderOption_1" /> },
-  { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
+  {
+    value: 'male',
+    label: <IntlMessages id="institute.studentgenderOption_1" />,
+  },
+  {
+    value: 'female',
+    label: <IntlMessages id="institute.studentgenderOption_2" />,
+  },
 ];
 
 export const mediumOfInstructionOptions = [
@@ -287,19 +332,46 @@ export const mediumOfInstructionOptions = [
 ];
 
 export const StdInteranceOptions = [
-  { value: '1', label: <IntlMessages id="forms.StdInteranceOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StdInteranceOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.StdInteranceOption_3" /> },
+  { value: 'decree', label: <IntlMessages id="forms.StdInteranceOption_1" /> },
+  {
+    value: 'institute_kankor',
+    label: <IntlMessages id="forms.StdInteranceOption_2" />,
+  },
+  {
+    value: 'general_kankor',
+    label: <IntlMessages id="forms.StdInteranceOption_3" />,
+  },
+];
+
+export const disabilityOptions = [
+  {
+    value: 'deaf',
+    label: 'ناشنوا/کوڼ',
+  },
+  {
+    value: 'blind',
+    label: 'نابینا/ړوند',
+  },
+  {
+    value: 'mute',
+    label: 'گنگ/ګنګ',
+  },
 ];
 
 export const StudentTypeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudentTypeContiniues" /> },
-  { value: '2', label: <IntlMessages id="forms.StudentTypeNonContiniues" /> },
+  {
+    value: 'continuous',
+    label: <IntlMessages id="forms.StudentTypeContiniues" />,
+  },
+  {
+    value: 'noncontinuous',
+    label: <IntlMessages id="forms.StudentTypeNonContiniues" />,
+  },
 ];
 
 export const studyTimeOptions = [
-  { value: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+  { value: 'morning', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
+  { value: 'night', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
 export const studyTimeOptionsForList = [
@@ -596,9 +668,9 @@ export const BuildingTypeOptions = [
 ];
 
 export const dormGenderOptions = [
-  { value: '1', label: <IntlMessages id="dorm.GenderOptions_1" /> },
-  { value: '2', label: <IntlMessages id="dorm.GenderOptions_2" /> },
-  { value: '3', label: <IntlMessages id="dorm.GenderOptions_3" /> },
+  { value: 'male', label: <IntlMessages id="dorm.GenderOptions_1" /> },
+  { value: 'female', label: <IntlMessages id="dorm.GenderOptions_2" /> },
+  { value: 'coed', label: <IntlMessages id="dorm.GenderOptions_3" /> },
 ];
 
 export const evaluationTypeOptions = [
@@ -704,19 +776,19 @@ export const sectionValueOptions = [
 
 export const tazkiraOptions = [
   {
-    value: 'ٍ Electronic',
+    value: 'ٍ electronic',
     label: <IntlMessages id="forms.StdTazkiraElectronic" />,
   },
-  { value: 'Paper', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
+  { value: 'paper', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
 ];
 
 export const educationLevelOptions = [
-  { value: 9, label: <IntlMessages id="forms.EducationalLevel_9th" /> },
-  { value: 10, label: <IntlMessages id="forms.EducationalLevel_10th" /> },
-  { value: 11, label: <IntlMessages id="forms.EducationalLevel_11th" /> },
-  { value: 12, label: <IntlMessages id="forms.EducationalLevel_12th" /> },
-  { value: 13, label: <IntlMessages id="forms.EducationalLevel_13th" /> },
-  { value: 14, label: <IntlMessages id="forms.EducationalLevel_14th" /> },
+  { value: '9', label: <IntlMessages id="forms.EducationalLevel_9th" /> },
+  { value: '10', label: <IntlMessages id="forms.EducationalLevel_10th" /> },
+  { value: '11', label: <IntlMessages id="forms.EducationalLevel_11th" /> },
+  { value: '12', label: <IntlMessages id="forms.EducationalLevel_12th" /> },
+  { value: '13', label: <IntlMessages id="forms.EducationalLevel_13th" /> },
+  { value: '14', label: <IntlMessages id="forms.EducationalLevel_14th" /> },
 ];
 
 export const teacherCurrentStatusOptions = [

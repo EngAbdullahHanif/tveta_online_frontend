@@ -31,7 +31,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import { async } from 'q';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+
+const servicePath = config.API_URL;
 const studentApi = `${servicePath}/api`;
 // http://localhost:8000/api/?student_id=1232
 
@@ -297,21 +299,18 @@ const MarksRegistration = ({ match }) => {
   };
 
   const fechtStudens = async () => {
+    console.log('subject', selectedSubject.value);
     const response = await callApi(
-      `api/second-chance-exam-students/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `api/class-marks/list/second-chance/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
       '',
       null
     );
     if (response.data && response.status === 200) {
-      // console.log('response of students', response);
       setStudents(response.data);
       setIsNext(true);
     } else {
       console.log('subject error');
     }
-    // console.log(
-    //   `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-    // );
   };
 
   const onSubmit = async (values) => {
@@ -329,7 +328,7 @@ const MarksRegistration = ({ match }) => {
     const newStudents = students.map((student, index) => {
       return {
         student_id: student.student_id,
-        score: values.score[student.student_id],
+        marks: values.score[student.student_id],
       };
     });
 

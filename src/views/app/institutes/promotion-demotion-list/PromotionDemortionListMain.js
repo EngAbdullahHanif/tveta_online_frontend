@@ -11,6 +11,8 @@ import ListPageListing from './PromotionDemortionListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import callApi from 'helpers/callApi';
 
+import config from '../../../../config';
+
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -20,7 +22,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 
 const apiUrl = `${servicePath}/cakes/paging`;
 const instituteApiUrl = `${servicePath}/institute/`;

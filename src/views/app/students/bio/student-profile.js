@@ -28,6 +28,7 @@ import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import config from '../../../../config';
 
 import {
   FormikReactSelect,
@@ -36,7 +37,7 @@ import {
 } from 'containers/form-validations/FormikFields';
 import Classes from 'views/app/classes';
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
 
 const StudentProfile = () => {
@@ -52,18 +53,13 @@ const StudentProfile = () => {
   //load data of student from database
   useEffect(() => {
     async function fetchStudent() {
-      // const response = await axios.get(
-      //   `${studentApiUrl}?student_id=${studentId}`
-      // );
       const response = await callApi(`api/?student_id=${studentId}`, '', null);
       const data = await response.data;
       setStudent(data.results);
       setIsLoaded(true);
 
       console.log('studentsdf', student);
-      // const instituteResponse = await axios.get(
-      //   `${studentApiUrl}student_institutes/?student_id=${studentId}`
-      // );
+
       const instituteResponse = await callApi(
         `api/student_institutes/?student_id=${studentId}`,
         '',
@@ -75,9 +71,6 @@ const StudentProfile = () => {
       setInstitute(instituteData);
 
       //type =1 means current class or current continued class
-      // const classResponse = await axios.get(
-      //   `${studentApiUrl}student_class/?student_id=${studentId}&type=1`
-      // );
       const classResponse = await callApi(
         `api/student_class/?student_id=${studentId}&type=1`,
         '',
@@ -86,10 +79,6 @@ const StudentProfile = () => {
 
       const classData = await classResponse.data;
       setClasss(classData);
-
-      // const dormResponse = await axios.get(
-      //   `${studentApiUrl}student_dorms/?student_id=${studentId}`
-      // );
       const dormResponse = await callApi(
         `api/student_dorms/?student_id=${studentId}`,
         '',
@@ -99,9 +88,6 @@ const StudentProfile = () => {
       const dormData = await dormResponse.data;
       setDorm(dormData);
 
-      // const marksResponse = await axios.get(
-      //   `${studentApiUrl}TranscriptData/?student_id=${studentId}`
-      // );
       const marksResponse = await callApi(
         `api/TranscriptData/?student_id=${studentId}`,
         '',
@@ -115,8 +101,6 @@ const StudentProfile = () => {
     }
     fetchStudent();
   }, []);
-
-  console.log('marks', marks);
 
   const handleClick = (event) => {
     setIsNext(event);
@@ -158,9 +142,10 @@ const StudentProfile = () => {
             <Colxx xxs="1"></Colxx>
             {student.length > 0 && (
               <Colxx>
+                {console.log('here', `${student[0].student_photo}`)}
                 {/* <img src={student.student_photo} alt="Photo" width={'10%'} />{' '} */}
                 <NavLink
-                  to={`?p=${student.student_id}`}
+                  to={`?p=${student[0].student_id}`}
                   className="w-40 w-sm-100"
                 >
                   <img
@@ -577,6 +562,8 @@ const StudentProfile = () => {
                                     <tr>
                                       <th scope="row">{index + 1}</th>
                                       <td>{child.subject_name}</td>
+
+                                      <td>{child.score}</td>
                                       {child.subject_credit > 1 && (
                                         <>
                                           <td>{child.subject_credit}</td>
@@ -584,8 +571,6 @@ const StudentProfile = () => {
                                           <td>{child.subject_type}</td>
                                         </>
                                       )}
-
-                                      <td>{child.score}</td>
                                     </tr>
                                   </>
                                 ))}

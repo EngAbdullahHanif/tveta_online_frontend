@@ -62,7 +62,7 @@ const ListPageHeading = ({
     <Row>
       <Colxx xxs="12">
         <div className="mb-2">
-          <h1>
+          <h1 style={{ fontSize: 40 }}>
             <IntlMessages id={heading} />
           </h1>
         </div>

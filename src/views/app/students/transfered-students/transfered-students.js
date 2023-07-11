@@ -28,7 +28,8 @@ import {
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
 import TransferedStudentList from './transfered-student-list/TransferedListMain';
-const servicePath = 'http://localhost:8000';
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const studentApi = `${servicePath}/api`;
 const transferedStudentsAPI = `${servicePath}/api/student_institutes`;
 // http://localhost:8000/api/student_institutes/?institute=&type=&language=&time=&student_id=&educational_year=&is_transfer=2

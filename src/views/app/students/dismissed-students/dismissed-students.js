@@ -26,7 +26,8 @@ import {
 } from 'containers/form-validations/FormikFields';
 
 import DismissedStudents from './dismissed-student-list/DismissedListMain';
-const servicePath = 'http://localhost:8000';
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const studentApi = `${servicePath}/api`;
 const dismissedStudentsAPI = `${servicePath}/api/student_institutes`;
 // http://localhost:8000/api/student_institutes/?institute=1&type=&language=&time=&student_id=&educational_year=1990

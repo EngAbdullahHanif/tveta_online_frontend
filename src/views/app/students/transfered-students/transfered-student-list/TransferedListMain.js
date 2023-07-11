@@ -8,7 +8,8 @@ import ListPageHeading from './TransferedListHeading';
 import { provinceOptions } from '../../../global-data/options';
 import ListPageListing from './TransferedListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
-
+import DisplayMessage from 'components/messages/DisplayMessage';
+import config from '../../../../../config';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -18,7 +19,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 const apiUrl = `${servicePath}/cakes/paging`;
 const studentApiUrl = `${servicePath}/api/`;
 const studentInstituteApiUrl = `${servicePath}/api/student_institutes/`;
@@ -306,17 +307,21 @@ const ThumbListPages = ({ match, item_list }) => {
               </th>
             </tr>
           </thead>
-          <ListPageListing
-            items={item_list}
-            displayMode={displayMode}
-            selectedItems={selectedItems}
-            onCheckItem={onCheckItem}
-            currentPage={currentPage}
-            totalPage={totalPage}
-            onContextMenuClick={onContextMenuClick}
-            onContextMenu={onContextMenu}
-            onChangePage={setCurrentPage}
-          />
+          {item_list.length > 0 ? (
+            <ListPageListing
+              items={item_list}
+              displayMode={displayMode}
+              selectedItems={selectedItems}
+              onCheckItem={onCheckItem}
+              currentPage={currentPage}
+              totalPage={totalPage}
+              onContextMenuClick={onContextMenuClick}
+              onContextMenu={onContextMenu}
+              onChangePage={setCurrentPage}
+            />
+          ) : (
+            <DisplayMessage type="error" message="معلومات شتون نلری" />
+          )}
         </table>
       </div>
     </>

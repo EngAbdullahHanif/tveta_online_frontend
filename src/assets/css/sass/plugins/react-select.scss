@@ -70,17 +70,11 @@
 .react-select__option {
   background: $foreground-color !important;
   color: $primary-color !important;
-
-  &:hover,
+  zz &:hover,
   &:active {
     background: $theme-color-1 !important;
     color: $button-text-color !important;
   }
-}
-
-.react-select__option--is-selected {
-  background: $theme-color-1 !important;
-  color: $button-text-color !important;
 }
 
 .react-select__control--is-focused {
@@ -109,7 +103,12 @@
   border-width: 1px !important;
 }
 
-.react-select__option—is-focused {
+.react-select__option--is-focused {
+  outline: 2px solid $theme-color-1 !important;
+  outline-offset: -1px !important;
+}
+
+.react-select__option--is-selected {
   background: $theme-color-1 !important;
   color: $button-text-color !important;
 }

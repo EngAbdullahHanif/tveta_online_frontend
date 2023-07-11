@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
-import ListPageHeading from './DepartmentListHeading'
+import ListPageHeading from './DepartmentListHeading';
 
 import ListPageListing from './DepartmentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
-
+import callApi from 'helpers/callApi';
+import config from '../../../../config';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -17,7 +18,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 const apiUrl = `${servicePath}/cakes/paging`;
 const departmentApiUrl = `${servicePath}/institute/department/`;
 const instituteApiUrl = `${servicePath}/institute/`;
@@ -188,7 +189,6 @@ const Provinces = [
   },
 ];
 const ThumbListPages = ({ match }) => {
-
   const [isLoaded, setIsLoaded] = useState(true);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -221,34 +221,37 @@ const ThumbListPages = ({ match }) => {
   }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
 
   useEffect(() => {
-    async function fetchData() {    
-    
-        await axios
-          .get(
-            departmentApiUrl
-          )
-          .then((res) => {
-            return res.data;
-          })
-          .then((data) => {
-            setItems(data);
-           
-            setSelectedItems([]);
-            setTotalItemCount(data.totalItem);
-            setIsLoaded(true);
-          });
-      
+    async function fetchData() {
+      // const response = callApi("institute/department/", "", null);
+      // console.log("DEPARTMENTS:", response.data);
+      // setItems(response.data);
+
+      // setSelectedItems([]);
+      // setTotalItemCount(response.data.totalItem);
+      // setIsLoaded(true);
+      await axios
+        .get(departmentApiUrl)
+        .then((res) => {
+          return res.data;
+        })
+        .then((data) => {
+          console.log('DEPARTMENTS:', data);
+          setItems(data);
+
+          setSelectedItems([]);
+          setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        });
     }
     fetchData();
-    
   }, [
     selectedPageSize,
     currentPage,
-   //selectedOrderOption,
+    //selectedOrderOption,
     //search,
     selectedGenderOption,
     selectedProvinceOption,
-   // studentId,
+    // studentId,
     province,
     district,
     rest,
@@ -345,7 +348,6 @@ const ThumbListPages = ({ match }) => {
     <div className="loading" />
   ) : (
     <>
-    
       <div className="disable-text-selection">
         <ListPageHeading
           heading="د دیپارتمنتونو لست/ لست دیپارتمنت ها"
@@ -397,7 +399,6 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
-          
         />
         <table className="table">
           <thead
@@ -405,7 +406,7 @@ const ThumbListPages = ({ match }) => {
             style={{ maxHeight: '55px', marginRight: 2 }}
           >
             <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
-            <th
+              <th
                 style={{
                   width: '15%',
                   fontSize: '20px',
@@ -449,11 +450,9 @@ const ThumbListPages = ({ match }) => {
               >
                 <IntlMessages id="departmentEnglishName" />
               </th>
-  
-            
             </tr>
           </thead>
-          
+
           <ListPageListing
             items={items}
             displayMode={displayMode}
@@ -464,9 +463,7 @@ const ThumbListPages = ({ match }) => {
             onContextMenuClick={onContextMenuClick}
             onContextMenu={onContextMenu}
             onChangePage={setCurrentPage}
-    
           />
-        
         </table>
       </div>
     </>

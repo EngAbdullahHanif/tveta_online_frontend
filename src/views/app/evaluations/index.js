@@ -1,5 +1,7 @@
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
+import { userRole } from 'constants/defaultValues';
 
 const EvaluationList = React.lazy(() =>
   import(
@@ -21,26 +23,54 @@ const TeacherEvaluation = React.lazy(() =>
   import(/* webpackChunkName: "teacher-evaluation" */ './teacher-evaluation')
 );
 
-const Evaluations = ({ match }) => (
+const Evaluations = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/evaluations`} />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/evaluations`}
-        render={(props) => <EvaluationList {...props} />}
+        component={EvaluationList}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         exact
         path={`${match.url}/teacher-evalaution`}
-        render={(props) => <TeacherEvaluation {...props} />}
+        component={TeacherEvaluation}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/promotion-demotion`}
-        render={(props) => <PromotionDemotion {...props} />}
+        component={PromotionDemotion}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/evaluation-details`}
-        render={(props) => <EvaluationDetails {...props} />}
+        component={EvaluationDetails}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
 
       <Redirect to="/error" />

@@ -27,7 +27,8 @@ import { Colxx } from 'components/common/CustomBootstrap';
 
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../../config';
+const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;
 const fieldsApiUrl = `${servicePath}/institute/field/`;
 const teacherSearchApiUrl = `${servicePath}/teachers/institute/`;

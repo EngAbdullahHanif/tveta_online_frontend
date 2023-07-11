@@ -13,14 +13,14 @@ const localizer = momentLocalizer(moment);
 
 const CalendarCard = () => {
   return (
-    <Card >
+    <Card>
       <CardBody>
-        <CardTitle>
+        <CardTitle style={{ fontSize: 30 }}>
           <IntlMessages id="dashboards.calendar" />
         </CardTitle>
         <Calendar
           localizer={localizer}
-          style={{ minHeight: '500px' }}
+          style={{ minHeight: '500px', fontSize: 20 }}
           events={data}
           rtl={getDirection().isRtl}
           views={['month']}

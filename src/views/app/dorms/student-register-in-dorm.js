@@ -20,13 +20,13 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
-
 const SignupSchema = Yup.object().shape({
   District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
   Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 });
 
-const servicePath = 'http://localhost:8000';
+import config from '../../../config';
+const servicePath = config.API_URL;
 const studentAPIUrl = `${servicePath}/api/`;
 const dormsApiUrl = `${servicePath}/institute/dorms/`;
 const studentDormsApiUrl = `${servicePath}/api/student_dorms_create/`;

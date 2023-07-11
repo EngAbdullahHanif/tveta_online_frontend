@@ -1,3 +1,5 @@
+import { userRole } from 'constants/defaultValues';
+import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -12,7 +14,7 @@ const HREvaluation = React.lazy(() =>
   )
 );
 
-const HREvaluations = ({ match }) => (
+const HREvaluations = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect
@@ -20,13 +22,27 @@ const HREvaluations = ({ match }) => (
         from={`${match.url}/`}
         to={`${match.url}/hr-evaluations`}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/hr-evaluations`}
-        render={(props) => <HREvaluationList {...props} />}
+        component={HREvaluationList}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
-      <Route
+      <ProtectedRoute
         path={`${match.url}/teacher-hr-evaluation`}
-        render={(props) => <HREvaluation {...props} />}
+        component={HREvaluation}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
       />
 
       <Redirect to="/error" />

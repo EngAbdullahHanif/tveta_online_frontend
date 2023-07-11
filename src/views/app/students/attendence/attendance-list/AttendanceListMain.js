@@ -11,7 +11,8 @@ import ListPageListing from './AttendanceListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import { useAsyncDebounce } from 'react-table';
 import callApi from 'helpers/callApi';
-
+import DisplayMessage from 'components/messages/DisplayMessage';
+import config from '../../../../../config';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -21,7 +22,7 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = 'http://localhost:8000';
+const servicePath = config.API_URL;
 const apiUrl = `${servicePath}/cakes/paging`;
 const studentApiUrl = `${servicePath}/api/`;
 const studentInstituteApiUrl = `${servicePath}/api/student_institutes/`;
@@ -203,7 +204,7 @@ const ThumbListPages = ({ match }) => {
     // setIsLoaded(true);
 
     const response = await callApi(`api/stdatten/`, '', null);
-
+    console.log('ATTENDANCE: ', response.data);
     if (response.data && response.status === 200) {
       setAttendance(response.data);
       console.log('resonse.data', response.data);
@@ -214,6 +215,7 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     fetchAttendance();
+    console.log('ATT: ', attendance);
   }, []);
 
   const onCheckItem = (event, id) => {
@@ -360,34 +362,34 @@ const ThumbListPages = ({ match }) => {
           institutes={institutes}
           onInstituteSelect={setInstitute}
         />
-
-        <table className="table">
-          <thead
-            className="pl-2 d-flex flex-grow-1  table-dark"
-            style={{ maxHeight: '55px' }}
-          >
-            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
-              <th
-                style={{
-                  width: '9%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="ایدی حاضری" />
-              </th>
-              <th
-                style={{
-                  width: '14%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="نام/نوم" />
-              </th>
-              {/* <th
+        {attendance.length > 0 ? (
+          <table className="table">
+            <thead
+              className="pl-2 d-flex flex-grow-1  table-dark"
+              style={{ maxHeight: '55px' }}
+            >
+              <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
+                <th
+                  style={{
+                    width: '9%',
+                    paddingInline: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  <IntlMessages id="ایدی حاضری" />
+                </th>
+                <th
+                  style={{
+                    width: '14%',
+                    paddingInline: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  <IntlMessages id="نام/نوم" />
+                </th>
+                {/* <th
                 style={{
                   width: '10%',
                   padding: '0%',
@@ -397,7 +399,7 @@ const ThumbListPages = ({ match }) => {
               >
                 <IntlMessages id="صنف/ټولګۍ" />
               </th> */}
-              {/* <th
+                {/* <th
                 style={{
                   width: '10%',
                   padding: '0%',
@@ -408,29 +410,29 @@ const ThumbListPages = ({ match }) => {
                 {' '}
                 <IntlMessages id="سمستر." />
               </th> */}
-              <th
-                style={{
-                  width: '13%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="دیپارتمنت" />
-              </th>
-              <th
-                style={{
-                  width: '11%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="انستیتوت" />
-              </th>
-              {/* <th
+                <th
+                  style={{
+                    width: '13%',
+                    padding: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  {' '}
+                  <IntlMessages id="دیپارتمنت" />
+                </th>
+                <th
+                  style={{
+                    width: '11%',
+                    padding: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  {' '}
+                  <IntlMessages id="انستیتوت" />
+                </th>
+                {/* <th
                 style={{
                   width: '10%',
                   padding: '0%',
@@ -441,75 +443,78 @@ const ThumbListPages = ({ match }) => {
                 {' '}
                 <IntlMessages id="دیپارتمنت" />
               </th> */}
-              <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="حاضر" />
-              </th>
-              <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="غیر حاضر" />
-              </th>
-              <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="مریض" />
-              </th>
-              <th
-                style={{
-                  width: '11%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="روز ها تعلیمی" />
-              </th>
-              <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="سال تعلیمی" />
-              </th>
-            </tr>
-          </thead>
-          <ListPageListing
-            items={attendance}
-            displayMode={displayMode}
-            selectedItems={selectedItems}
-            onCheckItem={onCheckItem}
-            currentPage={currentPage}
-            totalPage={totalPage}
-            onContextMenuClick={onContextMenuClick}
-            onContextMenu={onContextMenu}
-            onChangePage={setCurrentPage}
-          />
-        </table>
+                <th
+                  style={{
+                    width: '10%',
+                    padding: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  {' '}
+                  <IntlMessages id="حاضر" />
+                </th>
+                <th
+                  style={{
+                    width: '10%',
+                    padding: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  {' '}
+                  <IntlMessages id="غیر حاضر" />
+                </th>
+                <th
+                  style={{
+                    width: '10%',
+                    padding: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  {' '}
+                  <IntlMessages id="مریض" />
+                </th>
+                <th
+                  style={{
+                    width: '11%',
+                    padding: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  {' '}
+                  <IntlMessages id="روز ها تعلیمی" />
+                </th>
+                <th
+                  style={{
+                    width: '10%',
+                    padding: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  {' '}
+                  <IntlMessages id="سال تعلیمی" />
+                </th>
+              </tr>
+            </thead>
+            <ListPageListing
+              items={attendance}
+              displayMode={displayMode}
+              selectedItems={selectedItems}
+              onCheckItem={onCheckItem}
+              currentPage={currentPage}
+              totalPage={totalPage}
+              onContextMenuClick={onContextMenuClick}
+              onContextMenu={onContextMenu}
+              onChangePage={setCurrentPage}
+            />
+          </table>
+        ) : (
+          <DisplayMessage type="error" message="معلومات شتون نلری" />
+        )}
       </div>
     </>
   );

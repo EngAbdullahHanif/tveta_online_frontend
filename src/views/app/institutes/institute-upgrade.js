@@ -5,6 +5,7 @@ import './../dorms/dorm-register.css';
 import axios from 'axios';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import { upgradeToOption } from '../global-data/options';
+import callApi from 'helpers/callApi';
 
 import * as Yup from 'yup';
 import {
@@ -45,8 +46,8 @@ const InstituteUpgrade = (values) => {
   const [message, setMessage] = useState('');
   const [data, setData] = useState(false);
   const [isNext, setIsNext] = useState(true);
-  const [instituteId, setInstituteId] = useState();
-  const [institute, setInstitute] = useState();
+  const [instituteCode, setInstituteCode] = useState('');
+  const [institute, setInstitute] = useState([]);
 
   const initialValues = {
     upgradingOptions: {
@@ -64,24 +65,17 @@ const InstituteUpgrade = (values) => {
   };
 
   const handleSearch = async () => {
-    //search for the institute in the server
-    const response = await axios.get(
-      `${instituteSearchApiUrl}?id=${instituteId}`
-    );
-    const instituteResponse = await response.data;
-
-    if (instituteResponse.length > 0) {
-      setInstitute(instituteResponse);
+    const response = await callApi(`institute/?code=${instituteCode}`, 'GET', null);
+    if (response.data && response.status === 200) {
+      setInstitute(response.data);
       setData(true);
-    } else {
-      setData(false);
     }
   };
 
   const onSubmit = (values) => {
     console.log('values.institute.value', values);
     data = {
-      institute_id: instituteId,
+      institute_id: instituteCode,
       institute_new_name: values.instituteNewName,
       institute_old_name: institute[0].name,
       upgrade_date: values.upgradeDate,
@@ -141,7 +135,7 @@ const InstituteUpgrade = (values) => {
                           placeholder=""
                           aria-label=""
                           aria-describedby="basic-addon1"
-                          onChange={(e) => setInstituteId(e.target.value)}
+                          onChange={(e) => setInstituteCode(e.target.value)}
                         />
                       </div>
 
@@ -179,20 +173,20 @@ const InstituteUpgrade = (values) => {
                                       <Label>
                                         <IntlMessages id="forms.ProvinceLabel" />
                                       </Label>
-                                      <h3>{institute[0].province}</h3>
+                                      <h3>{institute[0].province.name}</h3>
                                       <Label>
                                         <IntlMessages id="forms.DistrictLabel" />
                                       </Label>
-                                      <h3>{institute[0].district}</h3>
+                                      <h3>{institute[0].district.name}</h3>
                                       <Label>
                                         <IntlMessages id="forms.VillageLabel" />
                                       </Label>
                                       <h3>{institute[0].village}</h3>
                                       <Label>
-                                        {/* <IntlMessages id="forms.InstituteLabel" /> */}
+                                        {/* <IntlMessages id="forms.Institute[0]Label" /> */}
                                         د انستیتوت نوعیت/ نوعیت انستیتوت
                                       </Label>
-                                      {institute[0].type == '1' ? (
+                                      {institute[0].ownership == 'governmental' ? (
                                         <h3>دولتی</h3>
                                       ) : (
                                         <h3>خصوصی</h3>
@@ -201,7 +195,7 @@ const InstituteUpgrade = (values) => {
                                         {/* <IntlMessages id="marks.ClassLabel" /> */}
                                         د انستیتوت نوعیت/ نوعیت انستیتوت
                                       </Label>
-                                      {institute[0].inst_city_type == '1' ? (
+                                      {institute[0].location_type == 'urban' ? (
                                         <h3>شهری</h3>
                                       ) : (
                                         <h3>دهاتی</h3>
@@ -212,9 +206,9 @@ const InstituteUpgrade = (values) => {
                                         {/* <IntlMessages id="field.SemesterLabel" /> */}
                                         د انستیتوت اقلیم/ اقلیم انستیتوت
                                       </Label>
-                                      {institute[0].inst_climaty == '1' ? (
+                                      {institute[0].climate == 'cold' ? (
                                         <h3>سردسیر</h3>
-                                      ) : institute[0].inst_climaty == '2' ? (
+                                      ) : institute[0].inst_climaty == 'warm' ? (
                                         <h3>گرم سیر</h3>
                                       ) : (
                                         <h3>زیادسردسیر</h3>
@@ -223,11 +217,15 @@ const InstituteUpgrade = (values) => {
                                         {/* <IntlMessages id="forms.FieldLabel" /> */}
                                         د تدریس ژبه / زبان تدریسی
                                       </Label>
-                                      {institute[0].language == '1' ? (
+                                      {institute[0].language == 'pashto' ? (
                                         <h3>پشتو</h3>
-                                      ) : institute[0].language == '2' ? (
+                                      ) : institute[0].language == 'dari' ? (
                                         <h3>دری</h3>
-                                      ) : (
+                                      ) : institute[0].language == 'pashto_dari' ? (
+                                        <h3>پشتو او دری</h3>
+                                      ) : institute[0].language == 'arabic' ? (
+                                        <h3>عربی</h3>
+                                      ) :  (
                                         <h3>انگلیسی</h3>
                                       )}
                                     </Colxx>

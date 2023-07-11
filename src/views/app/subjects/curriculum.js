@@ -4,6 +4,7 @@ import './../dorms/dorm-register.css';
 import { NotificationManager } from 'components/common/react-notifications';
 import * as Yup from 'yup';
 import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
+import { educationalYearsOptions } from '../global-data/options';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -32,9 +33,16 @@ const SignupSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="curriculum.classErr" />),
 
-  educationalYear: Yup.string().required(
-    <IntlMessages id="curriculum.eduactionalYearErr" />
-  ),
+  // educationalYear: Yup.string().required(
+  //   <IntlMessages id="curriculum.eduactionalYearErr" />
+  // ),
+
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="curriculum.eduactionalYearErr" />),
 });
 
 const Curriculum = (values) => {
@@ -92,7 +100,7 @@ const Curriculum = (values) => {
   const [initialDepartment, setInitialDepartment] = useState([]);
   const [initialSubject, setInitialSubject] = useState([]);
   const [initialClass, setInitialClass] = useState([]);
-  const [initialEducationalYear, setInitialEducationalYear] = useState('');
+  const [initialEducationalYear, setInitialEducationalYear] = useState([]);
 
   const initialValues = {
     departmentId: initialDepartment,
@@ -155,10 +163,10 @@ const Curriculum = (values) => {
     const data = {
       department: values.departmentId.value,
       subject: values.subject.value,
-      class_id: values.class.value,
-      educational_year: values.educationalYear,
-      user_id: '1',
+      classs: values.class.value,
+      educational_year: values.educationalYear.value,
     };
+    console.log('data', data);
     postStudentRecord(data);
   };
 
@@ -249,13 +257,16 @@ const Curriculum = (values) => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label>
                           <IntlMessages id="forms.educationYear" />
                         </Label>
-                        <Field
-                          type="number"
-                          className="form-control"
+                        <FormikReactSelect
                           name="educationalYear"
+                          id="educationalYear"
+                          value={values.educationalYear}
+                          options={educationalYearsOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
                           required
                         />
                         {errors.educationalYear && touched.educationalYear ? (

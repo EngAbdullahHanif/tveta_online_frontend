@@ -135,19 +135,7 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     console.log('studentId', studentId);
     async function fetchData() {
-      // await axios
-      //   .get(`${kankorStudentApiUrl}`)
-      //   .then((res) => {
-      //     return res.data;
-      //   })
-      //   .then((data) => {
-      //     setItems(data);
-      //     setSelectedItems([]);
-      //     setTotalItemCount(data.totalItem);
-      //     setIsLoaded(true);
-      //   });
-
-      const response = await callApi(`api/kankorResults/`, '', null);
+      const response = await callApi(`students/kankorResults/`, 'get', null);
       setItems(response.data);
       console.log('fetching data from the server', response);
       if (response.data && response.status === 200) {
@@ -187,7 +175,7 @@ const ThumbListPages = ({ match }) => {
   };
 
   useEffect(() => {
-    fetchInstitutes();
+    // fetchInstitutes();
   }, []);
 
   const onCheckItem = (event, id) => {

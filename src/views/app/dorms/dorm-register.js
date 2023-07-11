@@ -10,6 +10,8 @@ import './dorm-register.css';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
+import { NotificationManager } from 'components/common/react-notifications';
+
 import {
   Row,
   Card,
@@ -41,7 +43,7 @@ import {
 import { useEffect } from 'react';
 const UpdateMode = true;
 const SignupSchema = Yup.object().shape({
-  name1: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
+  name: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
 
   capicity: Yup.string().required(<IntlMessages id="dorm.CapicityErr" />),
   buildingType: Yup.object()
@@ -55,21 +57,14 @@ const SignupSchema = Yup.object().shape({
     <IntlMessages id="dorm.TotalBuildingNoErr" />
   ),
 
-  province: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-
-  PublicBuildingOwner: UpdateMode
-    ? Yup.object()
-        .shape({
-          value: Yup.string().required(),
-        })
-        .nullable()
-        .required(<IntlMessages id="dorm.genderErr" />)
-    : null,
+  // PublicBuildingOwner: UpdateMode
+  //   ? Yup.object()
+  //       .shape({
+  //         value: Yup.string().required(),
+  //       })
+  //       .nullable()
+  //       .required(<IntlMessages id="dorm.genderErr" />)
+  //   : null,
 
   totalRooms: Yup.string().required(<IntlMessages id="dorm.TotalRoomsErr" />),
   quota: Yup.string().required(<IntlMessages id="dorm.QuotaErr" />),
@@ -78,13 +73,26 @@ const SignupSchema = Yup.object().shape({
     <IntlMessages id="dorm.TotalKitchensErr" />
   ),
   toilet: Yup.string().required(<IntlMessages id="dorm.ToiletErr" />),
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+
+  province: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+
+  district: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
 });
 
 const updateMode = true;
 const DormRegistration = (values) => {
   const TestData = {
-    Name1: 'Number-01',
+    Name: 'Number-01',
     Capicity: '25',
     TotalKitchens: '2',
     Gender: '2',
@@ -107,7 +115,7 @@ const DormRegistration = (values) => {
       async function fetchData() {
         const { data } = await axios.get(`${dormAPI}/?id=${dormId}`);
         console.log(data, 'data');
-        setInitialName1(data[0].name);
+        setInitialName(data[0].name);
         setInitialCapicity(data[0].dorm_capacity);
         setInitialTotalKitchens(data[0].kitchen_qty);
         const dormTypeOptions = BuildingTypeOptions.map((dormType) => {
@@ -151,10 +159,9 @@ const DormRegistration = (values) => {
     }, []);
   }
 
-  const [initialName1, setInitialName1] = useState('');
+  const [initialName, setInitialName] = useState('');
   const [initialCapicity, setInitialCapicity] = useState('');
   const [initialTotalKitchens, setInitialTotalKitchens] = useState('');
-  const [initialProvince, setInitialProvince] = useState([]);
   const [initialGender, setInitialGender] = useState([]);
   const [initialBuildingType, setInitialBuildingType] = useState([]);
   const [initialPublicBuildingOwner, setInitialPublicBuildingOwner] = useState(
@@ -167,21 +174,68 @@ const DormRegistration = (values) => {
   const [initialTotalRooms, setInitialTotalRooms] = useState('');
   const [initialTotalBuildingNo, setInitialTotalBuildingNo] = useState('');
   const [initialToilet, setInitialToilet] = useState('');
-  const [initialDistrict, setInitialDistrict] = useState('');
+  const [initialProvince, setInitialProvince] = useState([]);
+  const [initialDistrict, setInitialDistrict] = useState([]);
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState('');
+
+  const fetchProvinces = async () => {
+    const response = await callApi('core/provinces/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+
+      setProvinces(updatedData);
+    } else {
+      console.log('province error');
+    }
+  };
+
+  const fetchDistricts = async (provinceId) => {
+    console.log('provinceId', provinceId);
+    const response = await callApi(
+      `core/districts/?province=${provinceId}`,
+      'GET',
+      null
+    );
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDistricts(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+  useEffect(() => {
+    fetchProvinces();
+  }, []);
+
+  useEffect(() => {
+    console.log('selectedProvince', selectedProvince);
+    if (selectedProvince) {
+      fetchDistricts(selectedProvince);
+    }
+  }, [selectedProvince]);
 
   const initialValues = {
-    name1: initialName1,
+    name: initialName,
     capicity: initialCapicity,
     totalKitchens: initialTotalKitchens,
     gender: initialGender,
     buildingType: initialBuildingType,
     publicBuildingOwner: initialPublicBuildingOwner,
     privateBuildingType: initialPrivateBuildingType,
-    province: initialProvince,
     quota: initialQuota,
     totalRooms: initialTotalRooms,
     totalBuildingNo: initialTotalBuildingNo,
     toilet: initialToilet,
+    province: initialProvince,
     district: initialDistrict,
   };
 
@@ -234,7 +288,7 @@ const DormRegistration = (values) => {
   const onRegister = (values, { resetForm }) => {
     resetForm();
     let DormTypeOptions;
-    if (values.buildingType.value === '1') {
+    if (values.buildingType.value === 'governmental') {
       //setDormTypeOption(values.PublicBuildingOwner.value);
       console.log('condition true', values.PublicBuildingOwner.value);
       DormTypeOptions = values.publicBuildingOwner.value;
@@ -244,22 +298,19 @@ const DormRegistration = (values) => {
       DormTypeOptions = values.privateBuildingType.value;
     }
 
-    //REMOVE USER FROM HERE LATTER, IT'S JUST FOR TESTING PURPOSE
-
     const data = {
-      name: values.name1,
-      provence: values.province.value,
-      district: values.district,
-      gender_type: values.gender.value,
-      dorm_type: values.buildingType.value,
-      dorm_type_option: DormTypeOptions,
-      building_qty: values.totalBuildingNo,
-      rooms_qty: values.totalRooms,
-      kitchen_qty: values.totalKitchens,
-      toilet_qty: values.toilet,
-      dorm_quota: values.quota,
-      dorm_capacity: values.capicity,
-      user_id: '1',
+      name: values.name,
+      province: values.province.value,
+      district: values.district.value,
+      gender: values.gender.value,
+      building_ownership: values.buildingType.value,
+      building_type_option: DormTypeOptions,
+      number_of_buildings: values.totalBuildingNo,
+      number_of_rooms: values.totalRooms,
+      number_of_kitchens: values.totalKitchens,
+      number_of_toilets: values.toilet,
+      quota: values.quota,
+      capacity: values.capicity,
     };
     console.log('object of data', data);
     postDormRecord(data);
@@ -295,10 +346,10 @@ const DormRegistration = (values) => {
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.NameLabel" />
                         </Label>
-                        <Field className="form-control" name="name1" />
-                        {errors.name1 && touched.name1 ? (
+                        <Field className="form-control" name="name" />
+                        {errors.name && touched.name ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.name1}
+                            {errors.name}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -341,7 +392,7 @@ const DormRegistration = (values) => {
                         ) : null}
                       </FormGroup>
 
-                      {values.buildingType.value == '1' ? (
+                      {values.buildingType.value == 'governmental' ? (
                         <div>
                           {/* DormOwner */}
                           <FormGroup className="form-group has-float-label">
@@ -355,7 +406,6 @@ const DormRegistration = (values) => {
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
                               options={publicBuildingOwnerOptions}
-                              required
                             />
                             {errors.PublicBuildingOwner &&
                             touched.PublicBuildingOwner ? (
@@ -408,7 +458,6 @@ const DormRegistration = (values) => {
                         ) : null}
                       </FormGroup>
 
-                      {/* province permanent*/}
                       <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.ProvinceLabel" />
@@ -416,10 +465,11 @@ const DormRegistration = (values) => {
                         <FormikReactSelect
                           name="province"
                           id="province"
-                          value={values.province}
-                          options={provinceOptions}
-                          onChange={setFieldValue}
+                          // value={values.province.value}
+                          options={provinces}
+                          onChange={setFieldValue} //onChange should conatain single line
                           onBlur={setFieldTouched}
+                          onClick={setSelectedProvince(values.province.value)}
                         />
                         {errors.province && touched.province ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -520,11 +570,18 @@ const DormRegistration = (values) => {
                       </FormGroup>
 
                       {/* District  permanent*/}
-                      <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label error-l-175">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.DistrictLabel" />
                         </Label>
-                        <Field className="form-control" name="district" />
+                        <FormikReactSelect
+                          name="district"
+                          id="district"
+                          // value={values.district.value}
+                          options={districts}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
                         {errors.district && touched.district ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.district}

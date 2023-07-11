@@ -181,7 +181,7 @@ export const provinceOptions = [
 ];
 
 export const educationalYearsOptions = [
-  { value: 2022, label: '1390' },
+  { value: '1390', label: '1390' },
   { value: '1391', label: '1391' },
   { value: '1392', label: '1392' },
   { value: '1393', label: '1393' },
@@ -202,7 +202,6 @@ export const educationalYearsOptions = [
   { value: '1408', label: '1408' },
   { value: '1409', label: '1409' },
   { value: '1410', label: '1410' },
-  { value: '2023', label: '2023' },
 ];
 
 export const dateOfBirthOptoions = [
@@ -371,7 +370,8 @@ export const StudentTypeOptions = [
 
 export const studyTimeOptions = [
   { value: 'morning', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: 'night', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+  { value: 'afternoon', label: 'بعد از ظهر' },
+  { value: 'evening', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
 export const studyTimeOptionsForList = [
@@ -573,18 +573,19 @@ export const appointmentTypeOptions = [
 
 export const levelOfEdcationOptions = [
   {
-    value: '14th',
+    value: 'Associate',
     label: <IntlMessages id="teacher.EducationLevelOption_1" />,
   },
   {
-    value: 'bachelor',
+    value: 'Bachelor',
     label: <IntlMessages id="teacher.EducationLevelOption_2" />,
   },
   {
-    value: 'master',
+    value: 'Master',
     label: <IntlMessages id="teacher.EducationLevelOption_3" />,
   },
-  { value: 'PHD', label: <IntlMessages id="teacher.EducationLevelOption_4" /> },
+  { value: 'PhD', label: <IntlMessages id="teacher.EducationLevelOption_4" /> },
+  { value: 'other', label: 'Other' },
 ];
 
 export const langOptions = [
@@ -643,28 +644,31 @@ export const workersGrade = [
 
 export const publicBuildingOwnerOptions = [
   {
-    value: '1',
+    value: 'tveta',
     label: <IntlMessages id="dorm.PublicBuildingOwnerLabelOption_1" />,
   },
   {
-    value: '2',
+    value: 'other_org',
     label: <IntlMessages id="dorm.PublicBuildingOwnerLabelOption_2" />,
   },
 ];
 
 export const privateBuildingTypeOptions = [
   {
-    value: '1',
+    value: 'rent',
     label: <IntlMessages id="dorm.PrivateBuildingTypeOption_1" />,
   },
   {
-    value: '2',
+    value: 'aid',
     label: <IntlMessages id="dorm.PrivateBuildingTypeOption_2" />,
   },
 ];
 export const BuildingTypeOptions = [
-  { value: '1', label: <IntlMessages id="dorm.BuildingTypeOptions_1" /> },
-  { value: '2', label: <IntlMessages id="dorm.BuildingTypeOptions_2" /> },
+  {
+    value: 'governmental',
+    label: <IntlMessages id="dorm.BuildingTypeOptions_1" />,
+  },
+  { value: 'private', label: <IntlMessages id="dorm.BuildingTypeOptions_2" /> },
 ];
 
 export const dormGenderOptions = [

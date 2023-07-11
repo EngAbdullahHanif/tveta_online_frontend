@@ -81,8 +81,8 @@ const InstituteRegister = () => {
   const [institute, setInstitute] = useState([]);
   const [initialInstituteName, setInitialInstituteName] = useState('');
   const [initialCode, setInitialCode] = useState('');
-  const [initialProvince, setInitialProvince] = useState('');
-  const [initialDistrict, setInitialDistrict] = useState('');
+  const [initialProvince, setInitialProvince] = useState([]);
+  const [initialDistrict, setInitialDistrict] = useState([]);
   const [initialInstType, setInitialInstType] = useState([]);
   const [initialVillage, setInitialVillage] = useState('');
   const [initialFoundationYear, setInitialFoundationYear] = useState('');
@@ -90,6 +90,7 @@ const InstituteRegister = () => {
 
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState('');
 
   const [initialGender, setInitialGender] = useState([]);
 
@@ -195,12 +196,13 @@ const InstituteRegister = () => {
   }
 
   const fetchProvinces = async () => {
-    const response = await callApi('core/province/', 'GET', null);
+    const response = await callApi('core/provinces/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.name,
       }));
+
       setProvinces(updatedData);
     } else {
       console.log('province error');
@@ -210,7 +212,7 @@ const InstituteRegister = () => {
   const fetchDistricts = async (provinceId) => {
     console.log('provinceId', provinceId);
     const response = await callApi(
-      `core/district/?province=${provinceId}`,
+      `core/districts/?province=${provinceId}`,
       'GET',
       null
     );
@@ -229,12 +231,19 @@ const InstituteRegister = () => {
     fetchProvinces();
   }, []);
 
+  useEffect(() => {
+    console.log('selectedProvince', selectedProvince);
+    if (selectedProvince) {
+      fetchDistricts(selectedProvince);
+    }
+  }, [selectedProvince]);
+
   const createNotification = (type, className) => {
     const cName = className || '';
     switch (type) {
       case 'success':
         NotificationManager.success(
-          'شاگرد موفقانه لیلی ته رجستر شو',
+          'انستیتوت موفقانه رجستر شو',
           'موفقیت',
           3000,
           null,
@@ -244,7 +253,7 @@ const InstituteRegister = () => {
         break;
       case 'error':
         NotificationManager.error(
-          'شاگرد ثبت نشو، بیا کوشش وکری',
+          'انستیتوت ثبت نشو، بیا کوشش وکری',
           'خطا',
           9000,
           () => {
@@ -342,29 +351,13 @@ const InstituteRegister = () => {
   // }),
   // });
 
-  // const onRegister = (values, { resetForm }) => {
-  //   console.log(values, 'Values ');
-  //   resetForm();
-  //   setIsNext(true);
-  //   // if (!values.province || values.province.value === '0') {
-  //   //   return;
-  //   // }
-  //   // if (!values.instType || values.instType.value === '0') {
-  //   //   return;
-  //   // }
-
-  //   // insert the data to the API with Axios here and redirect to the current page
-  // const handleClick = (event) => {
-  //   // setIsNext(event);
-  // };
-
   // post student record to server
   const postInstituteRecord = async (data) => {
     const response = await callApi('institute/create/', 'POST', data);
     if (response) {
       createNotification('success', 'filled');
       // resetForm();
-      // setIsNext(true);
+      setIsNext(true);
       console.log('success message from backend', response);
     } else {
       createNotification('error', 'filled');
@@ -372,22 +365,23 @@ const InstituteRegister = () => {
   };
 
   const onRegister = (values) => {
+    console.log('values of the form', values);
     const data = {
       name: values.institute,
       code: values.code,
-      province: values.province.column,
-      district: values.district,
+      province: values.province.value,
+      district: values.district.value,
       village: values.village,
       ownership: values.instType.value,
       location_type: values.institueCityType.value,
+      shift: values.shift.value,
       status: 'active', //as it is registered for the first time so it is considered to be active
       climate: values.instituteClimate.value,
       institute_type: values.instituteType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
-      foundation_year: values.foundationYear,
-      shift: values.shift.value,
-      created_by: '1',
+      foundation_year: values.foundationYear.value,
+      // created_by: '1',
     };
     console.log('data of the form', data);
     postInstituteRecord(data);
@@ -466,14 +460,11 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="province"
                           id="province"
-                          value={values.province}
+                          // value={values.province.value}
                           options={provinces}
-                          onChange={() => {
-                            setFieldValue;
-                            fetchDistricts(values.province.column);
-                          }}
+                          onChange={setFieldValue} //onChange should conatain single line
                           onBlur={setFieldTouched}
-                          // onSelect={() => fetchDistricts(values.province.column)}
+                          onClick={setSelectedProvince(values.province.value)}
                         />
                         {errors.province && touched.province ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -489,12 +480,9 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="district"
                           id="district"
-                          value={values.district}
+                          value={values.district.value}
                           options={districts}
-                          onChange={() => {
-                            setFieldValue;
-                            fetchDistricts(values.district.column);
-                          }}
+                          onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
                         {errors.district && touched.district ? (

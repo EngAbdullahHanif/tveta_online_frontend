@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 
-// import callApi from 'helpers/callApi';
+import callApi from 'helpers/callApi';
+
+import { educationalYearsOptions } from '../global-data/options';
 
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
@@ -31,8 +33,8 @@ const studentAPIUrl = `${servicePath}/api/`;
 const dormsApiUrl = `${servicePath}/institute/dorms/`;
 const studentDormsApiUrl = `${servicePath}/api/student_dorms_create/`;
 const dormTypeOptions = [
-  { value: '1', label: 'بدل عاشه' },
-  { value: '2', label: 'بدیل عاشه' },
+  { value: 'in_dorm', label: 'بدل عاشه' },
+  { value: 'cash', label: 'بدیل عاشه' },
 ];
 
 const DormRegistration = (values) => {
@@ -51,8 +53,8 @@ const DormRegistration = (values) => {
   const [dorms, setDorms] = useState([]);
   const [successMessage, setSuccessMessage] = useState(false);
   const [isNext, setIsNext] = useState(true);
+
   const fetchDorms = async () => {
-    // const response = await axios.get(dormsApiUrl);
     const response = await callApi(`institute/dorms/`, '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -77,24 +79,19 @@ const DormRegistration = (values) => {
     setData(event.target.value);
   };
 
-  const handleSearch = async () => {
-    console.log(`${studentAPIUrl}?student_id=${data}`);
-    // axios.get(`${studentAPIUrl}?student_id=${data}`).then((res) => {
-    //   setStudent(res.data);
-    // });
+  const handleFinalClick = () => {
+    setIsNext(false);
+    setSuccessMessage(true);
+  };
 
-    //search student by student id in database
+  const handleSearch = async () => {
     const response = await callApi(`api/?student_id=${data}`, '', null);
     if (response.data && response.status === 200) {
-      setStudent(response.data);
+      console.log('student', response.data.results);
+      setStudent(response.data.results);
     } else {
       console.log('student error');
     }
-
-    // const instituteResponse = await axios.get(
-    //   `${studentAPIUrl}student_institutes/?student_id=${data}`
-    //   );
-    // const instituteData = await instituteResponse.data;
 
     const instituteResponse = await callApi(
       `api/student_institutes/?student_id=${data}`,
@@ -107,12 +104,6 @@ const DormRegistration = (values) => {
       console.log('student institute error');
     }
 
-    // const departmentResponse = await axios.get(
-    //   `${studentAPIUrl}student_Departments/?student_id=${data}`
-    // );
-    // const departmentData = await departmentResponse.data;
-    // setDepartment(departmentData);
-
     const departmentResponse = await callApi(
       `api/student_Departments/?student_id=${data}`,
       '',
@@ -123,13 +114,6 @@ const DormRegistration = (values) => {
     } else {
       console.log('student department error');
     }
-
-    //type =1 means current class or current continued class
-    // const classResponse = await axios.get(
-    //   `${studentAPIUrl}student_class/?student_id=${data}&type=1`
-    // );
-    // const classData = await classResponse.data;
-    // setClasss(classData);
 
     const classResponse = await callApi(
       `api/student_class/?student_id=${data}`,
@@ -182,6 +166,7 @@ const DormRegistration = (values) => {
     if (response) {
       createNotification('success', 'filled');
       setSuccessMessage(true);
+      setStudent('');
       console.log('success message', response.data);
     } else {
       createNotification('error', 'filled');
@@ -192,12 +177,12 @@ const DormRegistration = (values) => {
   const handleRegister = (values) => {
     //REMOVE USER FROM HERE LATTER, IT'S JUST FOR TESTING PURPOSE
     const data = {
-      dorm_id: values.dorm.value,
-      student_id: student[0].student_id,
+      dorm: values.dorm.value,
+      student: student[0].student_id,
       dorm_type: values.dormType.value,
-      educational_year: values.educationalYear,
-      user_id: 1,
+      educational_year: values.educationalYear.value,
     };
+    console.log('data of dorm', data);
     postStudentRecord(data);
   };
 
@@ -302,9 +287,9 @@ const DormRegistration = (values) => {
                                           دایمی ادرس / ادرس دایمی
                                         </Label>
                                         <h3>
-                                          {student[0].main_province +
+                                          {student[0].main_province.name +
                                             ' - ' +
-                                            student[0].main_district +
+                                            student[0].main_district.name +
                                             ' - ' +
                                             student[0].main_village}
                                         </h3>
@@ -313,9 +298,9 @@ const DormRegistration = (values) => {
                                           اوسنی ادرس / ادرس فعلی
                                         </Label>
                                         <h3>
-                                          {student[0].main_province +
+                                          {student[0].main_province.name +
                                             ' - ' +
-                                            student[0].main_district +
+                                            student[0].main_district.name +
                                             ' - ' +
                                             student[0].main_village}
                                         </h3>
@@ -343,18 +328,16 @@ const DormRegistration = (values) => {
                                               <IntlMessages id="forms.FieldLabel" />
                                             </Label>
                                             <h3>
-                                              {department[0].department_id.name}
+                                              {department[0].department.name}
                                             </h3>
                                             <Label>
                                               <IntlMessages id="marks.ClassLabel" />
                                             </Label>
-                                            <h3>{classs[0].class_id.name}</h3>
+                                            <h3>{classs[0].classs.name}</h3>
                                             <Label>
                                               <IntlMessages id="field.SemesterLabel" />
                                             </Label>
-                                            <h3>
-                                              {classs[0].class_id.semester}
-                                            </h3>
+                                            <h3>{classs[0].classs.semester}</h3>
                                           </Colxx>
                                         )}
                                     </Row>
@@ -446,14 +429,18 @@ const DormRegistration = (values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
+
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="forms.educationYear" />
                               </Label>
-                              <Field
-                                type="number"
-                                className="form-control"
+                              <FormikReactSelect
                                 name="educationalYear"
+                                id="educationalYear"
+                                value={values.educationalYear}
+                                options={educationalYearsOptions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
                                 required
                               />
                               {errors.educationalYear &&
@@ -502,7 +489,10 @@ const DormRegistration = (values) => {
                 </h3>
                 <Button
                   className="m-5 bg-primary"
-                  onClick={() => setSuccessMessage(false)}
+                  onClick={() => {
+                    setSuccessMessage(false);
+                    setIsNext(true);
+                  }}
                 >
                   <IntlMessages id="button.back" />
                 </Button>

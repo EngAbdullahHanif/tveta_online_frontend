@@ -77,10 +77,16 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="teacher.departmentIdErr" />),
+  studyTime: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudyTimeErr" />),
 
-  totolEducationalDays: Yup.string().required(
-    <IntlMessages id="forms.totolEduactionalDaysErr" />
-  ),
+  // totolEducationalDays: Yup.string().required(
+  //   <IntlMessages id="forms.totolEduactionalDaysErr" />
+  // ),
 });
 
 const InnerInpufieldsValidation = Yup.object().shape({
@@ -250,7 +256,7 @@ const StudentAttendance = ({ match }) => {
     console.log('educatinll yera', selectedEducationalYear);
     console.log('Div Inner Side');
     const response = await callApi(
-      `api/class-students-list/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}`,
+      `students/class-students-list/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}`,
       'GET',
       null
     );
@@ -310,6 +316,7 @@ const StudentAttendance = ({ match }) => {
     const departmentId = selectedDepartment.value;
     const classId = selectedClass.value;
     const subjectId = selectedSubject.value;
+    const studyTime = selecedStudyTime.value;
     console.log('educationalYear', educationalYear);
     console.log('instituteId', instituteId);
     console.log('departmentId', departmentId);
@@ -330,10 +337,11 @@ const StudentAttendance = ({ match }) => {
     let data = [
       {
         educational_year: educationalYear,
-        institute_id: instituteId,
-        department_id: departmentId,
-        class_id: classId,
-        subject_id: subjectId,
+        institute: instituteId,
+        department: departmentId,
+        classs: classId,
+        subject: subjectId,
+        shift: studyTime,
       },
       ...newStudents,
     ];
@@ -341,7 +349,7 @@ const StudentAttendance = ({ match }) => {
     console.log('data', data);
 
     const response = await callApi(
-      'api/class-attendance/create/',
+      'students/class-attendance/create/',
       'POST',
       data
     );
@@ -350,7 +358,7 @@ const StudentAttendance = ({ match }) => {
       createNotification('success', 'filled');
     } else {
       console.log('marks error');
-      // setIsSubmitted(false);
+      setIsSubmitted(false);
       createNotification('error', 'filled');
     }
   };
@@ -419,9 +427,6 @@ const StudentAttendance = ({ match }) => {
                             values.educationalYear
                           )}
                           onBlur={setFieldTouched}
-                          onClick={setSelectedEducationalYear(
-                            values.educationalYear
-                          )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -429,8 +434,27 @@ const StudentAttendance = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
+                        <Label>
+                          <IntlMessages id="forms.StudyTimeLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="studyTime"
+                          id="studyTime"
+                          value={values.studyTime}
+                          options={studyTimeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          onClick={setSelectedStudyTime(values.studyTime)}
+                        />
+                        {errors.studyTime && touched.studyTime ? (
+                          <div className="invalid-feedback d-block bg-danger text-white ">
+                            {errors.studyTime}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+                      {/* <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.totolEducationalDays" />
                           <span style={{ color: 'red' }}>*</span>
@@ -450,7 +474,7 @@ const StudentAttendance = ({ match }) => {
                             {errors.totolEducationalDays}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
                     </Colxx>
 
                     <Colxx xxs="6">

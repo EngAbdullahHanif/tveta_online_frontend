@@ -80,7 +80,11 @@ const StudentRegistraion = ({ history }) => {
   const [initialGender, setInitialGender] = useState([]);
   const [initialEducationalYear, setInitialEducationalYear] = useState([]);
   const [initialProvince, setInitialProvince] = useState([]);
-  const [initialDistrict, setInitialDistrict] = useState('');
+  const [initialDistrict, setInitialDistrict] = useState([]);
+
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState('');
 
   const initialValues = {
     studentName: intialName,
@@ -137,6 +141,50 @@ const StudentRegistraion = ({ history }) => {
       console.log('department error');
     }
   };
+
+  const fetchProvinces = async () => {
+    const response = await callApi('core/provinces/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+
+      setProvinces(updatedData);
+    } else {
+      console.log('province error');
+    }
+  };
+
+  const fetchDistricts = async (provinceId) => {
+    console.log('provinceId', provinceId);
+    const response = await callApi(
+      `core/districts/?province=${provinceId}`,
+      'GET',
+      null
+    );
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDistricts(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+  useEffect(() => {
+    fetchProvinces();
+  }, []);
+
+  useEffect(() => {
+    console.log('selectedProvince', selectedProvince);
+    if (selectedProvince) {
+      fetchDistricts(selectedProvince);
+    }
+  }, [selectedProvince]);
+
   const updateMode = true;
 
   const createNotification = (type, className) => {
@@ -175,27 +223,23 @@ const StudentRegistraion = ({ history }) => {
     const data = {
       name: values.studentName,
       father_name: values.fatherName,
-      Institute: values.institute.value,
-      field_id: values.field.value,
-      department_id: values.department.value,
-      score: values.kankorMarks,
+      institute: values.institute.value,
+      field_of_study: values.field.value,
+      department: values.department.value,
+      marks: values.kankorMarks,
       educational_year: values.educationalYear.value,
-      provence: values.province.value,
-      district: values.district,
-      gender: 1,
+      province: values.province.value,
+      district: values.district.value,
+      gender: values.gender.value,
+      shift: values.studyTime.value,
     };
     console.log('data', data);
-    // axios
-    //   .post('http://localhost:8000/api/Create_kankorResults/', data)
-    //   .then((response) => {
-    //     console.log(response);
-    //     setIsNext(false);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
 
-    const response = await callApi('api/Create_kankorResults/', 'POST', data);
+    const response = await callApi(
+      'students/kankor-applicant-create/',
+      'POST',
+      data
+    );
     if (
       response.status === 200 ||
       response.status === 201 ||
@@ -323,39 +367,40 @@ const StudentRegistraion = ({ history }) => {
                         ) : null}
                       </FormGroup>
 
-                      {/* Study Time */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.StudyTimeLabel" />
-                          <span style={{ color: 'red' }}>*</span>
+                      <FormGroup className="form-group has-float-label">
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                          <IntlMessages id="forms.ProvinceLabel" />
                         </Label>
                         <FormikReactSelect
-                          name="studyTime"
-                          id="studyTime"
-                          value={values.studyTime}
-                          placeholder="Select option"
-                          options={studyTimeOptions}
-                          onChange={setFieldValue}
+                          name="province"
+                          id="province"
+                          // value={values.province.value}
+                          options={provinces}
+                          onChange={setFieldValue} //onChange should conatain single line
                           onBlur={setFieldTouched}
+                          onClick={setSelectedProvince(values.province.value)}
                         />
-                        {errors.studyTime && touched.studyTime ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.studyTime}
+                        {errors.province && touched.province ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.province}
                           </div>
                         ) : null}
                       </FormGroup>
-                      {/* District */}
+
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.DistrictLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
-                        <Field
-                          className="form-control fieldStyle"
+                        <FormikReactSelect
                           name="district"
+                          id="district"
+                          value={values.district.value}
+                          options={districts}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
                         />
                         {errors.district && touched.district ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.district}
                           </div>
                         ) : null}
@@ -402,6 +447,8 @@ const StudentRegistraion = ({ history }) => {
                           className="form-control fieldStyle"
                           name="kankorMarks"
                           type="number"
+                          min="0"
+                          max="100"
                         />
                         {errors.kankorMarks && touched.kankorMarks ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -453,22 +500,24 @@ const StudentRegistraion = ({ history }) => {
                         ) : null}
                       </FormGroup>
 
+                      {/* Study Time */}
                       <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
-                          <IntlMessages id="forms.ProvinceLabel" />
+                          <IntlMessages id="forms.StudyTimeLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
-                          name="province"
-                          id="province"
-                          value={values.province}
-                          options={provinceOptions}
+                          name="studyTime"
+                          id="studyTime"
+                          value={values.studyTime}
+                          placeholder="Select option"
+                          options={studyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.province && touched.province ? (
+                        {errors.studyTime && touched.studyTime ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.province}
+                            {errors.studyTime}
                           </div>
                         ) : null}
                       </FormGroup>

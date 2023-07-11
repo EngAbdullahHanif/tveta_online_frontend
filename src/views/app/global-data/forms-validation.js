@@ -498,7 +498,12 @@ export const kankorRegisterValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-  district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+  district: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
 });
 
 export const teacherTransferValidationSchema = Yup.object().shape({

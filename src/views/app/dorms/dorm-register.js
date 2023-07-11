@@ -55,11 +55,10 @@ const SignupSchema = Yup.object().shape({
     <IntlMessages id="dorm.TotalBuildingNoErr" />
   ),
 
-  
   // PublicBuildingOwner: UpdateMode
   //   ? Yup.object()
   //       .shape({
-    //         value: Yup.string().required(),
+  //         value: Yup.string().required(),
   //       })
   //       .nullable()
   //       .required(<IntlMessages id="dorm.genderErr" />)
@@ -72,20 +71,20 @@ const SignupSchema = Yup.object().shape({
     <IntlMessages id="dorm.TotalKitchensErr" />
   ),
   toilet: Yup.string().required(<IntlMessages id="dorm.ToiletErr" />),
-  
+
   province: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  
-  district:  Yup.object()
-  .shape({
-    value: Yup.string().required(),
-  })
-  .nullable()
-  .required(<IntlMessages id="forms.DistrictErr" />),
+
+  district: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
 });
 
 const updateMode = true;
@@ -165,7 +164,7 @@ const DormRegistration = (values) => {
   const [initialBuildingType, setInitialBuildingType] = useState([]);
   const [initialPublicBuildingOwner, setInitialPublicBuildingOwner] = useState(
     []
-    );
+  );
   const [initialPrivateBuildingType, setInitialPrivateBuildingType] = useState(
     []
   );
@@ -179,9 +178,8 @@ const DormRegistration = (values) => {
   const [districts, setDistricts] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState('');
 
-  
   const fetchProvinces = async () => {
-    const response = await callApi('core/province/', 'GET', null);
+    const response = await callApi('core/provinces/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -189,7 +187,6 @@ const DormRegistration = (values) => {
       }));
 
       setProvinces(updatedData);
-
     } else {
       console.log('province error');
     }
@@ -198,7 +195,7 @@ const DormRegistration = (values) => {
   const fetchDistricts = async (provinceId) => {
     console.log('provinceId', provinceId);
     const response = await callApi(
-      `core/district/?province=${provinceId}`,
+      `core/districts/?province=${provinceId}`,
       'GET',
       null
     );
@@ -238,7 +235,6 @@ const DormRegistration = (values) => {
     toilet: initialToilet,
     province: initialProvince,
     district: initialDistrict,
-
   };
 
   // notification message
@@ -299,7 +295,7 @@ const DormRegistration = (values) => {
       console.log('condition false', values.privateBuildingType.value);
       DormTypeOptions = values.privateBuildingType.value;
     }
-    
+
     const data = {
       name: values.name,
       province: values.province.value,
@@ -408,7 +404,6 @@ const DormRegistration = (values) => {
                               onChange={setFieldValue}
                               onBlur={setFieldTouched}
                               options={publicBuildingOwnerOptions}
-                            
                             />
                             {errors.PublicBuildingOwner &&
                             touched.PublicBuildingOwner ? (

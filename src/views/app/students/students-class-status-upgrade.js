@@ -1,3 +1,5 @@
+// this is the page where admin can upgrade students exam status to send level which means that student all marks have uploaded, after giveing all subjects exams and if they pass the exam then they can upgrade this status to next level
+
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { studyTimeOptions } from '../global-data/options';
@@ -168,7 +170,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
     setIsNext(true);
 
     const response = await callApi(
-      `api/class_marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift_id=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&upgrade=1`,
+      `students/class_marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift_id=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&upgrade=1`,
       '',
       null
     );
@@ -197,7 +199,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
   };
 
   const onSubmit = async (values) => {
-    setReload(true);
+    // setReload(true);
     const data = [
       {
         institute_id: selectedInstitute.value,
@@ -205,13 +207,13 @@ const StudentClassStatusUpgrade = ({ match }) => {
         shift: selecedStudyTime.value,
         department_id: selectedDepartment.value,
         educational_year: selectedEducationalYear,
-        user_id: currentUser(),
       },
       { students: students },
     ];
+    console.log('data', data);
 
     const response = await callApi(
-      'api/students-class-status-upgrade/',
+      'students/students-class-status-upgrade/',
       'POST',
       data
     );
@@ -290,7 +292,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
       <Card>
         <div className="mt-4 ml-5">
           <h2 className=" m-5  titleStyle">
-            {<IntlMessages id="student.upgrade-class" />}
+            {<IntlMessages id="student.marks.completion-approval" />}
           </h2>
         </div>
         <CardBody>

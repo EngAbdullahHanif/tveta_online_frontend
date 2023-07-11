@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form, Field, isEmptyArray } from "formik";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import callApi from "helpers/callApi";
-import currentUser from "helpers/currentUser";
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field, isEmptyArray } from 'formik';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import callApi from 'helpers/callApi';
+import currentUser from 'helpers/currentUser';
 import {
   studyTimeOptions,
   educationalYearsOptions,
-} from "./../global-data/options";
-import "./../../../assets/css/global-style.css";
+} from './../global-data/options';
+import './../../../assets/css/global-style.css';
 
 // Year  and SHift
-import * as Yup from "yup";
+import * as Yup from 'yup';
 import {
   Row,
   Card,
@@ -21,20 +21,20 @@ import {
   Button,
   CardTitle,
   Input,
-} from "reactstrap";
-import Select from "react-select";
-import { NotificationManager } from "components/common/react-notifications";
+} from 'reactstrap';
+import Select from 'react-select';
+import { NotificationManager } from 'components/common/react-notifications';
 
-import IntlMessages from "helpers/IntlMessages";
-import { Colxx } from "components/common/CustomBootstrap";
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
-} from "containers/form-validations/FormikFields";
-import userEvent from "@testing-library/user-event";
+} from 'containers/form-validations/FormikFields';
+import userEvent from '@testing-library/user-event';
 
-import Institues from "../institutes";
+import Institues from '../institutes';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -77,7 +77,7 @@ const ValidationSchema = Yup.object().shape({
 });
 const initialValues = {
   institute: [],
-  educationalYear: "",
+  educationalYear: '',
   studyTime: [],
   classs: [],
   department: [],
@@ -94,12 +94,12 @@ const MarksRegistration = ({ match }) => {
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([]);
-  const [selectedInstitute, setSelectedInstitute] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedClass, setSelectedClass] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [selecedStudyTime, setSelectedStudyTime] = useState("");
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState("");
+  const [selectedInstitute, setSelectedInstitute] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selecedStudyTime, setSelectedStudyTime] = useState('');
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
@@ -107,35 +107,35 @@ const MarksRegistration = ({ match }) => {
   const { markId } = useParams();
   // separate and set labels for classes
   const [selectedClassLabel, setselectedClassLabel] = useState({
-    classs: "",
-    semester: "",
-    section: "",
+    classs: '',
+    semester: '',
+    section: '',
   });
   const int = [
     {
-      label: "Dept 1",
-      value: "1",
-      institute: "1",
+      label: 'Dept 1',
+      value: '1',
+      institute: '1',
     },
     {
-      label: "Dept 2",
-      value: "2",
-      institute: "8",
+      label: 'Dept 2',
+      value: '2',
+      institute: '8',
     },
     {
-      label: "Dept 3",
-      value: "3",
-      institute: "1",
+      label: 'Dept 3',
+      value: '3',
+      institute: '1',
     },
     {
-      label: "Dept 4",
-      value: "4",
-      institute: "انستیتوت تکنالوژی افغان",
+      label: 'Dept 4',
+      value: '4',
+      institute: 'انستیتوت تکنالوژی افغان',
     },
   ];
   useEffect(() => {
-    if (!isEmptyArray(selectedClass) && selectedClass !== "") {
-      const [semester, classs, section] = selectedClass.label.split("-");
+    if (!isEmptyArray(selectedClass) && selectedClass !== '') {
+      const [semester, classs, section] = selectedClass.label.split('-');
       setselectedClassLabel({ classs, semester, section });
     }
   }, [selectedClass]);
@@ -160,22 +160,22 @@ const MarksRegistration = ({ match }) => {
   }
 
   const fetchInstitutes = async () => {
-    const response = await callApi("institute/", "", null);
-    console.warn("Reponse Institutes: ", response);
+    const response = await callApi('institute/', '', null);
+    console.warn('Reponse Institutes: ', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.name,
       }));
-      console.warn("Updated Institutes: ", updatedData);
+      console.warn('Updated Institutes: ', updatedData);
       setInstitutes(updatedData);
     } else {
-      console.log("institute error");
+      console.log('institute error');
     }
   };
 
   const fetchFields = async () => {
-    const response = await callApi("institute/field/", "", null);
+    const response = await callApi('institute/field/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -183,39 +183,44 @@ const MarksRegistration = ({ match }) => {
       }));
       setFields(updatedData);
     } else {
-      console.log("field error");
+      console.log('field error');
     }
   };
-  const fetchDepartments = async () => {
-    setDepartments(int);
-    const response = await callApi("institute/department/", "", null);
+  const fetchDepartments = async (instituteId) => {
+    const response = await callApi(
+      `institute/institite-department/?institute=${instituteId}`,
+      '',
+      null
+    );
     // console.log('response of department', response);
     if (response.data && response.status === 200) {
+      console.log('response of department', response);
       const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
+        value: item.department.id,
+        label: item.department.name,
       }));
-      // setDepartments(updatedData); //Set it up when data in Backend is ready
+      console.log('updatedData of department', updatedData);
+      setDepartments(updatedData); //Set it up when data in Backend is ready
     } else {
-      console.log("department error");
+      console.log('department error');
     }
   };
 
   const fetchClasses = async () => {
-    const response = await callApi("institute/classs/", "", null);
+    const response = await callApi('institute/classs/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name + " - " + item.semester + " - " + item.section,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
       }));
       setClasses(updatedData);
     } else {
-      console.log("class error");
+      console.log('class error');
     }
   };
 
   const fetchSubjects = async () => {
-    const response = await callApi("institute/subject/", "", null);
+    const response = await callApi('institute/subject/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -223,7 +228,7 @@ const MarksRegistration = ({ match }) => {
       }));
       setSubjects(updatedData);
     } else {
-      console.log("subject error");
+      console.log('subject error');
     }
   };
 
@@ -236,68 +241,71 @@ const MarksRegistration = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    if (selectedInstitute.value) {
-      const filtered = int.filter(
-        (dep) => dep.institute == selectedInstitute.value
-      );
-      console.log("Filter: ", filtered);
-      setDepartments(filtered);
+    if (selectedInstitute) {
+      fetchDepartments(selectedInstitute);
     }
   }, [selectedInstitute]);
 
   // notification message
   const createNotification = (type, className) => {
-    const cName = className || "";
+    const cName = className || '';
     switch (type) {
-      case "success":
+      case 'success':
         NotificationManager.success(
-          "نمری په بریالیتوب سره ثبت شوی",
-          "موفقیت",
+          'نمری په بریالیتوب سره ثبت شوی',
+          'موفقیت',
           3000,
           null,
           null,
           cName
         );
         break;
-      case "error":
+      case 'error':
         NotificationManager.error(
-          "نمری ثبت نه شوی بیا کوشش وکری",
-          "خطا",
+          'نمری ثبت نه شوی بیا کوشش وکری',
+          'خطا',
           9000,
           () => {
-            alert("callback");
+            alert('callback');
           },
           null,
           cName
         );
         break;
       default:
-        NotificationManager.info("Info message");
+        NotificationManager.info('Info message');
         break;
     }
   };
 
   const fetchStudents = async (values) => {
     const response = await callApi(
-      `api/class-marks/list/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
+      `students/class-marks/list/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}`,
       '',
       null
     );
     if (response.data && response.status === 200) {
-      console.log("response of students", response);
+      console.log('response of students', response);
       setStudents(response.data);
       setIsNext(true);
     } else {
-      console.log("subject error");
+      console.log('subject error');
     }
   };
 
   const onSubmit = async (values) => {
-    const educationalYear = selectedEducationalYear;
+    const educationalYear = selectedEducationalYear.value;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
     const classId = selectedClass.value;
     const subjectId = selectedSubject.value;
+    const shift = selecedStudyTime.value;
+
+    console.log('educationalYear', educationalYear);
+    console.log('instituteId', instituteId);
+    console.log('departmentId', departmentId);
+    console.log('classId', classId);
+    console.log('subjectId', subjectId);
 
     const newStudents = students.map((student, index) => {
       return {
@@ -306,21 +314,27 @@ const MarksRegistration = ({ match }) => {
       };
     });
 
+    console.log('newStudents', newStudents);
+
     let data = [
       {
         educational_year: educationalYear,
-        institute_id: instituteId,
-        department_id: departmentId,
-        class_id: classId,
-        subject_id: subjectId,
-        user_id: currentUser(),
+        institute: instituteId,
+        department: departmentId,
+        classs: classId,
+        subject: subjectId,
+        shift: shift,
       },
       ...newStudents,
     ];
 
     console.log('data', data);
 
-    const response = await callApi('api/class-marks/create/', 'POST', data);
+    const response = await callApi(
+      'students/class-marks/create/',
+      'POST',
+      data
+    );
     if (
       response.status === 200 ||
       response.status === 201 ||
@@ -328,11 +342,11 @@ const MarksRegistration = ({ match }) => {
     ) {
       // console.log('response of students', response);
       setIsSubmitted(true);
-      createNotification("success", "filled");
+      createNotification('success', 'filled');
     } else {
-      console.log("marks error");
+      console.log('marks error');
       setIsSubmitted(false);
-      createNotification("error", "filled");
+      createNotification('error', 'filled');
     }
   };
 
@@ -371,7 +385,7 @@ const MarksRegistration = ({ match }) => {
                         <FormikReactSelect
                           name="institute"
                           id="institute"
-                          value={values.institute}
+                          // value={values.institute}
                           options={institutes}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
@@ -405,27 +419,6 @@ const MarksRegistration = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      {/* <FormGroup className="form-group has-float-label mt-5 error-l-150">
-                        <Label>
-                          <IntlMessages id="forms.educationYearLabel" />
-                        </Label>
-                        <Field
-                          type="number"
-                          min="1400"
-                          id="educationalYear"
-                          className="form-control fieldStyle"
-                          name="educationalYear"
-                          // assign value to selectedEducationalYear
-                          onClick={setSelectedEducationalYear(
-                            values.educationalYear
-                          )}
-                        />
-                        {errors.educationalYear && touched.educationalYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white ">
-                            {errors.educationalYear}
-                          </div>
-                        ) : null}
-                      </FormGroup> */}
                       <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
@@ -520,7 +513,7 @@ const MarksRegistration = ({ match }) => {
                         className="float-right  buttonStyle"
                         size="lg"
                         // type="submit"
-                        style={{ margin: "2% 0% 10% 6%" }}
+                        style={{ margin: '2% 0% 10% 6%' }}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />
@@ -537,10 +530,10 @@ const MarksRegistration = ({ match }) => {
                 <>
                   <Row
                     className="border border bg-primary me-5 p-1 "
-                    style={{ marginInline: "16%" }}
+                    style={{ marginInline: '16%' }}
                   >
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="forms.FieldLabel" />
                       </Label>
                       {/* {console.log('selectedDepartment', selectedDepartment)} */}
@@ -548,35 +541,35 @@ const MarksRegistration = ({ match }) => {
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.ClassLabel" />
                       </Label>
                       <h5>{selectedClassLabel.classs}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="forms.StudyTimeLabel" />
                       </Label>
                       <h5>{selecedStudyTime.label}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SemesterLabel" />
                       </Label>
                       <h5>{selectedClassLabel.semester}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SectionLabel" />
                       </Label>
                       <h5>{selectedClassLabel.section}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
-                      <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.SubjectLabel" />
                       </Label>
                       <h5>{selectedSubject.label}</h5>
@@ -592,10 +585,10 @@ const MarksRegistration = ({ match }) => {
                         <Row
                           className="justify-content-center  border border"
                           style={{
-                            marginInline: "16%",
-                            height: "30rem",
-                            overflowY: "scroll",
-                            overflowX: "hidden",
+                            marginInline: '16%',
+                            height: '30rem',
+                            overflowY: 'scroll',
+                            overflowX: 'hidden',
                           }}
                         >
                           <table className="table ">
@@ -604,8 +597,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.No" />
@@ -613,8 +606,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.FullName" />
@@ -622,8 +615,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.FatherName" />
@@ -631,8 +624,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.ID" />
@@ -640,8 +633,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.Marks" />
@@ -651,8 +644,8 @@ const MarksRegistration = ({ match }) => {
                             <tbody
                               className="border border "
                               style={{
-                                overflowY: "scroll",
-                                overflowX: "hidden",
+                                overflowY: 'scroll',
+                                overflowX: 'hidden',
                               }}
                             >
                               {students.length > 0 &&
@@ -661,32 +654,32 @@ const MarksRegistration = ({ match }) => {
                                     <th
                                       scope="row"
                                       style={{
-                                        fontSize: "20px",
-                                        textAlign: "center",
+                                        fontSize: '20px',
+                                        textAlign: 'center',
                                       }}
                                     >
                                       {index + 1}
                                     </th>
                                     <td
                                       style={{
-                                        fontSize: "20px",
-                                        textAlign: "center",
+                                        fontSize: '20px',
+                                        textAlign: 'center',
                                       }}
                                     >
                                       {student.name}
                                     </td>
                                     <td
                                       style={{
-                                        fontSize: "20px",
-                                        textAlign: "center",
+                                        fontSize: '20px',
+                                        textAlign: 'center',
                                       }}
                                     >
                                       {student.father_name}
                                     </td>
                                     <td
                                       style={{
-                                        fontSize: "20px",
-                                        textAlign: "center",
+                                        fontSize: '20px',
+                                        textAlign: 'center',
                                       }}
                                     >
                                       {student.student_id}
@@ -696,18 +689,20 @@ const MarksRegistration = ({ match }) => {
                                     <td>
                                       <div
                                         style={{
-                                          margin: "-7px",
-                                          fontSize: "15px",
+                                          margin: '-7px',
+                                          fontSize: '15px',
                                         }}
                                       >
                                         <Field
                                           type="number"
                                           style={{
-                                            fontSize: "15px",
-                                            textAlign: "center",
+                                            fontSize: '15px',
+                                            textAlign: 'center',
                                           }}
                                           className="form-control"
                                           name={`score[${student.student_id}]`}
+                                          min="0"
+                                          max="100"
                                         />
                                         {errors.score && touched.score ? (
                                           <div className="invalid-feedback d-block">
@@ -724,8 +719,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.No" />
@@ -733,8 +728,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.FullName" />
@@ -742,8 +737,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.FatherName" />
@@ -751,8 +746,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.ID" />
@@ -760,8 +755,8 @@ const MarksRegistration = ({ match }) => {
                                 <th
                                   scope="col"
                                   style={{
-                                    fontSize: "15px",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   <IntlMessages id="marks.Marks" />

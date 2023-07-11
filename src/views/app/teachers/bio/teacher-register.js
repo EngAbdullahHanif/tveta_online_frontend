@@ -248,7 +248,7 @@ const TeacherRegister = ({ intl }, values) => {
   };
 
   const fetchProvinces = async () => {
-    const response = await callApi('core/province/', 'GET', null);
+    const response = await callApi('core/provinces/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -263,7 +263,7 @@ const TeacherRegister = ({ intl }, values) => {
   const fetchDistricts = async (provinceId) => {
     console.log('provinceId', provinceId);
     const response = await callApi(
-      `core/district/?province=${provinceId}`,
+      `core/districts/?province=${provinceId}`,
       'GET',
       null
     );

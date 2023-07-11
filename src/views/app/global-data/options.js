@@ -268,8 +268,14 @@ export const batchOptions = [
 ];
 
 export const genderOptions = [
-  { value: '1', label: <IntlMessages id="institute.studentgenderOption_1" /> },
-  { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
+  {
+    value: 'male',
+    label: <IntlMessages id="institute.studentgenderOption_1" />,
+  },
+  {
+    value: 'female',
+    label: <IntlMessages id="institute.studentgenderOption_2" />,
+  },
 ];
 
 export const mediumOfInstructionOptions = [
@@ -304,7 +310,8 @@ export const StudentTypeOptions = [
 
 export const studyTimeOptions = [
   { value: 'morning', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: 'night', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+  { value: 'afternoon', label: 'بعد از ظهر' },
+  { value: 'evening', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
 ];
 
 export const studyTimeOptionsForList = [

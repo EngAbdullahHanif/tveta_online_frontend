@@ -1440,6 +1440,8 @@ module.exports = {
   'section-change': 'د ټولګي/ سکشن تبدیلي',
   'new.section': 'نوی ټولګی /صنف جدید',
   'student.upgrade-class': 'د شاګرد دټولګي ارتقا / ارتقای صنف شاګرد',
+  'student.marks.completion-approval':
+    'د شاگردانو د نمرو تایید کول / تایید نمرات شاگردان',
   'menu.student.upgrade-class': 'د شاګرد دټولګي ارتقا',
   'student.assignment-to-class': 'شاګرد ته د ټولګي تعینوول',
 

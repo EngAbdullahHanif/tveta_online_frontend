@@ -9,14 +9,10 @@ import { BsTrashFill } from 'react-icons/bs';
 
 const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
   return (
-    <Colxx xxs="12" key={student.kankorId} className="mt-2">
-      <ContextMenuTrigger
-        id="menu_id"
-        data={student.kankorId}
-        collect={collect}
-      >
+    <Colxx xxs="12" key={student.id} className="mt-2">
+      <ContextMenuTrigger id="menu_id" data={student.id} collect={collect}>
         <Card
-          onClick={(event) => onCheckItem(event, student.kankorId)}
+          onClick={(event) => onCheckItem(event, student.id)}
           className={classnames('d-flex flex-row', {
             active: isSelect,
           })}
@@ -61,19 +57,19 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                 className="mb-1 text-small"
                 style={{ width: '17%', textAlign: 'right', fontSize: '20px' }}
               >
-                {student.Institute.name}
+                {student.institute.name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '14%', textAlign: 'right', fontSize: '20px' }}
               >
-                {student.department_id.name}
+                {student.department.name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '12%', textAlign: 'right', fontSize: '20px' }}
               >
-                {student.score}
+                {student.marks}
               </p>
               <p
                 className="mb-1 text-small"
@@ -86,7 +82,7 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                 className="align-self-center pr-4"
               >
                 <NavLink
-                  to={`/app/students/register-kankor/${student.id}`}
+                  to={`/students/register-kankor/${student.id}`}
                   // style={{ width: '10%' }}
                 >
                   <div>

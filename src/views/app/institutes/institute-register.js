@@ -196,7 +196,7 @@ const InstituteRegister = () => {
   }
 
   const fetchProvinces = async () => {
-    const response = await callApi('core/province/', 'GET', null);
+    const response = await callApi('core/provinces/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -204,7 +204,6 @@ const InstituteRegister = () => {
       }));
 
       setProvinces(updatedData);
-
     } else {
       console.log('province error');
     }
@@ -213,7 +212,7 @@ const InstituteRegister = () => {
   const fetchDistricts = async (provinceId) => {
     console.log('provinceId', provinceId);
     const response = await callApi(
-      `core/district/?province=${provinceId}`,
+      `core/districts/?province=${provinceId}`,
       'GET',
       null
     );
@@ -352,15 +351,13 @@ const InstituteRegister = () => {
   // }),
   // });
 
-
-
   // post student record to server
   const postInstituteRecord = async (data) => {
     const response = await callApi('institute/create/', 'POST', data);
     if (response) {
       createNotification('success', 'filled');
       // resetForm();
-      // setIsNext(true);
+      setIsNext(true);
       console.log('success message from backend', response);
     } else {
       createNotification('error', 'filled');
@@ -368,7 +365,7 @@ const InstituteRegister = () => {
   };
 
   const onRegister = (values) => {
-    console.log('values of the form', values)
+    console.log('values of the form', values);
     const data = {
       name: values.institute,
       code: values.code,
@@ -377,13 +374,13 @@ const InstituteRegister = () => {
       village: values.village,
       ownership: values.instType.value,
       location_type: values.institueCityType.value,
+      shift: values.shift.value,
       status: 'active', //as it is registered for the first time so it is considered to be active
       climate: values.instituteClimate.value,
       institute_type: values.instituteType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
       foundation_year: values.foundationYear.value,
-      shift: values.shift.value,
       // created_by: '1',
     };
     console.log('data of the form', data);

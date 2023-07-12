@@ -323,14 +323,8 @@ const ThumbListPages = ({ match }) => {
         });
       }
       if (dormName !== '') {
-        // const response = await axios.get(
-        //   `${dormStudentsUrl}/?dorm_id=${dormName.id}&district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`
-        // );
-        // setDorms(response.data);
-        // setIsLoaded(true);
-
         const response = await callApi(
-          `api/student_dorms/?dorm_id=${dormName.id}&district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`,
+          `students/student_dorms/?dorm_id=${dormName.id}&district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`,
           '',
           null
         );
@@ -341,17 +335,9 @@ const ThumbListPages = ({ match }) => {
           console.log('1, dorms students error');
         }
       } else {
-        // const response = await axios.get(
-        //   `${dormStudentsUrl}/?district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`
-        // );
-        // setDorms(response.data);
-        // setIsLoaded(true);
-        const response = await callApi(
-          `api/student_dorms/?district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`,
-          '',
-          null
-        );
+        const response = await callApi(`students/student_dorms`, '', null);
         if (response.data && response.status === 200) {
+          console.log('response.data of student-dorm', response.data);
           setDorms(response.data);
           setIsLoaded(true);
         } else {

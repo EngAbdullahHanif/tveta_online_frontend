@@ -254,7 +254,7 @@ const TeacherRegister = ({ intl }, values) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: item.native_name,
       }));
 
       setProvinces(updatedData);
@@ -272,7 +272,7 @@ const TeacherRegister = ({ intl }, values) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: item.native_name,
       }));
       setMainDistricts(updatedData);
     } else {

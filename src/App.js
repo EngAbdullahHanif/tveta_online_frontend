@@ -31,8 +31,8 @@ const App = ({ locale }) => {
     console.log('token is: ', token);
     if (token) {
       const response = callApi('auth/token/verify/', 'POST', { token: token });
-      if ((response && response.status < 200) || response.status > 299) {
-        console.log('toekn is invalid. removing it from local storage');
+      if (response && (response.status < 200 || response.status > 299)) {
+        console.log('token is invalid. removing it from local storage');
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
         setUser(null);

@@ -80,9 +80,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.genderErr" />),
 
-  email: Yup.string()
-    .email(<IntlMessages id="teacher.EmailRequiredErr" />)
-    .required(<IntlMessages id="teacher.EmailErr" />),
+  email: Yup.string().email(<IntlMessages id="teacher.EmailRequiredErr" />),
   disability: Yup.object()
     .shape({
       value: Yup.string().required(),

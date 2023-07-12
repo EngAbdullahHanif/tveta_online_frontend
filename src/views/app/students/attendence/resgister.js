@@ -182,8 +182,9 @@ const StudentAttendance = ({ match }) => {
   // fetch institute lists
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
+    if (response && response.status === 200) {
+      console.log(response.data, 'institute data');
+      const updatedData = await response.results.map((item) => ({
         value: item.id,
         label: item.name,
       }));

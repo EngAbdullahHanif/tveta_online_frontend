@@ -192,7 +192,7 @@ const MarksRegistration = ({ match }) => {
     }
     const response = await callApi(
       `institute/institite-department/?institute=${instituteId.value}`,
-      '',
+      'GET',
       null
     );
     // console.log('response of department', response);

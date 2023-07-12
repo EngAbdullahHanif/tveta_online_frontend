@@ -199,7 +199,7 @@ const StudentRegistration = ({ intl }, values) => {
     email: '',
     idCardPageNo: '',
     idCardJoldNo: '',
-    tazkiraType: '',
+    tazkiraType: tazkiraOptions[0],
     levelOfEducation: '',
     preSchool: '',
     graduationYear: '',
@@ -235,6 +235,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
   const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
 
+  // used arrays as intial values because other things will throw error
   const [initialValues, setInitialValues] = useState([
     {
       name1: '',
@@ -251,21 +252,21 @@ const StudentRegistration = ({ intl }, values) => {
       tazkiraNo: '',
       idCardPageNo: '',
       idCardJoldNo: '',
-      tazkiraType: [],
+      tazkiraType: tazkiraOptions[0],
       phoneNo: '',
       email: '',
       placeOfBirth: '',
       disability: [],
     },
     {
-      levelOfEducation: '',
+      levelOfEducation: [],
       preSchool: '',
-      graduationYear: '',
-      schoolProvince: '',
-      province: '',
-      C_Province: '',
-      C_District: '',
-      district: '',
+      graduationYear: [],
+      schoolProvince: [],
+      province: [],
+      C_Province: [],
+      C_District: [],
+      district: [],
       village: '',
       C_Village: '',
     },
@@ -275,15 +276,14 @@ const StudentRegistration = ({ intl }, values) => {
       educationalYear: [],
       department: [],
       mediumOfInstruction: [],
-      // kankorId: initialKankorId,
       studentId: '',
-      studyTime: '',
+      studyTime: [],
       interanceType: [],
       studentType: [],
-      batch: '',
+      batch: [],
       field: [],
       sector: [],
-      file: '',
+      file: [],
     },
   ]);
 
@@ -297,8 +297,9 @@ const StudentRegistration = ({ intl }, values) => {
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response) {
-      if (response.data && response.status === 200) {
-        const institutes = await response.data.map((item) => ({
+      if (response && response.status === 200) {
+        console.log('the response is', response);
+        const institutes = await response.data.results.map((item) => ({
           value: item.id,
           label: item.name,
         }));
@@ -544,19 +545,30 @@ const StudentRegistration = ({ intl }, values) => {
             classs: newFields.class.value,
             place_of_birth: newFields.placeOfBirth,
           };
+
+          // check if a file is selected
           if (selectedFile) {
+            console.log(selectedFile);
             data['photo'] = selectedFile;
           }
-          if (newFields.disability) {
+          console.log('disability: ', newFields.disability.value);
+          if (newFields.disability !== 'undefined') {
             data['disability'] = newFields.disability.value;
           }
 
           const formData2 = new FormData();
           for (let key in data) {
-            formData2.append(key, data[key]);
+            // remove undefined values from data that's being sent to the server
+            if (data[key]) {
+              formData2.append(key, data[key]);
+            }
           }
 
-          console.log('formdata', formData2.entries());
+          console.log('formdata: ', formData2.entries());
+
+          for (const entry of formData2.entries()) {
+            console.log(entry);
+          }
 
           // posting data to the server
           postStudentRecord(formData2);
@@ -694,6 +706,40 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
+                            {/* Father Duty */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="forms.StdFatherDutyLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="fatherDuty"
+                              />
+                              {errors.fatherDuty && touched.fatherDuty ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.fatherDuty}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/* Father duty place */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="forms.StdFatherDutyLocationLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="fatherDutyLocation"
+                              />
+                              {errors.fatherDutyLocation &&
+                              touched.fatherDutyLocation ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.fatherDutyLocation}
+                                </div>
+                              ) : null}
+                            </FormGroup>
 
                             {/* Tazkira Type */}
                             <FormGroup className="form-group has-float-label error-l-100">
@@ -706,7 +752,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="tazkiraType"
                                 id="tazkiraType"
                                 value={values.tazkiraType}
-                                // defaultValue={tazkiraOptions[0]}
+                                // defaultValue={}
                                 options={tazkiraOptions}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
@@ -736,6 +782,32 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
                             {values.tazkiraType.value === 'paper' ? (
+                              <div>
+                                {/* Jold Number */}
+                                <div>
+                                  <FormGroup className="form-group has-float-label error-l-100">
+                                    <Label>
+                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                                    </Label>
+                                    <Field
+                                      className="form-control fieldStyle"
+                                      name="idCardJoldNo"
+                                      type="string"
+                                    />
+                                    {errors.idCardJoldNo &&
+                                    touched.idCardJoldNo ? (
+                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                        {errors.idCardJoldNo}
+                                      </div>
+                                    ) : null}
+                                  </FormGroup>
+                                </div>
+                              </div>
+                            ) : (
+                              <div></div>
+                            )}
+
+                            {values.tazkiraType.value === 'Paper' ? (
                               <div>
                                 {/* Safha */}
                                 <div>
@@ -918,41 +990,6 @@ const StudentRegistration = ({ intl }, values) => {
                               {errors.disability && touched.disability ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.disability}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Father Duty */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.StdFatherDutyLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="fatherDuty"
-                              />
-                              {errors.fatherDuty && touched.fatherDuty ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.fatherDuty}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Father duty place */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.StdFatherDutyLocationLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="fatherDutyLocation"
-                              />
-                              {errors.fatherDutyLocation &&
-                              touched.fatherDutyLocation ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.fatherDutyLocation}
                                 </div>
                               ) : null}
                             </FormGroup>

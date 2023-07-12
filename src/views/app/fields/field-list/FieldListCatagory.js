@@ -40,7 +40,7 @@ const ListPageListing = ({
           </div>
         ) : null}
         {items &&
-          items.map((field) => {
+          items.map((field, index) => {
             if (displayMode === 'imagelist') {
               return (
                 <ImageListView
@@ -60,6 +60,7 @@ const ListPageListing = ({
                   isSelect={selectedItems.includes(field.id)}
                   collect={collect}
                   onCheckItem={onCheckItem}
+                  index={index}
                 />
               );
             }

@@ -38,7 +38,6 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
                   style={{ fontSize: '20px' }}
                 >
                   {subject.code}
-                  checkIntegration
                 </p>
               </NavLink>
               <NavLink
@@ -62,7 +61,6 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
                 }}
               >
                 {subject.english_name}
-                checkIntegration
               </p>
 
               <p
@@ -74,8 +72,7 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
                   fontSize: '20px',
                 }}
               >
-                {subject.sub_credit}
-                checkinteg
+                {subject.credit}
               </p>
               <p
                 className="mb-1 text-small"
@@ -86,18 +83,29 @@ const SubjectListBody = ({ subject, isSelect, collect, onCheckItem }) => {
                   fontSize: '20px',
                 }}
               >
-                {subject.sub_type == 1 ? (
-                  <IntlMessages id="subject.coreSubject" />
-                ) : (
-                  <IntlMessages id="subject.nonCoreSubject" />
-                )}
+                {subject.type == 'general'
+                  ? 'عمومی'
+                  : subject.type == 'supporting'
+                  ? 'فرعی'
+                  : subject.type == 'core'
+                  ? 'اصلی'
+                  : subject.type == 'specialized'
+                  ? 'مسلکی'
+                  : subject.type == 'practical'
+                  ? 'عملی'
+                  : 'اختیاری'}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '16%', textAlign: 'right', fontSize: '20px' }}
               >
-                {subject.system}
-                checkInteg
+                {subject.system_type == 'general'
+                  ? 'عمومی'
+                  : subject.system_type == 'giz'
+                  ? 'GiZ'
+                  : subject.system_type == 'nima'
+                  ? 'نیما'
+                  : 'تعلیمات خاص'}
               </p>
             </div>
           </div>

@@ -430,7 +430,18 @@ const ThumbListPages = ({ match }) => {
                   fontSize: '20px',
                 }}
               >
-                <IntlMessages id="marks.ID" />
+                شماره
+              </th>
+              <th
+                style={{
+                  width: '20%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                مضمون
               </th>
               <th
                 style={{

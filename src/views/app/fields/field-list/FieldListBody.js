@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-const FieldListBody = ({ field, isSelect, collect, onCheckItem }) => {
+const FieldListBody = ({ field, isSelect, collect, onCheckItem, index }) => {
   console.log('inside body', field);
   return (
     <Colxx xxs="12" key={field.id} className="mt-2">
@@ -24,35 +24,27 @@ const FieldListBody = ({ field, isSelect, collect, onCheckItem }) => {
               className="py-3 card-body align-self-center d-flex flex-column flex-lg-row min-width-zero align-items-lg-center "
               style={{ width: '100%' }}
             >
-              <NavLink
-              //  to={`fields/${field.id}`}
-               style={{ width: '25%' }}>
-                <p className="list-item-heading mb-1 truncate">
-                  {/* {field.id} */}
-                  Field Id
-                </p>
+              <NavLink to={`fields/${field.id}`} style={{ width: '25%' }}>
+                <p className="list-item-heading mb-1 truncate">{index + 1}</p>
               </NavLink>
 
               <p
                 className="mb-1 text-small"
                 style={{ width: '26%', textAlign: 'right' }}
               >
-                {/* {field.name} */}
-                Name
+                {field.name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '25%', textAlign: 'right' }}
               >
-                {/* {field.english_name} */}
-                English Name
+                {field.english_name}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right' }}
               >
-                {/* {field.sector} */}
-                flied Sector
+                {field.sector}
               </p>
             </div>
           </div>

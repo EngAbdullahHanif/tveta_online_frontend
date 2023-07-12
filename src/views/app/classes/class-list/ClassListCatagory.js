@@ -36,10 +36,10 @@ const ListPageListing = ({
       <Row>
         {items.length === 0 ? (
           <div className="no-result m-3">
-            <h5 >هیچ داده ای برای نمایش وجود ندارد</h5>
+            <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((classs) => {
+        {items.map((classs, index) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
@@ -59,6 +59,7 @@ const ListPageListing = ({
                 isSelect={selectedItems.includes(classs.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
+                index={index}
               />
             );
           }

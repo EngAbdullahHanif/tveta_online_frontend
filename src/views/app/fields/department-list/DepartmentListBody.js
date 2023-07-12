@@ -5,7 +5,13 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-const DepartmentListBody = ({ department, isSelect, collect, onCheckItem }) => {
+const DepartmentListBody = ({
+  department,
+  isSelect,
+  collect,
+  onCheckItem,
+  index,
+}) => {
   console.log('inside body', department);
   return (
     <Colxx xxs="12" key={department.id} className="mt-2">
@@ -26,28 +32,26 @@ const DepartmentListBody = ({ department, isSelect, collect, onCheckItem }) => {
             >
               <NavLink
                 to={`departments/${department.id}`}
-                style={{ width: '25%' }}
+                style={{ width: '15%' }}
               >
-                <p className="list-item-heading mb-1 truncate">
-                  {/* {department.id} */}
-                </p>
+                <p className="list-item-heading mb-1 truncate">{index + 1}</p>
               </NavLink>
 
               <p
                 className="mb-1 text-small"
-                style={{ width: '26%', textAlign: 'right' }}
+                style={{ width: '20%', textAlign: 'right' }}
               >
-                {department.filed.name}
+                {department.field_of_study.name}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '25%', textAlign: 'right' }}
+                style={{ width: '30%', textAlign: 'right' }}
               >
                 {department.name}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                style={{ width: '30%', textAlign: 'right' }}
               >
                 {department.english_name}
               </p>

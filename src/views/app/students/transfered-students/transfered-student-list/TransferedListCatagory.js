@@ -37,10 +37,10 @@ const ListPageListing = ({
       <Row>
         {items.length === 0 ? (
           <div className="no-result">
-            <h5 className='m-3'>هیچ داده ای برای نمایش وجود ندارد</h5>
+            <h5 className="m-3">هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((transferedStudents) => {
+        {items.map((transferedStudents, index) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
@@ -57,6 +57,7 @@ const ListPageListing = ({
               <StudentsListBody
                 key={transferedStudents.id}
                 transferedStudents={transferedStudents}
+                index={index}
                 isSelect={selectedItems.includes(transferedStudents.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}

@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import './../../.././../assets/css/global-style.css';
+import { educationalYearsOptions } from './../../global-data/options';
 
 // Year  and SHift
 
@@ -89,9 +90,12 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
 
-  educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
-  ),
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
 
   studyTime: Yup.object()
     .shape({
@@ -113,27 +117,18 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="teacher.departmentIdErr" />),
-
-  subject: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.SubjectErr" />),
 });
 
 const initialValues = {
   institute: [],
-  educationlaYear: '',
+  educationalYear: [],
   studyTime: [],
   classs: [],
   department: [],
-  subject: [],
 };
 const StudentAttendance = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNext, setIsNext] = useState(false);
-  const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -149,15 +144,6 @@ const StudentAttendance = ({ match }) => {
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
 
-  // const fetchInstitutes = async () => {
-  //   const response = await axios.get('http://localhost:8000/institute/');
-  //   const updatedData = await response.data.map((item) => ({
-  //     value: item.id,
-  //     label: item.name,
-  //   }));
-  //   setInstitutes(updatedData);
-  // };
-
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
@@ -171,72 +157,28 @@ const StudentAttendance = ({ match }) => {
     }
   };
 
-  // const fetchFields = async () => {
-  //   const response = await axios.get('http://localhost:8000/institute/filed/');
-  //   const updatedData = await response.data.map((item) => ({
-  //     value: item.id,
-  //     label: item.name,
-  //   }));
-  //   setFields(updatedData);
-  // };
-
-  // const fetchClasses = async () => {
-  //   const response = await callApi('institute/classs/', '', null);
-  //   if (response.data && response.status === 200) {
-  //     const updatedData = await response.data.map((item) => ({
-  //       value: item.id,
-  //       label: item.name + ' - ' + item.semester + ' - ' + item.section,
-  //     }));
-  //     setClasses(updatedData);
-  //   } else {
-  //     console.log('class error');
-  //   }
-  // };
-
-  const fetchFields = async () => {
-    const response = await callApi('institute/field/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setFields(updatedData);
-    } else {
-      console.log('field error');
+  const fetchDepartments = async (instituteId) => {
+    if (!instituteId || !instituteId.value) {
+      return;
     }
-  };
-
-  // const fetchDepartments = async () => {
-  //   const response = await axios.get(
-  //     'http://localhost:8000/institute/department/'
-  //   );
-  //   const updatedData = await response.data.map((item) => ({
-  //     value: item.id,
-  //     label: item.name,
-  //   }));
-  //   setDepartments(updatedData);
-  // };
-  const fetchDepartments = async () => {
-    const response = await callApi('institute/department/', '', null);
-    console.log('response of department', response);
+    const response = await callApi(
+      `institute/institite-department/?institute=${instituteId.value}`,
+      '',
+      null
+    );
+    // console.log('response of department', response);
     if (response.data && response.status === 200) {
+      console.log('response of department', response);
       const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
+        value: item.department.id,
+        label: item.department.name,
       }));
-      setDepartments(updatedData);
+      console.log('updatedData of department', updatedData);
+      setDepartments(updatedData); //Set it up when data in Backend is ready
     } else {
       console.log('department error');
     }
   };
-  // const fetchClasses = async () => {
-  //   const response = await axios.get('http://localhost:8000/institute/classs/');
-  //   const updatedData = await response.data.map((item) => ({
-  //     value: item.id,
-  //     label: item.name + ' - ' + item.semester + ' - ' + item.section,
-  //   }));
-  //   setClasses(updatedData);
-  // };
 
   const fetchSubjects = async () => {
     const response = await callApi('institute/subject/', '', null);
@@ -250,17 +192,6 @@ const StudentAttendance = ({ match }) => {
       console.log('subject error');
     }
   };
-
-  // const fetchSubjects = async () => {
-  //   const response = await axios.get(
-  //     'http://localhost:8000/institute/subject/'
-  //   );
-  //   const updatedData = await response.data.map((item) => ({
-  //     value: item.id,
-  //     label: item.name,
-  //   }));
-  //   setSubjects(updatedData);
-  // };
 
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', '', null);
@@ -277,30 +208,21 @@ const StudentAttendance = ({ match }) => {
 
   useEffect(() => {
     fetchInstitutes();
-    fetchFields();
-    fetchDepartments();
     fetchClasses();
     fetchSubjects();
   }, []);
 
-  const handleClick = (event) => {
-    // setIsNext(event);
-    axios
-      .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
-      )
-      .then((response) => {
-        console.log('response.data', response.data);
-        setStudents(response.data);
-        setIsNext(false);
-      });
-    console.log('students', students);
-  };
+  useEffect(() => {
+    if (selectedInstitute) {
+      console.log('selectedInstitute', selectedInstitute);
+      fetchDepartments(selectedInstitute);
+    }
+  }, [selectedInstitute]);
 
   // fetch student list for typing attendance
   const fetchStudentList = async () => {
     const response = await callApi(
-      `api/stdattendence_by/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `students/stdattendence_by/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}`,
       'GET',
       null
     );
@@ -413,26 +335,24 @@ const StudentAttendance = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
+
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
-                        <Field
-                          type="number"
-                          min="1350"
-                          max="1499"
-                          id="educationlaYear"
-                          className="form-control fieldStyle"
-                          name="educationlaYear"
-                          // assign value to selectedEducationalYear
+                        <FormikReactSelect
+                          name="educationalYear"
+                          id="educationalYear"
+                          options={educationalYearsOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationlaYear
+                            values.educationalYear
                           )}
                         />
-                        {errors.educationlaYear && touched.educationlaYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.educationlaYear}
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white ">
+                            {errors.educationalYear}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -482,28 +402,6 @@ const StudentAttendance = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150">
-                        <Label>
-                          <IntlMessages id="marks.SubjectLabel" />
-                          <span style={{ color: 'red' }}>*</span>
-                        </Label>
-                        <FormikReactSelect
-                          name="subject"
-                          id="subject"
-                          value={values.subject}
-                          options={subjects}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          onClick={setSelectedSubject(values.subject)}
-                          required
-                        />
-                        {errors.subject && touched.subject ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.subject}
-                          </div>
-                        ) : null}
-                      </FormGroup>
                     </Colxx>
                   </Row>
                   <Row>
@@ -515,7 +413,6 @@ const StudentAttendance = ({ match }) => {
                         type="submit"
                         style={{ margin: '3% 0% 9% 8%' }}
                         // onClick={() => {
-                        //   onSubmit;
                         //   handleClick(false);
                         // }}
                       >
@@ -711,10 +608,7 @@ const StudentAttendance = ({ match }) => {
               </Row>
               <Row className=" justify-content-center">
                 <Colxx xxs="9" className="m-5">
-                  <Button
-                    className=" m-4"
-                    // onClick={() => handleClick(true)}
-                  >
+                  <Button className=" m-4" onClick={() => setIsNext(false)}>
                     <IntlMessages id="button.Back" />
                   </Button>
                 </Colxx>

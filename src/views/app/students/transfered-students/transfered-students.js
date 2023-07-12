@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import './../../.././../assets/css/global-style.css';
+import { educationalYearsOptions } from './../../global-data/options';
 
 // Year  and SHift
 import * as Yup from 'yup';
@@ -47,20 +48,23 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
 
-  educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
-  ),
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
 });
 
 const initialValues = {
   institute: [],
-  educationlaYear: '',
+  educationalYear: [],
 };
 const MarksRegistration = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [institutes, setInstitutes] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState('');
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState([]);
   const [transferedStudents, setTransferedStudents] = useState([]);
   const [transferedStudentList, setTransferedStudentList] = useState(false);
 
@@ -85,15 +89,6 @@ const MarksRegistration = ({ match }) => {
     }, []);
   }
 
-  // const fetchInstitutes = async () => {
-  //   const response = await axios.get('http://localhost:8000/institute/');
-  //   const updatedData = await response.data.map((item) => ({
-  //     value: item.id,
-  //     label: item.name,
-  //   }));
-  //   setInstitutes(updatedData);
-  // };
-
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
@@ -111,16 +106,12 @@ const MarksRegistration = ({ match }) => {
   }, []);
 
   const fetchTransferedStudents = async (values) => {
-    // const { data } = await axios.get(
-    //   `${transferedStudentsAPI}/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}&is_transfer=2`
-    // );
     const response = await callApi(
-      `api/student_institutes/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}&is_transfer=2`,
+      `students/student_institutes/?institute=${values.institute.value}&educational_year=${values.educationalYear.value}&is_transfer=true`,
       '',
       null
     );
-    console.log('response.data', response.data);
-    console.log('response', response);
+    console.log('response of transfer students', response);
     setTransferedStudents(response.data);
     //console.log('transfered students list', data);
     setIsLoaded(true);
@@ -183,23 +174,23 @@ const MarksRegistration = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
-                        <Field
-                          type="number"
-                          id="educationlaYear"
-                          className="form-control fieldStyle"
-                          name="educationlaYear"
+                        <FormikReactSelect
+                          name="educationalYear"
+                          id="educationalYear"
+                          options={educationalYearsOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationlaYear
+                            values.educationalYear
                           )}
                         />
-                        {errors.educationlaYear && touched.educationlaYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.educationlaYear}
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white ">
+                            {errors.educationalYear}
                           </div>
                         ) : null}
                       </FormGroup>

@@ -35,37 +35,40 @@ const StudentListBody = ({ attendance, isSelect, collect, onCheckItem }) => {
                 style={{ marginRight: '20px' }}
                 className="mb-1 text-small w-10 w-sm-100"
               >
-                {attendance.student_id.name}
+                {attendance.student.name}
               </p>
               <p
                 style={{ marginRight: '30px' }}
                 className="mb-1 text-small w-10 w-sm-100"
               >
-                {attendance.department_id.name}
+                {attendance.department.name}
               </p>
               <p
                 style={{ marginRight: '30px' }}
                 className="mb-1 text-small w-10 w-sm-100"
               >
-                {attendance.institute_id.name}
+                {attendance.institute.name}
               </p>
               <p
                 style={{ marginRight: '10px' }}
                 className="mb-1 text-small w-10 w-sm-100"
               >
-                {attendance.Present_days}
+                {attendance.present_hours}
               </p>
               <p className="mb-1 text-small w-10 w-sm-100">
-                {attendance.appsent_days}
+                {attendance.absent_hours}
               </p>
               <p className="mb-1 text-small w-10 w-sm-100">
-                {attendance.sikness_days}
+                {attendance.sickness_hours}
               </p>
-              <p className="mb-1 text-small w-10 w-sm-100">
+              {/* <p className="mb-1 text-small w-10 w-sm-100">
                 {attendance.educational_days}
-              </p>
+              </p> */}
               <p className="mb-1 text-small w-10 w-sm-100">
                 {attendance.educational_year}
+              </p>
+              <p className="mb-1 text-small w-10 w-sm-100">
+                {attendance.is_short_attendance ? 'محروم' : 'غیر محروم'}
               </p>
             </div>
           </div>

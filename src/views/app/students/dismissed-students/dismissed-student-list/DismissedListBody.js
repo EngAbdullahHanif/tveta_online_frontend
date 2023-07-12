@@ -43,27 +43,27 @@ const StudentListBody = ({
               <NavLink
                 span
                 style={{ width: '11.8%', fontSize: '20px' }}
-                to={`student-profile/${transferedStudents.student_id.student_id}`}
+                to={`student-profile/${transferedStudents.student.student_id}`}
                 className=""
               >
                 <p
                   className="list-item-heading mb-1 truncate "
                   style={{ fontSize: '20px' }}
                 >
-                  {transferedStudents.student_id.student_id}
+                  {transferedStudents.student.student_id}
                 </p>
               </NavLink>
               <p
                 className="mb-1 text-small w-9 w-sm-100"
                 style={{ width: '20%', fontSize: '20px' }}
               >
-                {transferedStudents.student_id.name}
+                {transferedStudents.student.name}
               </p>
               <p
                 className="mb-1 text-small  w-sm-100"
                 style={{ width: '25%', fontSize: '20px' }}
               >
-                {transferedStudents.institute_id.name}
+                {transferedStudents.institute.name}
               </p>
               <p
                 className="mb-1 text-small w-10 w-sm-100"

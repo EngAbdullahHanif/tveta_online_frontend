@@ -170,7 +170,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
     setIsNext(true);
 
     const response = await callApi(
-      `students/class_marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift_id=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&upgrade=1`,
+      `students/class_marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&upgrade=1`,
       '',
       null
     );

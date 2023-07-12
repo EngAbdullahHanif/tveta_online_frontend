@@ -10,6 +10,7 @@ const StudentListBody = ({
   isSelect,
   collect,
   onCheckItem,
+  index,
 }) => {
   return (
     <Colxx xxs="12" key={transferedStudents.id} className="mb-3">
@@ -39,21 +40,20 @@ const StudentListBody = ({
                   className="list-item-heading mb-1 truncate "
                   style={{ marginRight: '-8px', fontSize: '20px' }}
                 >
-                  {/* {transferedStudents.id} */}
-                  Integrate
+                  {index + 1}
                 </p>
               </NavLink>
               <p
                 className="mb-1  w-9 w-sm-100"
                 style={{ width: '10%', fontSize: '20px' }}
               >
-                {transferedStudents.student_id.student_id}
+                {transferedStudents.student.student_id}
               </p>
               <p
                 className="mb-1 text-small w-9 w-sm-100"
                 style={{ width: '15.4%', fontSize: '20px' }}
               >
-                {transferedStudents.student_id.name}
+                {transferedStudents.student.name}
               </p>
 
               <p
@@ -65,7 +65,7 @@ const StudentListBody = ({
               </p>
 
               <p style={{ width: '18%', fontSize: '20px' }} className="mb-1">
-                {transferedStudents.institute_id.name}
+                {transferedStudents.institute.name}
               </p>
               <p
                 style={{ marginLeft: '0px', fontSize: '20px' }}

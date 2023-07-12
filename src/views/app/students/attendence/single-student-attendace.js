@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form, Field, isEmptyArray } from "formik";
-import axios from "axios";
-import "../style.css";
-import callApi from "helpers/callApi";
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field, isEmptyArray } from 'formik';
+import axios from 'axios';
+import '../style.css';
+import callApi from 'helpers/callApi';
 import {
   studyTimeOptions,
   educationalYearsOptions,
-} from "../../global-data/options";
-import "../../../../assets/css/global-style.css";
+} from '../../global-data/options';
+import '../../../../assets/css/global-style.css';
 
-import * as Yup from "yup";
-import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
+import * as Yup from 'yup';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
-import IntlMessages from "helpers/IntlMessages";
-import { Colxx } from "components/common/CustomBootstrap";
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
   FormikInputText,
-} from "containers/form-validations/FormikFields";
+} from 'containers/form-validations/FormikFields';
 
 const ValidationSchema = Yup.object().shape({
   studentID: Yup.string().required(<IntlMessages id="student.studentId" />),
@@ -45,7 +45,7 @@ const ValidationSchema = Yup.object().shape({
 });
 
 const initialValues = {
-  studentID: "",
+  studentID: '',
   educationalYear: [],
   classs: [],
   // subject: [],
@@ -56,46 +56,46 @@ function singleStudentAttendace(props) {
   const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([
     {
-      id: "414",
-      name: "Sohaib",
-      father_name: "Khan",
+      id: '414',
+      name: 'Sohaib',
+      father_name: 'Khan',
       oldMarks: 59,
     },
   ]);
-  const [selectedStudentID, setSelectedStudentID] = useState("");
-  const [selectedClass, setSelectedClass] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState("");
+  const [selectedStudentID, setSelectedStudentID] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
 
   // separate and set labels for classes
   const [selectedClassLabel, setselectedClassLabel] = useState({
-    classs: "",
-    semester: "",
-    section: "",
+    classs: '',
+    semester: '',
+    section: '',
   });
 
   useEffect(() => {
-    if (!isEmptyArray(selectedClass) && selectedClass !== "") {
-      const [semester, classs, section] = selectedClass.label.split("-");
+    if (!isEmptyArray(selectedClass) && selectedClass !== '') {
+      const [semester, classs, section] = selectedClass.label.split('-');
       setselectedClassLabel({ classs, semester, section });
     }
   }, [selectedClass]);
   const fetchClasses = async () => {
-    const response = await callApi("institute/classs/", "GET", null);
-    console.log("class repspossdfsde", response);
+    const response = await callApi('institute/classs/', 'GET', null);
+    console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name + " - " + item.semester + " - " + item.section,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
       }));
       setClasses(updatedData);
     } else {
-      console.log("class error");
+      console.log('class error');
     }
   };
 
   const fetchSubjects = async () => {
-    const response = await callApi("institute/subject/", "", null);
+    const response = await callApi('institute/subject/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -103,7 +103,7 @@ function singleStudentAttendace(props) {
       }));
       setSubjects(updatedData);
     } else {
-      console.log("subject error");
+      console.log('subject error');
     }
   };
 
@@ -113,8 +113,8 @@ function singleStudentAttendace(props) {
   }, []);
 
   const onSubmit = async (values) => {
-    console.log("Selected Class:", selectedClassLabel);
-    console.log("VALUES in Single Subject Marks display: ", values);
+    console.log('Selected Class:', selectedClassLabel);
+    console.log('VALUES in Single Subject Marks display: ', values);
     const data = {
       studentID: values.studentID,
       class: values.classs.value,
@@ -145,7 +145,7 @@ function singleStudentAttendace(props) {
       <Card>
         <div className="mt-4 ml-5">
           <h2 className="mt-5 ml-5 titleStyle">
-            {<IntlMessages id="marks.marksDisplayTitle" />}
+            {/* {<IntlMessages id="marks.marksDisplayTitle" />} */}د شاگرد حاضری
           </h2>
         </div>
         <CardBody>
@@ -169,12 +169,12 @@ function singleStudentAttendace(props) {
                       <FormGroup className="form-group has-float-label error-l-150">
                         <Label>
                           <IntlMessages id="شاګرد ایډی" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikInputText
                           name="studentID"
                           id="studentID"
-                          onChange={handleChange("studentID")}
+                          onChange={handleChange('studentID')}
                           onBlur={setFieldTouched}
                           onClick={setSelectedStudentID(values.studentID)}
                         />
@@ -231,7 +231,7 @@ function singleStudentAttendace(props) {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="classs"
@@ -322,7 +322,7 @@ function singleStudentAttendace(props) {
                         className="float-right  buttonStyle"
                         size="lg"
                         type="submit"
-                        style={{ margin: "2% 0% 10% 6%" }}
+                        style={{ margin: '2% 0% 10% 6%' }}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />
@@ -337,38 +337,38 @@ function singleStudentAttendace(props) {
             <>
               <Row
                 className="border border bg-primary me-5 p-1 "
-                style={{ marginInline: "16%" }}
+                style={{ marginInline: '16%' }}
               >
                 <Colxx xxs="2">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="شاګرد ایډی" />
                   </Label>
                   <h5>{selectedStudentID}</h5>
                 </Colxx>
 
                 <Colxx xxs="3">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="marks.ClassLabel" />
                   </Label>
                   <h5>{selectedClassLabel.semester}</h5>
                 </Colxx>
 
                 <Colxx xxs="2">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="marks.SemesterLabel" />
                   </Label>
                   <h5>{selectedClassLabel.classs}</h5>
                 </Colxx>
 
                 <Colxx xxs="2">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="marks.SectionLabel" />
                   </Label>
                   <h5>{selectedClassLabel.section}</h5>
                 </Colxx>
 
                 <Colxx xxs="3">
-                  <Label style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                     <IntlMessages id="کال/سال" />
                   </Label>
                   <h5>{selectedEducationalYear.value}</h5>
@@ -390,9 +390,9 @@ function singleStudentAttendace(props) {
                     <Row
                       className="justify-content-center  border border"
                       style={{
-                        marginInline: "10%",
-                        overflowY: "scroll",
-                        overflowX: "hidden",
+                        marginInline: '10%',
+                        overflowY: 'scroll',
+                        overflowX: 'hidden',
                       }}
                     >
                       <table class="table ">
@@ -468,9 +468,9 @@ function singleStudentAttendace(props) {
                         <tbody
                           className="border border "
                           style={{
-                            height: "200px",
-                            overflowY: "scroll",
-                            overflowX: "hidden",
+                            height: '200px',
+                            overflowY: 'scroll',
+                            overflowX: 'hidden',
                           }}
                         >
                           {students.length > 0 &&
@@ -478,9 +478,9 @@ function singleStudentAttendace(props) {
                               <tr>
                                 <th
                                   style={{
-                                    fontSize: "20px",
-                                    minWidth: "50px",
-                                    textAlign: "center",
+                                    fontSize: '20px',
+                                    minWidth: '50px',
+                                    textAlign: 'center',
                                   }}
                                   className="pt-0"
                                 >
@@ -488,9 +488,9 @@ function singleStudentAttendace(props) {
                                 </th>
                                 <td
                                   style={{
-                                    fontSize: "20px",
-                                    minWidth: "150px",
-                                    textAlign: "center",
+                                    fontSize: '20px',
+                                    minWidth: '150px',
+                                    textAlign: 'center',
                                   }}
                                   className="pt-0"
                                 >
@@ -498,9 +498,9 @@ function singleStudentAttendace(props) {
                                 </td>
                                 <td
                                   style={{
-                                    fontSize: "20px",
-                                    minWidth: "150px",
-                                    textAlign: "center",
+                                    fontSize: '20px',
+                                    minWidth: '150px',
+                                    textAlign: 'center',
                                   }}
                                   className="pt-0"
                                 >
@@ -508,9 +508,9 @@ function singleStudentAttendace(props) {
                                 </td>
                                 <td
                                   style={{
-                                    fontSize: "20px",
-                                    textAlign: "center",
-                                    minWidth: "100px",
+                                    fontSize: '20px',
+                                    textAlign: 'center',
+                                    minWidth: '100px',
                                   }}
                                   className="pt-0"
                                 >
@@ -587,8 +587,8 @@ function singleStudentAttendace(props) {
                               scope="col"
                               className="border text-center "
                               style={{
-                                maxWidth: "20px ",
-                                minWidth: "50px",
+                                maxWidth: '20px ',
+                                minWidth: '50px',
                               }}
                             >
                               <IntlMessages id="marks.No" />
@@ -650,7 +650,7 @@ function singleStudentAttendace(props) {
                           className="buttonStyle1"
                           size="lg"
                           type="submit"
-                          style={{ margin: "5% 6% 10% 8%" }}
+                          style={{ margin: '5% 6% 10% 8%' }}
                           onClick={() => setIsNext(false)}
                         >
                           <IntlMessages id="button.Back" />
@@ -661,7 +661,7 @@ function singleStudentAttendace(props) {
                           className=" float-right buttonStyle1"
                           size="lg"
                           type="submit"
-                          style={{ margin: "5% 0% 10% 6%" }}
+                          style={{ margin: '5% 0% 10% 6%' }}
                         >
                           <IntlMessages id="button.SubmitButton" />
                         </Button>

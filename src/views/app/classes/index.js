@@ -17,7 +17,7 @@ const Classes = ({ match, props }) => (
       <Redirect exact from={`${match.url}/`} to={`${match.url}/classes`} />
       <ProtectedRoute
         path={`${match.url}/classes`}
-        component={props}
+        component={ClassList}
         roles={[
           userRole.superUser,
           userRole.admin,
@@ -28,7 +28,7 @@ const Classes = ({ match, props }) => (
       />
       <ProtectedRoute
         path={`${match.url}/register`}
-        component={props}
+        component={ClassRegister}
         roles={[
           userRole.superUser,
           userRole.admin,

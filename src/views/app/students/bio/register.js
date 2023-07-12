@@ -235,6 +235,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
   const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
 
+  // used arrays as intial values because other things will throw error
   const [initialValues, setInitialValues] = useState([
     {
       name1: '',
@@ -251,21 +252,21 @@ const StudentRegistration = ({ intl }, values) => {
       tazkiraNo: '',
       idCardPageNo: '',
       idCardJoldNo: '',
-      tazkiraType: [],
+      tazkiraType: tazkiraOptions[0],
       phoneNo: '',
       email: '',
       placeOfBirth: '',
       disability: [],
     },
     {
-      levelOfEducation: '',
+      levelOfEducation: [],
       preSchool: '',
-      graduationYear: '',
-      schoolProvince: '',
-      province: '',
-      C_Province: '',
-      C_District: '',
-      district: '',
+      graduationYear: [],
+      schoolProvince: [],
+      province: [],
+      C_Province: [],
+      C_District: [],
+      district: [],
       village: '',
       C_Village: '',
     },
@@ -275,15 +276,14 @@ const StudentRegistration = ({ intl }, values) => {
       educationalYear: [],
       department: [],
       mediumOfInstruction: [],
-      // kankorId: initialKankorId,
       studentId: '',
-      studyTime: '',
+      studyTime: [],
       interanceType: [],
       studentType: [],
-      batch: '',
+      batch: [],
       field: [],
       sector: [],
-      file: '',
+      file: [],
     },
   ]);
 
@@ -297,8 +297,9 @@ const StudentRegistration = ({ intl }, values) => {
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response) {
-      if (response.data && response.status === 200) {
-        const institutes = await response.data.map((item) => ({
+      if (response && response.status === 200) {
+        console.log('the response is', response);
+        const institutes = await response.data.results.map((item) => ({
           value: item.id,
           label: item.name,
         }));
@@ -544,19 +545,30 @@ const StudentRegistration = ({ intl }, values) => {
             classs: newFields.class.value,
             place_of_birth: newFields.placeOfBirth,
           };
+
+          // check if a file is selected
           if (selectedFile) {
+            console.log(selectedFile);
             data['photo'] = selectedFile;
           }
-          if (newFields.disability) {
+          console.log('disability: ', newFields.disability.value);
+          if (newFields.disability !== 'undefined') {
             data['disability'] = newFields.disability.value;
           }
 
           const formData2 = new FormData();
           for (let key in data) {
-            formData2.append(key, data[key]);
+            // remove undefined values from data that's being sent to the server
+            if (data[key]) {
+              formData2.append(key, data[key]);
+            }
           }
 
-          console.log('formdata', formData2.entries());
+          console.log('formdata: ', formData2.entries());
+
+          for (const entry of formData2.entries()) {
+            console.log(entry);
+          }
 
           // posting data to the server
           postStudentRecord(formData2);
@@ -677,6 +689,23 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
+                            {/* grandFatherName */}
+                            <FormGroup className="form-group has-float-label">
+                              <Label>
+                                <IntlMessages id="forms.grandFatherName" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="grandFatherName"
+                              />
+                              {errors.grandFatherName &&
+                              touched.grandFatherName ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.grandFatherName}
+                                </div>
+                              ) : null}
+                            </FormGroup>
                             {/* Father Duty */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
@@ -708,24 +737,6 @@ const StudentRegistration = ({ intl }, values) => {
                               touched.fatherDutyLocation ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.fatherDutyLocation}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* grandFatherName */}
-                            <FormGroup className="form-group has-float-label">
-                              <Label>
-                                <IntlMessages id="forms.grandFatherName" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="grandFatherName"
-                              />
-                              {errors.grandFatherName &&
-                              touched.grandFatherName ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.grandFatherName}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -941,45 +952,6 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {/* Date of Birth */}
-                            <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
-                                <IntlMessages id="teacher.DoBLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <FormikReactSelect
-                                name="DoB"
-                                id="DoB"
-                                value={values.DoB}
-                                options={dateOfBirthOptoions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                required
-                              />
-                              {errors.DoB && touched.DoB ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.DoB}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Place of birth */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.PlaceOfBirthLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="placeOfBirth"
-                              />
-                              {errors.placeOfBirth && touched.placeOfBirth ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.placeOfBirth}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
                             {/* Gender */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
@@ -1022,41 +994,6 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            {/* Father Duty */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.StdFatherDutyLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="fatherDuty"
-                              />
-                              {errors.fatherDuty && touched.fatherDuty ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.fatherDuty}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Father duty place */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.StdFatherDutyLocationLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="fatherDutyLocation"
-                              />
-                              {errors.fatherDutyLocation &&
-                              touched.fatherDutyLocation ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.fatherDutyLocation}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
                             {/* Contact No */}
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
@@ -1089,24 +1026,6 @@ const StudentRegistration = ({ intl }, values) => {
                               {errors.email && touched.email ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.email}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Contact No */}
-                            <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
-                                <IntlMessages id="teacher.PhoneNoLabel" />
-                                {/* <span style={{ color: 'red' }}>*</span> */}
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="phoneNo"
-                                type="text"
-                              />
-                              {errors.phoneNo && touched.phoneNo ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.phoneNo}
                                 </div>
                               ) : null}
                             </FormGroup>

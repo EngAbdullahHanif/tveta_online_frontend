@@ -103,7 +103,7 @@ const Teachers = ({ match, props }) => (
         ]}
         props={props}
       />
-      <ProtectedRoute
+      {/* <ProtectedRoute
         path={`${match.url}/teacher-evalaution/:teacherId`}
         component={TeacherEvaluation}
         roles={[
@@ -113,7 +113,7 @@ const Teachers = ({ match, props }) => (
           userRole.institute,
         ]}
         props={props}
-      />
+      /> */}
       <ProtectedRoute
         path={`${match.url}/teacher-promotion-demotion`}
         component={TeacherPromotionDemotion}

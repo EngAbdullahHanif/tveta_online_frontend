@@ -3,7 +3,10 @@ import { Formik, Form, Field, isEmptyArray } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import { studyTimeOptions } from '../global-data/options';
+import {
+  studyTimeOptions,
+  educationalYearsOptions,
+} from '../global-data/options';
 import './../../../assets/css/global-style.css';
 
 // Year  and SHift
@@ -95,9 +98,12 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
 
-  educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
-  ),
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
 
   studyTime: Yup.object()
     .shape({
@@ -151,7 +157,7 @@ const MarksRegistration = ({ match }) => {
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selecedStudyTime, setSelectedStudyTime] = useState('');
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState([]);
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
@@ -301,7 +307,7 @@ const MarksRegistration = ({ match }) => {
   const fechtStudens = async () => {
     console.log('subject', selectedSubject.value);
     const response = await callApi(
-      `api/class-marks/list/second-chance/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
+      `students/class-marks/list/second-chance/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}`,
       '',
       null
     );
@@ -314,16 +320,16 @@ const MarksRegistration = ({ match }) => {
   };
 
   const onSubmit = async (values) => {
-    const educationalYear = selectedEducationalYear;
+    const educationalYear = selectedEducationalYear.value;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
     const classId = selectedClass.value;
     const subjectId = selectedSubject.value;
-    // console.log('educationalYear', educationalYear);
-    // console.log('instituteId', instituteId);
-    // console.log('departmentId', departmentId);
-    // console.log('classId', classId);
-    // console.log('subjectId', subjectId);
+    console.log('educationalYear', educationalYear);
+    console.log('instituteId', instituteId);
+    console.log('departmentId', departmentId);
+    console.log('classId', classId);
+    console.log('subjectId', subjectId);
 
     const newStudents = students.map((student, index) => {
       return {
@@ -335,29 +341,28 @@ const MarksRegistration = ({ match }) => {
     let data = [
       {
         educational_year: educationalYear,
-        institute_id: instituteId,
-        department_id: departmentId,
-        class_id: classId,
-        subject_id: subjectId,
-        user_id: '',
+        institute: instituteId,
+        department: departmentId,
+        classs: classId,
+        subject: subjectId,
       },
       ...newStudents,
     ];
 
-    // console.log('data', data);
+    console.log('data', data);
 
     const response = await callApi(
-      'api/second-chance-exam-create/',
+      'students/class-marks/create/second-chance/',
       'POST',
       data
     );
     if (response.status === 200) {
-      // console.log('response of students', response);
+      console.log('response of students', response);
       setIsSubmitted(true);
       createNotification('success', 'filled');
     } else {
       console.log('marks error');
-      // setIsSubmitted(false);
+      setIsSubmitted(false);
       createNotification('error', 'filled');
     }
   };
@@ -432,23 +437,22 @@ const MarksRegistration = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
-                        <Field
-                          type="number"
-                          id="educationlaYear"
-                          className="form-control fieldStyle"
-                          name="educationlaYear"
-                          // assign value to selectedEducationalYear
+                        <FormikReactSelect
+                          name="educationalYear"
+                          id="educationalYear"
+                          options={educationalYearsOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationlaYear
+                            values.educationalYear
                           )}
                         />
                         {errors.educationlaYear && touched.educationlaYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          <div className="invalid-feedback d-block bg-danger text-white ">
                             {errors.educationlaYear}
                           </div>
                         ) : null}
@@ -612,9 +616,10 @@ const MarksRegistration = ({ match }) => {
                           <th scope="col">
                             <IntlMessages id="marks.ID" />
                           </th>
-                          <th scope="col">
+                          {/* LATTER UNCOMMENT IT, WHEN FIRST CHANCE MARKS IS GOT FROM BACKEND */}
+                          {/* <th scope="col">
                             <IntlMessages id="marks.firstChance" />
-                          </th>
+                          </th> */}
                           <th scope="col">
                             <IntlMessages id="marks.secondChance" />
                           </th>
@@ -660,7 +665,8 @@ const MarksRegistration = ({ match }) => {
                                     <td>{student.name}</td>
                                     <td>{student.father_name}</td>
                                     <td>{student.student_id}</td>
-                                    <td>first chance marks</td>
+                                    {/* LATTER UNCOMMENT IT, WHEN FIRST CHANCE MARKS IS GOT FROM BACKEND */}
+                                    {/* <td>first chance marks</td> */}
 
                                     {/* Second Chance Marks */}
                                     <td>
@@ -670,6 +676,8 @@ const MarksRegistration = ({ match }) => {
                                             type="number"
                                             className="form-control"
                                             name={`score[${student.student_id}]`}
+                                            min="0"
+                                            max="100"
                                           />
                                           {errors.score && touched.score ? (
                                             <div className="invalid-feedback d-block">

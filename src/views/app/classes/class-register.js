@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
-import CustomSelectInput from "components/common/CustomSelectInput";
-import axios from "axios";
-import callApi from "helpers/callApi";
-import * as Yup from "yup";
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+import CustomSelectInput from 'components/common/CustomSelectInput';
+import { NotificationManager } from 'components/common/react-notifications';
+
+import axios from 'axios';
+import callApi from 'helpers/callApi';
+import * as Yup from 'yup';
 import {
   Row,
   Card,
@@ -14,46 +16,72 @@ import {
   Button,
   CardTitle,
   Input,
-} from "reactstrap";
-import Select from "react-select";
+} from 'reactstrap';
+import Select from 'react-select';
 
-import IntlMessages from "helpers/IntlMessages";
-import { Colxx } from "components/common/CustomBootstrap";
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
-} from "containers/form-validations/FormikFields";
-import { message } from "antd";
-
-const subjectOptions = [
-  { value: "1", label: "اصلی" },
-  { value: "2", label: "فرعی" },
-];
-
-const systemOption = [
-  { value: "1", label: "عمومی" },
-  { value: "2", label: "GIZ" },
-  { value: "3", label: "نیما" },
-];
+} from 'containers/form-validations/FormikFields';
+import { message } from 'antd';
 
 const ValidationSchema = Yup.object().shape({
   className: Yup.string().required(<IntlMessages id="class.nameErr" />),
-  semester: Yup.string().required(<IntlMessages id="class.semesterErr" />),
+  semester: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="class.semesterErr" />),
 });
 
 const updateMode = true;
-const SubjcetRegister = () => {
-  const TestData = {
-    ClassName: "10th A",
-    Semester: "1",
-  };
-  const [initialClassName, setInitialClassName] = useState(
-    TestData.ClassName ? TestData.ClassName : ""
-  );
-  const [initialSemester, setInitialSemester] = useState(
-    TestData.Semester ? TestData.Semester : ""
-  );
+const seasonOptions = [
+  {
+    label: 'بهاری',
+    value: 'spring',
+  },
+  {
+    label: 'خزانی',
+    value: 'fall',
+  },
+];
+const sectionOptions = [
+  {
+    label: 'A',
+    value: 'A',
+  },
+  {
+    label: 'B',
+    value: 'B',
+  },
+  {
+    label: 'C',
+    value: 'C',
+  },
+  {
+    label: 'D',
+    value: 'D',
+  },
+];
+
+const semesterOptions = [
+  {
+    label: '1',
+    value: '1',
+  },
+  {
+    label: '2',
+    value: '2',
+  },
+];
+const ClassRegister = () => {
+  const [initialClassName, setInitialClassName] = useState();
+  const [initialGrade, setInitialGrade] = useState();
+  const [initialSemester, setInitialSemester] = useState();
   const [initialSeason, setInitialSeason] = useState([]);
   const [initialSection, setInitialSection] = useState([]);
 
@@ -61,72 +89,64 @@ const SubjcetRegister = () => {
 
   const initialValues = {
     className: initialClassName,
+    grade: initialGrade,
     semester: initialSemester,
     season: initialSeason,
     section: initialSection,
   };
+  // notification message
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'صنف په بریالیتوب ثبت شو',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'صنف ثبت نشو, بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
   const onRegister = async (values, { resetForm }) => {
-    console.log(values, "Value");
-    setIsNext(true);
-    resetForm();
-
     const data = {
       name: values.className,
-      semester: values.semester,
+      grade: values.grade,
+      semester: values.semester.value,
       season: values.season.value,
       section: values.section.value,
-      user_id: 1,
     };
-    console.log("data", data);
-    const response = await callApi("institute/classs_create/", "POST", data);
+    console.log('data', data);
+    const response = await callApi('institute/classs_create/', 'POST', data);
     if (response) {
-      setLoader(false);
-      message.success("Class Added");
-      console.warn("success message from backend", response.data);
-      createNotification("success", "filled");
+      createNotification('success', 'filled');
+
+      // setLoader(false);
       resetForm();
       setIsNext(true);
     } else {
-      createNotification("error", "filled");
-      console.log("class error");
-    }
-    // await axios
-    //   .post("http://localhost:8000/institute/classs/", data)
-    //   .then((response) => {
-    //     console.log(response);
-    //     console.log("data sent to the server2");
-    //   })
-    //   .catch((error) => {
-    //     console.log("data sent to the server4");
-    //     console.log(error);
-    //   });
-
-    if (!loading) {
-      // if (values.email !== '' && values.password !== '') {
-      //   loginUserAction(values, history);
-      // }
+      createNotification('error', 'filled');
+      console.log('class error');
     }
   };
-  const seasonOptions = [
-    {
-      label: "Bahari",
-      value: "1",
-    },
-    {
-      label: "Khazani",
-      value: "2",
-    },
-  ];
-  const sectionOptions = [
-    {
-      label: "A",
-      value: "A",
-    },
-    {
-      label: "B",
-      value: "B",
-    },
-  ];
+
   return (
     <>
       <Card>
@@ -165,18 +185,40 @@ const SubjcetRegister = () => {
 
                       <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          <IntlMessages id="class.semesterLabel" />
+                          {/* <IntlMessages id="class.nameLabel" /> */}
+                          numeric name
                         </Label>
                         <Field
                           className="form-control"
-                          name="semester"
+                          name="grade"
                           type="number"
+                          max="14"
+                          min="10"
                         />
-                        {errors.semester && touched.semester && (
+                        {errors.grade && touched.grade && (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.semester}
+                            {errors.grade}
                           </div>
                         )}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label error-l-150">
+                        <Label>
+                          <IntlMessages id="class.semesterLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="semester"
+                          id="semester"
+                          value={values.semester}
+                          options={semesterOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.semester && touched.semester ? (
+                          <div className="invalid-feedback d-block bg-danger text-white ">
+                            {errors.semester}
+                          </div>
+                        ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
                         <Label>
@@ -217,7 +259,7 @@ const SubjcetRegister = () => {
                     </Colxx>
                   </Row>
                   <Row>
-                    <Colxx style={{ marginLeft: "5%", marginBottom: "8%" }}>
+                    <Colxx style={{ marginLeft: '5%', marginBottom: '8%' }}>
                       <Button
                         className="float-right m-5 "
                         size="lg"
@@ -244,7 +286,7 @@ const SubjcetRegister = () => {
           ) : (
             <div
               className="wizard-basic-step text-center pt-3 "
-              style={{ minHeight: "400px" }}
+              style={{ minHeight: '400px' }}
             >
               <div>
                 <h1 className="mb-2">
@@ -268,4 +310,4 @@ const SubjcetRegister = () => {
   );
 };
 
-export default SubjcetRegister;
+export default ClassRegister;

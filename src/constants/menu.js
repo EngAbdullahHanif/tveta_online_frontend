@@ -81,7 +81,7 @@ const data = [
       },
       {
         icon: 'FA.FaList',
-        label: 'ده یو شاګرد حاضری',
+        label: 'د حاضری اپدیت',
         to: `${adminRoot}/students/single-student-attendance`,
         newWindow: false,
       },

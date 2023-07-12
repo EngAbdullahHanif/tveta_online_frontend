@@ -196,11 +196,8 @@ function singleStudentSingleSubjectMarks(props) {
 
     if (response.data && response.status === 200) {
       setStudents(response.data);
-      console.log('response.data', response.data);
-      console.log('response', response);
       createNotification('success', 'filled');
       setIsNext(false);
-      console.log('students', students);
     } else {
       createNotification('error', 'filled');
       console.log('students error');

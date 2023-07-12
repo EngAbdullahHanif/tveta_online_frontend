@@ -5,7 +5,13 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-const InstituteListBody = ({ classs, isSelect, collect, onCheckItem }) => {
+const InstituteListBody = ({
+  classs,
+  isSelect,
+  collect,
+  onCheckItem,
+  index,
+}) => {
   return (
     <Colxx xxs="12" key={classs.id} className="mb-3">
       <ContextMenuTrigger id="menu_id" data={classs.id} collect={collect}>
@@ -24,22 +30,61 @@ const InstituteListBody = ({ classs, isSelect, collect, onCheckItem }) => {
           </NavLink> */}
           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
             <div className="py-3 card-body align-self-center d-flex flex-column flex-lg-row  min-width-zero align-items-lg-center">
-              <NavLink to={`${classs.id}`} className=""          style={{ width: '21%',  fontSize: '20px' }}>
+              <NavLink
+                to={`${classs.id}`}
+                className=""
+                style={{ width: '22%', fontSize: '20px' }}
+              >
                 <p className="list-item-heading mb-1 truncate">
-                  <span className="mr-5"     style={{ fontSize: '20px' }}>{classs.id}</span>
+                  <span className="mr-5" style={{ fontSize: '20px' }}>
+                    {index + 1}
+                  </span>
                 </p>
               </NavLink>
-              <NavLink to={`${classs.id}`} 
-              style={{ width: '20%',  fontSize: '20px' }}
+              <NavLink
+                to={`${classs.id}`}
+                style={{ width: '20%', fontSize: '20px' }}
               >
                 <p
                   className="list-item-heading mb-1 truncate"
                   style={{ fontSize: '20px' }}
                 >
-                    {classs.name}
+                  {classs.name}
                 </p>
               </NavLink>
-              <p className="mb-1 text-small"     style={{ fontSize: '20px' }}>{classs.semester}</p>
+              <p
+                className="mb-1 text-small"
+                style={{
+                  width: '20%',
+                  textAlign: 'right',
+                  marginRight: 50,
+                  fontSize: '20px',
+                }}
+              >
+                {classs.semester}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{
+                  width: '20%',
+                  textAlign: 'right',
+                  marginRight: 50,
+                  fontSize: '20px',
+                }}
+              >
+                {classs.section}
+              </p>
+              <p
+                className="mb-1 text-small"
+                style={{
+                  width: '20%',
+                  textAlign: 'right',
+                  marginRight: 50,
+                  fontSize: '20px',
+                }}
+              >
+                {classs.season}
+              </p>
             </div>
           </div>
         </Card>

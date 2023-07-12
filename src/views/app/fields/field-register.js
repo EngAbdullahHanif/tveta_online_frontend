@@ -90,7 +90,7 @@ const FieldRegister = () => {
     const response = await callApi('institute/field-create/', 'POST', data);
     if (response) {
       createNotification('success', 'filled');
-      resetForm();
+      // resetForm();
       setIsNext(true);
       console.log('success message', response.data);
     } else {

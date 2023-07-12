@@ -80,148 +80,6 @@ const roughData = [
   },
 ];
 
-const Provinces = [
-  {
-    column: 'all',
-    label: 'تول / همه',
-  },
-  {
-    column: '1',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
-  },
-  {
-    column: '2',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
-  },
-  {
-    column: '3',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
-  },
-  {
-    column: '4',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
-  },
-  {
-    column: '5',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
-  },
-  {
-    column: '6',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
-  },
-  {
-    column: '7',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
-  },
-  {
-    column: '8',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
-  },
-  {
-    column: '9',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
-  },
-  {
-    column: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    column: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    column: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    column: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    column: 'کابل',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    column: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    column: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    column: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    column: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    column: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    column: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    column: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    column: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    column: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    column: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    column: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    column: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    column: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    column: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    column: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    column: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    column: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    column: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
@@ -271,174 +129,15 @@ const ThumbListPages = ({ match }) => {
     const accessToken = localStorage.getItem('access_token');
     const headers = { Authorization: `Bearer ${accessToken}` };
     async function fetchData() {
-      // const res = axios.get("http://localhost:8000/subjects/", {
-      //   headers,
-      // });
-      // console.log("ALL Subjects: ", res.data);
-      if (institute !== '') {
-        // const res = await axios.get(
-        //   `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
-        // );
-        // console.log('res', response.data);
-        // setItems(response.data);
-        // setTotalItemCount(response.data.count);
-        // setIsLoaded(true);
-
-        const response = await callApi(
-          `teachers/institute/?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setInstituteTeachers(response.data);
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (
-        selectedTypeOption.column === 'all' &&
-        selectedCreditOption.column === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setTeacherId('');
-          setRest(false);
-        }
-        // axios
-        //   .get(
-        //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-
-        const response = await callApi(
-          `teachers/?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-        // setTotalPage(response.data.total_pages);
-        // setSelectedItems([]);
-        // setTotalItemCount(response.data.totalItem);
-        // setIsLoaded(true);
-        // .then((data) => {
-        //   console.log(
-        //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   );
-
-        //   setItems(data);
-        //   setTotalPage(data.total_pages);
-        //   setSelectedItems([]);
-        //   setTotalItemCount(data.totalItem);
-        //   setIsLoaded(true);
-        // });
-      } else if (selectedTypeOption.column === 'all') {
-        // axios
-        //   .get(
-        //     `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //     );
-
-        //     setItems(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-
-        const response = await callApi(
-          `teachers/?id=${teacherId}&gender=${selectedCreditOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedCreditOption.column === 'all') {
-        // axios
-        //   .get(
-        //     `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //     );
-
-        //     setItems(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-        const response = await callApi(
-          `teachers/?id=${teacherId}&current_province=${selectedTypeOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
+      const response = await callApi(`institute/subject/`, '', null);
+      if (response.data && response.status === 200) {
+        console.log('response of subjects', response.data);
+        setItems(response.data);
+        setSelectedItems([]);
+        // setTotalItemCount(data);
+        setIsLoaded(false);
       } else {
-        // axios
-        //   // get data from localhost:8000/teachers
-        //   .get(
-        //     `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //     );
-        //     setItems(data);
-
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-        const response = await callApi(
-          `teachers/?id=${teacherId}&gender=${selectedCreditOption.column}&current_province=${selectedTypeOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
+        console.log('students error');
       }
     }
 
@@ -456,14 +155,6 @@ const ThumbListPages = ({ match }) => {
     institute,
   ]);
 
-  // const fetchInstitutes = async () => {
-  //   const response = await axios.get(instituteApiUrl);
-  //   const updatedData = await response.data.map((item) => ({
-  //     id: item.id,
-  //     name: item.name,
-  //   }));
-  //   setInstitutes(updatedData);
-  // };
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
@@ -632,7 +323,7 @@ const ThumbListPages = ({ match }) => {
                   fontSize: '18px',
                 }}
               >
-                <IntlMessages id="student.ID" />
+                کود
               </th>
               <th
                 style={{
@@ -697,7 +388,7 @@ const ThumbListPages = ({ match }) => {
           </thead>
 
           <ListPageListing
-            items={roughData}
+            items={items}
             displayMode={displayMode}
             selectedItems={selectedItems}
             onCheckItem={onCheckItem}

@@ -24,12 +24,6 @@ const departmentApiUrl = `${servicePath}/institute/department/`;
 const instituteApiUrl = `${servicePath}/institute/`;
 const teacherInstituteApiUrl = `${servicePath}/teachers/institute/`;
 
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-
 const genderOptions = [
   {
     column: 'all',
@@ -39,12 +33,6 @@ const genderOptions = [
   { column: '2', label: 'اناث' },
 ];
 const pageSizes = [4, 8, 12, 20];
-
-const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
-];
 
 const Provinces = [
   {
@@ -222,27 +210,28 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     async function fetchData() {
-      // const response = callApi("institute/department/", "", null);
-      // console.log("DEPARTMENTS:", response.data);
-      // setItems(response.data);
-
-      // setSelectedItems([]);
+      const response = await callApi('institute/department/', '', null);
+      console.log('DEPARTMENTS:', response);
+      setItems(response.data);
+      setSelectedItems([]);
       // setTotalItemCount(response.data.totalItem);
-      // setIsLoaded(true);
-      await axios
-        .get(departmentApiUrl)
-        .then((res) => {
-          return res.data;
-        })
-        .then((data) => {
-          console.log('DEPARTMENTS:', data);
-          setItems(data);
-
-          setSelectedItems([]);
-          setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        });
+      setIsLoaded(true);
     }
+
+    //   await axios
+    //     .get(departmentApiUrl)
+    //     .then((res) => {
+    //       return res.data;
+    //     })
+    //     .then((data) => {
+    //       console.log('DEPARTMENTS:', data);
+    //       setItems(data);
+
+    //       setSelectedItems([]);
+    //       setTotalItemCount(data.totalItem);
+    //       setIsLoaded(true);
+    //     });
+    // }
     fetchData();
   }, [
     selectedPageSize,

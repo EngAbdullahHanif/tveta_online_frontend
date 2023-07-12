@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import './../../.././../assets/css/global-style.css';
+import { educationalYearsOptions } from './../../global-data/options';
+
 // Year  and SHift
 import * as Yup from 'yup';
 import {
@@ -45,23 +47,23 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
 
-  educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
-  ),
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
 });
 
 const initialValues = {
   institute: [],
-  educationlaYear: '',
-  studyTime: [],
-  classs: [],
-  department: [],
+  educationalYear: [],
 };
 const MarksRegistration = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [institutes, setInstitutes] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState('');
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState([]);
   const [dismissedStudents, setDismissedStudents] = useState([]);
   const [dismissedStudentsList, setDismissedStudentList] = useState(false);
 
@@ -105,16 +107,8 @@ const MarksRegistration = ({ match }) => {
   }, []);
 
   const fetchDismissedStudents = async (values) => {
-    // const { data } = await axios.get(
-    //   `${dismissedStudentsAPI}/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}`
-    // );
-    // setDismissedStudents(data);
-    // console.log('dismissed students list', data);
-    // setIsLoaded(true);
-    // setDismissedStudentList(true);
-
     const response = await callApi(
-      `api/student_institutes/?institute=${values.institute.value}&type=&language=&time=&student_id=&educational_year=${values.educationlaYear}`,
+      `students/student_institutes/?institute=${values.institute.value}&status=dismissed&educational_year=${values.educationalYear.value}`,
       '',
       null
     );
@@ -189,24 +183,23 @@ const MarksRegistration = ({ match }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
-                        <Field
-                          type="number"
-                          id="educationlaYear"
-                          className="form-control fieldStyle"
-                          name="educationlaYear"
-                          // assign value to selectedEducationalYear
+                        <FormikReactSelect
+                          name="educationalYear"
+                          id="educationalYear"
+                          options={educationalYearsOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationlaYear
+                            values.educationalYear
                           )}
                         />
-                        {errors.educationlaYear && touched.educationlaYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.educationlaYear}
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white ">
+                            {errors.educationalYear}
                           </div>
                         ) : null}
                       </FormGroup>

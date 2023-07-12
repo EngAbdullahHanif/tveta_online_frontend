@@ -77,7 +77,7 @@ const ValidationSchema = Yup.object().shape({
 });
 const initialValues = {
   institute: [],
-  educationalYear: '',
+  educationalYear: [],
   studyTime: [],
   classs: [],
   department: [],
@@ -436,9 +436,9 @@ const MarksRegistration = ({ match }) => {
                             values.educationalYear
                           )}
                         />
-                        {errors.studyTime && touched.studyTime ? (
+                        {errors.educationalYear && touched.educationalYear ? (
                           <div className="invalid-feedback d-block bg-danger text-white ">
-                            {errors.studyTime}
+                            {errors.educationalYear}
                           </div>
                         ) : null}
                       </FormGroup>

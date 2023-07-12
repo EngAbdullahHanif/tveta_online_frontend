@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form, Field, isEmptyArray } from "formik";
-import axios from "axios";
-import "./style.css";
-import callApi from "helpers/callApi";
-import { studyTimeOptions } from "../global-data/options";
-import "./../../../assets/css/global-style.css";
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field, isEmptyArray } from 'formik';
+import axios from 'axios';
+import './style.css';
+import callApi from 'helpers/callApi';
+import {
+  studyTimeOptions,
+  educationalYearsOptions,
+} from '../global-data/options';
+import './../../../assets/css/global-style.css';
 
-import * as Yup from "yup";
-import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
+import * as Yup from 'yup';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
-import IntlMessages from "helpers/IntlMessages";
-import { Colxx } from "components/common/CustomBootstrap";
-import { FormikReactSelect } from "containers/form-validations/FormikFields";
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx } from 'components/common/CustomBootstrap';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const orderOptions = [
-  { column: "title", label: "Product Name" },
-  { column: "category", label: "Category" },
-  { column: "status", label: "Status" },
+  { column: 'title', label: 'Product Name' },
+  { column: 'category', label: 'Category' },
+  { column: 'status', label: 'Status' },
 ];
 const pageSizes = [10, 20, 40, 80];
 
@@ -28,9 +31,12 @@ const ValidationSchema = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
 
-  educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
-  ),
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
 
   studyTime: Yup.object()
     .shape({
@@ -69,7 +75,7 @@ const ValidationSchema = Yup.object().shape({
 
 const initialValues = {
   institute: [],
-  educationlaYear: "",
+  educationalYear: [],
   studyTime: [],
   classs: [],
   department: [],
@@ -84,32 +90,32 @@ const MarksDisplay = ({ match }) => {
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([]);
-  const [selectedInstitute, setSelectedInstitute] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedClass, setSelectedClass] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [selecedStudyTime, setSelectedStudyTime] = useState("");
-  const [selectedEducationalYear, setSelectedEducationalYear] = useState("");
+  const [selectedInstitute, setSelectedInstitute] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selecedStudyTime, setSelectedStudyTime] = useState('');
+  const [selectedEducationalYear, setSelectedEducationalYear] = useState([]);
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
 
   // separate and set labels for classes
   const [selectedClassLabel, setselectedClassLabel] = useState({
-    classs: "",
-    semester: "",
-    section: "",
+    classs: '',
+    semester: '',
+    section: '',
   });
 
   useEffect(() => {
-    if (!isEmptyArray(selectedClass) && selectedClass !== "") {
-      const [semester, classs, section] = selectedClass.label.split("-");
+    if (!isEmptyArray(selectedClass) && selectedClass !== '') {
+      const [semester, classs, section] = selectedClass.label.split('-');
       setselectedClassLabel({ classs, semester, section });
     }
   }, [selectedClass]);
 
   const fetchInstitutes = async () => {
-    const response = await callApi("institute/", "", null);
+    const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -117,12 +123,12 @@ const MarksDisplay = ({ match }) => {
       }));
       setInstitutes(updatedData);
     } else {
-      console.log("institute error");
+      console.log('institute error');
     }
   };
 
   const fetchFields = async () => {
-    const response = await callApi("institute/field/", "", null);
+    const response = await callApi('institute/field/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -130,40 +136,49 @@ const MarksDisplay = ({ match }) => {
       }));
       setFields(updatedData);
     } else {
-      console.log("field error");
+      console.log('field error');
     }
   };
 
-  const fetchDepartments = async () => {
-    const response = await callApi("institute/department/", "GET", null);
+  const fetchDepartments = async (instituteId) => {
+    if (!instituteId || !instituteId.value) {
+      return;
+    }
+    const response = await callApi(
+      `institute/institite-department/?institute=${instituteId.value}`,
+      '',
+      null
+    );
+    // console.log('response of department', response);
     if (response.data && response.status === 200) {
+      console.log('response of department', response);
       const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
+        value: item.department.id,
+        label: item.department.name,
       }));
-      setDepartments(updatedData);
+      console.log('updatedData of department', updatedData);
+      setDepartments(updatedData); //Set it up when data in Backend is ready
     } else {
-      console.log("department error");
+      console.log('department error');
     }
   };
-
   //fetch class list
   const fetchClasses = async () => {
-    const response = await callApi("institute/classs/", "GET", null);
-    console.log("class repspossdfsde", response);
+    const response = await callApi('institute/classs/', 'GET', null);
+    console.log('class repspossdfsde', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name + " - " + item.semester + " - " + item.section,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
       }));
       setClasses(updatedData);
     } else {
-      console.log("class error");
+      console.log('class error');
     }
   };
 
   const fetchSubjects = async () => {
-    const response = await callApi("institute/subject/", "", null);
+    const response = await callApi('institute/subject/', '', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -171,17 +186,24 @@ const MarksDisplay = ({ match }) => {
       }));
       setSubjects(updatedData);
     } else {
-      console.log("subject error");
+      console.log('subject error');
     }
   };
 
   useEffect(() => {
     fetchInstitutes();
     fetchFields();
-    fetchDepartments();
     fetchClasses();
     fetchSubjects();
   }, []);
+
+  useEffect(() => {
+    if (selectedInstitute) {
+      console.log('selectedInstitute', selectedInstitute);
+      fetchDepartments(selectedInstitute);
+    }
+  }, [selectedInstitute]);
+
   let gpa = null;
   let grad = null;
 
@@ -190,25 +212,25 @@ const MarksDisplay = ({ match }) => {
     const studentRows = scores.map((score, i) => {
       const student_name =
         i === 0 ? (
-          <td rowSpan={scores.length + 1} style={{ borderStyle: "hidden" }}>
+          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
             {student.student_name}
           </td>
         ) : null;
       const student_father_name =
         i === 0 ? (
-          <td rowSpan={scores.length + 1} style={{ borderStyle: "hidden" }}>
+          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
             {student.student_father_name}
           </td>
         ) : null;
       const student_id =
         i === 0 ? (
-          <td rowSpan={scores.length + 1} style={{ borderStyle: "hidden" }}>
-            {student.student_id}
+          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+            {student.student}
           </td>
         ) : null;
       const index_no =
         i === 0 ? (
-          <td rowSpan={index.length + 1} style={{ borderStyle: "hidden" }}>
+          <td rowSpan={index.length + 1} style={{ borderStyle: 'hidden' }}>
             {index + 1}
           </td>
         ) : null;
@@ -221,22 +243,21 @@ const MarksDisplay = ({ match }) => {
             <td className="red-background">{student_father_name}</td>
             <td className="red-background">{student_id}</td>
             <td className="red-background">
-              {<td style={{ borderStyle: "hidden" }}>{score.score}</td>}
+              {<td style={{ borderStyle: 'hidden' }}>{score.marks}</td>}
             </td>
             <td className="red-background">
-              {score.exam_type == 1 && (
-                <td style={{ borderStyle: "hidden" }}>اول</td>
-              )}
-              {score.exam_type == 2 && (
-                <td style={{ borderStyle: "hidden", color: "#de0a26" }}>دوم</td>
-              )}
+              {
+                <td style={{ borderStyle: 'hidden' }}>
+                  {score.second_chance_marks}
+                </td>
+              }
             </td>
             {score.grad
               ? (grad = score.grad) && (
                   <td className="red-background">
-                    {" "}
+                    {' '}
                     {score.grad && (
-                      <td style={{ borderStyle: "hidden" }}>{score.grad}</td>
+                      <td style={{ borderStyle: 'hidden' }}>{score.grad}</td>
                     )}
                   </td>
                 )
@@ -244,15 +265,15 @@ const MarksDisplay = ({ match }) => {
             {score.Gpa
               ? (gpa = score.Gpa) && (
                   <td className="red-background">
-                    {" "}
+                    {' '}
                     {score.Gpa && (
-                      <td style={{ borderStyle: "hidden" }}>{score.Gpa}</td>
+                      <td style={{ borderStyle: 'hidden' }}>{score.Gpa}</td>
                     )}
                   </td>
                 )
               : null}
             <td className="red-background">
-              {score.score >= 55 ? (
+              {score.marks >= 50 || score.second_chance_marks >= 50 ? (
                 <div className="text-success pt-3">کامیاب </div>
               ) : (
                 <div className="text-danger pt-3">ناکام </div>
@@ -264,7 +285,7 @@ const MarksDisplay = ({ match }) => {
     });
     return (
       <>
-        <tbody key={index} className={student.name + " " + " border border "}>
+        <tbody key={index} className={student.name + ' ' + ' border border '}>
           {studentRows}
         </tbody>
       </>
@@ -272,73 +293,22 @@ const MarksDisplay = ({ match }) => {
   });
 
   const onSubmit = async (values) => {
-    // axios
-    //   .get(
-    //     `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
-    //   )
-
-    //   .then((response) => {
-    //     console.log('response.data', response.data);
-    //     setStudents(response.data);
-    //   });
-    // console.log(
-    //   `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
-    // );
-    // console.log('students', students);
-    console.log("VALUES in Subject Marks display: ", values);
-    // const response = await callApi(
-    //   `/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`,
-    //   "",
-    //   null
-    // );
     const response = await callApi(
-      `/api/students-marks?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject_id=${selectedSubject.value}`,
+      `students/students-marks/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}&subject_id=${selectedSubject.value}`,
       '',
       null
     );
-    console.log("responseeeeeeeeeeeeeeE", response.data);
+    console.log('responseeeeeeeeeeeeeeE', response.data);
 
     if (response.data && response.status === 200) {
       setStudents(response.data);
-      console.log("response.data", response.data);
-      console.log("response", response);
+      console.log('response.data', response.data);
+      console.log('response', response);
       setIsNext(true);
-      console.log("students", students);
+      console.log('students', students);
     } else {
-      console.log("students error");
+      console.log('students error');
     }
-
-    // split selected class to get semester and section
-
-    // console.log('values', values);
-    // const educational_year = selectedEducationalYear;
-    // const institute_id = selectedInstitute.value;
-    // const department = selectedDepartment.value;
-    // const class_id = selectedClass.value;
-    // const subject_id = selectedSubject.value;
-    // students.map((student) => {
-    //   const examData = {
-    //     educational_year: educational_year,
-    //     student_id: student.student_id,
-    //     institute_id: institute_id,
-    //     Department: department,
-    //     class_id: class_id,
-    //   };
-    //   //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-    //   //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-    //   console.log('exam', examData);
-    //   const data = {
-    //     subject: subject_id,
-    //     exam_types: 1,
-    //     passing_score: passingScore,
-    //     grad: subjectGrad,
-    //     Gpa: subjectGPA,
-    //     user_id: 1,
-    //     mark: values.score[student.student_id],
-    //   };
-    //   console.log('data', data);
-    //   // axios.post('http://localhost:8000/api/marks/', data);
-    // });
   };
 
   return (
@@ -371,7 +341,7 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="institute"
@@ -393,7 +363,7 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.StudyTimeLabel" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="studyTime"
@@ -410,24 +380,24 @@ const MarksDisplay = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
+
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
-                          <span style={{ color: "red" }}>*</span>
                         </Label>
-                        <Field
-                          type="number"
-                          id="educationlaYear"
-                          className="form-control fieldStyle"
-                          name="educationlaYear"
-                          // assign value to selectedEducationalYear
+                        <FormikReactSelect
+                          name="educationalYear"
+                          id="educationalYear"
+                          options={educationalYearsOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationlaYear
+                            values.educationalYear
                           )}
                         />
-                        {errors.educationlaYear && touched.educationlaYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.educationlaYear}
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white ">
+                            {errors.educationalYear}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -437,7 +407,7 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="classs"
@@ -459,7 +429,7 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.studyDepartment" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="department"
@@ -481,7 +451,7 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
-                          <span style={{ color: "red" }}>*</span>
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="subject"
@@ -528,7 +498,7 @@ const MarksDisplay = ({ match }) => {
                         className="float-right  buttonStyle"
                         size="lg"
                         type="submit"
-                        style={{ margin: "2% 0% 10% 6%" }}
+                        style={{ margin: '2% 0% 10% 6%' }}
                       >
                         <span className="label">
                           <IntlMessages id="button.Next" />
@@ -543,7 +513,7 @@ const MarksDisplay = ({ match }) => {
             <>
               <Row
                 className="border border bg-primary me-5 p-1 "
-                style={{ marginInline: "6%" }}
+                style={{ marginInline: '6%' }}
               >
                 <Colxx xxs="2">
                   <Label>
@@ -590,7 +560,7 @@ const MarksDisplay = ({ match }) => {
 
               <Row
                 className="justify-content-center  border border"
-                style={{ marginInline: "6%" }}
+                style={{ marginInline: '6%' }}
               >
                 <table className="table ">
                   <thead className="thead-dark">
@@ -608,11 +578,11 @@ const MarksDisplay = ({ match }) => {
                         <IntlMessages id="marks.ID" />
                       </th>
                       <th scope="col">
-                        <IntlMessages id="marks.Marks" />
+                        <IntlMessages id="marks.firstChance" />
                       </th>
                       <th scope="col">
-                        <IntlMessages id="marks.type" />
-                      </th>{" "}
+                        <IntlMessages id="marks.secondChance" />
+                      </th>{' '}
                       {grad ? (
                         <th scope="col">
                           <IntlMessages id="marks.grade" />
@@ -625,7 +595,7 @@ const MarksDisplay = ({ match }) => {
                       ) : null}
                       <th scope="col">
                         <IntlMessages id="marks.result" />
-                      </th>{" "}
+                      </th>{' '}
                     </tr>
                   </thead>
                   {/* </table>
@@ -690,10 +660,10 @@ const MarksDisplay = ({ match }) => {
                       ) : null}
                       <th scope="col">
                         <IntlMessages id="marks.type" />
-                      </th>{" "}
+                      </th>{' '}
                       <th scope="col">
                         <IntlMessages id="marks.result" />
-                      </th>{" "}
+                      </th>{' '}
                     </tr>
                   </tfoot>
                 </table>

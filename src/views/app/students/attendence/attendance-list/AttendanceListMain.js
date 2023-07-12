@@ -77,137 +77,14 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
-  // useEffect(() => {
-  //   setCurrentPage(1);
-  // }, [
-  //   selectedPageSize,
-  //   selectedOrderOption,
-  //   selectedGenderOption,
-  //   selectedProvinceOption,
-  // ]);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     if (institute !== '') {
-  //       const res = await axios.get(
-  //         `${studentInstituteApiUrl}?institute_id=${institute.id}`
-  //       );
-  //       setItems(res.data);
-  //       setTotalItemCount(res.data);
-  //       setIsLoaded(true);
-  //     } else if (
-  //       selectedProvinceOption.column === 'all' &&
-  //       selectedGenderOption.column === 'all'
-  //     ) {
-  //       if (rest == true) {
-  //         setDistrict('');
-  //         setStudentId('');
-  //         setRest(false);
-  //       }
-  //       axios
-  //         .get(
-  //           `${studentApiUrl}?student_id=${studentId}&current_district=${district}`
-  //         )
-  //         .then((res) => {
-  //           // console.log('res.data', res.data);
-  //           // console.log('res.data.results', res.data.results);
-  //           return res.data;
-  //         })
-  //         .then((data) => {
-  //           // console.log('res.data', data.results);
-
-  //           console.log(
-  //             `${studentApiUrl}?student_id=${studentId}&current_district=${district} 1`
-  //           );
-  //           console.log('data', data);
-  //           setItems(data);
-  //           setSelectedItems([]);
-  //           setTotalItemCount(data);
-  //           setIsLoaded(true);
-  //         });
-  //     } else if (selectedProvinceOption.column === 'all') {
-  //       axios
-  //         .get(
-  //           `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}`
-  //         )
-  //         .then((res) => {
-  //           return res.data;
-  //         })
-  //         .then((data) => {
-  //           console.log(
-  //             `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district} 2`
-  //           );
-
-  //           setItems(data);
-  //           setSelectedItems([]);
-  //           setTotalItemCount(data.totalItem);
-  //           setIsLoaded(true);
-  //         });
-  //     } else if (selectedGenderOption.column === 'all') {
-  //       axios
-  //         .get(
-  //           `${studentApiUrl}?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-  //         )
-  //         .then((res) => {
-  //           return res.data;
-  //         })
-  //         .then((data) => {
-  //           console.log(
-  //             `${studentApiUrl}?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-  //           );
-
-  //           setItems(data);
-  //           setSelectedItems([]);
-  //           setTotalItemCount(data.totalItem);
-  //           setIsLoaded(true);
-  //         });
-  //     } else {
-  //       axios
-  //         // get data from localhost:8000/api/student
-  //         .get(
-  //           `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-  //         )
-  //         .then((res) => {
-  //           return res.data;
-  //         })
-  //         .then((data) => {
-  //           console.log(
-  //             `${studentApiUrl}?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}`
-  //           );
-  //           setItems(data);
-
-  //           setSelectedItems([]);
-  //           setTotalItemCount(data.totalItem);
-  //           setIsLoaded(true);
-  //         });
-  //     }
-  //   }
-  //   fetchData();
-  // }, [
-  //   selectedPageSize,
-  //   currentPage,
-  //   selectedOrderOption,
-  //   search,
-  //   selectedGenderOption,
-  //   selectedProvinceOption,
-  //   studentId,
-  //   province,
-  //   district,
-  //   rest,
-  //   institute,
-  // ]);
 
   const fetchAttendance = async () => {
-    // const { data } = await axios.get(`api/stdatten/`);
-    // setAttendance(data);
-    // console.log('attendance list here you can see all of them', attendance);
-    // setIsLoaded(true);
-
-    const response = await callApi(`api/stdatten/`, '', null);
+    const response = await callApi(`students/stdatten/`, '', null);
     console.log('ATTENDANCE: ', response.data);
     if (response.data && response.status === 200) {
       setAttendance(response.data);
-      console.log('resonse.data', response.data);
+      setIsLoaded(true);
+      console.log('resonse.data attendance', response.data);
     } else {
       console.log('Attendance error: ' + response.status);
     }
@@ -476,7 +353,7 @@ const ThumbListPages = ({ match }) => {
                   {' '}
                   <IntlMessages id="مریض" />
                 </th>
-                <th
+                {/* <th
                   style={{
                     width: '11%',
                     padding: '0%',
@@ -486,7 +363,7 @@ const ThumbListPages = ({ match }) => {
                 >
                   {' '}
                   <IntlMessages id="روز ها تعلیمی" />
-                </th>
+                </th> */}
                 <th
                   style={{
                     width: '10%',
@@ -497,6 +374,18 @@ const ThumbListPages = ({ match }) => {
                 >
                   {' '}
                   <IntlMessages id="سال تعلیمی" />
+                </th>
+
+                <th
+                  style={{
+                    width: '10%',
+                    padding: '0%',
+                    textAlign: 'right',
+                    borderStyle: 'hidden',
+                  }}
+                >
+                  {' '}
+                  محرومیت
                 </th>
               </tr>
             </thead>

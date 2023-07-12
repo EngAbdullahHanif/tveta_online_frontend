@@ -1,11 +1,15 @@
+// this component is used to update marks of a subject of a student
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, isEmptyArray } from 'formik';
 import axios from 'axios';
 import './style.css';
 import callApi from 'helpers/callApi';
+import { NotificationManager } from 'components/common/react-notifications';
+
 import {
   studyTimeOptions,
   educationalYearsOptions,
+  chanceOptions,
 } from '../global-data/options';
 import './../../../assets/css/global-style.css';
 
@@ -19,7 +23,7 @@ import {
   FormikInputText,
 } from 'containers/form-validations/FormikFields';
 
-const ValidationSchema = Yup.object().shape({
+const ValidationSchema1 = Yup.object().shape({
   studentID: Yup.string().required(<IntlMessages id="student.studentId" />),
 
   educationalYear: Yup.object()
@@ -42,6 +46,17 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="marks.SubjectErr" />),
+
+  chance: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('chance is required'),
+});
+
+const validationSchema2 = Yup.object().shape({
+  marks: Yup.string().required(<IntlMessages id="marks.marksErr" />),
 });
 
 const initialValues = {
@@ -49,23 +64,21 @@ const initialValues = {
   educationalYear: [],
   classs: [],
   subject: [],
+  chance: [],
+};
+const initialValues2 = {
+  marks: '',
 };
 function singleStudentSingleSubjectMarks(props) {
   const [isNext, setIsNext] = useState(false);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [students, setStudents] = useState([
-    {
-      id: '414',
-      name: 'Sohaib',
-      father_name: 'Khan',
-      oldMarks: 59,
-    },
-  ]);
+  const [students, setStudents] = useState({});
   const [selectedStudentID, setSelectedStudentID] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
+  const [selectedChance, setSelectedChance] = useState('');
 
   // separate and set labels for classes
   const [selectedClassLabel, setselectedClassLabel] = useState({
@@ -114,48 +127,97 @@ function singleStudentSingleSubjectMarks(props) {
     fetchSubjects();
   }, []);
 
+  const fetchStudents = async (values) => {
+    const response = await callApi(
+      `students/subject-marks-update/list/?classs=${selectedClass.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}&student_id=${selectedStudentID}&chance=${selectedChance.value}`,
+      '',
+      null
+    );
+    if (response.data && response.status === 200) {
+      console.log('response of students', response);
+      // convert data to json format
+      const updatedData = JSON.parse(response.data);
+      console.log('updatedData', updatedData);
+      setStudents(updatedData);
+      setIsNext(true);
+    } else {
+      console.log('subject error');
+    }
+  };
+
+  // notification message
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'نمری په بریالیتوب سره اپدیت شوی',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'نمری اپدیت نه شوی بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
+
   const onSubmit = async (values) => {
-    console.log('Selected Class:', selectedClassLabel);
-    console.log('VALUES in Single Subject Marks display: ', values);
     const data = {
-      studentID: values.studentID,
-      class: values.classs.value,
-      educationalYear: values.educationalYear.value,
-      subject: values.subject.value,
+      subject_result_id: students.subject_result_id,
+      marks: values.marks,
+      chance: selectedChance.value,
+      classs: selectedClass.value,
     };
-    if (data.studentID) setIsNext(true);
+    console.log('data of onSubmit', data);
 
-    // const response = await callApi(
-    //   `/api/students-marks?institute=${values.studentID}&classs=${values.classs.value}&study_time=${values.studyTime.value}&department=${values.department.value}&educational_year=${educationlaYear}&subject=${values.subject.value}`,
-    //   "",
-    //   null
-    // );
-    // console.log("responseeeeeeeeeeeeeeE", response.data);
+    const response = await callApi(
+      'students/subject-marks-update/update/',
+      'PUT',
+      data,
+      '',
+      null
+    );
 
-    // if (response.data && response.status === 200) {
-    //   setStudents(response.data);
-    //   console.log("response.data", response.data);
-    //   console.log("response", response);
-    //   setIsNext(true);
-    //   console.log("students", students);
-    // } else {
-    //   console.log("students error");
-    // }
+    if (response.data && response.status === 200) {
+      setStudents(response.data);
+      createNotification('success', 'filled');
+      setIsNext(false);
+    } else {
+      createNotification('error', 'filled');
+      console.log('students error');
+    }
   };
   return (
     <>
       <Card>
         <div className="mt-4 ml-5">
           <h2 className="mt-5 ml-5 titleStyle">
-            {<IntlMessages id="marks.marksDisplayTitle" />}
+            {/* {<IntlMessages id="marks.marksDisplayTitle" />} */}د شاګرد یو
+            مضمون د نمرو اپدیتول
           </h2>
         </div>
         <CardBody>
           {!isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={onSubmit}
-              validationSchema={ValidationSchema}
+              onSubmit={fetchStudents}
+              validationSchema={ValidationSchema1}
             >
               {({
                 errors,
@@ -186,27 +248,6 @@ function singleStudentSingleSubjectMarks(props) {
                           </div>
                         ) : null}
                       </FormGroup>
-                      {/* Delete this */}
-                      {/* <FormGroup className="form-group has-float-label mt-5  error-l-150">
-                        <Label>
-                          <IntlMessages id="forms.StudyTimeLabel" />
-                          <span style={{ color: "red" }}>*</span>
-                        </Label>
-                        <FormikReactSelect
-                          name="studyTime"
-                          id="studyTime"
-                          value={values.studyTime}
-                          options={studyTimeOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          onClick={setSelectedStudyTime(values.studyTime)}
-                        />
-                        {errors.studyTime && touched.studyTime ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.studyTime}
-                          </div>
-                        ) : null}
-                      </FormGroup> */}
                       <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
@@ -221,9 +262,29 @@ function singleStudentSingleSubjectMarks(props) {
                             values.educationalYear
                           )}
                         />
-                        {errors.studyTime && touched.studyTime ? (
+                        {errors.educationalYear && touched.educationalYear ? (
                           <div className="invalid-feedback d-block bg-danger text-white ">
-                            {errors.studyTime}
+                            {errors.educationalYear}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
+                        <Label>
+                          {/* <IntlMessages id="forms.educationYearLabel" /> */}
+                          چانس
+                        </Label>
+                        <FormikReactSelect
+                          name="chance"
+                          id="chance"
+                          options={chanceOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          onClick={setSelectedChance(values.chance)}
+                        />
+                        {errors.chance && touched.chance ? (
+                          <div className="invalid-feedback d-block bg-danger text-white ">
+                            {errors.chance}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -251,28 +312,6 @@ function singleStudentSingleSubjectMarks(props) {
                           </div>
                         ) : null}
                       </FormGroup>
-                      {/* Delete this */}
-                      {/* <FormGroup className="form-group has-float-label mt-5 error-l-150">
-                        <Label>
-                          <IntlMessages id="forms.studyDepartment" />
-                          <span style={{ color: "red" }}>*</span>
-                        </Label>
-                        <FormikReactSelect
-                          name="department"
-                          id="department"
-                          value={values.department}
-                          options={departments}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          onClick={setSelectedDepartment(values.department)}
-                          required
-                        />
-                        {errors.department && touched.department ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.department}
-                          </div>
-                        ) : null}
-                      </FormGroup> */}
 
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
@@ -299,25 +338,6 @@ function singleStudentSingleSubjectMarks(props) {
                   </Row>
                   <Row>
                     <Colxx>
-                      {/* Changes Started for a single student marks retrieval */}
-                      {/* <FormGroup className="form-group has-float-label mt-5 error-l-150">
-                            <Label>
-                              <IntlMessages id="شاګرد ایډی" />
-                              <span style={{ color: "red" }}>*</span>
-                            </Label>
-                            <Input
-                              name="student"
-                              id="student"
-                              value={values.student}
-                              onChange={handleChange("student")}
-                              onBlur={setFieldTouched}
-                            />
-                            {errors.student && touched.student ? (
-                              <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                {errors.student}
-                              </div>
-                            ) : null}
-                          </FormGroup> */}
                       {/* Changes ended for a single student marks retrieval */}
                       <Button
                         color="primary"
@@ -336,165 +356,6 @@ function singleStudentSingleSubjectMarks(props) {
               )}
             </Formik>
           ) : (
-            // <>
-            //   <Row
-            //     className="border border bg-primary me-5 p-1 "
-            //     style={{ marginInline: "6%" }}
-            //   >
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="forms.FieldLabel" />
-            //       </Label>
-            //       {/* {console.log('selectedDepartment', selectedDepartment)} */}
-            //       <h6>{"selectedDepartment.label"}</h6>
-            //     </Colxx>
-
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="forms.StudyTimeLabel" />
-            //       </Label>
-            //       <h6>{"selecedStudyTime.label"}</h6>
-            //     </Colxx>
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="marks.ClassLabel" />
-            //       </Label>
-            //       <h6>{"selectedClassLabel.classs"}</h6>
-            //     </Colxx>
-
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="marks.SectionLabel" />
-            //       </Label>
-            //       <h6>{"selectedClassLabel.section"}</h6>
-            //     </Colxx>
-
-            //     <Colxx xxs="2">
-            //       <Label>
-            //         <IntlMessages id="marks.SubjectLabel" />
-            //       </Label>
-            //       <h6>{"selectedSubject.label"}</h6>
-            //     </Colxx>
-            //   </Row>
-
-            //   <Row
-            //     className="justify-content-center  border border"
-            //     style={{ marginInline: "6%" }}
-            //   >
-            //     <table className="table ">
-            //       <thead className="thead-dark">
-            //         <tr>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.No" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.FullName" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.FatherName" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.ID" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.Marks" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.type" />
-            //           </th>{" "}
-            //           {grad ? (
-            //             <th scope="col">
-            //               <IntlMessages id="marks.grade" />
-            //             </th>
-            //           ) : null}
-            //           {gpa ? (
-            //             <th scope="col">
-            //               <IntlMessages id="marks.gpa" />
-            //             </th>
-            //           ) : null}
-            //           <th scope="col">
-            //             <IntlMessages id="marks.result" />
-            //           </th>{" "}
-            //         </tr>
-            //       </thead>
-            //       {/* </table>
-            //       </Row>
-
-            //       <Row
-            //         className="justify-content-center  border border"
-            //         style={{
-            //           marginInline: '16%',
-            //           height: '30rem',
-            //           overflowY: 'scroll',
-            //           overflowX: 'hidden',
-            //         }}
-            //       >
-            //         <table class="table"> */}
-            //       {/* <tbody
-            //             className="border border "
-            //             style={{
-            //               height: '200px',
-            //               overflowY: 'scroll',
-            //               overflowX: 'hidden',
-            //             }}
-            //           >
-            //             {students.map((student, index) => (
-            //               <tr>
-            //                 <th scope="row">{index}</th>
-            //                 <td>{student.name}</td>
-            //                 <td>{student.father_name}</td>
-            //                 <td>{student.student_id}</td>
-            //                 <td>{student.marks}</td>
-            //               </tr>
-            //             ))}
-            //           </tbody> */}
-
-            //       {tbodies}
-            //       {/* <tfoot className="thead-dark">
-            //         <tr>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.No" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.FullName" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.FatherName" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.ID" />
-            //           </th>
-            //           <th scope="col">
-            //             <IntlMessages id="marks.Marks" />
-            //           </th>
-            //           {grad ? (
-            //             <th scope="col">
-            //               <IntlMessages id="marks.grade" />
-            //             </th>
-            //           ) : null}
-            //           {gpa ? (
-            //             <th scope="col">
-            //               <IntlMessages id="marks.gpa" />
-            //             </th>
-            //           ) : null}
-            //           <th scope="col">
-            //             <IntlMessages id="marks.type" />
-            //           </th>{" "}
-            //           <th scope="col">
-            //             <IntlMessages id="marks.result" />
-            //           </th>{" "}
-            //         </tr>
-            //       </tfoot> */}
-            //     </table>
-            //   </Row>
-            //   <Row className=" justify-content-center">
-            //     <Colxx xxs="9" className="m-5">
-            //       <Button className=" m-4" onClick={() => setIsNext(false)}>
-            //         <IntlMessages id="button.Back" />
-            //       </Button>
-            //     </Colxx>
-            //   </Row>
-            // </>
             <>
               <Row
                 className="border border bg-primary me-5 p-1 "
@@ -545,9 +406,9 @@ function singleStudentSingleSubjectMarks(props) {
                 </Colxx>
               </Row>
               <Formik
-                initialValues={initialValues}
+                initialValues={initialValues2}
                 onSubmit={onSubmit}
-                // validationSchema={ValidationSchema}
+                validationSchema={validationSchema2}
               >
                 {({ errors }) => (
                   <Form className="av-tooltip tooltip-label-right ">
@@ -626,77 +487,78 @@ function singleStudentSingleSubjectMarks(props) {
                             overflowX: 'hidden',
                           }}
                         >
-                          {students.length > 0 &&
-                            students.map((student, index) => (
-                              <tr key={index}>
-                                <th
-                                  scope="row"
-                                  style={{
-                                    fontSize: '20px',
-                                    textAlign: 'center',
-                                  }}
-                                >
-                                  {index + 1}
-                                </th>
-                                <td
-                                  style={{
-                                    fontSize: '20px',
-                                    textAlign: 'center',
-                                  }}
-                                >
-                                  {student.name}
-                                </td>
-                                <td
-                                  style={{
-                                    fontSize: '20px',
-                                    textAlign: 'center',
-                                  }}
-                                >
-                                  {student.father_name}
-                                </td>
-                                <td
-                                  style={{
-                                    fontSize: '20px',
-                                    textAlign: 'center',
-                                  }}
-                                >
-                                  {student.id}
-                                </td>
-                                <td
-                                  style={{
-                                    fontSize: '20px',
-                                    textAlign: 'center',
-                                  }}
-                                >
-                                  {student.oldMarks}
-                                </td>
+                          {students && (
+                            <tr>
+                              <th
+                                scope="row"
+                                style={{
+                                  fontSize: '20px',
+                                  textAlign: 'center',
+                                }}
+                              >
+                                1
+                              </th>
+                              <td
+                                style={{
+                                  fontSize: '20px',
+                                  textAlign: 'center',
+                                }}
+                              >
+                                {students.student_name}
+                              </td>
+                              <td
+                                style={{
+                                  fontSize: '20px',
+                                  textAlign: 'center',
+                                }}
+                              >
+                                {students.student_father_name}
+                              </td>
+                              <td
+                                style={{
+                                  fontSize: '20px',
+                                  textAlign: 'center',
+                                }}
+                              >
+                                {students.student_id}
+                              </td>
+                              <td
+                                style={{
+                                  fontSize: '20px',
+                                  textAlign: 'center',
+                                }}
+                              >
+                                {students.old_marks}
+                              </td>
 
-                                {/* Marks Entry */}
-                                <td>
-                                  <div
+                              {/* Marks Entry */}
+                              <td>
+                                <div
+                                  style={{
+                                    margin: '-7px',
+                                    fontSize: '15px',
+                                  }}
+                                >
+                                  <Field
+                                    type="number"
                                     style={{
-                                      margin: '-7px',
                                       fontSize: '15px',
+                                      textAlign: 'center',
                                     }}
-                                  >
-                                    <Field
-                                      type="number"
-                                      style={{
-                                        fontSize: '15px',
-                                        textAlign: 'center',
-                                      }}
-                                      className="form-control"
-                                      name={`score[${student.student_id}]`}
-                                    />
-                                    {errors.score && touched.score ? (
-                                      <div className="invalid-feedback d-block">
-                                        {errors.score}
-                                      </div>
-                                    ) : null}
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
+                                    className="form-control"
+                                    name="marks"
+                                    min="0"
+                                    max="100"
+                                  />
+                                  {errors.score && touched.score ? (
+                                    <div className="invalid-feedback d-block">
+                                      {errors.score}
+                                    </div>
+                                  ) : null}
+                                </div>
+                              </td>
+                            </tr>
+                          )}
                         </tbody>
                         <tfoot className="thead-dark">
                           <tr>

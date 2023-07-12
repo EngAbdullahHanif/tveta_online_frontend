@@ -82,11 +82,11 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
                 </p>
               )}
 
-              {institute.gender === '1' ? (
+              {institute.gender === 'male' ? (
                 <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
                   <IntlMessages id="institute.studentgenderOption_1" />
                 </p>
-              ) : institute.gender === '2' ? (
+              ) : institute.gender === 'female' ? (
                 <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
                   <IntlMessages id="institute.studentgenderOption_2" />
                 </p>
@@ -96,7 +96,7 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
                 </p>
               )}
 
-              {institute.status === '1' ? (
+              {institute.status === 'active' ? (
                 <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
                   <IntlMessages id="institute.statusOption_1" />
                 </p>
@@ -111,15 +111,15 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
                 style={{ display: 'flex', flexDirection: 'row' }}
                 className="align-self-center pr-4"
               >
-                <NavLink to={`/app/institutes/register/${institute.id}`} >
-                <div>
-                  <BsPencilSquare
-                    outline
-                    style={{ fontSize: '20px' }}
-                    id="updateIcon"
+                <NavLink to={`/app/institutes/register/${institute.id}`}>
+                  <div>
+                    <BsPencilSquare
+                      outline
+                      style={{ fontSize: '20px' }}
+                      id="updateIcon"
                     />
-                </div>
-                    </NavLink>
+                  </div>
+                </NavLink>
                 <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"

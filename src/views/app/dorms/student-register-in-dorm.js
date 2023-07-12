@@ -85,7 +85,7 @@ const DormRegistration = (values) => {
   };
 
   const handleSearch = async () => {
-    const response = await callApi(`api/?student_id=${data}`, '', null);
+    const response = await callApi(`students/?student_id=${data}`, '', null);
     if (response.data && response.status === 200) {
       console.log('student', response.data.results);
       setStudent(response.data.results);
@@ -94,7 +94,7 @@ const DormRegistration = (values) => {
     }
 
     const instituteResponse = await callApi(
-      `api/student_institutes/?student_id=${data}`,
+      `students/student_institutes/?student_id=${data}`,
       '',
       null
     );
@@ -105,7 +105,7 @@ const DormRegistration = (values) => {
     }
 
     const departmentResponse = await callApi(
-      `api/student_Departments/?student_id=${data}`,
+      `students/student_Departments/?student_id=${data}`,
       '',
       null
     );
@@ -116,7 +116,7 @@ const DormRegistration = (values) => {
     }
 
     const classResponse = await callApi(
-      `api/student_class/?student_id=${data}`,
+      `students/student_class/?student_id=${data}`,
       '',
       null
     );
@@ -162,7 +162,11 @@ const DormRegistration = (values) => {
 
   // post dorm record to server
   const postStudentRecord = async (data) => {
-    const response = await callApi('api/student_dorms_create/', 'POST', data);
+    const response = await callApi(
+      'students/student_dorms_create/',
+      'POST',
+      data
+    );
     if (response) {
       createNotification('success', 'filled');
       setSuccessMessage(true);

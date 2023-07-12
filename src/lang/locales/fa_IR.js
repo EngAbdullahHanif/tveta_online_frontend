@@ -854,7 +854,7 @@ module.exports = {
   'forms.totolEduactionalDaysErr':
     'د دتعلیمی ورځو لیکل اړین دي/ روز های تعلیمی ضروری است',
   'attendance.departmentLabel': 'دیپارتمنت',
-  'attendance-list': 'د حاضرۍ اپدیت لست',
+  'attendance-list': 'د حاضرۍ لست',
   'department.field': 'رشته',
   'department.FieldEngNameLabel':
     'د دیپارتمنت انګریزي نوم/ نام انگلسی دیپارتمنت',
@@ -999,6 +999,7 @@ module.exports = {
   'marks.FatherName': 'د پلارنوم/نام پدر',
   'marks.ID': 'آیدی',
   'marks.Marks': 'نمرې / نمرات',
+
   'marks.marksDisplayTitle': 'نمرې/ نمرات',
   'marks.studentChar': 'د شاګرد مالومات/ معلومات شاگرد',
   'marks.gpa': 'جی پی ای',

@@ -203,6 +203,10 @@ export const educationalYearsOptions = [
   { value: '1409', label: '1409' },
   { value: '1410', label: '1410' },
 ];
+export const chanceOptions = [
+  { value: 'first', label: 'اول' },
+  { value: 'second', label: 'دوهم' },
+];
 
 export const dateOfBirthOptoions = [
   { value: '1370', label: '1370' },

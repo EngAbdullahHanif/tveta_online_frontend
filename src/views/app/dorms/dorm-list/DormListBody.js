@@ -62,7 +62,7 @@ const DormListBody = ({ dorm, isSelect, collect, onCheckItem }) => {
                 className="mb-1 text-small"
                 style={{ width: '15%', fontSize: '20px' }}
               >
-                {dorm.provence}
+                {dorm.province}
               </p>
               <p
                 className="mb-1 text-small"
@@ -74,20 +74,19 @@ const DormListBody = ({ dorm, isSelect, collect, onCheckItem }) => {
                 className="mb-1 text-small"
                 style={{ width: '11%', fontSize: '20px' }}
               >
-                {dorm.dorm_capacity}
+                {dorm.capacity}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '12%', fontSize: '20px' }}
               >
-                {dorm.dorm_quota}
+                {dorm.quota}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', fontSize: '20px' }}
               >
-                {/* {dorm.building_type} */}
-                Integrate This column
+                {dorm.building_ownership === 'private' ? 'خصوصی' : 'دولتی'}
               </p>
             </div>
             <>

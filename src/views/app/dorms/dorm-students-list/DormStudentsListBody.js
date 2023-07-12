@@ -47,27 +47,25 @@ const DormListBody = ({ dormStudent, isSelect, collect, onCheckItem }) => {
               style={{ width: '100%' }}
             >
               <NavLink
-                to={`${dormStudent.student_id.student_id}`}
+                to={`${dormStudent.student.student_id}`}
                 style={{ width: '10%', fontSize: '20px' }}
               >
                 <p
                   className="list-item-heading mb-1 truncate"
                   style={{ fontSize: '20px' }}
                 >
-                  <span className="mr-5">
-                    {dormStudent.student_id.student_id}
-                  </span>
+                  <span className="mr-5">{dormStudent.student.student_id}</span>
                 </p>
               </NavLink>
               <NavLink
-                to={`${dormStudent.student_id.student_id}`}
+                to={`${dormStudent.student.student_id}`}
                 style={{ width: '15%', fontSize: '20px' }}
               >
                 <p
                   className="list-item-heading mb-1 truncate"
                   style={{ fontSize: '20px' }}
                 >
-                  {dormStudent.student_id.name}
+                  {dormStudent.student.name}
                 </p>
               </NavLink>
 
@@ -75,13 +73,13 @@ const DormListBody = ({ dormStudent, isSelect, collect, onCheckItem }) => {
                 className="mb-1 text-small"
                 style={{ width: '15%', fontSize: '20px' }}
               >
-                Integrate
+                {dormStudent.dorm.province}
               </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '17%', fontSize: '20px' }}
               >
-                {dormStudent.dorm_id.name}
+                {dormStudent.dorm.name}
               </p>
               <p
                 className="mb-1 text-small"
@@ -89,7 +87,7 @@ const DormListBody = ({ dormStudent, isSelect, collect, onCheckItem }) => {
               >
                 {dormStudent.educational_year}
               </p>
-              {dormStudent.dorm_type == 1 ? (
+              {dormStudent.dorm_type == 'in_dorm' ? (
                 <p
                   className="mb-1 text-small "
                   style={{ width: '13%', fontSize: '18px' }}
@@ -110,14 +108,13 @@ const DormListBody = ({ dormStudent, isSelect, collect, onCheckItem }) => {
               )}
 
               {/* Status */}
-              {dormStudent.dorm_type == 1 ? (
+              {dormStudent.status == 'active' ? (
                 <p
                   className="mb-1 text-small "
                   style={{ width: '15%', fontSize: '18px' }}
                 >
                   <Badge color="primary" pill>
                     <IntlMessages id="forms.StudyTypeInrolled" />
-                    Integrate
                   </Badge>
                 </p>
               ) : (

@@ -114,7 +114,7 @@ const ThumbListPages = ({ match }) => {
 
       if (institute !== '') {
         const response = await callApi(
-          `api/student_institutes/?institute_id=${institute.id}&page=${currentPage}`,
+          `students/student_institutes/?institute_id=${institute.id}&page=${currentPage}`,
           '',
           null
         );
@@ -123,7 +123,7 @@ const ThumbListPages = ({ match }) => {
           setItems(response.data.results);
           setSelectedItems([]);
           setTotalItemCount(response.data.count);
-          setIsLoaded(true);
+          setIsLoaded(false);
         } else {
           console.log('students error');
         }
@@ -140,25 +140,25 @@ const ThumbListPages = ({ match }) => {
 
         // here
         const response = await callApi(
-          `api/?student_id=${studentId}&current_district=${district}&p=${currentPage}&page=${1}`,
+          `students/?student_id=${studentId}&current_district=${district}&p=${currentPage}&page=${1}`,
           '',
           null
         );
         console.table('respons', response);
         if (response.data && response.status === 200) {
           setTotalPage(Math.ceil(response.data.count / itemsPerPage));
+          setIsLoaded(false);
           setItems(response.data.results);
-          console.log('response of the ', response);
           setSelectedItems([]);
           setTotalItemCount(response.data.count);
-
-          setIsLoaded(true);
+          console.log('response of the result ', response.data.results);
+          console.log('isLoaded sadf', isLoaded);
         } else {
           console.log('students error');
         }
       } else if (selectedProvinceOption.column === 'all') {
         const response = await callApi(
-          `api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}`,
+          `students/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}`,
           '',
           null
         );
@@ -168,13 +168,13 @@ const ThumbListPages = ({ match }) => {
           setItems(response.data.results);
           setSelectedItems([]);
           setTotalItemCount(response.data.count);
-          setIsLoaded(true);
+          setIsLoaded(false);
         } else {
           console.log('students error');
         }
       } else if (selectedGenderOption.column === 'all') {
         const response = await callApi(
-          `api/?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}`,
+          `students/?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}`,
           '',
           null
         );
@@ -183,14 +183,14 @@ const ThumbListPages = ({ match }) => {
           setItems(response.data.results);
           setSelectedItems([]);
           setTotalItemCount(response.data.count);
-          setIsLoaded(true);
+          setIsLoaded(false);
         } else {
           console.log('students error');
         }
       } else {
         setTotalItemCount(response.data.totalItem);
         const response = await callApi(
-          `api/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}`,
+          `students/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}`,
           '',
           null
         );
@@ -199,7 +199,7 @@ const ThumbListPages = ({ match }) => {
           setItems(response.data.results);
           setSelectedItems([]);
           setTotalItemCount(response.data.count);
-          setIsLoaded(true);
+          setIsLoaded(false);
         } else {
           console.log('students error');
         }
@@ -311,7 +311,7 @@ const ThumbListPages = ({ match }) => {
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
-
+  console.log('isLoadedsdfsd', isLoaded);
   return isLoaded ? (
     <div className="loading" />
   ) : (

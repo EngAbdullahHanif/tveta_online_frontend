@@ -1377,6 +1377,7 @@ module.exports = {
   'student.dissmissalDocumentErr':
     'د منفکي اسناد اړین دی/ اسناد منفکی ضروری است',
   'student.buttonDismissal': 'منفک',
+  'student.classChangeButton': 'تبدیل صنف',
   'studendts.dismisseds-students': 'لست شاگردان منفک ',
   'transfered-Students': 'د تبدیل شویو شاګردانو لست',
   'student.dismissal-studentList':

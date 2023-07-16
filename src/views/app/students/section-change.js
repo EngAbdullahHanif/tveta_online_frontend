@@ -123,7 +123,7 @@ const DepartmentChange = (values) => {
   const handleSearch = async (event, values) => {
     setSearchResult(event);
     const response = await callApi(
-      `api/student_accademic/?student_id=${studentId}`,
+      `students/student_accademic/?student_id=${studentId}`,
       '',
       null
     );
@@ -279,7 +279,7 @@ const DepartmentChange = (values) => {
 
                             <Colxx>
                               <img
-                                src={student.student_photo}
+                                src={student.photo}
                                 alt="Photo"
                                 width={'10%'}
                               />{' '}

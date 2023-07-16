@@ -367,7 +367,7 @@ const ClassTransfer = (values) => {
                                         onClick={() => handleClick(false)}
                                       >
                                         <span className="label">
-                                          <IntlMessages id="student.buttonDismissal" />
+                                          <IntlMessages id="student.classChangeButton" />
                                         </span>
                                       </Button>
                                     </Colxx>

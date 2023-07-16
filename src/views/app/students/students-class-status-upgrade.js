@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { studyTimeOptions } from '../global-data/options';
 import './../../../assets/css/global-style.css';
+import { NotificationManager } from 'components/common/react-notifications';
 
 // Year  and SHift
 
@@ -167,14 +168,13 @@ const StudentClassStatusUpgrade = ({ match }) => {
   }, []);
 
   const fetchStudents = async (event) => {
-    setIsNext(true);
-
     const response = await callApi(
       `students/class_marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&upgrade=1`,
       '',
       null
     );
     if (response.data && response.status === 200) {
+      setIsNext(true);
       setStudents(response.data);
       setHeader(response.data[0]);
 
@@ -198,15 +198,46 @@ const StudentClassStatusUpgrade = ({ match }) => {
     });
   };
 
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'شاگردانو نمری تاید شوی',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'نمری تاید نشوی, بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
+
   const onSubmit = async (values) => {
-    // setReload(true);
     const data = [
       {
-        institute_id: selectedInstitute.value,
-        class_id: selectedClass.value,
+        institute: selectedInstitute.value,
+        classs: selectedClass.value,
         shift: selecedStudyTime.value,
-        department_id: selectedDepartment.value,
+        department: selectedDepartment.value,
         educational_year: selectedEducationalYear,
+        verification_result: 'verified',
       },
       { students: students },
     ];
@@ -217,6 +248,17 @@ const StudentClassStatusUpgrade = ({ match }) => {
       'POST',
       data
     );
+    if (response.data && response.status === 200) {
+      console.log('response.data', response.data);
+      createNotification('success', 'filled');
+      setReload(false);
+      setIsNext(false);
+      setStudents([]);
+    } else {
+      createNotification('error', 'filled');
+
+      console.log('students error');
+    }
   };
 
   const initialValues = {
@@ -614,9 +656,10 @@ const StudentClassStatusUpgrade = ({ match }) => {
                             <Colxx xxs="9" className="m-5">
                               <Button
                                 className=" m-4"
-                                onClick={() => setIsNext(true)}
+                                onClick={() => setIsNext(false)}
                               >
-                                <IntlMessages id="button.Back" />
+                                {/* <IntlMessages id="button.Back" /> */}
+                                reject
                               </Button>
                             </Colxx>
                             <div className="d-flex justify-content-between align-items-center m-4 float-right">
@@ -627,7 +670,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
                                 // onClick={() => getSelectedStudents()}
                               >
                                 {/* <IntlMessages id="button.SubmitButton" /> */}
-                                ارتقا / ترفيع
+                                Approve
                               </Button>
                             </div>
                           </Row>

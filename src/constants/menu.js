@@ -147,7 +147,8 @@ const data = [
       },
       {
         icon: 'MD.MdAddBox',
-        label: 'menu.student.upgrade-class',
+        // label: 'menu.student.upgrade-class',
+        label: 'class marks completion confirmation',
         to: `${adminRoot}/students/students-class-status-upgrade`,
         newWindow: false,
       },

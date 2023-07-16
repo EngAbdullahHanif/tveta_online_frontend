@@ -122,7 +122,7 @@ const DepartmentChange = (values) => {
   const handleSearch = async (event, values) => {
     setSearchResult(event);
     const response = await callApi(
-      `api/student_accademic/?student_id=${studentId}`,
+      `students/student_accademic/?student_id=${studentId}`,
       '',
       null
     );

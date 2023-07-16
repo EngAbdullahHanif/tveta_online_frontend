@@ -35,6 +35,7 @@ const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;
 const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
 const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
+import DisplayMessage from 'components/messages/DisplayMessage';
 
 const StudentsDismissal = (values) => {
   const [studentId, setStudentId] = useState('');
@@ -109,11 +110,12 @@ const StudentsDismissal = (values) => {
   const handleSearch = async (event, values) => {
     setSearchResult(event);
     const response = await callApi(
-      `api/student_accademic/?student_id=${studentId}`,
+      `students/student_accademic/?student_id=${studentId}`,
       '',
       null
     );
-    if (response.data && response.status === 200) {
+    console.log('repsonse is: ', response);
+    if (response && response.status === 200) {
       studentId == response.data.student_id
         ? setStudentIdMatch(true)
         : setStudentIdMatch(false);
@@ -129,12 +131,21 @@ const StudentsDismissal = (values) => {
   };
   const onSubmit = async (values) => {
     // setReload(true);
-    const data = {
-      student_id: studentId,
-      dismissal_date: values.dismissalDate,
-    };
+
+    const formData = new FormData();
+    formData.append('student_id', studentId);
+    formData.append('dismiss_date', values.dismissalDate);
+    if (values.dismissalDocument) {
+      formData.append('dismiss_proof', values.dismissalDocument);
+    }
+
+    console.log('file is ', values.dismissalDocument);
     try {
-      const response = await callApi(`api/student-dissmiss/`, 'POST', data);
+      const response = await callApi(
+        `students/student-dissmiss/`,
+        'POST',
+        formData
+      );
       if (response.status === 200 || response.status === 201) {
         console.log('success');
         createNotification('success', 'filled');
@@ -260,8 +271,8 @@ const StudentsDismissal = (values) => {
 
                               <Colxx>
                                 <img
-                                  src={student.student_photo}
-                                  alt="Photo"
+                                  src={student.photo}
+                                  alt="student's photo"
                                   width={'10%'}
                                 />{' '}
                               </Colxx>
@@ -378,7 +389,10 @@ const StudentsDismissal = (values) => {
                             <Row className="justify-content-left mb-5">
                               <Colxx xxs="8" className="text-left">
                                 <h1 className="text-center">
-                                  <IntlMessages id="forms.NoData" />
+                                  <DisplayMessage
+                                    type="error"
+                                    message={<IntlMessages id="forms.NoData" />}
+                                  />
                                 </h1>
                               </Colxx>
                             </Row>
@@ -569,5 +583,4 @@ const StudentsDismissal = (values) => {
     </>
   );
 };
-
 export default StudentsDismissal;

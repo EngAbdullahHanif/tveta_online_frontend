@@ -182,7 +182,6 @@ const SubjectRegister = () => {
                           <IntlMessages id="subject.code" />
                         </Label>
                         <Field
-                          type="number"
                           className="form-control"
                           name="code"
                           // validate={validatesubjectCode}

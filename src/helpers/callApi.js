@@ -41,6 +41,9 @@ const callApi = async (endpoint, method = 'get', data = null) => {
   console.log('HEaders: ', headers);
   const url = `${servicePath}/${endpoint}`;
   console.log('DATA in API Call: ' + endpoint, data);
+  if (data instanceof FormData) {
+    console.log('data is instance of formData');
+  }
 
   console.log('the url is', url);
   try {

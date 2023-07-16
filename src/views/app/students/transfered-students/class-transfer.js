@@ -110,11 +110,12 @@ const ClassTransfer = (values) => {
   const handleSearch = async (event, values) => {
     setSearchResult(event);
     const response = await callApi(
-      `api/student_accademic/?student_id=${studentId}`,
+      `students/student_accademic/?student_id=${studentId}`,
       '',
       null
     );
-    if (response.data && response.status === 200) {
+    console.log('repsonse is: ', response);
+    if (response && response.status === 200) {
       studentId == response.data.student_id
         ? setStudentIdMatch(true)
         : setStudentIdMatch(false);
@@ -135,7 +136,11 @@ const ClassTransfer = (values) => {
       dismissal_date: values.dismissalDate,
     };
     try {
-      const response = await callApi(`api/student-dissmiss/`, 'POST', data);
+      const response = await callApi(
+        `students/student-dissmiss/`,
+        'POST',
+        data
+      );
       if (response.status === 200 || response.status === 201) {
         console.log('success');
         createNotification('success', 'filled');
@@ -263,8 +268,8 @@ const ClassTransfer = (values) => {
 
                               <Colxx>
                                 <img
-                                  src={student.student_photo}
-                                  alt="Photo"
+                                  src={student.photo}
+                                  alt="student's photo"
                                   width={'10%'}
                                 />{' '}
                               </Colxx>

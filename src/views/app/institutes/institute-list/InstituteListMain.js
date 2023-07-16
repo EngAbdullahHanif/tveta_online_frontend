@@ -133,7 +133,7 @@ const ThumbListPages = ({ match }) => {
           '',
           null
         );
-        if (response.data && response.status === 200) {
+        if (response && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
           // setTotalItemCount(data);

@@ -247,7 +247,7 @@ const StudentRegistration = ({ intl }, values) => {
       fatherEngName: '',
       grandFatherName: '',
       fatherDutyLocation: '',
-      DoB: [],
+      DoB: '',
       gender: [],
       tazkiraNo: '',
       idCardPageNo: '',
@@ -299,7 +299,7 @@ const StudentRegistration = ({ intl }, values) => {
     if (response) {
       if (response && response.status === 200) {
         console.log('the response is', response);
-        const institutes = await response.data.results.map((item) => ({
+        const institutes = await response.data.map((item) => ({
           value: item.id,
           label: item.name,
         }));
@@ -514,14 +514,13 @@ const StudentRegistration = ({ intl }, values) => {
             cover_number: newFields.idCardJoldNo,
             page_number: newFields.idCardPageNo,
             registration_number: newFields.tazkiraNo,
-            sukuk_number: newFields.tazkiraNo,
             main_province: newFields.province.value,
             main_district: newFields.district.value,
             main_village: newFields.village,
             current_province: newFields.C_Province.value,
             current_district: newFields.C_District.value,
             current_village: newFields.C_Village,
-            year_of_birth: newFields.DoB.label,
+            year_of_birth: newFields.DoB,
             father_profession: newFields.fatherDuty,
             father_place_of_duty: newFields.fatherDutyLocation,
             admission_method: newFields.interanceType.value,
@@ -551,8 +550,7 @@ const StudentRegistration = ({ intl }, values) => {
             console.log(selectedFile);
             data['photo'] = selectedFile;
           }
-          console.log('disability: ', newFields.disability.value);
-          if (newFields.disability !== 'undefined') {
+          if (newFields.disability) {
             data['disability'] = newFields.disability.value;
           }
 
@@ -864,7 +862,14 @@ const StudentRegistration = ({ intl }, values) => {
                                 <IntlMessages id="teacher.DoBLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
-                              <FormikReactSelect
+                              <Field
+                                className="form-control fieldStyle"
+                                name="DoB"
+                                type="number"
+                                min={1300}
+                                max={1450}
+                              />
+                              {/* <FormikReactSelect
                                 name="DoB"
                                 id="DoB"
                                 value={values.DoB}
@@ -873,7 +878,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 onBlur={setFieldTouched}
                                 isSearchable={false}
                                 required
-                              />
+                              /> */}
                               {errors.DoB && touched.DoB ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.DoB}
@@ -1090,7 +1095,7 @@ const StudentRegistration = ({ intl }, values) => {
                                     );
                                     setFieldValue(name, value);
                                   }}
-                                  isSearchable={false}
+                                  isSearchable={true}
                                   onBlur={setFieldTouched}
                                 />
                                 {errors.province && touched.province ? (
@@ -1113,7 +1118,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   options={mainDistrictOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
-                                  isSearchable={false}
+                                  isSearchable={true}
                                 />
                                 {errors.district && touched.district ? (
                                   <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -1162,7 +1167,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   id="C_Province"
                                   value={values.C_Province}
                                   options={provinceOptions}
-                                  isSearchable={false}
+                                  isSearchable={true}
                                   onChange={(name, value) => {
                                     handleProvinceChange(
                                       name,
@@ -1193,7 +1198,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   options={currentDistrictOptions}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
-                                  isSearchable={false}
+                                  isSearchable={true}
                                 />
                                 {errors.C_District && touched.C_District ? (
                                   <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -1225,6 +1230,28 @@ const StudentRegistration = ({ intl }, values) => {
                         <Row style={{ marginInline: '2%' }}>
                           <Colxx xxs="6" className="pt-3">
                             <div className="square p-3 ">
+                              {/*School province*/}
+                              <FormGroup className="form-group has-float-label error-l-100">
+                                <Label>
+                                  <IntlMessages id="forms.StdSchoolProvinceLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <FormikReactSelect
+                                  name="schoolProvince"
+                                  id="schoolProvince"
+                                  value={values.schoolProvince}
+                                  options={provinceOptions}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                  isSearchable={true}
+                                />
+                                {errors.schoolProvince &&
+                                touched.schoolProvince ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                    {errors.schoolProvince}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
                               <FormGroup className="form-group has-float-label error-l-100 ">
                                 <Label>
                                   <IntlMessages id="forms.StdGraduationYearLabel" />
@@ -1244,28 +1271,6 @@ const StudentRegistration = ({ intl }, values) => {
                                 touched.graduationYear ? (
                                   <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.graduationYear}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                              {/*School province*/}
-                              <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
-                                  <IntlMessages id="forms.StdSchoolProvinceLabel" />
-                                  <span style={{ color: 'red' }}>*</span>
-                                </Label>
-                                <FormikReactSelect
-                                  name="schoolProvince"
-                                  id="schoolProvince"
-                                  value={values.schoolProvince}
-                                  options={provinceOptions}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                  isSearchable={false}
-                                />
-                                {errors.schoolProvince &&
-                                touched.schoolProvince ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                    {errors.schoolProvince}
                                   </div>
                                 ) : null}
                               </FormGroup>
@@ -1398,6 +1403,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <Field
                                 className="form-control fieldStyle"
                                 name="studentId"
+                                type="number"
                               />
                               {errors.studentId && touched.studentId ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">

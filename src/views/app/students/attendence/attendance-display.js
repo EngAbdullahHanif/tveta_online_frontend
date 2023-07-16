@@ -272,7 +272,7 @@ const StudentAttendance = ({ match }) => {
       <Card>
         <div className="mt-4 ml-5">
           <h2 className=" m-5  titleStyle">
-            {<IntlMessages id="menu.attendance" />}
+            {<IntlMessages id="menu.class_attendance" />}
           </h2>
         </div>
         <CardBody>

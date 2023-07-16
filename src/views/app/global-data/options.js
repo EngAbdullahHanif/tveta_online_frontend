@@ -203,10 +203,6 @@ export const educationalYearsOptions = [
   { value: '1409', label: '1409' },
   { value: '1410', label: '1410' },
 ];
-export const chanceOptions = [
-  { value: 'first', label: 'اول' },
-  { value: 'second', label: 'دوهم' },
-];
 
 export const dateOfBirthOptoions = [
   { value: '1370', label: '1370' },
@@ -373,9 +369,33 @@ export const StudentTypeOptions = [
 ];
 
 export const studyTimeOptions = [
-  { value: 'morning', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { value: 'afternoon', label: 'بعد از ظهر' },
-  { value: 'evening', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+  { value: 'morning', label: <IntlMessages id="forms.morningShift" /> },
+  { value: 'afternoon', label: <IntlMessages id="forms.afternoonShift" /> },
+  { value: 'night', label: <IntlMessages id="forms.nightShift" /> },
+  {
+    value: 'morning_afternoon',
+    label: <IntlMessages id="forms.morningAfternoonShift" />,
+  },
+  {
+    value: 'morning_night',
+    label: <IntlMessages id="forms.morningNightShift" />,
+  },
+  {
+    value: 'afternoon_night',
+    label: <IntlMessages id="forms.afternoonNightShift" />,
+  },
+  {
+    value: 'morning_afternoon_night',
+    label: <IntlMessages id="forms.allShifts" />,
+  },
+];
+
+export const chanceOptions = [
+  { value: 1, label: <IntlMessages id="marks.firstChance" /> },
+  {
+    value: 2,
+    label: <IntlMessages id="marks.secondChance" />,
+  },
 ];
 
 export const studyTimeOptionsForList = [

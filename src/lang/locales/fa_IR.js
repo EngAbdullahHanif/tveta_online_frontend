@@ -825,8 +825,13 @@ module.exports = {
   'forms.FieldErr': 'رشته اړین دی/ رشته ضروری است',
   'forms.StudyTimeLabel': 'وخت/ وقت',
   'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',
-  'forms.StudyTimeOption_1': 'ورځنی/ روزانه',
-  'forms.StudyTimeOption_2': 'شپې/ شبانه',
+  'forms.morningShift': 'صبحانه/سهار',
+  'forms.nightShift': 'شبانه/شپنی',
+  'forms.afternoonShift': 'بعد از ظهر/ماذدیګر',
+  'forms.morningAfternoonShift': 'سهار و ماذدیګر/صبحانه و بعد از ظهر',
+  'forms.morningNightShift': 'سهار او شپنی/صبحانه و شبانه',
+  'forms.afternoonNightShift': 'ماذدیګر او شپنی/بعد از ظهر و شبانه',
+  'forms.allShifts': 'ټول شفتونه/تمام شفت ها',
   'forms.studyDepartment': 'دیپارتمنت',
   'forms.SubimssionButton': 'ثبت',
   'student.Profile': ' د شاگرد پروفایل/ پروفایل شاگرد',
@@ -848,7 +853,10 @@ module.exports = {
   'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
   'forms.ConfirmButton': 'تایید/ تصدیق',
   'menu.attendance': 'د حاضرۍ لست/ لست حاضری',
+  'menu.class_attendance': ' د ټولګي د حاضرۍ لست/ لست حاضری صنف',
   'student.dismissal': ' د شاګرد منفکول/ منفک کردن شاگرد',
+
+  'sector.sectorRegisterlabel': 'د سکتور ثبت/ ثبت سکتور',
 
   'forms.totolEducationalDays': 'تعلیمی ورځې',
   'forms.totolEduactionalDaysErr':

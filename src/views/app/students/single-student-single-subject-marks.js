@@ -49,7 +49,7 @@ const ValidationSchema1 = Yup.object().shape({
 
   chance: Yup.object()
     .shape({
-      value: Yup.string().required(),
+      value: Yup.number().required(),
     })
     .nullable()
     .required('chance is required'),

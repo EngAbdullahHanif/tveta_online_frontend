@@ -35,15 +35,12 @@ const FormikReactSelect = ({
   isSearchable,
 }) => {
   const handleChange = (val) => {
-    console.log('onchange called from select');
     onChange(name, val);
   };
 
   const handleBlur = () => {
     onBlur(name, true);
   };
-
-  console.log('values called from select', value, defaultValue, name);
 
   return (
     <Select

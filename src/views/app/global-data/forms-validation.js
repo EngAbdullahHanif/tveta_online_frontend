@@ -59,10 +59,12 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
   tazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
 
   // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
-  DoB: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
+  DoB: Yup.number()
+    .min(1350, 'د تولد کال سم ندی')
+    .max(1420, 'د تولد کال سم ندی')
+    // .shape({
+    //   value: Yup.string().required(),
+    // })
     .nullable()
     .required(<IntlMessages id="forms.StdDoBErr" />),
 
@@ -198,7 +200,7 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.batchErr" />),
-  studentId: Yup.string().required(<IntlMessages id="student.studentIdErr" />),
+  studentId: Yup.number().required(<IntlMessages id="student.studentIdErr" />),
 
   field: Yup.object()
     .shape({

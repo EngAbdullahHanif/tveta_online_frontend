@@ -91,7 +91,11 @@ const StudentsDismissal = (values) => {
     setStudentId(event.target.value);
   };
   const handleSearch = async () => {
-    const response = await callApi(`api/?student_id=${studentId}`, '', null);
+    const response = await callApi(
+      `students/?student_id=${studentId}`,
+      '',
+      null
+    );
     if (response.data && response.status === 200) {
       console.log('dissmiss student ', response.data.results);
       setStudent(response.data.results);
@@ -100,7 +104,7 @@ const StudentsDismissal = (values) => {
     }
 
     const instituteResponse = await callApi(
-      `api/student_institutes/?student=${studentId}`,
+      `studendts/student_institutes/?student=${studentId}`,
       '',
       null
     );
@@ -111,7 +115,7 @@ const StudentsDismissal = (values) => {
     }
 
     const departmentResponse = await callApi(
-      `api/student_Departments/?student=${studentId}`,
+      `students/student_Departments/?student=${studentId}`,
       '',
       null
     );
@@ -122,7 +126,7 @@ const StudentsDismissal = (values) => {
     }
 
     const classResponse = await callApi(
-      `api/student_class/?student=${studentId}`,
+      `studendts/student_class/?student=${studentId}`,
       '',
       null
     );

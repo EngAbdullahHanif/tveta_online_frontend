@@ -91,22 +91,6 @@ const SignupSchema = Yup.object().shape({
 
 const updateMode = true;
 const DormRegistration = (values) => {
-  const TestData = {
-    Name: 'Number-01',
-    Capicity: '25',
-    TotalKitchens: '2',
-    Gender: '2',
-    BuildingType: 'Private',
-    PublicBuildingOwner: 'Tveta',
-    PrivateBuildingType: 'Donated',
-    Province: 'Baghlan',
-    Quota: '120',
-    TotalRooms: '40',
-    TotalBuildingNo: '8',
-    Toilet: '18',
-    District: 'Doshi',
-  };
-
   const { dormId } = useParams();
   //console.log('Dorm info', dormId);
 
@@ -185,7 +169,7 @@ const DormRegistration = (values) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: item.native_name,
       }));
 
       setProvinces(updatedData);
@@ -204,7 +188,7 @@ const DormRegistration = (values) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: item.native_name,
       }));
       setDistricts(updatedData);
     } else {

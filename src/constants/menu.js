@@ -2,22 +2,6 @@ import { adminRoot } from './defaultValues';
 
 const data = [
   {
-    id: 'users',
-    icon: 'BS.BsCardChecklist',
-    label: 'Users',
-    to: `${adminRoot}/users`,
-    // roles: [userRole.Admin, userRole.Editor],
-    subs: [
-      {
-        icon: 'FA.FaList',
-        label: 'Users List',
-        to: `${adminRoot}/users/users_list`,
-        // roles: [userRole.Admin],
-      },
-    ],
-  },
-
-  {
     id: 'students',
     icon: 'FA.FaUserGraduate',
     label: 'menu.students',
@@ -214,36 +198,6 @@ const data = [
   },
 
   {
-    id: 'workers',
-    icon: 'FA.FaUsers',
-    // label: 'menu.students',
-    label: 'menu.workers',
-    to: `${adminRoot}/workers`,
-    // roles: [userRole.Admin, userRole.Editor],
-    subs: [
-      {
-        icon: 'CG.CgUserList',
-        label: 'menu.workers-list',
-        to: `${adminRoot}/workers/worker-list`,
-        newWindow: false,
-      },
-      {
-        icon: 'GR.GrUserAdd',
-        label: 'menu.worker-register',
-        to: `${adminRoot}/workers/worker`,
-        newWindow: false,
-      },
-
-      {
-        icon: 'IM.ImProfile',
-        label: 'menu.workers-profile',
-        to: `${adminRoot}/workers/workerId`,
-        newWindow: false,
-      },
-    ],
-  },
-
-  {
     id: 'institute',
     icon: 'FA.FaUniversity',
     label: 'menu.institutes',
@@ -391,6 +345,11 @@ const data = [
         label: 'menu.department-register',
         to: `${adminRoot}/fields/department-register`,
       },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'sector.sectorRegisterlabel',
+        to: `${adminRoot}/fields/new-sector`,
+      },
     ],
   },
 
@@ -462,6 +421,50 @@ const data = [
         icon: 'MD.MdAddBox',
         label: 'menu.group-premissions',
         to: `${adminRoot}/groups/premissions`,
+      },
+    ],
+  },
+  {
+    id: 'workers',
+    icon: 'FA.FaUsers',
+    // label: 'menu.students',
+    label: 'menu.workers',
+    to: `${adminRoot}/workers`,
+    // roles: [userRole.Admin, userRole.Editor],
+    subs: [
+      {
+        icon: 'CG.CgUserList',
+        label: 'menu.workers-list',
+        to: `${adminRoot}/workers/worker-list`,
+        newWindow: false,
+      },
+      {
+        icon: 'GR.GrUserAdd',
+        label: 'menu.worker-register',
+        to: `${adminRoot}/workers/worker`,
+        newWindow: false,
+      },
+
+      {
+        icon: 'IM.ImProfile',
+        label: 'menu.workers-profile',
+        to: `${adminRoot}/workers/workerId`,
+        newWindow: false,
+      },
+    ],
+  },
+  {
+    id: 'users',
+    icon: 'BS.BsCardChecklist',
+    label: 'Users',
+    to: `${adminRoot}/users`,
+    // roles: [userRole.Admin, userRole.Editor],
+    subs: [
+      {
+        icon: 'FA.FaList',
+        label: 'Users List',
+        to: `${adminRoot}/users/users_list`,
+        // roles: [userRole.Admin],
       },
     ],
   },

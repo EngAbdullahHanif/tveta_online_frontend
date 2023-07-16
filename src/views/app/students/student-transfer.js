@@ -126,17 +126,17 @@ const StudentsTransfer = (values) => {
   const handleSearch = async (event, values) => {
     setSearchResult(event);
     const response = await callApi(
-      `api/student_accademic/?student_id=${studentId}`,
+      `students/student_accademic/?student_id=${studentId}`,
       '',
       null
     );
-    if (response.data && response.status === 200) {
-      studentId == response.data.student_id
-        ? setStudentIdMatch(true)
-        : setStudentIdMatch(false);
-      if (response.data) {
+    if (response && response.status === 200) {
+      setStudentIdMatch(true);
+      if (response) {
+        console.log('response of student search', response);
         setStudent(response.data);
-        setData(true);
+        // setData(true);
+        // setSearchResult(true);
       } else {
         setMessage('Student not found');
       }
@@ -175,7 +175,11 @@ const StudentsTransfer = (values) => {
     };
 
     try {
-      const response = await callApi(`api/student-transfer/`, 'POST', data);
+      const response = await callApi(
+        `students/student-transfer/`,
+        'POST',
+        data
+      );
       if (response.status === 200 || response.status === 201) {
         console.log('success');
         createNotification('success', 'filled');

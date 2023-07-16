@@ -184,7 +184,7 @@ const StudentAttendance = ({ match }) => {
     const response = await callApi('institute/', '', null);
     if (response && response.status === 200) {
       console.log(response.data, 'institute data');
-      const updatedData = await response.results.map((item) => ({
+      const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.name,
       }));
@@ -750,10 +750,13 @@ const StudentAttendance = ({ match }) => {
                                     <td className="mb-2 p-0">
                                       {/* Present*/}
                                       <Field
-                                        type="string"
+                                        type="number"
                                         className="form-control"
                                         name={`present[${student.student_id}]`}
                                         // name="present"
+                                        min="0"
+                                        max="300"
+                                        required
                                       />
                                       {errors.present && touched.present ? (
                                         <div className="invalid-feedback d-block">
@@ -764,10 +767,13 @@ const StudentAttendance = ({ match }) => {
                                     <td className="p-0">
                                       {/* Absent */}
                                       <Field
-                                        type="string"
+                                        type="number"
                                         className="form-control"
                                         name={`absent[${student.student_id}]`}
                                         // name={`${index}`}
+                                        min="0"
+                                        max="300"
+                                        required
                                       />
                                       {errors.absent && touched.absent ? (
                                         <div className="invalid-feedback d-block">
@@ -778,10 +784,13 @@ const StudentAttendance = ({ match }) => {
                                     <td className="p-0">
                                       {/* Necessary Work */}
                                       <Field
-                                        type="string"
+                                        type="number"
                                         className="form-control"
                                         name={`necessaryWork[${student.student_id}]`}
                                         // name={`${index}`}
+                                        min="0"
+                                        max="300"
+                                        required
                                       />
                                       {errors.necessaryWork &&
                                       touched.necessaryWork ? (
@@ -794,10 +803,13 @@ const StudentAttendance = ({ match }) => {
                                       {/* SickNess */}
 
                                       <Field
-                                        type="string"
+                                        type="number"
                                         className="form-control"
                                         name={`sickness[${student.student_id}]`}
                                         // name={`${index}`}
+                                        min="0"
+                                        max="300"
+                                        required
                                       />
                                       {errors.sickness && touched.sickness ? (
                                         <div className="invalid-feedback d-block">

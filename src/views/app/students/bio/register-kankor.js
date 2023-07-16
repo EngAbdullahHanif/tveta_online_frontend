@@ -148,7 +148,7 @@ const StudentRegistraion = ({ history }) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: item.native_name,
       }));
 
       setProvinces(updatedData);
@@ -167,7 +167,7 @@ const StudentRegistraion = ({ history }) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: item.native_name,
       }));
       setDistricts(updatedData);
     } else {
@@ -395,7 +395,7 @@ const StudentRegistraion = ({ history }) => {
                         <FormikReactSelect
                           name="district"
                           id="district"
-                          value={values.district.value}
+                          // value={values.district.value}
                           options={districts}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

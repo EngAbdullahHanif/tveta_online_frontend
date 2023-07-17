@@ -158,6 +158,12 @@ const data = [
         to: `${adminRoot}/students/marks-status-cheked-students`,
         newWindow: false,
       },
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'student.subject-marks-verification',
+        to: `${adminRoot}/students/subject-marks-verification`,
+        newWindow: false,
+      },
 
       {
         icon: 'MD.MdOutlineTransferWithinAStation',

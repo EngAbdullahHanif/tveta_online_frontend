@@ -782,6 +782,11 @@ export const sectionValueOptions = [
   { value: 'e', label: 'e' },
 ];
 
+export const verificationValueOptions = [
+  { value: 'verified', label: 'تاید کول' },
+  { value: 'rejected', label: 'رد کول' },
+];
+
 export const tazkiraOptions = [
   {
     value: 'ٍ electronic',

@@ -1,11 +1,21 @@
+// this compoenent is used to show the list of students whose marks have been uploaded and verified, but students upgraded/degraded class has not been assigned yet
+
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field, isEmptyArray } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
-import './style.css';
+import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import { studyTimeOptions } from '../global-data/options';
+import currentUser from 'helpers/currentUser';
+import {
+  studyTimeOptions,
+  semesterValueOptions,
+  classOptions,
+  verificationValueOptions,
+  educationalYearsOptions,
+} from '../global-data/options';
 import './../../../assets/css/global-style.css';
 
+// Year  and SHift
 import * as Yup from 'yup';
 import {
   Row,
@@ -18,22 +28,17 @@ import {
   Input,
 } from 'reactstrap';
 import Select from 'react-select';
+import { NotificationManager } from 'components/common/react-notifications';
 
 import IntlMessages from 'helpers/IntlMessages';
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
   FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
-
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-const pageSizes = [10, 20, 40, 80];
+import { async } from 'q';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -67,13 +72,6 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="teacher.departmentIdErr" />),
-
-  subject: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="marks.SubjectErr" />),
 });
 
 const initialValues = {
@@ -82,41 +80,55 @@ const initialValues = {
   studyTime: [],
   classs: [],
   department: [],
-  subject: [],
-  semester: [],
-  section: [],
 };
-const MarksDisplay = ({ match }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+
+const submitInitialValues = {
+  verification: [],
+  examId: '',
+};
+
+const SubjectMarksVerification = ({ match }) => {
   const [isNext, setIsNext] = useState(false);
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [classes, setClasses] = useState([]);
-  const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
+  const [selectedSemester, setSelectedSemester] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedSection, setSelectedSection] = useState('');
   const [selecedStudyTime, setSelectedStudyTime] = useState('');
   const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
-  // separate and set labels for classes
-  const [selectedClassLabel, setselectedClassLabel] = useState({
-    classs: '',
-    semester: '',
-    section: '',
-  });
 
-  useEffect(() => {
-    if (!isEmptyArray(selectedClass) && selectedClass !== '') {
-      const [semester, classs, section] = selectedClass.label.split('-');
-      setselectedClassLabel({ classs, semester, section });
-    }
-  }, [selectedClass]);
+  const { markId } = useParams();
+
+  //   if (markId) {
+  //     useEffect(() => {
+  //       async function fetchStudent() {
+  //         const { data } = await axios.get(
+  //           `${studentMarkId}/?student_id=${markId}`
+  //         );
+  //         console.log(data, 'object of the data');
+
+  //         // const instGender = genderOptions.map((studentGender) => {
+  //         //   if (studentGender.value === data[0].gender) {
+  //         //     setInitialGender(studentGender);
+  //         //   }
+  //         // });
+  //       }
+  //       fetchStudent();
+  //       //setUpdateMode(true);
+  //     }, []);
+  //   }
 
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
@@ -131,47 +143,28 @@ const MarksDisplay = ({ match }) => {
     }
   };
 
-  const fetchFields = async () => {
-    const response = await callApi('institute/field/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setFields(updatedData);
-    } else {
-      console.log('field error');
+  const fetchDepartments = async (instituteId) => {
+    if (!instituteId || !instituteId.value) {
+      return;
     }
-  };
-
-  const fetchDepartments = async () => {
-    const response = await callApi('institute/department/', 'GET', null);
+    const response = await callApi(
+      `institute/institite-department/?institute=${instituteId.value}`,
+      '',
+      null
+    );
+    // console.log('response of department', response);
     if (response.data && response.status === 200) {
+      console.log('response of department', response);
       const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
+        value: item.department.id,
+        label: item.department.name,
       }));
-      setDepartments(updatedData);
+      console.log('updatedData of department', updatedData);
+      setDepartments(updatedData); //Set it up when data in Backend is ready
     } else {
       console.log('department error');
     }
   };
-
-  //fetch class list
-  const fetchClasses = async () => {
-    const response = await callApi('institute/classs/', 'GET', null);
-    // console.log('class repspossdfsde', response);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name + ' - ' + item.semester + ' - ' + item.section,
-      }));
-      setClasses(updatedData);
-    } else {
-      console.log('class error');
-    }
-  };
-
   const fetchSubjects = async () => {
     const response = await callApi('institute/subject/', '', null);
     if (response.data && response.status === 200) {
@@ -186,261 +179,139 @@ const MarksDisplay = ({ match }) => {
   };
 
   useEffect(() => {
+    if (selectedInstitute) {
+      console.log('selectedInstitute', selectedInstitute);
+      fetchDepartments(selectedInstitute);
+    }
+  }, [selectedInstitute]);
+
+  const fetchClasses = async () => {
+    const response = await callApi('institute/classs/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setClasses(updatedData);
+    } else {
+      console.log('class error');
+    }
+  };
+
+  useEffect(() => {
     fetchInstitutes();
-    fetchFields();
-    fetchDepartments();
     fetchClasses();
     fetchSubjects();
   }, []);
-  let gpa = null;
-  let grad = null;
 
-  const tbodies = students.map((student, index) => {
-    const scores = Object.values(student.subject_id);
-    // console.log(scores, 'scoressssssssssssssssssss');
-    const scoreDetails = scores[0];
-    const student_name = (
-      <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-        {student.student_name}
-      </td>
-    );
-    const student_father_name = (
-      <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-        {student.student_father_name}
-      </td>
-    );
-    const student_id = (
-      <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-        {student.student_id}
-      </td>
-    );
-    const index_no = (
-      <td rowSpan={index + 1} style={{ borderStyle: 'hidden' }}>
-        {index + 1}
-      </td>
-    );
-    // console.log(index, 'indexxxxxxxxxxxxxxxx');
-    const studentRows = (
-      <>
-        <tr key={index} className="red-background">
-          <td className="red-background">{index_no}</td>
-          <td className="red-background"> {student_name}</td>
-          <td className="red-background">{student_father_name}</td>
-          <td className="red-background">{student_id}</td>
-          <td className="red-background">
-            {<td style={{ borderStyle: 'hidden' }}>{scoreDetails.score}</td>}
-          </td>
-          <td className="red-background">
-            {scoreDetails.exam_type == 1 && (
-              <td style={{ borderStyle: 'hidden' }}>اول</td>
-            )}
-            {scoreDetails.exam_type == 2 && (
-              <td style={{ borderStyle: 'hidden', color: '#de0a26' }}>دوم</td>
-            )}
-          </td>
-          {scoreDetails.grad
-            ? (grad = scoreDetails.grad) && (
-                <td className="red-background">
-                  {' '}
-                  {scoreDetails.grad && (
-                    <td style={{ borderStyle: 'hidden' }}>
-                      {scoreDetails.grad}
-                    </td>
-                  )}
-                </td>
-              )
-            : null}
-          {scoreDetails.Gpa
-            ? (gpa = scoreDetails.Gpa) && (
-                <td className="red-background">
-                  {' '}
-                  {scoreDetails.Gpa && (
-                    <td style={{ borderStyle: 'hidden' }}>
-                      {scoreDetails.Gpa}
-                    </td>
-                  )}
-                </td>
-              )
-            : null}
-          <td className="red-background">
-            {scoreDetails.score >= 55 ? (
-              <div className="text-success pt-3">کامیاب </div>
-            ) : (
-              <div className="text-danger pt-3">ناکام </div>
-            )}
-          </td>
-          <td className="red-background d-flex justify-content-center pt-4 ">
-            <Input type="checkbox" />
-          </td>
-        </tr>
-      </>
-    );
-    // const studentRows = scores.map((score, i) => {
-    //   const student_name =
-    //     i === 0 ? (
-    //       <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-    //         {student.student_name}
-    //       </td>
-    //     ) : null;
-    //   const student_father_name =
-    //     i === 0 ? (
-    //       <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-    //         {student.student_father_name}
-    //       </td>
-    //     ) : null;
-    //   const student_id =
-    //     i === 0 ? (
-    //       <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-    //         {student.student_id}
-    //       </td>
-    //     ) : null;
-    //   const index_no =
-    //     i === 0 ? (
-    //       <td rowSpan={index.length + 1} style={{ borderStyle: 'hidden' }}>
-    //         {index + 1}
-    //       </td>
-    //     ) : null;
+  // notification message
+  const createNotification = (type, className) => {
+    const cName = className || '';
+    switch (type) {
+      case 'success':
+        NotificationManager.success(
+          'نمری په بریالیتوب سره تاید شوی',
+          'موفقیت',
+          3000,
+          null,
+          null,
+          cName
+        );
+        break;
+      case 'error':
+        NotificationManager.error(
+          'نمری تاید نشوی, بیا کوشش وکری',
+          'خطا',
+          9000,
+          () => {
+            alert('callback');
+          },
+          null,
+          cName
+        );
+        break;
+      default:
+        NotificationManager.info('Info message');
+        break;
+    }
+  };
 
-    //   return (
-    //     <>
-    //       <tr key={i} className="red-background">
-    //         <td className="red-background">{index_no}</td>
-    //         <td className="red-background"> {student_name}</td>
-    //         <td className="red-background">{student_father_name}</td>
-    //         <td className="red-background">{student_id}</td>
-    //         <td className="red-background">
-    //           {<td style={{ borderStyle: 'hidden' }}>{score.score}</td>}
-    //         </td>
-    //         <td className="red-background">
-    //           {score.exam_type == 1 && (
-    //             <td style={{ borderStyle: 'hidden' }}>اول</td>
-    //           )}
-    //           {score.exam_type == 2 && (
-    //             <td style={{ borderStyle: 'hidden', color: '#de0a26' }}>دوم</td>
-    //           )}
-    //         </td>
-    //         {score.grad
-    //           ? (grad = score.grad) && (
-    //               <td className="red-background">
-    //                 {' '}
-    //                 {score.grad && (
-    //                   <td style={{ borderStyle: 'hidden' }}>{score.grad}</td>
-    //                 )}
-    //               </td>
-    //             )
-    //           : null}
-    //         {score.Gpa
-    //           ? (gpa = score.Gpa) && (
-    //               <td className="red-background">
-    //                 {' '}
-    //                 {score.Gpa && (
-    //                   <td style={{ borderStyle: 'hidden' }}>{score.Gpa}</td>
-    //                 )}
-    //               </td>
-    //             )
-    //           : null}
-    //         <td className="red-background">
-    //           {score.score >= 55 ? (
-    //             <div className="text-success pt-3">کامیاب </div>
-    //           ) : (
-    //             <div className="text-danger pt-3">ناکام </div>
-    //           )}
-    //         </td>
-    //       </tr>
-    //     </>
-    //   );
-    // });
-    return (
-      <>
-        <tbody key={index} className={student.name + ' ' + ' border border '}>
-          {studentRows}
-        </tbody>
-      </>
-    );
-  });
-
-  const onSubmit = async (values) => {
-    // axios
-    //   .get(
-    //     `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
-    //   )
-
-    //   .then((response) => {
-    //     console.log('response.data', response.data);
-    //     setStudents(response.data);
-    //   });
-    // console.log(
-    //   `http://localhost:8000/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`
-    // );
-    // console.log('students', students);
-
+  const fechtStudents = async () => {
+    console.log('selecedStudyTime.value', selecedStudyTime.value);
     const response = await callApi(
-      `/api/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`,
+      `students/marks-verification-subjects-list/?institute=${selectedInstitute.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}&classs=${selectedClass.value}`,
       '',
       null
     );
-
     if (response.data && response.status === 200) {
+      console.log('response of students', response);
       setStudents(response.data);
-      //   console.log('response.data', response.data);
-      //   console.log('response', response);
       setIsNext(true);
-      //   console.log('students', students);
     } else {
       console.log('students error');
     }
+  };
 
-    // split selected class to get semester and section
-    // const classArray = selectedClass.label.split(' - ');
-    // setClasss(classArray[0]);
-    // setSemester(classArray[1]);
-    // setSection(classArray[2]);
+  const onSubmit = async (values) => {
+    const educationalYear = selectedEducationalYear;
+    const instituteId = selectedInstitute.value;
+    const departmentId = selectedDepartment.value;
+    const classId = selectedClass.value;
+    const subjectId = selectedSubject.value;
+    console.log('values', values);
 
-    // console.log('values', values);
-    // const educational_year = selectedEducationalYear;
-    // const institute_id = selectedInstitute.value;
-    // const department = selectedDepartment.value;
-    // const class_id = selectedClass.value;
-    // const subject_id = selectedSubject.value;
-    // students.map((student) => {
-    //   const examData = {
-    //     educational_year: educational_year,
-    //     student_id: student.student_id,
-    //     institute_id: institute_id,
-    //     Department: department,
-    //     class_id: class_id,
-    //   };
-    //   //REMOVE USER FROM HERE, IT'S JUST FOR TESTING
-    //   //EXAM TYPE IS SELECTED 1, BECUASE THIS PAGE IS FOR THE FIRST CHANCE EXAM MRKS
-    //   console.log('exam', examData);
-    //   const data = {
-    //     subject: subject_id,
-    //     exam_types: 1,
-    //     passing_score: passingScore,
-    //     grad: subjectGrad,
-    //     Gpa: subjectGPA,
-    //     user_id: 1,
-    //     mark: values.score[student.student_id],
-    //   };
-    //   console.log('data', data);
-    //   // axios.post('http://localhost:8000/api/marks/', data);
-    // });
+    const newStudents = students.map((student, index) => {
+      return {
+        student: student.student,
+        verification_result: values.verification[student.student].value,
+        exam_id: student.class_exam_id,
+      };
+    });
+    console.log('newStudents', newStudents);
+
+    let data = [
+      {
+        subject: subjectId,
+        classs: classId,
+      },
+      ...newStudents,
+    ];
+
+    const response = await callApi(
+      'students/verify-subject-marks/',
+      'POST',
+      data
+    );
+    if (
+      response.status === 200 ||
+      response.status === 201 ||
+      response.status === 202
+    ) {
+      console.log('response of students', response);
+      setIsSubmitted(true);
+      createNotification('success', 'filled');
+    } else {
+      console.log('marks error');
+      // setIsSubmitted(false);
+      createNotification('error', 'filled');
+    }
   };
 
   return (
     <>
       <Card>
         <div className="mt-4 ml-5">
-          <h2 className="mt-5 ml-5 titleStyle">
-            {<IntlMessages id="marks.marksDisplayTitle" />}
+          <h2 className="mt-5 m-5 titleStyle">
+            {/* {<IntlMessages id="student.assignment-to-class" />} */}د نمرو
+            تایدی
           </h2>
         </div>
         <CardBody>
           {!isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={onSubmit}
-              validationSchema={ValidationSchema}
+              onSubmit={fechtStudents}
+              // validationSchema={ValidationSchema}
             >
               {({
                 errors,
@@ -449,14 +320,13 @@ const MarksDisplay = ({ match }) => {
                 setFieldTouched,
                 setFieldValue,
               }) => (
-                <Form className="av-tooltip tooltip-label-right style ">
+                <Form className="av-tooltip tooltip-label-right  style">
                   <Row className="m-5">
                     <Colxx xxs="6">
                       {/* set if condition, if institutes are loaded */}
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="forms.InstituteLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="institute"
@@ -478,7 +348,6 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.StudyTimeLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="studyTime"
@@ -495,24 +364,24 @@ const MarksDisplay = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
-                      <FormGroup className="form-group has-float-label mt-5 error-l-150 ">
+
+                      <FormGroup className="form-group has-float-label mt-5  error-l-150">
                         <Label>
                           <IntlMessages id="forms.educationYearLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
-                        <Field
-                          type="number"
-                          id="educationlaYear"
-                          className="form-control fieldStyle"
-                          name="educationlaYear"
-                          // assign value to selectedEducationalYear
+                        <FormikReactSelect
+                          name="educationalYear"
+                          id="educationalYear"
+                          options={educationalYearsOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationlaYear
+                            values.educationalYear
                           )}
                         />
-                        {errors.educationlaYear && touched.educationlaYear ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.educationlaYear}
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white ">
+                            {errors.educationalYear}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -522,7 +391,6 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label error-l-150 ">
                         <Label>
                           <IntlMessages id="marks.ClassLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="classs"
@@ -535,7 +403,7 @@ const MarksDisplay = ({ match }) => {
                           required
                         />
                         {errors.classs && touched.classs ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          <div className="invalid-feedback d-block bg-danger text-white ">
                             {errors.classs}
                           </div>
                         ) : null}
@@ -544,7 +412,6 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="forms.studyDepartment" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="department"
@@ -557,7 +424,7 @@ const MarksDisplay = ({ match }) => {
                           required
                         />
                         {errors.department && touched.department ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          <div className="invalid-feedback d-block bg-danger text-white ">
                             {errors.department}
                           </div>
                         ) : null}
@@ -566,7 +433,6 @@ const MarksDisplay = ({ match }) => {
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="subject"
@@ -579,7 +445,7 @@ const MarksDisplay = ({ match }) => {
                           required
                         />
                         {errors.subject && touched.subject ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          <div className="invalid-feedback d-block bg-danger text-white ">
                             {errors.subject}
                           </div>
                         ) : null}
@@ -606,182 +472,325 @@ const MarksDisplay = ({ match }) => {
             </Formik>
           ) : (
             <>
-              <Row
-                className="border border bg-primary me-5 p-1 "
-                style={{ marginInline: '6%' }}
-              >
-                <Colxx xxs="2">
-                  <Label>
-                    <IntlMessages id="forms.FieldLabel" />
-                  </Label>
-                  {/* {console.log('selectedDepartment', selectedDepartment)} */}
-                  <h6>{selectedDepartment.label}</h6>
-                </Colxx>
-
-                <Colxx xxs="2">
-                  <Label>
-                    <IntlMessages id="forms.StudyTimeLabel" />
-                  </Label>
-                  <h6>{selecedStudyTime.label}</h6>
-                </Colxx>
-                <Colxx xxs="2">
-                  <Label>
-                    <IntlMessages id="marks.ClassLabel" />
-                  </Label>
-                  <h6>{selectedClassLabel.classs}</h6>
-                </Colxx>
-
-                <Colxx xxs="2">
-                  <Label>
-                    <IntlMessages id="marks.SemesterLabel" />
-                  </Label>
-                  <h6>{selectedClassLabel.semester}</h6>
-                </Colxx>
-
-                <Colxx xxs="2">
-                  <Label>
-                    <IntlMessages id="marks.SectionLabel" />
-                  </Label>
-                  <h6>{selectedClassLabel.section}</h6>
-                </Colxx>
-
-                <Colxx xxs="2">
-                  <Label>
-                    <IntlMessages id="marks.SubjectLabel" />
-                  </Label>
-                  <h6>{selectedSubject.label}</h6>
-                </Colxx>
-              </Row>
-
-              <Row
-                className="justify-content-center border"
-                style={{ marginInline: '6%' }}
-              >
-                <table className="table ">
-                  <thead className="thead-dark">
-                    <tr>
-                      <th scope="col">
-                        <IntlMessages id="marks.No" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.FullName" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.FatherName" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.ID" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.Marks" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.type" />
-                      </th>{' '}
-                      {grad ? (
-                        <th scope="col">
-                          <IntlMessages id="marks.grade" />
-                        </th>
-                      ) : null}
-                      {gpa ? (
-                        <th scope="col">
-                          <IntlMessages id="marks.gpa" />
-                        </th>
-                      ) : null}
-                      <th scope="col">
-                        <IntlMessages id="marks.result" />
-                      </th>{' '}
-                      <th scope="col">
-                        <IntlMessages id="marks.verify" />
-                      </th>{' '}
-                    </tr>
-                  </thead>
-                  {/* </table>
-              </Row>
-
-              <Row
-                className="justify-content-center  border border"
-                style={{
-                  marginInline: '16%',
-                  height: '30rem',
-                  overflowY: 'scroll',
-                  overflowX: 'hidden',
-                }}
-              >
-                <table class="table"> */}
-                  {/* <tbody
-                    className="border border "
-                    style={{
-                      height: '200px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
+              {!isSubmitted ? (
+                <>
+                  <Row
+                    className="border border bg-primary me-5 p-1 "
+                    style={{ marginInline: '16%' }}
                   >
-                    {students.map((student, index) => (
-                      <tr>
-                        <th scope="row">{index}</th>
-                        <td>{student.name}</td>
-                        <td>{student.father_name}</td>
-                        <td>{student.student_id}</td>
-                        <td>{student.marks}</td>
-                      </tr>
-                    ))}
-                  </tbody> */}
+                    <Colxx xxs="2">
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                        <IntlMessages id="forms.FieldLabel" />
+                      </Label>
+                      {console.log('selectedDepartment', selectedDepartment)}
+                      <h5>{selectedDepartment.label}</h5>
+                    </Colxx>
 
-                  {tbodies}
-                  <tfoot className="thead-dark">
-                    <tr>
-                      <th scope="col">
-                        <IntlMessages id="marks.No" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.FullName" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.FatherName" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.ID" />
-                      </th>
-                      <th scope="col">
-                        <IntlMessages id="marks.Marks" />
-                      </th>
-                      {grad ? (
-                        <th scope="col">
-                          <IntlMessages id="marks.grade" />
-                        </th>
-                      ) : null}
-                      {gpa ? (
-                        <th scope="col">
-                          <IntlMessages id="marks.gpa" />
-                        </th>
-                      ) : null}
-                      <th scope="col">
-                        <IntlMessages id="marks.type" />
-                      </th>{' '}
-                      <th scope="col">
-                        <IntlMessages id="marks.result" />
-                      </th>{' '}
-                      <th scope="col">
-                        <IntlMessages id="marks.verify" />
-                      </th>{' '}
-                    </tr>
-                  </tfoot>
-                </table>
-              </Row>
-              <Row className="justify-content-center ">
-                <Colxx
-                  xxs="9"
-                  className="d-flex justify-content-between my-5 col-10"
-                >
-                  <Button className="" onClick={() => setIsNext(false)}>
-                    <IntlMessages id="button.Back" />
-                  </Button>
-                  <Button className="" onClick={() => setIsNext(false)}>
-                    <IntlMessages id="button.verify" />
-                  </Button>
-                </Colxx>
-              </Row>
+                    <Colxx xxs="2">
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                        <IntlMessages id="marks.ClassLabel" />
+                      </Label>
+                      <h5>{selectedClass.label}</h5>
+                    </Colxx>
+                    <Colxx xxs="2">
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                        <IntlMessages id="marks.SemesterLabel" />
+                      </Label>
+                      <h5>{selectedSemester.label}</h5>
+                    </Colxx>
+
+                    <Colxx xxs="2">
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                        <IntlMessages id="forms.StudyTimeLabel" />
+                      </Label>
+                      <h5>{selecedStudyTime.label}</h5>
+                    </Colxx>
+                  </Row>
+                  <Formik
+                    initialValues={submitInitialValues}
+                    onSubmit={onSubmit}
+                    // validationSchema={ValidationSchema}
+                  >
+                    {({ errors, values, setFieldValue, setFieldTouched }) => (
+                      <Form className="av-tooltip tooltip-label-right ">
+                        <Row
+                          className="justify-content-center  border border"
+                          style={{
+                            marginInline: '16%',
+                            height: '30rem',
+                            overflowY: 'scroll',
+                            overflowX: 'hidden',
+                          }}
+                        >
+                          <table class="table ">
+                            <thead className="thead-dark">
+                              <tr>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.No" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.FullName" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.FatherName" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.ID" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.Marks" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  {/* <IntlMessages id="marks.Marks" /> */}
+                                  result
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody
+                              className="border border "
+                              style={{
+                                overflowY: 'scroll',
+                                overflowX: 'hidden',
+                              }}
+                            >
+                              {students.length > 0 &&
+                                students.map((student, index) => {
+                                  return (
+                                    <tr key={index}>
+                                      <th
+                                        scope="row"
+                                        style={{
+                                          fontSize: '20px',
+                                          textAlign: 'center',
+                                        }}
+                                      >
+                                        {index + 1}
+                                      </th>
+                                      <td
+                                        style={{
+                                          fontSize: '20px',
+                                          textAlign: 'center',
+                                        }}
+                                      >
+                                        {student.student_name}
+                                      </td>
+                                      <td
+                                        style={{
+                                          fontSize: '20px',
+                                          textAlign: 'center',
+                                        }}
+                                      >
+                                        {student.student_father_name}
+                                      </td>
+                                      <td
+                                        style={{
+                                          fontSize: '20px',
+                                          textAlign: 'center',
+                                        }}
+                                      >
+                                        {student.student}
+                                      </td>
+                                      <td
+                                        style={{
+                                          fontSize: '20px',
+                                          textAlign: 'center',
+                                        }}
+                                      >
+                                        {student.subject_id.map((subject) => {
+                                          return <>{subject.marks}</>;
+                                        })}
+                                      </td>
+
+                                      {/* Marks Entry */}
+                                      <td>
+                                        <div
+                                          style={{
+                                            margin: '-7px',
+                                            fontSize: '15px',
+                                          }}
+                                        >
+                                          {/* <Field
+                                          type="number"
+                                          style={{
+                                            fontSize: '15px',
+                                            textAlign: 'center',
+                                          }}
+                                          className="form-control"
+                                          name={`score[${student.student_id}]`}
+                                        />
+                                        {errors.score && touched.score ? (
+                                          <div className="invalid-feedback d-block">
+                                            {errors.score}
+                                          </div>
+                                        ) : null} */}
+
+                                          <FormikReactSelect
+                                            name={`verification[${student.student}]`}
+                                            id={`verification[${student.student}]`}
+                                            // value={`values.section[${student.student_id}]`}
+                                            options={verificationValueOptions}
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            required
+                                          />
+                                          {errors.verification &&
+                                          touched.verification ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.verification}
+                                            </div>
+                                          ) : null}
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                            </tbody>
+                            <tfoot className="thead-dark">
+                              <tr>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.No" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.FullName" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.FatherName" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.ID" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  <IntlMessages id="marks.Marks" />
+                                </th>
+                                <th
+                                  scope="col"
+                                  style={{
+                                    fontSize: '15px',
+                                    textAlign: 'center',
+                                  }}
+                                >
+                                  result
+                                </th>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        </Row>
+                        <Row className=" justify-content-center">
+                          <Colxx xxs="9" className="m-5">
+                            <Button
+                              className=" m-4 "
+                              color="primary"
+                              onClick={() => setIsNext(false)}
+                            >
+                              <IntlMessages id="button.Back" />
+                            </Button>
+
+                            <div className="d-flex justify-content-between align-items-center m-4 float-right">
+                              <Button
+                                size="lg"
+                                type="submit"
+                                color="primary"
+                                // onSubmit={onSubmit}
+                                // onClick={() => setIsSubmitted(true)}
+                              >
+                                <IntlMessages id="button.SubmitButton" />
+                              </Button>
+                            </div>
+                          </Colxx>
+                        </Row>
+                      </Form>
+                    )}
+                  </Formik>
+                </>
+              ) : (
+                <div className="wizard-basic-step text-center pt-3">
+                  <div>
+                    <h1 className="mb-2">
+                      <IntlMessages id="wizard.content-thanks" />
+                    </h1>
+                    <h3>
+                      {/* <IntlMessages id="wizard.registered" /> */}
+                      زده کوونکو ته صنف په بریالیتوب سره تعین شو
+                    </h3>
+                    <Button
+                      className="m-5 bg-primary"
+                      // onClick={() => window.location.reload()}
+                      onClick={() => {
+                        setIsNext(false);
+                        setIsSubmitted(false);
+                      }}
+                    >
+                      <IntlMessages id="button.Back" />
+                    </Button>
+                  </div>
+                </div>
+              )}
             </>
           )}
         </CardBody>
@@ -790,4 +799,4 @@ const MarksDisplay = ({ match }) => {
   );
 };
 
-export default MarksDisplay;
+export default SubjectMarksVerification;

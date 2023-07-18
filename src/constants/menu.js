@@ -164,6 +164,12 @@ const data = [
         to: `${adminRoot}/students/subject-marks-verification`,
         newWindow: false,
       },
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'student.rejected-marks-update',
+        to: `${adminRoot}/students/rejected-marks-update`,
+        newWindow: false,
+      },
 
       {
         icon: 'MD.MdOutlineTransferWithinAStation',

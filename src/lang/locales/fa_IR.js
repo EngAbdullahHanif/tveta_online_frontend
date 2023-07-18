@@ -1446,6 +1446,7 @@ module.exports = {
   'menu.student.upgrade-class': 'د شاګرد دټولګي ارتقا',
   'student.assignment-to-class': 'شاګرد ته د ټولګي تعینوول',
   'student.subject-marks-verification': 'د مضمون د نمرو تایدی',
+  'student.rejected-marks-update': 'د رد شویو نمرو اپدیت',
 
   // Deletion flash message model
   'modal.deletion-message-title': 'تایید',

@@ -167,7 +167,7 @@ const data = [
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'student.rejected-marks-update',
-        to: `${adminRoot}/students/rejected-marks-update`,
+        to: `${adminRoot}/students/rejected-marks-updates`,
         newWindow: false,
       },
 

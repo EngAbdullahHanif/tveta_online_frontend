@@ -30,8 +30,10 @@ const Dashboards = ({ match, props }) => (
         roles={[
           userRole.superUser,
           userRole.admin,
-          userRole.provincial,
-          userRole.institute,
+          userRole.instituteDataentry,
+          userRole.instituteManager,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
         ]}
         props={props}
       />
@@ -83,12 +85,12 @@ const Dashboards = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}
-        roles={[userRole.Admin]}
+        roles={[userRole.admin]}
       />
       <ProtectedRoute
         path={`${match.url}/content`}
         component={ContentDefault}
-        roles={[userRole.Admin]}
+        roles={[userRole.admin]}
       />
       <ProtectedRoute
         path={`${match.url}/ecommerce`}

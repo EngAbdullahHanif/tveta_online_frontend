@@ -7,12 +7,19 @@ import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
 import { isMultiColorActive } from './constants/defaultValues';
 import { getDirection, getCurrentUser } from './helpers/Utils';
-import { AuthContext } from './context/AuthContext';
+import {
+  AuthContext,
+  ProvincesContext,
+  DistrictsContext,
+} from './context/AuthContext';
 import Application from 'context/Application';
 import Authentication from 'context/Authentication';
 import callApi from 'helpers/callApi';
+
 const App = ({ locale }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [provinces, setProvinces] = useState();
+  const [districts, setDistricts] = useState();
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
   useEffect(() => {
@@ -25,37 +32,84 @@ const App = ({ locale }) => {
     }
   }, [direction]);
 
-  // check if token is still valid
-  useEffect(() => {
+  const checkTokenValidity = async () => {
+    console.log('checking token validity');
     const token = localStorage.getItem('access_token');
-    console.log('token is: ', token);
+    console.log('token is:', token);
     if (token) {
-      const response = callApi('auth/token/verify/', 'POST', { token: token });
-      if (response && (response.status < 200 || response.status > 299)) {
+      const response = await callApi('auth/token/verify/', 'POST', {
+        token: token,
+      });
+      if (response && response.status >= 200 && response.status <= 299) {
+        console.log('token is valid');
+      } else {
         console.log('token is invalid. removing it from local storage');
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
         setUser(null);
       }
+    } else {
+      localStorage.removeItem('user');
+      setUser(null);
     }
+  };
+
+  const fetchProvinces = async () => {
+    const response = await callApi('core/provinces/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.native_name,
+      }));
+
+      setProvinces(updatedData);
+    } else {
+      console.log('province error');
+    }
+  };
+
+  const fetchDistricts = async (provinceId) => {
+    const response = await callApi(`core/districts/?province`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.native_name,
+      }));
+      setDistricts(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+  // check if token is still valid
+  useEffect(async () => {
+    checkTokenValidity();
+    fetchProvinces();
+    fetchDistricts();
   }, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
-      <div className="h-100">
-        <IntlProvider
-          locale={currentAppLocale.locale}
-          messages={currentAppLocale.messages}
-        >
-          <>
-            <NotificationContainer />
-            {isMultiColorActive && <ColorSwitcher />}
-            <Suspense fallback={<div className="loading" />}>
-              <Router>{!user ? <Authentication /> : <Application />}</Router>
-            </Suspense>
-          </>
-        </IntlProvider>
-      </div>
+      <ProvincesContext.Provider value={{ provinces }}>
+        <DistrictsContext.Provider value={{ districts }}>
+          <div className="h-100">
+            <IntlProvider
+              locale={currentAppLocale.locale}
+              messages={currentAppLocale.messages}
+            >
+              <>
+                <NotificationContainer />
+                {isMultiColorActive && <ColorSwitcher />}
+                <Suspense fallback={<div className="loading" />}>
+                  <Router>
+                    {!user ? <Authentication /> : <Application />}
+                  </Router>
+                </Suspense>
+              </>
+            </IntlProvider>
+          </div>
+        </DistrictsContext.Provider>
+      </ProvincesContext.Provider>
     </AuthContext.Provider>
   );
 };

@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import TopNav from 'containers/navs/Topnav';
 import Sidebar from 'containers/navs/Sidebar';
 import Footer from 'containers/navs/Footer';
+import { AuthContext } from 'context/AuthContext';
 
 const AppLayout = ({ containerClassnames, children, history }) => {
+  const { user } = useContext(AuthContext);
+  console.log('user from context is: ', user);
   return (
     <div id="app-container" className={containerClassnames}>
       <TopNav history={history} />
-      <Sidebar />
+      <Sidebar currentUser={user} />
       <main>
         <div className="container-fluid">{children}</div>
       </main>

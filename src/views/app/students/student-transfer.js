@@ -123,10 +123,10 @@ const StudentsTransfer = (values) => {
     }
   };
 
-  const handleSearch = async (event, values) => {
-    setSearchResult(event);
+  const handleSearch = async (values) => {
+    setSearchResult(false);
     const response = await callApi(
-      `students/student_accademic/?student_id=${studentId}`,
+      `students/student_accademic/?student_id=${values.searchfield}`,
       '',
       null
     );
@@ -164,14 +164,14 @@ const StudentsTransfer = (values) => {
   const onSubmit = async (values) => {
     // setReload(true);
     const data = {
-      student_id: studentId,
-      institute_id: values.institute.value,
+      student: student.id,
+      institute: values.institute.value,
       transfer_date: values.transferDate,
       educational_year: values.educationalYear.value,
       shift: values.studyTime.value, //shift
       language: values.mediumOfInstruction.value,
-      type: 1, //type = 1 means this is student new institute, the old institute type is now 2 which means old institute
-      is_transfer: 2, //is_transfer = 2 means transfered
+      type: 'inprogress', //type = 1 means this is student new institute, the old institute type is now 2 which means old institute
+      is_transfer: true, //is_transfer = 2 means transfered
     };
 
     try {
@@ -249,7 +249,7 @@ const StudentsTransfer = (values) => {
                                   style={{ fontSize: '80%' }}
                                   type="submit"
                                   color="primary"
-                                  onClick={() => handleSearch(false)}
+                                  onClick={() => setSearchResult(true)}
                                 >
                                   <span className="spinner d-inline-block">
                                     <span className="bounce1" />
@@ -265,7 +265,6 @@ const StudentsTransfer = (values) => {
                                 className="form-control fieldStyle "
                                 name="searchfield"
                                 type="text"
-                                onKeyUp={() => setStudentId(values.searchfield)}
                               />
                               {errors.searchfield && touched.searchfield ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
@@ -293,7 +292,7 @@ const StudentsTransfer = (values) => {
 
                             <Colxx>
                               <img
-                                src={student.student_photo}
+                                src={student.photo}
                                 alt="Photo"
                                 width={'10%'}
                               />{' '}

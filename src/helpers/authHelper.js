@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { isAuthGuardActive } from 'constants/defaultValues';
 import { AuthContext } from 'context/AuthContext';
+import { roleRoots } from 'constants/defaultValues';
 
 const ProtectedRoute = ({
   component: Component,
@@ -13,25 +14,31 @@ const ProtectedRoute = ({
     if (isAuthGuardActive) {
       if (user) {
         if (roles) {
-          // [{name: 'admin'}, {name: 'user'}}]
-          // check if allowed roles is present in user roles
-          user.groups.forEach((group) => {
-            if (roles.includes(group.name)) {
+          console.log('roles are', roles);
+          const groups = user.groups;
+          console.log('groups are', groups);
+          console.log('groups[0].name', groups[0].name);
+          for (let i = 0; i < groups.length; i++) {
+            console.log('groups inside loop', groups, i);
+            if (roles.includes(groups[i].name)) {
               return <Component {...props} />;
             }
-          });
-          return <Component {...props} />;
-
+          }
+          console.log('could not found user group in roles');
           return (
             <Redirect
               to={{
                 pathname: '/unauthorized',
-                state: { from: props.location },
+                state: {
+                  from: props.location,
+                  returnPath: roleRoots[user.groups[0].name],
+                },
               }}
             />
           );
+        } else {
+          return <Component {...props} />;
         }
-        return <Component {...props} />;
       }
       return (
         <Redirect
@@ -42,7 +49,6 @@ const ProtectedRoute = ({
         />
       );
     }
-    return <Component {...props} />;
   };
 
   return <Route {...rest} render={setComponent} />;

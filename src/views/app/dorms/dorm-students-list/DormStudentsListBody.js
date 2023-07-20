@@ -108,16 +108,27 @@ const DormListBody = ({ dormStudent, isSelect, collect, onCheckItem }) => {
               )}
 
               {/* Status */}
-              {dormStudent.status == 'active' ? (
+              {dormStudent.status == 'inprogress' && (
                 <p
                   className="mb-1 text-small "
                   style={{ width: '15%', fontSize: '18px' }}
                 >
-                  <Badge color="primary" pill>
+                  <Badge color="success" pill>
                     <IntlMessages id="forms.StudyTypeInrolled" />
                   </Badge>
                 </p>
-              ) : (
+              )}
+              {dormStudent.status == 'past' && (
+                <p
+                  className="mb-1 text-small"
+                  style={{ width: '15%', fontSize: '18px' }}
+                >
+                  <Badge color="warning" pill>
+                    <IntlMessages id="forms.StudyTypePast" />
+                  </Badge>
+                </p>
+              )}
+              {dormStudent.status == 'dismiss' && (
                 <p
                   className="mb-1 text-small"
                   style={{ width: '15%', fontSize: '18px' }}

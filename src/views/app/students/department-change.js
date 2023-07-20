@@ -63,6 +63,7 @@ const DepartmentChange = (values) => {
   const [isNext, setIsNext] = useState(true);
   const [institutes, setInstitutes] = useState();
   const [isLoad, SetIsLoad] = useState();
+  const [departments, setDepartments] = useState([]);
 
   const initialValues = {
     department: [],
@@ -119,24 +120,20 @@ const DepartmentChange = (values) => {
     }
   };
 
-  const handleSearch = async (event, values) => {
-    setSearchResult(event);
+  const handleSearch = async (values) => {
+    console.log('values: ', values);
+    setSearchResult(false);
+    if (!values.searchfield) return;
     const response = await callApi(
-      `students/student_accademic/?student_id=${studentId}`,
+      `students/student_accademic/?student_id=${values.searchfield}`,
       '',
       null
     );
     if (response.data && response.status === 200) {
-      studentId == response.data.student_id
-        ? setStudentIdMatch(true)
-        : setStudentIdMatch(false);
-      if (response.data) {
-        setStudent(response.data);
-        setData(true);
-      } else {
-        setMessage('Student not found');
-      }
+      setStudentIdMatch(true);
+      setStudent(response.data);
     } else {
+      setStudentIdMatch(false);
       console.log('student search error');
     }
   };
@@ -154,38 +151,66 @@ const DepartmentChange = (values) => {
     }
   };
 
+  const fetchDepartments = async () => {
+    console.log('student form fetchDepartments: ', student);
+    if (!student) return;
+
+    const response = await callApi(
+      `institute/institite-department/?institute=${student.institute_id}`,
+      '',
+      null
+    );
+    console.log('department response: ', response);
+    // console.log('response of department', response);
+    if (response.data && response.status === 200) {
+      console.log('response of department', response);
+      const updatedData = await response.data.map((item) => ({
+        value: item.department.id,
+        label: item.department.name,
+      }));
+      console.log('updatedData of department', updatedData);
+      setDepartments(updatedData); //Set it up when data in Backend is ready
+    } else {
+      console.log('department error');
+    }
+  };
+
   useEffect(() => {
     fetchInstitutes();
+    fetchDepartments();
   }, []);
+
   const onSubmit = async (values) => {
+    console.log(values);
     setReload(true);
     const data = {
-      student_id: studentId,
-      institute_id: values.institute.value,
-      transfer_date: values.transferDate,
-      educational_year: values.educationalYear.value,
-      shift: values.studyTime.value, //shift
-      language: values.mediumOfInstruction.value,
-      type: 1, //type = 1 means this is student new institute, the old institute type is now 2 which means old institute
-      is_transfer: 2, //is_transfer = 2 means transfered
+      student_id: student.id,
+      institute_id: student.institute_id,
+      department_id: values.department.value,
     };
 
-    // try {
-    //   const response = await callApi(`api/student-transfer/`, 'POST', data);
-    //   if (response.status === 200 || response.status === 201) {
-    //     console.log('success');
-    //     createNotification('success', 'filled');
-    //     setReload(true);
-    //   }
-    // } catch (error) {
-    //   if (error.message === 'Resource not found') {
-    //     console.log('student not found');
-    //     createNotification('info', 'filled');
-    //   } else {
-    //     console.log('An error occurred:', error.message);
-    //     createNotification('error', 'filled');
-    //   }
-    // }
+    console.log(data);
+
+    try {
+      const response = await callApi(
+        `students/${student.id}/department`,
+        'PATCH',
+        data
+      );
+      if (response.status === 200 || response.status === 201) {
+        console.log('success');
+        createNotification('success', 'filled');
+        setReload(true);
+      }
+    } catch (error) {
+      if (error.message === 'Resource not found') {
+        console.log('student not found');
+        createNotification('info', 'filled');
+      } else {
+        console.log('An error occurred:', error.message);
+        createNotification('error', 'filled');
+      }
+    }
 
     // if (response.status === 200 || response.status === 201) {
     //   console.log('success');
@@ -241,7 +266,6 @@ const DepartmentChange = (values) => {
                                   style={{ fontSize: '80%' }}
                                   type="submit"
                                   color="primary"
-                                  onClick={() => handleSearch(false)}
                                 >
                                   <span className="spinner d-inline-block">
                                     <span className="bounce1" />
@@ -257,7 +281,6 @@ const DepartmentChange = (values) => {
                                 className="form-control fieldStyle "
                                 name="searchfield"
                                 type="text"
-                                onKeyUp={() => setStudentId(values.searchfield)}
                               />
                               {errors.searchfield && touched.searchfield ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
@@ -357,7 +380,7 @@ const DepartmentChange = (values) => {
                                         margin: '5% 6% 15% 8%',
                                         paddingInline: '10%',
                                       }}
-                                      onClick={() => handleSearch(true)}
+                                      onClick={() => setSearchResult(true)}
                                     >
                                       <span className="label">
                                         <IntlMessages id="button.Back" />
@@ -411,7 +434,7 @@ const DepartmentChange = (values) => {
                                 size="lg"
                                 type="submit"
                                 color="primary"
-                                onClick={() => handleSearch(true)}
+                                onClick={() => setSearchResult(true)}
                               >
                                 <span className="label">
                                   <IntlMessages id="button.Back" />
@@ -457,7 +480,7 @@ const DepartmentChange = (values) => {
                                 name="department"
                                 id="department"
                                 value={values.department}
-                                options={departmentOptions}
+                                options={departments}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />

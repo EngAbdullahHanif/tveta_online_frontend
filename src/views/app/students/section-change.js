@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, useFormikContext } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import { educationalYearsOptions } from '../global-data/options';
-import { studyTimeOptions } from '../global-data/options';
 import { mediumOfInstructionOptions } from '../global-data/options';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../../assets/css/global-style.css';
 import { classChangeValidationSchema } from './../global-data/forms-validation';
+
+// import shift times from options
+import { studyTimeOptions } from '../../app/global-data/options';
 
 import * as Yup from 'yup';
 import {
@@ -38,6 +40,7 @@ import {
 import { department } from 'lang/locales/fa_IR';
 
 import config from '../../../config';
+import { isCompositeComponent } from 'react-dom/test-utils';
 
 const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;
@@ -56,24 +59,27 @@ const SearchResultSchema = Yup.object().shape({
     .required(<IntlMessages id="search.studentIdsearchErr" />),
 });
 
-const DepartmentChange = (values) => {
-  const [studentId, setStudentId] = useState('');
+const DepartmentChange = (props) => {
+  const [studentId, setStudentId] = useState();
   const [student, setStudent] = useState('');
   const [data, setData] = useState(false);
   const [message, setMessage] = useState('');
   const [isNext, setIsNext] = useState(true);
   const [institutes, setInstitutes] = useState();
   const [isLoad, SetIsLoad] = useState();
+  const [classes, setClasses] = useState();
 
   const initialValues = {
     class: [],
     searchfield: '',
+    shift: [],
   };
 
   const handleClick = (event) => {
     setIsNext(event);
     setData(true);
   };
+
   const [searchResult, setSearchResult] = useState(true);
   const [studentIdMatch, setStudentIdMatch] = useState(false);
   const [reload, setReload] = useState(false);
@@ -120,24 +126,22 @@ const DepartmentChange = (values) => {
     }
   };
 
-  const handleSearch = async (event, values) => {
-    setSearchResult(event);
+  const handleSearch = async (values) => {
+    console.log('student ID is: ', values.searchfield);
+    if (!values.searchfield) return;
+    setSearchResult(false);
     const response = await callApi(
-      `students/student_accademic/?student_id=${studentId}`,
+      `students/student_accademic/?student_id=${values.searchfield}`,
       '',
       null
     );
     if (response.data && response.status === 200) {
-      studentId == response.data.student_id
-        ? setStudentIdMatch(true)
-        : setStudentIdMatch(false);
-      if (response.data) {
-        setStudent(response.data);
-        setData(true);
-      } else {
-        setMessage('Student not found');
-      }
+      setStudentIdMatch(true);
+      setStudent(response.data);
+      setData(true);
     } else {
+      setStudentIdMatch(false);
+
       console.log('student search error');
     }
   };
@@ -155,42 +159,70 @@ const DepartmentChange = (values) => {
     }
   };
 
+  const fetchClasses = async () => {
+    if (student?.grade) {
+      const response = await callApi(
+        'institute/classs/?grade=' + student.grade
+      );
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + ' - ' + item.semester + ' - ' + item.section,
+      }));
+      setClasses(updatedData);
+    }
+  };
+
   useEffect(() => {
     fetchInstitutes();
   }, []);
+
+  useEffect(() => {
+    fetchClasses();
+  }, [student]);
+
+  const handleFormChange = (values) => {
+    console.log('values after change', values);
+  };
+
   const onSubmit = async (values) => {
     setReload(true);
     const data = {
-      student_id: studentId,
+      classs: values.class.value,
+      shift: values.shift.value,
     };
+    console.log('data is : ', data);
 
-    // try {
-    //   const response = await callApi(`api/student-transfer/`, 'POST', data);
-    //   if (response.status === 200 || response.status === 201) {
-    //     console.log('success');
-    //     createNotification('success', 'filled');
-    //     setReload(true);
-    //   }
-    // } catch (error) {
-    //   if (error.message === 'Resource not found') {
-    //     console.log('student not found');
-    //     createNotification('info', 'filled');
-    //   } else {
-    //     console.log('An error occurred:', error.message);
-    //     createNotification('error', 'filled');
-    //   }
-    // }
+    try {
+      const response = await callApi(
+        `students/${student.id}/class`,
+        'PATCH',
+        data
+      );
+      if (response.status === 200 || response.status === 201) {
+        console.log('success');
+        createNotification('success', 'filled');
+        setReload(true);
+      }
+    } catch (error) {
+      if (error.message === 'Resource not found') {
+        console.log('student not found');
+        createNotification('info', 'filled');
+      } else {
+        console.log('An error occurred:', error.message);
+        createNotification('error', 'filled');
+      }
+    }
 
-    // if (response.status === 200 || response.status === 201) {
-    //   console.log('success');
-    //   createNotification('success', 'filled');
-    // } else if (response.status === 404 || response.status === 400) {
-    //   console.log('student not found');
-    //   createNotification('info', 'filled');
-    // } else {
-    //   console.log('error');
-    //   createNotification('error', 'filled');
-    // }
+    if (response.status === 200 || response.status === 201) {
+      console.log('success');
+      createNotification('success', 'filled');
+    } else if (response.status === 404 || response.status === 400) {
+      console.log('student not found');
+      createNotification('info', 'filled');
+    } else {
+      console.log('error');
+      createNotification('error', 'filled');
+    }
   };
 
   return (
@@ -235,7 +267,6 @@ const DepartmentChange = (values) => {
                                   style={{ fontSize: '80%' }}
                                   type="submit"
                                   color="primary"
-                                  onClick={() => handleSearch(false)}
                                 >
                                   <span className="spinner d-inline-block">
                                     <span className="bounce1" />
@@ -250,8 +281,8 @@ const DepartmentChange = (values) => {
                               <Field
                                 className="form-control fieldStyle "
                                 name="searchfield"
+                                id="searchfield"
                                 type="text"
-                                onKeyUp={() => setStudentId(values.searchfield)}
                               />
                               {errors.searchfield && touched.searchfield ? (
                                 <div className="invalid-feedback d-block bg-danger text-white">
@@ -351,7 +382,7 @@ const DepartmentChange = (values) => {
                                         margin: '5% 6% 15% 8%',
                                         paddingInline: '10%',
                                       }}
-                                      onClick={() => handleSearch(true)}
+                                      onClick={() => setSearchResult(true)}
                                     >
                                       <span className="label">
                                         <IntlMessages id="button.Back" />
@@ -396,7 +427,7 @@ const DepartmentChange = (values) => {
                           </Row>
                           <Row>
                             <Colxx>
-                              <Button
+                              {/* <Button
                                 className=" m-5 buttonStyle"
                                 style={{
                                   fontSize: '140%',
@@ -410,7 +441,7 @@ const DepartmentChange = (values) => {
                                 <span className="label">
                                   <IntlMessages id="button.Back" />
                                 </span>
-                              </Button>
+                              </Button> */}
                             </Colxx>
                           </Row>
                         </div>
@@ -441,7 +472,6 @@ const DepartmentChange = (values) => {
                               <IntlMessages id="new.section" />
                             </h1>
 
-                            {/* Institute Name*/}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="marks.ClassLabel" />
@@ -451,7 +481,7 @@ const DepartmentChange = (values) => {
                                 name="class"
                                 id="class"
                                 value={values.class}
-                                options={classOptions}
+                                options={classes}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                               />
@@ -459,6 +489,26 @@ const DepartmentChange = (values) => {
                               {errors.class && touched.class ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.class}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            <FormGroup className="form-group has-float-label ">
+                              <Label>
+                                وخت / وقت
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <FormikReactSelect
+                                name="shift"
+                                value={values.shift}
+                                options={studyTimeOptions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                              />
+
+                              {errors.shift && touched.shift ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.shift}
                                 </div>
                               ) : null}
                             </FormGroup>

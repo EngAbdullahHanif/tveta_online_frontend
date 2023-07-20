@@ -396,7 +396,8 @@ const ThumbListPages = ({ match }) => {
   };
 
   const handleChangeSelectAll = (isToggle) => {
-    if (selectedItems.length >= items.length) {
+    return;
+    if (selectedItems.length >= items?.length) {
       if (isToggle) {
         setSelectedItems([]);
       }

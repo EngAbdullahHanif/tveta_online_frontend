@@ -1,9 +1,24 @@
 export const userRole = {
   superUser: 'super_admin',
   admin: 'admin',
-  provincial: 'provincial',
+  provincial: 'ins_dataentry',
   institute: 'institute',
   user: 'user',
+  dormManager: 'dorm_manager',
+  instituteDataentry: 'ins_dataentry',
+  instituteManager: 'ins_manager',
+  authorityDataentry: 'hq_dataentry',
+  authoritySupervisor: 'hq_supervisor',
+  provinceDataentry: 'pr_dataentry',
+  provinceSupervisor: 'pr_supervisor',
+  dataentry: 'dataentry',
+  supervisor: 'supervisor',
+};
+
+export const roleRoots = {
+  admin: '/app',
+  dorm_manager: '/app/dorms/students',
+  ins_manager: '/app/students',
 };
 
 /* 
@@ -37,7 +52,7 @@ export const currentUser = {
   title: 'سمیع الله رحیمی',
   img: '/assets/img/profiles/l-1.jpg',
   date: 'آخرین بازدید امروز 15:24',
-  role: [userRole.Admin, userRole.Editor],
+  role: [userRole.admin, userRole.Editor],
 };
 
 export const adminRoot = '/app';

@@ -150,7 +150,7 @@ const Students = ({ match, props }) => {
             userRole.admin,
             userRole.institute,
             userRole.superUser,
-            userRole.provincial,
+            userRole.instituteDataentry,
           ]}
           props={props}
         />
@@ -174,7 +174,9 @@ const Students = ({ match, props }) => {
             userRole.admin,
             userRole.institute,
             userRole.superUser,
-            userRole.provincial,
+            userRole.instituteDataentry,
+            userRole.provinceDataentry,
+            userRole.authorityDataentry,
           ]}
           props={props}
         />
@@ -582,7 +584,7 @@ const Students = ({ match, props }) => {
         {/* <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}
-        roles={[userRole.Admin]}
+        roles={[userRole.admin]}
       />*/}
         <Redirect to="/error" />
       </Switch>

@@ -249,7 +249,7 @@ const ThumbListPages = ({ match }) => {
   ]);
 
   const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
+    const response = await callApi('institute/', 'GET');
     const updatedData = await response.data.map((item) => ({
       id: item.id,
       name: item.name,

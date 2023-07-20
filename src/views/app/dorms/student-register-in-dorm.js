@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 
 import callApi from 'helpers/callApi';
@@ -28,14 +28,13 @@ const SignupSchema = Yup.object().shape({
 });
 
 import config from '../../../config';
-const servicePath = config.API_URL;
-const studentAPIUrl = `${servicePath}/api/`;
-const dormsApiUrl = `${servicePath}/institute/dorms/`;
-const studentDormsApiUrl = `${servicePath}/api/student_dorms_create/`;
+
 const dormTypeOptions = [
   { value: 'in_dorm', label: 'بدل عاشه' },
   { value: 'cash', label: 'بدیل عاشه' },
 ];
+
+import { ProvincesContext, DistrictsContext } from 'context/AuthContext';
 
 const DormRegistration = (values) => {
   const initialValues = {
@@ -46,13 +45,18 @@ const DormRegistration = (values) => {
   };
 
   const [data, setData] = useState([]);
-  const [student, setStudent] = useState('');
-  const [institute, setInstitute] = useState([]);
-  const [department, setDepartment] = useState([]);
-  const [classs, setClasss] = useState([]); //classs is used because class is a reserved word
-  const [dorms, setDorms] = useState([]);
+  const [student, setStudent] = useState();
+  const [institute, setInstitute] = useState();
+  const [department, setDepartment] = useState();
+  const [classs, setClasss] = useState(); //classs is used because class is a reserved word
+  const [dorms, setDorms] = useState();
   const [successMessage, setSuccessMessage] = useState(false);
   const [isNext, setIsNext] = useState(true);
+  const provinces = useContext(ProvincesContext).provinces;
+  const districts = useContext(DistrictsContext).districts;
+
+  console.log('provinces context', provinces);
+  console.log('districts from context', districts);
 
   const fetchDorms = async () => {
     const response = await callApi(`institute/dorms/`, '', null);
@@ -86,49 +90,51 @@ const DormRegistration = (values) => {
 
   const handleSearch = async () => {
     const response = await callApi(`students/?student_id=${data}`, '', null);
+    let student_id;
     if (response.data && response.status === 200) {
       console.log('student', response.data.results);
       setStudent(response.data.results);
+      student_id = response.data.results[0].id;
     } else {
       console.log('student error');
+      return;
     }
 
     const instituteResponse = await callApi(
-      `students/student_institutes/?student_id=${data}`,
+      `students/${student_id}/institute`,
       '',
       null
     );
     if (instituteResponse.data && instituteResponse.status === 200) {
-      setInstitute(instituteResponse.data);
+      console.log('institute response', instituteResponse.data);
+      setInstitute(instituteResponse.data.institute);
     } else {
-      console.log('student institute error');
+      return;
     }
 
     const departmentResponse = await callApi(
-      `students/student_Departments/?student_id=${data}`,
+      `students/${student_id}/department`,
       '',
       null
     );
     if (departmentResponse.data && departmentResponse.status === 200) {
-      setDepartment(departmentResponse.data);
+      setDepartment(departmentResponse.data.department);
     } else {
       console.log('student department error');
     }
 
     const classResponse = await callApi(
-      `students/student_class/?student_id=${data}`,
+      `students/${student_id}/class`,
       '',
       null
     );
     if (classResponse.data && classResponse.status === 200) {
-      setClasss(classResponse.data);
+      setClasss(classResponse.data.classs);
     } else {
-      console.log('student class error');
+      return;
     }
-
-    console.log('Institute', institute);
-    console.log('deparment', classs);
   };
+
   const createNotification = (type, className) => {
     const cName = className || '';
     switch (type) {
@@ -182,7 +188,7 @@ const DormRegistration = (values) => {
     //REMOVE USER FROM HERE LATTER, IT'S JUST FOR TESTING PURPOSE
     const data = {
       dorm: values.dorm.value,
-      student: student[0].student_id,
+      student: student[0].id,
       dorm_type: values.dormType.value,
       educational_year: values.educationalYear.value,
     };
@@ -239,7 +245,7 @@ const DormRegistration = (values) => {
                         </div>
 
                         <Colxx style={{ paddingInline: '3%' }}>
-                          {student.length > 0 ? (
+                          {student ? (
                             <div className="border rounded">
                               <Label>
                                 <h6 className="mt-5 m-5">
@@ -291,9 +297,17 @@ const DormRegistration = (values) => {
                                           دایمی ادرس / ادرس دایمی
                                         </Label>
                                         <h3>
-                                          {student[0].main_province.name +
+                                          {provinces.filter(
+                                            (province) =>
+                                              province.value ===
+                                              student[0].main_province
+                                          )[0].label +
                                             ' - ' +
-                                            student[0].main_district.name +
+                                            districts.filter(
+                                              (district) =>
+                                                district.value ===
+                                                student[0].main_district
+                                            )[0].label +
                                             ' - ' +
                                             student[0].main_village}
                                         </h3>
@@ -302,48 +316,49 @@ const DormRegistration = (values) => {
                                           اوسنی ادرس / ادرس فعلی
                                         </Label>
                                         <h3>
-                                          {student[0].main_province.name +
+                                          {provinces.filter(
+                                            (province) =>
+                                              province.value ===
+                                              student[0].main_province
+                                          )[0].label +
                                             ' - ' +
-                                            student[0].main_district.name +
+                                            districts.filter(
+                                              (district) =>
+                                                district.value ===
+                                                student[0].main_district
+                                            )[0].label +
                                             ' - ' +
                                             student[0].main_village}
                                         </h3>
                                       </Colxx>
-                                      {institute.length > 0 &&
-                                        classs.length > 0 &&
-                                        department.length > 0 && (
-                                          <Colxx className="p-5 border rounded">
-                                            <Label>
-                                              <IntlMessages id="forms.InstituteLabel" />
-                                            </Label>
-                                            <h3>
-                                              {institute[0].institute.name}
-                                            </h3>
-                                            <Label>د انستیوت ادرس</Label>
-                                            <h3>
-                                              {institute[0].institute.province +
-                                                ' - ' +
-                                                institute[0].institute
-                                                  .district +
-                                                ' - ' +
-                                                institute[0].institute.village}
-                                            </h3>
-                                            <Label>
-                                              <IntlMessages id="forms.FieldLabel" />
-                                            </Label>
-                                            <h3>
-                                              {department[0].department.name}
-                                            </h3>
-                                            <Label>
-                                              <IntlMessages id="marks.ClassLabel" />
-                                            </Label>
-                                            <h3>{classs[0].classs.name}</h3>
-                                            <Label>
-                                              <IntlMessages id="field.SemesterLabel" />
-                                            </Label>
-                                            <h3>{classs[0].classs.semester}</h3>
-                                          </Colxx>
-                                        )}
+                                      {institute && classs && department && (
+                                        <Colxx className="p-5 border rounded">
+                                          <Label>
+                                            <IntlMessages id="forms.InstituteLabel" />
+                                          </Label>
+                                          <h3>{institute.name}</h3>
+                                          <Label>د انستیوت ادرس</Label>
+                                          <h3>
+                                            {institute.province.native_name +
+                                              ' - ' +
+                                              institute.district.native_name +
+                                              ' - ' +
+                                              institute.village}
+                                          </h3>
+                                          <Label>
+                                            <IntlMessages id="forms.FieldLabel" />
+                                          </Label>
+                                          <h3>{department.name}</h3>
+                                          <Label>
+                                            <IntlMessages id="marks.ClassLabel" />
+                                          </Label>
+                                          <h3>{classs.name}</h3>
+                                          <Label>
+                                            <IntlMessages id="field.SemesterLabel" />
+                                          </Label>
+                                          <h3>{classs.semester}</h3>
+                                        </Colxx>
+                                      )}
                                     </Row>
                                     <Row>
                                       <Colxx>

@@ -735,6 +735,7 @@ module.exports = {
   'forms.StudyTypeGraduated': 'فارغ',
   'forms.StudyTypeInrolled': 'جاری',
   'forms.StudyTypeDismissed': 'منفک',
+  'forms.StudyTypePast': 'گزشته',
   'forms.StudyTypeLabel': 'د شاګرد وضعیت/ حالت شاگرد',
   'forms.StudyTypeErr': 'د شاگرد وضعیت اړین دی/ حالت شاگرد ضروری است',
   'forms.StdInteranceOption_1': 'حکمی',

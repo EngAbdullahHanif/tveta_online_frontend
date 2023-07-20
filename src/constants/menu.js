@@ -1,4 +1,5 @@
 import { adminRoot } from './defaultValues';
+import { userRole } from './defaultValues';
 
 const data = [
   {
@@ -6,13 +7,26 @@ const data = [
     icon: 'FA.FaUserGraduate',
     label: 'menu.students',
     to: `${adminRoot}/students`,
-    // roles: [userRole.Admin, userRole.Editor],
+    roles: [
+      userRole.admin,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
+      userRole.instituteManager,
+      userRole.provinceSupervisor,
+      userRole.authoritySupervisor,
+      userRole.authorityDataentry,
+    ],
     subs: [
       {
         icon: 'FA.FaList',
         label: 'menu.student_list',
         to: `${adminRoot}/students/students`,
-        // roles: [userRole.Admin],
+        roles: [
+          userRole.admin,
+          userRole.instituteManager,
+          userRole.provinceSupervisor,
+          userRole.authoritySupervisor,
+        ],
       },
 
       {
@@ -20,34 +34,70 @@ const data = [
         label: 'menu.kankor-student-list',
         to: `${adminRoot}/students/kankor-students`,
         newWindow: false,
+        roles: [
+          userRole.admin,
+          userRole.instituteManager,
+          userRole.provinceSupervisor,
+          userRole.authoritySupervisor,
+        ],
       },
       {
         icon: 'FA.FaList',
         label: 'attendance-list',
         to: `${adminRoot}/students/attendance-list`,
+        roles: [
+          userRole.admin,
+          userRole.instituteManager,
+          userRole.provinceSupervisor,
+          userRole.authoritySupervisor,
+        ],
       },
       {
         icon: 'FA.FaList',
         label: 'transfered-Students',
         to: `${adminRoot}/students/transfered-list`,
-        // roles: [userRole.Admin],
+        roles: [
+          userRole.admin,
+          userRole.instituteManager,
+          userRole.provinceSupervisor,
+          userRole.authoritySupervisor,
+        ],
+        // roles: [userRole.admin],
       },
       {
         icon: 'FA.FaList',
         label: 'studendts.dismisseds-students',
         to: `${adminRoot}/students/dismissed-list`,
-        // roles: [userRole.Admin],
+        roles: [
+          userRole.admin,
+          userRole.instituteManager,
+          userRole.provinceSupervisor,
+          userRole.authoritySupervisor,
+        ],
+        // roles: [userRole.admin],
       },
       {
         icon: 'FA.FaList',
         label: 'menu.attendance',
         to: `${adminRoot}/students/attendance`,
+        roles: [
+          userRole.admin,
+          userRole.instituteManager,
+          userRole.provinceSupervisor,
+          userRole.authoritySupervisor,
+        ],
         newWindow: false,
       },
       {
         icon: 'FA.FaList',
         label: 'menu.marks-display',
         to: `${adminRoot}/students/marks-display`,
+        roles: [
+          userRole.admin,
+          userRole.instituteManager,
+          userRole.provinceSupervisor,
+          userRole.authoritySupervisor,
+        ],
         newWindow: false,
       },
       {
@@ -55,24 +105,48 @@ const data = [
         label: 'menu.class-marks',
         to: `${adminRoot}/students/class-marks`,
         newWindow: false,
+        roles: [
+          userRole.admin,
+          userRole.instituteManager,
+          userRole.provinceSupervisor,
+          userRole.authoritySupervisor,
+        ],
       },
       //Changes started
       {
         icon: 'FA.FaList',
         label: 'د مضمون نمری اپدیت',
         to: `${adminRoot}/students/single-subject`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+          userRole.authorityDataentry,
+        ],
         newWindow: false,
       },
       {
         icon: 'FA.FaList',
         label: 'د حاضری اپدیت',
         to: `${adminRoot}/students/single-student-attendance`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+          userRole.authorityDataentry,
+        ],
         newWindow: false,
       },
       {
         icon: 'MD.MdAddBox',
         label: 'ده شاګرد تبدیلی صنف',
         to: `${adminRoot}/students/class-transfer`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+          userRole.authorityDataentry,
+        ],
         newWindow: false,
       },
       //Changes ended
@@ -80,13 +154,24 @@ const data = [
         icon: 'GR.GrUserAdd',
         label: 'forms.studentRegisterTitle',
         to: `${adminRoot}/students/register`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+          userRole.authorityDataentry,
+        ],
         newWindow: false,
       },
       {
         icon: 'GR.GrUserAdd',
         label: 'menu.student_register_kankor',
         to: `${adminRoot}/students/register-kankor`,
-        // roles: [userRole.Admin],
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+          userRole.authorityDataentry,
+        ],
       },
 
       // {
@@ -99,16 +184,31 @@ const data = [
         icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
         to: `${adminRoot}/students/marks-register`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+        ],
       },
       {
         icon: 'MD.MdAddBox',
         label: 'menu.second-chance-marks-register',
         to: `${adminRoot}/students/second-chance`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+        ],
       },
       {
         icon: 'MD.MdAddBox',
         label: 'menu.attendance-registration',
         to: `${adminRoot}/students/attendance-register`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+        ],
       },
       // {
       //   icon: 'IM.ImProfile',
@@ -120,6 +220,11 @@ const data = [
         icon: 'MD.MdAddBox',
         label: 'menu.student-transfer',
         to: `${adminRoot}/students/student-transfer`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+        ],
         newWindow: false,
       },
 
@@ -127,12 +232,22 @@ const data = [
         icon: 'MD.MdAddBox',
         label: 'student.dismissal',
         to: `${adminRoot}/students/student-dismissal`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+        ],
         newWindow: false,
       },
       {
         icon: 'MD.MdAddBox',
         label: 'menu.student.upgrade-class',
         to: `${adminRoot}/students/students-class-status-upgrade`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+        ],
         newWindow: false,
       },
       {
@@ -146,6 +261,11 @@ const data = [
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'department-change',
         to: `${adminRoot}/students/department-change`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+        ],
         newWindow: false,
       },
 
@@ -153,6 +273,11 @@ const data = [
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'section-change',
         to: `${adminRoot}/students/section-change`,
+        roles: [
+          userRole.admin,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+        ],
         newWindow: false,
       },
       // {
@@ -169,6 +294,11 @@ const data = [
     icon: 'FA.FaChalkboardTeacher',
     label: 'menu.teacher',
     to: `${adminRoot}/teacher`,
+    roles: [
+      userRole.admin,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
+    ],
 
     subs: [
       {
@@ -202,6 +332,11 @@ const data = [
     icon: 'FA.FaUniversity',
     label: 'menu.institutes',
     to: `${adminRoot}/institutes`,
+    roles: [
+      userRole.admin,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
+    ],
     subs: [
       {
         icon: 'FA.FaList',
@@ -236,11 +371,17 @@ const data = [
     icon: 'FA.FaHotel',
     label: 'menu.dorms',
     to: `${adminRoot}/dorms`,
+    roles: [userRole.admin, userRole.dormManager],
     subs: [
       {
         icon: 'FA.FaList',
         label: 'dorm.list',
         to: `${adminRoot}/dorms/dorms`,
+        roles: [
+          userRole.provinceSupervisor,
+          userRole.admin,
+          userRole.authoritySupervisor,
+        ],
       },
       {
         icon: 'CG.CgUserList',
@@ -251,11 +392,13 @@ const data = [
         icon: 'MD.MdAddBox',
         label: 'dorm.register',
         to: `${adminRoot}/dorms/register`,
+        roles: [userRole.admin, userRole.authorityDataentry],
       },
       {
         icon: 'GR.GrUserAdd',
         label: 'menu.student-register-in-dorm',
         to: `${adminRoot}/dorms/student-register`,
+        roles: [userRole.admin, userRole.dormManager],
       },
 
       // {
@@ -275,6 +418,11 @@ const data = [
     icon: 'IO.IoBook',
     label: 'menu.subjects',
     to: `${adminRoot}/subjects`,
+    roles: [
+      userRole.admin,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
+    ],
     subs: [
       {
         icon: 'FA.FaList',
@@ -304,6 +452,11 @@ const data = [
     icon: 'SI.SiGoogleclassroom',
     label: 'menu.classes',
     to: `${adminRoot}/classes`,
+    roles: [
+      userRole.admin,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
+    ],
     subs: [
       {
         icon: 'FA.FaList',
@@ -323,6 +476,11 @@ const data = [
     icon: 'MD.MdOutlineNoteAlt',
     label: 'menu.field',
     to: `${adminRoot}/fields`,
+    roles: [
+      userRole.admin,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
+    ],
     subs: [
       {
         icon: 'FA.FaList',
@@ -358,6 +516,11 @@ const data = [
     icon: 'BS.BsCardChecklist',
     label: 'menu.evaluation',
     to: `${adminRoot}/evaluations`,
+    roles: [
+      userRole.admin,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
+    ],
     subs: [
       {
         icon: 'FA.FaList',
@@ -387,6 +550,11 @@ const data = [
     icon: 'MD.MdManageAccounts',
     label: 'menu.hr-evaluation',
     to: `${adminRoot}/hr-evaluations`,
+    roles: [
+      userRole.admin,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
+    ],
     subs: [
       {
         icon: 'FA.FaList',
@@ -406,6 +574,7 @@ const data = [
     icon: 'MD.MdManageAccounts',
     label: 'menu.group-label',
     to: `${adminRoot}/groups`,
+    roles: [userRole.admin],
     subs: [
       // {
       //   icon: 'FA.FaList',
@@ -430,7 +599,12 @@ const data = [
     // label: 'menu.students',
     label: 'menu.workers',
     to: `${adminRoot}/workers`,
-    // roles: [userRole.Admin, userRole.Editor],
+    roles: [
+      userRole.admin,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
+    ],
+
     subs: [
       {
         icon: 'CG.CgUserList',
@@ -458,13 +632,14 @@ const data = [
     icon: 'BS.BsCardChecklist',
     label: 'Users',
     to: `${adminRoot}/users`,
-    // roles: [userRole.Admin, userRole.Editor],
+    roles: [userRole.admin],
+
     subs: [
       {
         icon: 'FA.FaList',
         label: 'Users List',
         to: `${adminRoot}/users/users_list`,
-        // roles: [userRole.Admin],
+        // roles: [userRole.admin],
       },
     ],
   },

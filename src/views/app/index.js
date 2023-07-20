@@ -77,12 +77,12 @@ const App = ({ match, props }) => {
             <ProtectedRoute
               path={`${match.url}/dashboards`}
               component={Dashboards}
-              roles={[
-                userRole.superUser,
-                userRole.admin,
-                userRole.institute,
-                userRole.provincial,
-              ]}
+              // roles={[
+              //   userRole.superUser,
+              //   userRole.admin,
+              //   userRole.instituteDataentry,
+              //   userRole.instituteManager,
+              // ]}
               props={props}
             />
             <ProtectedRoute
@@ -159,12 +159,7 @@ const App = ({ match, props }) => {
             <ProtectedRoute
               path={`${match.url}/dorms`}
               component={Dorms}
-              roles={[
-                userRole.superUser,
-                userRole.admin,
-                userRole.institute,
-                userRole.provincial,
-              ]}
+              roles={[userRole.admin, userRole.dormManager]}
               props={props}
             />
 

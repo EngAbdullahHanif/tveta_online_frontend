@@ -29,6 +29,7 @@ class Sidebar extends Component {
       viewingParentMenu: '',
       collapsedMenus: [],
     };
+    this.currentUser = JSON.parse(localStorage.getItem('user'));
   }
 
   // eslint-disable-next-line react/sort-comp
@@ -344,11 +345,19 @@ class Sidebar extends Component {
 
   // eslint-disable-next-line no-shadow
   filteredList = (menuItems) => {
-    const { currentUser } = this.props;
+    console.log(this.props);
+    console.log('current user is: ', this.currentUser);
+    console.log(menuItems);
+    const currentUser = this.currentUser;
     if (currentUser) {
-      return menuItems.filter(
-        (x) => (x.roles && x.roles.includes(currentUser.role)) || !x.roles
-      );
+      return menuItems.filter((item) => {
+        if (item.roles) {
+          for (const i = 0; i < currentUser.groups.length; i++) {
+            return item.roles.includes(currentUser.groups[i].name);
+          }
+        }
+        return true;
+      });
     }
     return menuItems;
   };
@@ -560,7 +569,10 @@ class Sidebar extends Component {
   }
 }
 
-const mapStateToProps = ({ menu, authUser }) => {
+const mapStateToProps = ({ menu, currentUser, ...rest }) => {
+  console.log('menu is', menu);
+  console.log('current_user is', currentUser);
+  console.log('rest is', rest);
   const {
     containerClassnames,
     subHiddenBreakpoint,
@@ -569,7 +581,6 @@ const mapStateToProps = ({ menu, authUser }) => {
     selectedMenuHasSubItems,
   } = menu;
 
-  const { currentUser } = authUser;
   return {
     containerClassnames,
     subHiddenBreakpoint,
@@ -579,6 +590,7 @@ const mapStateToProps = ({ menu, authUser }) => {
     currentUser,
   };
 };
+
 export default withRouter(
   connect(mapStateToProps, {
     setContainerClassnames,

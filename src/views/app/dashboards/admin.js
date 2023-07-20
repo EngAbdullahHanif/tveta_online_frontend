@@ -2078,7 +2078,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         </Colxx>
 
         {/* Notification */}
-        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+        {/* <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '600px' }}>
             <CardBody>
               <CardTitle style={{ fontSize: 30 }}>
@@ -2140,7 +2140,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         </Colxx>
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Calendar />
-        </Colxx>
+        </Colxx> */}
 
         {/* Total statistics */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4  ">

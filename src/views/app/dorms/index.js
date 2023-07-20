@@ -38,79 +38,44 @@ const Dorms = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/dorms`}
         component={DormList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.admin, userRole.dormManager]}
         props={props}
       />
       <ProtectedRoute
         exact
         path={`${match.url}/register`}
         component={DormRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.admin, userRole.dormManager]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/register/:dormId`}
         component={DormRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.admin, userRole.dormManager]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/students`}
         component={StudentDormList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.admin, userRole.dormManager]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/student-register`}
         component={StudentRegistrationInDorm}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.admin, userRole.dormManager]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/dorm/:dormId`}
         component={DormProfile}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.admin, userRole.dormManager]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/student-dismissal`}
         component={DormStudentDismissal}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.admin, userRole.dormManager]}
         props={props}
       />
       <Redirect to="/error" />

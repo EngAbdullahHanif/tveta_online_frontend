@@ -55,9 +55,9 @@ const StudentTransfer = React.lazy(() =>
 const MarksDisplay = React.lazy(() =>
   import(/* webpackChunkName: "marks-display" */ './subject-marks')
 );
-const MarksVerification = React.lazy(() =>
-  import(/* webpackChunkName: "marks-display" */ './subject-marks-verification')
-);
+// const MarksVerification = React.lazy(() =>
+//   import(/* webpackChunkName: "marks-display" */ './subject-marks-verification')
+// );
 const MarksDisplayAllSubs = React.lazy(() =>
   import(/* webpackChunkName: "marks-display-allsubs" */ './class-marks')
 );
@@ -109,6 +109,16 @@ const StudentClassStatusUpgrade = React.lazy(() =>
 const MarkStatusCheckedStudents = React.lazy(() =>
   import(
     /* webpackChunkName: "student-upgrade" */ './marks-status-checked-students'
+  )
+);
+
+const SubjectMarksVerification = React.lazy(() =>
+  import(/* webpackChunkName: "marks-display" */ './subject-marks-verification')
+);
+
+const RejectedMarksUpdate = React.lazy(() =>
+  import(
+    /* webpackChunkName: "marks-update" */ './rejected-subject-marks-update'
   )
 );
 
@@ -396,8 +406,20 @@ const Students = ({ match, props }) => {
           props={props}
         />
         <ProtectedRoute
-          path={`${match.url}/marks-verification`}
-          component={MarksVerification}
+          path={`${match.url}/subject-marks-verification`}
+          component={SubjectMarksVerification}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.provincial,
+          ]}
+          props={props}
+        />
+
+        <ProtectedRoute
+          path={`${match.url}/rejected-marks-update`}
+          component={RejectedMarksUpdate}
           roles={[
             userRole.admin,
             userRole.institute,

@@ -767,11 +767,11 @@ export const semesterValueOptions = [
 ];
 
 export const classOptions = [
-  { value: '10', label: 10 },
-  { value: '11', label: 11 },
-  { value: '12', label: 12 },
-  { value: '13', label: 13 },
-  { value: '14', label: 14 },
+  { value: 10, label: 10 },
+  { value: 11, label: 11 },
+  { value: 12, label: 12 },
+  { value: 13, label: 13 },
+  { value: 14, label: 14 },
 ];
 
 export const sectionValueOptions = [
@@ -780,6 +780,11 @@ export const sectionValueOptions = [
   { value: 'c', label: 'c' },
   { value: 'd', label: 'd' },
   { value: 'e', label: 'e' },
+];
+
+export const verificationValueOptions = [
+  { value: 'verified', label: 'تاید کول' },
+  { value: 'rejected', label: 'رد کول' },
 ];
 
 export const tazkiraOptions = [

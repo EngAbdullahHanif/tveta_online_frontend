@@ -53,51 +53,64 @@ const StudentProfile = () => {
   //load data of student from database
   useEffect(() => {
     async function fetchStudent() {
-      const response = await callApi(`api/?student_id=${studentId}`, '', null);
-      const data = await response.data;
-      setStudent(data.results);
-      setIsLoaded(true);
-
-      console.log('studentsdf', student);
+      const response = await callApi(
+        `students/?student=${studentId}`,
+        '',
+        null
+      );
+      console.log('student response', response.data);
+      if (response.data && response.status === 200) {
+        const data = await response.data.results;
+        setStudent(data);
+        setIsLoaded(true);
+      }
 
       const instituteResponse = await callApi(
-        `api/student_institutes/?student_id=${studentId}`,
+        `students/student_institutes/?student=${studentId}`,
         '',
         null
       );
 
-      const instituteData = await instituteResponse.data;
-      console.log('instituteData', instituteData);
-      setInstitute(instituteData);
+      if (instituteResponse.data && instituteResponse.status === 200) {
+        const instituteData = await instituteResponse.data;
+        console.log('instituteData', instituteData);
+        setInstitute(instituteData);
+      }
 
       //type =1 means current class or current continued class
       const classResponse = await callApi(
-        `api/student_class/?student_id=${studentId}&type=1`,
+        `students/student_class/?student=${studentId}&stauts=inprogress`,
         '',
         null
       );
 
-      const classData = await classResponse.data;
-      setClasss(classData);
+      if (classResponse.data && classResponse.status === 200) {
+        const classData = await classResponse.data;
+        console.log('classData', classData);
+        setClasss(classData);
+      }
+
       const dormResponse = await callApi(
-        `api/student_dorms/?student_id=${studentId}`,
+        `students/student_dorms/?student=${studentId}`,
         '',
         null
       );
-
-      const dormData = await dormResponse.data;
-      setDorm(dormData);
+      if (dormResponse.data && dormResponse.status === 200) {
+        const dormData = await dormResponse.data;
+        console.log('dormData', dormData);
+        setDorm(dormData);
+      }
 
       const marksResponse = await callApi(
-        `api/TranscriptData/?student_id=${studentId}`,
+        `students/TranscriptData/?student=${studentId}`,
         '',
         null
       );
-
-      console.log(`${studentApiUrl}TranscriptData/?student_id=${studentId}`);
-      const marksData = await marksResponse.data;
-      console.log('marksData', marksData);
-      setMarks(marksData);
+      if (marksResponse.data && marksResponse.status === 200) {
+        const marksData = await marksResponse.data;
+        console.log('marksData', marksData);
+        setMarks(marksData);
+      }
     }
     fetchStudent();
   }, []);
@@ -142,16 +155,13 @@ const StudentProfile = () => {
             <Colxx xxs="1"></Colxx>
             {student.length > 0 && (
               <Colxx>
-                {console.log('here', `${student[0].student_photo}`)}
+                {console.log('here', `${student.student_photo}`)}
                 {/* <img src={student.student_photo} alt="Photo" width={'10%'} />{' '} */}
-                <NavLink
-                  to={`?p=${student[0].student_id}`}
-                  className="w-40 w-sm-100"
-                >
+                <NavLink to={`?p=${student.student}`} className="w-40 w-sm-100">
                   <img
                     top
                     alt={student.name}
-                    src={`${student[0].student_photo}`}
+                    src={`${student.student_photo}`}
                     style={{
                       maxWidth: '12%',
                       maxHeight: '130%',
@@ -233,59 +243,59 @@ const StudentProfile = () => {
                           <IntlMessages id="teacher.NameLabel" />
                         </Label>
                         <h2>
-                          {student[0].name + '  "' + student[0].last_name + '"'}
+                          {student.name + '  "' + student.last_name + '"'}
                         </h2>
                         <Label className="data-style">
                           <IntlMessages id="forms.Eng_name" />
                         </Label>
                         <h2>
-                          {student[0].english_name +
+                          {student.english_name +
                             ' ' +
-                            student[0].english_last_name}{' '}
+                            student.english_last_name}{' '}
                         </h2>
                         <Label className="data-style">
                           <IntlMessages id="teacher.FatherNameLabel" />
                         </Label>
-                        <h2>{student[0].father_name}</h2>
+                        <h2>{student.father_name}</h2>
 
                         <Label className="data-style">
                           <IntlMessages id="forms.Std_father_Eng_Name" />
                         </Label>
-                        <h2>{student[0].english_father_name}</h2>
+                        <h2>{student.english_father_name}</h2>
 
                         <Label className="data-style">
                           <IntlMessages id="teacher.PhoneNoLabel" />
                         </Label>
-                        <h2>{student[0].phone_number}</h2>
+                        <h2>{student.phone_number}</h2>
                         <Label className="data-style">
                           <IntlMessages id="teacher.EmailLabel" />
                         </Label>
-                        <h2>{student[0].email}</h2>
+                        <h2>{student.email}</h2>
                         <Label className="data-style">
                           <IntlMessages id="forms.StdTazkiraNoLabel" />
                         </Label>
-                        <h2>{student[0].registration_number}</h2>
+                        <h2>{student.registration_number}</h2>
                         <br />
                         <br />
                       </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
                         {/* if person has paper-based ID card, not electronic */}
-                        {student[0].cover_number && (
+                        {student.cover_number && (
                           <>
                             <Label className="data-style">
                               <IntlMessages id="forms.StdIdCardCoverLabel" />
                             </Label>
-                            <h2>{student[0].cover_number}</h2>
+                            <h2>{student.cover_number}</h2>
                             <Label className="data-style">
                               <IntlMessages id="forms.StdIdCardPageNoLabel" />
                             </Label>
-                            <h2>{student[0].page_number}</h2>
+                            <h2>{student.page_number}</h2>
                           </>
                         )}
                         <Label className="data-style">
                           <IntlMessages id="forms.StdDoBLabel" />
                         </Label>
-                        <h2>{student[0].birth_date}</h2>
+                        <h2>{student.birth_date}</h2>
                         <Label className="data-style">
                           <IntlMessages id="forms.PlaceOfBirthLabel" />
                         </Label>
@@ -293,11 +303,11 @@ const StudentProfile = () => {
                         <Label className="data-style">
                           <IntlMessages id="forms.StdFatherDutyLabel" />
                         </Label>
-                        <h2>{student[0].fatherـprofession}</h2>
+                        <h2>{student.fatherـprofession}</h2>
                         <Label className="data-style">
                           <IntlMessages id="forms.StdFatherDutyLocationLabel" />
                         </Label>
-                        <h2>{student[0].fatherـplaceـofـduty}</h2>
+                        <h2>{student.fatherـplaceـofـduty}</h2>
 
                         <br />
                         <br />
@@ -321,21 +331,21 @@ const StudentProfile = () => {
                             <Label className="data-style">
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h2>{student[0].main_province}</h2>
+                            <h2>{student.main_province}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label className="data-style">
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h2>{student[0].main_district}</h2>
+                            <h2>{student.main_district}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label className="data-style">
                               <IntlMessages id="forms.VillageLabel" />
                             </Label>
-                            <h2>{student[0].main_village}</h2>
+                            <h2>{student.main_village}</h2>
                           </Colxx>
                         </Row>
                       </Colxx>
@@ -356,21 +366,21 @@ const StudentProfile = () => {
                             <Label className="data-style">
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h2>{student[0].current_province}</h2>
+                            <h2>{student.current_province}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label className="data-style">
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h2>{student[0].current_district}</h2>
+                            <h2>{student.current_district}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label className="data-style">
                               <IntlMessages id="forms.VillageLabel" />
                             </Label>
-                            <h2>{student[0].current_village}</h2>
+                            <h2>{student.current_village}</h2>
                           </Colxx>
                         </Row>
                       </Colxx>
@@ -403,27 +413,27 @@ const StudentProfile = () => {
                         <Label className="data-style">
                           <IntlMessages id="forms.EducationLevelLabel" />
                         </Label>
-                        <h2>{student[0].finished_grade}</h2>
+                        <h2>{student.finished_grade}</h2>
                         <Label className="data-style">
                           <IntlMessages id="forms.StdGraduationYearLabel" />
                         </Label>
-                        <h2>{student[0].finished_grade_year}</h2>
+                        <h2>{student.finished_grade_year}</h2>
                         <Label className="data-style">
                           <IntlMessages id="forms.StPreShcoolLabel" />
                         </Label>
-                        <h2>{student[0].school}</h2>
+                        <h2>{student.school}</h2>
 
                         <Label className="data-style">
                           <IntlMessages id="forms.StdSchoolProvinceLabel" />
                         </Label>
-                        <h2>{student[0].schoolـprovince}</h2>
+                        <h2>{student.schoolـprovince}</h2>
 
                         <Label className="data-style">
                           <IntlMessages id="forms.StdInteranceTypeLabel" />
                         </Label>
-                        {student[0].internse_type === '1' ? (
+                        {student.internse_type === '1' ? (
                           <h2>حکمی</h2>
-                        ) : student[0].internse_type === '2' ? (
+                        ) : student.internse_type === '2' ? (
                           <h2>کانکور اختصاصی</h2>
                         ) : (
                           <h2>کانکور عمومی</h2>
@@ -431,7 +441,7 @@ const StudentProfile = () => {
                         <Label className="data-style">
                           <IntlMessages id="student.educationType" />
                         </Label>
-                        {student[0].education_type === '1' ? (
+                        {student.education_type === '1' ? (
                           <h2>پیوسته</h2>
                         ) : (
                           <h2>غیر پیوسته</h2>
@@ -443,28 +453,28 @@ const StudentProfile = () => {
                         <Label className="data-style">
                           <IntlMessages id="menu.institutes" />
                         </Label>
-                        <h2>{institute[0].institute_id.name}</h2>
+                        <h2>{institute.institute.name}</h2>
                         <Label className="data-style">
                           <IntlMessages id="field.SemesterLabel" />
                         </Label>
-                        <h2>{classs[0].class_id.semester}</h2>
+                        <h2>{classs.class_id.semester}</h2>
                         <Label className="data-style">
                           <IntlMessages id="curriculum.classLabel" />
                         </Label>
-                        <h2>{classs[0].class_id.name}</h2>
+                        <h2>{classs.classs.name}</h2>
                         <Label className="data-style">
                           <IntlMessages id="field.SectionLabel" />
                         </Label>
-                        <h2>{classs[0].class_id.section}</h2>
-                        {dorm[0] && (
+                        <h2>{classs.classs.section}</h2>
+                        {dorm.length > 0 && (
                           <>
                             <Label className="data-style">
                               <IntlMessages id="menu.dorms" />
                             </Label>
-                            <h2>{dorm[0].dorm_id.name}</h2>
+                            <h2>{dorm.dorm.name}</h2>
                             <Label>نوعیت</Label>
 
-                            {dorm[0].dorm_type == 1 ? (
+                            {dorm.dorm_type == 1 ? (
                               <h2> بدل عاشه</h2>
                             ) : (
                               <h2> بدیل عاشه</h2>
@@ -508,7 +518,7 @@ const StudentProfile = () => {
                                 <span className="data-style">
                                   <IntlMessages id="forms.studentIdLabel" />
                                   <h3 style={{ fontWeight: 'bold' }}>
-                                    {mark.student_id}
+                                    {mark.student}
                                   </h3>
                                 </span>
                               </Colxx>

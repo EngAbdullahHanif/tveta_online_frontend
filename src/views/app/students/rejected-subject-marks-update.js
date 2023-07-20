@@ -1,18 +1,13 @@
-// this compoenent is used to show the list of students whose marks have been uploaded and verified, but students upgraded/degraded class has not been assigned yet
-
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, isEmptyArray } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
 import {
   studyTimeOptions,
-  semesterValueOptions,
-  classOptions,
-  verificationValueOptions,
   educationalYearsOptions,
-} from '../global-data/options';
+} from './../global-data/options';
 import './../../../assets/css/global-style.css';
 
 // Year  and SHift
@@ -38,7 +33,8 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
-import { async } from 'q';
+
+import Institues from '../institutes';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -47,10 +43,12 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
-
-  educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
-  ),
+  educationalYear: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.educationYearErr" />),
 
   studyTime: Yup.object()
     .shape({
@@ -58,91 +56,136 @@ const ValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.StudyTimeErr" />),
-
   classs: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
     .required(<IntlMessages id="marks.ClassErr" />),
-
   department: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
     .required(<IntlMessages id="teacher.departmentIdErr" />),
+  subject: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.SubjectErr" />),
 });
-
 const initialValues = {
   institute: [],
-  educationlaYear: '',
+  educationalYear: [],
   studyTime: [],
   classs: [],
   department: [],
+  subject: [],
 };
 
-const submitInitialValues = {
-  verification: [],
-  examId: '',
-};
-
-const SubjectMarksVerification = ({ match }) => {
+const MarksRegistration = ({ match }) => {
   const [isNext, setIsNext] = useState(false);
-
+  const [counter, setCounter] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [fields, setFields] = useState([]);
   const [institutes, setInstitutes] = useState([]);
-  const [subjects, setSubjects] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([]);
-  const [selectedInstitute, setSelectedInstitute] = useState('');
+  const [selectedInstitute, setSelectedInstitute] = useState();
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
-  const [selectedSemester, setSelectedSemester] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
-  const [selectedSection, setSelectedSection] = useState('');
   const [selecedStudyTime, setSelectedStudyTime] = useState('');
   const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
   const [passingScore, setPassingScore] = useState(55);
   const [subjectGrad, setSubjectGrad] = useState();
   const [subjectGPA, setSubjectGPA] = useState();
-
+  const [examId, setExamId] = useState();
   const { markId } = useParams();
+  // separate and set labels for classes
+  const [selectedClassLabel, setselectedClassLabel] = useState({
+    classs: '',
+    semester: '',
+    section: '',
+  });
+  const int = [
+    {
+      label: 'Dept 1',
+      value: '1',
+      institute: '1',
+    },
+    {
+      label: 'Dept 2',
+      value: '2',
+      institute: '8',
+    },
+    {
+      label: 'Dept 3',
+      value: '3',
+      institute: '1',
+    },
+    {
+      label: 'Dept 4',
+      value: '4',
+      institute: 'انستیتوت تکنالوژی افغان',
+    },
+  ];
+  useEffect(() => {
+    if (!isEmptyArray(selectedClass) && selectedClass !== '') {
+      const [semester, classs, section] = selectedClass.label.split('-');
+      setselectedClassLabel({ classs, semester, section });
+    }
+  }, [selectedClass]);
 
-  //   if (markId) {
-  //     useEffect(() => {
-  //       async function fetchStudent() {
-  //         const { data } = await axios.get(
-  //           `${studentMarkId}/?student_id=${markId}`
-  //         );
-  //         console.log(data, 'object of the data');
+  if (markId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        const { data } = await axios.get(
+          `${studentMarkId}/?student_id=${markId}`
+        );
+        // console.log(data, 'object of the data');
 
-  //         // const instGender = genderOptions.map((studentGender) => {
-  //         //   if (studentGender.value === data[0].gender) {
-  //         //     setInitialGender(studentGender);
-  //         //   }
-  //         // });
-  //       }
-  //       fetchStudent();
-  //       //setUpdateMode(true);
-  //     }, []);
-  //   }
+        // const instGender = genderOptions.map((studentGender) => {
+        //   if (studentGender.value === data[0].gender) {
+        //     setInitialGender(studentGender);
+        //   }
+        // });
+      }
+      fetchStudent();
+      //setUpdateMode(true);
+    }, []);
+  }
 
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
+    console.warn('Reponse Institutes: ', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.name,
       }));
+      console.warn('Updated Institutes: ', updatedData);
       setInstitutes(updatedData);
     } else {
       console.log('institute error');
     }
   };
 
+  const fetchFields = async () => {
+    const response = await callApi('institute/field/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFields(updatedData);
+    } else {
+      console.log('field error');
+    }
+  };
   const fetchDepartments = async (instituteId) => {
     if (!instituteId || !instituteId.value) {
       return;
@@ -165,25 +208,6 @@ const SubjectMarksVerification = ({ match }) => {
       console.log('department error');
     }
   };
-  const fetchSubjects = async () => {
-    const response = await callApi('institute/subject/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setSubjects(updatedData);
-    } else {
-      console.log('subject error');
-    }
-  };
-
-  useEffect(() => {
-    if (selectedInstitute) {
-      console.log('selectedInstitute', selectedInstitute);
-      fetchDepartments(selectedInstitute);
-    }
-  }, [selectedInstitute]);
 
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', '', null);
@@ -198,11 +222,32 @@ const SubjectMarksVerification = ({ match }) => {
     }
   };
 
+  const fetchSubjects = async () => {
+    const response = await callApi('institute/subject/', '', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('subject error');
+    }
+  };
+
   useEffect(() => {
     fetchInstitutes();
+    fetchFields();
     fetchClasses();
     fetchSubjects();
   }, []);
+
+  useEffect(() => {
+    if (selectedInstitute) {
+      console.log('selectedInstitute', selectedInstitute);
+      fetchDepartments(selectedInstitute);
+    }
+  }, [selectedInstitute]);
 
   // notification message
   const createNotification = (type, className) => {
@@ -210,7 +255,7 @@ const SubjectMarksVerification = ({ match }) => {
     switch (type) {
       case 'success':
         NotificationManager.success(
-          'نمری په بریالیتوب سره تاید شوی',
+          'نمری په بریالیتوب سره ثبت شوی',
           'موفقیت',
           3000,
           null,
@@ -220,7 +265,7 @@ const SubjectMarksVerification = ({ match }) => {
         break;
       case 'error':
         NotificationManager.error(
-          'نمری تاید نشوی, بیا کوشش وکری',
+          'نمری ثبت نه شوی بیا کوشش وکری',
           'خطا',
           9000,
           () => {
@@ -236,10 +281,9 @@ const SubjectMarksVerification = ({ match }) => {
     }
   };
 
-  const fechtStudents = async () => {
-    console.log('selecedStudyTime.value', selecedStudyTime.value);
+  const fetchStudents = async (values) => {
     const response = await callApi(
-      `students/marks-verification-subjects-list/?institute=${selectedInstitute.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}&classs=${selectedClass.value}`,
+      `students/rejected-subject-marks-list/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}`,
       '',
       null
     );
@@ -248,37 +292,50 @@ const SubjectMarksVerification = ({ match }) => {
       setStudents(response.data);
       setIsNext(true);
     } else {
-      console.log('students error');
+      console.log('subject error');
     }
   };
 
   const onSubmit = async (values) => {
-    const educationalYear = selectedEducationalYear;
+    const educationalYear = selectedEducationalYear.value;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
     const classId = selectedClass.value;
     const subjectId = selectedSubject.value;
-    console.log('values', values);
+    const shift = selecedStudyTime.value;
+
+    console.log('educationalYear', educationalYear);
+    console.log('instituteId', instituteId);
+    console.log('departmentId', departmentId);
+    console.log('classId', classId);
+    console.log('subjectId', subjectId);
 
     const newStudents = students.map((student, index) => {
       return {
-        student: student.student,
-        verification_result: values.verification[student.student].value,
-        exam_id: student.class_exam_id,
+        student_id: student.student,
+        marks: values.score[student.student],
+        exam_result_id: student.class_exam_id,
       };
     });
+
     console.log('newStudents', newStudents);
 
     let data = [
       {
-        subject: subjectId,
+        educational_year: educationalYear,
+        institute: instituteId,
+        department: departmentId,
         classs: classId,
+        subject: subjectId,
+        shift: shift,
       },
       ...newStudents,
     ];
 
+    console.log('data', data);
+
     const response = await callApi(
-      'students/verify-subject-marks/',
+      'students/update-rejected-subject-marks/',
       'POST',
       data
     );
@@ -287,31 +344,29 @@ const SubjectMarksVerification = ({ match }) => {
       response.status === 201 ||
       response.status === 202
     ) {
-      console.log('response of students', response);
+      // console.log('response of students', response);
       setIsSubmitted(true);
       createNotification('success', 'filled');
     } else {
       console.log('marks error');
-      // setIsSubmitted(false);
+      //   setIsSubmitted(false);
       createNotification('error', 'filled');
     }
   };
 
+  // console.log('condsotlsa f', students);
   return (
     <>
       <Card>
         <div className="mt-4 ml-5">
-          <h2 className="mt-5 m-5 titleStyle">
-            {/* {<IntlMessages id="student.assignment-to-class" />} */}د نمرو
-            تایدی
-          </h2>
+          <h2 className="mt-5 m-5 titleStyle">د رد شویو نمرو اپدیت</h2>
         </div>
         <CardBody>
           {!isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={fechtStudents}
-              // validationSchema={ValidationSchema}
+              onSubmit={fetchStudents}
+              validationSchema={ValidationSchema}
             >
               {({
                 errors,
@@ -319,6 +374,7 @@ const SubjectMarksVerification = ({ match }) => {
                 values,
                 setFieldTouched,
                 setFieldValue,
+                handleSubmit,
               }) => (
                 <Form className="av-tooltip tooltip-label-right  style">
                   <Row className="m-5">
@@ -331,7 +387,7 @@ const SubjectMarksVerification = ({ match }) => {
                         <FormikReactSelect
                           name="institute"
                           id="institute"
-                          value={values.institute}
+                          // value={values.institute}
                           options={institutes}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
@@ -339,7 +395,7 @@ const SubjectMarksVerification = ({ match }) => {
                         />
 
                         {errors.institute && touched.institute ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          <div className="invalid-feedback d-block bg-danger text-white ">
                             {errors.institute}
                           </div>
                         ) : null}
@@ -359,7 +415,7 @@ const SubjectMarksVerification = ({ match }) => {
                           onClick={setSelectedStudyTime(values.studyTime)}
                         />
                         {errors.studyTime && touched.studyTime ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          <div className="invalid-feedback d-block bg-danger text-white ">
                             {errors.studyTime}
                           </div>
                         ) : null}
@@ -429,7 +485,6 @@ const SubjectMarksVerification = ({ match }) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
                       <FormGroup className="form-group has-float-label mt-5 error-l-150">
                         <Label>
                           <IntlMessages id="marks.SubjectLabel" />
@@ -455,10 +510,11 @@ const SubjectMarksVerification = ({ match }) => {
                   <Row>
                     <Colxx>
                       <Button
+                        onClick={handleSubmit}
                         color="primary"
                         className="float-right  buttonStyle"
                         size="lg"
-                        type="submit"
+                        // type="submit"
                         style={{ margin: '2% 0% 10% 6%' }}
                       >
                         <span className="label">
@@ -482,7 +538,7 @@ const SubjectMarksVerification = ({ match }) => {
                       <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="forms.FieldLabel" />
                       </Label>
-                      {console.log('selectedDepartment', selectedDepartment)}
+                      {/* {console.log('selectedDepartment', selectedDepartment)} */}
                       <h5>{selectedDepartment.label}</h5>
                     </Colxx>
 
@@ -490,13 +546,7 @@ const SubjectMarksVerification = ({ match }) => {
                       <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
                         <IntlMessages id="marks.ClassLabel" />
                       </Label>
-                      <h5>{selectedClass.label}</h5>
-                    </Colxx>
-                    <Colxx xxs="2">
-                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
-                        <IntlMessages id="marks.SemesterLabel" />
-                      </Label>
-                      <h5>{selectedSemester.label}</h5>
+                      <h5>{selectedClassLabel.classs}</h5>
                     </Colxx>
 
                     <Colxx xxs="2">
@@ -505,13 +555,34 @@ const SubjectMarksVerification = ({ match }) => {
                       </Label>
                       <h5>{selecedStudyTime.label}</h5>
                     </Colxx>
+
+                    <Colxx xxs="2">
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                        <IntlMessages id="marks.SemesterLabel" />
+                      </Label>
+                      <h5>{selectedClassLabel.semester}</h5>
+                    </Colxx>
+
+                    <Colxx xxs="2">
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                        <IntlMessages id="marks.SectionLabel" />
+                      </Label>
+                      <h5>{selectedClassLabel.section}</h5>
+                    </Colxx>
+
+                    <Colxx xxs="2">
+                      <Label style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                        <IntlMessages id="marks.SubjectLabel" />
+                      </Label>
+                      <h5>{selectedSubject.label}</h5>
+                    </Colxx>
                   </Row>
                   <Formik
-                    initialValues={submitInitialValues}
+                    initialValues={initialValues}
                     onSubmit={onSubmit}
                     // validationSchema={ValidationSchema}
                   >
-                    {({ errors, values, setFieldValue, setFieldTouched }) => (
+                    {({ errors }) => (
                       <Form className="av-tooltip tooltip-label-right ">
                         <Row
                           className="justify-content-center  border border"
@@ -522,7 +593,7 @@ const SubjectMarksVerification = ({ match }) => {
                             overflowX: 'hidden',
                           }}
                         >
-                          <table class="table ">
+                          <table className="table ">
                             <thead className="thead-dark">
                               <tr>
                                 <th
@@ -568,7 +639,7 @@ const SubjectMarksVerification = ({ match }) => {
                                     textAlign: 'center',
                                   }}
                                 >
-                                  <IntlMessages id="marks.Marks" />
+                                  <IntlMessages id="پخوانی نمری" />
                                 </th>
                                 <th
                                   scope="col"
@@ -577,8 +648,7 @@ const SubjectMarksVerification = ({ match }) => {
                                     textAlign: 'center',
                                   }}
                                 >
-                                  {/* <IntlMessages id="marks.Marks" /> */}
-                                  result
+                                  <IntlMessages id="marks.Marks" />
                                 </th>
                               </tr>
                             </thead>
@@ -590,96 +660,80 @@ const SubjectMarksVerification = ({ match }) => {
                               }}
                             >
                               {students.length > 0 &&
-                                students.map((student, index) => {
-                                  return (
-                                    <tr key={index}>
-                                      <th
-                                        scope="row"
-                                        style={{
-                                          fontSize: '20px',
-                                          textAlign: 'center',
-                                        }}
-                                      >
-                                        {index + 1}
-                                      </th>
-                                      <td
-                                        style={{
-                                          fontSize: '20px',
-                                          textAlign: 'center',
-                                        }}
-                                      >
-                                        {student.student_name}
-                                      </td>
-                                      <td
-                                        style={{
-                                          fontSize: '20px',
-                                          textAlign: 'center',
-                                        }}
-                                      >
-                                        {student.student_father_name}
-                                      </td>
-                                      <td
-                                        style={{
-                                          fontSize: '20px',
-                                          textAlign: 'center',
-                                        }}
-                                      >
-                                        {student.student}
-                                      </td>
-                                      <td
-                                        style={{
-                                          fontSize: '20px',
-                                          textAlign: 'center',
-                                        }}
-                                      >
-                                        {student.subject_id.map((subject) => {
-                                          return <>{subject.marks}</>;
-                                        })}
-                                      </td>
+                                students.map((student, index) => (
+                                  <tr key={index}>
+                                    <th
+                                      scope="row"
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      {index + 1}
+                                    </th>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      {student.student_name}
+                                    </td>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      {student.student_father_name}
+                                    </td>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      {student.student}
+                                    </td>
+                                    <td
+                                      style={{
+                                        fontSize: '20px',
+                                        textAlign: 'center',
+                                      }}
+                                    >
+                                      {student.subject_id.map((subject) => {
+                                        return <>{subject.marks}</>;
+                                      })}
+                                    </td>
 
-                                      {/* Marks Entry */}
-                                      <td>
-                                        <div
-                                          style={{
-                                            margin: '-7px',
-                                            fontSize: '15px',
-                                          }}
-                                        >
-                                          {/* <Field
+                                    {/* Marks Entry */}
+                                    <td>
+                                      <div
+                                        style={{
+                                          margin: '-7px',
+                                          fontSize: '15px',
+                                        }}
+                                      >
+                                        <Field
                                           type="number"
                                           style={{
                                             fontSize: '15px',
                                             textAlign: 'center',
                                           }}
                                           className="form-control"
-                                          name={`score[${student.student_id}]`}
+                                          name={`score[${student.student}]`}
+                                          min="0"
+                                          max="100"
                                         />
                                         {errors.score && touched.score ? (
                                           <div className="invalid-feedback d-block">
                                             {errors.score}
                                           </div>
-                                        ) : null} */}
-
-                                          <FormikReactSelect
-                                            name={`verification[${student.student}]`}
-                                            id={`verification[${student.student}]`}
-                                            // value={`values.section[${student.student_id}]`}
-                                            options={verificationValueOptions}
-                                            onChange={setFieldValue}
-                                            onBlur={setFieldTouched}
-                                            required
-                                          />
-                                          {errors.verification &&
-                                          touched.verification ? (
-                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                              {errors.verification}
-                                            </div>
-                                          ) : null}
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
+                                        ) : null}
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))}
                             </tbody>
                             <tfoot className="thead-dark">
                               <tr>
@@ -726,7 +780,7 @@ const SubjectMarksVerification = ({ match }) => {
                                     textAlign: 'center',
                                   }}
                                 >
-                                  <IntlMessages id="marks.Marks" />
+                                  <IntlMessages id="پخوانی نمری" />
                                 </th>
                                 <th
                                   scope="col"
@@ -735,7 +789,7 @@ const SubjectMarksVerification = ({ match }) => {
                                     textAlign: 'center',
                                   }}
                                 >
-                                  result
+                                  <IntlMessages id="marks.Marks" />
                                 </th>
                               </tr>
                             </tfoot>
@@ -775,8 +829,7 @@ const SubjectMarksVerification = ({ match }) => {
                       <IntlMessages id="wizard.content-thanks" />
                     </h1>
                     <h3>
-                      {/* <IntlMessages id="wizard.registered" /> */}
-                      زده کوونکو ته صنف په بریالیتوب سره تعین شو
+                      <IntlMessages id="wizard.registered" />
                     </h3>
                     <Button
                       className="m-5 bg-primary"
@@ -799,4 +852,4 @@ const SubjectMarksVerification = ({ match }) => {
   );
 };
 
-export default SubjectMarksVerification;
+export default MarksRegistration;

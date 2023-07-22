@@ -19,6 +19,8 @@ export const roleRoots = {
   admin: '/app',
   dorm_manager: '/app/dorms/students',
   ins_manager: '/app/students',
+  ins_dataentry: '/app/students',
+  dataentry: '/app/students',
 };
 
 /* 

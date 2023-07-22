@@ -240,6 +240,7 @@ const Students = ({ match, props }) => {
             userRole.institute,
             userRole.superUser,
             userRole.provincial,
+            userRole.dataentry,
           ]}
           props={props}
         />

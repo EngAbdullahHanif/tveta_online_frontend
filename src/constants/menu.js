@@ -26,6 +26,7 @@ const data = [
           userRole.instituteManager,
           userRole.provinceSupervisor,
           userRole.authoritySupervisor,
+          userRole.dataentry,
         ],
       },
 
@@ -296,8 +297,8 @@ const data = [
     to: `${adminRoot}/teacher`,
     roles: [
       userRole.admin,
-      userRole.instituteDataentry,
-      userRole.provinceDataentry,
+      // userRole.instituteDataentry,
+      // userRole.provinceDataentry,
     ],
 
     subs: [
@@ -418,11 +419,7 @@ const data = [
     icon: 'IO.IoBook',
     label: 'menu.subjects',
     to: `${adminRoot}/subjects`,
-    roles: [
-      userRole.admin,
-      userRole.instituteDataentry,
-      userRole.provinceDataentry,
-    ],
+    roles: [userRole.admin, userRole.dataentry, userRole.supervisor],
     subs: [
       {
         icon: 'FA.FaList',
@@ -452,11 +449,7 @@ const data = [
     icon: 'SI.SiGoogleclassroom',
     label: 'menu.classes',
     to: `${adminRoot}/classes`,
-    roles: [
-      userRole.admin,
-      userRole.instituteDataentry,
-      userRole.provinceDataentry,
-    ],
+    roles: [userRole.admin, userRole.dataentry, userRole.supervisor],
     subs: [
       {
         icon: 'FA.FaList',
@@ -478,8 +471,8 @@ const data = [
     to: `${adminRoot}/fields`,
     roles: [
       userRole.admin,
-      userRole.instituteDataentry,
-      userRole.provinceDataentry,
+      userRole.authorityDataentry,
+      userRole.authoritySupervisor,
     ],
     subs: [
       {
@@ -518,8 +511,8 @@ const data = [
     to: `${adminRoot}/evaluations`,
     roles: [
       userRole.admin,
-      userRole.instituteDataentry,
-      userRole.provinceDataentry,
+      // userRole.instituteDataentry,
+      // userRole.provinceDataentry,
     ],
     subs: [
       {
@@ -552,8 +545,8 @@ const data = [
     to: `${adminRoot}/hr-evaluations`,
     roles: [
       userRole.admin,
-      userRole.instituteDataentry,
-      userRole.provinceDataentry,
+      // userRole.instituteDataentry,
+      // userRole.provinceDataentry,
     ],
     subs: [
       {
@@ -601,8 +594,8 @@ const data = [
     to: `${adminRoot}/workers`,
     roles: [
       userRole.admin,
-      userRole.instituteDataentry,
-      userRole.provinceDataentry,
+      // userRole.instituteDataentry,
+      // userRole.provinceDataentry,
     ],
 
     subs: [

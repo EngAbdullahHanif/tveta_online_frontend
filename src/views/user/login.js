@@ -44,16 +44,18 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       password: values.password,
     })
       .then((response) => {
-        message.success(' شه راغلاست / خوش امدید');
-        console.log('Data: ', response.data);
-        console.log('Token: ', response.data.access);
-        let loggedUser = jwt_decode(response.data.access);
-        console.log('Logged User in Token: ', loggedUser);
-        authContext.setUser(response.data.user);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        localStorage.setItem('current_user', response.data.user); //this should be removed after conflict resolved
-        localStorage.setItem('access_token', response.data.access);
-        history.push('/');
+        if (response.status === 200) {
+          message.success(' شه راغلاست / خوش امدید');
+          console.log('Data: ', response.data);
+          console.log('Token: ', response.data.access);
+          let loggedUser = jwt_decode(response.data.access);
+          console.log('Logged User in Token: ', loggedUser);
+          authContext.setUser(response.data.user);
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          localStorage.setItem('current_user', response.data.user); //this should be removed after conflict resolved
+          localStorage.setItem('access_token', response.data.access);
+          history.push('/');
+        }
         // return response.data;
       })
       .catch((err) => {

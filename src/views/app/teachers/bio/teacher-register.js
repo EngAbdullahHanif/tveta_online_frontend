@@ -283,7 +283,7 @@ const TeacherRegister = ({ intl }, values) => {
   const fetchCurrentDistricts = async (provinceId) => {
     console.log('provinceId', provinceId);
     const response = await callApi(
-      `core/district/?province=${provinceId}`,
+      `core/districts/?province=${provinceId}`,
       'GET',
       null
     );
@@ -316,59 +316,50 @@ const TeacherRegister = ({ intl }, values) => {
     }
   }, [selectedCurrentProvince]);
 
-  // const onRegister = (values) => {
-  //   //REMOVE USER_ID LATER, IT IS JUST FOR TESTING
-  //   //UNCOMMENT TEACHER_PHOTO LATER, when the frontend updated
-  //   const data = {
-  //     name: values.name,
-  //     father_name: values.fatherName,
-  //     grand_father_name: values.grandFatherName,
-  //     cover_number: values.coverNumber,
-  //     registration_number: values.registrationNumber,
-  //     gender: values.gender.value,
-  //     main_province: values.province.value,
-  //     main_district: values.district,
-  //     main_village: values.village,
-  //     current_province: values.C_Province.value,
-  //     current_district: values.C_District,
-  //     current_village: values.C_Village,
-  //     education_degree: values.levelOfEducation.value,
-  //     major: values.major.value,
-  //     phone_number: values.PhoneNumber,
-  //     email: values.email,
-  //     birth_date: values.yearOfBirth,
-  //     status_type: values.status.value,
-  //     grade: values.grade.value,
-  //     step: values.step.value,
-  //     user_id: 1,
-  //     // teacher_photo: values.TeacherPhoto,
-  //   };
-  //   console.log('The Data', data);
+  const onRegister = (values) => {
+    //REMOVE USER_ID LATER, IT IS JUST FOR TESTING
+    //UNCOMMENT TEACHER_PHOTO LATER, when the frontend updated
+    console.log('values of teacher', values);
+    const data = {
+      name: values.name,
+      father_name: values.fatherName,
+      grand_father_name: values.grandFatherName,
+      cover_number: values.coverNumber,
+      registration_number: values.registrationNumber,
+      gender: values.gender.value,
+      main_province: values.province.value,
+      main_district: values.district,
+      main_village: values.village,
+      current_province: values.C_Province.value,
+      current_district: values.C_District,
+      current_village: values.C_Village,
+      education_degree: values.levelOfEducation.value,
+      major: values.major.value,
+      phone_number: values.PhoneNumber,
+      email: values.email,
+      birth_date: values.yearOfBirth,
+      status_type: values.status.value,
+      grade: values.grade.value,
+      step: values.step.value,
+      // teacher_photo: values.TeacherPhoto,
+    };
+    console.log('Data of Teachers', data);
 
-  //   if (
-  //     data.values.Name &&
-  //     data.values.FatherName &&
-  //     data.values.GrandFatherName &&
-  //     data.values.coverNumber !== ''
-  //   ) {
-  //     return console.log('Please Enter Valid the value');
-  //   }
-
-  //   axios
-  //     .post(teacherResitgerAPIUrl, data)
-  //     .then((res) => {
-  //       console.log('The Response', res);
-  //       createNotification('success', 'filled');
-  //     })
-  //     .catch((err) => {
-  //       createNotification('error', 'filled');
-  //       console.log('The Error ', err);
-  //       console.log('The Error ', err.message);
-  //       console.log('The Error response ', err.response);
-  //       console.log('The Error response.data ', err.response.data);
-  //       console.log('The Error response.status', err.response.status);
-  //     });
-  // };
+    // axios
+    //   .post(teacherResitgerAPIUrl, data)
+    //   .then((res) => {
+    //     console.log('The Response', res);
+    //     createNotification('success', 'filled');
+    //   })
+    //   .catch((err) => {
+    //     createNotification('error', 'filled');
+    //     console.log('The Error ', err);
+    //     console.log('The Error ', err.message);
+    //     console.log('The Error response ', err.response);
+    //     console.log('The Error response.data ', err.response.data);
+    //     console.log('The Error response.status', err.response.status);
+    //   });
+  };
 
   const forms = [createRef(null), createRef(null), createRef(null)];
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
@@ -390,7 +381,7 @@ const TeacherRegister = ({ intl }, values) => {
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
-          console.log('Final Values', newFields.C_District);
+          console.log('Final Values', newFields);
           setTimeout(() => {
             setLoading(false);
           }, 0);
@@ -878,7 +869,7 @@ const TeacherRegister = ({ intl }, values) => {
                     currentVillage: initialCurrentVillage,
                   }}
                   onSubmit={() => {}}
-                  validationSchema={teacherRegisterFormStep_2}
+                  // validationSchema={teacherRegisterFormStep_2}
                   validateOnMount
                 >
                   {({

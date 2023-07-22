@@ -544,6 +544,7 @@ function singleStudentAttendace(props) {
                                 <td></td>
                                 <td className="mb-2 p-0">
                                   {/* presentHours*/}
+
                                   <Field
                                     type="string"
                                     className="form-control"

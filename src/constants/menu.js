@@ -242,7 +242,8 @@ const data = [
       },
       {
         icon: 'MD.MdAddBox',
-        label: 'menu.student.upgrade-class',
+        // label: 'menu.student.upgrade-class',
+        label: 'class marks completion confirmation',
         to: `${adminRoot}/students/students-class-status-upgrade`,
         roles: [
           userRole.admin,
@@ -255,6 +256,18 @@ const data = [
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'student.assignment-to-class',
         to: `${adminRoot}/students/marks-status-cheked-students`,
+        newWindow: false,
+      },
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'student.subject-marks-verification',
+        to: `${adminRoot}/students/subject-marks-verification`,
+        newWindow: false,
+      },
+      {
+        icon: 'MD.MdOutlineTransferWithinAStation',
+        label: 'student.rejected-marks-update',
+        to: `${adminRoot}/students/rejected-marks-updates`,
         newWindow: false,
       },
 

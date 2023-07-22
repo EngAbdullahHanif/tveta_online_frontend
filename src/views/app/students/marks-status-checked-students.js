@@ -159,19 +159,36 @@ const MarskStatusCheckedStudents = ({ match }) => {
       console.log('field error');
     }
   };
-  const fetchDepartments = async () => {
-    const response = await callApi('institute/department/', '', null);
-    console.log('response of department', response);
+  const fetchDepartments = async (instituteId) => {
+    if (!instituteId || !instituteId.value) {
+      return;
+    }
+    const response = await callApi(
+      `institute/institite-department/?institute=${instituteId.value}`,
+      '',
+      null
+    );
+    // console.log('response of department', response);
     if (response.data && response.status === 200) {
+      console.log('response of department', response);
       const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
+        value: item.department.id,
+        label: item.department.name,
       }));
-      setDepartments(updatedData);
+      console.log('updatedData of department', updatedData);
+      setDepartments(updatedData); //Set it up when data in Backend is ready
     } else {
       console.log('department error');
     }
   };
+
+  useEffect(() => {
+    if (selectedInstitute) {
+      console.log('selectedInstitute', selectedInstitute);
+      fetchDepartments(selectedInstitute);
+    }
+  }, [selectedInstitute]);
+
   const fetchClasses = async () => {
     const response = await callApi('institute/classs/', '', null);
     if (response.data && response.status === 200) {
@@ -188,7 +205,6 @@ const MarskStatusCheckedStudents = ({ match }) => {
   useEffect(() => {
     fetchInstitutes();
     fetchFields();
-    fetchDepartments();
     fetchClasses();
   }, []);
 
@@ -224,11 +240,10 @@ const MarskStatusCheckedStudents = ({ match }) => {
     }
   };
 
-  const fechtStudens = async () => {
-    setIsNext(true);
+  const fechtStudents = async () => {
     console.log('selectedSemester', selectedSemester);
     const response = await callApi(
-      `api/marks-status-checked-students/?institute_id=${selectedInstitute.value}&class=${selectedClass.value}&semester=${selectedSemester.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
+      `students/marks-status-checked-students/?institute=${selectedInstitute.value}&class_grade=${selectedClass.value}&semester=${selectedSemester.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
       null
     );
@@ -258,18 +273,17 @@ const MarskStatusCheckedStudents = ({ match }) => {
     let data = [
       {
         educational_year: educationalYear,
-        institute_id: instituteId,
-        department_id: departmentId,
-        class_name: className,
+        institute: instituteId,
+        department: departmentId,
+        class_grade: className,
         semester: semesterId,
         shift: selecedStudyTime.value,
-        user_id: currentUser(),
       },
       ...newStudents,
     ];
 
     const response = await callApi(
-      'api/set-students-to-new-class/',
+      'students/set-students-to-new-class/',
       'POST',
       data
     );
@@ -300,7 +314,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
           {!isNext ? (
             <Formik
               initialValues={initialValues}
-              onSubmit={fechtStudens}
+              onSubmit={fechtStudents}
               validationSchema={ValidationSchema}
             >
               {({

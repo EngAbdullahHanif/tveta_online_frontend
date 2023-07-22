@@ -853,7 +853,7 @@ module.exports = {
   'forms.StdNecessaryWorkLabel': 'اړین کار/ کار ضروری',
   'forms.StdNecessaryWorkErr': 'دا ارقام اړین دي/ این ارقام ضروی است',
   'forms.ConfirmButton': 'تایید/ تصدیق',
-  'menu.attendance': 'د حاضرۍ لست/ لست حاضری',
+  'menu.attendance': ' د صنف حاضری/حاضری صنف',
   'menu.class_attendance': ' د ټولګي د حاضرۍ لست/ لست حاضری صنف',
   'student.dismissal': ' د شاګرد منفکول/ منفک کردن شاگرد',
 

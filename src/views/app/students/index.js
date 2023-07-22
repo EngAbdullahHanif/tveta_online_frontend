@@ -142,7 +142,23 @@ const Students = ({ match, props }) => {
   return (
     <Suspense fallback={<div className="loading" />}>
       <Switch>
-        <Redirect exact from={`${match.url}/`} to={`${match.url}/register`} />
+        {/* redirect from / to students */}
+        <Redirect exact from={`${match.url}/`} to={`${match.url}/students`} />
+
+        <ProtectedRoute
+          exact
+          path={`${match.url}/register-kankor`}
+          component={RegisterKankor}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.instituteDataentry,
+            userRole.provinceDataentry,
+            userRole.authorityDataentry,
+          ]}
+          props={props}
+        />
         <ProtectedRoute
           path={`${match.url}/register`}
           component={Register}
@@ -166,20 +182,7 @@ const Students = ({ match, props }) => {
           ]}
           props={props}
         />
-        <ProtectedRoute
-          exact
-          path={`${match.url}/register-kankor`}
-          component={RegisterKankor}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.instituteDataentry,
-            userRole.provinceDataentry,
-            userRole.authorityDataentry,
-          ]}
-          props={props}
-        />
+
         {/* Changes Started */}
         <ProtectedRoute
           exact

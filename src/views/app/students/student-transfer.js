@@ -124,6 +124,8 @@ const StudentsTransfer = (values) => {
   };
 
   const handleSearch = async (values) => {
+    if (!values.searchfield) return;
+
     setSearchResult(false);
     const response = await callApi(
       `students/student_accademic/?student_id=${values.searchfield}`,
@@ -364,7 +366,7 @@ const StudentsTransfer = (values) => {
                                         margin: '5% 6% 15% 8%',
                                         paddingInline: '10%',
                                       }}
-                                      onClick={() => handleSearch(true)}
+                                      onClick={() => setSearchResult(true)}
                                     >
                                       <span className="label">
                                         <IntlMessages id="button.Back" />
@@ -487,7 +489,7 @@ const StudentsTransfer = (values) => {
                               <Field
                                 className="form-control fieldStyle"
                                 name="transferDate"
-                                placeholder="1399/01/01"
+                                placeholder="1399-01-29"
                               />
                               {errors.transferDate && touched.transferDate ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">

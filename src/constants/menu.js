@@ -277,6 +277,16 @@ const data = [
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
       },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.institute_department_list',
+        to: `${adminRoot}/institutes/institute-department/list`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.institute_department_register',
+        to: `${adminRoot}/institutes/institute-department/register`,
+      },
       // {
       //   icon: "FA.FaLevelUpAlt",
       //   label: "menu.institute-upgrade",

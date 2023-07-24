@@ -235,7 +235,9 @@ module.exports = {
   'menu.subject-list': 'د مضامینو لست/ لست مضامین',
   'menu.field-list': 'د رشتو لست/ لست رشته ها',
   'menu.department-register': 'ددیپارتمنت ثبتول/ ثبت دیپارتمنت',
+  'menu.sector-register': 'د سکتور ثبتول/ ثبت سکتور',
   'menu.department-list': 'ددیپارتمنت لست/ لست دیپارتمنت ها',
+  'menu.sector-list': 'د سکتور لست/ لست سکتور ها',
   'menu.group-label': 'گروپ',
   'menu.group-register': 'د ګروپ ثبتول/ ثبت کردن گروپ',
 

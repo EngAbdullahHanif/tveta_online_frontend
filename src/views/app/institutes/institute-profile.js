@@ -4,6 +4,7 @@ import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import callApi from 'helpers/callApi';
 
 import * as Yup from 'yup';
 import {
@@ -33,27 +34,59 @@ const instituteApiUrl = `${servicePath}/institute/institute-teachers-students-st
 
 const InstituteDetails = (values) => {
   const [isNext, setIsNext] = useState(true);
-  // const { instituteId } = useParams();
-  const instituteId = 1;
+  const { instituteId } = useParams();
   const [institute, setInstitute] = useState([]);
   const [instituteStatistics, setInstituteStatistics] = useState([]);
+  const [departments, setDepartments] = useState([]);
 
-  useEffect(() => {
-    async function fetchDrom() {
-      const response = await axios.get(
-        `${instituteApiUrl}?institute_id=${instituteId}`
-      );
-      const data = await response.data;
-      setInstitute(data);
-
-      const instituteStatistics = await axios.get(
-        `${instituteApiUrl}?institute_id=${instituteId}`
-      );
-      const instituteStatisticsData = await instituteStatistics.data;
-      setInstituteStatistics(instituteStatisticsData);
-      console.log('institute', instituteStatisticsData);
+  const fetchDepartments = async () => {
+    if (!instituteId) {
+      return;
     }
-    fetchDrom();
+    const response = await callApi(
+      `institute/institite-department/?institute=${instituteId}`,
+      '',
+      null
+    );
+    // console.log('response of department', response);
+    if (response.data && response.status === 200) {
+      console.log('instituteId', instituteId);
+      console.log('response of department', response);
+      setDepartments(response.data);
+    } else {
+      console.log('department error');
+    }
+  };
+  useEffect(() => {
+    async function fetchInstituteInformation() {
+      const instituteResponse = await callApi(
+        `institute/?institute=${instituteId}`,
+        '',
+        null
+      );
+      if (instituteResponse.data && instituteResponse.status === 200) {
+        const instituteData = await instituteResponse.data;
+        console.log('instituteData', instituteData);
+        setInstitute(instituteData);
+      }
+
+      const instituteStatisticsResponse = await callApi(
+        `institute/institute-teachers-students-statistics/?institute=${instituteId}`,
+        '',
+        null
+      );
+      if (
+        instituteStatisticsResponse.data &&
+        instituteStatisticsResponse.status === 200
+      ) {
+        const instituteStatisticsData = await instituteStatisticsResponse.data;
+        console.log('instituteStatisticsData', instituteStatisticsData);
+        setInstituteStatistics(instituteStatisticsData);
+      }
+    }
+
+    fetchDepartments();
+    fetchInstituteInformation();
   }, []);
   const handleClick = (event) => {
     setIsNext(event);
@@ -186,10 +219,16 @@ const InstituteDetails = (values) => {
                   </p>
                 </b>
                 <Row className="d-block">
-                  <Colxx>کمپیوتر ساینس</Colxx>
+                  {departments &&
+                    departments.map((item) => {
+                      return (
+                        <Colxx key={item.id}>{item.department.name}</Colxx>
+                      );
+                    })}
+                  {/* // <Colxx>کمپیوتر ساینس</Colxx>
 
-                  <Colxx>برق</Colxx>
-                  <Colxx>میخانیک</Colxx>
+                  // <Colxx>برق</Colxx>
+                  // <Colxx>میخانیک</Colxx> */}
                 </Row>
               </CardBody>
             </Card>

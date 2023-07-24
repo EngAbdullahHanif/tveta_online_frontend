@@ -63,10 +63,7 @@ const StudentListBody = (
             >
               {/* send this to localhost/students/:id */}
 
-              <NavLink
-                to={`student/${student.student_id}`}
-                style={{ width: '10%' }}
-              >
+              <NavLink to={`student/${student.id}`} style={{ width: '10%' }}>
                 <p
                   className="list-item-heading mb-1 truncate"
                   style={{ fontSize: '20px', marginInline: '-7px' }}
@@ -74,10 +71,7 @@ const StudentListBody = (
                   {student.student_id}
                 </p>
               </NavLink>
-              <NavLink
-                to={`student/${student.student_id}`}
-                style={{ width: '15%' }}
-              >
+              <NavLink to={`student/${student.id}`} style={{ width: '15%' }}>
                 <p
                   className="list-item-heading mb-1 truncate"
                   style={{ fontSize: '20px' }}

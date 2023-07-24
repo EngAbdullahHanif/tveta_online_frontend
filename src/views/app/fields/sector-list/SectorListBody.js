@@ -24,7 +24,7 @@ const createNotification = (type, className) => {
   switch (type) {
     case 'success':
       NotificationManager.success(
-        'دیپارتمنت په بریالیتوب سره دیلیت شو',
+        'رشته په بریالیتوب سره دیلیت شو',
         'موفقیت',
         3000,
         null,
@@ -34,7 +34,7 @@ const createNotification = (type, className) => {
       break;
     case 'error':
       NotificationManager.error(
-        'دیپارتمنت دیلیت نه شو بیا کوشش وکری',
+        'رشته دیلیت نه شو بیا کوشش وکری',
         'خطا',
         9000,
         () => {
@@ -50,19 +50,13 @@ const createNotification = (type, className) => {
   }
 };
 
-const DepartmentListBody = ({
-  department,
-  isSelect,
-  collect,
-  onCheckItem,
-  index,
-}) => {
-  console.log('inside body', department);
+const SectorListBody = ({ sector, isSelect, collect, onCheckItem, index }) => {
+  console.log('inside body', sector.id);
   const [modalBasic, setModalBasic] = useState(false);
 
-  const handleClick = async (departmentId) => {
+  const handleClick = async (sectorId) => {
     const instituteResponse = await callApi(
-      `institute/department/${departmentId}/`,
+      `institute/sectors_details/${sectorId}/`,
       'DELETE',
       null
     );
@@ -81,10 +75,10 @@ const DepartmentListBody = ({
     // setDeletion(event);
   };
   return (
-    <Colxx xxs="12" key={department.id} className="mt-2">
-      <ContextMenuTrigger id="menu_id" data={department.id} collect={collect}>
+    <Colxx xxs="12" key={sector.id} className="mt-2">
+      <ContextMenuTrigger id="menu_id" data={sector.id} collect={collect}>
         <Card
-          onClick={(event) => onCheckItem(event, department.id)}
+          onClick={(event) => onCheckItem(event, sector.id)}
           className={classnames('d-flex flex-row', {
             active: isSelect,
           })}
@@ -99,28 +93,16 @@ const DepartmentListBody = ({
             >
               <p
                 className="list-item-heading mb-1 truncate"
-                style={{ width: '15%' }}
+                style={{ width: '25%' }}
               >
                 {index + 1}
               </p>
 
               <p
                 className="mb-1 text-small"
-                style={{ width: '20%', textAlign: 'right' }}
+                style={{ width: '26%', textAlign: 'right' }}
               >
-                {department.field_of_study.name}
-              </p>
-              <p
-                className="mb-1 text-small"
-                style={{ width: '30%', textAlign: 'right' }}
-              >
-                {department.name}
-              </p>
-              <p
-                className="mb-1 text-small"
-                style={{ width: '30%', textAlign: 'right' }}
-              >
-                {department.english_name}
+                {sector.sector}
               </p>
             </div>
             <>
@@ -165,7 +147,7 @@ const DepartmentListBody = ({
                   <Button
                     color="danger"
                     onClick={() => {
-                      handleClick(`${department.id}`);
+                      handleClick(`${sector.id}`);
                     }}
                     style={{ marginLeft: '5%' }}
                   >
@@ -182,4 +164,4 @@ const DepartmentListBody = ({
 };
 
 /* React.memo detail : https://reactjs.org/docs/react-api.html#reactpurecomponent  */
-export default React.memo(DepartmentListBody);
+export default React.memo(SectorListBody);

@@ -41,25 +41,20 @@ const DormProfile = (values) => {
   const [dormStudents, setDormStudents] = useState([]);
   useEffect(() => {
     async function fetchDrom() {
-      // const response = await axios.get(`${dormApiUrl}?id=${dormId}`);
       const response = await callApi(`institute/dorms/?id=${dormId}`, '', null);
       if (response.data && response.status === 200) {
+        console.log('dorm response', response);
         setDorm(response.data);
       } else {
         console.log('dorm error');
       }
-
-      // const dormStudentresponse = await axios.get(
-      //   `${dormStudentsApiUrl}?dorm_id=${dormId}`
-      // );
-      // const dormStudentdata = await dormStudentresponse.data;
-
       const dormStudentresponse = await callApi(
-        `api/Num_stddorm/?dorm_id=${dormId}`,
+        `students/Num_stddorm/?dorm_id=${dormId}`,
         '',
         null
       );
       if (dormStudentresponse.data && dormStudentresponse.status === 200) {
+        console.log('dorm student response', dormStudentresponse);
         setDormStudents(dormStudentresponse.data);
       } else {
         console.log('dorm student error');
@@ -91,10 +86,25 @@ const DormProfile = (values) => {
                 <b>
                   <p>{dorm[0].name}</p>
                 </b>
-                <p>{dorm[0].provence + ' - ' + dorm[0].district}</p>
+                <p>{dorm[0].province + ' - ' + dorm[0].district}</p>
 
-                {dorm[0].dorm_type == 1 ? <p>خصوصی</p> : <p>خصوصی</p>}
-                <p>{dorm[0].dorm_type_option}</p>
+                {dorm[0].building_ownership == 'governmental' ? (
+                  <p>دولتی</p>
+                ) : (
+                  <p>خصوصی</p>
+                )}
+                {dorm[0].building_type_option == 'tveta' ? (
+                  <p>
+                    د تخنیکی او مسکلی زده کړو اداره/ اداره تعلبمات تخنبکب و
+                    مسلکی
+                  </p>
+                ) : dorm[0].building_type_option == 'other_org' ? (
+                  <p>بل ارګان/ ارگان دیگر</p>
+                ) : dorm[0].building_type_option == 'rent' ? (
+                  <p>کرایی</p>
+                ) : (
+                  <p>کمکی</p>
+                )}
               </CardBody>
             </Card>
           </Colxx>
@@ -103,19 +113,19 @@ const DormProfile = (values) => {
               <CardBody className="">
                 <p>
                   د ساختمانونو تعداد:
-                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].building_qty}</b>
+                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].number_of_buildings}</b>
                 </p>
                 <p>
                   د اطاقونو تعداد:
-                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].rooms_qty}</b>
+                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].number_of_rooms}</b>
                 </p>
                 <p>
                   د اشپزخانو تعداد:
-                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].kitchen_qty}</b>
+                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].number_of_kitchens}</b>
                 </p>
                 <p>
                   د تشنابونو تعداد:
-                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].toilet_qty}</b>
+                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].number_of_toilets}</b>
                 </p>
               </CardBody>
             </Card>
@@ -126,11 +136,11 @@ const DormProfile = (values) => {
               <CardBody className="">
                 <p>
                   سهمیه کل:
-                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].dorm_quota}</b>
+                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].quota}</b>
                 </p>
                 <p>
                   ظرفیت کل:
-                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].dorm_capacity}</b>
+                  <b>&nbsp;&nbsp;&nbsp; {dorm[0].capacity}</b>
                 </p>
                 <p>
                   تعداد کل شاگردان:

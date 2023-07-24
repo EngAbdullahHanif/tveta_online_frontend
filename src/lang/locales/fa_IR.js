@@ -1189,8 +1189,8 @@ module.exports = {
   'institute.totalStudentsFemale': 'ښّځینه/اناث',
   'institute.totalTeachers': 'د استادانو تعداد/ تعداد استادان',
   'institute.totalDepartments': 'ډیپارتمنتونه/ دیپارتمنت ها',
-  'institute.Greduated_12': 'دوولسم پاس/ فارغین دوازده',
-  'institute.Greduated_14': 'څورلسم پاس/ فارغین چهارده',
+  'institute.Greduated_12': 'دوولسم شاگردان/ شاگردان دوازده',
+  'institute.Greduated_14': 'څورلسم شاگردان/ شاگردان چهارده',
   'menu.dorm-details': 'معلومات اضافی لیلیه',
 
   // Validation

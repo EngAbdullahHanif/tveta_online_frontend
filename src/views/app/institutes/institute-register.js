@@ -480,7 +480,7 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="district"
                           id="district"
-                          value={values.district.value}
+                          // value={values.district.value}
                           options={districts}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

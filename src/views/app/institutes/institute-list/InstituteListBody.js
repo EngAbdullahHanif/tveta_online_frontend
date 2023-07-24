@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import callApi from 'helpers/callApi';
+import { NotificationManager } from 'components/common/react-notifications';
+
 import {
   Card,
   CustomInput,
@@ -16,14 +20,62 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { BsTrashFill } from 'react-icons/bs';
 import { BsPencilSquare } from 'react-icons/bs';
+import { async } from 'q';
+
+const createNotification = (type, className) => {
+  const cName = className || '';
+  switch (type) {
+    case 'success':
+      NotificationManager.success(
+        'انستیتوت په بریالیتوب سره دیلیت شو',
+        'موفقیت',
+        3000,
+        null,
+        null,
+        cName
+      );
+      break;
+    case 'error':
+      NotificationManager.error(
+        'انستیتوت دیلیت نه شو بیا کوشش وکری',
+        'خطا',
+        9000,
+        () => {
+          alert('callback');
+        },
+        null,
+        cName
+      );
+      break;
+    default:
+      NotificationManager.info('Info message');
+      break;
+  }
+};
 
 const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
   const [modalBasic, setModalBasic] = useState(false);
   const [dataDeletion, setDeletion] = useState(false);
 
-  const handleClick = (event) => {
-    setDeletion(event);
-    console.log('API should be called here');
+  const handleClick = async (instituteId) => {
+    const instituteResponse = await callApi(
+      `institute/${instituteId}/`,
+      'DELETE',
+      null
+    );
+    if (instituteResponse.status >= 200 && instituteResponse.status < 300) {
+      console.log('succesfully deleted');
+      createNotification('success', 'filled');
+      // relaoad after 3 seconds to see the changes
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } else {
+      console.log('error');
+      createNotification('error', 'filled');
+    }
+
+    // setDeletion(event);
   };
   return (
     <Colxx xxs="12" key={institute.id} className="mt-2">
@@ -150,8 +202,8 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
                   <Button
                     color="danger"
                     onClick={() => {
-                      setModalBasic(false);
-                      handleClick(true);
+                      // setModalBasic(false);
+                      handleClick(`${institute.id}`);
                     }}
                     style={{ marginLeft: '5%' }}
                   >

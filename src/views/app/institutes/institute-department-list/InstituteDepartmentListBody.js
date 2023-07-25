@@ -109,7 +109,7 @@ const InstituteDepartmentListBody = ({
               <div style={{ width: '18%', fontSize: '20px' }}>
                 <p
                   className="list-item-heading mb-1 truncate"
-                  style={{ width: '18%', fontSize: '20px' }}
+                  style={{ width: '30%', fontSize: '20px' }}
                 >
                   {institute.institute.name}
                 </p>

@@ -128,72 +128,23 @@ const ThumbListPages = ({ match }) => {
     async function fetchData() {
       if (institute !== '') {
         const response = await callApi(
-          `institute/?id=${institute.id}`,
+          `institute/institite-department/?institute=${institute.value}`,
           '',
           null
         );
         if (response.data && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setInstituteId('');
-          setRest(false);
-        }
-        const response = await callApi(
-          `institute/institite-department/`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedProvinceOption.value === 'all') {
-        const response = await callApi(
-          `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedGenderOption.column === 'all') {
-        const response = await callApi(
-          `institute/institite-department/?id=${instituteId}&province=${selectedProvinceOption.value}&district=${district}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          console.log('RUN THIS ONE');
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
           setIsLoaded(true);
         } else {
           console.log('students error');
         }
       } else {
+        if (rest == true) {
+          setRest(false);
+        }
         const response = await callApi(
-          `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`,
+          `institute/institite-department/`,
           '',
           null
         );

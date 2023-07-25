@@ -177,133 +177,6 @@ const ListPageHeading = ({
 
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle
-                    caret
-                    color="outline-dark"
-                    size="xs"
-                    style={{ fontSize: '18px' }}
-                  >
-                    <IntlMessages id="filter" />
-                    {selectedGenderOption.label}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {genderOptions.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeGenderBy(order.column)}
-                          style={{ fontSize: '18px' }}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle
-                    caret
-                    color="outline-dark"
-                    size="xs"
-                    style={{ fontSize: '18px' }}
-                  >
-                    <IntlMessages id="filter" />
-                    {console.log(
-                      'selectedProvinceOption here',
-                      selectedProvinceOption
-                    )}
-                    {selectedProvinceOption.label}
-                  </DropdownToggle>
-                  <DropdownMenu
-                    style={{
-                      height: '200px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
-                  >
-                    {provincesOptionsForList.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeProvinceBy(order.value)}
-                          style={{ fontSize: '18px' }}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle
-                    caret
-                    color="outline-dark"
-                    size="xs"
-                    style={{ fontSize: '18px' }}
-                  >
-                    <IntlMessages id="filter" />
-                    {selectedStatusOptions.label}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {statusOptions.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeStatusBy(order.column)}
-                          style={{ fontSize: '18px' }}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle
-                    caret
-                    color="outline-dark"
-                    size="xs"
-                    style={{ fontSize: '18px' }}
-                  >
-                    <IntlMessages id="filter" />
-                    {selectedInstituteType.label}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {instituteTypeOptions.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeInstituteBy(order.column)}
-                          style={{ fontSize: '18px' }}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="district"
-                    id="district"
-                    style={{ fontSize: '18px' }}
-                    placeholder={messages['search.district']}
-                    onKeyPress={(e) => onDistrictSearchKey(e)}
-                  />
-                </div>
-                {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="keyword"
-                    id="search"
-                    placeholder={messages['search.id']}
-                    onKeyPress={(e) => onIdSearchKey(e)}
-                  />
-                </div> */}
                 <div className="" style={{ fontSize: '18px' }}>
                   <ReactAutoSugegst
                     data={institutes}
@@ -313,24 +186,14 @@ const ListPageHeading = ({
                     placeholder={messages['dorm.search.name']}
                   />
                 </div>
-
-                {/* <Row>
-                <Colxx xs="12" sm="12" className="mb-4">
-                  <ReactAutoSugegst data={institutes} />
-                </Colxx>
-              </Row> */}
+                -
               </div>
               <Button
-                style={{ fontSize: '18px' }}
+                style={{ fontSize: '18px', marginTop: '10px' }}
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
                 onClick={() => {
-                  changeGenderBy('all');
-                  changeStatusBy('all');
-                  changeProvinceBy('all');
-                  document.getElementById('district').value = '';
-                  // document.getElementById('search').value = '';
                   setSelectedInstitute('');
                   onResetClick(!reset);
                 }}

@@ -39,7 +39,7 @@ const ListPageListing = ({
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((institute) => {
+        {items.map((institute, index) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
@@ -48,6 +48,7 @@ const ListPageListing = ({
                 isSelect={selectedItems.includes(institute.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
+                index={index}
               />
             );
           }
@@ -59,6 +60,7 @@ const ListPageListing = ({
                 isSelect={selectedItems.includes(institute.id)}
                 collect={collect}
                 onCheckItem={onCheckItem}
+                index={index}
               />
             );
           }

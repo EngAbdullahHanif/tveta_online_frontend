@@ -69,6 +69,7 @@ const ListPageHeading = ({
   const { messages } = intl;
   const [selectedInstitute, setSelectedInstitute] = useState('');
   console.log('selectedInstitute12', selectedInstitute);
+  console.log('provincesOptionsForList', provincesOptionsForList);
   onInstituteSelect(selectedInstitute);
   return (
     <Row>
@@ -208,6 +209,10 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
+                    {console.log(
+                      'selectedProvinceOption here',
+                      selectedProvinceOption
+                    )}
                     {selectedProvinceOption.label}
                   </DropdownToggle>
                   <DropdownMenu
@@ -221,7 +226,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeProvinceBy(order.column)}
+                          onClick={() => changeProvinceBy(order.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}

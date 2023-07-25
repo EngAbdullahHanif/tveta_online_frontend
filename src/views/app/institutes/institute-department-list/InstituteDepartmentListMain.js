@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { provincesOptionsForList } from '../../global-data/options';
+import {
+  provincesOptionsForList,
+  fetchProvinces,
+} from '../../global-data/options';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
@@ -90,6 +93,8 @@ const ThumbListPages = ({ match }) => {
   const [district, setDistrict] = useState('');
   const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
+  const [provinceOptions, setProvinceOptions] = useState([]);
+
   const [selectedGenderOption, setSelectedGenderOption] = useState({
     column: 'all',
     label: 'جنیست',
@@ -122,12 +127,6 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     async function fetchData() {
       if (institute !== '') {
-        // const res = await axios.get(`institute/?id=${institute.id}`);
-        // console.log('res', response.data);
-        // setItems(response.data);
-        // setTotalItemCount(response.data.totalItem);
-        // setIsLoaded(true);
-
         const response = await callApi(
           `institute/?id=${institute.id}`,
           '',
@@ -163,25 +162,7 @@ const ThumbListPages = ({ match }) => {
         } else {
           console.log('students error');
         }
-      } else if (selectedProvinceOption.column === 'all') {
-        // axios
-        //   .get(
-        //     `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`
-        //     );
-
-        //     setItems(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-
+      } else if (selectedProvinceOption.value === 'all') {
         const response = await callApi(
           `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`,
           '',
@@ -196,30 +177,13 @@ const ThumbListPages = ({ match }) => {
           console.log('students error');
         }
       } else if (selectedGenderOption.column === 'all') {
-        // axios
-        //   .get(
-        //     `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${instituteApiUrl}?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`
-        //     );
-
-        //     setItems(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-
         const response = await callApi(
-          `institute/?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`,
+          `institute/institite-department/?id=${instituteId}&province=${selectedProvinceOption.value}&district=${district}`,
           '',
           null
         );
         if (response.data && response.status === 200) {
+          console.log('RUN THIS ONE');
           setItems(response.data);
           setSelectedItems([]);
           // setTotalItemCount(data);
@@ -228,24 +192,6 @@ const ThumbListPages = ({ match }) => {
           console.log('students error');
         }
       } else {
-        axios;
-        // get data from localhost:8000/api/student
-        // .get(
-        //   `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-        // )
-        // .then((res) => {
-        //   return res.data;
-        // })
-        // .then((data) => {
-        //   console.log(
-        //     `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-        //   );
-        //   setItems(data);
-
-        //   setSelectedItems([]);
-        //   setTotalItemCount(data.totalItem);
-        //   setIsLoaded(true);
-        // });
         const response = await callApi(
           `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`,
           '',
@@ -289,8 +235,15 @@ const ThumbListPages = ({ match }) => {
     }
   };
 
+  const fetchProvincesList = async () => {
+    console.log('provinces');
+    const provinces = await fetchProvinces();
+    setProvinceOptions(provinces);
+  };
+
   useEffect(() => {
     fetchInstitutes();
+    fetchProvincesList();
   }, []);
 
   const onCheckItem = (event, id) => {
@@ -374,7 +327,7 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د انستیوت لست/ لست انستیتوت ها"
+          heading="د انستیوت - دیپارتمنت لست/ لست انستیتوت - دیپارتمنت"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
@@ -417,9 +370,9 @@ const ThumbListPages = ({ match }) => {
               instituteTypeOptions.find((x) => x.column === column)
             );
           }}
-          changeProvinceBy={(column) => {
+          changeProvinceBy={(value) => {
             setSelectedProvinceOption(
-              provincesOptionsForList.find((x) => x.column === column)
+              provinceOptions.find((x) => x.value === value)
             );
           }}
           selectedGenderOption={selectedGenderOption}
@@ -429,7 +382,7 @@ const ThumbListPages = ({ match }) => {
           genderOptions={genderOptions}
           statusOptions={statusOptions}
           instituteTypeOptions={instituteTypeOptions}
-          provincesOptionsForList={provincesOptionsForList}
+          provincesOptionsForList={provinceOptions}
           onIdSearchKey={(e) => {
             if (e.key === 'Enter') {
               setInstituteId(e.target.value.toLowerCase());

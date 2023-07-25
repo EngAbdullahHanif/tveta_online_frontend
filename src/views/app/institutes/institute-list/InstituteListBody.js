@@ -53,7 +53,13 @@ const createNotification = (type, className) => {
   }
 };
 
-const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
+const InstituteListBody = ({
+  institute,
+  isSelect,
+  collect,
+  onCheckItem,
+  index,
+}) => {
   const [modalBasic, setModalBasic] = useState(false);
   const [dataDeletion, setDeletion] = useState(false);
 
@@ -107,7 +113,7 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
                     className="list-item-heading mb-1 "
                     style={{ fontSize: '20px' }}
                   >
-                    {institute.id}
+                    {index + 1}
                   </p>
                 </NavLink>
               </div>
@@ -117,14 +123,17 @@ const InstituteListBody = ({ institute, isSelect, collect, onCheckItem }) => {
                     className="list-item-heading mb-1 truncate"
                     style={{ fontSize: '20px' }}
                   >
-                    {institute.name}
+                    {institute.code}
                   </p>
                 </NavLink>
               </div>
               <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
+                {institute.name}
+              </p>
+              <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
                 {institute.province}
               </p>
-              {institute.type === '1' ? (
+              {institute.type === 'governmental' ? (
                 <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
                   <IntlMessages id="dash.institutePublic" />
                 </p>

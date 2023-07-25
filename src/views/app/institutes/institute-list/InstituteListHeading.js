@@ -191,7 +191,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeGenderBy(order.column)}
+                          onClick={() => changeGenderBy(order.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}
@@ -221,7 +221,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeProvinceBy(order.column)}
+                          onClick={() => changeProvinceBy(order.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}
@@ -238,14 +238,14 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedStatusOptions.label}
+                    {selectedStatusOptions?.label}
                   </DropdownToggle>
                   <DropdownMenu>
                     {statusOptions.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeStatusBy(order.column)}
+                          onClick={() => changeStatusBy(order.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}
@@ -263,14 +263,15 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedInstituteType.label}
+
+                    {selectedInstituteType?.label}
                   </DropdownToggle>
                   <DropdownMenu>
                     {instituteTypeOptions.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeInstituteBy(order.column)}
+                          onClick={() => changeInstituteBy(order.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}
@@ -280,7 +281,7 @@ const ListPageHeading = ({
                   </DropdownMenu>
                 </UncontrolledDropdown>
 
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
                     name="district"
@@ -289,7 +290,7 @@ const ListPageHeading = ({
                     placeholder={messages['search.district']}
                     onKeyPress={(e) => onDistrictSearchKey(e)}
                   />
-                </div>
+                </div> */}
                 {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
@@ -324,7 +325,7 @@ const ListPageHeading = ({
                   changeGenderBy('all');
                   changeStatusBy('all');
                   changeProvinceBy('all');
-                  document.getElementById('district').value = '';
+                  // document.getElementById('district').value = '';
                   // document.getElementById('search').value = '';
                   setSelectedInstitute('');
                   onResetClick(!reset);

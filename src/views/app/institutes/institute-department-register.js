@@ -179,7 +179,8 @@ const InstituteDepartmentRegister = () => {
     <>
       <Card>
         <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
-          <IntlMessages id="inst.register.title" />
+          {/* <IntlMessages id="inst.register.title" /> */}د انستیتوت -
+          دیپارتمنت ثبت کول / ثبت انستیتوت - دیپارتمنت
         </h3>
         <CardBody>
           {!isNext ? (

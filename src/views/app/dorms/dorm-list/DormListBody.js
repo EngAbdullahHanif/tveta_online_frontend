@@ -9,6 +9,9 @@ import {
   ModalFooter,
   Button,
 } from 'reactstrap';
+
+import callApi from 'helpers/callApi';
+import { NotificationManager } from 'components/common/react-notifications';
 import { NavLink } from 'react-router-dom';
 import IntlMessages from 'helpers/IntlMessages';
 import classnames from 'classnames';
@@ -17,13 +20,60 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import { BsTrashFill } from 'react-icons/bs';
 import { BsPencilSquare } from 'react-icons/bs';
 
+const createNotification = (type, className) => {
+  const cName = className || '';
+  switch (type) {
+    case 'success':
+      NotificationManager.success(
+        'لیله په بریالیتوب سره دیلیت شو',
+        'موفقیت',
+        3000,
+        null,
+        null,
+        cName
+      );
+      break;
+    case 'error':
+      NotificationManager.error(
+        'لیله دیلیت نه شو بیا کوشش وکری',
+        'خطا',
+        9000,
+        () => {
+          alert('callback');
+        },
+        null,
+        cName
+      );
+      break;
+    default:
+      NotificationManager.info('Info message');
+      break;
+  }
+};
+
 const DormListBody = ({ dorm, isSelect, collect, onCheckItem }) => {
   const [modalBasic, setModalBasic] = useState(false);
   const [dataDeletion, setDeletion] = useState(false);
 
-  const handleClick = (event) => {
-    setDeletion(event);
-    console.log('API should be called here');
+  const handleClick = async (dormId) => {
+    const instituteResponse = await callApi(
+      `institute/dorms_detials/${dormId}/`,
+      'DELETE',
+      null
+    );
+    if (instituteResponse.status >= 200 && instituteResponse.status < 300) {
+      console.log('succesfully deleted');
+      createNotification('success', 'filled');
+      // relaoad after 3 seconds to see the changes
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } else {
+      console.log('error');
+      createNotification('error', 'filled');
+    }
+
+    // setDeletion(event);
   };
   return (
     <Colxx xxs="12" key={dorm.id} className="mb-3">
@@ -131,8 +181,7 @@ const DormListBody = ({ dorm, isSelect, collect, onCheckItem }) => {
                   <Button
                     color="danger"
                     onClick={() => {
-                      setModalBasic(false);
-                      handleClick(true);
+                      handleClick(`${dorm.id}`);
                     }}
                     style={{ marginLeft: '5%' }}
                   >

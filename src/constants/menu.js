@@ -499,6 +499,11 @@ const data = [
         to: `${adminRoot}/fields/department-list`,
       },
       {
+        icon: 'FA.FaList',
+        label: 'menu.sector-list',
+        to: `${adminRoot}/fields/sector-list`,
+      },
+      {
         icon: 'MD.MdAddBox',
         label: 'menu.field-register',
         to: `${adminRoot}/fields/register`,

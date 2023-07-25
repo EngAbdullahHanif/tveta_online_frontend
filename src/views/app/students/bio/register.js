@@ -801,11 +801,9 @@ const StudentRegistration = ({ intl }, values) => {
                                   </FormGroup>
                                 </div>
                               </div>
-                            ) : (
-                              <div></div>
-                            )}
+                            ) : null}
 
-                            {values.tazkiraType.value === 'Paper' ? (
+                            {values.tazkiraType.value === 'paper' ? (
                               <div>
                                 {/* Safha */}
                                 <div>
@@ -827,35 +825,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   </FormGroup>
                                 </div>
                               </div>
-                            ) : (
-                              <div></div>
-                            )}
-
-                            {values.tazkiraType.value === 'paper' ? (
-                              <div>
-                                {/* Jold Number */}
-                                <div>
-                                  <FormGroup className="form-group has-float-label error-l-100">
-                                    <Label>
-                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                    </Label>
-                                    <Field
-                                      className="form-control fieldStyle"
-                                      name="idCardJoldNo"
-                                      type="string"
-                                    />
-                                    {errors.idCardJoldNo &&
-                                    touched.idCardJoldNo ? (
-                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                        {errors.idCardJoldNo}
-                                      </div>
-                                    ) : null}
-                                  </FormGroup>
-                                </div>
-                              </div>
-                            ) : (
-                              <div></div>
-                            )}
+                            ) : null}
 
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>

@@ -46,29 +46,18 @@ const DormListBody = ({ dormStudent, isSelect, collect, onCheckItem }) => {
               className="py-3 card-body align-self-center d-flex flex-column flex-lg-row  min-width-zero align-items-lg-center"
               style={{ width: '100%' }}
             >
-              <NavLink
-                to={`${dormStudent.student.student_id}`}
+              <p
+                className="list-item-heading mb-1 truncate"
                 style={{ width: '10%', fontSize: '20px' }}
               >
-                <p
-                  className="list-item-heading mb-1 truncate"
-                  style={{ fontSize: '20px' }}
-                >
-                  <span className="mr-5">{dormStudent.student.student_id}</span>
-                </p>
-              </NavLink>
-              <NavLink
-                to={`${dormStudent.student.student_id}`}
+                <span className="mr-5">{dormStudent.student.student_id}</span>
+              </p>
+              <p
+                className="list-item-heading mb-1 truncate"
                 style={{ width: '15%', fontSize: '20px' }}
               >
-                <p
-                  className="list-item-heading mb-1 truncate"
-                  style={{ fontSize: '20px' }}
-                >
-                  {dormStudent.student.name}
-                </p>
-              </NavLink>
-
+                {dormStudent.student.name}
+              </p>
               <p
                 className="mb-1 text-small"
                 style={{ width: '15%', fontSize: '20px' }}

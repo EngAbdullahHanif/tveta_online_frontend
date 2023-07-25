@@ -98,9 +98,13 @@ const TeacherRegister = ({ intl }, values) => {
   const [currentDistricts, setCurrentDistricts] = useState([]);
   const [selectedMainProvince, setSelectedMainProvince] = useState('');
   const [selectedCurrentProvince, setSelectedCurrentProvince] = useState('');
-
+  const [institutes, setInstitutes] = useState([]);
+  const [fieldsOfStudy, setFieldsOfStudy] = useState([]);
+  const forms = [createRef(null), createRef(null), createRef(null)];
+  const [bottomNavHidden, setBottomNavHidden] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [fields, setFields] = useState({});
   const { teacherId } = useParams();
-  console.log('teacher-id', teacherId);
 
   if (teacherId) {
     useEffect(() => {
@@ -297,9 +301,38 @@ const TeacherRegister = ({ intl }, values) => {
       console.log('district error');
     }
   };
+  const fetchInstitutes = async () => {
+    const response = await callApi('institute/', '', null);
+    console.warn('Reponse Institutes: ', response);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      console.warn('Updated Institutes: ', updatedData);
+      setInstitutes(updatedData);
+    } else {
+      console.log('institute error');
+    }
+  };
+  const fetchFields = async () => {
+    const response = await callApi('institute/field/', '', null);
+    if (response.data && response.status === 200) {
+      console.log('fields', response.data);
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFieldsOfStudy(updatedData);
+    } else {
+      console.log('field error');
+    }
+  };
 
   useEffect(() => {
     fetchProvinces();
+    fetchInstitutes();
+    fetchFields();
   }, []);
 
   useEffect(() => {
@@ -316,55 +349,22 @@ const TeacherRegister = ({ intl }, values) => {
     }
   }, [selectedCurrentProvince]);
 
-  const onRegister = (values) => {
-    //REMOVE USER_ID LATER, IT IS JUST FOR TESTING
-    //UNCOMMENT TEACHER_PHOTO LATER, when the frontend updated
-    console.log('values of teacher', values);
-    const data = {
-      name: values.name,
-      father_name: values.fatherName,
-      grand_father_name: values.grandFatherName,
-      cover_number: values.coverNumber,
-      registration_number: values.registrationNumber,
-      gender: values.gender.value,
-      main_province: values.province.value,
-      main_district: values.district,
-      main_village: values.village,
-      current_province: values.C_Province.value,
-      current_district: values.C_District,
-      current_village: values.C_Village,
-      education_degree: values.levelOfEducation.value,
-      major: values.major.value,
-      phone_number: values.PhoneNumber,
-      email: values.email,
-      birth_date: values.yearOfBirth,
-      status_type: values.status.value,
-      grade: values.grade.value,
-      step: values.step.value,
-      // teacher_photo: values.TeacherPhoto,
-    };
-    console.log('Data of Teachers', data);
-
-    // axios
-    //   .post(teacherResitgerAPIUrl, data)
-    //   .then((res) => {
-    //     console.log('The Response', res);
-    //     createNotification('success', 'filled');
-    //   })
-    //   .catch((err) => {
-    //     createNotification('error', 'filled');
-    //     console.log('The Error ', err);
-    //     console.log('The Error ', err.message);
-    //     console.log('The Error response ', err.response);
-    //     console.log('The Error response.data ', err.response.data);
-    //     console.log('The Error response.status', err.response.status);
-    //   });
+  const postTeacherRecord = async (data) => {
+    console.log('data of post record', data);
+    const response = await callApi(
+      'teachers/teacher-contract/create/',
+      'POST',
+      data
+    );
+    if (response.status >= 200 && response.status < 300) {
+      createNotification('success', 'filled');
+      console.log('success message', response.data);
+    } else {
+      createNotification('error', 'filled');
+      console.log('teacher error');
+    }
   };
 
-  const forms = [createRef(null), createRef(null), createRef(null)];
-  const [bottomNavHidden, setBottomNavHidden] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [fields, setFields] = useState({});
   const onClickNext = (goToNext, steps, step, values) => {
     if (steps.length - 1 <= steps.indexOf(step)) {
       return;
@@ -377,11 +377,48 @@ const TeacherRegister = ({ intl }, values) => {
       if (!form.isDirty && form.isValid) {
         const newFields = { ...fields, ...form.values };
         setFields(newFields);
+        const data = {
+          contract_type: newFields.appointmentType?.value,
+          cover_number: newFields.coverNumber,
+          current_district: newFields.currentDistrict?.value,
+          current_province: newFields.currentProvince?.value,
+          current_village: newFields.currentVillage,
+          email: newFields.email,
+          english_father_name: newFields.englishFatherName,
+          english_last_name: newFields.englishLastName,
+          english_name: newFields.englishName,
+          father_name: newFields.fatherName,
+          gender: newFields.gender?.value,
+          grade: newFields.grade?.value,
+          grandfather_name: newFields.grandFatherName,
+          hire_date: newFields.hireDate,
+          institution: newFields.institution,
+          institute: newFields.jobLocation?.value,
+          last_name: newFields.lastName,
+          degree: newFields.levelOfEducation?.value,
+          main_district: newFields.mainDistrict?.value,
+          main_province: newFields.mainProvince?.value,
+          main_village: newFields.mainVillage,
+          field_of_study: newFields.major,
+          name: newFields.name,
+          page_number: newFields.pageNumber,
+          phone_number: newFields.phoneNumber,
+          place_of_birth: newFields.placeOfBirth,
+          registration_number: newFields.registrationNumber,
+          step: newFields.step?.value,
+          teaching_field: newFields.teachingField?.value,
+          teaching_language: newFields.teachingLang?.value,
+          year_completed: newFields.yearCompleted?.value,
+          year_of_birth: newFields.yearOfBirth?.value,
+        };
+
+        console.log('data', data);
         console.log('form data all here', newFields);
         if (steps.length - 2 <= steps.indexOf(step)) {
           setBottomNavHidden(true);
           setLoading(true);
           console.log('Final Values', newFields);
+          postTeacherRecord(data);
           setTimeout(() => {
             setLoading(false);
           }, 0);
@@ -949,7 +986,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   value={values.teachingField}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
-                                  options={majorOptions}
+                                  options={fieldsOfStudy}
                                   required
                                 />
                                 {errors.teachingField &&
@@ -1007,7 +1044,7 @@ const TeacherRegister = ({ intl }, values) => {
                           <Colxx xxs="5">
                             <div>
                               {/* Job location*/}
-                              <FormGroup className="form-group has-float-label error-l-175">
+                              {/* <FormGroup className="form-group has-float-label error-l-175">
                                 <Label>
                                   <IntlMessages id="teacher.jobLocationLabel" />
                                   <span style={{ color: 'red' }}>*</span>
@@ -1026,9 +1063,29 @@ const TeacherRegister = ({ intl }, values) => {
                                     {errors.jobLocation}
                                   </div>
                                 ) : null}
+                              </FormGroup> */}
+
+                              <FormGroup className="form-group has-float-label error-l-150 ">
+                                <Label>
+                                  <IntlMessages id="forms.InstituteLabel" />
+                                </Label>
+                                <FormikReactSelect
+                                  name="jobLocation"
+                                  id="jobLocation"
+                                  // value={values.jobLocation}
+                                  options={institutes}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                />
+
+                                {errors.jobLocation && touched.jobLocation ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white ">
+                                    {errors.jobLocation}
+                                  </div>
+                                ) : null}
                               </FormGroup>
                               {/* Meduim of instruction*/}
-                              <FormGroup className="form-group has-float-label error-l-175">
+                              {/* <FormGroup className="form-group has-float-label error-l-175">
                                 <Label>
                                   <IntlMessages id="teacher.teachingLang" />
                                   <span style={{ color: 'red' }}>*</span>
@@ -1045,6 +1102,28 @@ const TeacherRegister = ({ intl }, values) => {
                                 />
                                 {errors.teachingLang && touched.teachingLang ? (
                                   <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                    {errors.teachingLang}
+                                  </div>
+                                ) : null}
+                              </FormGroup> */}
+
+                              {/* institute language  */}
+                              <FormGroup className="form-group has-float-label">
+                                <Label
+                                  style={{ fontSize: 18, fontWeight: 'bold' }}
+                                >
+                                  <IntlMessages id="teacher.teachingLang" />
+                                </Label>
+                                <FormikReactSelect
+                                  name="teachingLang"
+                                  id="teachingLang"
+                                  value={values.teachingLang}
+                                  options={langOptions}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                />
+                                {errors.teachingLang && touched.teachingLang ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white">
                                     {errors.teachingLang}
                                   </div>
                                 ) : null}

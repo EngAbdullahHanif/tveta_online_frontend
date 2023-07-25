@@ -567,31 +567,35 @@ export const contractTypeOptions = [
 ];
 
 export const gradeOptions = [
-  { value: '3', label: <IntlMessages id="teacher.GradeOption_3" /> },
-  { value: '4', label: <IntlMessages id="teacher.GradeOption_4" /> },
-  { value: '5', label: <IntlMessages id="teacher.GradeOption_5" /> },
-  { value: '6', label: <IntlMessages id="teacher.GradeOption_6" /> },
-  { value: '7', label: <IntlMessages id="teacher.GradeOption_7" /> },
-  { value: '8', label: <IntlMessages id="teacher.GradeOption_8" /> },
+  { value: 3, label: <IntlMessages id="teacher.GradeOption_3" /> },
+  { value: 4, label: <IntlMessages id="teacher.GradeOption_4" /> },
+  { value: 5, label: <IntlMessages id="teacher.GradeOption_5" /> },
+  { value: 6, label: <IntlMessages id="teacher.GradeOption_6" /> },
+  { value: 7, label: <IntlMessages id="teacher.GradeOption_7" /> },
+  { value: 8, label: <IntlMessages id="teacher.GradeOption_8" /> },
 ];
 
 export const stepOptions = [
-  { value: '1', label: <IntlMessages id="teacher.StepOption_1" /> },
-  { value: '2', label: <IntlMessages id="teacher.StepOption_2" /> },
-  { value: '3', label: <IntlMessages id="teacher.StepOption_3" /> },
-  { value: '4', label: <IntlMessages id="teacher.StepOption_4" /> },
-  { value: '5', label: <IntlMessages id="teacher.StepOption_5" /> },
-  { value: '6', label: <IntlMessages id="teacher.StepOption_6" /> },
+  { value: 1, label: <IntlMessages id="teacher.StepOption_1" /> },
+  { value: 2, label: <IntlMessages id="teacher.StepOption_2" /> },
+  { value: 3, label: <IntlMessages id="teacher.StepOption_3" /> },
+  { value: 4, label: <IntlMessages id="teacher.StepOption_4" /> },
+  { value: 5, label: <IntlMessages id="teacher.StepOption_5" /> },
+  { value: 6, label: <IntlMessages id="teacher.StepOption_6" /> },
 ];
 
 export const appointmentTypeOptions = [
   {
-    value: '1',
+    value: 'outstructure_fixed_term',
     label: <IntlMessages id="teacher.appointmentTOptions_1" />,
   },
   {
-    value: '2',
+    value: 'instructure_fixed_term',
     label: <IntlMessages id="teacher.appointmentTOptions_2" />,
+  },
+  {
+    value: 'official',
+    label: <IntlMessages id="teacher.appointmentTOptions_3" />,
   },
 ];
 
@@ -614,16 +618,20 @@ export const levelOfEdcationOptions = [
 
 export const langOptions = [
   {
-    value: '1',
+    value: 'pashto',
     label: <IntlMessages id="teacher.langOptions_1" />,
   },
   {
-    value: '2',
+    value: 'dari',
     label: <IntlMessages id="teacher.langOptions_2" />,
   },
   {
-    value: '3',
+    value: 'english',
     label: <IntlMessages id="teacher.langOptions_3" />,
+  },
+  {
+    value: 'pashto_dari',
+    label: <IntlMessages id="teacher.langOptions_4" />,
   },
 ];
 

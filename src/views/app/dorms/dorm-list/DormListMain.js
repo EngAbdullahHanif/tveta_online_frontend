@@ -42,29 +42,54 @@ const categories = [
 
 const genderOptions = [
   {
-    column: 'all',
+    value: 'all',
     label: 'تول / همه',
   },
-  { column: '1', label: 'ذکور' },
-  { column: '2', label: 'اناث' },
+  { value: 'male', label: 'ذکور' },
+  { value: 'female', label: 'اناث' },
 ];
 
+// const statusOptions = [
+//   {
+//     value: 'all',
+//     label: <IntlMessages id="option.all" />,
+//   },
+//   { value: 'active', label: <IntlMessages id="institute.statusOption_1" /> },
+//   { value: 'deactive', label: <IntlMessages id="institute.statusOption_2" /> },
+// ];
 const statusOptions = [
   {
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="option.all" />,
   },
-  { column: '1', label: <IntlMessages id="institute.statusOption_1" /> },
-  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+  {
+    value: 'governmental',
+    label: 'دولتی',
+  },
+  { value: 'private', label: 'شخصی' },
 ];
 
 const buildingTypeOptions = [
   {
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="option.all" />,
   },
-  { column: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
-  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
+  {
+    value: 'tveta',
+    label: <IntlMessages id="dorm.PublicBuildingOwnerLabelOption_1" />,
+  },
+  {
+    value: 'other_org',
+    label: <IntlMessages id="dorm.PublicBuildingOwnerLabelOption_2" />,
+  },
+  {
+    value: 'rent',
+    label: <IntlMessages id="dorm.PrivateBuildingTypeOption_1" />,
+  },
+  {
+    value: 'aid',
+    label: <IntlMessages id="dorm.PrivateBuildingTypeOption_2" />,
+  },
 ];
 
 const ThumbListPages = ({ match }) => {
@@ -94,30 +119,32 @@ const ThumbListPages = ({ match }) => {
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
   const [selectedGenderOption, setSelectedGenderOption] = useState({
-    column: 'all',
+    value: 'all',
     label: 'جنیست',
   });
   const [selectedProvinceOption, setSelectedProvinceOption] = useState({
-    column: 'all',
+    value: 'all',
     label: 'ولایت',
   });
   const [selectedStatusOptions, setSelectedStatusOptions] = useState({
-    column: 'all',
-    label: 'حالت',
+    value: 'all',
+    label: 'ملکیت',
   });
 
   const [selectedBuildingType, setSelectedBuildingType] = useState({
-    column: 'all',
+    value: 'all',
     label: 'نوع تعمیر',
   });
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [
-    selectedPageSize,
-    selectedOrderOption,
-    selectedStatusOptions,
-    selectedBuildingType,
-  ]);
+  const [provinceOptions, setProvinceOptions] = useState([]);
+
+  // useEffect(() => {
+  //   setCurrentPage(1);
+  // }, [
+  //   selectedPageSize,
+  //   selectedOrderOption,
+  //   selectedStatusOptions,
+  //   selectedBuildingType,
+  // ]);
   const fetchDorms = async () => {
     // const response = await axios.get(`institute/dorms`);
     const response = await callApi('institute/', '', null);
@@ -132,161 +159,159 @@ const ThumbListPages = ({ match }) => {
       console.log('error');
     }
   };
+  const fetchProvinces = async () => {
+    const response = await callApi('core/provinces/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.native_name,
+      }));
+      const all = { value: 'all', label: 'همه' };
+      updatedData.unshift(all);
+      setProvinceOptions(updatedData);
+    } else {
+      console.log('province error');
+    }
+  };
 
   useEffect(() => {
     fetchDorms();
+    fetchProvinces();
   }, []);
 
   useEffect(() => {
     console.log('district', district);
     async function fetchData() {
       if (dormName !== '') {
-        // axios
-        //   .get(`${dormUrl}?id=${dormName.id}`)
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(`${dormUrl}?id=${dormName.id}`);
-
-        //     setDorms(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
         const response = await callApi(
-          `institute/dorms/?id=${dormName.id}`,
+          `institute/dorms/?id=${dormName.value}`,
           '',
           null
         );
         if (response.data && response.status === 200) {
           setDorms(response.data);
           setSelectedItems([]);
-          // setTotalItemCount(data.totalItem);
+          // setTotalItemCount(data);
           setIsLoaded(true);
         } else {
           console.log('dorm 1 error');
         }
       } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
+        selectedProvinceOption.value === 'all' &&
+        selectedGenderOption.value === 'all'
       ) {
         if (rest == true) {
           setDistrict('');
+          setDormName('');
+          setSelectedStatusOptions({ value: 'all' });
+          setSelectedBuildingType({ value: 'all' });
           setRest(false);
         }
-        // axios
-        //   .get(`${dormUrl}?district=${district}`)
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(`print${dormUrl}`);
-
-        //     setDorms(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-
-        const response = await callApi(
-          `institute/dorms/?district=${district}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setDorms(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        } else {
-          console.log('dorm 1 error');
+        if (selectedBuildingType?.value == 'all') {
+          selectedBuildingType.value = '';
         }
-      } else if (selectedProvinceOption.column === 'all') {
-        // axios
-        //   .get(
-        //     `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${dormUrl}?gender_type=${selectedGenderOption.column}&district=${district}`
-        //     );
+        let newCount = selectedStatusOptions?.value;
 
-        //     setDorms(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-
-        const response = await callApi(
-          `institute/dorms/?gender_type=${selectedGenderOption.column}&district=${district}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setDorms(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        } else {
-          console.log('dorm 1 error');
+        if (selectedStatusOptions?.value == 'all') {
+          newCount = '';
         }
-      } else if (selectedGenderOption.column === 'all') {
-        // axios
-        //   .get(
-        //     `${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `2${dormUrl}?provence=${selectedProvinceOption.column}&district=${district}`
-        //     );
 
-        //     setDorms(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
         const response = await callApi(
-          `institute/dorms/?provence=${selectedProvinceOption.column}&district=${district}`,
+          `institute/dorms/?district=${district}&building_ownership=${newCount}&building_type_option=${selectedBuildingType.value}`,
           '',
           null
         );
         if (response.data && response.status === 200) {
           setDorms(response.data);
           setSelectedItems([]);
-          // setTotalItemCount(data.totalItem);
+          // setTotalItemCount(data);
           setIsLoaded(true);
         } else {
-          console.log('dorm 1 error');
+          console.log('Dorm 2 error');
+        }
+      } else if (selectedProvinceOption.value === 'all') {
+        if (selectedBuildingType?.value === 'all') {
+          selectedBuildingType.value = '';
+        }
+        if (selectedStatusOptions?.value === 'all') {
+          selectedStatusOptions.value = '';
+        }
+
+        const response = await callApi(
+          `institute/dorms/?building_type_option=${selectedBuildingType.value}&district=${district}&gender=${selectedGenderOption.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('dorm 3 error');
+        }
+      } else if (selectedGenderOption.value === 'all') {
+        if (selectedBuildingType?.value === 'all') {
+          selectedBuildingType.value = '';
+        }
+        if (selectedStatusOptions?.value === 'all') {
+          selectedStatusOptions.value = '';
+        }
+
+        const response = await callApi(
+          `institute/dorms/?province=${selectedProvinceOption.value}&district=${district}&building_type_option=${selectedBuildingType.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          console.log('response is here');
+          setDorms(response.data);
+
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
+      } else if (selectedStatusOptions?.value === 'all') {
+        if (selectedBuildingType?.value === 'all') {
+          selectedBuildingType.value = '';
+        }
+        const response = await callApi(
+          `institute/dorms/?province=${selectedProvinceOption.value}&district=${district}&building_type_option=${selectedBuildingType.value}&gender=${selectedGenderOption.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
+        }
+      } else if (selectedBuildingType.value === 'all') {
+        if (selectedStatusOptions?.value === 'all') {
+          selectedStatusOptions.value = '';
+        }
+
+        const response = await callApi(
+          `institute/dorms/?province=${selectedProvinceOption.value}&district=${district}&gender=${selectedGenderOption.value}&building_ownership=${selectedStatusOptions.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(true);
+        } else {
+          console.log('students error');
         }
       } else {
-        // axios
-        //   // get data from localhost:8000/dorms
-        //   .get(
-        //     `${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `3${dormUrl}?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`
-        //     );
-        //     setDorms(data);
-
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-
         const response = await callApi(
-          `institute/dorms/?gender_type=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`,
+          `institute/dorms/?gender_type=${selectedGenderOption.value}&province=${selectedProvinceOption.value}&district=${district}&building_type_option=${selectedBuildingType.value}&building_ownership=${selectedStatusOptions.value}`,
           '',
           null
         );
@@ -308,8 +333,11 @@ const ThumbListPages = ({ match }) => {
     dormName,
     rest,
     district,
+    selectedBuildingType,
     selectedGenderOption,
     selectedProvinceOption,
+    selectedStatusOptions,
+    province,
   ]);
 
   const onCheckItem = (event, id) => {
@@ -421,24 +449,24 @@ const ThumbListPages = ({ match }) => {
           orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
-          changeGenderBy={(column) => {
+          changeGenderBy={(value) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+              genderOptions.find((x) => x.value === value)
             );
           }}
-          changeProvinceBy={(column) => {
+          changeProvinceBy={(value) => {
             setSelectedProvinceOption(
-              provincesOptionsForList.find((x) => x.column === column)
+              provinceOptions.find((x) => x.value === value)
             );
           }}
-          changeStatusBy={(column) => {
+          changeStatusBy={(value) => {
             setSelectedStatusOptions(
-              statusOptions.find((x) => x.column === column)
+              statusOptions.find((x) => x.value === value)
             );
           }}
-          changeBuildingTypeBy={(column) => {
+          changeBuildingTypeBy={(value) => {
             setSelectedBuildingType(
-              buildingTypeOptions.find((x) => x.column === column)
+              buildingTypeOptions.find((x) => x.value === value)
             );
           }}
           selectedGenderOption={selectedGenderOption}
@@ -448,7 +476,7 @@ const ThumbListPages = ({ match }) => {
           genderOptions={genderOptions}
           statusOptions={statusOptions}
           buildingTypeOptions={buildingTypeOptions}
-          provincesOptionsForList={provincesOptionsForList}
+          provincesOptionsForList={provinceOptions}
           dormsFilterList={dormsFilterList}
           onDormSelect={setDormName}
           onResetClick={setRest}

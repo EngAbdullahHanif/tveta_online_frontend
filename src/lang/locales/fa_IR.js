@@ -134,6 +134,8 @@ module.exports = {
   'menu.dorm-student-dismissal': 'د لیلې نه د شاګرد منفکول',
   'menu.institute_list': 'لست انستیتوت/لیسه',
   'menu.institute_register': 'ثبت انستیتوت/لیسه',
+  'menu.institute_department_list': 'لست دیپارتمنت انستیتوت',
+  'menu.institute_department_register': 'ثبت دیپارتمنت - انستیتوت',
   'menu.todo': 'لیست To-do',
   'menu.survey': 'نظرسنجی',
   'menu.chat': 'چت',

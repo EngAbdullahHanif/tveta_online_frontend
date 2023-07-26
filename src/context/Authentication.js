@@ -1,18 +1,18 @@
-import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 const ViewHome = React.lazy(() =>
-  import(/* webpackChunkName: "views" */ "../views/home")
+  import(/* webpackChunkName: "views" */ '../views/home')
 );
 
 const ViewUser = React.lazy(() =>
-  import(/* webpackChunkName: "views-user" */ "../views/user")
+  import(/* webpackChunkName: "views-user" */ '../views/user')
 );
 const ViewError = React.lazy(() =>
-  import(/* webpackChunkName: "views-error" */ "../views/error")
+  import(/* webpackChunkName: "views-error" */ '../views/error')
 );
 const ViewUnauthorized = React.lazy(() =>
-  import(/* webpackChunkName: "views-error" */ "../views/unauthorized")
+  import(/* webpackChunkName: "views-error" */ '../views/unauthorized')
 );
 function Authentication(props) {
   return (

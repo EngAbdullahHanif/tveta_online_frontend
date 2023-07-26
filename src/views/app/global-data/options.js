@@ -5,6 +5,12 @@ export const fetchProvinces = async () => {
   const response = await callApi('core/provinces');
   if (response) {
     if (response.status === 200) {
+      console.log(
+        response.data.map((province) => ({
+          value: province.id,
+          label: province.native_name,
+        }))
+      );
       return response.data.map((province) => ({
         value: province.id,
         label: province.native_name,

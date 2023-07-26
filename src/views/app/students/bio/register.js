@@ -16,6 +16,7 @@ import {
   Row,
   Card,
   CardBody,
+  CardHeader,
   FormGroup,
   Label,
   Spinner,
@@ -348,8 +349,17 @@ const StudentRegistration = ({ intl }, values) => {
         const listOfClasses = await response.data.map((item) => ({
           value: item.id,
           label: item.name + ' - ' + item.semester + ' - ' + item.section,
+          grade: item.grade,
+          semester: item.semester,
         }));
-        setClasss(listOfClasses);
+
+        setClasss(
+          listOfClasses.filter(
+            (classs) =>
+              (classs.grade === 10 && classs.semester === 1) ||
+              (classs.grade === 13 && classs.semester === 1)
+          )
+        );
       } else {
         console.log('Could not fetch list of classes from server');
       }
@@ -595,20 +605,18 @@ const StudentRegistration = ({ intl }, values) => {
 
   return (
     <Card>
-      <div className="mt-4 ml-5">
-        <h2 className="mt-5 m-5 titleStyle">
+      <CardHeader className="px-4">
+        <h2 className="mt-5  titleStyle">
           {<IntlMessages id="forms.studentRegisterTitle" />}
         </h2>
-      </div>
+      </CardHeader>
       <CardBody className="wizard wizard-default">
         <Wizard>
           <Steps>
-            <Step
-              id="step1"
-              name={messages['wizard.step-name-1']}
-              desc={messages['wizard.step-desc-1']}
-            >
+            <Step id="step1">
               <div className="wizard-basic-step">
+                <h3>معلومات شخصی</h3>
+                <hr />
                 <Formik
                   innerRef={forms[0]}
                   enableReinitialize={true}
@@ -826,7 +834,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
-                                <IntlMessages id="teacher.DoBLabel" />
+                                <IntlMessages id="label.yearOfBirth" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
@@ -1010,11 +1018,9 @@ const StudentRegistration = ({ intl }, values) => {
               </div>
             </Step>
 
-            <Step
-              id="step2"
-              name={messages['wizard.step-name-2']}
-              desc={messages['wizard.step-desc-2']}
-            >
+            <Step id="step2">
+              <h3>سکونت و تعلیمات قبلی</h3>
+              <hr />
               <div className="wizard-basic-step">
                 <Formik
                   innerRef={forms[1]}
@@ -1295,6 +1301,8 @@ const StudentRegistration = ({ intl }, values) => {
             </Step>
 
             <Step id="step3" hideTopNav>
+              <h3>معلومات شمولیت جدید</h3>
+              <hr />
               <div className="wizard-basic-step">
                 <Formik
                   innerRef={forms[2]}

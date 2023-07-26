@@ -860,6 +860,7 @@ module.exports = {
   'menu.attendance': ' د صنف حاضری/حاضری صنف',
   'menu.class_attendance': ' د ټولګي د حاضرۍ لست/ لست حاضری صنف',
   'student.dismissal': ' د شاګرد منفکول/ منفک کردن شاگرد',
+  'label.yearOfBirth': 'زیږیدنې کال/سال تولد',
 
   'sector.sectorRegisterlabel': 'د سکتور ثبت/ ثبت سکتور',
 

@@ -20,6 +20,8 @@ const App = ({ locale }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const [provinces, setProvinces] = useState();
   const [districts, setDistricts] = useState();
+  const [options, setOptions] = useState({});
+
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
   useEffect(() => {
@@ -63,6 +65,7 @@ const App = ({ locale }) => {
       }));
 
       setProvinces(updatedData);
+      setOptions((prevOptions) => ({ ...prevOptions, provinces: updatedData }));
     } else {
       console.log('province error');
     }

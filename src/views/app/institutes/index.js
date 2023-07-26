@@ -14,6 +14,14 @@ const InstituteRegister = React.lazy(() => import('./institute-register.js'));
 const InstitueCreate = React.lazy(() => import('./institute-create'));
 const InstituteUpgrade = React.lazy(() => import('./institute-upgrade'));
 const InstituteProfile = React.lazy(() => import('./institute-profile'));
+const InstituteDepartmentRegister = React.lazy(() =>
+  import('./institute-department-register')
+);
+
+const InstituteDepartmentList = React.lazy(() =>
+  import('./institute-department-list/InstituteDepartmentListMain')
+);
+
 const Institues = ({ match, props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -90,6 +98,28 @@ const Institues = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/institute/:instituteId`}
         component={InstituteProfile}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
+      />
+      <ProtectedRoute
+        path={`${match.url}/institute-department/register`}
+        component={InstituteDepartmentRegister}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.provincial,
+          userRole.institute,
+        ]}
+        props={props}
+      />
+      <ProtectedRoute
+        path={`${match.url}/institute-department/list`}
+        component={InstituteDepartmentList}
         roles={[
           userRole.superUser,
           userRole.admin,

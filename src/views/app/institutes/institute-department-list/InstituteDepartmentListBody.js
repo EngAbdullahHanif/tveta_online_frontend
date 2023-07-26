@@ -53,7 +53,7 @@ const createNotification = (type, className) => {
   }
 };
 
-const InstituteListBody = ({
+const InstituteDepartmentListBody = ({
   institute,
   isSelect,
   collect,
@@ -65,7 +65,7 @@ const InstituteListBody = ({
 
   const handleClick = async (instituteId) => {
     const instituteResponse = await callApi(
-      `institute/${instituteId}/`,
+      `institute/institute-department/${instituteId}/`,
       'DELETE',
       null
     );
@@ -92,13 +92,6 @@ const InstituteListBody = ({
             active: isSelect,
           })}
         >
-          {/* <NavLink to={`?p=${institute.id}`} className="d-flex">
-            <img
-              alt={institute.title}
-              src={institute.img}
-              className="list-thumbnail responsive border-0 card-img-left"
-            />
-          </NavLink> */}
           <div
             className="pl-2 d-flex flex-grow-1 min-width-zero"
             style={{ maxHeight: '50px', width: '100%' }}
@@ -107,63 +100,31 @@ const InstituteListBody = ({
               className="py-3 card-body align-self-center d-flex flex-column flex-lg-row  min-width-zero align-items-lg-center"
               style={{ width: '100%' }}
             >
-              <div style={{ width: '10%', fontSize: '20px' }}>
-                <NavLink to={`institute/${institute.id}`} className="">
-                  <p
-                    className="list-item-heading mb-1 "
-                    style={{ fontSize: '20px' }}
-                  >
-                    {index + 1}
-                  </p>
-                </NavLink>
-              </div>
+              <p
+                className="list-item-heading mb-1 truncate"
+                style={{ width: '18%', fontSize: '20px' }}
+              >
+                {index + 1}
+              </p>
               <div style={{ width: '18%', fontSize: '20px' }}>
-                <NavLink to={`institute/${institute.id}`} className="">
-                  <p
-                    className="list-item-heading mb-1 truncate"
-                    style={{ fontSize: '20px' }}
-                  >
-                    {institute.code}
-                  </p>
-                </NavLink>
+                <p
+                  className="list-item-heading mb-1 truncate"
+                  style={{ width: '30%', fontSize: '20px' }}
+                >
+                  {institute.institute.name}
+                </p>
               </div>
-              <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
-                {institute.name}
+              <p className="mb-1 " style={{ width: '18%', fontSize: '20px' }}>
+                {institute.department.name}
               </p>
-              <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
-                {institute.province}
-              </p>
-              {institute.type === 'governmental' ? (
-                <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
-                  <IntlMessages id="dash.institutePublic" />
+              {institute.is_active === true ? (
+                <p className="mb-1 " style={{ width: '18%', fontSize: '20px' }}>
+                  {/* <IntlMessages id="dash.institutePublic" /> */}
+                  فعال
                 </p>
               ) : (
-                <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
-                  <IntlMessages id="dash.institutePrivate" />
-                </p>
-              )}
-
-              {institute.gender === 'male' ? (
-                <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
-                  <IntlMessages id="institute.studentgenderOption_1" />
-                </p>
-              ) : institute.gender === 'female' ? (
-                <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
-                  <IntlMessages id="institute.studentgenderOption_2" />
-                </p>
-              ) : (
-                <p className="mb-1 " style={{ width: '13%', fontSize: '20px' }}>
-                  <IntlMessages id="institute.studentgenderOption_3" />
-                </p>
-              )}
-
-              {institute.status === 'active' ? (
-                <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
-                  <IntlMessages id="institute.statusOption_1" />
-                </p>
-              ) : (
-                <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
-                  <IntlMessages id="institute.statusOption_2" />
+                <p className="mb-1 " style={{ width: '18%', fontSize: '20px' }}>
+                  غیر فعال
                 </p>
               )}
             </div>
@@ -229,4 +190,4 @@ const InstituteListBody = ({
 };
 
 /* React.memo detail : https://reactjs.org/docs/react-api.html#reactpurecomponent  */
-export default React.memo(InstituteListBody);
+export default React.memo(InstituteDepartmentListBody);

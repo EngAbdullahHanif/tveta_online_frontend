@@ -9,12 +9,11 @@ import callApi from 'helpers/callApi';
 
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './InstituteListHeading';
+import ListPageHeading from './InstituteDepartmentListHeading';
 
-import ListPageListing from './InstituteListCatagory';
+import ListPageListing from './InstituteDepartmentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import config from '../../../../config';
-import { el } from 'date-fns/locale';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -38,38 +37,37 @@ const orderOptions = [
 
 const genderOptions = [
   {
-    value: 'all',
+    column: 'all',
     label: <IntlMessages id="option.all" />,
   },
-  { value: 'male', label: 'ذکور' },
-  { value: 'female', label: 'اناث' },
-  { value: 'coed', label: 'مختلط' },
+  { column: '1', label: 'ذکور' },
+  { column: '2', label: 'اناث' },
 ];
 const statusOptions = [
   {
-    value: 'all',
+    column: 'all',
     label: <IntlMessages id="option.all" />,
   },
-  { value: 'active', label: <IntlMessages id="institute.statusOption_1" /> },
-  { value: 'inactive', label: <IntlMessages id="institute.statusOption_2" /> },
+  { column: '1', label: <IntlMessages id="institute.statusOption_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
 ];
 
 const instituteTypeOptions = [
   {
-    value: 'all',
+    column: 'all',
     label: <IntlMessages id="option.all" />,
   },
-  {
-    value: 'governmental',
-    label: <IntlMessages id="institute.instTypeOptions_1" />,
-  },
-  {
-    value: 'private',
-    label: <IntlMessages id="institute.instTypeOptions_2" />,
-  },
+  { column: '1', label: <IntlMessages id="institute.instTypeOptions_1" /> },
+  { column: '2', label: <IntlMessages id="institute.statusOption_2" /> },
 ];
 
 const pageSizes = [4, 8, 12, 20];
+
+const categories = [
+  { label: 'Cakes', value: 'Cakes', key: 0 },
+  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
+  { label: 'Desserts', value: 'Desserts', key: 2 },
+];
 
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -95,23 +93,24 @@ const ThumbListPages = ({ match }) => {
   const [district, setDistrict] = useState('');
   const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
+  const [provinceOptions, setProvinceOptions] = useState([]);
+
   const [selectedGenderOption, setSelectedGenderOption] = useState({
-    value: 'all',
+    column: 'all',
     label: 'جنیست',
   });
   const [selectedProvinceOption, setSelectedProvinceOption] = useState({
-    value: 'all',
+    column: 'all',
     label: 'ولایت',
   });
   const [selectedStatusOptions, setSelectedStatusOptions] = useState({
-    value: 'all',
+    column: 'all',
     label: 'حالت',
   });
   const [selectedInstituteType, setSelectedInstituteType] = useState({
-    value: 'all',
+    column: 'all',
     label: 'ډول/ نوعیت',
   });
-  const [provinceOptions, setProvinceOptions] = useState([]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -127,139 +126,25 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     async function fetchData() {
-      console.log('instituteId instituteId', instituteId);
       if (institute !== '') {
         const response = await callApi(
-          `institute/?id=${institute.value}`,
+          `institute/institite-department/?institute=${institute.value}`,
           '',
           null
         );
         if (response.data && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (
-        selectedProvinceOption.value === 'all' &&
-        selectedGenderOption.value === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setInstituteId('');
-          setSelectedStatusOptions({ value: 'all' });
-          setSelectedInstituteType({ value: 'all' });
-          setRest(false);
-        }
-        if (selectedInstituteType?.value == 'all') {
-          selectedInstituteType.value = '';
-          console.log('selelctedInstituteType', selectedInstituteType);
-        }
-        let newCount = selectedStatusOptions?.value;
-
-        if (selectedStatusOptions?.value == 'all') {
-          newCount = '';
-          console.log('selectedStatusOptions', selectedStatusOptions);
-        }
-
-        console.log('selectedStatusOptions23212', newCount);
-        const response = await callApi(
-          `institute/?id=${instituteId}&district=${district}&status=${newCount}&ownership=${selectedInstituteType?.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedProvinceOption.value === 'all') {
-        if (selectedInstituteType?.value === 'all') {
-          selectedInstituteType.value = '';
-        }
-        if (selectedStatusOptions?.value === 'all') {
-          selectedStatusOptions.value = '';
-        }
-
-        const response = await callApi(
-          `institute/?id=${instituteId}&gender=${selectedGenderOption.value}&district=${district}&status=${selectedStatusOptions?.value}&ownership=${selectedInstituteType?.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedGenderOption.value === 'all') {
-        if (selectedInstituteType?.value === 'all') {
-          selectedInstituteType.value = '';
-        }
-        if (selectedStatusOptions?.value === 'all') {
-          selectedStatusOptions.value = '';
-        }
-
-        const response = await callApi(
-          `institute/?id=${instituteId}&province=${selectedProvinceOption.value}&district=${district}&status=${selectedStatusOptions?.value}&ownership=${selectedInstituteType?.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          console.log('response is here');
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedStatusOptions?.value === 'all') {
-        if (selectedInstituteType?.value === 'all') {
-          selectedInstituteType.value = '';
-        }
-        const response = await callApi(
-          `institute/?id=${instituteId}&gender=${selectedGenderOption.value}&province=${selectedProvinceOption.value}&district=${district}&ownership=${selectedInstituteType?.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedInstituteType.value === 'all') {
-        if (selectedStatusOptions?.value === 'all') {
-          selectedStatusOptions.value = '';
-        }
-
-        const response = await callApi(
-          `institute/?id=${instituteId}&gender=${selectedGenderOption.value}&province=${selectedProvinceOption.value}&district=${district}&status=${selectedStatusOptions?.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-
-          setSelectedItems([]);
-          // setTotalItemCount(data);
           setIsLoaded(true);
         } else {
           console.log('students error');
         }
       } else {
+        if (rest == true) {
+          setRest(false);
+        }
         const response = await callApi(
-          `institute/?id=${instituteId}&gender=${selectedGenderOption.value}&province=${selectedProvinceOption.value}&district=${district}`,
+          `institute/institite-department/`,
           '',
           null
         );
@@ -280,8 +165,7 @@ const ThumbListPages = ({ match }) => {
     selectedOrderOption,
     search,
     selectedGenderOption,
-    selectedStatusOptions,
-    selectedInstituteType,
+
     selectedProvinceOption,
     instituteId,
     province,
@@ -301,30 +185,16 @@ const ThumbListPages = ({ match }) => {
       console.log('institute error');
     }
   };
-  // const fetchProvincesList = async () => {
-  //   console.log('provinces');
-  //   const provinces = await fetchProvinces();
-  //   setProvinceOptions(provinces);
-  // };
 
-  const fetchProvinces = async () => {
-    const response = await callApi('core/provinces/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.native_name,
-      }));
-      const all = { value: 'all', label: 'همه' };
-      updatedData.unshift(all);
-      setProvinceOptions(updatedData);
-    } else {
-      console.log('province error');
-    }
+  const fetchProvincesList = async () => {
+    console.log('provinces');
+    const provinces = await fetchProvinces();
+    setProvinceOptions(provinces);
   };
 
   useEffect(() => {
     fetchInstitutes();
-    fetchProvinces();
+    fetchProvincesList();
   }, []);
 
   const onCheckItem = (event, id) => {
@@ -408,14 +278,16 @@ const ThumbListPages = ({ match }) => {
     <>
       <div className="disable-text-selection">
         <ListPageHeading
-          heading="د انستیوت لست/ لست انستیتوت ها"
+          heading="د انستیوت - دیپارتمنت لست/ لست انستیتوت - دیپارتمنت"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeOrderBy={(value) => {
-            setSelectedOrderOption(orderOptions.find((x) => x.value === value));
+          changeOrderBy={(column) => {
+            setSelectedOrderOption(
+              orderOptions.find((x) => x.column === column)
+            );
           }}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
@@ -434,19 +306,19 @@ const ThumbListPages = ({ match }) => {
           orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
-          changeGenderBy={(value) => {
+          changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.value === value)
+              genderOptions.find((x) => x.column === column)
             );
           }}
-          changeStatusBy={(value) => {
+          changeStatusBy={(column) => {
             setSelectedStatusOptions(
-              statusOptions.find((x) => x.value === value)
+              statusOptions.find((x) => x.column === column)
             );
           }}
-          changeInstituteBy={(value) => {
+          changeInstituteBy={(column) => {
             setSelectedInstituteType(
-              instituteTypeOptions.find((x) => x.value === value)
+              instituteTypeOptions.find((x) => x.column === column)
             );
           }}
           changeProvinceBy={(value) => {
@@ -494,7 +366,7 @@ const ThumbListPages = ({ match }) => {
             >
               <th
                 style={{
-                  width: '10%',
+                  width: '18%',
                   paddingInline: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -505,30 +377,18 @@ const ThumbListPages = ({ match }) => {
               </th>
               <th
                 style={{
-                  width: '10%',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                {/* <IntlMessages id="student.ID" /> */}
-                کود
-              </th>
-              <th
-                style={{
-                  width: '16%',
+                  width: '18%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
                   fontSize: '20px',
                 }}
               >
-                <IntlMessages id="inst.nameList" />
+                د انستیتوت نوم
               </th>
               <th
                 style={{
-                  width: '13%',
+                  width: '18%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -536,11 +396,11 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 {' '}
-                <IntlMessages id="forms.ProvinceLabel" />
+                د دیپارتمنت نوم
               </th>
               <th
                 style={{
-                  width: '13%',
+                  width: '18%',
                   padding: '0%',
                   textAlign: 'right',
                   borderStyle: 'hidden',
@@ -548,31 +408,7 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 {' '}
-                <IntlMessages id="inst.type" />
-              </th>
-              <th
-                style={{
-                  width: '13%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                {' '}
-                <IntlMessages id="gender" />
-              </th>
-              <th
-                style={{
-                  width: '13%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                {' '}
-                <IntlMessages id="institute.status" />
+                وضعیت
               </th>
             </tr>
           </thead>

@@ -12,7 +12,7 @@ import Pagination from '../../../../containers/pages/Pagination';
 import ContextMenuContainer from '../../../../containers/pages/ContextMenuContainer';
 import DataListView from '../../../../containers/pages/DataListView';
 import ImageListView from '../../../../containers/pages/ImageListView';
-import InstituteListBody from './InstituteListBody';
+import InstituteListBody from './InstituteDepartmentListBody';
 
 function collect(props) {
   return { data: props.data };

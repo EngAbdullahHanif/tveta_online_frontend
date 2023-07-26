@@ -7,6 +7,7 @@ import {
   provincesOptionsForList,
   dateOfBirthOptoions,
   studyTimeOptions,
+  InstituteShiftOptions,
 } from '../global-data/options';
 import * as Yup from 'yup';
 
@@ -58,6 +59,8 @@ const instituteCityOptions = [
 const instituteLanguageOptions = [
   { value: 'pashto', label: 'پښتو' },
   { value: 'dari', label: 'دری' },
+  { value: 'pashto_dari', label: 'پښتو و دری' },
+  { value: 'english', label: 'انګلیسی' },
 ];
 const instituteClimateOptions = [
   { value: 'cold', label: 'سرد سیر' },
@@ -513,7 +516,7 @@ const InstituteRegister = () => {
                           name="shift"
                           id="shift"
                           value={values.shift}
-                          options={studyTimeOptions}
+                          options={InstituteShiftOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />

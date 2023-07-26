@@ -628,10 +628,7 @@ const StudentRegistration = ({ intl }, values) => {
                     setFieldValue,
                     isSubmitting,
                   }) => (
-                    <Form
-                      className="av-tooltip tooltip-label-right has-float-label error-l-100 style "
-                      style={{ paddingInline: '3%' }}
-                    >
+                    <Form className="av-tooltip tooltip-label-right has-float-label error-l-100 style ">
                       <Row>
                         <Colxx xxs="6">
                           <div className="p-3">

@@ -13,7 +13,8 @@ import 'react-tagsinput/react-tagsinput.css';
 import Switch from 'rc-switch';
 import 'rc-switch/assets/index.css';
 
-import DatePicker from 'react-datepicker';
+import DatePicker from 'react-multi-date-picker';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import { Field } from 'formik';
 import { Input } from 'antd';

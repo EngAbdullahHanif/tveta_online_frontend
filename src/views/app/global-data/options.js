@@ -368,7 +368,7 @@ export const StudentTypeOptions = [
   },
 ];
 
-export const studyTimeOptions = [
+export const InstituteShiftOptions = [
   { value: 'morning', label: <IntlMessages id="forms.morningShift" /> },
   { value: 'afternoon', label: <IntlMessages id="forms.afternoonShift" /> },
   { value: 'night', label: <IntlMessages id="forms.nightShift" /> },
@@ -388,6 +388,12 @@ export const studyTimeOptions = [
     value: 'morning_afternoon_night',
     label: <IntlMessages id="forms.allShifts" />,
   },
+];
+
+export const studyTimeOptions = [
+  { value: 'morning', label: <IntlMessages id="forms.morningShift" /> },
+  { value: 'afternoon', label: <IntlMessages id="forms.afternoonShift" /> },
+  { value: 'night', label: <IntlMessages id="forms.nightShift" /> },
 ];
 
 export const chanceOptions = [

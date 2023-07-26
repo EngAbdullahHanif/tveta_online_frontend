@@ -195,7 +195,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeGenderBy(gender.column)}
+                          onClick={() => changeGenderBy(gender.value)}
                           style={{ fontSize: '20px' }}
                         >
                           {gender.label}
@@ -228,7 +228,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeProvinceBy(province.column)}
+                          onClick={() => changeProvinceBy(province.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {province.label}
@@ -248,14 +248,14 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedStatusOptions.label}
+                    {selectedStatusOptions?.label}
                   </DropdownToggle>
                   <DropdownMenu>
                     {statusOptions.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeStatusBy(order.column)}
+                          onClick={() => changeStatusBy(order?.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}
@@ -276,14 +276,14 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedBuildingType.label}
+                    {selectedBuildingType?.label}
                   </DropdownToggle>
                   <DropdownMenu>
                     {buildingTypeOptions.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeBuildingTypeBy(order.column)}
+                          onClick={() => changeBuildingTypeBy(order?.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}
@@ -292,7 +292,7 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
                     name="district"
@@ -310,7 +310,7 @@ const ListPageHeading = ({
                     }}
                     placeholder={messages['dorm.search.name']}
                   />
-                </div>
+                </div> */}
               </div>
               <Button
                 color="outline-dark"
@@ -320,7 +320,7 @@ const ListPageHeading = ({
                 onClick={() => {
                   changeGenderBy('all');
                   changeProvinceBy('all');
-                  document.getElementById('district').value = '';
+                  // document.getElementById('district').value = '';
                   setSelectDorm('');
                   onResetClick(!reset);
                 }}

@@ -189,6 +189,10 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [selectedFieldOption, setSelectedFieldOption] = useState({
+    value: 'all',
+    label: <IntlMessages id="marks.FieldLabelList" />,
+  });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
@@ -203,6 +207,8 @@ const ThumbListPages = ({ match }) => {
   const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [fields, setFields] = useState([]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -210,43 +216,53 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await callApi('institute/department/', '', null);
-      console.log('DEPARTMENTS:', response);
-      setItems(response.data);
-      setSelectedItems([]);
-      // setTotalItemCount(response.data.totalItem);
-      setIsLoaded(true);
+      if (selectedFieldOption?.value === 'all') {
+        if (rest === true) {
+          setRest(false);
+        }
+        if (selectedFieldOption?.value === 'all') {
+          selectedFieldOption.value = '';
+        }
+        const response = await callApi('institute/department/', '', null);
+        if (response.data && response.status === 200) {
+          console.log('DEPARTMENTS:', response);
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(response.data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('error');
+        }
+      } else {
+        console.log('field changed', selectedFieldOption);
+        let newField = selectedFieldOption?.value;
+        if (
+          selectedFieldOption?.value === 'all' ||
+          selectedFieldOption === null ||
+          selectedFieldOption === undefined
+        ) {
+          newField = '';
+        }
+        const response = await callApi(
+          `institute/department/?field_of_study=${newField}`,
+          '',
+          null
+        );
+        console.log('DEPARTMENTS:', response);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(response.data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('error');
+        }
+      }
     }
 
-    //   await axios
-    //     .get(departmentApiUrl)
-    //     .then((res) => {
-    //       return res.data;
-    //     })
-    //     .then((data) => {
-    //       console.log('DEPARTMENTS:', data);
-    //       setItems(data);
-
-    //       setSelectedItems([]);
-    //       setTotalItemCount(data.totalItem);
-    //       setIsLoaded(true);
-    //     });
     // }
     fetchData();
-  }, [
-    selectedPageSize,
-    currentPage,
-    //selectedOrderOption,
-    //search,
-    selectedGenderOption,
-    selectedProvinceOption,
-    // studentId,
-    province,
-    district,
-    rest,
-    institute,
-    //educationYear,
-  ]);
+  }, [selectedPageSize, currentPage, selectedFieldOption, rest]);
 
   const fetchInstitutes = async () => {
     const response = await axios.get(instituteApiUrl);
@@ -256,9 +272,21 @@ const ThumbListPages = ({ match }) => {
     }));
     setInstitutes(updatedData);
   };
-
+  const fetchFields = async () => {
+    const response = await callApi('institute/field/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setFields(updatedData);
+    } else {
+      console.log('field error');
+    }
+  };
   useEffect(() => {
     fetchInstitutes();
+    fetchFields();
   }, []);
   const onCheckItem = (event, id) => {
     if (
@@ -388,6 +416,11 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
+          changeFieldBy={(value) => {
+            setSelectedFieldOption(fields.find((x) => x.value === value));
+          }}
+          fields={fields}
+          selectedFieldOption={selectedFieldOption}
         />
         <table className="table">
           <thead

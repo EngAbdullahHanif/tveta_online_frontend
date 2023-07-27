@@ -26,7 +26,7 @@ const StudentProfile = () => {
     console.log('id', kankorId);
     async function fetchData() {
       const response = await callApi(
-        `api/kankorResults/?id=${kankorId}`,
+        `students/kankorResults/?id=${kankorId}`,
         'GET',
         null
       );
@@ -46,9 +46,9 @@ const StudentProfile = () => {
   // Destructuring the kankor student field, institute, and department names.
   let field_name, institute_name, department_name;
   if (kankorStudent[0]) {
-    const { name: fieldName } = kankorStudent[0].field_id;
-    const { name: instituteName } = kankorStudent[0].Institute;
-    const { name: departmentName } = kankorStudent[0].department_id;
+    const { name: fieldName } = kankorStudent[0].field_of_study;
+    const { name: instituteName } = kankorStudent[0].institute;
+    const { name: departmentName } = kankorStudent[0].department;
     field_name = fieldName;
     institute_name = instituteName;
     department_name = departmentName;
@@ -108,7 +108,7 @@ const StudentProfile = () => {
                     <Label className="data-style">
                       <IntlMessages id="dash.teacherGender" />
                     </Label>
-                    {kankorStudent[0].gender === '1' ? (
+                    {kankorStudent[0].gender === 'male' ? (
                       <h2>
                         {' '}
                         <IntlMessages id="institute.totalStudentsMale" />
@@ -119,7 +119,7 @@ const StudentProfile = () => {
                     <Label className="data-style">
                       <IntlMessages id="forms.KankorMarksLabel" />
                     </Label>
-                    <h2>{kankorStudent[0].score}</h2>
+                    <h2>{kankorStudent[0].marks}</h2>
 
                     <Label className="data-style">
                       <IntlMessages id="forms.InstituteLabel" />
@@ -142,17 +142,23 @@ const StudentProfile = () => {
                     <Label className="data-style">
                       <IntlMessages id="forms.StudyTimeLabel" />
                     </Label>
-                    {kankorStudent[0].shift === '1' ? (
+                    {kankorStudent[0].shift === 'morning' ? (
                       <h2>
                         {' '}
                         <IntlMessages id="forms.StudyTimeOption_1" />{' '}
                       </h2>
-                    ) : (
+                    ) : kankorStudent[0].shift === 'afternoon' ? (
                       <h2>
                         {' '}
                         <IntlMessages id="forms.StudyTimeOption_2" />{' '}
                       </h2>
+                    ) : (
+                      <h2>
+                        {' '}
+                        <IntlMessages id="forms.StudyTimeOption_3" />{' '}
+                      </h2>
                     )}
+
                     <Label className="data-style">
                       <IntlMessages id="forms.studyDepartment" />
                     </Label>
@@ -160,7 +166,7 @@ const StudentProfile = () => {
                     <Label className="data-style">
                       <IntlMessages id="forms.ProvinceLabel" />
                     </Label>
-                    <h2>{kankorStudent[0].provence} </h2>
+                    <h2>{kankorStudent[0].province} </h2>
                     <Label className="data-style">
                       <IntlMessages id="forms.DistrictLabel" />
                     </Label>

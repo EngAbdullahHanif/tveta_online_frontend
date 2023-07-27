@@ -831,6 +831,7 @@ module.exports = {
   'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',
   'forms.StudyTimeOption_1': 'ورځنی/ روزانه',
   'forms.StudyTimeOption_2': 'شپې/ شبانه',
+  'forms.StudyTimeOption_3': 'بعد از ظهر',
   'forms.studyDepartment': 'دیپارتمنت',
   'forms.SubimssionButton': 'ثبت',
   'student.Profile': ' د شاگرد پروفایل/ پروفایل شاگرد',

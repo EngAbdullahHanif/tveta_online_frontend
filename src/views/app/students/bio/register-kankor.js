@@ -148,7 +148,7 @@ const StudentRegistraion = ({ history }) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: item.native_name,
       }));
 
       setProvinces(updatedData);
@@ -167,7 +167,7 @@ const StudentRegistraion = ({ history }) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: item.native_name,
       }));
       setDistricts(updatedData);
     } else {

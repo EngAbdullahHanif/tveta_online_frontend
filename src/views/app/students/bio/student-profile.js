@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
@@ -36,6 +36,7 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import Classes from 'views/app/classes';
+import { DistrictsContext, ProvincesContext } from 'context/AuthContext';
 
 const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
@@ -49,6 +50,25 @@ const StudentProfile = () => {
   const [dorm, setDorm] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const { provinces } = useContext(ProvincesContext);
+  const { districts } = useContext(DistrictsContext);
+
+  console.log('districts from context: ', districts);
+
+  console.log('provinces from context: ', provinces);
+  const provincesList = {};
+  const districtsList = {};
+
+  provinces.forEach((province) => {
+    provincesList[province.value] = province.label;
+  });
+
+  districts.forEach((districts) => {
+    districtsList[districts.value] = districts.label;
+  });
+  console.log('provincesList: ', provincesList);
+  console.log('districtsList: ', districtsList);
 
   //load data of student from database
   useEffect(() => {
@@ -329,14 +349,14 @@ const StudentProfile = () => {
                             <Label className="data-style">
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h2>{student[0].main_province}</h2>
+                            <h2>{provincesList[student[0].main_province]}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label className="data-style">
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h2>{student[0].main_district}</h2>
+                            <h2>{districtsList[student[0].main_district]}</h2>
                           </Colxx>
                           <Colxx>
                             {' '}
@@ -364,14 +384,18 @@ const StudentProfile = () => {
                             <Label className="data-style">
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h2>{student[0].current_province}</h2>
+                            <h2>
+                              {provincesList[student[0].current_province]}
+                            </h2>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label className="data-style">
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h2>{student[0].current_district}</h2>
+                            <h2>
+                              {districtsList[student[0].current_district]}
+                            </h2>
                           </Colxx>
                           <Colxx>
                             {' '}

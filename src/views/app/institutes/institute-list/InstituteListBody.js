@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
+
+import { ProvincesContext } from 'context/AuthContext';
 
 import {
   Card,
@@ -62,6 +64,9 @@ const InstituteListBody = ({
 }) => {
   const [modalBasic, setModalBasic] = useState(false);
   const [dataDeletion, setDeletion] = useState(false);
+
+  const { provinces } = useContext(ProvincesContext);
+  console.log('provinces from context: ', provinces);
 
   const handleClick = async (instituteId) => {
     const instituteResponse = await callApi(
@@ -131,7 +136,10 @@ const InstituteListBody = ({
                 {institute.name}
               </p>
               <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
-                {institute.province}
+                {provinces &&
+                  provinces.filter(
+                    (province) => province.value === institute.province
+                  )[0].label}
               </p>
               {institute.type === 'governmental' ? (
                 <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>

@@ -54,7 +54,6 @@ const ListPageHeading = ({
             <IntlMessages id={heading} />
           </h1>
           <div className="text-zero top-right-button-container">
-
             {/* <Button
               color="primary"
               size="lg"
@@ -147,31 +146,36 @@ const ListPageHeading = ({
               >
                 <ImageListIcon />
               </a>
-       
             </span>
-            <br/>
-            <br/>
+            <br />
+            <br />
 
             <div className="d-block d-md-inline-block pt-1">
               <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-                <DropdownToggle caret color="outline-dark" size="xs"     style={{ fontSize: '20px' }}>
-                  <IntlMessages id="filter"/>
-                  {selectedSemesterOption.label}
+                <DropdownToggle
+                  caret
+                  color="outline-dark"
+                  size="xs"
+                  style={{ fontSize: '20px' }}
+                >
+                  <IntlMessages id="filter" />
+                  {selectedSemesterOption?.label}
                 </DropdownToggle>
                 <DropdownMenu>
                   {semesterOptions.map((order, index) => {
                     return (
                       <DropdownItem
                         key={index}
-                        onClick={() => changeSemesterBy(order.column)}
-                        style={{ fontSize: '20px' }} >
+                        onClick={() => changeSemesterBy(order.value)}
+                        style={{ fontSize: '20px' }}
+                      >
                         {order.label}
                       </DropdownItem>
                     );
                   })}
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+              {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                 <input
                   type="text"
                   name="keyword"
@@ -180,15 +184,14 @@ const ListPageHeading = ({
                   placeholder={messages['class.nameList']}
                   onKeyPress={(e) => onSearchKey(e)}
                 />
-              </div>
+              </div> */}
               <Button
                 color="outline-dark"
                 size="xs"
-                style={{fontSize: '18px'}}
+                style={{ fontSize: '18px' }}
                 className="float-md-left mb-1"
                 onClick={() => {
-                  // changeSemesterBy('all');
-                  document.getElementById('search').value = '';
+                  changeSemesterBy('all');
                   onResetClick(!reset);
                 }}
               >

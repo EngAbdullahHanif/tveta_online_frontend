@@ -24,7 +24,7 @@ import {
 
 import { injectIntl } from 'react-intl';
 //import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
-import {FormikReactSelect} from '../../../../containers/form-validations/FormikFields'
+import { FormikReactSelect } from '../../../../containers/form-validations/FormikFields';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
@@ -59,15 +59,14 @@ const ListPageHeading = ({
 
   // Educational Year
   selectedEducationalYearOption,
-  educationalYearsOptionsForList,
-  changeEducationalYearBy,  
+  educationalYearsOptions,
+  changeEducationalYearBy,
   onDistrictSearchKey,
   onProvinceSearchKey,
   onResetClick,
   reset,
   institutes,
   onInstituteSelect,
-  
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
@@ -75,7 +74,7 @@ const ListPageHeading = ({
   const [selectedInstitute, setSelectedInstitute] = useState('');
   onInstituteSelect(selectedInstitute);
   const { messages } = intl;
-
+  console.log('educationalYearsOptions are here', educationalYearsOptions);
   return (
     <Row>
       <Colxx xxs="12">
@@ -176,48 +175,59 @@ const ListPageHeading = ({
               >
                 <ImageListIcon />
               </a>
-            </span> 
-            <br/>
-            <br/>
+            </span>
+            <br />
+            <br />
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs"   style={{fontSize: '18px'}}>
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
-                    {selectedDepartmentOption.label}
+                    {selectedDepartmentOption?.label}
                   </DropdownToggle>
                   <DropdownMenu>
                     {departmentOptions.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeDepartmentBy(order.column)}
-                          style={{fontSize: '18px'}} >
+                          onClick={() => changeDepartmentBy(order.value)}
+                          style={{ fontSize: '18px' }}
+                        >
                           {order.label}
                         </DropdownItem>
                       );
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 " >
-                  <DropdownToggle caret color="outline-dark" size="xs"   style={{fontSize: '18px'}}>
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
-                    {selectedClassOption.label}
+                    {selectedClassOption?.label}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
                       height: '200px',
                       overflowY: 'scroll',
                       overflowX: 'hidden',
-                      
                     }}
                   >
                     {classes.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeClassBy(order.column)}
-                       style={{fontSize: '18px'}} >
+                          onClick={() => changeClassBy(order.value)}
+                          style={{ fontSize: '18px' }}
+                        >
                           {order.label}
                         </DropdownItem>
                       );
@@ -225,55 +235,60 @@ const ListPageHeading = ({
                   </DropdownMenu>
                 </UncontrolledDropdown>
 
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 " >
-                  <DropdownToggle caret color="outline-dark" size="xs"   style={{fontSize: '18px'}}>
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle
+                    caret
+                    color="outline-dark"
+                    size="xs"
+                    style={{ fontSize: '18px' }}
+                  >
                     <IntlMessages id="filter" />
-                    {selectedEducationalYearOption.label}
+                    {selectedEducationalYearOption?.label}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
                       height: '200px',
                       overflowY: 'scroll',
                       overflowX: 'hidden',
-                      
                     }}
                   >
-                    {educationalYearsOptionsForList.map((order, index) => {
+                    {educationalYearsOptions.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeEducationalYearBy(order.column)}
-                       style={{fontSize: '18px'}} >
+                          onClick={() => changeEducationalYearBy(order.value)}
+                          style={{ fontSize: '18px' }}
+                        >
                           {order.label}
                         </DropdownItem>
                       );
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top"   style={{fontSize: '18px'}}>
+                {/* <div
+                  className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top"
+                  style={{ fontSize: '18px' }}
+                >
                   <input
                     type="text"
-                    style={{fontSize: '18px'}}
+                    style={{ fontSize: '18px' }}
                     name="keyword"
                     id="search"
                     placeholder={messages['search.id']}
                     onKeyPress={(e) => onIdSearchKey(e)}
                   />
-                </div>
+                </div> */}
               </div>
 
               <Button
                 color="outline-dark"
                 size="xs"
-                style={{fontSize: '18px'}}
+                style={{ fontSize: '18px' }}
                 className="float-md-left mb-1"
                 onClick={() => {
                   changeDepartmentBy('all');
                   changeClassBy('all');
                   changeEducationalYearBy('all');
-                  document.getElementById('district').value = '';
-                  document.getElementById('search').value = '';
-                  setSelectedInstitute('');
                   onResetClick(!reset);
                 }}
               >

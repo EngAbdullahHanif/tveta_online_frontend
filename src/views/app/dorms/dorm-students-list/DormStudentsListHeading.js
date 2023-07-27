@@ -185,14 +185,14 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedDormTypeOption.label}
+                    {selectedDormTypeOption?.label}
                   </DropdownToggle>
                   <DropdownMenu>
                     {DormTypeOptions.map((gender, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeDormTypeBy(gender.column)}
+                          onClick={() => changeDormTypeBy(gender.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {gender.label}
@@ -201,7 +201,7 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle
                     caret
                     color="outline-dark"
@@ -209,7 +209,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
+                    {selectedProvinceOption?.label}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -222,7 +222,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeProvinceBy(province.column)}
+                          onClick={() => changeProvinceBy(province.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {province.label}
@@ -230,7 +230,7 @@ const ListPageHeading = ({
                       );
                     })}
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown> */}
 
                 {/* Year */}
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
@@ -241,7 +241,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedYearOption.label}
+                    {selectedYearOption?.label}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -254,7 +254,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeYearBy(educationYears.column)}
+                          onClick={() => changeYearBy(educationYears.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {educationYears.label}
@@ -272,7 +272,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedStatusOptions.label}
+                    {selectedStatusOptions?.label}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -285,7 +285,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeStatusBy(statusOptions.column)}
+                          onClick={() => changeStatusBy(statusOptions.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {statusOptions.label}
@@ -312,9 +312,11 @@ const ListPageHeading = ({
                 className="float-md-left mb-1"
                 style={{ fontSize: '18px' }}
                 onClick={() => {
+                  changeYearBy('all');
                   changeDormTypeBy('all');
                   changeProvinceBy('all');
-                  document.getElementById('district').value = '';
+                  changeStatusBy('all');
+                  // document.getElementById('district').value = '';
                   setSelectDorm('');
                   onResetClick(!reset);
                 }}

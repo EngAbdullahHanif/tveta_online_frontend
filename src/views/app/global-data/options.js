@@ -734,7 +734,7 @@ export const genderOptionsForList = [
 
 export const subjectCreditOptions = [
   {
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="option.all" />,
   },
   { value: '1', label: <IntlMessages id="subject.creditOption_1" /> },
@@ -746,27 +746,31 @@ export const subjectCreditOptions = [
 
 export const subjectTypeOptions = [
   {
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="option.all" />,
   },
-  { value: '1', label: <IntlMessages id="subject.coreSubject" /> },
-  { value: '2', label: <IntlMessages id="subject.nonCoreSubject" /> },
+  { value: 'general', label: 'عمومی' },
+  { value: 'supporting', label: 'فرعی' },
+  { value: 'core', label: 'اصلی' },
+  { value: 'specialized', label: 'مسلکی' },
+  { value: 'practical', label: 'عملی' },
+  { value: 'elective', label: 'اختیاری' },
 ];
 
 export const subjectSystemOptions = [
   {
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="option.all" />,
   },
-  { value: '1', label: <IntlMessages id="subject.systemOption_1" /> },
-  { value: '2', label: <IntlMessages id="subject.systemOption_2" /> },
-  { value: '3', label: <IntlMessages id="subject.systemOption_3" /> },
-  { value: '4', label: <IntlMessages id="subject.systemOption_4" /> },
+  { value: 'general', label: 'عمومی' },
+  { value: 'nima', label: 'نیما' },
+  { value: 'giz', label: 'جی ای زید' },
+  { value: 'special_ed', label: 'تعلیمات خاص' },
 ];
 
 export const semesterOptions = [
-  { column: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-  { column: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
+  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
+  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
 ];
 
 export const semesterValueOptions = [

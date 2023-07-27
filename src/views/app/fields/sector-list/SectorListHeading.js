@@ -74,15 +74,6 @@ const ListPageHeading = ({
             <IntlMessages id={heading} />
           </h1>
           <div className="text-zero top-right-button-container">
-            {/* <Button
-              color="primary"
-              size="lg"
-              className="top-right-button"
-              onClick={() => toggleModal()}
-            >
-              <IntlMessages id="pages.add-new" />
-            </Button> */}
-            {'  '}
             <ButtonDropdown
               isOpen={dropdownSplitOpen}
               toggle={() => setDropdownSplitOpen(!dropdownSplitOpen)}
@@ -168,7 +159,7 @@ const ListPageHeading = ({
               </a>
             </span>
 
-            <div className="d-block d-md-inline-block pt-1">
+            {/* <div className="d-block d-md-inline-block pt-1">
               <div className="row">
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark" size="xs">
@@ -234,7 +225,7 @@ const ListPageHeading = ({
               >
                 <IntlMessages id="pages.reset" />
               </Button>
-            </div>
+            </div> */}
 
             {/* <div className="float-md-right pt-1">
               <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>

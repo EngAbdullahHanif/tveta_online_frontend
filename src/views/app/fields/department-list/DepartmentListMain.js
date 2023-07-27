@@ -279,6 +279,8 @@ const ThumbListPages = ({ match }) => {
         value: item.id,
         label: item.name,
       }));
+      const all = { value: 'all', label: 'همه' };
+      updatedData.unshift(all);
       setFields(updatedData);
     } else {
       console.log('field error');

@@ -58,6 +58,10 @@ const ListPageHeading = ({
   reset,
   institutes,
   onInstituteSelect,
+
+  sectors,
+  selectedSectorOption,
+  changeSectorBy,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
@@ -169,66 +173,44 @@ const ListPageHeading = ({
             </span>
 
             <div className="d-block d-md-inline-block pt-1">
-              <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="filter" />
-                    {selectedGenderOption.label}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {genderOptions.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeGenderBy(order.column)}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="district"
-                    id="district"
-                    placeholder={messages['search.district']}
-                    onKeyPress={(e) => onDistrictSearchKey(e)}
-                  />
-                </div>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="keyword"
-                    id="search"
-                    placeholder={messages['search.id']}
-                    onKeyPress={(e) => onIdSearchKey(e)}
-                  />
-                </div>
-
-                <div>
-                  <ReactAutoSugegst
-                    data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
-                    }}
-                    placeholder={messages['search.institute.name']}
-                  />
-                </div>
-              </div>
+              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                <DropdownToggle
+                  caret
+                  color="outline-dark"
+                  size="xs"
+                  style={{ fontSize: '18px' }}
+                >
+                  <IntlMessages id="filter" />
+                  {selectedSectorOption?.label}
+                </DropdownToggle>
+                <DropdownMenu
+                  style={{
+                    height: '200px',
+                    overflowY: 'scroll',
+                    overflowX: 'hidden',
+                  }}
+                >
+                  {sectors.map((order, index) => {
+                    return (
+                      <DropdownItem
+                        key={index}
+                        onClick={() => changeSectorBy(order.value)}
+                        style={{ fontSize: '18px' }}
+                      >
+                        {order.label}
+                      </DropdownItem>
+                    );
+                  })}
+                </DropdownMenu>
+              </UncontrolledDropdown>
 
               <Button
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
+                style={{ fontSize: '18px' }}
                 onClick={() => {
-                  changeGenderBy('all');
-                  changeProvinceBy('all');
-                  document.getElementById('district').value = '';
-                  document.getElementById('search').value = '';
-                  setSelectedInstitute('');
+                  changeSectorBy('all');
                   onResetClick(!reset);
                 }}
               >

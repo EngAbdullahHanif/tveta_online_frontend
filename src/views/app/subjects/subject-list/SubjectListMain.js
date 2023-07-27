@@ -87,15 +87,15 @@ const ThumbListPages = ({ match }) => {
   const [selectedPageSize, setSelectedPageSize] = useState(20);
 
   const [selectedCreditOption, setSelectedCreditOption] = useState({
-    column: 'all',
+    value: 'all',
     label: 'کریدت',
   });
   const [selectedTypeOption, setSelectedTypeOption] = useState({
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="subject.typeList" />,
   });
   const [selectedSystemOption, setSelectedSystemOption] = useState({
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="subject.systemList" />,
   });
 
@@ -123,21 +123,103 @@ const ThumbListPages = ({ match }) => {
   ]);
 
   useEffect(() => {
-    console.log('institute', institute);
-    console.log('current page', currentPage);
-    console.log('current page Size', selectedPageSize);
-    const accessToken = localStorage.getItem('access_token');
-    const headers = { Authorization: `Bearer ${accessToken}` };
+    console.log('rest', rest);
+    console.log('selectedCreditOption', selectedCreditOption);
+    console.log('selectedTypeOption', selectedTypeOption);
+    console.log('selectedSystemOption', selectedSystemOption);
     async function fetchData() {
-      const response = await callApi(`institute/subject/`, '', null);
-      if (response.data && response.status === 200) {
-        console.log('response of subjects', response.data);
-        setItems(response.data);
-        setSelectedItems([]);
-        // setTotalItemCount(data);
-        setIsLoaded(false);
+      if (
+        selectedCreditOption?.value === 'all' &&
+        selectedSystemOption?.value === 'all' &&
+        selectedTypeOption?.value === 'all'
+      ) {
+        if (rest == true) {
+          setRest(false);
+        }
+        const response = await callApi(`institute/subject/`, '', null);
+        if (response.data && response.status === 200) {
+          console.log('response of subjects', response.data);
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(false);
+        } else {
+          console.log('students error');
+        }
+      } else if (selectedCreditOption?.value === 'all') {
+        let newSytem = selectedSystemOption?.value;
+        if (selectedSystemOption?.value === 'all') {
+          newSytem = '';
+        }
+
+        let newType = selectedTypeOption?.value;
+        if (selectedTypeOption?.value === 'all') {
+          newType = '';
+        }
+        const response = await callApi(
+          `institute/subject/?system_type=${newSytem}&type=${newType}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          console.log('response of subjects', response.data);
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(false);
+        } else {
+          console.log('students error');
+        }
+      } else if (selectedSystemOption?.value === 'all') {
+        let newType = selectedTypeOption?.value;
+        if (selectedTypeOption?.value === 'all') {
+          newType = '';
+        }
+
+        const response = await callApi(
+          `institute/subject/?credit=${selectedCreditOption?.value}&type=${newType}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          console.log('response of subjects', response.data);
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(false);
+        } else {
+          console.log('students error');
+        }
+      } else if (selectedTypeOption?.value === 'all') {
+        const response = await callApi(
+          `institute/subject/?credit=${selectedCreditOption?.value}&system_type${selectedSystemOption?.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          console.log('response of subjects', response.data);
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(false);
+        } else {
+          console.log('students error');
+        }
       } else {
-        console.log('students error');
+        const response = await callApi(
+          `institute/subject/?credit=${selectedCreditOption?.value}&system_type${selectedSystemOption?.value}&type=${selectedTypeOption?.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          console.log('response of subjects', response.data);
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data);
+          setIsLoaded(false);
+        } else {
+          console.log('students error');
+        }
       }
     }
 
@@ -148,11 +230,7 @@ const ThumbListPages = ({ match }) => {
     selectedCreditOption,
     selectedTypeOption,
     selectedSystemOption,
-    teacherId,
-    province,
-    district,
     rest,
-    institute,
   ]);
 
   const fetchInstitutes = async () => {
@@ -256,19 +334,19 @@ const ThumbListPages = ({ match }) => {
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeCreditBy={(column) => {
+          changeCreditBy={(value) => {
             setSelectedCreditOption(
-              subjectCreditOptions.find((x) => x.column === column)
+              subjectCreditOptions.find((x) => x.value === value)
             );
           }}
-          changeTypeBy={(column) => {
+          changeTypeBy={(value) => {
             setSelectedTypeOption(
-              subjectTypeOptions.find((x) => x.column === column)
+              subjectTypeOptions.find((x) => x.value === value)
             );
           }}
-          changeSystemBy={(column) => {
+          changeSystemBy={(value) => {
             setSelectedSystemOption(
-              subjectSystemOptions.find((x) => x.column === column)
+              subjectSystemOptions.find((x) => x.value === value)
             );
           }}
           selectedCreditOption={selectedCreditOption}

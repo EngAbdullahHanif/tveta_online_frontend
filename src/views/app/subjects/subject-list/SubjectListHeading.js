@@ -187,14 +187,14 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedCreditOption.label}
+                    {selectedCreditOption?.label}
                   </DropdownToggle>
                   <DropdownMenu>
                     {subjectCreditOptions.map((order, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeCreditBy(order.column)}
+                          onClick={() => changeCreditBy(order.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}
@@ -211,7 +211,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedTypeOption.label}
+                    {selectedTypeOption?.label}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -224,7 +224,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeTypeBy(order.column)}
+                          onClick={() => changeTypeBy(order.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}
@@ -242,7 +242,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedSystemOption.label}
+                    {selectedSystemOption?.label}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -255,7 +255,7 @@ const ListPageHeading = ({
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeSystemBy(order.column)}
+                          onClick={() => changeSystemBy(order.value)}
                           style={{ fontSize: '18px' }}
                         >
                           {order.label}
@@ -264,40 +264,16 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="keyword"
-                    id="search"
-                    placeholder={messages['search.id']}
-                    onKeyPress={(e) => onIdSearchKey(e)}
-                    style={{ fontSize: '18px' }}
-                  />
-                </div>
-                {/* INTEGRATE THIS BASE ON Subject name */}
-                <div style={{ fontSize: '18px' }}>
-                  <ReactAutoSugegst
-                    data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
-                    }}
-                    placeholder={messages['search.subject.name']}
-                  />
-                </div>
               </div>
-
               <Button
                 style={{ fontSize: '18px' }}
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
                 onClick={() => {
+                  changeTypeBy('all');
+                  changeSystemBy('all');
                   changeCreditBy('all');
-                  changeProvinceBy('all');
-                  document.getElementById('district').value = '';
-                  document.getElementById('search').value = '';
-                  setSelectedInstitute('');
                   onResetClick(!reset);
                 }}
               >

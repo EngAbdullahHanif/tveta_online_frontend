@@ -24,7 +24,7 @@ import {
 
 import { injectIntl } from 'react-intl';
 //import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
-import {FormikReactSelect} from '../../../../containers/form-validations/FormikFields'
+import { FormikReactSelect } from '../../../../containers/form-validations/FormikFields';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
@@ -62,7 +62,9 @@ const ListPageHeading = ({
   reset,
   institutes,
   onInstituteSelect,
-  
+  fields,
+  selectedFieldOption,
+  changeFieldBy,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
@@ -172,94 +174,48 @@ const ListPageHeading = ({
                 <ImageListIcon />
               </a>
             </span>
-            <br/>
-            <br/>
+            <br />
+            <br />
 
             <div className="d-block d-md-inline-block pt-1">
-              <div className="row">
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs"style={{fontSize:'18px'}}>
-                    <IntlMessages id="filter" />
-                    {selectedGenderOption.label}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {genderOptions.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeGenderBy(order.column)}
-                          style={{fontSize:'18px'}} >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                  <DropdownToggle caret color="outline-dark" size="xs" style={{fontSize:'18px'}}>
-                    <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
-                  </DropdownToggle>
-                  <DropdownMenu
-                    style={{
-                      height: '200px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
-                  >
-                    {provinces.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeProvinceBy(order.column)}
-                          style={{fontSize:'18px'}}>
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-                {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="district"
-                    id="district"
-                    placeholder={messages['search.district']}
-                    onKeyPress={(e) => onDistrictSearchKey(e)}
-                  />
-                </div> */}
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top" style={{fontSize:'18px'}}>
-                  <input style={{fontSize:'18px'}}
-                    type="text"
-                    name="keyword"
-                    id="search"
-                    placeholder={messages['search.id']}
-                    onKeyPress={(e) => onIdSearchKey(e)}
-                  />
-                </div>
-
-                <div style={{fontSize:'18px'}}>
-                  <ReactAutoSugegst
-                    data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
-                    }}
-                    placeholder={messages['search.institute.name']}
-                  />
-                </div>
-              </div>
+              <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                <DropdownToggle
+                  caret
+                  color="outline-dark"
+                  size="xs"
+                  style={{ fontSize: '18px' }}
+                >
+                  <IntlMessages id="filter" />
+                  {selectedFieldOption?.label}
+                </DropdownToggle>
+                <DropdownMenu
+                  style={{
+                    height: '200px',
+                    overflowY: 'scroll',
+                    overflowX: 'hidden',
+                  }}
+                >
+                  {fields.map((order, index) => {
+                    return (
+                      <DropdownItem
+                        key={index}
+                        onClick={() => changeFieldBy(order.value)}
+                        style={{ fontSize: '18px' }}
+                      >
+                        {order.label}
+                      </DropdownItem>
+                    );
+                  })}
+                </DropdownMenu>
+              </UncontrolledDropdown>
 
               <Button
                 color="outline-dark"
                 size="xs"
                 className="float-md-left mb-1"
-                style={{fontSize:'18px'}}
+                style={{ fontSize: '18px' }}
                 onClick={() => {
-                  changeGenderBy('all');
-                  changeProvinceBy('all');
-                  document.getElementById('district').value = '';
-                  document.getElementById('search').value = '';
-                  setSelectedInstitute('');
+                  changeFieldBy('all');
                   onResetClick(!reset);
                 }}
               >

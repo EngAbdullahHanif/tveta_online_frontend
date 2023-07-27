@@ -38,214 +38,55 @@ const categories = [
   { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
   { label: 'Desserts', value: 'Desserts', key: 2 },
 ];
-const provinces = [
-  {
-    column: 'all',
-    label: 'تول / همه',
-  },
-  {
-    column: '1',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
-  },
-  {
-    column: '2',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_2" />,
-  },
-  {
-    column: '3',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_3" />,
-  },
-  {
-    column: '4',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_4" />,
-  },
-  {
-    column: '5',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_5" />,
-  },
-  {
-    column: '6',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_6" />,
-  },
-  {
-    column: '7',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_7" />,
-  },
-  {
-    column: '8',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_8" />,
-  },
-  {
-    column: '9',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_9" />,
-  },
-  {
-    column: '10',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_10" />,
-  },
-  {
-    column: '11',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_11" />,
-  },
-  {
-    column: '12',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_12" />,
-  },
-  {
-    column: '13',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_13" />,
-  },
-  {
-    column: 'کابل',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_14" />,
-  },
-  {
-    column: '15',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_15" />,
-  },
-  {
-    column: '16',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_16" />,
-  },
-  {
-    column: '17',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_17" />,
-  },
-  {
-    column: '18',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_18" />,
-  },
-  {
-    column: '19',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_19" />,
-  },
-  {
-    column: '20',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '21',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_21" />,
-  },
-  {
-    column: '22',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_22" />,
-  },
-  {
-    column: '23',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_23" />,
-  },
-  {
-    column: '24',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_24" />,
-  },
-  {
-    column: '25',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_25" />,
-  },
-  {
-    column: '26',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_26" />,
-  },
-  {
-    column: '27',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_27" />,
-  },
-  {
-    column: '28',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_28" />,
-  },
-  {
-    column: '29',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_29" />,
-  },
-  {
-    column: '30',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_30" />,
-  },
-  {
-    column: '31',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_31" />,
-  },
-  {
-    column: '32',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_32" />,
-  },
-  {
-    column: '33',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_33" />,
-  },
-  {
-    column: '34',
-    label: <IntlMessages id="forms.StdSchoolProvinceOptions_34" />,
-  },
-];
-const educationYears = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  { value: '1', label: <IntlMessages id="forms.educationalYearOption_1" /> },
-  { value: '2', label: <IntlMessages id="forms.educationalYearOption_2" /> },
-  { value: '3', label: <IntlMessages id="forms.educationalYearOption_3" /> },
-  { value: '4', label: <IntlMessages id="forms.educationalYearOption_4" /> },
-  { value: '5', label: <IntlMessages id="forms.educationalYearOption_5" /> },
-  { value: '6', label: <IntlMessages id="forms.educationalYearOption_6" /> },
-  { value: '7', label: <IntlMessages id="forms.educationalYearOption_7" /> },
-  { value: '8', label: <IntlMessages id="forms.educationalYearOption_8" /> },
-  { value: '9', label: <IntlMessages id="forms.educationalYearOption_9" /> },
-  { value: '10', label: <IntlMessages id="forms.educationalYearOption_10" /> },
-  { value: '11', label: <IntlMessages id="forms.educationalYearOption_11" /> },
-  { value: '12', label: <IntlMessages id="forms.educationalYearOption_12" /> },
-  { value: '13', label: <IntlMessages id="forms.educationalYearOption_13" /> },
-  { value: '14', label: <IntlMessages id="forms.educationalYearOption_14" /> },
-  { value: '15', label: <IntlMessages id="forms.educationalYearOption_15" /> },
-  { value: '16', label: <IntlMessages id="forms.educationalYearOption_16" /> },
-  { value: '17', label: <IntlMessages id="forms.educationalYearOption_17" /> },
-  { value: '18', label: <IntlMessages id="forms.educationalYearOption_18" /> },
-  { value: '19', label: <IntlMessages id="forms.educationalYearOption_19" /> },
-  { value: '20', label: <IntlMessages id="forms.educationalYearOption_20" /> },
-  { value: '21', label: <IntlMessages id="forms.educationalYearOption_21" /> },
-  { value: '22', label: <IntlMessages id="forms.educationalYearOption_22" /> },
-  { value: '23', label: <IntlMessages id="forms.educationalYearOption_23" /> },
-  { value: '24', label: <IntlMessages id="forms.educationalYearOption_24" /> },
-  { value: '25', label: <IntlMessages id="forms.educationalYearOption_25" /> },
-  { value: '26', label: <IntlMessages id="forms.educationalYearOption_26" /> },
-  { value: '27', label: <IntlMessages id="forms.educationalYearOption_27" /> },
-  { value: '28', label: <IntlMessages id="forms.educationalYearOption_28" /> },
-  { value: '29', label: <IntlMessages id="forms.educationalYearOption_29" /> },
-  { value: '30', label: <IntlMessages id="forms.educationalYearOption_30" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_31" /> },
-  { value: '31', label: <IntlMessages id="forms.educationalYearOption_32" /> },
-  { value: '32', label: <IntlMessages id="forms.educationalYearOption_33" /> },
-  { value: '33', label: <IntlMessages id="forms.educationalYearOption_34" /> },
-  { value: '34', label: <IntlMessages id="forms.educationalYearOption_35" /> },
-  { value: '35', label: <IntlMessages id="forms.educationalYearOption_36" /> },
-];
+
 const DormTypeOptions = [
   {
-    column: 'all',
+    value: 'all',
     label: 'تول / همه',
   },
-  { column: '1', label: 'بدل عاشه' },
-  { column: '2', label: 'بدیل عاشه' },
+  { value: 'in_dorm', label: 'بدل عاشه' },
+  { value: 'cash', label: 'بدیل عاشه' },
 ];
 const statusOptions = [
   {
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="option.all" />,
   },
-  { column: '1', label: <IntlMessages id="forms.StudyTypeInrolled" /> },
-  { column: '2', label: <IntlMessages id="forms.StudyTypeDismissed" /> },
+  { value: 'active', label: <IntlMessages id="forms.StudyTypeInrolled" /> },
+  { value: 'past', label: 'گزشته' },
+  { value: 'dismiss', label: <IntlMessages id="forms.StudyTypeDismissed" /> },
 ];
-
+const educationalYearsOptions = [
+  { value: 'all', label: 'تول/همه' },
+  { value: '1390', label: '1390' },
+  { value: '1391', label: '1391' },
+  { value: '1392', label: '1392' },
+  { value: '1393', label: '1393' },
+  { value: '1394', label: '1394' },
+  { value: '1395', label: '1395' },
+  { value: '1396', label: '1396' },
+  { value: '1397', label: '1397' },
+  { value: '1398', label: '1398' },
+  { value: '1399', label: '1399' },
+  { value: '1400', label: '1400' },
+  { value: '1401', label: '1401' },
+  { value: '1402', label: '1402' },
+  { value: '1403', label: '1403' },
+  { value: '1404', label: '1404' },
+  { value: '1405', label: '1405' },
+  { value: '1406', label: '1406' },
+  { value: '1407', label: '1407' },
+  { value: '1408', label: '1408' },
+  { value: '1409', label: '1409' },
+  { value: '1410', label: '1410' },
+];
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'title',
+    value: 'title',
     label: 'Product Name',
   });
   const [modalOpen, setModalOpen] = useState(false);
@@ -255,7 +96,7 @@ const ThumbListPages = ({ match }) => {
   const [dorms, setDorms] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [selectedFilter, setSelectFilter] = useState({
-    column: 'all',
+    value: 'all',
     label: 'تول / همه',
   });
   const [rest, setRest] = useState(0);
@@ -264,38 +105,30 @@ const ThumbListPages = ({ match }) => {
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
   const [selectedDormTypeOption, setSelectedDormTypeOption] = useState({
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="dorm.type" />,
   });
 
   const [selectedProvinceOption, setSelectedProvinceOption] = useState({
-    column: 'all',
+    value: 'all',
     label: 'ولایت',
   });
 
   const [selectedYearOption, setSelectedYearOption] = useState({
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="dorm.yearList-1" />,
   });
 
   const [selectedStatusOptions, setSelectedStatusOptions] = useState({
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="teacher.status" />,
   });
+  const [provinceOptions, setProvinceOptions] = useState([]);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedOrderOption]);
 
-  // const fetchDorms = async () => {
-  //   const response = await axios.get(`${dormUrl}`);
-  //   const updatedData = await response.data.map((item) => ({
-  //     id: item.id,
-  //     name: item.name,
-  //   }));
-  //   setDormsFilterList(updatedData);
-  //   console.log('dormsFilterList', dormsFilterList);
-  // };
   const fetchDorms = async () => {
     const response = await callApi('institute/dorms/', '', null);
     if (response.data && response.status === 200) {
@@ -308,23 +141,31 @@ const ThumbListPages = ({ match }) => {
       console.log('dorms error');
     }
   };
+  const fetchProvinces = async () => {
+    const response = await callApi('core/provinces/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.native_name,
+      }));
+      const all = { value: 'all', label: 'همه' };
+      updatedData.unshift(all);
+      setProvinceOptions(updatedData);
+    } else {
+      console.log('province error');
+    }
+  };
   useEffect(() => {
     fetchDorms();
+    fetchProvinces();
   }, []);
 
   useEffect(() => {
-    console.log('district', district);
     async function fetchData() {
-      if (selectedDormTypeOption.column == 'all') {
-        console.log('selectedDormTypeOption', selectedDormTypeOption.column);
-        setSelectedDormTypeOption({
-          column: '',
-          label: <IntlMessages id="dorm.type" />,
-        });
-      }
       if (dormName !== '') {
+        console.log('dormName', dormName);
         const response = await callApi(
-          `students/student_dorms/?dorm_id=${dormName.id}&district=${district}&province=${selectedProvinceOption.column}&dorm_type=${selectedDormTypeOption.column}`,
+          `students/student_dorms/?dorm=${dormName?.value}`,
           '',
           null
         );
@@ -334,8 +175,112 @@ const ThumbListPages = ({ match }) => {
         } else {
           console.log('1, dorms students error');
         }
+      } else if (
+        selectedProvinceOption?.value === 'all' &&
+        selectedStatusOptions?.value === 'all' &&
+        selectedDormTypeOption?.value === 'all' &&
+        selectedYearOption?.value === 'all'
+      ) {
+        if (rest == true) {
+          setSelectedProvinceOption({ value: 'all', label: 'ولایت' });
+          setSelectedDormTypeOption({ value: 'all', label: 'تول / همه' });
+          setSelectedYearOption({
+            value: 'all',
+            label: <IntlMessages id="dorm.yearList-1" />,
+          });
+          setSelectedStatusOptions({
+            value: 'all',
+            label: <IntlMessages id="teacher.status" />,
+          });
+          setDormName('');
+          setDistrict('');
+          setRest(false);
+        }
+        const response = await callApi(`students/student_dorms/`, '', null);
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setIsLoaded(true);
+        } else {
+          console.log('Dorm 2 error');
+        }
+      } else if (selectedProvinceOption.value === 'all') {
+        let newYear = selectedYearOption?.value;
+
+        if (selectedYearOption?.value === 'all') {
+          newYear = '';
+        }
+        if (selectedStatusOptions.value === 'all') {
+          selectedStatusOptions.value = '';
+        }
+        let newCount = selectedDormTypeOption?.value;
+
+        if (selectedDormTypeOption?.value == 'all') {
+          console.log('thest');
+          newCount = '';
+        }
+        console.log('selectedDormTypeOption', newCount);
+
+        const response = await callApi(
+          `students/student_dorms/?dorm_type=${newCount}&educational_year=${newYear}&district=${district}&status=${selectedStatusOptions?.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setIsLoaded(true);
+        } else {
+          console.log('Dorm 3 error');
+        }
+      } else if (selectedDormTypeOption.value === 'all') {
+        if (selectedYearOption?.value === 'all') {
+          selectedYearOption.value = '';
+        }
+        if (selectedStatusOptions.value === 'all') {
+          selectedStatusOptions.value = '';
+        }
+
+        const response = await callApi(
+          `students/student_dorms/?province=${selectedProvinceOption.value}&educational_year=${selectedYearOption.value}&district=${district}&status=${selectedStatusOptions.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setIsLoaded(true);
+        } else {
+          console.log('Dorm 2 error');
+        }
+      } else if (selectedYearOption.value === 'all') {
+        const response = await callApi(
+          `students/student_dorms/?province=${selectedProvinceOption.value}&dorm_type=${selectedDormTypeOption.value}&district=${district}&status=${selectedStatusOptions.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+
+          setIsLoaded(true);
+        } else {
+          console.log('Dorm 2 error');
+        }
+      } else if (selectedStatusOptions.value === 'all') {
+        const response = await callApi(
+          `students/student_dorms/?province=${selectedProvinceOption.value}&dorm_type=${selectedDormTypeOption.value}&educational_year=${selectedYearOption.value}&district=${district}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setDorms(response.data);
+          setIsLoaded(true);
+        } else {
+          console.log('Dorm 2 error');
+        }
       } else {
-        const response = await callApi(`students/student_dorms`, '', null);
+        const response = await callApi(
+          `students/student_dorms/?province=${selectedProvinceOption?.value}&dorm_type=${selectedDormTypeOption?.value}&educational_year=${selectedYearOption?.value}&district=${district}&status=${selectedStatusOptions?.value}`,
+          '',
+          null
+        );
         if (response.data && response.status === 200) {
           console.log('response.data of student-dorm', response.data);
           setDorms(response.data);
@@ -447,10 +392,8 @@ const ThumbListPages = ({ match }) => {
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeOrderBy={(column) => {
-            setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
-            );
+          changeOrderBy={(value) => {
+            setSelectedOrderOption(orderOptions.find((x) => x.value === value));
           }}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}
@@ -469,24 +412,24 @@ const ThumbListPages = ({ match }) => {
           orderOptions={orderOptions}
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
-          changeDormTypeBy={(column) => {
+          changeDormTypeBy={(value) => {
             setSelectedDormTypeOption(
-              DormTypeOptions.find((x) => x.column === column)
+              DormTypeOptions.find((x) => x.value === value)
             );
           }}
-          changeProvinceBy={(column) => {
+          changeProvinceBy={(value) => {
             setSelectedProvinceOption(
-              provinces.find((x) => x.column === column)
+              provinceOptions.find((x) => x.value === value)
             );
           }}
-          changeYearBy={(column) => {
+          changeYearBy={(value) => {
             setSelectedYearOption(
-              educationYears.find((x) => x.column === column)
+              educationalYearsOptions.find((x) => x.value === value)
             );
           }}
-          changeStatusBy={(column) => {
+          changeStatusBy={(value) => {
             setSelectedStatusOptions(
-              statusOptions.find((x) => x.column === column)
+              statusOptions.find((x) => x.value === value)
             );
           }}
           selectedDormTypeOption={selectedDormTypeOption}
@@ -494,8 +437,8 @@ const ThumbListPages = ({ match }) => {
           selectedYearOption={selectedYearOption}
           selectedStatusOptions={selectedStatusOptions}
           DormTypeOptions={DormTypeOptions}
-          provinces={provinces}
-          educationYears={educationYears}
+          provinces={provinceOptions}
+          educationYears={educationalYearsOptions}
           statusOptions={statusOptions}
           dormsFilterList={dormsFilterList}
           onDormSelect={setDormName}

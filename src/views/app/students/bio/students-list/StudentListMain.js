@@ -421,7 +421,7 @@ const ThumbListPages = ({ match }) => {
                   borderStyle: 'hidden',
                 }}
               >
-                <IntlMessages id="student.ID" />
+                <IntlMessages id="student.rollNo" />
               </th>
               <th
                 style={{

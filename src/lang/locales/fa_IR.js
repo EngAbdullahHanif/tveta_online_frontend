@@ -770,6 +770,7 @@ module.exports = {
   'student.photo': 'انځور / عکس',
   'student.photoErr': 'د شاگرد انځور اړین دی/ عکس شاګرد ضروری است',
   'student.ID': 'آیدی',
+  'student.rollNo': 'نمبر اساس',
   'student.interenaceType': 'د جذب نوعیت',
   'student.PhoneNo': 'د تلفن نمبر',
   'study.type': 'د شاګرد ډول',
@@ -864,6 +865,8 @@ module.exports = {
   'menu.class_attendance': ' د ټولګي د حاضرۍ لست/ لست حاضری صنف',
   'student.dismissal': ' د شاګرد منفکول/ منفک کردن شاگرد',
   'label.yearOfBirth': 'زیږیدنې کال/سال تولد',
+  'label.monthOfBirth': 'د زیږیدنې میاشت/ماه تولد',
+  'label.dayOfBirth': 'د زیږېدنې ورځ/روز تولد',
 
   'sector.sectorRegisterlabel': 'د سکتور ثبت/ ثبت سکتور',
 

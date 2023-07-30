@@ -9,8 +9,6 @@ const ReactAutoSugegstExample = ({ intl, data, select, placeholder }) => {
     result = [];
   }
 
-  // var result = ''
-
   const [selectedOption, setSelectedOption] = useState({});
 
   //find the selected institute from result array

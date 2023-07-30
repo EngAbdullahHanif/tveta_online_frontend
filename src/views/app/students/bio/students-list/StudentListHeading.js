@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Row,
   Button,
@@ -18,6 +18,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
+import { DistrictsContext } from 'context/AuthContext';
 // import Breadcrumb from '../navs/Breadcrumb';
 
 const ListPageHeading = ({
@@ -52,12 +53,22 @@ const ListPageHeading = ({
   reset,
   institutes,
   onInstituteSelect,
+  setSelectedDistrict,
 }) => {
+  console.log('provincesOptionsForList:', provincesOptionsForList);
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   const { messages } = intl;
   const [selectedInstitute, setSelectedInstitute] = useState('');
   onInstituteSelect(selectedInstitute);
+  const { districts: districtsFromContext } = useContext(DistrictsContext);
+  console.log('districts from context: ', districtsFromContext);
+  let districts = districtsFromContext;
+  if (selectedProvinceOption) {
+    districts = districtsFromContext.filter(
+      (district) => district.province === selectedProvinceOption.value
+    );
+  }
   return (
     <Row>
       <Colxx xxs="12">
@@ -120,14 +131,14 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedGenderOption.label}
+                    {selectedGenderOption?.label || 'جنسیت'}
                   </DropdownToggle>
                   <DropdownMenu>
                     {genderOptionsForList.map((gender, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeGenderBy(gender.column)}
+                          onClick={() => changeGenderBy(gender.value)}
                           style={{ fontSize: '17px' }}
                         >
                           {gender.label}
@@ -146,7 +157,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
+                    {selectedProvinceOption?.label || 'ولایت'}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -155,19 +166,38 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
-                    {provincesOptionsForList.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeProvinceBy(order.column)}
-                          style={{ fontSize: '17px' }}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
+                    {provincesOptionsForList &&
+                      provincesOptionsForList.map((province, index) => {
+                        return (
+                          <DropdownItem
+                            key={index}
+                            onClick={() => changeProvinceBy(province.value)}
+                            style={{ fontSize: '17px' }}
+                          >
+                            {province.label}
+                          </DropdownItem>
+                        );
+                      })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
+
+                {/* District */}
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                  {/* <input
+                    type="text"
+                    name="district"
+                    id="district"
+                    placeholder={messages['search.district']}
+                    style={{ fontSize: '17px' }}
+                  /> */}
+                  <ReactAutoSugegst
+                    data={districts}
+                    select={(district) => {
+                      setSelectedDistrict(district);
+                    }}
+                    placeholder={messages['search.district']}
+                  />
+                </div>
 
                 <div>
                   {/* Educational Year */}
@@ -179,7 +209,7 @@ const ListPageHeading = ({
                       style={{ fontSize: '17px' }}
                     >
                       <IntlMessages id="filter" />
-                      {selectedEducationalYearOption.label}
+                      {selectedEducationalYearOption?.label || 'سال تعلیمی'}
                       {/* {Educationnal} */}
                       {/* <span>fdsg</span> */}
                     </DropdownToggle>
@@ -216,7 +246,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedShiftOption.label}
+                    {selectedShiftOption?.label || 'شفټ'}
                   </DropdownToggle>
                   <DropdownMenu>
                     {studyTimeOptionsForList.map((shift, index) => {
@@ -232,18 +262,6 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-
-                {/* District */}
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                  <input
-                    type="text"
-                    name="district"
-                    id="district"
-                    placeholder={messages['search.district']}
-                    onKeyPress={(e) => onDistrictSearchKey(e)}
-                    style={{ fontSize: '17px' }}
-                  />
-                </div>
 
                 {/* Student Id */}
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
@@ -261,8 +279,8 @@ const ListPageHeading = ({
                 <div style={{ marginLeft: '90px', fontSize: '17px' }}>
                   <ReactAutoSugegst
                     data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
+                    select={(institute) => {
+                      setSelectedInstitute(institute);
                     }}
                     placeholder={messages['search.institute.name']}
                   />
@@ -277,7 +295,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
-                    {studentTypeOptions.label}
+                    {studentTypeOptions?.label}
                   </DropdownToggle>
                   <DropdownMenu>
                     {studentType.map((order, index) => {
@@ -306,20 +324,19 @@ const ListPageHeading = ({
                 </div>
               </div>
               <Button
-                color="outline-dark"
+                color="outline-red"
                 size="xs"
                 className="float-md-left mb-1"
                 style={{ fontSize: '17px' }}
                 onClick={() => {
-                  changeGenderBy('all');
-                  changeProvinceBy('all');
-                  changeShiftBy('all');
-                  // changeLevelOfEducationBy('all');
-                  changeEducationalYearBy('all');
-                  document.getElementById('district').value = '';
-                  document.getElementById('student_id').value = '';
+                  changeGenderBy(null);
+                  changeProvinceBy(null);
+                  changeShiftBy(null);
+                  // changeLevelOfEducationBy(null);
+                  changeEducationalYearBy(null);
                   setSelectedInstitute('');
                   onResetClick(!reset);
+                  setSelectedDistrict('');
                 }}
               >
                 <IntlMessages id="pages.reset" />

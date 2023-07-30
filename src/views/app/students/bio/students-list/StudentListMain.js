@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 import {
-  provincesOptionsForList,
   educationalYearsOptionsForList,
   studentType,
   genderOptionsForList,
@@ -15,6 +14,7 @@ import ListPageListing from 'views/app/students/bio/students-list/StudentListCat
 import useMousetrap from 'hooks/use-mousetrap';
 
 import config from '../../../../../config';
+import { ProvincesContext } from 'context/AuthContext';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -38,27 +38,23 @@ const orderOptions = [
 ];
 const pageSizes = [10, 20, 40, 80];
 
-const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
-];
-
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
+
   const [selectedPageSize, setSelectedPageSize] = useState(20);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [selectedOrderOption, setSelectedOrderOption] = useState({
     column: 'title',
     label: 'Product Name',
   });
+  const [selectedDistrict, setSelectedDistrict] = useState();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState('');
-  const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
@@ -68,27 +64,17 @@ const ThumbListPages = ({ match }) => {
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
-  const [selectedGenderOption, setSelectedGenderOption] = useState({
-    column: 'all',
-    label: 'جنیست',
-  });
-  const [selectedProvinceOption, setSelectedProvinceOption] = useState({
-    column: 'all',
-    label: 'ولایت',
-  });
-  const [selectedShiftOption, setSelectedShiftOption] = useState({
-    column: 'all',
-    label: 'وقت/ شفت',
-  });
+
+  const { provinces: provincesOptionsForList } = useContext(ProvincesContext);
+
+  const [selectedGenderOption, setSelectedGenderOption] = useState();
+  const [selectedProvinceOption, setSelectedProvinceOption] = useState();
+  const [selectedShiftOption, setSelectedShiftOption] = useState();
   const [selectedEducationalYearOption, seSelectedEducationalYearOption] =
-    useState({
-      column: 'all',
-      label: 'سال تعلیمی',
-    });
-  const [studentTypeOptions, setStudentTypeOptions] = useState({
-    column: 'all',
-    label: 'حالت شاگرد',
-  });
+    useState();
+  const [studentTypeOptions, setStudentTypeOptions] = useState();
+
+  // if any filter changes, go to first page
   useEffect(() => {
     setCurrentPage(1);
   }, [
@@ -112,11 +98,17 @@ const ThumbListPages = ({ match }) => {
       console.log('selectedGenderOption', selectedGenderOption);
       console.log('currentPage', currentPage);
 
+      // if institute not selected
       if (institute !== '') {
+        const params = {
+          institute_id: institute.id,
+          page: currentPage,
+        };
         const response = await callApi(
-          `students/student_institutes/?institute_id=${institute.id}&page=${currentPage}`,
+          `students/student_institutes/`,
           '',
-          null
+          null,
+          params
         );
         if (response.data && response.status === 200) {
           setTotalPage(Math.ceil(response.data.count / itemsPerPage));
@@ -127,9 +119,11 @@ const ThumbListPages = ({ match }) => {
         } else {
           console.log('students error');
         }
-      } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all' &&
+      }
+      // if institute and shift selected, but province and gender are not selected
+      else if (
+        !selectedProvinceOption &&
+        !selectedGenderOption &&
         selectedShiftOption
       ) {
         if (rest == true) {
@@ -138,12 +132,14 @@ const ThumbListPages = ({ match }) => {
           setRest(false);
         }
 
+        const params = {
+          student_id: studentId,
+          current_district: district,
+          p: currentPage,
+          page: 1,
+        };
         // here
-        const response = await callApi(
-          `students/?student_id=${studentId}&current_district=${district}&p=${currentPage}&page=${1}`,
-          '',
-          null
-        );
+        const response = await callApi(`students/`, '', null, params);
         console.table('respons', response);
         if (response.data && response.status === 200) {
           setTotalPage(Math.ceil(response.data.count / itemsPerPage));
@@ -156,12 +152,14 @@ const ThumbListPages = ({ match }) => {
         } else {
           console.log('students error');
         }
-      } else if (selectedProvinceOption.column === 'all') {
-        const response = await callApi(
-          `students/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}`,
-          '',
-          null
-        );
+      } else if (!selectedProvinceOption) {
+        const params = {
+          student_id: studentId,
+          gender: selectedGenderOption?.value,
+          current_district: district?.value,
+          page: currentPage,
+        };
+        const response = await callApi(`students/`, '', null, params);
 
         if (response.data && response.status === 200) {
           setTotalPage(Math.ceil(response.data.count / itemsPerPage));
@@ -172,12 +170,14 @@ const ThumbListPages = ({ match }) => {
         } else {
           console.log('students error');
         }
-      } else if (selectedGenderOption.column === 'all') {
-        const response = await callApi(
-          `students/?student_id=${studentId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}`,
-          '',
-          null
-        );
+      } else if (!selectedGenderOption) {
+        const params = {
+          student_id: studentId,
+          current_province: selectedProvinceOption.value,
+          current_district: district,
+          page: currentPage,
+        };
+        const response = await callApi(`students/`, '', null, params);
         if (response.data && response.status === 200) {
           setTotalPage(Math.ceil(response.data.count / itemsPerPage));
           setItems(response.data.results);
@@ -188,12 +188,15 @@ const ThumbListPages = ({ match }) => {
           console.log('students error');
         }
       } else {
-        setTotalItemCount(response.data.totalItem);
-        const response = await callApi(
-          `students/?student_id=${studentId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}`,
-          '',
-          null
-        );
+        // setTotalItemCount(response.data.totalItem);
+        const params = {
+          student_id: studentId,
+          gender: selectedGenderOption.value,
+          current_province: selectedProvinceOption.value,
+          current_district: district.value,
+          page: currentPage,
+        };
+        const response = await callApi(`students`, '', null, params);
         if (response.data && response.status === 200) {
           setTotalPage(Math.ceil(response.data.count / itemsPerPage));
           setItems(response.data.results);
@@ -205,6 +208,7 @@ const ThumbListPages = ({ match }) => {
         }
       }
     }
+
     fetchData();
   }, [
     selectedPageSize,
@@ -218,6 +222,7 @@ const ThumbListPages = ({ match }) => {
     district,
     rest,
     institute,
+    studentTypeOptions,
   ]);
 
   const fetchInstitutes = async () => {
@@ -348,14 +353,17 @@ const ThumbListPages = ({ match }) => {
           pageSizes={pageSizes}
           toggleModal={() => setModalOpen(!modalOpen)}
           // Gender
-          changeGenderBy={(column) => {
+          changeGenderBy={(value) => {
+            console.log('changeGenderBy: ', value);
             setSelectedGenderOption(
-              genderOptionsForList.find((x) => x.column === column)
+              genderOptionsForList.find((x) => x.value == value)
             );
           }}
-          changeProvinceBy={(column) => {
+          changeProvinceBy={(provinceId) => {
             setSelectedProvinceOption(
-              provincesOptionsForList.find((x) => x.column === column)
+              provincesOptionsForList.find(
+                (province) => province.value === provinceId
+              )
             );
           }}
           selectedGenderOption={selectedGenderOption}
@@ -401,10 +409,11 @@ const ThumbListPages = ({ match }) => {
           }}
           educationalYearsOptionsForList={educationalYearsOptionsForList}
           // Level of Education
-          changestudentTypeBy={(column) => {
+          changeStudentTypeBy={(column) => {
             setStudentTypeOptions(studentType.find((x) => x.column === column));
           }}
           studentType={studentType}
+          setSelectedDistrict={setSelectedDistrict}
         />
         <table className="table">
           <thead

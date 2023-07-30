@@ -56,7 +56,10 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
-
+  const [selectedSectorOption, setSelectedSectorOption] = useState({
+    value: 'all',
+    label: 'سکتور',
+  });
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
@@ -70,43 +73,72 @@ const ThumbListPages = ({ match }) => {
   const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
+  const [sectors, setSectors] = useState([]);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedGenderOption, selectedProvinceOption]);
 
-  useEffect(
-    () => {
-      async function fetchData() {
-        const response = await callApi(`institute/field/`, '', null);
+  useEffect(() => {
+    async function fetchData() {
+      if (selectedSectorOption?.value === 'all') {
+        if (rest === true) {
+          setRest(false);
+        }
+        if (selectedSectorOption?.value === 'all') {
+          selectedSectorOption.value = '';
+        }
+        const response = await callApi('institute/field/', '', null);
         if (response.data && response.status === 200) {
-          console.log('response of field', response.data);
           setItems(response.data);
-          // setSelectedItems([]);
-          // setTotalItemCount(data.totalItem);
+          setSelectedItems([]);
+          // setTotalItemCount(response.data.totalItem);
           setIsLoaded(true);
         } else {
-          console.log('3, institute error');
+          console.log('error');
+        }
+      } else {
+        console.log('field changed', selectedSectorOption);
+        let newSector = selectedSectorOption?.value;
+        if (
+          selectedSectorOption?.value === 'all' ||
+          selectedSectorOption === null ||
+          selectedSectorOption === undefined
+        ) {
+          newSector = '';
+        }
+        const response = await callApi(
+          `institute/field/?sector=${newSector}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(response.data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('error');
         }
       }
+    }
 
-      fetchData();
-    },
-    [
-      // selectedPageSize,
-      //selectedOrderOption,
-      //search,
-      // selectedGenderOption,
-      // selectedProvinceOption,
-      // studentId,
-      // province,
-      // district,
-      // rest,
-      // institute,
-      //educationYear,
-    ]
-  );
-
+    fetchData();
+  }, [selectedPageSize, currentPage, selectedSectorOption, rest]);
+  const fetchSectors = async () => {
+    const response = await callApi('institute/sectors/', 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.sector,
+      }));
+      const all = { value: 'all', label: 'همه' };
+      updatedData.unshift(all);
+      setSectors(updatedData);
+    } else {
+      console.log('field error');
+    }
+  };
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
     if (response.data && response.status === 200) {
@@ -122,6 +154,7 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     fetchInstitutes();
+    fetchSectors();
   }, []);
   const onCheckItem = (event, id) => {
     if (
@@ -234,6 +267,11 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
+          changeSectorBy={(value) => {
+            setSelectedSectorOption(sectors.find((x) => x.value === value));
+          }}
+          sectors={sectors}
+          selectedSectorOption={selectedSectorOption}
         />
         <table className="table">
           <thead

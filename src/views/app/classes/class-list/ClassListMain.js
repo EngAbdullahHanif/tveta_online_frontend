@@ -7,7 +7,6 @@ import ListPageHeading from './ClassListHeading';
 
 import ListPageListing from './ClassListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
-import { semesterOptions } from 'views/app/global-data/options';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -25,13 +24,19 @@ const instituteApiUrl = `${servicePath}/institute/classs/`;
 
 const pageSizes = [4, 8, 12, 20];
 
+const semesterOptions = [
+  { value: 'all', label: <IntlMessages id="field.SemesterLabel" /> },
+  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
+  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
+];
+
 const ThumbListPages = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedSemesterOption, setSelectedSemesterOption] = useState({
-    column: 'all',
+    value: 'all',
     label: <IntlMessages id="field.SemesterLabel" />,
   });
 
@@ -50,18 +55,38 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await callApi(`institute/classs/`, '', null);
-      if (response.data && response.status === 200) {
-        setItems(response.data);
-        setSelectedItems([]);
-        // setTotalItemCount(data.totalItem);
-        setIsLoaded(true);
+      if (selectedSemesterOption?.value === 'all') {
+        if (rest == true) {
+          setRest(false);
+        }
+
+        const response = await callApi(`institute/classs/`, '', null);
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('3, institute error');
+        }
       } else {
-        console.log('3, institute error');
+        const response = await callApi(
+          `institute/classs/?semester=${selectedSemesterOption?.value}`,
+          '',
+          null
+        );
+        if (response.data && response.status === 200) {
+          setItems(response.data);
+          setSelectedItems([]);
+          // setTotalItemCount(data.totalItem);
+          setIsLoaded(true);
+        } else {
+          console.log('3, institute error');
+        }
       }
     }
     fetchData();
-  }, [selectedPageSize, currentPage, selectedSemesterOption, search]);
+  }, [selectedPageSize, currentPage, selectedSemesterOption, search, rest]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -152,9 +177,9 @@ const ThumbListPages = ({ match }) => {
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
-          changeSemesterBy={(column) => {
+          changeSemesterBy={(value) => {
             setSelectedSemesterOption(
-              semesterOptions.find((x) => x.column === column)
+              semesterOptions.find((x) => x.value === value)
             );
           }}
           changePageSize={setSelectedPageSize}
@@ -240,6 +265,17 @@ const ThumbListPages = ({ match }) => {
               >
                 {' '}
                 فصل
+              </th>
+              <th
+                style={{
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                {' '}
+                ویرایش
               </th>
             </tr>
           </thead>

@@ -1003,6 +1003,7 @@ module.exports = {
   'marks.SectionOption_5': 'ح',
   'marks.ClassLabel': 'ټولګی/ صنف',
   'marks.ClassLabelList': 'صنف',
+  'marks.FieldLabelList': 'رشته',
   'marks.ClassErr': 'ټولګی اړین دی/ صنف ضروری است',
   'marks.ClassOption_1': 'نهم',
   'marks.ClassOption_2': 'لسم/ دهم',

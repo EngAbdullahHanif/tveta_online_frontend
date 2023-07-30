@@ -314,7 +314,7 @@ const ListPageHeading = ({
                   changeGenderBy('all');
                   changeProvinceBy('all');
                   changeShiftBy('all');
-                  changeLevelOfEducationBy('all');
+                  // changeLevelOfEducationBy('all');
                   changeEducationalYearBy('all');
                   document.getElementById('district').value = '';
                   document.getElementById('student_id').value = '';

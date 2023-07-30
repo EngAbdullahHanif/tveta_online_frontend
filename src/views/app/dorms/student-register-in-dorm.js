@@ -7,7 +7,7 @@ import { educationalYearsOptions } from '../global-data/options';
 
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
-import profilePhoto from './../../../assets/img/profiles/22.jpg';
+import profilePhoto from './../../../assets/img/profiles/user.png';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import * as Yup from 'yup';
@@ -257,7 +257,7 @@ const DormRegistration = (values) => {
 
                                 <Colxx>
                                   <img
-                                    src={profilePhoto}
+                                    src={student[0].photo || profilePhoto}
                                     alt="Photo"
                                     width={'10%'}
                                   />{' '}

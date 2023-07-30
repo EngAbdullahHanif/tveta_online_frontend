@@ -37,15 +37,15 @@ const ListPageListing = ({
   console.log(deletedStudent, 'THis is deleted');
   const [receivedData, setReceivedData] = useState('');
   console.log('total  page', totalPage);
-// useEffect(()=)
-//    setItems((prevItems) =>
-//      prevItems.filter((student) => student.id !== student_id)
-//    );
+  // useEffect(()=)
+  //    setItems((prevItems) =>
+  //      prevItems.filter((student) => student.id !== student_id)
+  //    );
 
   return (
     <>
       <Row>
-        {items.length === 0 ? (
+        {items?.length === 0 ? (
           <div className="no-result">
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
@@ -65,7 +65,7 @@ const ListPageListing = ({
           if (displayMode === 'thumblist') {
             return (
               <StudentListBody
-                key={student.id }
+                key={student.id}
                 student={student}
                 isSelect={selectedItems.includes(student.id)}
                 collect={collect}

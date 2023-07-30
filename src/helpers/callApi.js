@@ -36,7 +36,12 @@ const getHeaders = (data) => {
 };
 
 // make API calls
-const callApi = async (endpoint, method = 'get', data = null) => {
+const callApi = async (
+  endpoint,
+  method = 'get',
+  data = null,
+  params = null
+) => {
   const headers = getHeaders(data);
   console.log('HEaders: ', headers);
   const url = `${servicePath}/${endpoint}`;
@@ -52,6 +57,7 @@ const callApi = async (endpoint, method = 'get', data = null) => {
       url,
       headers,
       data,
+      params,
     });
     console.log('CALL API Response: on ' + endpoint, response.data);
     return response;

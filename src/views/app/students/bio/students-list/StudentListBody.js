@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Card,
   CustomInput,
@@ -18,6 +18,7 @@ import { BsPencilSquare } from 'react-icons/bs';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
+import { ProvincesContext } from 'context/AuthContext';
 
 const StudentListBody = (
   { student, isSelect, collect, onCheckItem },
@@ -25,6 +26,8 @@ const StudentListBody = (
 ) => {
   const [modalBasic, setModalBasic] = useState(false);
   const [Deletion, setDeletion] = useState(false);
+
+  const { provinces } = useContext(ProvincesContext);
 
   const handleClick = async (event, student_id) => {
     console.log(student_id, 'student_id');
@@ -91,7 +94,11 @@ const StudentListBody = (
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
-                {student.current_province}
+                {
+                  provinces.filter(
+                    (province) => province.value === student.current_province
+                  )[0].label
+                }
               </p>
 
               <p

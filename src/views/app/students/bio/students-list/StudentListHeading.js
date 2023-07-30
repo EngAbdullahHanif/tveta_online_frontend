@@ -53,6 +53,8 @@ const ListPageHeading = ({
   institutes,
   onInstituteSelect,
 }) => {
+  console.log('provincesOptionsForList:', provincesOptionsForList);
+  console.log;
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   const { messages } = intl;
@@ -120,14 +122,14 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedGenderOption.label}
+                    {selectedGenderOption?.label || 'جنسیت'}
                   </DropdownToggle>
                   <DropdownMenu>
                     {genderOptionsForList.map((gender, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeGenderBy(gender.column)}
+                          onClick={() => changeGenderBy(gender.value)}
                           style={{ fontSize: '17px' }}
                         >
                           {gender.label}
@@ -146,7 +148,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
+                    {selectedProvinceOption?.label || 'ولایت'}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -155,17 +157,18 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
-                    {provincesOptionsForList.map((order, index) => {
-                      return (
-                        <DropdownItem
-                          key={index}
-                          onClick={() => changeProvinceBy(order.column)}
-                          style={{ fontSize: '17px' }}
-                        >
-                          {order.label}
-                        </DropdownItem>
-                      );
-                    })}
+                    {provincesOptionsForList &&
+                      provincesOptionsForList.map((province, index) => {
+                        return (
+                          <DropdownItem
+                            key={index}
+                            onClick={() => changeProvinceBy(province.value)}
+                            style={{ fontSize: '17px' }}
+                          >
+                            {province.label}
+                          </DropdownItem>
+                        );
+                      })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
 
@@ -179,7 +182,7 @@ const ListPageHeading = ({
                       style={{ fontSize: '17px' }}
                     >
                       <IntlMessages id="filter" />
-                      {selectedEducationalYearOption.label}
+                      {selectedEducationalYearOption?.label || 'سال تعلیمی'}
                       {/* {Educationnal} */}
                       {/* <span>fdsg</span> */}
                     </DropdownToggle>
@@ -216,7 +219,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedShiftOption.label}
+                    {selectedShiftOption?.label || 'شفټ'}
                   </DropdownToggle>
                   <DropdownMenu>
                     {studyTimeOptionsForList.map((shift, index) => {
@@ -261,8 +264,8 @@ const ListPageHeading = ({
                 <div style={{ marginLeft: '90px', fontSize: '17px' }}>
                   <ReactAutoSugegst
                     data={institutes}
-                    select={(opt) => {
-                      setSelectedInstitute(opt);
+                    select={(institute) => {
+                      setSelectedInstitute(institute);
                     }}
                     placeholder={messages['search.institute.name']}
                   />
@@ -277,7 +280,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
-                    {studentTypeOptions.label}
+                    {studentTypeOptions?.label}
                   </DropdownToggle>
                   <DropdownMenu>
                     {studentType.map((order, index) => {
@@ -306,16 +309,16 @@ const ListPageHeading = ({
                 </div>
               </div>
               <Button
-                color="outline-dark"
+                color="outline-red"
                 size="xs"
                 className="float-md-left mb-1"
                 style={{ fontSize: '17px' }}
                 onClick={() => {
-                  changeGenderBy('all');
-                  changeProvinceBy('all');
-                  changeShiftBy('all');
-                  changeLevelOfEducationBy('all');
-                  changeEducationalYearBy('all');
+                  changeGenderBy(null);
+                  changeProvinceBy(null);
+                  changeShiftBy(null);
+                  // changeLevelOfEducationBy(null);
+                  changeEducationalYearBy(null);
                   document.getElementById('district').value = '';
                   document.getElementById('student_id').value = '';
                   setSelectedInstitute('');

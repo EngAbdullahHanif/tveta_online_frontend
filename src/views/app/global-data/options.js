@@ -236,10 +236,6 @@ export const dateOfBirthOptoions = [
 ];
 
 export const educationalYearsOptionsForList = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
   { value: '1390', label: '1390' },
   { value: '1391', label: '1391' },
   { value: '1392', label: '1392' },
@@ -411,20 +407,12 @@ export const chanceOptions = [
 ];
 
 export const studyTimeOptionsForList = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-
-  { column: '1', label: <IntlMessages id="forms.StudyTimeOption_1" /> },
-  { column: '2', label: <IntlMessages id="forms.StudyTimeOption_2" /> },
+  { column: 'morning', label: <IntlMessages id="forms.morningShift" /> },
+  { column: 'afternoon', label: <IntlMessages id="forms.afternoonShift" /> },
+  { column: 'night', label: <IntlMessages id="forms.nightShift" /> },
 ];
 
 export const provincesOptionsForList = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
   {
     column: 'بدخشان',
     label: <IntlMessages id="forms.StdSchoolProvinceOptions_1" />,
@@ -734,10 +722,6 @@ export const upgradeToOption = [
 
 export const levelOfEdcationForList = [
   {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  {
     value: '14th',
     label: <IntlMessages id="teacher.EducationLevelOption_1" />,
   },
@@ -757,18 +741,16 @@ export const levelOfEdcationForList = [
 
 export const genderOptionsForList = [
   {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
+    value: 'male',
+    label: <IntlMessages id="institute.studentgenderOption_1" />,
   },
-  { value: '1', label: <IntlMessages id="institute.studentgenderOption_1" /> },
-  { value: '2', label: <IntlMessages id="institute.studentgenderOption_2" /> },
+  {
+    value: 'female',
+    label: <IntlMessages id="institute.studentgenderOption_2" />,
+  },
 ];
 
 export const subjectCreditOptions = [
-  {
-    value: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
   { value: '1', label: <IntlMessages id="subject.creditOption_1" /> },
   { value: '2', label: <IntlMessages id="subject.creditOption_2" /> },
   { value: '3', label: <IntlMessages id="subject.creditOption_3" /> },
@@ -777,10 +759,6 @@ export const subjectCreditOptions = [
 ];
 
 export const subjectTypeOptions = [
-  {
-    value: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
   { value: 'general', label: 'عمومی' },
   { value: 'supporting', label: 'فرعی' },
   { value: 'core', label: 'اصلی' },
@@ -790,10 +768,6 @@ export const subjectTypeOptions = [
 ];
 
 export const subjectSystemOptions = [
-  {
-    value: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
   { value: 'general', label: 'عمومی' },
   { value: 'nima', label: 'نیما' },
   { value: 'giz', label: 'جی ای زید' },
@@ -854,10 +828,6 @@ export const teacherCurrentStatusOptions = [
 ];
 
 export const studentType = [
-  {
-    column: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
   {
     value: 'registered',
     label: <IntlMessages id="student.typeOption_1" />,

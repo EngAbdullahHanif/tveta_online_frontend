@@ -44,7 +44,6 @@ const ListPageHeading = ({
   changeGenderBy,
   selectedGenderOption,
   genderOptions,
-  selectedProvinceOption,
   provincesOptionsForList,
   changeProvinceBy,
   onDistrictSearchKey,
@@ -54,6 +53,7 @@ const ListPageHeading = ({
   institutes,
   onInstituteSelect,
   onEducationYearSelect,
+  selectedProvinceOption,
 }) => {
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
@@ -117,7 +117,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
+                    {selectedProvinceOption?.label || 'ولایت'}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -159,10 +159,9 @@ const ListPageHeading = ({
                     onKeyPress={(e) => onIdSearchKey(e)}
                   />
                 </div>
-                <div style={{ fontSize: '17px' }}>
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <ReactAutoSugegst
                     data={institutes}
-                    style={{ fontSize: '18px' }}
                     select={(opt) => {
                       setSelectedInstitute(opt);
                     }}

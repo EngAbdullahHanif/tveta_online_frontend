@@ -446,9 +446,11 @@ const StudentProfile = () => {
                         <h2>{student[0].previous_school_name}</h2>
 
                         <Label className="data-style">
-                          <IntlMessages id="forms.StdSchoolProvinceLabel" />
+                          <IntlMessages id="students.previousProvince" />
                         </Label>
-                        <h2>{student[0].previous_school_province}</h2>
+                        <h2>
+                          {provincesList[student[0].previous_school_province]}
+                        </h2>
 
                         <Label className="data-style">
                           <IntlMessages id="forms.StdInteranceTypeLabel" />

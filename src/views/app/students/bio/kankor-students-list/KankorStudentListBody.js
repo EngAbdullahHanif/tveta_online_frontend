@@ -77,6 +77,7 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                 style={{ display: 'flex', flexDirection: 'row' }}
                 className="align-self-center pr-4"
               >
+                {/*
                 <NavLink
                   to={`/students/register-kankor/${student.id}`}
                   // style={{ width: '10%' }}
@@ -93,10 +94,11 @@ const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
                   <BsTrashFill
                     id="deleteIcon"
                     outline
-                    onClick={() => setModalBasic(true)}
+                    // onClick={() => setModalBasic(true)}
                     style={{ fontSize: '20px' }}
                   />
                 </div>
+              */}
               </div>
             </div>
           </div>

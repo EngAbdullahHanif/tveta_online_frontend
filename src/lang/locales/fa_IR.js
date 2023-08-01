@@ -1666,6 +1666,7 @@ module.exports = {
 
   'search.district': 'ولسوالی ',
   'search.province': 'ولایت',
+  'students.previousProvince': 'مخکني مکتب ولایت/ ولایت مکتب گذشته',
 
   'search.id': 'آیدی',
   filter: ' فلتر بر اساس ',

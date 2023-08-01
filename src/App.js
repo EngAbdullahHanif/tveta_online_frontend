@@ -77,6 +77,7 @@ const App = ({ locale }) => {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.native_name,
+        province: item.province,
       }));
       setDistricts(updatedData);
     } else {

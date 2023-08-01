@@ -824,7 +824,7 @@ export const educationLevelOptions = [
 
 export const teacherCurrentStatusOptions = [
   { value: 'active', label: <IntlMessages id="teacher.StatusOption_1" /> },
-  { value: 'dismissed', label: <IntlMessages id="teacher.StatusOption_1" /> },
+  { value: 'dismissed', label: <IntlMessages id="teacher.StatusOption_2" /> },
 ];
 
 export const studentType = [

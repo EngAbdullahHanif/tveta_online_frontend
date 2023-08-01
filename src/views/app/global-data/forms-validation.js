@@ -275,16 +275,16 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.StdDoBErr" />),
 
-  levelOfEducation: Yup.object()
+  grade: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
+    .required(<IntlMessages id="teacher.GradeErr" />),
 
-  major: Yup.string().required(
-    <IntlMessages id="teacher.LevelOfEducationErr" />
-  ),
+  // major: Yup.string().required(
+  //   <IntlMessages id="teacher.LevelOfEducationErr" />
+  // ),
   tazkiraType: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -638,4 +638,20 @@ export const classChangeValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="marks.ClassErr" />),
+});
+
+export const teacherEducationValidationSchema = Yup.object().shape({
+  degree: Yup.string().required('Degree is Required Field'),
+
+  institute: Yup.string().required('Institute is Required Field'),
+
+  field_of_study: Yup.string().required('Field of Study is Required Field'),
+
+  year_of_completion: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdGraduationYearErr" />),
+  description: Yup.string(),
 });

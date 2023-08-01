@@ -92,7 +92,7 @@ const App = ({ locale }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, provinces, districts }}>
       <ProvincesContext.Provider value={{ provinces }}>
         <DistrictsContext.Provider value={{ districts }}>
           <div className="h-100">

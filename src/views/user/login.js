@@ -23,6 +23,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
   const [email] = useState('');
   const [password] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -45,6 +46,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
     })
       .then((response) => {
         if (response.status === 200) {
+          setLoginError(false);
           message.success(' شه راغلاست / خوش امدید');
           console.log('Data: ', response.data);
           console.log('Token: ', response.data.access);
@@ -56,11 +58,20 @@ const Login = ({ history, loading, error, loginUserAction }) => {
           localStorage.setItem('access_token', response.data.access);
           history.push('/');
         }
+
+        console.log('response is: ', response);
+
         // return response.data;
       })
       .catch((err) => {
+        console.log('error inside login: ', err);
+        if (err.response.status === 400) {
+          setLoginError(true);
+          console.log('status is 400');
+        }
+
         console.log('error of response', err);
-        message.error('Network Error');
+        // message.error('Network Error');
       });
     if (!loading) {
       if (values.username !== '' && values.password !== '') {
@@ -79,19 +90,11 @@ const Login = ({ history, loading, error, loginUserAction }) => {
               <img src={logo} alt="Logo" />
             </NavLink>
             <p className=" h2 ">برای استفاده از سیستم شما نیاز به ورود دارید</p>
-            <p className=" mb-0">
-              برای ورود به سیستم نام کاربری و رمز خود را وارد کنید
-              <br />
-              اگه حساب کاربری نداری نگران نباش، از{' '}
-              <NavLink to="/user/register" className="">
-                اینجا
-              </NavLink>{' '}
-              میتونی تو سایت اسمتو بویسی
-            </p>
+            <p className=" mb-0"></p>
           </div>
           <div className="form-side">
             <CardTitle className="mb-4">
-              {error && (
+              {loginError && (
                 <div className="alert alert-danger">
                   <h2>{'یوزر یا پسورد اشتباهست'}</h2>
 

@@ -89,8 +89,8 @@ const InstituteRegister = () => {
   const [initialInstType, setInitialInstType] = useState([]);
   const [initialVillage, setInitialVillage] = useState('');
   const [initialFoundationYear, setInitialFoundationYear] = useState('');
-  const [initialShift, setInitialShift] = useState('');
-
+  const [initialShift, setInitialShift] = useState([]);
+  const [initialOwnerhip, setInitialOwnership] = useState([]);
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState('');
@@ -142,56 +142,91 @@ const InstituteRegister = () => {
             (item) => item.id == instituteId
           );
           data = updatedData[0];
-          console.log('UPDATED DATA: ', updatedData[0]);
-          setInstitute(updatedData[0]);
-          setInitialInstituteName(updatedData[0].name);
-          setInitialDistrict(updatedData[0].district);
-          setInitialVillage(updatedData[0].village);
-          setInitialProvince(updatedData[0].province);
-          setInstituteTypeGVT(updatedData[0].school_type);
-          setCityType(updatedData[0].inst_city_type);
-          setClimate(updatedData[0].inst_climat);
-
+          console.log('UPDATED DATA: ', data);
+          setInstitute(data);
+          setInitialInstituteName(data.name);
+          setInitialDistrict(
+            districts.filter((dist) => {
+              return dist.value === data.district;
+            })
+          );
+          setInitialVillage(data.village);
+          setInitialProvince(
+            provinces.filter((prov) => {
+              return prov.value === data.province;
+            })
+          );
+          setInstituteTypeGVT({
+            value: data.school_type,
+            label: data.school_type,
+          });
+          setInitialGender({ value: data.gender, label: data.gender });
+          setInitialInstType(
+            instituteTypeOptions.filter((sh) => {
+              return sh.value == data.institute_type;
+            })
+          );
+          setCityType({
+            value: data.location_type,
+            label: data.location_type,
+          });
+          setInitialShift(
+            InstituteShiftOptions.filter((sh) => {
+              return sh.value == data.shift;
+            })
+          );
+          setClimate({ value: data.climate, label: data.climate });
+          setInitialCode(data.code);
+          setLanguage({ value: data.language, label: data.language });
+          setInitialFoundationYear({
+            value: data.foundation_year,
+            label: data.foundation_year,
+          });
+          setInitialOwnership(
+            instTypeOptions.filter((sh) => {
+              return sh.value == data.ownership;
+            })
+          );
           console.log('UPDATED Institute DATA: ', institute);
         } else {
           console.log('institute error');
         }
         //end
-        const Instprovince = provincesOptionsForList.map((provName) => {
-          if (provName.value === data.province) {
-            setInitialProvince([provName]);
-          }
-        });
-        const instClimat = instituteClimateOptions.map((provName) => {
-          if (provName.value === data.inst_climat) {
-            setClimate([provName]);
-          }
-        });
-        const instType = instituteTypeOptions.map((provName) => {
-          if (provName.value === data.school_type) {
-            setInstituteTypeGVT([provName]);
-          }
-        });
-        const cityType = instituteCityOptions.map((provName) => {
-          if (provName.value === data.inst_city_type) {
-            setCityType([provName]);
-          }
-        });
-        const instTypee = instTypeOptions.map((instType) => {
-          if (instType.value === data.type) {
-            setInitialInstType([instType]);
-          }
-        });
-        const languageType = instituteLanguageOptions.map((lang) => {
-          if (lang.value === data.language) {
-            setLanguage([lang]);
-          }
-        });
-        const instGender = dormGenderOptions.map((instGender) => {
-          if (instGender.value === data.gender) {
-            setInitialGender(instGender);
-          }
-        });
+        // const Instprovince = provincesOptionsForList.map((provName) => {
+        //   if (provName.value === data.province) {
+        //     setInitialProvince([provName]);
+        //   }
+        // });
+        // const instClimat = instituteClimateOptions.map((provName) => {
+        //   if (provName.value === data.inst_climat) {
+        //     setClimate([provName]);
+        //   }
+        // });
+        // const instType = instituteTypeOptions.map((provName) => {
+        //   if (provName.value === data.school_type) {
+        //     setInstituteTypeGVT([provName]);
+        //   }
+        // });
+        // const cityType = instituteCityOptions.map((provName) => {
+        //   if (provName.value === data.inst_city_type) {
+        //     setCityType([provName]);
+        //   }
+        // });
+        // const instTypee = instTypeOptions.map((instType) => {
+        //   if (instType.value === data.type) {
+        //     setInitialInstType([instType]);
+        //   }
+        // });
+        // const languageType = instituteLanguageOptions.map((lang) => {
+        //   if (lang.value === data.language) {
+        //     setLanguage([lang]);
+        //   }
+        // });
+        // const instGender = dormGenderOptions.map((instGender) => {
+        //   if (instGender.value === data.gender) {
+        //     setInitialGender(instGender);
+        //   }
+        // });
       }
       fetchInstitute();
       setUpdateMode(true);
@@ -225,6 +260,7 @@ const InstituteRegister = () => {
         label: item.native_name,
       }));
       setDistricts(updatedData);
+      console.log('district areeeeeeeeee: ', updatedData);
     } else {
       console.log('district error');
     }
@@ -232,6 +268,7 @@ const InstituteRegister = () => {
 
   useEffect(() => {
     fetchProvinces();
+    fetchDistricts();
   }, []);
 
   useEffect(() => {
@@ -415,6 +452,10 @@ const InstituteRegister = () => {
                 foundationYear: initialFoundationYear,
                 gender: initialGender,
                 shift: initialShift,
+                instituteClimate: climate,
+                cityType: cityType,
+                institueLanguage: language,
+                initialOwnerhip,
               }}
               // validationSchema={ValidationSchema}
               onSubmit={onRegister}
@@ -463,7 +504,7 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="province"
                           id="province"
-                          // value={values.province.value}
+                          value={values.province}
                           options={provinces}
                           onChange={setFieldValue} //onChange should conatain single line
                           onBlur={setFieldTouched}
@@ -483,7 +524,7 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="district"
                           id="district"
-                          // value={values.district.value}
+                          value={values.district}
                           options={districts}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
@@ -533,7 +574,7 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="instType"
                           id="instType"
-                          value={values.instType}
+                          value={values.initialOwnerhip}
                           options={instTypeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
@@ -574,7 +615,7 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="instituteType"
                           id="instituteType"
-                          value={values.instituteType}
+                          value={values.instType}
                           options={instituteTypeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
@@ -594,7 +635,7 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="institueCityType"
                           id="institueCityType"
-                          value={values.institueCityType}
+                          value={values.cityType}
                           options={instituteCityOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

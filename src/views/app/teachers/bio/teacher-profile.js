@@ -20,6 +20,7 @@ import {
   InputGroupAddon,
   Input,
 } from 'reactstrap';
+import { dateOfBirthOptoions } from '../../global-data/options';
 import Select from 'react-select';
 import logo from './../../../../assets/logos/AdminLogo.png';
 import profilePhoto from './../../../../assets/img/profiles/22.jpg';
@@ -34,6 +35,8 @@ import {
 } from 'containers/form-validations/FormikFields';
 import Classes from 'views/app/classes';
 import config from '../../../../config';
+import { teacherEducationValidationSchema } from 'views/app/global-data/forms-validation';
+import { message } from 'antd';
 const servicePath = config.API_URL;
 const teacherApiUrl = `${servicePath}/teachers/`;
 const teacherEvaluationApiUrl = `${servicePath}/teachers/evaluation`;
@@ -48,7 +51,9 @@ const TeacherProfile = () => {
   const [teacherEvaluation, setTeacherEvaluation] = useState([]);
   const [teacherHREvaluation, setTeacherHREvaluation] = useState([]);
   const [teacherTransfer, setTeacherTransfer] = useState([]);
+  const [teacherEducation, setTeacherEducation] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [cvFile, setCVFile] = useState();
 
   useEffect(() => {
     async function fetchTeacher() {
@@ -62,12 +67,13 @@ const TeacherProfile = () => {
       //   `${teacherApiUrl}institute/?teacher_id=${teacherId}`
       // );
       const instituteResponse = await callApi(
-        `teachers/institute/?id=${teacherId}`,
+        `teachers/institute/${teacherId}/`,
         '',
         null
       );
 
       const instituteData = await instituteResponse.data;
+      console.log('Data Institute: ', instituteData);
       setInstitute(instituteData);
     }
     async function fetchTeacherEvaluation() {
@@ -112,10 +118,22 @@ const TeacherProfile = () => {
       console.log(`${teacherTransferApiUrl}/?teacher_id=${teacherId}`);
       setTeacherTransfer(data);
     }
+    async function fetchTeacherEducation() {
+      const response = await callApi(
+        `teachers/${teacherId}/educations`,
+        '',
+        null
+      );
+
+      const data = response.data;
+      console.log('Teacher Educations: ', data);
+      setTeacherEducation(data);
+    }
     fetchTeacher();
     fetchTeacherEvaluation();
     fetchTeacherHREvaluation();
     fetchTeacherTransfer();
+    fetchTeacherEducation();
   }, []);
 
   const handleClick = (event) => {
@@ -127,6 +145,25 @@ const TeacherProfile = () => {
   };
   const style1 = {
     backgroungColor: 'blue',
+  };
+
+  const addEducation = async (inputData) => {
+    message.success('Education Added');
+    console.log('File: ', cvFile);
+    console.log('Form Data in Teacher Education: ', inputData);
+    const formData = new FormData();
+    formData.append('document', cvFile);
+    formData.append('degree', inputData.degree);
+    formData.append('institution', inputData.institute);
+    formData.append('field_of_study', inputData.field_of_study);
+    formData.append('year_completed', inputData.year_of_completion?.value);
+    formData.append('description', inputData.description);
+    formData.append('teacher', teacherId);
+    await callApi(`teachers/${teacherId}/educations/`, 'POST', formData).then(
+      (response) => {
+        console.log('RESPONSE in teacher Education;: ', response.data);
+      }
+    );
   };
 
   return (
@@ -197,8 +234,8 @@ const TeacherProfile = () => {
           </div>
         </Colxx>
       </Row>
-
-      {teacher.length > 0 && institute.length > 0 && (
+      {console.log('teacher: ', teacher, 'institute: ', institute)}
+      {teacher.length > 0 && (
         <>
           {isNext ? (
             <>
@@ -238,7 +275,7 @@ const TeacherProfile = () => {
                         <Label>
                           <IntlMessages id="teacher.GrandFatherNameLabel" />
                         </Label>
-                        <h3>Mohammad Samim</h3>
+                        <h3>{teacher[0].father_name}</h3>
                         {/* <Label>
                           <IntlMessages id="forms.Std_father_Eng_Name" />
                         </Label>
@@ -246,7 +283,7 @@ const TeacherProfile = () => {
                         <Label>
                           <IntlMessages id="gender.gender" />
                         </Label>
-                        <h3>Male</h3>
+                        <h3>{teacher[0].gender}</h3>
 
                         <Label>
                           <IntlMessages id="teacher.PhoneNoLabel" />
@@ -263,19 +300,22 @@ const TeacherProfile = () => {
                         <Label>
                           <IntlMessages id="forms.StdTazkiraNoLabel" />
                         </Label>
-                        <h3>009234932434</h3>
+                        <h3>{teacher[0].registration_number}</h3>
                         <Label>
                           <IntlMessages id="forms.StdIdCardCoverLabel" />
                         </Label>
-                        <h3>12</h3>
+                        <h3>{teacher[0].cover_number}</h3>
                         <Label>
                           <IntlMessages id="forms.StdIdCardPageNoLabel" />
                         </Label>
-                        <h3>45</h3>
+                        <h3>{teacher[0].page_number}</h3>
                         <Label>
                           <IntlMessages id="forms.StdDoBLabel" />
                         </Label>
-                        <h3>2000-02-12</h3>
+                        <h3>
+                          {teacher[0].year_of_birth}-{teacher[0].month_of_birth}
+                          -{teacher[0].day_of_birth}
+                        </h3>
                         <Label>
                           <IntlMessages id="forms.EducationLevelLabel" />
                         </Label>
@@ -306,21 +346,14 @@ const TeacherProfile = () => {
                             <Label>
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>کابل</h3>
+                            <h3>{teacher[0].main_province}</h3>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label>
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>پغمان</h3>
-                          </Colxx>
-                          <Colxx>
-                            {' '}
-                            <Label>
-                              <IntlMessages id="forms.VillageLabel" />
-                            </Label>
-                            <h3>چهلتن</h3>
+                            <h3>{teacher[0].main_district}</h3>
                           </Colxx>
                         </Row>
                       </Colxx>
@@ -341,23 +374,388 @@ const TeacherProfile = () => {
                             <Label>
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>کابل</h3>
+                            <h3>{teacher[0].current_province}</h3>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label>
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>پغمان</h3>
-                          </Colxx>
-                          <Colxx>
-                            {' '}
-                            <Label>
-                              <IntlMessages id="forms.VillageLabel" />
-                            </Label>
-                            <h3>چهلتن</h3>
+                            <h3>{teacher[0].current_district}</h3>
                           </Colxx>
                         </Row>
+                      </Colxx>
+                    </Row>
+                    <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                      {' '}
+                      <h2
+                        className="bg-primary "
+                        style={{
+                          padding: '8px',
+                          paddingInline: '30px',
+                          borderRadius: '10px',
+                        }}
+                      >
+                        {' '}
+                        <IntlMessages id="تحصیل" />
+                      </h2>
+                    </Colxx>
+
+                    <Row className="justify-content-center   rounded ">
+                      <Colxx style={{ paddingInline: '4%' }}>
+                        <table class="table table-lg" style={{ fontSize: 18 }}>
+                          <thead>
+                            <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">Institution</th>
+                              <th scope="col">Degree</th>
+                              <th scope="col">Field Of Study</th>
+                              <th scope="col">Year Completed</th>
+                              <th scope="col">Document</th>
+                              <th scope="col">Description</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {teacherEducation.map((item, index) => {
+                              return (
+                                <tr>
+                                  <th scope="row">{item.id}</th>
+                                  <td>{item.institution}</td>
+                                  <td>{item.degree}</td>
+                                  <td>{item.field_of_study}</td>
+                                  <td>{item.year_completed}</td>
+                                  <td>
+                                    <a href={item.document}>Resume</a>
+                                  </td>
+                                  <td>{item.description}</td>
+                                  <td>
+                                    <a
+                                      data-toggle="modal"
+                                      data-target="#exampleModal"
+                                      data-whatever="@getbootstrap"
+                                    >
+                                      Edit
+                                    </a>
+                                    /<a>Delete</a>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                        <br />
+                        <br />
+                        <Button
+                          class="btn btn-primary"
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                          data-whatever="@getbootstrap"
+                        >
+                          اضافه نمودن تحصیل
+                        </Button>
+
+                        <div
+                          class="modal fade"
+                          id="exampleModal"
+                          tabindex="-1"
+                          role="dialog"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                  ثبت تحصیل استاد
+                                </h5>
+                                <button
+                                  type="button"
+                                  class="close"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <Formik
+                                  enableReinitialize={true}
+                                  initialValues={{
+                                    degree: '',
+                                    institute: '',
+                                    field_of_study: '',
+                                    year_of_completion: '',
+                                    description: '',
+                                  }}
+                                  validationSchema={
+                                    teacherEducationValidationSchema
+                                  }
+                                  onSubmit={(formData) => {
+                                    addEducation(formData);
+                                  }}
+                                >
+                                  {({
+                                    errors,
+                                    touched,
+                                    values,
+                                    setFieldTouched,
+                                    setFieldValue,
+                                    handleSubmit,
+                                  }) => (
+                                    <>
+                                      <form>
+                                        <div class="form-group">
+                                          <label
+                                            for="recipient-name"
+                                            class="col-form-label"
+                                          >
+                                            دگری
+                                          </label>
+                                          <Field
+                                            className="form-control fieldStyle"
+                                            name="degree"
+                                          />
+                                          {errors.degree && touched.degree ? (
+                                            <div class="">{errors.degree}</div>
+                                          ) : null}
+                                        </div>
+                                        <div class="form-group">
+                                          <label
+                                            for="recipient-name"
+                                            class="col-form-label"
+                                          >
+                                            انستیتوت
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <Field
+                                            className="form-control fieldStyle"
+                                            name="institute"
+                                          />
+                                        </div>
+                                        <div class="form-group">
+                                          <label
+                                            for="field_of_study"
+                                            class="col-form-label"
+                                          >
+                                            رشته
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <Field
+                                            className="form-control fieldStyle"
+                                            name="field_of_study"
+                                          />
+                                        </div>
+                                        <div class="form-group">
+                                          <label
+                                            for="year_of_completion"
+                                            class="col-form-label"
+                                          >
+                                            سال تکمیل
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+
+                                          <FormikReactSelect
+                                            name="year_of_completion"
+                                            id="year_of_completion"
+                                            value={values.year_of_completion}
+                                            options={dateOfBirthOptoions}
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            required
+                                          />
+                                          {errors.year_of_completion &&
+                                          touched.year_of_completion ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.year_of_completion}
+                                            </div>
+                                          ) : null}
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label
+                                            for="description"
+                                            class="col-form-label"
+                                          >
+                                            Description
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <Field
+                                            className="form-control fieldStyle"
+                                            name="description"
+                                          />
+                                        </div>
+                                        <div class="form-group">
+                                          <label
+                                            for="recipient-name"
+                                            class="col-form-label"
+                                          >
+                                            Document
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <input
+                                            class="form-control"
+                                            type="file"
+                                            id="formFile"
+                                            onChange={(e) => {
+                                              setCVFile(e.target.files[0]);
+                                            }}
+                                          />
+                                        </div>
+                                      </form>
+                                      <div class="modal-footer">
+                                        <button
+                                          type="button"
+                                          class="btn btn-secondary"
+                                          data-dismiss="modal"
+                                        >
+                                          Close
+                                        </button>
+                                        <button
+                                          type="submit"
+                                          class="btn btn-primary"
+                                          onClick={handleSubmit}
+                                        >
+                                          Add Education
+                                        </button>
+                                      </div>{' '}
+                                    </>
+                                    // <Form className="av-tooltip tooltip-label-right style">
+                                    //   <Row className="justify-content-center">
+                                    //     <Colxx xxs="5" className="ml-5">
+                                    //       <FormGroup className="form-group has-float-label error-l-175">
+                                    //         <Label>
+                                    //           <IntlMessages id="teacher.NameLabel" />
+                                    //           <span style={{ color: 'red' }}>
+                                    //             *
+                                    //           </span>
+                                    //         </Label>
+                                    //         <Field
+                                    //           className="form-control fieldStyle"
+                                    //           name="degree"
+                                    //           onChange={setFieldValue}
+                                    //         />
+                                    //         {errors.degree && touched.degree ? (
+                                    //           <div className="">
+                                    //             {errors.degree}
+                                    //           </div>
+                                    //         ) : null}
+                                    //       </FormGroup>
+
+                                    //       {/* lastname */}
+                                    //       <FormGroup className="form-group has-float-label">
+                                    //         <Label>
+                                    //           <IntlMessages id="forms.lastName" />
+                                    //           <span style={{ color: 'red' }}>
+                                    //             *
+                                    //           </span>
+                                    //         </Label>
+                                    //         <Field
+                                    //           className="form-control fieldStyle"
+                                    //           name="institute"
+                                    //         />
+                                    //         {errors.institute &&
+                                    //         touched.institute ? (
+                                    //           <div className="">
+                                    //             {errors.institute}
+                                    //           </div>
+                                    //         ) : null}
+                                    //       </FormGroup>
+                                    //       <FormGroup className="form-group has-float-label error-l-175">
+                                    //         <Label>
+                                    //           <IntlMessages id="teacher.FatherNameLabel" />
+                                    //           <span style={{ color: 'red' }}>
+                                    //             *
+                                    //           </span>
+                                    //         </Label>
+                                    //         <Field
+                                    //           className="form-control fieldStyle"
+                                    //           name="field_of_study"
+                                    //         />
+                                    //         {errors.field_of_study &&
+                                    //         touched.field_of_study ? (
+                                    //           <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                    //             {errors.field_of_study}
+                                    //           </div>
+                                    //         ) : null}
+                                    //       </FormGroup>
+                                    //       <FormGroup className="form-group has-float-label error-l-175">
+                                    //         <Label>
+                                    //           {/* <IntlMessages id="teacher.LevelOfEducationLabel" /> */}
+                                    //           graduation year
+                                    //           <span style={{ color: 'red' }}>
+                                    //             *
+                                    //           </span>
+                                    //         </Label>
+                                    //         <FormikReactSelect
+                                    //           name="year_of_completion"
+                                    //           id="year_of_completion"
+                                    //           value={values.year_of_completion}
+                                    //           options={dateOfBirthOptoions}
+                                    //           onChange={setFieldValue}
+                                    //           onBlur={setFieldTouched}
+                                    //           required
+                                    //         />
+                                    //         {errors.year_of_completion &&
+                                    //         touched.year_of_completion ? (
+                                    //           <div className="">
+                                    //             {errors.year_of_completion}
+                                    //           </div>
+                                    //         ) : null}
+                                    //       </FormGroup>
+                                    //       <FormGroup className="form-group has-float-label error-l-175 ">
+                                    //         <Label>
+                                    //           <IntlMessages id="teacher.PhoneNoLabel" />
+                                    //           <span style={{ color: 'red' }}>
+                                    //             *
+                                    //           </span>
+                                    //         </Label>
+                                    //         <Field
+                                    //           className="form-control fieldStyle"
+                                    //           name="description"
+                                    //           id="description"
+                                    //           type="text"
+                                    //         />
+                                    //         {errors.description &&
+                                    //         touched.description ? (
+                                    //           <div className="">
+                                    //             {errors.description}
+                                    //           </div>
+                                    //         ) : null}
+                                    //       </FormGroup>
+                                    //     </Colxx>
+                                    //   </Row>
+                                    //   <div class="modal-footer">
+                                    //     <button
+                                    //       class="btn btn-secondary"
+                                    //       data-dismiss="modal"
+                                    //     >
+                                    //       Close
+                                    //     </button>
+                                    //     <button
+                                    //       class="btn btn-primary"
+                                    //       onClick={handleSubmit}
+                                    //     >
+                                    //       Save Education
+                                    //     </button>
+                                    //   </div>
+                                    // </Form>
+                                  )}
+                                </Formik>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </Colxx>
                     </Row>
                   </div>

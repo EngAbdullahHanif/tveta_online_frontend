@@ -20,6 +20,9 @@ const App = ({ locale }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const [provinces, setProvinces] = useState();
   const [districts, setDistricts] = useState();
+  const [classes, setClasses] = useState();
+  const [subjects, setSubjects] = useState();
+  const [departments, setDepartments] = useState();
   const [options, setOptions] = useState({});
 
   const direction = getDirection();
@@ -89,15 +92,67 @@ const App = ({ locale }) => {
     }
   };
 
+  const fetchClasses = async (provinceId) => {
+    const response = await callApi(`institute/classs/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + '-' + item.section,
+      }));
+      setClasses(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+  const fetchSubjects = async (provinceId) => {
+    const response = await callApi(`institute/subject/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+  const fetchDepartments = async (provinceId) => {
+    const response = await callApi(`institute/department/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
   // check if token is still valid
   useEffect(async () => {
     checkTokenValidity();
     fetchProvinces();
     fetchDistricts();
+    fetchClasses();
+    fetchSubjects();
+    fetchDepartments();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, provinces, districts }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        provinces,
+        districts,
+        classes,
+        subjects,
+        departments,
+      }}
+    >
       <ProvincesContext.Provider value={{ provinces }}>
         <DistrictsContext.Provider value={{ districts }}>
           <div className="h-100">

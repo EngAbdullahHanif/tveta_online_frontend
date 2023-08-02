@@ -957,6 +957,7 @@ module.exports = {
   'teacher.contractTypeErr': 'د قرارداد ډول اړین دی/ نوع قرارداد ضروری است',
   'teacher.contractTypeOptions_1': 'د تشکیل د ننه/ داخل تشکیل',
   'teacher.contractTypeOptions_2': 'د تشکیل بهر/ خارج تشکیل',
+  'teacher.contractTypeOptions_3': 'رسمی',
   'teacher.ProfessionalRanksLabel': 'مسلکي رتبه/ رتبه مسلکی',
   'teacher.status': 'حالت',
 

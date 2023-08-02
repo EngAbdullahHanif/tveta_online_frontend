@@ -489,7 +489,8 @@ const StudentsTransfer = (values) => {
                               <Field
                                 className="form-control fieldStyle"
                                 name="transferDate"
-                                placeholder="1399-01-29"
+                                // placeholder=""
+                                type="date"
                               />
                               {errors.transferDate && touched.transferDate ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">

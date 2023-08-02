@@ -42,7 +42,11 @@ const App = ({ locale }) => {
       const response = await callApi('auth/token/verify/', 'POST', {
         token: token,
       });
-      if (response && response.status >= 200 && response.status <= 299) {
+      if (!response) {
+        console.log('cannot connect to server');
+        return;
+      }
+      if (response.status >= 200 && response.status <= 299) {
         console.log('token is valid');
       } else {
         console.log('token is invalid. removing it from local storage');

@@ -83,7 +83,7 @@ const StudentProfile = () => {
       }
 
       const instituteResponse = await callApi(
-        `students/student_institutes/?student=${studentId}`,
+        `students/student_institutes/?student__id=${studentId}`,
         '',
         null
       );

@@ -96,9 +96,11 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             <CardTitle className="mb-4">
               {loginError && (
                 <div className="alert alert-danger">
-                  <h2>{'یوزر یا پسورد اشتباهست'}</h2>
+                  <h2>
+                    {'کارن نوم او یا پاسورډ سم ندی. / یوزر یا پسورد اشتباه است'}
+                  </h2>
 
-                  <h6>{'دوباره کوشش کنید'}</h6>
+                  <h6>{'بیا ځلې کوشش وکړی/ دوباره کوشش کنید'}</h6>
                 </div>
               )}
               <IntlMessages id="user.login-title" />

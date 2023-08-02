@@ -194,6 +194,8 @@ const StudentRegistration = ({ intl }, values) => {
     fatherDutyLocation: '',
     placeOfBirth: '',
     DoB: '',
+    monthOfBirth: '',
+    dayOfBirth: '',
     gender: '',
     tazkiraNo: '',
     phoneNo: '',
@@ -249,6 +251,8 @@ const StudentRegistration = ({ intl }, values) => {
       grandFatherName: '',
       fatherDutyLocation: '',
       DoB: '',
+      monthOfBirth: '',
+      dayOfBirth: '',
       gender: [],
       tazkiraNo: '',
       idCardPageNo: '',
@@ -531,6 +535,8 @@ const StudentRegistration = ({ intl }, values) => {
             current_district: newFields.C_District.value,
             current_village: newFields.C_Village,
             year_of_birth: newFields.DoB,
+            month_of_birth: newFields.monthOfBirth,
+            day_of_birth: newFields.dayOfBirth,
             father_profession: newFields.fatherDuty,
             father_place_of_duty: newFields.fatherDutyLocation,
             admission_method: newFields.interanceType.value,
@@ -832,6 +838,7 @@ const StudentRegistration = ({ intl }, values) => {
                               </div>
                             ) : null}
 
+                            {/* year, month and day of birth */}
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>
                                 <IntlMessages id="label.yearOfBirth" />
@@ -844,19 +851,47 @@ const StudentRegistration = ({ intl }, values) => {
                                 min={1300}
                                 max={1450}
                               />
-                              {/* <FormikReactSelect
-                                name="DoB"
-                                id="DoB"
-                                value={values.DoB}
-                                options={dateOfBirthOptoions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                isSearchable={false}
-                                required
-                              /> */}
                               {errors.DoB && touched.DoB ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.DoB}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            <FormGroup className="form-group has-float-label error-l-100 ">
+                              <Label>
+                                <IntlMessages id="label.monthOfBirth" />
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="monthOfBirth"
+                                type="number"
+                                min={1}
+                                max={12}
+                                required={false}
+                              />
+                              {errors.monthOfBirth && touched.monthOfBirth ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.monthOfBirth}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            <FormGroup className="form-group has-float-label error-l-100 ">
+                              <Label>
+                                <IntlMessages id="label.dayOfBirth" />
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="dayOfBirth"
+                                type="number"
+                                min={1}
+                                max={31}
+                                required={false}
+                              />
+                              {errors.dayOfBirth && touched.dayOfBirth ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.dayOfBirth}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -1019,7 +1054,7 @@ const StudentRegistration = ({ intl }, values) => {
             </Step>
 
             <Step id="step2">
-              <h3>سکونت و تعلیمات قبلی</h3>
+              <h3>سکونت تعلیمات قبلی</h3>
               <hr />
               <div className="wizard-basic-step">
                 <Formik
@@ -1200,6 +1235,7 @@ const StudentRegistration = ({ intl }, values) => {
                           </Colxx>
                         </Row>
 
+                        <h3>تعلیمات قبلی</h3>
                         <Row style={{ marginInline: '2%' }}>
                           <Colxx xxs="6" className="pt-3">
                             <div className="square p-3 ">

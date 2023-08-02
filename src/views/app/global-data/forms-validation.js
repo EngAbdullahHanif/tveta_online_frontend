@@ -275,16 +275,16 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.StdDoBErr" />),
 
-  levelOfEducation: Yup.object()
+  grade: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
+    .required(<IntlMessages id="teacher.GradeErr" />),
 
-  major: Yup.string().required(
-    <IntlMessages id="teacher.LevelOfEducationErr" />
-  ),
+  // major: Yup.string().required(
+  //   <IntlMessages id="teacher.LevelOfEducationErr" />
+  // ),
   tazkiraType: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -638,4 +638,74 @@ export const classChangeValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="marks.ClassErr" />),
+});
+
+export const teacherEducationValidationSchema = Yup.object().shape({
+  degree: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="Degree is Required Field" />),
+  description: Yup.string(),
+
+  institute: Yup.string().required('Institute is Required Field'),
+
+  field_of_study: Yup.string().required('Field of Study is Required Field'),
+
+  year_of_completion: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdGraduationYearErr" />),
+  description: Yup.string(),
+});
+
+export const teacherContractValidationSchema = Yup.object().shape({
+  jobType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="Degree is Required Field" />),
+  step: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="Step is Required Field" />),
+
+  teaching_language: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="Teaching Language is Required Field" />),
+
+  hireType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="Hire Type is Required Field" />),
+
+  contract_type: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="Contract Type is Required" />),
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="Institute is Required Field" />),
+  field: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="Please Select a Field" />),
 });

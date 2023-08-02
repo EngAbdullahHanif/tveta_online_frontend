@@ -177,8 +177,11 @@ const DepartmentChange = (values) => {
 
   useEffect(() => {
     fetchInstitutes();
-    fetchDepartments();
   }, []);
+
+  useEffect(() => {
+    fetchDepartments();
+  }, [student]);
 
   const onSubmit = async (values) => {
     console.log(values);

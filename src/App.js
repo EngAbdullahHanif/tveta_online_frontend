@@ -20,6 +20,9 @@ const App = ({ locale }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const [provinces, setProvinces] = useState();
   const [districts, setDistricts] = useState();
+  const [classes, setClasses] = useState();
+  const [subjects, setSubjects] = useState();
+  const [departments, setDepartments] = useState();
   const [options, setOptions] = useState({});
 
   const direction = getDirection();
@@ -42,7 +45,11 @@ const App = ({ locale }) => {
       const response = await callApi('auth/token/verify/', 'POST', {
         token: token,
       });
-      if (response && response.status >= 200 && response.status <= 299) {
+      if (!response) {
+        console.log('cannot connect to server');
+        return;
+      }
+      if (response.status >= 200 && response.status <= 299) {
         console.log('token is valid');
       } else {
         console.log('token is invalid. removing it from local storage');
@@ -77,8 +84,48 @@ const App = ({ locale }) => {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.native_name,
+        province: item.province,
       }));
       setDistricts(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+  const fetchClasses = async (provinceId) => {
+    const response = await callApi(`institute/classs/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name + '-' + item.section,
+      }));
+      setClasses(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+  const fetchSubjects = async (provinceId) => {
+    const response = await callApi(`institute/subject/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setSubjects(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+
+  const fetchDepartments = async (provinceId) => {
+    const response = await callApi(`institute/department/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDepartments(updatedData);
     } else {
       console.log('district error');
     }
@@ -89,10 +136,23 @@ const App = ({ locale }) => {
     checkTokenValidity();
     fetchProvinces();
     fetchDistricts();
+    fetchClasses();
+    fetchSubjects();
+    fetchDepartments();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        provinces,
+        districts,
+        classes,
+        subjects,
+        departments,
+      }}
+    >
       <ProvincesContext.Provider value={{ provinces }}>
         <DistrictsContext.Provider value={{ districts }}>
           <div className="h-100">

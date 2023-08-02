@@ -36,7 +36,12 @@ const getHeaders = (data) => {
 };
 
 // make API calls
-const callApi = async (endpoint, method = 'get', data = null) => {
+const callApi = async (
+  endpoint,
+  method = 'get',
+  data = null,
+  params = null
+) => {
   const headers = getHeaders(data);
   console.log('HEaders: ', headers);
   const url = `${servicePath}/${endpoint}`;
@@ -52,10 +57,21 @@ const callApi = async (endpoint, method = 'get', data = null) => {
       url,
       headers,
       data,
+      params,
     });
     console.log('CALL API Response: on ' + endpoint, response.data);
     return response;
   } catch (error) {
+    if (error.response.status >= 500 && error.response.status < 600) {
+      NotificationManager.error(
+        'په سرور کې کوم مشکل رامینځته شوی،‌مهربانی وکړی له مسسول کس سره تماس ونیسی',
+        'سرور ایرور',
+        5000,
+        null,
+        null,
+        'fill'
+      );
+    }
     NotificationManager.error(
       'an error occured while connecting to server at ' + endpoint,
       error?.response?.status + ': Server Error',
@@ -72,10 +88,9 @@ const callApi = async (endpoint, method = 'get', data = null) => {
         null,
         ''
       );
-    } else {
-      console.log(error.response);
     }
-    return false;
+    // console.log('error inside callapi: ', error.request);
+    throw error;
   }
 };
 

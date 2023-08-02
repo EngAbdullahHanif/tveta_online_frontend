@@ -1,94 +1,116 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import React, { useState, useEffect, useContext } from 'react';
+import { Formik, Field } from 'formik';
 import { useParams } from 'react-router-dom';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-import axios from 'axios';
 
 import callApi from 'helpers/callApi';
-
-import * as Yup from 'yup';
+import { AuthContext } from 'context/AuthContext';
 import {
   Row,
   Card,
   CardBody,
-  FormGroup,
   Label,
   Button,
   CardTitle,
   Table,
-  InputGroup,
-  InputGroupAddon,
-  Input,
 } from 'reactstrap';
-import { dateOfBirthOptoions } from '../../global-data/options';
-import Select from 'react-select';
+import DatePicker from 'react-multi-date-picker';
+import persian from 'react-date-object/calendars/persian';
+import persian_fa from 'react-date-object/locales/persian_fa';
+
+import {
+  contractTypeOptions,
+  dateOfBirthOptoions,
+  degreeTypeOptions,
+  evaluationTypeOptions,
+  gradeOptions,
+  hireTypeOptions,
+  jobTypeOptions,
+  langOptions,
+  persianMonthOptions,
+  stepOptions,
+} from '../../global-data/options';
 import logo from './../../../../assets/logos/AdminLogo.png';
 import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-import Classes from 'views/app/classes';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import config from '../../../../config';
-import { teacherEducationValidationSchema } from 'views/app/global-data/forms-validation';
-import { message } from 'antd';
+import {
+  teacherContractValidationSchema,
+  teacherEducationValidationSchema,
+} from 'views/app/global-data/forms-validation';
+import { message, Col, InputNumber, Slider, Spac } from 'antd';
 const servicePath = config.API_URL;
 const teacherApiUrl = `${servicePath}/teachers/`;
 const teacherEvaluationApiUrl = `${servicePath}/teachers/evaluation`;
 const teacherHREvaluationApiUrl = `${servicePath}/teachers/hr-evaluation`;
 const teacherTransferApiUrl = `${servicePath}/teachers/institute`;
-
+// const { RangePicker } = DatePicker;
 const TeacherProfile = () => {
+  const { departments, classes, subjects } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(true);
   const { teacherId } = useParams();
   const [teacher, setTeacher] = useState([]);
-  const [institute, setInstitute] = useState([]);
+  const [teacherInstitute, setTeacherInstitute] = useState([]);
   const [teacherEvaluation, setTeacherEvaluation] = useState([]);
   const [teacherHREvaluation, setTeacherHREvaluation] = useState([]);
   const [teacherTransfer, setTeacherTransfer] = useState([]);
   const [teacherEducation, setTeacherEducation] = useState([]);
+  const [teacherContracts, setTeacherContracts] = useState([]);
+  const [institutes, setInstitutes] = useState([]);
+  const [fields, setFields] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [cvFile, setCVFile] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [score, setScore] = useState(1);
+  const [evaluationDate, setEvaluationDate] = useState();
 
+  const fetchInstitutes = async () => {
+    const response = await callApi(`/institute/`, '', null);
+    const data = response.data;
+    console.log('All Institutes in Profile: ', data);
+    let obj = data.map((item) => ({ value: item.id, label: item.name }));
+    setInstitutes(obj);
+  };
+  const fetchFields = async () => {
+    const response = await callApi(`/institute/field/`, '', null);
+    const data = response.data;
+    console.log('All Institutes in Profile: ', data);
+    let obj = data.map((item) => ({ value: item.id, label: item.name }));
+    setFields(obj);
+  };
   useEffect(() => {
     async function fetchTeacher() {
-      // const response = await axios.get(`${teacherApiUrl}?id=${teacherId}`);
       const response = await callApi(`teachers/?id=${teacherId}`, '', null);
-
       const data = response.data;
       setTeacher(data);
       setIsLoaded(true);
-      // const instituteResponse = await axios.get(
-      //   `${teacherApiUrl}institute/?teacher_id=${teacherId}`
-      // );
       const instituteResponse = await callApi(
         `teachers/institute/${teacherId}/`,
         '',
         null
       );
-
       const instituteData = await instituteResponse.data;
       console.log('Data Institute: ', instituteData);
-      setInstitute(instituteData);
+      setTeacherInstitute(instituteData);
     }
     async function fetchTeacherEvaluation() {
-      console.log('data');
       // const response = await axios.get(
       //   `${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`
       // );
       const response = await callApi(
-        `teachers/evaluation/?teacher_id=${teacherId}`,
+        `teachers/${teacherId}/evaluations/`,
         '',
         null
       );
 
       console.log(`${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`);
       const data = response.data;
+      console.log('TEACHER EVALUATIONS: ', data);
+
       setTeacherEvaluation(data);
     }
     async function fetchTeacherHREvaluation() {
@@ -129,22 +151,30 @@ const TeacherProfile = () => {
       console.log('Teacher Educations: ', data);
       setTeacherEducation(data);
     }
+    async function fetchTeacherContracts() {
+      const response = await callApi(
+        `teachers/${teacherId}/contracts/`,
+        '',
+        null
+      );
+
+      const data = response.data;
+      console.log('Teacher Contracts: ', data);
+      setTeacherContracts(data);
+    }
+
     fetchTeacher();
     fetchTeacherEvaluation();
     fetchTeacherHREvaluation();
     fetchTeacherTransfer();
     fetchTeacherEducation();
+    fetchTeacherContracts();
+    fetchInstitutes();
+    fetchFields();
   }, []);
 
   const handleClick = (event) => {
     setIsNext(event);
-  };
-
-  const style2 = {
-    padding: '',
-  };
-  const style1 = {
-    backgroungColor: 'blue',
   };
 
   const addEducation = async (inputData) => {
@@ -153,7 +183,7 @@ const TeacherProfile = () => {
     console.log('Form Data in Teacher Education: ', inputData);
     const formData = new FormData();
     formData.append('document', cvFile);
-    formData.append('degree', inputData.degree);
+    formData.append('degree', inputData.degree?.value);
     formData.append('institution', inputData.institute);
     formData.append('field_of_study', inputData.field_of_study);
     formData.append('year_completed', inputData.year_of_completion?.value);
@@ -162,6 +192,63 @@ const TeacherProfile = () => {
     await callApi(`teachers/${teacherId}/educations/`, 'POST', formData).then(
       (response) => {
         console.log('RESPONSE in teacher Education;: ', response.data);
+      }
+    );
+  };
+
+  const addContract = async (inputData) => {
+    console.log('File: ', cvFile);
+    console.log('Form Data in Teacher Contract: ', inputData);
+    const formData = new FormData();
+    formData.append('document', cvFile);
+    formData.append('job_type', inputData.jobType?.value);
+    formData.append('grade', inputData.grade?.value);
+    formData.append('step', inputData.step?.value);
+    formData.append('teaching_language', inputData.teaching_language?.value);
+    formData.append('contract_type', inputData.contract_type?.value);
+    formData.append('hire_type', inputData.hireType?.value);
+    formData.append('start_date', startDate);
+    formData.append('end_date', endDate);
+    formData.append('teacher', teacherId);
+    formData.append('institute', inputData.institute?.value);
+    formData.append('teaching_field', inputData.field?.value);
+
+    await callApi(`teachers/${teacherId}/contracts/`, 'POST', formData).then(
+      (response) => {
+        console.log('RESPONSE in teacher Contract;: ', response.data);
+
+        response.status >= 200 && response.status < 300
+          ? message.success('Data Saved Successfully')
+          : message.error('Data Not Saved Check your Payload');
+      }
+    );
+  };
+
+  const addEvaluation = async (inputData) => {
+    console.log('Form Data in Teacher Contract: ', inputData);
+    const data = {
+      topic: inputData.topic,
+      evaluator_name: inputData.evaluator_name,
+      evaluation_type: inputData.evaluation_type?.value,
+      strong_points: inputData.strong_points,
+      weak_points: inputData.weak_points,
+      suggestions: inputData.suggestions,
+      score,
+      evaluation_date: evaluationDate,
+      teacher: teacher[0].id,
+      institute: inputData.institute?.value,
+      department: inputData.department?.value,
+      classs: inputData.classs?.value,
+      subject: inputData.subject?.value,
+    };
+    console.log('Evaluation Date: ', data);
+    await callApi(`teachers/evaluation-create/`, 'POST', data).then(
+      (response) => {
+        console.log('RESPONSE in teacher Contract;: ', response.data);
+
+        response.status >= 200 && response.status < 300
+          ? message.success('Data Saved Successfully')
+          : message.error('Data Not Saved Check your Payload');
       }
     );
   };
@@ -234,7 +321,6 @@ const TeacherProfile = () => {
           </div>
         </Colxx>
       </Row>
-      {console.log('teacher: ', teacher, 'institute: ', institute)}
       {teacher.length > 0 && (
         <>
           {isNext ? (
@@ -253,7 +339,6 @@ const TeacherProfile = () => {
                             borderRadius: '10px',
                           }}
                         >
-                          {' '}
                           <IntlMessages id="forms.personalInfo" />
                         </h2>
                       </Colxx>
@@ -386,382 +471,1253 @@ const TeacherProfile = () => {
                         </Row>
                       </Colxx>
                     </Row>
-                    <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                  </div>
+                </CardBody>
+              </Card>
+              {/* Education Details Start */}
+              <Card className="rounded m-4 mt-5">
+                <CardBody>
+                  <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                    {' '}
+                    <h2
+                      className="bg-primary "
+                      style={{
+                        padding: '8px',
+                        paddingInline: '30px',
+                        borderRadius: '10px',
+                      }}
+                    >
                       {' '}
-                      <h2
-                        className="bg-primary "
-                        style={{
-                          padding: '8px',
-                          paddingInline: '30px',
-                          borderRadius: '10px',
-                        }}
+                      <IntlMessages id="تحصیل" />
+                    </h2>
+                  </Colxx>
+
+                  <Row className="justify-content-center   rounded ">
+                    <Colxx style={{ paddingInline: '4%' }}>
+                      <table class="table table-lg" style={{ fontSize: 18 }}>
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Institution</th>
+                            <th scope="col">Degree</th>
+                            <th scope="col">Field Of Study</th>
+                            <th scope="col">Year Completed</th>
+                            <th scope="col">Document</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {teacherEducation.map((item, index) => {
+                            return (
+                              <tr
+                                className={
+                                  index % 2 == 0 ? 'table-danger' : 'table-info'
+                                }
+                              >
+                                <th scope="row">{item.id}</th>
+                                <td>{item.institution}</td>
+                                <td>{item.degree}</td>
+                                <td>{item.field_of_study}</td>
+                                <td>{item.year_completed}</td>
+                                <td>
+                                  <a href={item.document}>Resume</a>
+                                </td>
+                                <td>{item.description}</td>
+                                <td>
+                                  <a
+                                    data-toggle="modal"
+                                    data-target="#exampleModal"
+                                    data-whatever="@getbootstrap"
+                                  >
+                                    Edit
+                                  </a>
+                                  /<a>Delete</a>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                      <br />
+                      <br />
+                      <Button
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                        data-whatever="@getbootstrap"
                       >
-                        {' '}
-                        <IntlMessages id="تحصیل" />
-                      </h2>
+                        اضافه نمودن تحصیل
+                      </Button>
+
+                      <div
+                        class="modal fade"
+                        id="exampleModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">
+                                ثبت تحصیل استاد
+                              </h5>
+                              <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <Formik
+                                enableReinitialize={true}
+                                initialValues={{
+                                  degree: '',
+                                  institute: '',
+                                  field_of_study: '',
+                                  year_of_completion: '',
+                                  description: '',
+                                }}
+                                // validationSchema={
+                                //   teacherEducationValidationSchema
+                                // }
+                                onSubmit={(formData) => {
+                                  addEducation(formData);
+                                }}
+                              >
+                                {({
+                                  errors,
+                                  touched,
+                                  values,
+                                  setFieldTouched,
+                                  setFieldValue,
+                                  handleSubmit,
+                                }) => (
+                                  <>
+                                    <form>
+                                      <div class="form-group">
+                                        <label
+                                          for="degree"
+                                          class="col-form-label"
+                                        >
+                                          دگری
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="degree"
+                                          id="degree"
+                                          value={values.degree}
+                                          options={degreeTypeOptions}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.degree && touched.degree ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.degree}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="recipient-name"
+                                          class="col-form-label"
+                                        >
+                                          انستیتوت
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <Field
+                                          className="form-control fieldStyle"
+                                          name="institute"
+                                        />
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="field_of_study"
+                                          class="col-form-label"
+                                        >
+                                          رشته
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <Field
+                                          className="form-control fieldStyle"
+                                          name="field_of_study"
+                                        />
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="year_of_completion"
+                                          class="col-form-label"
+                                        >
+                                          سال تکمیل
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+
+                                        <FormikReactSelect
+                                          name="year_of_completion"
+                                          id="year_of_completion"
+                                          value={values.year_of_completion}
+                                          options={dateOfBirthOptoions}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.year_of_completion &&
+                                        touched.year_of_completion ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.year_of_completion}
+                                          </div>
+                                        ) : null}
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label
+                                          for="description"
+                                          class="col-form-label"
+                                        >
+                                          Description
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <Field
+                                          className="form-control fieldStyle"
+                                          name="description"
+                                        />
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="recipient-name"
+                                          class="col-form-label"
+                                        >
+                                          Document
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <input
+                                          class="form-control"
+                                          type="file"
+                                          id="formFile"
+                                          onChange={(e) => {
+                                            setCVFile(e.target.files[0]);
+                                          }}
+                                        />
+                                      </div>
+                                    </form>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-dismiss="modal"
+                                      >
+                                        Close
+                                      </button>
+                                      <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                        data-dismiss="modal"
+                                        onClick={handleSubmit}
+                                      >
+                                        Add Education
+                                      </button>
+                                    </div>{' '}
+                                  </>
+                                )}
+                              </Formik>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </Colxx>
+                  </Row>
+                </CardBody>
+              </Card>
+              {/* Education Details End */}
+              {/* Contract Details Start */}
+              <Card className="rounded m-4 mt-5">
+                <CardBody>
+                  <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                    {' '}
+                    <h2
+                      className="bg-primary "
+                      style={{
+                        padding: '8px',
+                        paddingInline: '30px',
+                        borderRadius: '10px',
+                      }}
+                    >
+                      <IntlMessages id="قرارداد" />
+                    </h2>
+                  </Colxx>
 
-                    <Row className="justify-content-center   rounded ">
-                      <Colxx style={{ paddingInline: '4%' }}>
-                        <table class="table table-lg" style={{ fontSize: 18 }}>
-                          <thead>
-                            <tr>
-                              <th scope="col">ID</th>
-                              <th scope="col">Institution</th>
-                              <th scope="col">Degree</th>
-                              <th scope="col">Field Of Study</th>
-                              <th scope="col">Year Completed</th>
-                              <th scope="col">Document</th>
-                              <th scope="col">Description</th>
-                              <th scope="col">Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {teacherEducation.map((item, index) => {
-                              return (
-                                <tr>
-                                  <th scope="row">{item.id}</th>
-                                  <td>{item.institution}</td>
-                                  <td>{item.degree}</td>
-                                  <td>{item.field_of_study}</td>
-                                  <td>{item.year_completed}</td>
-                                  <td>
-                                    <a href={item.document}>Resume</a>
-                                  </td>
-                                  <td>{item.description}</td>
-                                  <td>
-                                    <a
-                                      data-toggle="modal"
-                                      data-target="#exampleModal"
-                                      data-whatever="@getbootstrap"
-                                    >
-                                      Edit
-                                    </a>
-                                    /<a>Delete</a>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                        <br />
-                        <br />
-                        <Button
-                          class="btn btn-primary"
-                          data-toggle="modal"
-                          data-target="#exampleModal"
-                          data-whatever="@getbootstrap"
-                        >
-                          اضافه نمودن تحصیل
-                        </Button>
+                  <Row className="justify-content-center   rounded">
+                    <Colxx style={{ paddingInline: '4%' }}>
+                      <table class="table table-lg" style={{ fontSize: 18 }}>
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Contract Type</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Step</th>
+                            <th scope="col">Job Type</th>
+                            <th scope="col">Language</th>
+                            <th scope="col">Contract Duration</th>
+                            <th scope="col">Document</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {teacherContracts.map((item, index) => {
+                            return (
+                              <tr
+                                className={
+                                  index % 2 == 0 ? 'table-danger' : 'table-info'
+                                }
+                              >
+                                <th scope="row">{item.id}</th>
+                                <td>{item.contract_type}</td>
+                                <td>{item.grade}</td>
+                                <td>{item.step}</td>
+                                <td>{item.job_type}</td>
+                                <td>{item.teaching_language}</td>
+                                <td>
+                                  {item.start_date}-{item.end_date}
+                                </td>
+                                <td>
+                                  <a href={item.document}>Download</a>
+                                </td>
+                                <td>{item.description}</td>
+                                <td>
+                                  <a
+                                    data-toggle="modal"
+                                    data-target="#contractModal"
+                                    data-whatever="@getbootstrap"
+                                  >
+                                    Edit
+                                  </a>
+                                  /<a>Delete</a>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                      <br />
+                      <br />
+                      <Button
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#contractModal"
+                        data-whatever="@getbootstrap"
+                      >
+                        اضافه نمودن قرارداد
+                      </Button>
 
-                        <div
-                          class="modal fade"
-                          id="exampleModal"
-                          tabindex="-1"
-                          role="dialog"
-                          aria-labelledby="exampleModalLabel"
-                          aria-hidden="true"
-                        >
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">
-                                  ثبت تحصیل استاد
-                                </h5>
-                                <button
-                                  type="button"
-                                  class="close"
-                                  data-dismiss="modal"
-                                  aria-label="Close"
-                                >
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <Formik
-                                  enableReinitialize={true}
-                                  initialValues={{
-                                    degree: '',
-                                    institute: '',
-                                    field_of_study: '',
-                                    year_of_completion: '',
-                                    description: '',
-                                  }}
-                                  validationSchema={
-                                    teacherEducationValidationSchema
-                                  }
-                                  onSubmit={(formData) => {
-                                    addEducation(formData);
-                                  }}
-                                >
-                                  {({
-                                    errors,
-                                    touched,
-                                    values,
-                                    setFieldTouched,
-                                    setFieldValue,
-                                    handleSubmit,
-                                  }) => (
-                                    <>
-                                      <form>
-                                        <div class="form-group">
+                      <div
+                        class="modal fade"
+                        id="contractModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="contractModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="contractModalLabel">
+                                ثبت قرارداد استاد
+                              </h5>
+                              <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <Formik
+                                enableReinitialize={true}
+                                initialValues={{
+                                  jobType: '',
+                                  grade: '',
+                                  step: '',
+                                  teaching_language: '',
+                                  hireType: '',
+                                  contract_type: '',
+                                  institute: '',
+                                  field: '',
+                                }}
+                                // validationSchema={
+                                //   teacherContractValidationSchema
+                                // }
+                                onSubmit={(formData) => {
+                                  addContract(formData);
+                                }}
+                              >
+                                {({
+                                  errors,
+                                  touched,
+                                  values,
+                                  setFieldTouched,
+                                  setFieldValue,
+                                  handleSubmit,
+                                }) => (
+                                  <>
+                                    <form>
+                                      <div
+                                        style={{
+                                          display: 'flex',
+                                          flexDirection: 'row',
+                                        }}
+                                      >
+                                        <div class="form-group w-100">
                                           <label
-                                            for="recipient-name"
+                                            for="institute"
                                             class="col-form-label"
                                           >
-                                            دگری
+                                            Institute
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
                                           </label>
-                                          <Field
-                                            className="form-control fieldStyle"
-                                            name="degree"
+                                          <FormikReactSelect
+                                            name="institute"
+                                            id="institute"
+                                            value={values.institute}
+                                            options={institutes}
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            required
                                           />
-                                          {errors.degree && touched.degree ? (
-                                            <div class="">{errors.degree}</div>
+                                          {errors.institute &&
+                                          touched.institute ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.institute}
+                                            </div>
                                           ) : null}
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group w-100">
                                           <label
-                                            for="recipient-name"
+                                            for="field"
                                             class="col-form-label"
                                           >
-                                            انستیتوت
+                                            Field
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
                                           </label>
-                                          <Field
-                                            className="form-control fieldStyle"
-                                            name="institute"
+                                          <FormikReactSelect
+                                            name="field"
+                                            id="field"
+                                            value={values.field}
+                                            options={fields}
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            required
                                           />
+                                          {errors.field && touched.field ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.field}
+                                            </div>
+                                          ) : null}
                                         </div>
-                                        <div class="form-group">
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label
+                                          for="jobType"
+                                          class="col-form-label"
+                                        >
+                                          job type
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="jobType"
+                                          id="jobType"
+                                          value={values.jobType}
+                                          options={jobTypeOptions}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.jobType && touched.jobType ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.jobType}
+                                          </div>
+                                        ) : null}
+                                      </div>
+
+                                      <div
+                                        style={{
+                                          display: 'flex',
+                                          flexDirection: 'row',
+                                        }}
+                                      >
+                                        <div class="form-group w-100">
                                           <label
-                                            for="field_of_study"
+                                            for="grade"
                                             class="col-form-label"
                                           >
-                                            رشته
-                                            <span style={{ color: 'red' }}>
-                                              *
-                                            </span>
-                                          </label>
-                                          <Field
-                                            className="form-control fieldStyle"
-                                            name="field_of_study"
-                                          />
-                                        </div>
-                                        <div class="form-group">
-                                          <label
-                                            for="year_of_completion"
-                                            class="col-form-label"
-                                          >
-                                            سال تکمیل
+                                            Grade
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
                                           </label>
 
                                           <FormikReactSelect
-                                            name="year_of_completion"
-                                            id="year_of_completion"
-                                            value={values.year_of_completion}
-                                            options={dateOfBirthOptoions}
+                                            name="grade"
+                                            id="grade"
+                                            value={values.grade}
+                                            options={gradeOptions}
                                             onChange={setFieldValue}
                                             onBlur={setFieldTouched}
                                             required
                                           />
-                                          {errors.year_of_completion &&
-                                          touched.year_of_completion ? (
+                                          {errors.grade && touched.grade ? (
                                             <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                              {errors.year_of_completion}
+                                              {errors.grade}
                                             </div>
                                           ) : null}
                                         </div>
-
-                                        <div class="form-group">
+                                        <div class="form-group w-100">
                                           <label
-                                            for="description"
+                                            for="step"
                                             class="col-form-label"
                                           >
-                                            Description
+                                            Step
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <FormikReactSelect
+                                            name="step"
+                                            id="step"
+                                            value={values.step}
+                                            options={stepOptions}
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            required
+                                          />
+                                          {errors.step && touched.step ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.step}
+                                            </div>
+                                          ) : null}
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label
+                                          for="teaching_language"
+                                          class="col-form-label"
+                                        >
+                                          Teaching Language
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="teaching_language"
+                                          id="teaching_language"
+                                          value={values.teaching_language}
+                                          options={langOptions}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.teaching_language &&
+                                        touched.teaching_language ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.teaching_language}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="contractType"
+                                          class="col-form-label"
+                                        >
+                                          Contract Type
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="contract_type"
+                                          id="contract_type"
+                                          value={values.contract_type}
+                                          options={contractTypeOptions}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.contract_type &&
+                                        touched.contract_type ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.contract_type}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="hireType"
+                                          class="col-form-label"
+                                        >
+                                          hireType
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="hireType"
+                                          id="hireType"
+                                          value={values.hireType}
+                                          options={hireTypeOptions}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.hireType && touched.hireType ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.hireType}
+                                          </div>
+                                        ) : null}
+                                      </div>
+
+                                      <div
+                                        style={{
+                                          display: 'flex',
+                                          flexDirection: 'row',
+                                          justifyContent: 'space-between',
+                                        }}
+                                      >
+                                        <div>
+                                          <label
+                                            for="year_of_completion"
+                                            class="col-form-label"
+                                          >
+                                            Contract Start Date
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <br />
+
+                                          <DatePicker
+                                            name="startDate"
+                                            calendar={persian}
+                                            locale={persian_fa}
+                                            months={persianMonthOptions}
+                                            onChange={(e) =>
+                                              setStartDate(
+                                                new Date(
+                                                  e.toDate()
+                                                ).getFullYear() +
+                                                  '-' +
+                                                  (new Date(
+                                                    e.toDate()
+                                                  ).getMonth() +
+                                                    1) +
+                                                  '-' +
+                                                  new Date(e.toDate()).getDate()
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                        <div>
+                                          <label
+                                            for="year_of_completion"
+                                            class="col-form-label"
+                                          >
+                                            Contract End Date
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <br />
+
+                                          <DatePicker
+                                            name="endDate"
+                                            calendar={persian}
+                                            locale={persian_fa}
+                                            months={persianMonthOptions}
+                                            onChange={(e) =>
+                                              setEndDate(
+                                                new Date(
+                                                  e.toDate()
+                                                ).getFullYear() +
+                                                  '-' +
+                                                  (new Date(
+                                                    e.toDate()
+                                                  ).getMonth() +
+                                                    1) +
+                                                  '-' +
+                                                  new Date(e.toDate()).getDate()
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label
+                                          for="recipient-name"
+                                          class="col-form-label"
+                                        >
+                                          Document
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <input
+                                          class="form-control"
+                                          type="file"
+                                          id="formFile"
+                                          onChange={(e) => {
+                                            setCVFile(e.target.files[0]);
+                                          }}
+                                        />
+                                      </div>
+                                    </form>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-dismiss="modal"
+                                      >
+                                        Close
+                                      </button>
+                                      <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                        data-dismiss="modal"
+                                        onClick={handleSubmit}
+                                      >
+                                        Add Contract
+                                      </button>
+                                    </div>{' '}
+                                  </>
+                                )}
+                              </Formik>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Colxx>
+                  </Row>
+                </CardBody>
+              </Card>
+              {/* Contract Details End */}
+              {/* Evaluation Details Start */}
+              <Card className="rounded m-4 mt-5">
+                <CardBody>
+                  <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                    {' '}
+                    <h2
+                      className="bg-primary "
+                      style={{
+                        padding: '8px',
+                        paddingInline: '30px',
+                        borderRadius: '10px',
+                      }}
+                    >
+                      <IntlMessages id="ارزیابی" />
+                    </h2>
+                  </Colxx>
+
+                  <Row className="justify-content-center   rounded">
+                    <Colxx style={{ paddingInline: '4%' }}>
+                      <table class="table table-lg" style={{ fontSize: 18 }}>
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Evaluator Name</th>
+                            <th scope="col">Evaluation Type</th>
+                            <th scope="col">Evaluation Date</th>
+                            <th scope="col">Institute</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Strong Points</th>
+                            <th scope="col">Weak Points</th>
+                            <th scope="col">Suggestions</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {teacherEvaluation.map((item, index) => {
+                            return (
+                              <tr
+                                className={
+                                  index % 2 == 0 ? 'table-danger' : 'table-info'
+                                }
+                              >
+                                <th scope="row">{item.id}</th>
+                                <td>{item.evaluator_name}</td>
+                                <td>{item.evaluation_type}</td>
+                                <td>{item.evaluation_date}</td>
+                                <td>{item.institute}</td>
+
+                                <td>{item.score}</td>
+                                <td>{item.strong_points}</td>
+                                <td>{item.weak_points}</td>
+                                <td>{item.suggestions}</td>
+                                <td>
+                                  <a
+                                    data-toggle="modal"
+                                    data-target="#evaluationModal"
+                                    data-whatever="@getbootstrap"
+                                  >
+                                    Edit
+                                  </a>
+                                  /<a>Delete</a>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                      <br />
+                      <br />
+                      <Button
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#evaluationModal"
+                        data-whatever="@getbootstrap"
+                      >
+                        اضافه نمودن ارزیابی
+                      </Button>
+
+                      <div
+                        class="modal fade"
+                        id="evaluationModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="evaluationModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="evaluationModalLabel">
+                                ثبت ارزیابی
+                              </h5>
+                              <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <Formik
+                                enableReinitialize={true}
+                                initialValues={{
+                                  topic: '',
+                                  evaluator_name: '',
+                                  evaluation_type: '',
+                                  strong_points: '',
+                                  weak_points: '',
+                                  suggestions: '',
+                                  evaluation_date: '',
+                                  institute: '',
+                                  department: '',
+                                  classs: '',
+                                  subject: '',
+                                }}
+                                // validationSchema={
+                                //   teacherContractValidationSchema
+                                // }
+                                onSubmit={(formData) => {
+                                  addEvaluation(formData);
+                                }}
+                              >
+                                {({
+                                  errors,
+                                  touched,
+                                  values,
+                                  setFieldTouched,
+                                  setFieldValue,
+                                  handleSubmit,
+                                }) => (
+                                  <>
+                                    <form>
+                                      <div
+                                        style={{
+                                          display: 'flex',
+                                          flexDirection: 'row',
+                                        }}
+                                      >
+                                        <div class="form-group w-100">
+                                          <label
+                                            for="evaluator_name"
+                                            class="col-form-label"
+                                          >
+                                            Evaluator
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
                                           </label>
                                           <Field
                                             className="form-control fieldStyle"
-                                            name="description"
+                                            name="evaluator_name"
                                           />
+                                          {errors.evaluator_name &&
+                                          touched.evaluator_name ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.evaluator_name}
+                                            </div>
+                                          ) : null}
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group w-100">
                                           <label
-                                            for="recipient-name"
+                                            for="evaluation_type"
                                             class="col-form-label"
                                           >
-                                            Document
+                                            Evaluation Type
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
                                           </label>
-                                          <input
-                                            class="form-control"
-                                            type="file"
-                                            id="formFile"
-                                            onChange={(e) => {
-                                              setCVFile(e.target.files[0]);
+                                          <FormikReactSelect
+                                            name="evaluation_type"
+                                            id="evaluation_type"
+                                            value={values.evaluation_type}
+                                            options={evaluationTypeOptions}
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            required
+                                          />
+                                          {errors.evaluation_type &&
+                                          touched.evaluation_type ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.evaluation_type}
+                                            </div>
+                                          ) : null}
+                                        </div>
+                                      </div>
+
+                                      <div
+                                        style={{
+                                          display: 'flex',
+                                          flexDirection: 'row',
+                                        }}
+                                      >
+                                        <div class="form-group w-100">
+                                          <label
+                                            for="institute"
+                                            class="col-form-label"
+                                          >
+                                            institute
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <FormikReactSelect
+                                            name="institute"
+                                            id="institute"
+                                            value={values.institute}
+                                            options={institutes}
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            required
+                                          />
+                                          {errors.institute &&
+                                          touched.institute ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.institute}
+                                            </div>
+                                          ) : null}
+                                        </div>
+                                        <div class="form-group w-100">
+                                          <label
+                                            for="department"
+                                            class="col-form-label"
+                                          >
+                                            department
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <FormikReactSelect
+                                            name="department"
+                                            id="department"
+                                            value={values.department}
+                                            options={departments}
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            required
+                                          />
+                                          {errors.department &&
+                                          touched.department ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.department}
+                                            </div>
+                                          ) : null}
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="classs"
+                                          class="col-form-label"
+                                        >
+                                          Class
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="classs"
+                                          id="classs"
+                                          value={values.classs}
+                                          options={classes}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.classs && touched.classs ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.classs}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div
+                                        style={{
+                                          display: 'flex',
+                                          flexDirection: 'row',
+                                        }}
+                                      >
+                                        <div class="form-group w-100">
+                                          <label
+                                            for="subject"
+                                            class="col-form-label"
+                                          >
+                                            subject
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+
+                                          <FormikReactSelect
+                                            name="subject"
+                                            id="subject"
+                                            value={values.subject}
+                                            options={subjects}
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            required
+                                          />
+                                          {errors.subject && touched.subject ? (
+                                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                              {errors.subject}
+                                            </div>
+                                          ) : null}
+                                        </div>
+                                        <div className="">
+                                          <label
+                                            for="year_of_completion"
+                                            class="col-form-label"
+                                          >
+                                            Evaluation Date
+                                            <span style={{ color: 'red' }}>
+                                              *
+                                            </span>
+                                          </label>
+                                          <br />
+
+                                          <DatePicker
+                                            style={{
+                                              width: '100%',
+                                              height: 38,
+                                              borderRadius: 0,
                                             }}
+                                            name="evaluation_date"
+                                            calendar={persian}
+                                            locale={persian_fa}
+                                            months={persianMonthOptions}
+                                            onChange={(e) =>
+                                              setEvaluationDate(
+                                                new Date(
+                                                  e.toDate()
+                                                ).getFullYear() +
+                                                  '-' +
+                                                  (new Date(
+                                                    e.toDate()
+                                                  ).getMonth() +
+                                                    1) +
+                                                  '-' +
+                                                  new Date(e.toDate()).getDate()
+                                              )
+                                            }
                                           />
                                         </div>
-                                      </form>
-                                      <div class="modal-footer">
-                                        <button
-                                          type="button"
-                                          class="btn btn-secondary"
-                                          data-dismiss="modal"
-                                        >
-                                          Close
-                                        </button>
-                                        <button
-                                          type="submit"
-                                          class="btn btn-primary"
-                                          onClick={handleSubmit}
-                                        >
-                                          Add Education
-                                        </button>
-                                      </div>{' '}
-                                    </>
-                                    // <Form className="av-tooltip tooltip-label-right style">
-                                    //   <Row className="justify-content-center">
-                                    //     <Colxx xxs="5" className="ml-5">
-                                    //       <FormGroup className="form-group has-float-label error-l-175">
-                                    //         <Label>
-                                    //           <IntlMessages id="teacher.NameLabel" />
-                                    //           <span style={{ color: 'red' }}>
-                                    //             *
-                                    //           </span>
-                                    //         </Label>
-                                    //         <Field
-                                    //           className="form-control fieldStyle"
-                                    //           name="degree"
-                                    //           onChange={setFieldValue}
-                                    //         />
-                                    //         {errors.degree && touched.degree ? (
-                                    //           <div className="">
-                                    //             {errors.degree}
-                                    //           </div>
-                                    //         ) : null}
-                                    //       </FormGroup>
+                                      </div>
 
-                                    //       {/* lastname */}
-                                    //       <FormGroup className="form-group has-float-label">
-                                    //         <Label>
-                                    //           <IntlMessages id="forms.lastName" />
-                                    //           <span style={{ color: 'red' }}>
-                                    //             *
-                                    //           </span>
-                                    //         </Label>
-                                    //         <Field
-                                    //           className="form-control fieldStyle"
-                                    //           name="institute"
-                                    //         />
-                                    //         {errors.institute &&
-                                    //         touched.institute ? (
-                                    //           <div className="">
-                                    //             {errors.institute}
-                                    //           </div>
-                                    //         ) : null}
-                                    //       </FormGroup>
-                                    //       <FormGroup className="form-group has-float-label error-l-175">
-                                    //         <Label>
-                                    //           <IntlMessages id="teacher.FatherNameLabel" />
-                                    //           <span style={{ color: 'red' }}>
-                                    //             *
-                                    //           </span>
-                                    //         </Label>
-                                    //         <Field
-                                    //           className="form-control fieldStyle"
-                                    //           name="field_of_study"
-                                    //         />
-                                    //         {errors.field_of_study &&
-                                    //         touched.field_of_study ? (
-                                    //           <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                    //             {errors.field_of_study}
-                                    //           </div>
-                                    //         ) : null}
-                                    //       </FormGroup>
-                                    //       <FormGroup className="form-group has-float-label error-l-175">
-                                    //         <Label>
-                                    //           {/* <IntlMessages id="teacher.LevelOfEducationLabel" /> */}
-                                    //           graduation year
-                                    //           <span style={{ color: 'red' }}>
-                                    //             *
-                                    //           </span>
-                                    //         </Label>
-                                    //         <FormikReactSelect
-                                    //           name="year_of_completion"
-                                    //           id="year_of_completion"
-                                    //           value={values.year_of_completion}
-                                    //           options={dateOfBirthOptoions}
-                                    //           onChange={setFieldValue}
-                                    //           onBlur={setFieldTouched}
-                                    //           required
-                                    //         />
-                                    //         {errors.year_of_completion &&
-                                    //         touched.year_of_completion ? (
-                                    //           <div className="">
-                                    //             {errors.year_of_completion}
-                                    //           </div>
-                                    //         ) : null}
-                                    //       </FormGroup>
-                                    //       <FormGroup className="form-group has-float-label error-l-175 ">
-                                    //         <Label>
-                                    //           <IntlMessages id="teacher.PhoneNoLabel" />
-                                    //           <span style={{ color: 'red' }}>
-                                    //             *
-                                    //           </span>
-                                    //         </Label>
-                                    //         <Field
-                                    //           className="form-control fieldStyle"
-                                    //           name="description"
-                                    //           id="description"
-                                    //           type="text"
-                                    //         />
-                                    //         {errors.description &&
-                                    //         touched.description ? (
-                                    //           <div className="">
-                                    //             {errors.description}
-                                    //           </div>
-                                    //         ) : null}
-                                    //       </FormGroup>
-                                    //     </Colxx>
-                                    //   </Row>
-                                    //   <div class="modal-footer">
-                                    //     <button
-                                    //       class="btn btn-secondary"
-                                    //       data-dismiss="modal"
-                                    //     >
-                                    //       Close
-                                    //     </button>
-                                    //     <button
-                                    //       class="btn btn-primary"
-                                    //       onClick={handleSubmit}
-                                    //     >
-                                    //       Save Education
-                                    //     </button>
-                                    //   </div>
-                                    // </Form>
-                                  )}
-                                </Formik>
-                              </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="topic"
+                                          class="col-form-label"
+                                        >
+                                          Topic
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <Field
+                                          className="form-control fieldStyle"
+                                          name="topic"
+                                        />
+                                        {errors.topic && touched.topic ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.topic}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="strong_points"
+                                          class="col-form-label"
+                                        >
+                                          Strong Points
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <Field
+                                          className="form-control fieldStyle"
+                                          name="strong_points"
+                                        />
+                                        {errors.strong_points &&
+                                        touched.strong_points ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.strong_points}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="weak_points"
+                                          class="col-form-label"
+                                        >
+                                          Weak Points
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <Field
+                                          className="form-control fieldStyle"
+                                          name="weak_points"
+                                        />
+                                        {errors.weak_points &&
+                                        touched.weak_points ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.weak_points}
+                                          </div>
+                                        ) : null}
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label
+                                          for="suggestions"
+                                          class="col-form-label"
+                                        >
+                                          Suggestions
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <Field
+                                          className="form-control fieldStyle"
+                                          name="suggestions"
+                                        />
+                                        {errors.suggestions &&
+                                        touched.suggestions ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.suggestions}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <label for="score" class="col-form-label">
+                                        Score
+                                        <span style={{ color: 'red' }}>*</span>
+                                      </label>
+                                      <div
+                                        style={{
+                                          display: 'flex',
+                                          flexDirection: 'row',
+                                          justifyContent: 'space-between',
+                                        }}
+                                      >
+                                        <Col span={4}>
+                                          <InputNumber
+                                            min={1}
+                                            max={10}
+                                            style={{ margin: '0 16px' }}
+                                            value={score}
+                                            onChange={(val) => setScore(val)}
+                                          />
+                                        </Col>
+                                        <Col span={17}>
+                                          <Slider
+                                            min={1}
+                                            max={10}
+                                            onChange={(val) => setScore(val)}
+                                            value={
+                                              typeof score === 'number'
+                                                ? score
+                                                : 0
+                                            }
+                                          />
+                                        </Col>
+                                      </div>
+                                    </form>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-dismiss="modal"
+                                      >
+                                        Close
+                                      </button>
+                                      <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                        data-dismiss="modal"
+                                        onClick={handleSubmit}
+                                      >
+                                        Add Contract
+                                      </button>
+                                    </div>{' '}
+                                  </>
+                                )}
+                              </Formik>
                             </div>
                           </div>
                         </div>
-                      </Colxx>
-                    </Row>
-                  </div>
+                      </div>
+                    </Colxx>
+                  </Row>
                 </CardBody>
               </Card>
-
+              {/* Evaluation Details End */}
               <Card className="rounded m-4 mt-5">
                 <CardBody>
                   <div>

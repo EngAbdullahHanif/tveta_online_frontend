@@ -209,6 +209,17 @@ export const educationalYearsOptions = [
   { value: '1409', label: '1409' },
   { value: '1410', label: '1410' },
 ];
+export const degreeTypeOptions = [
+  { value: 'associate', label: 'Associate' },
+  { value: 'bachelor', label: 'Bachelor' },
+  { value: 'master', label: 'Master' },
+  { value: 'phd', label: 'PhD' },
+  { value: 'other', label: 'Other' },
+];
+export const jobTypeOptions = [
+  { value: 'official', label: 'رسمی' },
+  { value: 'contractual', label: 'قراردادی' },
+];
 
 export const dateOfBirthOptoions = [
   { value: '1370', label: '1370' },
@@ -557,12 +568,27 @@ export const provincesOptionsForList = [
 
 export const contractTypeOptions = [
   {
-    value: '1',
+    value: 'instructure_fixed_term',
     label: <IntlMessages id="teacher.contractTypeOptions_1" />,
   },
   {
-    value: '2',
+    value: 'outstructure_fixed_term',
     label: <IntlMessages id="teacher.contractTypeOptions_2" />,
+  },
+  {
+    value: 'official',
+    label: <IntlMessages id="teacher.contractTypeOptions_3" />,
+  },
+];
+
+export const hireTypeOptions = [
+  {
+    value: 'new',
+    label: 'New',
+  },
+  {
+    value: 'transfer',
+    label: 'Transfer',
   },
 ];
 
@@ -710,8 +736,14 @@ export const dormGenderOptions = [
 ];
 
 export const evaluationTypeOptions = [
-  { value: '1', label: <IntlMessages id="teacher.evaluationTypeOption_1" /> },
-  { value: '2', label: <IntlMessages id="teacher.evaluationTypeOption_2" /> },
+  {
+    value: 'goal_oriented',
+    label: <IntlMessages id="teacher.evaluationTypeOption_1" />,
+  },
+  {
+    value: 'activity_oriented',
+    label: <IntlMessages id="teacher.evaluationTypeOption_2" />,
+  },
 ];
 
 export const upgradeToOption = [
@@ -840,4 +872,19 @@ export const studentType = [
     value: 'dismissed',
     label: <IntlMessages id="student.typeOption_3" />,
   },
+];
+
+export const persianMonthOptions = [
+  ['حمل', 'فر'],
+  ['ثور', 'ار'],
+  ['جوزا', 'خرد'],
+  ['سرطان', 'تیر'],
+  ['اسد', 'مر'],
+  ['سنبله', 'شه'],
+  ['میزان', 'مه'],
+  ['عقرب', 'آبا'],
+  ['قوس', 'آذ'],
+  ['جدی', 'دی'],
+  ['دلو', 'بهم'],
+  ['حوت', 'اسف'],
 ];

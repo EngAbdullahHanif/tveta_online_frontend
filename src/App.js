@@ -23,6 +23,8 @@ const App = ({ locale }) => {
   const [classes, setClasses] = useState();
   const [subjects, setSubjects] = useState();
   const [departments, setDepartments] = useState();
+  const [institutes, setInstitutes] = useState();
+  const [contextFields, setContextFields] = useState();
   const [options, setOptions] = useState({});
 
   const direction = getDirection();
@@ -125,7 +127,30 @@ const App = ({ locale }) => {
       console.log('district error');
     }
   };
-
+  const fetchInstitutes = async (provinceId) => {
+    const response = await callApi(`institute/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
+  const fetchFields = async (provinceId) => {
+    const response = await callApi(`institute/field/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setContextFields(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
   // check if token is still valid
   useEffect(async () => {
     checkTokenValidity();
@@ -134,6 +159,8 @@ const App = ({ locale }) => {
     fetchClasses();
     fetchSubjects();
     fetchDepartments();
+    fetchInstitutes();
+    fetchFields();
   }, []);
 
   return (
@@ -146,6 +173,8 @@ const App = ({ locale }) => {
         classes,
         subjects,
         departments,
+        institutes,
+        contextFields,
       }}
     >
       <ProvincesContext.Provider value={{ provinces }}>

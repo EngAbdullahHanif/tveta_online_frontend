@@ -179,152 +179,51 @@ const ThumbListPages = ({ match }) => {
     fetchProvinces();
   }, []);
 
-  useEffect(() => {
-    console.log('district', district);
-    async function fetchData() {
-      if (dormName !== '') {
-        const response = await callApi(
-          `institute/dorms/?id=${dormName.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setDorms(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('dorm 1 error');
-        }
-      } else if (
-        selectedProvinceOption.value === 'all' &&
-        selectedGenderOption.value === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setDormName('');
-          setSelectedStatusOptions({ value: 'all' });
-          setSelectedBuildingType({ value: 'all' });
-          setRest(false);
-        }
-        if (selectedBuildingType?.value == 'all') {
-          selectedBuildingType.value = '';
-        }
-        let newCount = selectedStatusOptions?.value;
+  async function fetchData() {
+    let endpoint = `institute/dorms/`;
+    let params = {};
 
-        if (selectedStatusOptions?.value == 'all') {
-          newCount = '';
-        }
+    if (dormName !== '') {
+      params['id'] = dormName.value;
+    } else {
+      if (selectedProvinceOption?.value !== 'all') {
+        params['province'] = selectedProvinceOption.value;
+      }
 
-        const response = await callApi(
-          `institute/dorms/?district=${district}&building_ownership=${newCount}&building_type_option=${selectedBuildingType.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setDorms(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('Dorm 2 error');
-        }
-      } else if (selectedProvinceOption.value === 'all') {
-        if (selectedBuildingType?.value === 'all') {
-          selectedBuildingType.value = '';
-        }
-        if (selectedStatusOptions?.value === 'all') {
-          selectedStatusOptions.value = '';
-        }
+      if (district !== '') {
+        params['district'] = district;
+      }
 
-        const response = await callApi(
-          `institute/dorms/?building_type_option=${selectedBuildingType.value}&district=${district}&gender=${selectedGenderOption.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setDorms(response.data);
+      if (selectedGenderOption?.value !== 'all') {
+        params['gender'] = selectedGenderOption.value;
+      }
 
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('dorm 3 error');
-        }
-      } else if (selectedGenderOption.value === 'all') {
-        if (selectedBuildingType?.value === 'all') {
-          selectedBuildingType.value = '';
-        }
-        if (selectedStatusOptions?.value === 'all') {
-          selectedStatusOptions.value = '';
-        }
+      if (selectedBuildingType?.value !== 'all') {
+        params['building_type_option'] = selectedBuildingType.value;
+      }
 
-        const response = await callApi(
-          `institute/dorms/?province=${selectedProvinceOption.value}&district=${district}&building_type_option=${selectedBuildingType.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          console.log('response is here');
-          setDorms(response.data);
-
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedStatusOptions?.value === 'all') {
-        if (selectedBuildingType?.value === 'all') {
-          selectedBuildingType.value = '';
-        }
-        const response = await callApi(
-          `institute/dorms/?province=${selectedProvinceOption.value}&district=${district}&building_type_option=${selectedBuildingType.value}&gender=${selectedGenderOption.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedBuildingType.value === 'all') {
-        if (selectedStatusOptions?.value === 'all') {
-          selectedStatusOptions.value = '';
-        }
-
-        const response = await callApi(
-          `institute/dorms/?province=${selectedProvinceOption.value}&district=${district}&gender=${selectedGenderOption.value}&building_ownership=${selectedStatusOptions.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else {
-        const response = await callApi(
-          `institute/dorms/?gender_type=${selectedGenderOption.value}&province=${selectedProvinceOption.value}&district=${district}&building_type_option=${selectedBuildingType.value}&building_ownership=${selectedStatusOptions.value}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setDorms(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        } else {
-          console.log('dorm 1 error');
-        }
+      if (selectedStatusOptions?.value !== 'all') {
+        params['building_ownership'] = selectedStatusOptions.value;
       }
     }
+
+    try {
+      const response = await callApi(endpoint, '', null, params);
+
+      if (response.data && response.status === 200) {
+        setDorms(response.data);
+        setSelectedItems([]);
+        setIsLoaded(true);
+      } else {
+        console.log('Error fetching data from API');
+      }
+    } catch (error) {
+      console.log('API request failed:', error);
+    }
+  }
+
+  useEffect(() => {
+    console.log('district', district);
     fetchData();
   }, [
     selectedPageSize,

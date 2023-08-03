@@ -64,6 +64,7 @@ const App = ({ locale }) => {
   };
 
   const fetchProvinces = async () => {
+    if (!user) return;
     const response = await callApi('core/provinces/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -79,6 +80,7 @@ const App = ({ locale }) => {
   };
 
   const fetchDistricts = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`core/districts/?province`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -93,6 +95,7 @@ const App = ({ locale }) => {
   };
 
   const fetchClasses = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/classs/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -106,6 +109,7 @@ const App = ({ locale }) => {
   };
 
   const fetchSubjects = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/subject/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -119,6 +123,7 @@ const App = ({ locale }) => {
   };
 
   const fetchDepartments = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/department/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({

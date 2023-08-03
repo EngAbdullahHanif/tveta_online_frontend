@@ -12,9 +12,9 @@ message.config({
 import axios from 'axios';
 
 // const servicePath = 'http://172.16.105.244/tveta'; #production mood
-// const servicePath = 'http://172.16.105.108:8000';
+// const servicePath = 'http://0.0.0.0:8000';
+const servicePath = 'http://172.16.105.108:8000';
 // const servicePath = 'https://online.tveta.gov.af:8000';
-const servicePath = 'http://0.0.0.0:8000';
 
 const start_date = '2023-06-01';
 const end_date = '2023-06-30';
@@ -63,16 +63,6 @@ const callApi = async (
     console.log('CALL API Response: on ' + endpoint, response.data);
     return response;
   } catch (error) {
-    if (error.response.status >= 500 && error.response.status < 600) {
-      NotificationManager.error(
-        'په سرور کې کوم مشکل رامینځته شوی،‌مهربانی وکړی له مسسول کس سره تماس ونیسی',
-        'سرور ایرور',
-        5000,
-        null,
-        null,
-        'fill'
-      );
-    }
     NotificationManager.error(
       'an error occured while connecting to server at ' + endpoint,
       error?.response?.status + ': Server Error',
@@ -89,9 +79,10 @@ const callApi = async (
         null,
         ''
       );
+    } else {
+      console.log(error.response);
     }
-    // console.log('error inside callapi: ', error.request);
-    // throw error;
+    return false;
   }
 };
 

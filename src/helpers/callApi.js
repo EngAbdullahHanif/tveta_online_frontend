@@ -91,7 +91,7 @@ const callApi = async (
       );
     }
     // console.log('error inside callapi: ', error.request);
-    throw error;
+    // throw error;
   }
 };
 

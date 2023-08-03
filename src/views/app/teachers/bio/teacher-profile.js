@@ -82,87 +82,88 @@ const TeacherProfile = () => {
     let obj = data.map((item) => ({ value: item.id, label: item.name }));
     setFields(obj);
   };
+
+  async function fetchTeacher() {
+    const response = await callApi(`teachers/?id=${teacherId}`, '', null);
+    const data = response.data;
+    setTeacher(data);
+    setIsLoaded(true);
+    const instituteResponse = await callApi(
+      `teachers/institute/${teacherId}/`,
+      '',
+      null
+    );
+    const instituteData = await instituteResponse.data;
+    console.log('Data Institute: ', instituteData);
+    setTeacherInstitute(instituteData);
+  }
+  async function fetchTeacherEvaluation() {
+    // const response = await axios.get(
+    //   `${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`
+    // );
+    const response = await callApi(
+      `teachers/${teacherId}/evaluations/`,
+      '',
+      null
+    );
+
+    console.log(`${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`);
+    const data = response.data;
+    console.log('TEACHER EVALUATIONS: ', data);
+
+    setTeacherEvaluation(data);
+  }
+  async function fetchTeacherHREvaluation() {
+    // const response = await axios.get(
+    //   `${teacherHREvaluationApiUrl}/?teacher_id=${teacherId}`
+    // );
+    const response = await callApi(
+      `teachers/hr-evaluation/?teacher_id=${teacherId}`,
+      '',
+      null
+    );
+
+    const data = response.data;
+    setTeacherHREvaluation(data);
+  }
+  async function fetchTeacherTransfer() {
+    // const response = await axios.get(
+    //   `${teacherTransferApiUrl}/?teacher_id=${teacherId}`
+    // );
+    const response = await callApi(
+      `teachers/institute/?teacher_id=${teacherId}`,
+      '',
+      null
+    );
+
+    const data = response.data;
+    console.log(`${teacherTransferApiUrl}/?teacher_id=${teacherId}`);
+    setTeacherTransfer(data);
+  }
+  async function fetchTeacherEducation() {
+    const response = await callApi(
+      `teachers/${teacherId}/educations`,
+      '',
+      null
+    );
+
+    const data = response.data;
+    console.log('Teacher Educations: ', data);
+    setTeacherEducation(data);
+  }
+  async function fetchTeacherContracts() {
+    const response = await callApi(
+      `teachers/${teacherId}/contracts/`,
+      '',
+      null
+    );
+
+    const data = response.data;
+    console.log('Teacher Contracts: ', data);
+    setTeacherContracts(data);
+  }
+
   useEffect(() => {
-    async function fetchTeacher() {
-      const response = await callApi(`teachers/?id=${teacherId}`, '', null);
-      const data = response.data;
-      setTeacher(data);
-      setIsLoaded(true);
-      const instituteResponse = await callApi(
-        `teachers/institute/${teacherId}/`,
-        '',
-        null
-      );
-      const instituteData = await instituteResponse.data;
-      console.log('Data Institute: ', instituteData);
-      setTeacherInstitute(instituteData);
-    }
-    async function fetchTeacherEvaluation() {
-      // const response = await axios.get(
-      //   `${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`
-      // );
-      const response = await callApi(
-        `teachers/${teacherId}/evaluations/`,
-        '',
-        null
-      );
-
-      console.log(`${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`);
-      const data = response.data;
-      console.log('TEACHER EVALUATIONS: ', data);
-
-      setTeacherEvaluation(data);
-    }
-    async function fetchTeacherHREvaluation() {
-      // const response = await axios.get(
-      //   `${teacherHREvaluationApiUrl}/?teacher_id=${teacherId}`
-      // );
-      const response = await callApi(
-        `teachers/hr-evaluation/?teacher_id=${teacherId}`,
-        '',
-        null
-      );
-
-      const data = response.data;
-      setTeacherHREvaluation(data);
-    }
-    async function fetchTeacherTransfer() {
-      // const response = await axios.get(
-      //   `${teacherTransferApiUrl}/?teacher_id=${teacherId}`
-      // );
-      const response = await callApi(
-        `teachers/institute/?teacher_id=${teacherId}`,
-        '',
-        null
-      );
-
-      const data = response.data;
-      console.log(`${teacherTransferApiUrl}/?teacher_id=${teacherId}`);
-      setTeacherTransfer(data);
-    }
-    async function fetchTeacherEducation() {
-      const response = await callApi(
-        `teachers/${teacherId}/educations`,
-        '',
-        null
-      );
-
-      const data = response.data;
-      console.log('Teacher Educations: ', data);
-      setTeacherEducation(data);
-    }
-    async function fetchTeacherContracts() {
-      const response = await callApi(
-        `teachers/${teacherId}/contracts/`,
-        '',
-        null
-      );
-
-      const data = response.data;
-      console.log('Teacher Contracts: ', data);
-      setTeacherContracts(data);
-    }
-
     fetchTeacher();
     fetchTeacherEvaluation();
     fetchTeacherHREvaluation();
@@ -192,6 +193,9 @@ const TeacherProfile = () => {
     await callApi(`teachers/${teacherId}/educations/`, 'POST', formData).then(
       (response) => {
         console.log('RESPONSE in teacher Education;: ', response.data);
+        if (response.status === 201) {
+          fetchTeacherEducation();
+        }
       }
     );
   };

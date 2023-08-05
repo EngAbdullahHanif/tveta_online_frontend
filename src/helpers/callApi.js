@@ -19,13 +19,14 @@ const servicePath = 'http://172.16.105.108:8000';
 const start_date = '2023-06-01';
 const end_date = '2023-06-30';
 
-//  get the API headers
+//  sets authentication header and content-type
 const getHeaders = (data) => {
   const user = localStorage.getItem('user');
   const access_token = localStorage.getItem('access_token');
-
   if (user && access_token) {
     const headers = { Authorization: `Bearer ${access_token}` };
+
+    // if data includes files, send request as multipart/form-data
     if (data instanceof FormData) {
       console.log('data instanceof FormData', data instanceof FormData);
       headers['Content-Type'] = 'multipart/form-data';
@@ -44,14 +45,10 @@ const callApi = async (
   params = null
 ) => {
   const headers = getHeaders(data);
-  console.log('HEaders: ', headers);
   const url = `${servicePath}/${endpoint}`;
   console.log('DATA in API Call: ' + endpoint, data);
-  if (data instanceof FormData) {
-    console.log('data is instance of formData');
-  }
-
   console.log('the url is', url);
+
   try {
     const response = await axios({
       method,
@@ -60,6 +57,7 @@ const callApi = async (
       data,
       params,
     });
+
     console.log('CALL API Response: on ' + endpoint, response.data);
     return response;
   } catch (error) {

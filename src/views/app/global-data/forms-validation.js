@@ -282,9 +282,6 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="teacher.GradeErr" />),
 
-  // major: Yup.string().required(
-  //   <IntlMessages id="teacher.LevelOfEducationErr" />
-  // ),
   tazkiraType: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -295,13 +292,6 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
   email: Yup.string().email(<IntlMessages id="teacher.EmailRequiredErr" />),
   // .required(<IntlMessages id="teacher.EmailErr" />),
   placeOfBirth: Yup.string().required('place of birth is required'),
-  institution: Yup.string().required('institution is required'),
-  yearCompleted: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required('year completion is required'),
 });
 
 //   teacher  form validation step Two

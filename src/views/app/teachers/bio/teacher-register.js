@@ -1,5 +1,11 @@
 /* eslint-disable no-param-reassign */
-import React, { createRef, useState, Controller, useEffect } from 'react';
+import React, {
+  createRef,
+  useState,
+  Controller,
+  useEffect,
+  useContext,
+} from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import {
@@ -41,6 +47,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 
 import config from '../../../../config';
 import { message } from 'antd';
+import { AuthContext } from 'context/AuthContext';
 const servicePath = config.API_URL;
 const teacherResitgerAPIUrl = `${servicePath}/teachers/create_teachers/`;
 const gettingSingleTeacherAPI = `${servicePath}/teachers/institute`;
@@ -58,6 +65,8 @@ const majorOptions = [
   { value: '4', label: 'Mechenical Engineering' },
 ];
 const TeacherRegister = ({ intl }, values) => {
+  const { institutes, contextFields, provinces, districts } =
+    useContext(AuthContext);
   const [initialName, setInitialName] = useState('');
   const [initialLastName, setInitialLastName] = useState('');
   const [initialEnglishName, setInitialEnglishName] = useState('');
@@ -80,7 +89,7 @@ const TeacherRegister = ({ intl }, values) => {
   const [initialInstitution, setInitialInstitution] = useState('');
   const [initialcoverNumber, setInitialcoverNumber] = useState('');
   const [initialStatus, setinitialStatus] = useState([]);
-  const [initialGrade, setIntialGrade] = useState([]);
+  const [initialGrade, setInitialGrade] = useState([]);
   const [initialTeachingField, setInitialTeachingField] = useState([]);
   const [initialAppointmentType, setInitialAppointmentType] = useState([]);
   const [initialJobLocation, setInitialJobLocation] = useState([]);
@@ -94,13 +103,13 @@ const TeacherRegister = ({ intl }, values) => {
   const [initialMainDistrict, setInitialMainDistrict] = useState([]);
   const [initialMainVillage, setInitialMainVillage] = useState('');
 
-  const [provinces, setProvinces] = useState([]);
-  const [mainDistricts, setMainDistricts] = useState([]);
+  // const [provinces, setProvinces] = useState([]);
+  const [mainDistricts, setMainDistricts] = useState(districts);
   const [currentDistricts, setCurrentDistricts] = useState([]);
   const [selectedMainProvince, setSelectedMainProvince] = useState('');
   const [selectedCurrentProvince, setSelectedCurrentProvince] = useState('');
-  const [institutes, setInstitutes] = useState([]);
-  const [fieldsOfStudy, setFieldsOfStudy] = useState([]);
+  // const [institutes, setInstitutes] = useState([]);
+  const [fieldsOfStudy, setFieldsOfStudy] = useState(contextFields);
   const forms = [createRef(null), createRef(null), createRef(null)];
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -109,117 +118,92 @@ const TeacherRegister = ({ intl }, values) => {
 
   if (teacherId) {
     useEffect(() => {
-      async function fetchStudent() {
-        // const { data } = await axios.get(
-        //   `${gettingSingleTeacherAPI}/?teacher_id=${teacherId}`
-        // );
-        const { data } = await callApi(
-          `teachers/institute/?teacher_id=${teacherId}`,
-          '',
-          null
-        );
-        setInitialName(data[0].teacher_id.name);
-        setInitialFatherName(data[0].teacher_id.father_name);
-        setInitialGrandFatherName(data[0].teacher_id.grand_father_name);
-        setInitialregistrationNumber(data[0].teacher_id.sukuk_number);
-        if (data[0].teacher_id.sukuk_number)
-          setInitialTazkiraType(tazkiraOptions[1]);
+      async function fetchTeacher() {
+        const { data } = await callApi(`teachers/${teacherId}`, '', null);
+        console.log('DATA in teacher UPDATE:', data);
+        setInitialName(data.name);
+        setInitialFatherName(data.father_name);
+        setInitialGrandFatherName(data.grand_father_name);
+        setInitialregistrationNumber(data.sukuk_number);
+        setInitialLastName(data.last_name);
+        setInitialEnglishName(data.english_name);
+        setInitialEnglishLastName(data.english_last_name);
+        setInitialEnglishFatherName(data.english_father_name);
+        setInitialGrandFatherName(data.grandfather_name);
+        setInitialregistrationNumber(data.registration_number);
+        setInitialPlaceOfBirth(data.place_of_birth);
+        if (data.sukuk_number) setInitialTazkiraType(tazkiraOptions[1]);
         else setInitialTazkiraType(tazkiraOptions[0]);
-        setInitialPhoneNumber(data[0].teacher_id.phone_number);
-        yearOfBirth('2022');
-        setInitialpageNumber(data[0].teacher_id.page_number);
-        setInitialEmail(data[0].teacher_id.email);
-        const teacherFieldOptions = majorOptions.map((teacherField) => {
-          if (teacherField.value === data[0].teacher_id.education_degree) {
-            setInitialMajor(teacherField);
+        setInitialPhoneNumber(data.phone_number);
+        // yearOfBirth('2022');
+        setInitialpageNumber(data.page_number);
+        setInitialEmail(data.email);
+        setInitialcoverNumber(data.cover_number);
+        // const teacherFieldOptions = majorOptions.map((teacherField) => {
+        //   if (teacherField.value === data.education_degree) {
+        //     setInitialMajor(teacherField);
+        //   }
+        // });
+        dateOfBirthOptoions.map((teacherBirth) => {
+          if (teacherBirth.value === data.year_of_birth.toString()) {
+            setYearOfBirth(teacherBirth);
           }
         });
-        const teahcerGenderOptions = genderOptions.map((teacherGender) => {
-          if (teacherGender.value === data[0].teacher_id.gender) {
+
+        gradeOptions.map((teacherGrade) => {
+          if (teacherGrade.value === data.grade) {
+            setInitialGrade(teacherGrade);
+          }
+        });
+        genderOptions.map((teacherGender) => {
+          if (teacherGender.value === data.gender) {
             setInitialGender(teacherGender);
           }
         });
-        setInitialcoverNumber(data[0].teacher_id.cover_number);
 
-        const teacherLevelOfEducationOptions = workersGrade.map(
-          (teacherLevelOfEducation) => {
-            if (
-              teacherLevelOfEducation.value ===
-              data[0].teacher_id.education_degree
-            ) {
-              setInitialLevelOfEducation(teacherLevelOfEducation);
-            }
-          }
-        );
-        const teacherMainProvince = provinceOptions.map((province) => {
-          if (province.value == data[0].teacher_id.main_province) {
-            setInitialProvince(province);
+        // const teacherLevelOfEducationOptions = workersGrade.map(
+        //   (teacherLevelOfEducation) => {
+        //     if (teacherLevelOfEducation.value === data.education_degree) {
+        //       setInitialLevelOfEducation(teacherLevelOfEducation);
+        //     }
+        //   }
+        // );
+        teacherCurrentStatusOptions.map((teacherStatus) => {
+          if (teacherStatus.value == data.status) {
+            setinitialStatus(teacherStatus);
           }
         });
-        const teacherCurrentProvince = provinceOptions.map((province) => {
-          if (province.value == data[0].teacher_id.current_province) {
+        provinces.map((province) => {
+          if (province.value == data.current_province) {
             setInitialCurrentProvince(province);
           }
-        });
-        const teachingLangugaeOptions = langOptions.map((teachingLangugage) => {
-          if (teachingLangugage.value == data[0].institute_id.language) {
-            setInitialTeachingLang(teachingLangugage);
-          }
-        });
-        const teacherStatusOptions = teacherCurrentStatusOptions.map(
-          (teacherStatus) => {
-            if (teacherStatus.value == data[0].teacher_id.status_type) {
-              setinitialStatus(teacherStatus);
-            }
-          }
-        );
-        const teacherAppointingOptions = appointmentTypeOptions.map(
-          (appointingType) => {
-            if (appointingType.value == data[0].job_type) {
-              setInitialAppointmentType(appointingType);
-            }
-          }
-        );
-        const teachingFieldOptions = teacherteachingfieldOptions.map(
-          (teachingField) => {
-            if (teachingField.value == data[0].teacher_id.education_degree) {
-              setInitialTeachingField(teachingField);
-            }
-          }
-        );
-        const teacherGradeOptions = gradeOptions.map((teacherGrade) => {
-          if (teacherGrade.value == data[0].teacher_id.status_type) {
-            setIntialGrade(teacherGrade);
+          if (province.value == data.main_province) {
+            setInitialMainProvince(province);
           }
         });
 
-        setInitialCurrentDistrict(data[0].teacher_id.current_district);
-        setInitialCurrentVillage(data[0].teacher_id.current_village);
-        setInitialDistrict(data[0].teacher_id.main_district);
-        setInitialVillage(data[0].teacher_id.main_village);
-        setInitialJobLocation([
-          {
-            value: data[0].institute_id.id,
-            label: data[0].institute_id.name,
-          },
-        ]);
+        districts.map((district) => {
+          if (district.value == data.main_district) {
+            setInitialMainDistrict(district);
+          }
+        });
+        currentDistricts.map((district) => {
+          console.log(district);
+          if (district.id == data.current_district) {
+            setInitialCurrentDistrict(district);
+          }
+        });
 
-        const teacherStepOptions = stepOptions.map((teacherStep) => {
-          if (teacherStep.value == data[0].teacher_id.step) {
+        setInitialCurrentDistrict(data.current_district);
+        setInitialCurrentVillage(data.current_village);
+
+        stepOptions.map((teacherStep) => {
+          if (teacherStep.value == data.step) {
             setInitialStep(teacherStep);
           }
         });
-
-        const contractTypeOptionss = contractTypeOptions.map(
-          (teacherContractType) => {
-            if (teacherContractType.value == data[0].contract_type) {
-              setInitialContractType(teacherContractType);
-            }
-          }
-        );
       }
-      fetchStudent();
-      //setUpdateMode(true);
+      fetchTeacher();
     }, []);
   }
 
@@ -254,19 +238,6 @@ const TeacherRegister = ({ intl }, values) => {
     }
   };
 
-  const fetchProvinces = async () => {
-    const response = await callApi('core/provinces/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.native_name,
-      }));
-
-      setProvinces(updatedData);
-    } else {
-      console.log('province error');
-    }
-  };
   const fetchDistricts = async (provinceId) => {
     console.log('provinceId', provinceId);
     const response = await callApi(
@@ -302,39 +273,6 @@ const TeacherRegister = ({ intl }, values) => {
       console.log('district error');
     }
   };
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    console.warn('Reponse Institutes: ', response);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      console.warn('Updated Institutes: ', updatedData);
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-  const fetchFields = async () => {
-    const response = await callApi('institute/field/', '', null);
-    if (response.data && response.status === 200) {
-      console.log('fields', response.data);
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setFieldsOfStudy(updatedData);
-    } else {
-      console.log('field error');
-    }
-  };
-
-  useEffect(() => {
-    fetchProvinces();
-    fetchInstitutes();
-    fetchFields();
-  }, []);
 
   useEffect(() => {
     console.log('selectedmainProvince', selectedMainProvince);
@@ -350,99 +288,14 @@ const TeacherRegister = ({ intl }, values) => {
     }
   }, [selectedCurrentProvince]);
 
-  const postTeacherRecord = async (data) => {
-    console.log('data of post record', data);
-    const response = await callApi(
-      'teachers/teacher-contract/create/',
-      'POST',
-      data
-    );
-    if (response.status >= 200 && response.status < 300) {
-      createNotification('success', 'filled');
-      console.log('success message', response.data);
-    } else {
-      createNotification('error', 'filled');
-      console.log('teacher error');
-    }
-  };
-
-  const onClickNext = (goToNext, steps, step, values) => {
-    if (steps.length - 1 <= steps.indexOf(step)) {
-      return;
-    }
-    const formIndex = steps.indexOf(step);
-    const form = forms[formIndex].current;
-    console.log(step.id, 'stepoId');
-    console.log('First Step (Form) Values', form.values);
-    form.submitForm().then(() => {
-      if (!form.isDirty && form.isValid) {
-        const newFields = { ...fields, ...form.values };
-        setFields(newFields);
-        const data = {
-          contract_type: newFields.appointmentType?.value,
-          cover_number: newFields.coverNumber,
-          current_district: newFields.currentDistrict?.value,
-          current_province: newFields.currentProvince?.value,
-          current_village: newFields.currentVillage,
-          email: newFields.email,
-          english_father_name: newFields.englishFatherName,
-          english_last_name: newFields.englishLastName,
-          english_name: newFields.englishName,
-          father_name: newFields.fatherName,
-          gender: newFields.gender?.value,
-          grade: newFields.grade?.value,
-          grandfather_name: newFields.grandFatherName,
-          hire_date: newFields.hireDate,
-          institution: newFields.institution,
-          institute: newFields.jobLocation?.value,
-          last_name: newFields.lastName,
-          degree: newFields.levelOfEducation?.value,
-          main_district: newFields.mainDistrict?.value,
-          main_province: newFields.mainProvince?.value,
-          main_village: newFields.mainVillage,
-          field_of_study: newFields.major,
-          name: newFields.name,
-          page_number: newFields.pageNumber,
-          phone_number: newFields.phoneNumber,
-          place_of_birth: newFields.placeOfBirth,
-          registration_number: newFields.registrationNumber,
-          step: newFields.step?.value,
-          teaching_field: newFields.teachingField?.value,
-          teaching_language: newFields.teachingLang?.value,
-          year_completed: newFields.yearCompleted?.value,
-          year_of_birth: newFields.yearOfBirth?.value,
-        };
-
-        console.log('data', data);
-        console.log('form data all here', newFields);
-        if (steps.length - 2 <= steps.indexOf(step)) {
-          setBottomNavHidden(true);
-          setLoading(true);
-          console.log('Final Values', newFields);
-          postTeacherRecord(data);
-          setTimeout(() => {
-            setLoading(false);
-          }, 0);
-        }
-        goToNext();
-        step.isDone = true;
-      }
-    });
-  };
-  const onClickPrev = (goToPrev, steps, step) => {
-    if (steps.indexOf(step) <= 0) {
-      return;
-    }
-    goToPrev();
-  };
-
   const { messages } = intl;
 
   const RegisterTeacher = async (newFields) => {
     alert('Form Submitted');
     console.log('Form Data: ', newFields);
+
     const data = {
-      contract_type: newFields.appointmentType?.value,
+      // contract_type: newFields.appointmentType?.value,
       cover_number: newFields.coverNumber,
       current_district: newFields.currentDistrict?.value,
       current_province: newFields.currentProvince?.value,
@@ -455,31 +308,31 @@ const TeacherRegister = ({ intl }, values) => {
       gender: newFields.gender?.value,
       grade: newFields.grade?.value,
       grandfather_name: newFields.grandFatherName,
-      hire_date: newFields.hireDate,
-      institution: newFields.institution,
-      institute: newFields.jobLocation?.value,
+      // hire_date: newFields.hireDate,
+      // institution: newFields.institution,
+      // institute: newFields.jobLocation?.value,
       last_name: newFields.lastName,
-      degree: newFields.levelOfEducation?.value,
+      // degree: newFields.levelOfEducation?.value,
       main_district: newFields.mainDistrict?.value,
       main_province: newFields.mainProvince?.value,
       main_village: newFields.mainVillage,
-      field_of_study: newFields.major,
+      // field_of_study: newFields.major,
       name: newFields.name,
       page_number: newFields.pageNumber,
       phone_number: newFields.phoneNumber,
       place_of_birth: newFields.placeOfBirth,
       registration_number: newFields.registrationNumber,
       step: newFields.step?.value,
-      teaching_field: newFields.teachingField?.value,
-      teaching_language: newFields.teachingLang?.value,
-      year_completed: newFields.yearCompleted?.value,
+      // teaching_field: newFields.teachingField?.value,
+      // teaching_language: newFields.teachingLang?.value,
+      // year_completed: newFields.yearCompleted?.value,
       year_of_birth: newFields.yearOfBirth?.value,
       status: newFields.status?.value,
     };
     await callApi('teachers/', 'POST', data)
       .then((response) => {
         message.success('استاد ثبت شو');
-        window.location.replace(`app/teachers/teacher/${response.data.id}/`);
+        window.location.replace(`${response.data.id}/`);
         console.log('RESPONSE in Teacher register: ', response.data);
       })
       .catch((err) => console.log('Error in Teacher Save: ', err));
@@ -513,11 +366,8 @@ const TeacherRegister = ({ intl }, values) => {
               coverNumber: initialcoverNumber,
               gender: initialGender,
               tazkiraType: initialTazkiraType,
-              major: initialMajor,
-              levelOfEducation: initialLevelOfEducation,
-              yearCompleted: initialYearCompleted,
-              institution: initialInstitution,
               grade: initialGrade,
+              step: initialStep,
               currentDistrict: initialCurrentDistrict,
               currentProvince: initialCurrentProvince,
               mainProvince: initialMainProvince,
@@ -668,19 +518,6 @@ const TeacherRegister = ({ intl }, values) => {
                       ) : null}
                     </FormGroup>
 
-                    {/* Major */}
-                    {/* <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.MajorLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field className="form-control fieldStyle" name="major" />
-                      {errors.major && touched.major ? (
-                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                          {errors.major}
-                        </div>
-                      ) : null}
-                    </FormGroup> */}
                     {/* Education */}
                     <FormGroup className="form-group has-float-label error-l-175">
                       <Label>
@@ -742,46 +579,55 @@ const TeacherRegister = ({ intl }, values) => {
                         </div>
                       ) : null}
                     </FormGroup>
-                    {/* Graduation Year */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        {/* <IntlMessages id="teacher.LevelOfEducationLabel" /> */}
-                        graduation year
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <FormikReactSelect
-                        name="yearCompleted"
-                        id="yearCompleted"
-                        value={values.yearCompleted}
-                        options={dateOfBirthOptoions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.yearCompleted && touched.yearCompleted ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.yearCompleted}
-                        </div>
-                      ) : null}
-                    </FormGroup>
 
-                    {/* institution */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        {/* <IntlMessages id="teacher.LevelOfEducationLabel" /> */}
-                        University name
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="institution"
-                      />
-                      {errors.institution && touched.institution ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.institution}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                    {/* <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                      }}
+                    >
+                      <FormGroup className="form-group has-float-label error-l-175 w-100">
+                        <label for="grade" class="col-form-label">
+                          Grade
+                          <span style={{ color: 'red' }}>*</span>
+                        </label>
+
+                        <FormikReactSelect
+                          name="grade"
+                          id="grade"
+                          value={values.grade}
+                          options={gradeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.grade && touched.grade ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.grade}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      <FormGroup className="form-group has-float-label error-l-175 w-100">
+                        <label for="step" class="col-form-label">
+                          Step
+                          <span style={{ color: 'red' }}>*</span>
+                        </label>
+                        <FormikReactSelect
+                          name="step"
+                          id="step"
+                          value={values.step}
+                          options={stepOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.step && touched.step ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.step}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </div> */}
                   </Colxx>
                   <Colxx xxs="5" className="mr-5">
                     {/* Teacher English Name */}
@@ -960,7 +806,7 @@ const TeacherRegister = ({ intl }, values) => {
                         <FormikReactSelect
                           name="mainProvince"
                           id="mainProvince"
-                          // value={values.mainProvince}
+                          value={values.mainProvince}
                           options={provinces}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

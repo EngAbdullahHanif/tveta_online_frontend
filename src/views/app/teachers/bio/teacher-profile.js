@@ -28,6 +28,7 @@ import {
   langOptions,
   persianMonthOptions,
   stepOptions,
+  teacherContractStatusOptions,
 } from '../../global-data/options';
 import logo from './../../../../assets/logos/AdminLogo.png';
 import profilePhoto from './../../../../assets/img/profiles/22.jpg';
@@ -48,6 +49,7 @@ const teacherEvaluationApiUrl = `${servicePath}/teachers/evaluation`;
 const teacherHREvaluationApiUrl = `${servicePath}/teachers/hr-evaluation`;
 const teacherTransferApiUrl = `${servicePath}/teachers/institute`;
 // const { RangePicker } = DatePicker;
+
 const TeacherProfile = () => {
   const { departments, classes, subjects } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(true);
@@ -82,7 +84,6 @@ const TeacherProfile = () => {
     let obj = data.map((item) => ({ value: item.id, label: item.name }));
     setFields(obj);
   };
-
   async function fetchTeacher() {
     const response = await callApi(`teachers/?id=${teacherId}`, '', null);
     const data = response.data;
@@ -216,14 +217,18 @@ const TeacherProfile = () => {
     formData.append('teacher', teacherId);
     formData.append('institute', inputData.institute?.value);
     formData.append('teaching_field', inputData.field?.value);
+    formData.append('status', inputData.status?.value);
 
     await callApi(`teachers/${teacherId}/contracts/`, 'POST', formData).then(
       (response) => {
         console.log('RESPONSE in teacher Contract;: ', response.data);
 
-        response.status >= 200 && response.status < 300
-          ? message.success('Data Saved Successfully')
-          : message.error('Data Not Saved Check your Payload');
+        if (response.status >= 200 && response.status < 300) {
+          message.success('Data Saved Successfully');
+          fetchTeacherContracts();
+        } else {
+          message.error('Data Not Saved Check your Payload');
+        }
       }
     );
   };
@@ -250,9 +255,12 @@ const TeacherProfile = () => {
       (response) => {
         console.log('RESPONSE in teacher Contract;: ', response.data);
 
-        response.status >= 200 && response.status < 300
-          ? message.success('Data Saved Successfully')
-          : message.error('Data Not Saved Check your Payload');
+        if (response.status >= 200 && response.status < 300) {
+          message.success('Data Saved Successfully');
+          fetchTeacherEvaluation();
+        } else {
+          message.error('Data Not Saved Check your Payload');
+        }
       }
     );
   };
@@ -525,7 +533,13 @@ const TeacherProfile = () => {
                                 <td>{item.field_of_study}</td>
                                 <td>{item.year_completed}</td>
                                 <td>
-                                  <a href={item.document}>Resume</a>
+                                  <a
+                                    href={item.document}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    Resume
+                                  </a>
                                 </td>
                                 <td>{item.description}</td>
                                 <td>
@@ -802,7 +816,13 @@ const TeacherProfile = () => {
                                   {item.start_date}-{item.end_date}
                                 </td>
                                 <td>
-                                  <a href={item.document}>Download</a>
+                                  <a
+                                    href={item.document}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    Download
+                                  </a>
                                 </td>
                                 <td>{item.description}</td>
                                 <td>
@@ -866,6 +886,7 @@ const TeacherProfile = () => {
                                   contract_type: '',
                                   institute: '',
                                   field: '',
+                                  status: '',
                                 }}
                                 // validationSchema={
                                 //   teacherContractValidationSchema
@@ -1163,7 +1184,8 @@ const TeacherProfile = () => {
                                             calendar={persian}
                                             locale={persian_fa}
                                             months={persianMonthOptions}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
+                                              if (!e) return;
                                               setEndDate(
                                                 new Date(
                                                   e.toDate()
@@ -1175,10 +1197,36 @@ const TeacherProfile = () => {
                                                     1) +
                                                   '-' +
                                                   new Date(e.toDate()).getDate()
-                                              )
-                                            }
+                                              );
+                                            }}
                                           />
                                         </div>
+                                      </div>
+
+                                      <div class="form-group w-100">
+                                        <label
+                                          for="institute"
+                                          class="col-form-label"
+                                        >
+                                          حالت قرارداد
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="status"
+                                          id="status"
+                                          value={values.status}
+                                          options={teacherContractStatusOptions}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.status && touched.status ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.status}
+                                          </div>
+                                        ) : null}
                                       </div>
 
                                       <div class="form-group">

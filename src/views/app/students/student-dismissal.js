@@ -6,6 +6,11 @@ import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../../assets/css/global-style.css';
 import { studentdismissalvalidationSchema } from './../global-data/forms-validation';
+import DatePicker from 'react-multi-date-picker';
+import persian from 'react-date-object/calendars/persian';
+import persian_fa from 'react-date-object/locales/persian_fa';
+import { persianMonthOptions } from '../global-data/options';
+
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
@@ -45,6 +50,7 @@ const StudentsDismissal = (values) => {
   const [isNext, setIsNext] = useState(true);
   const [institutes, setInstitutes] = useState();
   const [reload, setReload] = useState(false);
+  const [dismissDate, setDismissDate] = useState();
   const SearchResultSchema = Yup.object().shape({
     searchfield: Yup.string()
       .min(4, <IntlMessages id="min.invalidId" />)
@@ -130,7 +136,10 @@ const StudentsDismissal = (values) => {
     }
   };
   const onSubmit = async (values) => {
+    console.log('in onSubmit');
+    handleClick(true);
     // setReload(true);
+    console.log('values from onsubmit are: ', values);
 
     const formData = new FormData();
     formData.append('student_id', studentId);
@@ -449,10 +458,25 @@ const StudentsDismissal = (values) => {
                                 <Label>
                                   <IntlMessages id="student.dismissalDateLabel" />
                                 </Label>
-                                <Field
-                                  className="form-control fieldStyle "
+                                <DatePicker
                                   name="dismissalDate"
-                                  placeholder="1399/01/01"
+                                  calendar={persian}
+                                  locale={persian_fa}
+                                  months={persianMonthOptions}
+                                  className="form-control fieldStyle "
+                                  onChange={(e) =>
+                                    setFieldValue(
+                                      'dismissalDate',
+                                      setDismissDate(
+                                        new Date(e.toDate()).getFullYear() +
+                                          '-' +
+                                          (new Date(e.toDate()).getMonth() +
+                                            1) +
+                                          '-' +
+                                          new Date(e.toDate()).getDate()
+                                      )
+                                    )
+                                  }
                                 />
                                 {errors.dismissalDate &&
                                 touched.dismissalDate ? (
@@ -508,7 +532,6 @@ const StudentsDismissal = (values) => {
                                 margin: '5% 10% 30% 6%',
                                 paddingInline: '10%',
                               }}
-                              onClick={() => handleClick(true)}
                             >
                               <span className="label">
                                 <IntlMessages id="button.Back" />

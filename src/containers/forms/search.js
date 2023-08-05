@@ -37,7 +37,7 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
     }
 
     return (
-      <div className="bg-primary  " id="para">
+      <div className="bg-primary " id="para">
         {suggest.map((item, index) => {
           return (
             <div key={index} className="divs">
@@ -68,6 +68,7 @@ const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
           className="search"
           value={searchtext}
           onChange={handleChange}
+          style={{ paddingLeft: 10, paddingRight: 10, fontSize: 17 }}
         />
       </div>
       <div

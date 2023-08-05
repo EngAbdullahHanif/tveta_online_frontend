@@ -19,6 +19,7 @@ const ViewUnauthorized = React.lazy(() =>
 const ViewUser = React.lazy(() =>
   import(/* webpackChunkName: "views-user" */ '../views/user')
 );
+
 function Application(props) {
   const { user } = useContext(AuthContext);
 

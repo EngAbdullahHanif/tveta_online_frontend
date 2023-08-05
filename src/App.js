@@ -47,7 +47,11 @@ const App = ({ locale }) => {
       const response = await callApi('auth/token/verify/', 'POST', {
         token: token,
       });
-      if (response && response.status >= 200 && response.status <= 299) {
+      if (!response) {
+        console.log('cannot connect to server');
+        return;
+      }
+      if (response.status >= 200 && response.status <= 299) {
         console.log('token is valid');
       } else {
         console.log('token is invalid. removing it from local storage');
@@ -62,6 +66,7 @@ const App = ({ locale }) => {
   };
 
   const fetchProvinces = async () => {
+    if (!user) return;
     const response = await callApi('core/provinces/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -77,11 +82,13 @@ const App = ({ locale }) => {
   };
 
   const fetchDistricts = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`core/districts/?province`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.native_name,
+        province: item.province,
       }));
       setDistricts(updatedData);
     } else {
@@ -90,6 +97,7 @@ const App = ({ locale }) => {
   };
 
   const fetchClasses = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/classs/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -103,6 +111,7 @@ const App = ({ locale }) => {
   };
 
   const fetchSubjects = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/subject/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -116,6 +125,7 @@ const App = ({ locale }) => {
   };
 
   const fetchDepartments = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/department/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({

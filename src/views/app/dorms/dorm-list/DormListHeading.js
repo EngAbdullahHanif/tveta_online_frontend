@@ -188,7 +188,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="evaluation.filter" />
-                    {selectedGenderOption.label}
+                    {selectedGenderOption?.label || 'جنیست'}
                   </DropdownToggle>
                   <DropdownMenu>
                     {genderOptions.map((gender, index) => {
@@ -215,7 +215,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
+                    {selectedProvinceOption?.label || 'ولایت'}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -276,7 +276,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedBuildingType?.label}
+                    {selectedBuildingType?.label || 'نوع تعمیر'}
                   </DropdownToggle>
                   <DropdownMenu>
                     {buildingTypeOptions.map((order, index) => {
@@ -322,6 +322,7 @@ const ListPageHeading = ({
                   changeProvinceBy('all');
                   // document.getElementById('district').value = '';
                   setSelectDorm('');
+                  changeBuildingTypeBy('all');
                   onResetClick(!reset);
                 }}
               >

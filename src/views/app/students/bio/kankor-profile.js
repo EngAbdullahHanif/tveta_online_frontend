@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import './../../../../assets/css/global-style.css';
@@ -9,6 +9,11 @@ import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import config from '../../../../config';
+import {
+  AuthContext,
+  DistrictsContext,
+  ProvincesContext,
+} from 'context/AuthContext';
 const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
 
@@ -20,6 +25,11 @@ const StudentProfile = () => {
   const [kankorStudent, setKankorStudent] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const { provinces } = useContext(ProvincesContext);
+  const { districts } = useContext(DistrictsContext);
+
+  console.log('provinces from context: ', provinces);
 
   //load data of student from database
   useEffect(() => {
@@ -166,11 +176,25 @@ const StudentProfile = () => {
                     <Label className="data-style">
                       <IntlMessages id="forms.ProvinceLabel" />
                     </Label>
-                    <h2>{kankorStudent[0].province} </h2>
+                    <h2>
+                      {
+                        provinces.filter(
+                          (province) =>
+                            province.value == kankorStudent[0].province
+                        )[0].label
+                      }{' '}
+                    </h2>
                     <Label className="data-style">
                       <IntlMessages id="forms.DistrictLabel" />
                     </Label>
-                    <h2>{kankorStudent[0].district}</h2>
+                    <h2>
+                      {
+                        districts.filter(
+                          (district) =>
+                            district.value === kankorStudent[0].district
+                        )[0].label
+                      }
+                    </h2>
                     <br />
                     <br />
                   </Colxx>

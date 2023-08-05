@@ -69,6 +69,8 @@ const ListPageHeading = ({
       (district) => district.province === selectedProvinceOption.value
     );
   }
+
+  console.log('distrcts: ', districts);
   return (
     <Row>
       <Colxx xxs="12">
@@ -153,7 +155,7 @@ const ListPageHeading = ({
                   <DropdownToggle
                     caret
                     color="outline-dark"
-                    size="xs"
+                    // size="xs"
                     style={{ fontSize: '17px' }}
                   >
                     <IntlMessages id="filter" />
@@ -182,7 +184,7 @@ const ListPageHeading = ({
                 </UncontrolledDropdown>
 
                 {/* District */}
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 ">
                   {/* <input
                     type="text"
                     name="district"
@@ -195,47 +197,39 @@ const ListPageHeading = ({
                     select={(district) => {
                       setSelectedDistrict(district);
                     }}
+                    style={{ fontSize: '17px' }}
                     placeholder={messages['search.district']}
                   />
                 </div>
 
-                <div>
-                  {/* Educational Year */}
-                  <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
-                    <DropdownToggle
-                      caret
-                      color="outline-dark"
-                      size="xs"
-                      style={{ fontSize: '17px' }}
-                    >
-                      <IntlMessages id="filter" />
-                      {selectedEducationalYearOption?.label || 'سال تعلیمی'}
-                      {/* {Educationnal} */}
-                      {/* <span>fdsg</span> */}
-                    </DropdownToggle>
-                    <DropdownMenu
-                      style={{
-                        height: '300px',
-                        overflowY: 'scroll',
-                        overflowX: 'hidden',
-                      }}
-                    >
-                      {educationalYearsOptionsForList.map((order, index) => {
-                        return (
-                          <DropdownItem
-                            key={index}
-                            onClick={() =>
-                              changeEducationalYearBy(order.column)
-                            }
-                            style={{ fontSize: '17px' }}
-                          >
-                            {order.label}
-                          </DropdownItem>
-                        );
-                      })}
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                </div>
+                {/* Educational Year */}
+                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                  <DropdownToggle caret color="outline-dark">
+                    <IntlMessages id="filter" />
+                    {selectedEducationalYearOption?.label || 'سال تعلیمی'}
+                    {/* {Educationnal} */}
+                    {/* <span>fdsg</span> */}
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{
+                      height: '300px',
+                      overflowY: 'scroll',
+                      overflowX: 'hidden',
+                    }}
+                  >
+                    {educationalYearsOptionsForList.map((order, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => changeEducationalYearBy(order.column)}
+                          style={{ fontSize: '17px' }}
+                        >
+                          {order.label}
+                        </DropdownItem>
+                      );
+                    })}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
 
                 {/* Timing Shift */}
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">

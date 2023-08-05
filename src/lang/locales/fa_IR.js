@@ -936,6 +936,7 @@ module.exports = {
   'teacher.DoBErr': 'د زیږیدنې نیټه اړینه ده/ تاریخ تولد ضروری است',
   'teacher.StatusOption_1': 'فعال',
   'teacher.StatusOption_2': 'منفک/تنقیص',
+  'teacher.StatusOption_3': 'غیر فعال',
   'teacher.StatusLabel': 'د دندې حالت/ حالت وظیفوی',
   'teacher.JobDeteilsLabel': ' دنده/وظیفه',
   'teacher.StatusErr': 'د حالت انتخابول اړین دی/انتخاب حالت ضروری است',
@@ -1667,6 +1668,7 @@ module.exports = {
 
   'search.district': 'ولسوالی ',
   'search.province': 'ولایت',
+  'students.previousProvince': 'مخکني مکتب ولایت/ ولایت مکتب گذشته',
 
   'search.id': 'آیدی',
   filter: ' فلتر بر اساس ',

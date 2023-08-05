@@ -291,6 +291,14 @@ const TeacherRegister = ({ intl }, values) => {
   const { messages } = intl;
 
   const RegisterTeacher = async (newFields) => {
+    let apiParams = {
+      endPoint: 'teachers/',
+      method: 'POST',
+    };
+    if (teacherId) {
+      apiParams.endPoint = `teachers/${teacherId}/`;
+      apiParams.method = 'PATCH';
+    }
     alert('Form Submitted');
     console.log('Form Data: ', newFields);
 
@@ -329,7 +337,8 @@ const TeacherRegister = ({ intl }, values) => {
       year_of_birth: newFields.yearOfBirth?.value,
       status: newFields.status?.value,
     };
-    await callApi('teachers/', 'POST', data)
+    console.log('apiParas: ', apiParams);
+    await callApi(apiParams.endPoint, apiParams.method, data)
       .then((response) => {
         message.success('استاد ثبت شو');
         window.location.replace(`${response.data.id}/`);
@@ -365,7 +374,10 @@ const TeacherRegister = ({ intl }, values) => {
               pageNumber: initialpageNumber,
               coverNumber: initialcoverNumber,
               gender: initialGender,
-              tazkiraType: initialTazkiraType,
+              tazkiraType:
+                initialpageNumber > 0 && initialpageNumber > 0
+                  ? tazkiraOptions[1]
+                  : tazkiraOptions[0],
               grade: initialGrade,
               step: initialStep,
               currentDistrict: initialCurrentDistrict,

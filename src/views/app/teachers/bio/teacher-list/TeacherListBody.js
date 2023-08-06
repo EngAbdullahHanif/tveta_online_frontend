@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './list.css';
 import {
   Card,
-  CustomInput,
   Badge,
   Modal,
   ModalHeader,
@@ -17,14 +16,19 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { BsTrashFill } from 'react-icons/bs';
 import { BsPencilSquare } from 'react-icons/bs';
+import callApi from 'helpers/callApi';
 
 const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
   const [modalBasic, setModalBasic] = useState(false);
   const [dataDeletion, setDeletion] = useState(false);
 
-  const handleClick = (event) => {
+  const handleClick = async (event) => {
     setDeletion(event);
-    console.log('API should be called here');
+    console.log('API should be called here', teacher);
+    await callApi(`teachers/${teacher.id}/`, 'DELETE').then((response) => {
+      console.log('RESPONSE on Teacher DELETE: ', response.data);
+      window.location.reload();
+    });
   };
   return (
     <Colxx xxs="12" key={teacher.id} className="mt-2">
@@ -59,7 +63,6 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
                   style={{ fontSize: '20px', width: '170px' }}
                 >
                   {teacher.name}
-      
                 </p>
               </NavLink>
               <p
@@ -67,35 +70,30 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
                 style={{ width: '170px', textAlign: 'right', fontSize: '20px' }}
               >
                 {teacher.father_name}
-          
               </p>
               <p
                 className="mb-1 text-small responsiveness1 "
                 style={{ fontSize: '20px', width: '110px' }}
               >
                 {teacher.current_province}
-          
               </p>
               <p
                 className="mb-1 text-small responsiveness2 "
                 style={{ fontSize: '20px', width: '110px' }}
               >
                 {teacher.phone_number}
-        
               </p>
               <p
                 className="mb-1 text-small responsiveness3 "
                 style={{ fontSize: '20px', width: '170px' }}
               >
                 {teacher.major}
-        
               </p>
               <p
                 className="mb-1 text-small responsiveness4 "
                 style={{ fontSize: '20px', width: '170px' }}
               >
                 {teacher.grade}
-              
               </p>
               {/* {teacher.status_type === '2' && ( */}
               <div className="mb-1 text-small " style={{ width: '100px' }}>
@@ -113,15 +111,14 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
                 className="align-self-center pr-4"
               >
                 <NavLink to={`/app/teachers/register/${teacher.id}`}>
-
-                <div>
-                  <BsPencilSquare
-                    outline
-                    style={{ fontSize: '20px' }}
-                    id="updateIcon"
+                  <div>
+                    <BsPencilSquare
+                      outline
+                      style={{ fontSize: '20px' }}
+                      id="updateIcon"
                     />
-                </div>
-                    </NavLink>
+                  </div>
+                </NavLink>
                 <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"
@@ -160,7 +157,7 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
                     هو / بلی
                   </Button>{' '}
                 </ModalFooter>
-              </Modal>{' '}
+              </Modal>
             </>
             {/* <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
               <CustomInput

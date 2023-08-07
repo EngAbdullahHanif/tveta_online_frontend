@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { FormControl, FormLabel } from 'react-bootstrap';
 import './../../.././../assets/css/global-style.css';
 
@@ -56,125 +56,15 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
-import { useParams } from 'react-router-dom';
 
 import * as Yup from 'yup';
 
 import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
+import data from 'constants/menu';
 
 const StudentRegistration = ({ intl }, values) => {
-  const { studentId } = useParams();
-
-  // if student id is provided, fetch student data from backend
-  // if (studentId) {
-  //   useEffect(() => {
-  //     async function fetchStudent() {
-  //       // const { data } = await axios.get(
-  //       //   `api/?student_id=${updateStudentId}`
-  //       // );
-  //       const { data } = await callApi(
-  //         `api/?student_id=${studentId}`,
-  //         '',
-  //         null
-  //       );
-  //       console.log('the backend server data', data.results[0]);
-
-  //       // get already existing student data from backend
-  //       setInitialname1(data.results[0].name);
-  //       setInitialLastName(data.results[0].last_name);
-  //       setInitialFatherName(data.results[0].father_name);
-  //       setInitialGrandFatherName(data.results[0].grand_father_name);
-  //       setInitialFatherDuty(data.results[0].fatherـprofession);
-  //       setInitialLastNameEng(data.results[0].english_last_name);
-  //       const instGender = genderOptions.map((studentGender) => {
-  //         if (studentGender.value === data.results[0].gender) {
-  //           setInitialGender(studentGender);
-  //         }
-  //       });
-  //       const dateOfBirthOptions = dateOfBirthOptoions.map((yearOptions) => {
-  //         if (yearOptions.value === data.results[0].birth_date) {
-  //           setInitialDoB(yearOptions);
-  //         }
-  //       });
-  //       const graduationYear = educationalYearsOptions.map((yearOptions) => {
-  //         if (yearOptions.value === data.results[0].finished_grade_year) {
-  //           setInitialGraduationYear(yearOptions);
-  //         }
-  //       });
-  //       setInitialEnglishName(data.results[0].english_name);
-  //       setInitialPhoneNo(data.results[0].phone_number);
-  //       setInitialFatherDutyLocation(data.results[0].fatherـplaceـofـduty);
-  //       if (data.results[0].sukuk_number)
-  //         setInitialTazkiraType(tazkiraOptions[1]);
-  //       else setInitialTazkiraType(tazkiraOptions[0]);
-  //       setInitialFatherEngName(data.results[0].english_father_name);
-  //       setInitialPlaceOfBirth(data.results[0].main_province);
-  //       setInitialTazkiraNo(data.results[0].registration_number);
-  //       setInitialEmail(data.results[0].email);
-  //       setInitialIdCardPageNo(data.results[0].page_number);
-  //       setInitialStudentId(data.results[0].cover_number);
-  //       setInitialPreSchool(data.results[0].school);
-  //       const studentFinishGrade = educationLevelOptions.map(
-  //         (finishedGrade) => {
-  //           if (finishedGrade.value === data.results[0].finished_grade) {
-  //             setInitialLevelOfEducation(finishedGrade);
-  //           }
-  //         }
-  //       );
-  //       const studentMainProvincee = provinceOptions.map((studentProvince) => {
-  //         if (studentProvince.value === data.results[0].main_province) {
-  //           setInitialProvince(studentProvince);
-  //         }
-  //       });
-  //       const studentCurrentProvince = provinceOptions.map(
-  //         (studentProvince) => {
-  //           if (studentProvince.value === data.results[0].current_province) {
-  //             setInitialC_Province(studentProvince);
-  //           }
-  //         }
-  //       );
-  //       const studentSchoolProvince = provinceOptions.map((studentProvince) => {
-  //         if (studentProvince.value === data.results[0].schoolـprovince) {
-  //           setInitialSchoolProvince(studentProvince);
-  //         }
-  //       });
-  //       setInitialDistrict(data.results[0].main_district);
-  //       setInitialVillage(data.results[0].main_village);
-  //       setInitialC_District(data.results[0].current_district);
-  //       setInitialC_Village(data.results[0].current_village);
-  //       setInitialIdCardPageNo(data.results[0].page_number);
-  //       setInitialIdCardJoldNo(data.results[0].cover_number);
-  //       // setInitialInstitute(data[0].school);
-  //       // setInitialEducationalYear(data[0].finished_grade_year);
-  //       // setInitialKankorId(data[0].kankor_id);
-  //       // setInitialStudentId(data[0].student_id);
-  //       // setInitialClass(data[0].graduat_12_types);
-  //       // setInitialInteranceType(data[0].internse_type);
-  //       // setInitialDepartment(data[0].kankor_id);
-  //       // setInitialBatch(data[0].kankor_id);
-  //       // setInitialMediumOfInstruction(data[0].kankor_id);
-  //       // setInitialStudyTime(data[0].kankor_id);
-  //       // setInitialStudentType(data[0].student_type);
-  //       // setInitialField(data[0].field);
-  //       // setInitialSector(data[0].sector);
-  //       // setInitialphoto(data[0].photo);
-  //     }
-  //     async function fetchStudentDepartment() {
-  //       const { data } = await callApi(
-  //         `api/student_institutes/?student_id=${studentId}`,
-  //         '',
-  //         null
-  //       );
-  //       console.log('student department data', data);
-  //     }
-  //     fetchStudent();
-  //     fetchStudentDepartment();
-  //     //setUpdateMode(true);
-  //   }, []);
-  // }
-
   const [isNext, setIsNext] = useState(false);
   const [institutes, setInstitutes] = useState([]);
   const [fieldList, setFieldList] = useState([]);
@@ -237,7 +127,22 @@ const StudentRegistration = ({ intl }, values) => {
 
   const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
   const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
+  const [initialName1, setInitialname1] = useState('');
+  const [initialLastName, setInitialLastName] = useState('');
+  const [initialLastNameEng, setInitialLastNameEng] = useState('');
+  const [initialFatherName, setInitialFatherName] = useState('');
+  const [initialFatherEngName, setInitialFatherEngName] = useState('');
+  const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
+  const [initialFatherDuty, setInitialFatherDuty] = useState('');
+  const [initialEngLastName, setInitialEnglishName] = useState('');
+  const [initialFatherDutyLocation, setInitialFatherDutyLocation] =
+    useState('');
+  const [initialGender, setInitialGender] = useState([]);
+  const [initialTazkiraType, setInitialTazkiraType] = useState([]);
+  const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState([]);
+  const [initialTazkiraNo, setInitialTazkiraNo] = useState([]);
 
+  const [initialPhoneNo, setInitialPhoneNo] = useState('');
   // used arrays as intial values because other things will throw error
   const [initialValues, setInitialValues] = useState([
     {
@@ -291,6 +196,139 @@ const StudentRegistration = ({ intl }, values) => {
       file: [],
     },
   ]);
+  // const { studentId } = useParams();
+  const studentId = '1';
+  console.log('PARAMS ID: ', studentId);
+  // if student id is provided, fetch student data from backend
+  if (studentId) {
+    useEffect(() => {
+      async function fetchStudent() {
+        // const { data } = await axios.get(
+        //   `api/?student_id=${updateStudentId}`
+        // );
+        const { data } = await callApi(`students/${studentId}/`);
+        console.log('the backend server data', data);
+        setInitialValues((prevValues) => [
+          {
+            ...prevValues[0],
+            name1: data.name,
+            englishName: data.english_name,
+            lastName: data.last_name,
+            lastNameEng: data.english_last_name,
+            fatherName: '',
+            fatherDuty: '',
+            fatherEngName: '',
+            grandFatherName: '',
+            fatherDutyLocation: '',
+            DoB: '',
+            monthOfBirth: '',
+            dayOfBirth: '',
+            gender: [],
+            tazkiraNo: '',
+            idCardPageNo: '',
+            idCardJoldNo: '',
+            tazkiraType: tazkiraOptions[0],
+            phoneNo: '',
+            email: '',
+            placeOfBirth: '',
+            disability: [],
+          },
+          { ...prevValues[1] },
+          { ...prevValues[2], name: data.name },
+        ]);
+        // get already existing student data from backend
+        // setInitialname1(data.name);
+        // setInitialLastName(data.last_name);
+        // setInitialFatherName(data.father_name);
+        // setInitialGrandFatherName(data.grand_father_name);
+        // setInitialFatherDuty(data.fatherـprofession);
+        // setInitialLastNameEng(data.english_last_name);
+        // const instGender = genderOptions.map((studentGender) => {
+        //   if (studentGender.value === data.gender) {
+        //     setInitialGender(studentGender);
+        //   }
+        // });
+        // const dateOfBirthOptions = dateOfBirthOptoions.map((yearOptions) => {
+        //   if (yearOptions.value === data.birth_date) {
+        //     setInitialDoB(yearOptions);
+        //   }
+        // });
+        // const graduationYear = educationalYearsOptions.map((yearOptions) => {
+        //   if (yearOptions.value === data.finished_grade_year) {
+        //     setInitialGraduationYear(yearOptions);
+        //   }
+        // });
+        // setInitialEnglishName(data.english_name);
+        // setInitialPhoneNo(data.phone_number);
+        // setInitialFatherDutyLocation(data.fatherـplaceـofـduty);
+        // if (data.sukuk_number) setInitialTazkiraType(tazkiraOptions[1]);
+        // else setInitialTazkiraType(tazkiraOptions[0]);
+        // setInitialFatherEngName(data.english_father_name);
+        // setInitialPlaceOfBirth(data.main_province);
+        // setInitialTazkiraNo(data.registration_number);
+        // setInitialEmail(data.email);
+        // setInitialIdCardPageNo(data.page_number);
+        // setInitialStudentId(data.cover_number);
+        // setInitialPreSchool(data.school);
+        // const studentFinishGrade = educationLevelOptions.map(
+        //   (finishedGrade) => {
+        //     if (finishedGrade.value === data.finished_grade) {
+        //       setInitialLevelOfEducation(finishedGrade);
+        //     }
+        //   }
+        // );
+        // const studentMainProvincee = provinceOptions.map((studentProvince) => {
+        //   if (studentProvince.value === data.main_province) {
+        //     setInitialProvince(studentProvince);
+        //   }
+        // });
+        // const studentCurrentProvince = provinceOptions.map(
+        //   (studentProvince) => {
+        //     if (studentProvince.value === data.current_province) {
+        //       setInitialC_Province(studentProvince);
+        //     }
+        //   }
+        // );
+        // const studentSchoolProvince = provinceOptions.map((studentProvince) => {
+        //   if (studentProvince.value === data.schoolـprovince) {
+        //     setInitialSchoolProvince(studentProvince);
+        //   }
+        // });
+        // setInitialDistrict(data.main_district);
+        // setInitialVillage(data.main_village);
+        // setInitialC_District(data.current_district);
+        // setInitialC_Village(data.current_village);
+        // setInitialIdCardPageNo(data.page_number);
+        // setInitialIdCardJoldNo(data.cover_number);
+
+        // setInitialInstitute(data[0].school);
+        // setInitialEducationalYear(data[0].finished_grade_year);
+        // setInitialKankorId(data[0].kankor_id);
+        // setInitialStudentId(data[0].student_id);
+        // setInitialClass(data[0].graduat_12_types);
+        // setInitialInteranceType(data[0].internse_type);
+        // setInitialDepartment(data[0].kankor_id);
+        // setInitialBatch(data[0].kankor_id);
+        // setInitialMediumOfInstruction(data[0].kankor_id);
+        // setInitialStudyTime(data[0].kankor_id);
+        // setInitialStudentType(data[0].student_type);
+        // setInitialField(data[0].field);
+        // setInitialSector(data[0].sector);
+        // setInitialphoto(data[0].photo);
+      }
+      // async function fetchStudentDepartment() {
+      //   const { data } = await callApi(
+      //     `api/student_institutes/?student_id=${studentId}`,
+      //     '',
+      //     null
+      //   );
+      //   console.log('student department data', data);
+      // }
+      fetchStudent();
+      // fetchStudentDepartment();
+      //setUpdateMode(true);
+    }, []);
+  }
 
   const forms = [createRef(null), createRef(null), createRef(null)];
 

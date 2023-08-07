@@ -33,6 +33,7 @@ import {
   persianMonthOptions,
   stepOptions,
   teacherContractStatusOptions,
+  teacherFeedbackOptions,
 } from '../../global-data/options';
 import logo from './../../../../assets/logos/AdminLogo.png';
 import profilePhoto from './../../../../assets/img/profiles/22.jpg';
@@ -66,6 +67,7 @@ const TeacherProfile = () => {
   const [teacherTransfer, setTeacherTransfer] = useState([]);
   const [teacherEducation, setTeacherEducation] = useState([]);
   const [teacherContracts, setTeacherContracts] = useState([]);
+  const [teacherIncentives, setTeacherIncentives] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [fields, setFields] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -78,6 +80,7 @@ const TeacherProfile = () => {
   const [contractAlert, setContractAlert] = useState(false);
   const [educationAlert, setEducationAlert] = useState(false);
   const [evaluationAlert, setEvaluationAlert] = useState(false);
+  const [insentiveAlert, setInsentiveAlert] = useState(false);
   const [updatingRecord, setUpdatingRecord] = useState({});
 
   const resetUpdate = () => {
@@ -164,6 +167,17 @@ const TeacherProfile = () => {
     console.log('Teacher Contracts: ', data);
     setTeacherContracts(data);
   }
+  async function fetchTeacherIncentives() {
+    const response = await callApi(
+      `teachers/${teacherId}/feedbacks/`,
+      '',
+      null
+    );
+
+    const data = response.data;
+    console.log('Teacher Contracts: ', data);
+    setTeacherIncentives(data);
+  }
   let recId;
   const handleRecord = (item) => {
     recId = item.id;
@@ -184,6 +198,7 @@ const TeacherProfile = () => {
     fetchTeacherEducation();
     fetchTeacherContracts();
     fetchInstitutes();
+    fetchTeacherIncentives();
     fetchFields();
   }, []);
 
@@ -223,6 +238,14 @@ const TeacherProfile = () => {
       console.log('Response in Education Delete: ', response.data);
       fetchTeacherHREvaluation();
     });
+  };
+  const deleteInsentive = async (item) => {
+    await callApi(`teachers/${teacherId}/feedbacks/${item}/`, 'DELETE').then(
+      (response) => {
+        console.log('Response in Incentive Delete: ', response.data);
+        fetchTeacherIncentives();
+      }
+    );
   };
   const addEducation = async (inputData) => {
     let apiParams = {
@@ -377,7 +400,36 @@ const TeacherProfile = () => {
       }
     );
   };
-
+  const addIncentive = async (inputData) => {
+    let apiParams = {
+      endPoint: `teachers/${teacherId}/feedbacks/`,
+      method: 'POST',
+    };
+    if (recId || updatingRecord) {
+      apiParams.endPoint = `teachers/${teacherId}/feedbacks/${updatingRecord.id}/`;
+      apiParams.method = 'PATCH';
+    }
+    const data = {
+      type: inputData.type?.value,
+      teacher: teacher[0].id,
+      institute: inputData.institute?.value,
+      details: inputData.details,
+    };
+    console.log('Incentive Data Data: ', data);
+    await callApi(apiParams.endPoint, apiParams.method, data).then(
+      (response) => {
+        console.log('RESPONSE in teacher Incentive Data;: ', response.data);
+        resetUpdate();
+        if (response.status >= 200 && response.status < 300) {
+          message.success('Data Saved Successfully');
+          fetchTeacherIncentives();
+          resetUpdate();
+        } else {
+          message.error('Data Not Saved Check your Payload');
+        }
+      }
+    );
+  };
   return (
     <>
       <Row>
@@ -1844,7 +1896,7 @@ const TeacherProfile = () => {
                                             name="institute"
                                             id="institute"
                                             value={values.institute}
-                                            options={institutes}
+                                            options={teacherFeedbackOptions}
                                             onChange={setFieldValue}
                                             onBlur={setFieldTouched}
                                             required
@@ -2548,6 +2600,277 @@ const TeacherProfile = () => {
                 </CardBody>
               </Card>
               {/* Evaluation Details End */}
+              {/* Insentives Start */}
+              <Card className="rounded m-4 mt-5">
+                <CardBody>
+                  <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                    {' '}
+                    <h2
+                      className="bg-primary "
+                      style={{
+                        padding: '8px',
+                        paddingInline: '30px',
+                        borderRadius: '10px',
+                      }}
+                    >
+                      <IntlMessages id="Insentives" />
+                    </h2>
+                  </Colxx>
+
+                  <Row className="justify-content-center   rounded">
+                    <Colxx style={{ paddingInline: '4%' }}>
+                      <table class="table table-lg" style={{ fontSize: 18 }}>
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Teacher</th>
+                            <th scope="col">Institute</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Details</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {teacherIncentives.map((item, index) => {
+                            return (
+                              <tr
+                                className={
+                                  index % 2 == 0 ? 'table-danger' : 'table-info'
+                                }
+                              >
+                                <th scope="row">{item.id}</th>
+                                <td>{item.teacher}</td>
+                                <td>{item.institute}</td>
+                                <td>{item.type}</td>
+                                <td>{item.details}</td>
+                                <td>
+                                  <BsPencilSquare
+                                    color="green"
+                                    data-toggle="modal"
+                                    data-target="#incentiveModal"
+                                    data-whatever="@getbootstrap"
+                                    outline
+                                    style={{ fontSize: '20px' }}
+                                    id="updateIcon"
+                                    onClick={() => handleRecord(item)}
+                                  />
+                                  <BsTrashFill
+                                    color="red"
+                                    id="deleteIcon"
+                                    outline
+                                    onClick={() => setInsentiveAlert(true)}
+                                    style={{ fontSize: '20px' }}
+                                  />
+                                </td>
+                                <Modal
+                                  isOpen={insentiveAlert}
+                                  toggle={() =>
+                                    setInsentiveAlert(!insentiveAlert)
+                                  }
+                                  style={{ marginTop: '10%' }}
+                                >
+                                  <ModalHeader>
+                                    <IntlMessages id="modal.deletion-message-title" />
+                                  </ModalHeader>
+                                  <ModalBody className="text-center">
+                                    <IntlMessages id="modal.deletion-message-details" />
+                                  </ModalBody>
+                                  <ModalFooter>
+                                    <Button
+                                      onClick={() => setInsentiveAlert(false)}
+                                      style={{ marginLeft: '55%' }}
+                                    >
+                                      نه/ نخیر
+                                    </Button>
+                                    <Button
+                                      color="danger"
+                                      onClick={() => {
+                                        setInsentiveAlert(false);
+                                        deleteInsentive(item.id);
+                                      }}
+                                      style={{ marginLeft: '5%' }}
+                                    >
+                                      هو / بلی
+                                    </Button>{' '}
+                                  </ModalFooter>
+                                </Modal>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+
+                      <br />
+                      <br />
+                      <Button
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#incentiveModal"
+                        data-whatever="@getbootstrap"
+                      >
+                        Save Incentive
+                      </Button>
+
+                      <div
+                        class="modal fade"
+                        id="incentiveModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="incentiveModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5
+                                class="modal-title"
+                                id="incentiveModalLabel"
+                              ></h5>
+                              <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={resetUpdate}
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <Formik
+                                enableReinitialize={true}
+                                initialValues={
+                                  !updatingRecord
+                                    ? {
+                                        institute: '',
+                                        type: '',
+                                        details: '',
+                                      }
+                                    : {
+                                        institute: {
+                                          value: updatingRecord.institute,
+                                          label: updatingRecord.institute,
+                                        },
+                                        type: {
+                                          value: updatingRecord.type,
+                                          label: updatingRecord.type,
+                                        },
+                                        details: updatingRecord.details,
+                                      }
+                                }
+                                // validationSchema={
+                                //   teacherContractValidationSchema
+                                // }
+                                onSubmit={(formData) => {
+                                  addIncentive(formData);
+                                }}
+                              >
+                                {({
+                                  errors,
+                                  touched,
+                                  values,
+                                  setFieldTouched,
+                                  setFieldValue,
+                                  handleSubmit,
+                                }) => (
+                                  <>
+                                    <form>
+                                      <div class="form-group w-100">
+                                        <label
+                                          for="type"
+                                          class="col-form-label"
+                                        >
+                                          Type
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="type"
+                                          id="type"
+                                          value={values.type}
+                                          options={teacherFeedbackOptions}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.type && touched.type ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.type}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div class="form-group w-100">
+                                        <label
+                                          for="institute"
+                                          class="col-form-label"
+                                        >
+                                          institute
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="institute"
+                                          id="institute"
+                                          value={values.institute}
+                                          options={institutes}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.institute &&
+                                        touched.institute ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.institute}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div class="form-group">
+                                        <label
+                                          for="recipient-name"
+                                          class="col-form-label"
+                                        >
+                                          Description
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <Field
+                                          className="form-control fieldStyle"
+                                          name="details"
+                                        />
+                                      </div>
+                                    </form>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-dismiss="modal"
+                                        onClick={resetUpdate}
+                                      >
+                                        Close
+                                      </button>
+                                      <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                        data-dismiss="modal"
+                                        onClick={handleSubmit}
+                                      >
+                                        Add Insentive
+                                      </button>
+                                    </div>{' '}
+                                  </>
+                                )}
+                              </Formik>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Colxx>
+                  </Row>
+                </CardBody>
+              </Card>
+              {/* Insentives End */}
               <Card className="rounded m-4 mt-5">
                 <CardBody>
                   <div>

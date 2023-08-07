@@ -19,6 +19,10 @@ import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { ProvincesContext } from 'context/AuthContext';
+import {
+  StdInteranceOptions,
+  studentStatusOptions,
+} from 'views/app/global-data/options';
 
 const StudentListBody = (
   { student, isSelect, collect, onCheckItem },
@@ -107,63 +111,37 @@ const StudentListBody = (
                 {student.phone_number}
               </p>
 
-              {/* UN COMMINT IT WHEN THE API IS COMPLETED */}
-              {/* <p className="mb-1 text-small">{student.class}</p>
-              <p className="mb-1 text-small">{student.department}</p>
-              <p className="mb-1 text-small">{student.institute}</p> */}
+              {StdInteranceOptions.map((type) => {
+                if (type.value == student?.admission_method) {
+                  return <p>{type.label}</p>;
+                }
+              })}
 
-              {/* <p className="mb-1 text-small">{student.internse_type}</p> */}
-              {student.internse_type === 1 ? (
-                <p
-                  className="mb-1 text-small"
-                  style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
-                >
-                  حکمی
-                </p>
-              ) : student.internse_type === 2 ? (
-                <p
-                  className="mb-1 text-small"
-                  style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
-                >
-                  کانکور اختصاصی
-                </p>
-              ) : (
-                <p
-                  className="mb-1 text-small"
-                  style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
-                >
-                  کانکور تحصیلات عالی
-                </p>
-              )}
-
-              {student.graduat_14_types === '1' ? (
-                <div
-                  className="mb-1 text-small "
-                  style={{ fontSize: '20px', width: '15%' }}
-                >
-                  <Badge color="success" pill>
-                    فارغ التحصیل
-                  </Badge>
-                </div>
-              ) : student.graduat_14_types == '3' ? (
-                <div
-                  className="mb-1 text-small"
-                  style={{ fontSize: '20px', width: '10%' }}
-                >
-                  <Badge color="danger" pill>
-                    منفک
-                  </Badge>
-                </div>
-              ) : (
-                <div
-                  className="mb-1 text-small"
-                  style={{ fontSize: '20px', width: '10%' }}
-                >
-                  <Badge color="warning" pill>
-                    جاری
-                  </Badge>
-                </div>
-              )}
+              {studentStatusOptions.map((status) => {
+                if (status.value == student?.status) {
+                  return (
+                    <div
+                      className="mb-1 text-small"
+                      style={{ fontSize: '20px', width: '10%' }}
+                    >
+                      <Badge
+                        color={
+                          status.value == 'dismissed'
+                            ? 'danger'
+                            : status.value == 'inprogress'
+                            ? 'success'
+                            : status.value == 'freeze'
+                            ? 'secondary'
+                            : 'warning'
+                        }
+                        pill
+                      >
+                        {status.label}
+                      </Badge>
+                    </div>
+                  );
+                }
+              })}
             </div>
             <>
               {/* the update and delete buttons */}
@@ -172,7 +150,7 @@ const StudentListBody = (
                 className="align-self-center pr-4"
               >
                 <NavLink
-                  to={`/app/students/register/${student.student_id}`}
+                  to={`/app/students/student-update/${student.id}`}
                   // style={{ width: '10%' }}
                 >
                   <div>

@@ -22,10 +22,22 @@ const UpdateStudentAttendanceAPI =
 
 const ValidationSchema = Yup.object().shape({
   studentName: Yup.string().required(<IntlMessages id="studentNameErr" />),
-  present: Yup.number().required(<IntlMessages id="presentErr" />),
-  absent: Yup.number().required(<IntlMessages id="absentErr" />),
-  holidays: Yup.number().required(<IntlMessages id="holidaysErr" />),
-  sickness: Yup.number().required(<IntlMessages id="sicknessErr" />),
+  present: Yup.number()
+    .min(0)
+    .max(300)
+    .required(<IntlMessages id="presentErr" />),
+  absent: Yup.number()
+    .min(0)
+    .max(300)
+    .required(<IntlMessages id="absentErr" />),
+  holidays: Yup.number()
+    .min(0)
+    .max(100)
+    .required(<IntlMessages id="holidaysErr" />),
+  sickness: Yup.number()
+    .min(0)
+    .max(100)
+    .required(<IntlMessages id="sicknessErr" />),
   educationalDays: Yup.number().required(
     <IntlMessages id="educationalDaysErr" />
   ),

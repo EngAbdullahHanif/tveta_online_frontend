@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 // import useSelector
@@ -34,19 +34,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import { getDirection, getCurrentUser } from './../../../../helpers/Utils';
 import { NotificationManager } from 'components/common/react-notifications';
+import { AuthContext } from 'context/AuthContext';
+import { educationalDaysErr } from 'lang/locales/fa_IR';
 
-const SubjectOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
-
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
 const pageSizes = [10, 20, 40, 80];
 
 const ValidationSchema = Yup.object().shape({
@@ -158,11 +148,6 @@ const StudentAttendance = ({ match }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isNext, setIsNext] = useState(false);
-  const [fields, setFields] = useState([]);
-  const [institutes, setInstitutes] = useState([{ label: 1, value: 'he' }]);
-  const [departments, setDepartments] = useState([]);
-  const [classes, setClasses] = useState([]);
-  const [subjects, setSubjects] = useState([]);
   const [students, setStudents] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
@@ -179,78 +164,15 @@ const StudentAttendance = ({ match }) => {
   const [initailDepartment, setInitialDepartment] = useState([]);
   const [initalSubject, setInitialSubject] = useState([]);
 
-  // fetch institute lists
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response && response.status === 200) {
-      console.log(response.data, 'institute data');
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-
-  // fetch fields
-  const fetchFields = async () => {
-    const response = await callApi('institute/field/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setFields(updatedData);
-    } else {
-      console.log('field error');
-    }
-  };
-
-  // fetch department list
-  const fetchDepartments = async () => {
-    const response = await callApi('institute/department/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setDepartments(updatedData);
-    } else {
-      console.log('department error');
-    }
-  };
-
-  //fetch class list
-  const fetchClasses = async () => {
-    const response = await callApi('institute/classs/', 'GET', null);
-    console.log('class repspossdfsde', response);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name + ' - ' + item.semester + ' - ' + item.section,
-      }));
-      setClasses(updatedData);
-    } else {
-      console.log('class error');
-    }
-  };
-
-  //fetch subject list
-  const fetchSubjects = async () => {
-    const response = await callApi('institute/subject/', 'GET', null);
-    console.log('class repspossdfsde', response);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name + ' - ' + item.semester + ' - ' + item.section,
-      }));
-      setSubjects(updatedData);
-    } else {
-      console.log('class error');
-    }
-  };
+  const {
+    provinces,
+    districts,
+    classes,
+    subjects,
+    departments,
+    institutes,
+    contextFields: fields,
+  } = useContext(AuthContext);
 
   // fetch student list for typing attendance
   const fetchStudentList = async () => {
@@ -270,14 +192,6 @@ const StudentAttendance = ({ match }) => {
       console.log('class error');
     }
   };
-
-  useEffect(() => {
-    fetchInstitutes();
-    fetchFields();
-    fetchDepartments();
-    fetchClasses();
-    fetchSubjects();
-  }, []);
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -325,13 +239,14 @@ const StudentAttendance = ({ match }) => {
     console.log('subjectId', subjectId);
     //create an array which first node has exam_id and the rest of the nodes has student_id and marks
     // values.score[student.student_id]
+    console.log('values are: ', values);
     const newStudents = students.map((student, index) => {
       return {
         student_id: student.student_id,
-        present_hours: values.present[student.student_id],
-        absent_hours: values.absent[student.student_id],
-        necessary_work_hours: values.necessaryWork[student.student_id],
-        sickness_hours: values.sickness[student.student_id],
+        present_hours: values[`present[${student.student_id}]`],
+        absent_hours: values[`absent[${student.student_id}]`],
+        necessary_work_hours: values[`necessaryWork[${student.student_id}]`],
+        sickness_hours: values[`sickness[${student.student_id}]`],
       };
     });
 
@@ -559,7 +474,7 @@ const StudentAttendance = ({ match }) => {
                       <Label className="data-style-1">
                         <IntlMessages id="menu.institutes" />
                       </Label>
-                      <h2>دینامیک گردد</h2>
+                      <h2>{selectedInstitute.label}</h2>
                     </Colxx>
 
                     <Colxx xxs="2">
@@ -587,7 +502,7 @@ const StudentAttendance = ({ match }) => {
                       <Label className="data-style-1">
                         <IntlMessages id="curriculum.eduactionalYearList" />
                       </Label>
-                      <h2>دینامیک گردد</h2>
+                      <h2>{selectedEducationalYear.label}</h2>
                     </Colxx>
 
                     <Colxx xxs="2">
@@ -609,6 +524,8 @@ const StudentAttendance = ({ match }) => {
                       values,
                       setFieldTouched,
                       setFieldValue,
+                      handleSubmit,
+                      handleChange,
                     }) => (
                       <Form className="av-tooltip tooltip-label-right ">
                         <Row
@@ -706,7 +623,7 @@ const StudentAttendance = ({ match }) => {
                             >
                               {students.length > 0 &&
                                 students.map((student, index) => (
-                                  <tr>
+                                  <tr key={student.id}>
                                     <th
                                       style={{
                                         fontSize: '20px',
@@ -749,11 +666,25 @@ const StudentAttendance = ({ match }) => {
                                     </td>
                                     <td className="mb-2 p-0">
                                       {/* Present*/}
-                                      <Field
+                                      <input
                                         type="number"
                                         className="form-control"
                                         name={`present[${student.student_id}]`}
-                                        // name="present"
+                                        onChange={(event) => {
+                                          console.log(
+                                            'value is: ',
+                                            event.target.value
+                                          );
+                                          setFieldValue(
+                                            `present[${student.student_id}]`,
+                                            event.target.value
+                                          );
+                                        }}
+                                        value={
+                                          values[
+                                            `present[${student.student_id}]`
+                                          ]
+                                        }
                                         min="0"
                                         max="300"
                                         required
@@ -766,7 +697,7 @@ const StudentAttendance = ({ match }) => {
                                     </td>
                                     <td className="p-0">
                                       {/* Absent */}
-                                      <Field
+                                      <input
                                         type="number"
                                         className="form-control"
                                         name={`absent[${student.student_id}]`}
@@ -783,7 +714,7 @@ const StudentAttendance = ({ match }) => {
                                     </td>
                                     <td className="p-0">
                                       {/* Necessary Work */}
-                                      <Field
+                                      <input
                                         type="number"
                                         className="form-control"
                                         name={`necessaryWork[${student.student_id}]`}
@@ -802,7 +733,7 @@ const StudentAttendance = ({ match }) => {
                                     <td className="mb-2 p-0">
                                       {/* SickNess */}
 
-                                      <Field
+                                      <input
                                         type="number"
                                         className="form-control"
                                         name={`sickness[${student.student_id}]`}
@@ -892,7 +823,6 @@ const StudentAttendance = ({ match }) => {
                               color="primary"
                               className="buttonStyle1"
                               size="lg"
-                              type="submit"
                               style={{ margin: '5% 6% 10% 8%' }}
                               onClick={() => setIsNext(false)}
                             >
@@ -905,6 +835,7 @@ const StudentAttendance = ({ match }) => {
                               size="lg"
                               type="submit"
                               style={{ margin: '5% 0% 10% 6%' }}
+                              // onClick={onSubmit}
                             >
                               <IntlMessages id="button.SubmitButton" />
                             </Button>

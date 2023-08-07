@@ -26,6 +26,7 @@ const App = ({ locale }) => {
   const [institutes, setInstitutes] = useState();
   const [contextFields, setContextFields] = useState();
   const [options, setOptions] = useState({});
+  const [isTokenValid, setIsTokenValid] = useState(false);
 
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
@@ -40,6 +41,7 @@ const App = ({ locale }) => {
   }, [direction]);
 
   const checkTokenValidity = async () => {
+    setIsTokenValid(false);
     console.log('checking token validity');
     const token = localStorage.getItem('access_token');
     console.log('token is:', token);
@@ -53,7 +55,9 @@ const App = ({ locale }) => {
       }
       if (response.status >= 200 && response.status <= 299) {
         console.log('token is valid');
+        setIsTokenValid(true);
       } else {
+        setIsTokenValid(false);
         console.log('token is invalid. removing it from local storage');
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
@@ -102,7 +106,7 @@ const App = ({ locale }) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name + '-' + item.section,
+        label: item.name + '-' + item.semester + '-' + item.section,
       }));
       setClasses(updatedData);
     } else {
@@ -145,8 +149,9 @@ const App = ({ locale }) => {
         label: item.name,
       }));
       setInstitutes(updatedData);
+      console.log('institues fetched in app.js: ', response.data);
     } else {
-      console.log('district error');
+      console.log('institutes error');
     }
   };
   const fetchFields = async (provinceId) => {
@@ -161,9 +166,16 @@ const App = ({ locale }) => {
       console.log('district error');
     }
   };
+
   // check if token is still valid
   useEffect(async () => {
     checkTokenValidity();
+  }, []);
+
+  useEffect(async () => {
+    if (!isTokenValid) {
+      return;
+    }
     fetchProvinces();
     fetchDistricts();
     fetchClasses();
@@ -171,7 +183,7 @@ const App = ({ locale }) => {
     fetchDepartments();
     fetchInstitutes();
     fetchFields();
-  }, []);
+  }, [isTokenValid]);
 
   return (
     <AuthContext.Provider

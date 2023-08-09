@@ -345,11 +345,7 @@ const MarksRegistration = ({ match }) => {
       'POST',
       data
     );
-    if (
-      response.status === 200 ||
-      response.status === 201 ||
-      response.status === 202
-    ) {
+    if (response.status >= 200 || response.status < 300 > 201) {
       // console.log('response of students', response);
       setIsSubmitted(true);
       createNotification('success', 'filled');

@@ -839,7 +839,7 @@ export const verificationValueOptions = [
 
 export const tazkiraOptions = [
   {
-    value: 'ٍ electronic',
+    value: 'electronic',
     label: <IntlMessages id="forms.StdTazkiraElectronic" />,
   },
   { value: 'paper', label: <IntlMessages id="forms.StdTazkiraPaper" /> },

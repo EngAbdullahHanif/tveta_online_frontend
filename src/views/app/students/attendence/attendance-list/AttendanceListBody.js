@@ -27,47 +27,62 @@ const StudentListBody = ({ attendance, isSelect, collect, onCheckItem }) => {
               {/* send this to localhost/attendances/:id */}
 
               <NavLink to={`attendance-list/${attendance.id}`} className="">
-                <p className="list-item-heading mb-1 truncate ">
+                <p
+                  className="list-item-heading mb-1 truncate "
+                  style={{ fontSize: 18 }}
+                >
                   <span className="mr-5">{attendance.id}</span>
                 </p>
               </NavLink>
               <p
-                style={{ marginRight: '20px' }}
+                style={{ marginRight: '20px', fontSize: 18 }}
                 className="mb-1 text-small w-10 w-sm-100"
               >
                 {attendance.student.name}
               </p>
               <p
-                style={{ marginRight: '30px' }}
+                style={{ marginRight: '30px', fontSize: 18 }}
                 className="mb-1 text-small w-10 w-sm-100"
               >
                 {attendance.department.name}
               </p>
               <p
-                style={{ marginRight: '30px' }}
+                style={{ marginRight: '30px', fontSize: 18 }}
                 className="mb-1 text-small w-10 w-sm-100"
               >
                 {attendance.institute.name}
               </p>
               <p
-                style={{ marginRight: '10px' }}
+                style={{ marginRight: '10px', fontSize: 18 }}
                 className="mb-1 text-small w-10 w-sm-100"
               >
                 {attendance.present_hours}
               </p>
-              <p className="mb-1 text-small w-10 w-sm-100">
+              <p
+                className="mb-1 text-small w-10 w-sm-100"
+                style={{ fontSize: 18 }}
+              >
                 {attendance.absent_hours}
               </p>
-              <p className="mb-1 text-small w-10 w-sm-100">
+              <p
+                className="mb-1 text-small w-10 w-sm-100"
+                style={{ fontSize: 18 }}
+              >
                 {attendance.sickness_hours}
               </p>
               {/* <p className="mb-1 text-small w-10 w-sm-100">
                 {attendance.educational_days}
               </p> */}
-              <p className="mb-1 text-small w-10 w-sm-100">
+              <p
+                className="mb-1 text-small w-10 w-sm-100"
+                style={{ fontSize: 18 }}
+              >
                 {attendance.educational_year}
               </p>
-              <p className="mb-1 text-small w-10 w-sm-100">
+              <p
+                className="mb-1 text-small w-10 w-sm-100"
+                style={{ fontSize: 18 }}
+              >
                 {attendance.is_short_attendance ? 'محروم' : 'غیر محروم'}
               </p>
             </div>

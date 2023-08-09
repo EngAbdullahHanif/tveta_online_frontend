@@ -323,9 +323,10 @@ const TeacherRegister = ({ intl }, values) => {
       main_province: newFields.mainProvince?.value,
       main_village: newFields.mainVillage,
       // field_of_study: newFields.major,
+      tazkira_type: newFields.tazkiraType?.value,
       name: newFields.name,
-      page_number: newFields.pageNumber,
-      phone_number: newFields.phoneNumber,
+      page_number: newFields.pageNumber || null,
+      phone_number: newFields.phoneNumber || null,
       place_of_birth: newFields.placeOfBirth,
       registration_number: newFields.registrationNumber,
       step: newFields.step?.value,
@@ -339,7 +340,7 @@ const TeacherRegister = ({ intl }, values) => {
     await callApi(apiParams.endPoint, apiParams.method, data)
       .then((response) => {
         message.success('استاد ثبت شو');
-        window.location.replace(`${response.data.id}/`);
+        window.location.replace(`/`);
         console.log('RESPONSE in Teacher register: ', response.data);
       })
       .catch((err) => console.log('Error in Teacher Save: ', err));
@@ -373,9 +374,7 @@ const TeacherRegister = ({ intl }, values) => {
               coverNumber: initialcoverNumber,
               gender: initialGender,
               tazkiraType:
-                initialpageNumber > 0 && initialpageNumber > 0
-                  ? tazkiraOptions[1]
-                  : tazkiraOptions[0],
+                initialpageNumber > 0 ? tazkiraOptions[1] : tazkiraOptions[0],
               grade: initialGrade,
               step: initialStep,
               currentDistrict: initialCurrentDistrict,

@@ -82,6 +82,7 @@ const initialValues = {
   classs: [],
   department: [],
   subject: [],
+  marks: 0,
 };
 
 const MarksRegistration = ({ match }) => {
@@ -105,6 +106,7 @@ const MarksRegistration = ({ match }) => {
   const [subjectGPA, setSubjectGPA] = useState();
   const [examId, setExamId] = useState();
   const { markId } = useParams();
+  const [arr, setArr] = useState({});
   // separate and set labels for classes
   const [selectedClassLabel, setselectedClassLabel] = useState({
     classs: '',
@@ -297,6 +299,11 @@ const MarksRegistration = ({ match }) => {
   };
 
   const onSubmit = async (values) => {
+    const newStudents = [];
+    Object.keys(arr).forEach((id) => {
+      newStudents.push({ student_id: id, ...arr[id] });
+    });
+    console.log('arr is: ', arr);
     const educationalYear = selectedEducationalYear.value;
     const instituteId = selectedInstitute.value;
     const departmentId = selectedDepartment.value;
@@ -310,12 +317,12 @@ const MarksRegistration = ({ match }) => {
     console.log('classId', classId);
     console.log('subjectId', subjectId);
 
-    const newStudents = students.map((student, index) => {
-      return {
-        student_id: student.student_id,
-        marks: values.score[student.student_id],
-      };
-    });
+    // const newStudents = students.map((student, index) => {
+    //   return {
+    //     student_id: student.student_id,
+    //     marks: values.score[student.student_id],
+    //   };
+    // });
 
     console.log('newStudents', newStudents);
 
@@ -696,16 +703,27 @@ const MarksRegistration = ({ match }) => {
                                           fontSize: '15px',
                                         }}
                                       >
-                                        <Field
+                                        <input
                                           type="number"
-                                          style={{
-                                            fontSize: '15px',
-                                            textAlign: 'center',
-                                          }}
+                                          // style={{
+                                          //   fontSize: '15px',
+                                          //   textAlign: 'center',
+                                          // }}
                                           className="form-control"
-                                          name={`score[${student.student_id}]`}
-                                          min="0"
-                                          max="100"
+                                          // name={`score[${student.student_id}]`}
+                                          name="marks"
+                                          min={0}
+                                          max={100}
+                                          onChange={(e) => {
+                                            const newArr = arr;
+                                            newArr[student.student_id] = {
+                                              ...newArr[student.student_id],
+                                              [e.target.name]: Number.parseInt(
+                                                e.target.value
+                                              ),
+                                            };
+                                            setArr(newArr);
+                                          }}
                                         />
                                         {errors.score && touched.score ? (
                                           <div className="invalid-feedback d-block">

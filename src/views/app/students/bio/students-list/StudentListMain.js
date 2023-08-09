@@ -64,7 +64,6 @@ const ThumbListPages = ({ match }) => {
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
-
   const { provinces: provincesOptionsForList } = useContext(ProvincesContext);
 
   const [selectedGenderOption, setSelectedGenderOption] = useState();
@@ -145,6 +144,7 @@ const ThumbListPages = ({ match }) => {
           setTotalPage(Math.ceil(response.data.count / itemsPerPage));
           setIsLoaded(false);
           setItems(response.data.results);
+
           setSelectedItems([]);
           setTotalItemCount(response.data.count);
           console.log('response of the result ', response.data.results);

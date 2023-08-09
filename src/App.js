@@ -23,7 +23,10 @@ const App = ({ locale }) => {
   const [classes, setClasses] = useState();
   const [subjects, setSubjects] = useState();
   const [departments, setDepartments] = useState();
+  const [institutes, setInstitutes] = useState();
+  const [contextFields, setContextFields] = useState();
   const [options, setOptions] = useState({});
+  const [isTokenValid, setIsTokenValid] = useState(false);
 
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
@@ -38,6 +41,7 @@ const App = ({ locale }) => {
   }, [direction]);
 
   const checkTokenValidity = async () => {
+    setIsTokenValid(false);
     console.log('checking token validity');
     const token = localStorage.getItem('access_token');
     console.log('token is:', token);
@@ -51,7 +55,9 @@ const App = ({ locale }) => {
       }
       if (response.status >= 200 && response.status <= 299) {
         console.log('token is valid');
+        setIsTokenValid(true);
       } else {
+        setIsTokenValid(false);
         console.log('token is invalid. removing it from local storage');
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
@@ -64,6 +70,7 @@ const App = ({ locale }) => {
   };
 
   const fetchProvinces = async () => {
+    if (!user) return;
     const response = await callApi('core/provinces/', 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -79,6 +86,7 @@ const App = ({ locale }) => {
   };
 
   const fetchDistricts = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`core/districts/?province`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -93,11 +101,12 @@ const App = ({ locale }) => {
   };
 
   const fetchClasses = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/classs/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name + '-' + item.section,
+        label: item.name + '-' + item.semester + '-' + item.section,
       }));
       setClasses(updatedData);
     } else {
@@ -106,6 +115,7 @@ const App = ({ locale }) => {
   };
 
   const fetchSubjects = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/subject/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -119,6 +129,7 @@ const App = ({ locale }) => {
   };
 
   const fetchDepartments = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/department/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -130,16 +141,49 @@ const App = ({ locale }) => {
       console.log('district error');
     }
   };
+  const fetchInstitutes = async (provinceId) => {
+    const response = await callApi(`institute/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setInstitutes(updatedData);
+      console.log('institues fetched in app.js: ', response.data);
+    } else {
+      console.log('institutes error');
+    }
+  };
+  const fetchFields = async (provinceId) => {
+    const response = await callApi(`institute/field/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setContextFields(updatedData);
+    } else {
+      console.log('district error');
+    }
+  };
 
   // check if token is still valid
   useEffect(async () => {
     checkTokenValidity();
+  }, []);
+
+  useEffect(async () => {
+    if (!isTokenValid) {
+      return;
+    }
     fetchProvinces();
     fetchDistricts();
     fetchClasses();
     fetchSubjects();
     fetchDepartments();
-  }, []);
+    fetchInstitutes();
+    fetchFields();
+  }, [isTokenValid]);
 
   return (
     <AuthContext.Provider
@@ -151,6 +195,8 @@ const App = ({ locale }) => {
         classes,
         subjects,
         departments,
+        institutes,
+        contextFields,
       }}
     >
       <ProvincesContext.Provider value={{ provinces }}>

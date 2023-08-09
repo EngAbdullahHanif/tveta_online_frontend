@@ -6,6 +6,7 @@ import { userRole } from 'constants/defaultValues';
 import singleStudentSingleSubjectMarks from './single-student-single-subject-marks';
 import singleStudentAttendace from './attendence/single-student-attendace';
 import ClassTransfer from './transfered-students/class-transfer';
+import StudentUpdate from './bio/student-update';
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "register" */ './bio/register')
 );
@@ -182,8 +183,8 @@ const Students = ({ match, props }) => {
         />
 
         <ProtectedRoute
-          path={`${match.url}/register/:studentId`}
-          component={Register}
+          path={`${match.url}/student-update/:studentId`}
+          component={StudentUpdate}
           roles={[
             userRole.admin,
             userRole.institute,

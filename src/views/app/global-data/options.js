@@ -856,7 +856,26 @@ export const educationLevelOptions = [
 
 export const teacherCurrentStatusOptions = [
   { value: 'active', label: <IntlMessages id="teacher.StatusOption_1" /> },
+  { value: 'inactive', label: <IntlMessages id="teacher.StatusOption_3" /> },
   { value: 'dismissed', label: <IntlMessages id="teacher.StatusOption_2" /> },
+];
+
+export const studentStatusOptions = [
+  { value: 'inprogress', label: <IntlMessages id="جاری" /> },
+  { value: 'dismissed', label: <IntlMessages id="منفک" /> },
+  { value: 'freeze', label: <IntlMessages id="تعجیل" /> },
+  { value: 'temporary', label: <IntlMessages id="موقت" /> },
+];
+
+export const teacherContractStatusOptions = [
+  { value: 'active', label: <IntlMessages id="teacher.StatusOption_1" /> },
+  { value: 'inactive', label: <IntlMessages id="teacher.StatusOption_3" /> },
+  { value: 'dismissed', label: <IntlMessages id="teacher.StatusOption_2" /> },
+];
+
+export const teacherFeedbackOptions = [
+  { value: 'incentive', label: <IntlMessages id="teacher.promotionLabel" /> },
+  { value: 'discipline', label: <IntlMessages id="teacher.demotionLabel" /> },
 ];
 
 export const studentType = [

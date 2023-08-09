@@ -635,7 +635,7 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="institueCityType"
                           id="institueCityType"
-                          value={values.cityType}
+                          value={values.cityType.value}
                           options={instituteCityOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

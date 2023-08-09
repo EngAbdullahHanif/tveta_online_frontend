@@ -1,59 +1,26 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
 import './../dorms/dorm-register.css';
 import './provincail-dashboard.css';
-import Calendar from 'containers/dashboards/Calendar';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { NavLink } from 'react-router-dom';
-import { adminRoot } from 'constants/defaultValues';
 import { AuthContext } from 'context/AuthContext';
-import {
-  DoughnutChart,
-  LineChart,
-  PolarAreaChart,
-  AreaChart,
-  ScatterChart,
-  BarChart,
-  RadarChart,
-  PieChart,
-} from 'components/charts';
+
 import CustomePieChart from 'components/charts/custom-pie-chart';
 import CustomeBarChart from 'components/charts/custom-bar-chart';
-import {
-  lineChartData,
-  polarAreaChartData,
-  polarAreaChartData1,
-  areaChartData,
-  scatterChartData,
-  barChartData,
-  radarChartData,
-  pieChartData,
-  doughnutChartData,
-  doughnutChartData1,
-} from 'data/charts';
 
-import * as Yup from 'yup';
 import {
   Row,
   Card,
   CardBody,
   Table,
-  FormGroup,
-  Label,
-  Button,
   CardTitle,
   CardSubtitle,
-  Input,
 } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import { comments } from 'data/comments';
-import Rating from 'components/common/Rating';
-import { studyTimeOptionsForList } from './../global-data/options';
 
 const Admin = (values, { className = '', displayRate = false }) => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, institutes } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(true);
   const handleClick = (event) => {
     setIsNext(event);
@@ -1978,6 +1945,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
                   <ol style={{ fontSize: 20 }}>
+                    {/* {institutes.map((item) => {
+                      <li>{item.label}</li>;
+                    })} */}
                     <li>Nima</li>
                     <li>کثیر الرشتوی بغلان</li>
                     <li>تکنالوژی بغلان</li>

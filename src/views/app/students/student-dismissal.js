@@ -435,7 +435,7 @@ const StudentsDismissal = (values) => {
                   <Formik
                     initialValues={initialValues}
                     onSubmit={onSubmit}
-                    validationSchema={studentdismissalvalidationSchema}
+                    // validationSchema={studentdismissalvalidationSchema}
                   >
                     {({
                       errors,

@@ -50,7 +50,6 @@ const Login = ({ history, loading, error, loginUserAction }) => {
 
   const onUserLogin = (values) => {
     setIsLoading(true);
-
     callApi(`auth/login/`, 'POST', {
       username: values.username,
       password: values.password,
@@ -69,9 +68,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
           localStorage.setItem('access_token', response.data.access);
           history.push('/');
         }
-
         console.log('response is: ', response);
-
         // return response.data;
       })
       .catch((err) => {
@@ -80,7 +77,6 @@ const Login = ({ history, loading, error, loginUserAction }) => {
           setLoginError(true);
           console.log('status is 400');
         }
-
         console.log('error of response', err);
         // message.error('Network Error');
       })

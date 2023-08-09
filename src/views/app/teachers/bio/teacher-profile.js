@@ -49,6 +49,7 @@ import {
 } from 'views/app/global-data/forms-validation';
 import { message, Col, InputNumber, Slider, Spac } from 'antd';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
+import { Spinner } from 'react-bootstrap';
 const servicePath = config.API_URL;
 const teacherApiUrl = `${servicePath}/teachers/`;
 const teacherEvaluationApiUrl = `${servicePath}/teachers/evaluation`;
@@ -82,10 +83,15 @@ const TeacherProfile = () => {
   const [evaluationAlert, setEvaluationAlert] = useState(false);
   const [insentiveAlert, setInsentiveAlert] = useState(false);
   const [updatingRecord, setUpdatingRecord] = useState({});
-
+  const [loading, setLoading] = useState(false);
+  console.log('Teacher ID: ', teacherId);
   const resetUpdate = () => {
     setUpdatingRecord(null);
     recId = null;
+    setStartDate(null);
+    setEndDate(null);
+    setScore(null);
+    setEvaluationDate(null);
   };
   const fetchInstitutes = async () => {
     const response = await callApi(`/institute/`, '', null);
@@ -248,18 +254,19 @@ const TeacherProfile = () => {
     );
   };
   const addEducation = async (inputData) => {
+    setLoading(true);
     let apiParams = {
       endPoint: `teachers/${teacherId}/educations/`,
       method: 'POST',
     };
-    if (recId || updatingRecord) {
+    if (recId || updatingRecord.id) {
       apiParams.endPoint = `teachers/${teacherId}/educations/${updatingRecord.id}/`;
       apiParams.method = 'PATCH';
     }
     console.log('File: ', cvFile);
     console.log('Form Data in Teacher Education: ', inputData);
     const formData = new FormData();
-    formData.append('document', cvFile);
+    cvFile && formData.append('document', cvFile);
     formData.append('degree', inputData.degree?.value);
     formData.append('institution', inputData.institute);
     formData.append('field_of_study', inputData.field_of_study);
@@ -270,7 +277,8 @@ const TeacherProfile = () => {
     await callApi(apiParams.endPoint, apiParams.method, formData).then(
       (response) => {
         console.log('RESPONSE in teacher Education: ', response.data);
-        if (response.status === 201) {
+        if (response.status >= 200 && response.status <= 299) {
+          setLoading(false);
           message.success('Education Added');
           fetchTeacherEducation();
           resetUpdate();
@@ -280,11 +288,12 @@ const TeacherProfile = () => {
   };
 
   const addContract = async (inputData) => {
+    setLoading(true);
     let apiParams = {
       endPoint: `teachers/${teacherId}/contracts/`,
       method: 'POST',
     };
-    if (recId || updatingRecord) {
+    if (recId || updatingRecord.id) {
       apiParams.endPoint = `teachers/${teacherId}/contracts/${updatingRecord.id}/`;
       apiParams.method = 'PATCH';
     }
@@ -316,6 +325,7 @@ const TeacherProfile = () => {
         console.log('RESPONSE in teacher Evaluation;: ', response.data);
 
         if (response.status >= 200 && response.status < 300) {
+          setLoading(false);
           message.success('Data Saved Successfully');
           fetchTeacherContracts();
           resetUpdate();
@@ -327,12 +337,13 @@ const TeacherProfile = () => {
   };
 
   const addEvaluation = async (inputData) => {
+    setLoading(true);
     console.log('Form Data in Teacher HR Evaluation: ', inputData);
     let apiParams = {
       endPoint: `teachers/evaluation-create/`,
       method: 'POST',
     };
-    if (recId || updatingRecord) {
+    if (recId || updatingRecord.id) {
       apiParams.endPoint = `teachers/${teacherId}/evaluations/${updatingRecord.id}/`;
       apiParams.method = 'PATCH';
     }
@@ -357,6 +368,7 @@ const TeacherProfile = () => {
         console.log('RESPONSE in teacher Contract;: ', response.data);
 
         if (response.status >= 200 && response.status < 300) {
+          setLoading(false);
           message.success('Data Saved Successfully');
           fetchTeacherEvaluation();
           resetUpdate();
@@ -368,11 +380,12 @@ const TeacherProfile = () => {
   };
 
   const addHREvaluation = async (inputData) => {
+    setLoading(true);
     let apiParams = {
       endPoint: `teachers/${teacherId}/hr-evaluations/`,
       method: 'POST',
     };
-    if (recId || updatingRecord) {
+    if (recId || updatingRecord.id) {
       apiParams.endPoint = `teachers/${teacherId}/hr-evaluations/${updatingRecord.id}/`;
       apiParams.method = 'PATCH';
     }
@@ -391,6 +404,7 @@ const TeacherProfile = () => {
         console.log('RESPONSE in teacher HR Evaluation;: ', response.data);
 
         if (response.status >= 200 && response.status < 300) {
+          setLoading(false);
           message.success('Data Saved Successfully');
           fetchTeacherHREvaluation();
           resetUpdate();
@@ -401,11 +415,12 @@ const TeacherProfile = () => {
     );
   };
   const addIncentive = async (inputData) => {
+    setLoading(true);
     let apiParams = {
       endPoint: `teachers/${teacherId}/feedbacks/`,
       method: 'POST',
     };
-    if (recId || updatingRecord) {
+    if (recId || updatingRecord.id) {
       apiParams.endPoint = `teachers/${teacherId}/feedbacks/${updatingRecord.id}/`;
       apiParams.method = 'PATCH';
     }
@@ -421,6 +436,7 @@ const TeacherProfile = () => {
         console.log('RESPONSE in teacher Incentive Data;: ', response.data);
         resetUpdate();
         if (response.status >= 200 && response.status < 300) {
+          setLoading(false);
           message.success('Data Saved Successfully');
           fetchTeacherIncentives();
           resetUpdate();
@@ -447,7 +463,7 @@ const TeacherProfile = () => {
           </div>
         </Colxx>
       </Row>
-
+      {loading && <Spinner />}
       <Row>
         <Colxx xxs="1"></Colxx>
         <Colxx>
@@ -819,10 +835,10 @@ const TeacherProfile = () => {
                                         description: '',
                                       }
                                     : {
-                                        // degree: {
-                                        //   value: updatingRecord.degree,
-                                        //   label: updatingRecord.degree,
-                                        // },
+                                        degree: {
+                                          value: updatingRecord.degree,
+                                          label: updatingRecord.degree,
+                                        },
                                         institute: updatingRecord?.institution,
 
                                         field_of_study:
@@ -1001,6 +1017,7 @@ const TeacherProfile = () => {
               </Card>
               {/* Education Details End */}
               {/* Contract Details Start */}
+
               <Card className="rounded m-4 mt-5">
                 <CardBody>
                   <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
@@ -1593,7 +1610,6 @@ const TeacherProfile = () => {
                                   </>
                                 )}
                               </Formik>
-                              )
                             </div>
                           </div>
                         </div>
@@ -1896,7 +1912,7 @@ const TeacherProfile = () => {
                                             name="institute"
                                             id="institute"
                                             value={values.institute}
-                                            options={teacherFeedbackOptions}
+                                            options={institutes}
                                             onChange={setFieldValue}
                                             onBlur={setFieldTouched}
                                             required

@@ -91,6 +91,7 @@ const StudentRegistration = ({ intl }, values) => {
     phoneNo: '',
     email: '',
     idCardPageNo: '',
+    sabtNo: '',
     idCardJoldNo: '',
     tazkiraType: tazkiraOptions[0],
     levelOfEducation: '',
@@ -142,6 +143,10 @@ const StudentRegistration = ({ intl }, values) => {
   const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState([]);
   const [initialTazkiraNo, setInitialTazkiraNo] = useState([]);
 
+  const [bottomNavHidden, setBottomNavHidden] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const [initialPhoneNo, setInitialPhoneNo] = useState('');
   // used arrays as intial values because other things will throw error
   const [initialValues, setInitialValues] = useState([
@@ -162,6 +167,7 @@ const StudentRegistration = ({ intl }, values) => {
       tazkiraNo: '',
       idCardPageNo: '',
       idCardJoldNo: '',
+      sabtNo: '',
       tazkiraType: tazkiraOptions[0],
       phoneNo: '',
       email: '',
@@ -337,7 +343,7 @@ const StudentRegistration = ({ intl }, values) => {
           'خطا',
           9000,
           () => {
-            alert('callback');
+            // alert('callback');
           },
           null,
           cName
@@ -351,20 +357,23 @@ const StudentRegistration = ({ intl }, values) => {
 
   // post student record to server
   const postStudentRecord = async (data) => {
-    // const response = await callApi('api/student_create', 'POST', data);
-    const response = await callApi('students/register', 'POST', data);
-    // console.log('response of call api', response);
-    if (response.status >= 200 && response.status < 300) {
+    setLoading(true);
+    try {
+      const response = await callApi('students/register', 'POST', data);
       createNotification('success', 'filled');
       console.log('success message', response.data);
-    } else {
+      setIsSuccess(true);
+    } catch (error) {
+      setIsSuccess(false);
       createNotification('error', 'filled');
       console.log('class error');
+      console.log('error from student registration: ', error.response);
     }
-  };
+    // const response = await callApi('api/student_create', 'POST', data);
+    // console.log('response of call api', response);
 
-  const [bottomNavHidden, setBottomNavHidden] = useState(false);
-  const [loading, setLoading] = useState(false);
+    setLoading(false);
+  };
 
   const handleInitialValues = (steps, step) => {
     console.log('steps is ', steps);
@@ -409,7 +418,6 @@ const StudentRegistration = ({ intl }, values) => {
         // if next on last step is clicked, call the api to register student
         if (steps.length - 2 <= steps.indexOf(step)) {
           // setBottomNavHidden(true);
-          setLoading(true);
           console.log('new fields', newFields);
 
           const data = {
@@ -432,6 +440,7 @@ const StudentRegistration = ({ intl }, values) => {
             grandfather_name: newFields.grandFatherName,
             cover_number: newFields.idCardJoldNo,
             page_number: newFields.idCardPageNo,
+            sabt_number: newFields.sabtNo,
             registration_number: newFields.tazkiraNo,
             main_province: newFields.province.value,
             main_district: newFields.district.value,
@@ -491,10 +500,6 @@ const StudentRegistration = ({ intl }, values) => {
 
           // posting data to the server
           postStudentRecord(formData2);
-
-          setTimeout(() => {
-            setLoading(false);
-          }, 0);
         }
         goToNext();
         step.isDone = true;
@@ -654,94 +659,6 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
-
-                            {/* Tazkira Type */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="forms.TazkiraType" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-
-                              <FormikReactSelect
-                                name="tazkiraType"
-                                id="tazkiraType"
-                                value={values.tazkiraType}
-                                // defaultValue={}
-                                options={tazkiraOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                isSearchable={false}
-                              />
-                              {errors.tazkiraType && touched.tazkiraType ? (
-                                <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
-                                  {errors.tazkiraType}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-                            {/* Tazkira Number */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="teacher.TazkiraNoLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="tazkiraNo"
-                                type="number"
-                              />
-                              {errors.tazkiraNo && touched.tazkiraNo ? (
-                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                  {errors.tazkiraNo}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-                            {values.tazkiraType.value === 'paper' ? (
-                              <div>
-                                {/* Jold Number */}
-                                <div>
-                                  <FormGroup className="form-group has-float-label error-l-100">
-                                    <Label>
-                                      <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                    </Label>
-                                    <Field
-                                      className="form-control fieldStyle"
-                                      name="idCardJoldNo"
-                                      type="string"
-                                    />
-                                    {errors.idCardJoldNo &&
-                                    touched.idCardJoldNo ? (
-                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                        {errors.idCardJoldNo}
-                                      </div>
-                                    ) : null}
-                                  </FormGroup>
-                                </div>
-                              </div>
-                            ) : null}
-
-                            {values.tazkiraType.value === 'paper' ? (
-                              <div>
-                                {/* Safha */}
-                                <div>
-                                  <FormGroup className="form-group has-float-label error-l-100">
-                                    <Label>
-                                      <IntlMessages id="teacher.IdCardPageNoLabel" />
-                                    </Label>
-                                    <Field
-                                      className="form-control fieldStyle"
-                                      name="idCardPageNo"
-                                      type="number"
-                                    />
-                                    {errors.idCardPageNo &&
-                                    touched.idCardPageNo ? (
-                                      <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                        {errors.idCardPageNo}
-                                      </div>
-                                    ) : null}
-                                  </FormGroup>
-                                </div>
-                              </div>
-                            ) : null}
 
                             {/* year, month and day of birth */}
                             <FormGroup className="form-group has-float-label error-l-100 ">
@@ -913,6 +830,113 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
+
+                            {/* Tazkira Type */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="forms.TazkiraType" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+
+                              <FormikReactSelect
+                                name="tazkiraType"
+                                id="tazkiraType"
+                                value={values.tazkiraType}
+                                // defaultValue={}
+                                options={tazkiraOptions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                isSearchable={false}
+                              />
+                              {errors.tazkiraType && touched.tazkiraType ? (
+                                <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
+                                  {errors.tazkiraType}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+                            {/* Tazkira Number */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                نمبر تذکره الکترونی/صکوک نمبر
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="tazkiraNo"
+                                type="number"
+                              />
+                              {errors.tazkiraNo && touched.tazkiraNo ? (
+                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                  {errors.tazkiraNo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {values.tazkiraType.value === 'paper' ? (
+                              <>
+                                <div>
+                                  {/* Jold Number */}
+                                  <div>
+                                    <FormGroup className="form-group has-float-label error-l-100">
+                                      <Label>
+                                        <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                                      </Label>
+                                      <Field
+                                        className="form-control fieldStyle"
+                                        name="idCardJoldNo"
+                                        type="string"
+                                      />
+                                      {errors.idCardJoldNo &&
+                                      touched.idCardJoldNo ? (
+                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                          {errors.idCardJoldNo}
+                                        </div>
+                                      ) : null}
+                                    </FormGroup>
+                                  </div>
+                                </div>
+
+                                <div>
+                                  {/* Safha */}
+                                  <div>
+                                    <FormGroup className="form-group has-float-label error-l-100">
+                                      <Label>
+                                        <IntlMessages id="teacher.IdCardPageNoLabel" />
+                                      </Label>
+                                      <Field
+                                        className="form-control fieldStyle"
+                                        name="idCardPageNo"
+                                        type="number"
+                                      />
+                                      {errors.idCardPageNo &&
+                                      touched.idCardPageNo ? (
+                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                          {errors.idCardPageNo}
+                                        </div>
+                                      ) : null}
+                                    </FormGroup>
+                                  </div>
+                                </div>
+                                <div>
+                                  {/* Sabt */}
+                                  <div>
+                                    <FormGroup className="form-group has-float-label error-l-100">
+                                      <Label>شماره ثبت</Label>
+                                      <Field
+                                        className="form-control fieldStyle"
+                                        name="sabtNo"
+                                        type="number"
+                                      />
+                                      {errors.sabtNo && touched.sabtNo ? (
+                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                          {errors.sabtNo}
+                                        </div>
+                                      ) : null}
+                                    </FormGroup>
+                                  </div>
+                                </div>
+                              </>
+                            ) : null}
 
                             {/* Contact No */}
                             <FormGroup className="form-group has-float-label error-l-100 ">
@@ -1574,14 +1598,15 @@ const StudentRegistration = ({ intl }, values) => {
             </Step>
             <Step id="step4" hideTopNav>
               <div className="wizard-basic-step text-center pt-3">
-                {loading ? (
+                {loading && (
                   <div>
                     <Spinner color="primary" className="mb-1" />
                     <p>
                       <IntlMessages id="submit.waitmessage" />
                     </p>
                   </div>
-                ) : (
+                )}
+                {isSuccess ? (
                   <div>
                     <h1 className="mb-2">
                       <IntlMessages id="wizard.content-thanks" />
@@ -1600,22 +1625,36 @@ const StudentRegistration = ({ intl }, values) => {
                       </Button>
                     </NavLink>
                   </div>
+                ) : (
+                  <div>
+                    <h1 className="mb-2">شاګرد ثبت نشو/نشد</h1>
+                    <h3>بیرته لاړ شی او</h3>
+                    <NavLink
+                      to={{
+                        pathname: '/app/students/register-1',
+                        state: { data: 'STUDENT' },
+                      }}
+                    >
+                      <Button className="mt-5 bg-primary">
+                        <IntlMessages id="button.back" />
+                      </Button>
+                    </NavLink>
+                  </div>
                 )}
               </div>
             </Step>
           </Steps>
-          <BottomNavigation
-            onClickNext={onClickNext}
-            onClickPrev={onClickPrev}
-            className={` m-5  ${bottomNavHidden && 'invisible'}`}
-            prevLabel={messages['wizard.prev']}
-            nextLabel={messages['wizard.next']}
-          />
+          {!isSuccess && (
+            <BottomNavigation
+              onClickNext={onClickNext}
+              onClickPrev={onClickPrev}
+              className={` m-5  ${bottomNavHidden && 'invisible'}`}
+              prevLabel={messages['wizard.prev']}
+              nextLabel={messages['wizard.next']}
+            />
+          )}
         </Wizard>
       </CardBody>
-      <button type="submit" onClick={postStudentRecord}>
-        Admit Student
-      </button>
     </Card>
   );
 };

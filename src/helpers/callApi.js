@@ -62,16 +62,31 @@ const callApi = async (
     console.log('CALL API Response: on ' + endpoint, response.data);
     return response;
   } catch (error) {
-    NotificationManager.error(
-      'an error occured while connecting to server at ' + endpoint,
-      error?.response?.status + ': Server Error',
-      5000
-    );
-    console.log('Error in API: ', error);
-    if (error.response && error.response.status === 404) {
-      // throw new Error('Resource not found');
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      if (error.response.status === 404) {
+        // throw new Error('Resource not found');
+        NotificationManager.warning(
+          'Resource not found',
+          'Error',
+          10000,
+          null,
+          null,
+          ''
+        );
+      }
+      NotificationManager.error(
+        (error?.response?.data?.non_field_errors[0] ||
+          'an error occured while connecting to server at ') + endpoint,
+        error?.response?.status + ': Server Error',
+        5000
+      );
+      console.log('Error in API: ', error?.response?.data?.non_field_errors[0]);
+    } else if (error.request) {
+      // The request was made but no response was received
       NotificationManager.warning(
-        'Resource not found',
+        'ریکویسټ سرور ته ولیږل شوه،‌خو ځواب رانغی',
         'Error',
         10000,
         null,
@@ -79,8 +94,17 @@ const callApi = async (
         ''
       );
     } else {
-      console.log(error.response);
+      // Something happened in setting up the request that triggered an Error
+      NotificationManager.warning(
+        'ریکویسټ جوړولو کې مشکل رامینځته شو',
+        'Error',
+        10000,
+        null,
+        null,
+        ''
+      );
     }
+    console.log(error);
     throw error;
   }
 };

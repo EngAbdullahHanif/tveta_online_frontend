@@ -156,6 +156,8 @@ const App = ({ locale }) => {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.name + '-' + item.semester + '-' + item.section,
+        grade: item.grade,
+        semester: item.semester,
       }));
       setClasses(updatedData);
     } else {

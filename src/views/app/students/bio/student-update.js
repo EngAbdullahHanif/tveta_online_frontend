@@ -65,7 +65,7 @@ const StudentUpdate = ({ intl }, values) => {
           'خطا',
           5000,
           () => {
-            alert('callback');
+            // alert('callback');
           },
           null,
           cName
@@ -127,8 +127,8 @@ const StudentUpdate = ({ intl }, values) => {
     }
   }, [selectedCurrentProvince]);
 
-  const RegisterTeacher = async (newFields) => {
-    alert('Form Submitted');
+  const updateStudent = async (newFields) => {
+    // alert('Form Submitted');
     console.log('Form Data: ', newFields);
 
     const data = {
@@ -158,7 +158,7 @@ const StudentUpdate = ({ intl }, values) => {
     await callApi(`students/${studentId}/`, 'PATCH', data)
       .then((response) => {
         if (response.data) {
-          message.success('استاد ثبت شو');
+          message.success('شاګرد آپډیټ شو');
           window.history.back();
           console.log('RESPONSE in Student Update: ', response.data);
         }
@@ -245,7 +245,7 @@ const StudentUpdate = ({ intl }, values) => {
             validateOnMount
             // validationSchema={teacherRegisterFormStep_1}
             onSubmit={(formData) => {
-              RegisterTeacher(formData);
+              updateStudent(formData);
             }}
           >
             {({

@@ -12,8 +12,8 @@ message.config({
 import axios from 'axios';
 
 // const servicePath = 'http://172.16.105.244/tveta'; #production mood
-// const servicePath = 'http://0.0.0.0:8000';
-const servicePath = 'http://172.16.105.108:8000';
+const servicePath = 'http://0.0.0.0:8000';
+// const servicePath = 'http://172.16.105.108:8000';
 // const servicePath = 'https://online.tveta.gov.af:8000';
 
 const start_date = '2023-06-01';
@@ -45,6 +45,7 @@ const callApi = async (
   params = null
 ) => {
   const headers = getHeaders(data);
+  console.log('headers are: ', headers);
   const url = `${servicePath}/${endpoint}`;
   console.log('DATA in API Call: ' + endpoint, data);
   console.log('the url is', url);
@@ -80,7 +81,7 @@ const callApi = async (
     } else {
       console.log(error.response);
     }
-    return false;
+    throw error;
   }
 };
 

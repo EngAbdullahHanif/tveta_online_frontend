@@ -40,6 +40,7 @@ import { AuthContext } from 'context/AuthContext';
 import TopnavDarkSwitch from './Topnav.DarkSwitch';
 import callApi from 'helpers/callApi';
 // import logo from '../../assets/img/logo2.png';
+import userAvatar from '../../assets/img/profiles/user.png';
 
 const TopNav = ({
   // intl,
@@ -181,7 +182,7 @@ const TopNav = ({
   };
 
   const handleLogout = async () => {
-    // logoutUserAction(history);
+    logoutUserAction(history);
     setUser(null);
     window.location.href = window.location.origin;
     console.log('clearing from localstorage');
@@ -190,11 +191,11 @@ const TopNav = ({
     localStorage.removeItem('current_user');
     console.log('calling backend logout');
 
-    const response = await callApi('/auth/logout', 'POST', null);
+    const response = await callApi('auth/logout/', 'POST', null);
     console.log('response: ', response);
-    if (response.status === 200) {
-      console.log('logged out from backend');
-    }
+    // if (response.status === 200) {
+    //   console.log('logged out from backend');
+    // }
   };
 
   const menuButtonClick = (e, _clickCount, _conClassnames) => {
@@ -321,10 +322,7 @@ const TopNav = ({
             <DropdownToggle className="p-0" color="empty">
               <span className="name mr-1">{user.username}</span>
               <span>
-                <img
-                  alt="Profile"
-                  src={user.photo || '/assets/img/profiles/l-2.jpg'}
-                />
+                <img alt="Profile" src={user.photo || userAvatar} />
               </span>
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>

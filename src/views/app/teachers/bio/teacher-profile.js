@@ -142,14 +142,18 @@ const TeacherProfile = () => {
     });
   }
   async function fetchTeacherTransfer() {
-    const response = await callApi(
-      `teachers/institute/?teacher_id=${teacherId}`,
-      '',
-      null
-    );
-    const data = response.data;
-    console.log(`${teacherTransferApiUrl}/?teacher_id=${teacherId}`);
-    setTeacherTransfer(data);
+    try {
+      const response = await callApi(
+        `teachers/institute/?teacher_id=${teacherId}`,
+        '',
+        null
+      );
+      const data = response.data;
+      console.log(`${teacherTransferApiUrl}/?teacher_id=${teacherId}`);
+      setTeacherTransfer(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
   async function fetchTeacherEducation() {
     const response = await callApi(
@@ -3001,13 +3005,13 @@ const TeacherProfile = () => {
                           {teacherHREvaluation.map((item, index) => (
                             <tr key={index}>
                               <th scope="row">{index + 1}</th>
-                              <td>{item.institute_id.name}</td>
-                              <td>{item.current_grade}</td>
-                              <td>{item.current_step}</td>
-                              <td>{item.new_grade}</td>
-                              <td>{item.new_step}</td>
-                              <td>{item.score}</td>
-                              <td>{item.evaluation_date}</td>
+                              <td>{item?.institute_id?.name}</td>
+                              <td>{item?.current_grade}</td>
+                              <td>{item?.current_step}</td>
+                              <td>{item?.new_grade}</td>
+                              <td>{item?.new_step}</td>
+                              <td>{item?.score}</td>
+                              <td>{item?.evaluation_date}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -3076,16 +3080,16 @@ const TeacherProfile = () => {
                           {teacherEvaluation.map((item, index) => (
                             <tr key={index}>
                               <th scope="row">{index + 1}</th>
-                              <td>{item.institute_id.name}</td>
-                              <td>{item.department_id.name}</td>
+                              <td>{item?.institute_id?.name}</td>
+                              <td>{item?.department_id?.name}</td>
                               <td>
-                                {item.class_id.name +
+                                {item?.class_id?.name +
                                   ' - ' +
-                                  item.class_id.semester}
+                                  item?.class_id?.semester}
                               </td>
-                              <td>{item.topic}</td>
-                              <td>{item.score}</td>
-                              <td>{item.evaluation_date}</td>
+                              <td>{item?.topic}</td>
+                              <td>{item?.score}</td>
+                              <td>{item?.evaluation_date}</td>
                             </tr>
                           ))}
                         </tbody>

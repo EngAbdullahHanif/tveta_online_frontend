@@ -73,7 +73,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       })
       .catch((err) => {
         console.log('error inside login: ', err);
-        if (err.response.status === 400) {
+        if (err?.response && err.response.status === 400) {
           setLoginError(true);
           console.log('status is 400');
         }

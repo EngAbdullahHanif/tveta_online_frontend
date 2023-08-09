@@ -224,6 +224,7 @@ const TeacherRegister = ({ intl }, values) => {
       year_of_birth: newFields.yearOfBirth?.value,
       status: newFields.status?.value,
     };
+
     console.log('apiParas: ', apiParams);
     await callApi(apiParams.endPoint, apiParams.method, data)
       .then((response) => {

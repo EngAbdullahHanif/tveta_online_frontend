@@ -12,8 +12,8 @@ message.config({
 import axios from 'axios';
 
 // const servicePath = 'http://172.16.105.244/tveta'; #production mood
-// const servicePath = 'http://0.0.0.0:8000';
-const servicePath = 'http://172.16.105.108:8000';
+const servicePath = 'http://0.0.0.0:8000';
+// const servicePath = 'http://172.16.105.108:8000';
 // const servicePath = 'https://online.tveta.gov.af:8000';
 
 const start_date = '2023-06-01';
@@ -77,12 +77,11 @@ const callApi = async (
         );
       }
       NotificationManager.error(
-        (error?.response?.data?.non_field_errors[0] ||
-          'an error occured while connecting to server at ') + endpoint,
+        'an error occured while connecting to server at ' + endpoint,
         error?.response?.status + ': Server Error',
         5000
       );
-      console.log('Error in API: ', error?.response?.data?.non_field_errors[0]);
+      console.log('Error in API: ', error?.response);
     } else if (error.request) {
       // The request was made but no response was received
       NotificationManager.warning(
@@ -105,7 +104,8 @@ const callApi = async (
       );
     }
     console.log(error);
-    throw error;
+    // throw error;
+    return false;
   }
 };
 

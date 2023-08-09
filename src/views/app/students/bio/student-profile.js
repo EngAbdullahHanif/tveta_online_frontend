@@ -73,60 +73,64 @@ const StudentProfile = () => {
   //load data of student from database
   useEffect(() => {
     async function fetchStudent() {
-      const response = await callApi(`students/?id=${studentId}`, '', null);
-      console.log('student response', response.data);
-      if (response.data && response.status === 200) {
-        const data = await response.data.results;
-        console.log('student data', data);
-        setStudent(data);
-        setIsLoaded(true);
-      }
+      try {
+        const response = await callApi(`students/?id=${studentId}`, '', null);
+        console.log('student response', response.data);
+        if (response.data && response.status === 200) {
+          const data = await response.data.results;
+          console.log('student data', data);
+          setStudent(data);
+          setIsLoaded(true);
+        }
 
-      const instituteResponse = await callApi(
-        `students/student_institutes/?student__id=${studentId}`,
-        '',
-        null
-      );
+        const instituteResponse = await callApi(
+          `students/student_institutes/?student__id=${studentId}`,
+          '',
+          null
+        );
 
-      if (instituteResponse.data && instituteResponse.status === 200) {
-        const instituteData = await instituteResponse.data;
-        console.log('instituteData', instituteData);
-        setInstitute(instituteData);
-      }
+        if (instituteResponse.data && instituteResponse.status === 200) {
+          const instituteData = await instituteResponse.data;
+          console.log('instituteData', instituteData);
+          setInstitute(instituteData);
+        }
 
-      //type =1 means current class or current continued class
-      const classResponse = await callApi(
-        `students/student_class/?student=${studentId}&stauts=inprogress`,
-        '',
-        null
-      );
+        //type =1 means current class or current continued class
+        const classResponse = await callApi(
+          `students/student_class/?student=${studentId}&stauts=inprogress`,
+          '',
+          null
+        );
 
-      if (classResponse.data && classResponse.status === 200) {
-        const classData = await classResponse.data;
-        console.log('classData', classData);
-        setClasss(classData);
-      }
+        if (classResponse.data && classResponse.status === 200) {
+          const classData = await classResponse.data;
+          console.log('classData', classData);
+          setClasss(classData);
+        }
 
-      const dormResponse = await callApi(
-        `students/student_dorms/?student=${studentId}`,
-        '',
-        null
-      );
-      if (dormResponse.data && dormResponse.status === 200) {
-        const dormData = await dormResponse.data;
-        console.log('dormData', dormData);
-        setDorm(dormData);
-      }
+        const dormResponse = await callApi(
+          `students/student_dorms/?student=${studentId}`,
+          '',
+          null
+        );
+        if (dormResponse.data && dormResponse.status === 200) {
+          const dormData = await dormResponse.data;
+          console.log('dormData', dormData);
+          setDorm(dormData);
+        }
 
-      const marksResponse = await callApi(
-        `students/TranscriptData/?student=${studentId}`,
-        '',
-        null
-      );
-      if (marksResponse.data && marksResponse.status === 200) {
-        const marksData = await marksResponse.data;
-        console.log('marksData', marksData);
-        setMarks(marksData);
+        const marksResponse = await callApi(
+          `students/TranscriptData/?student=${studentId}`,
+          '',
+          null
+        );
+        if (marksResponse.data && marksResponse.status === 200) {
+          const marksData = await marksResponse.data;
+          console.log('marksData', marksData);
+          setMarks(marksData);
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
     fetchStudent();

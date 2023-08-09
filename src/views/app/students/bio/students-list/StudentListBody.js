@@ -94,7 +94,7 @@ const StudentListBody = (
                 className="mb-1 text-small"
                 style={{ width: '15%', textAlign: 'right', fontSize: '20px' }}
               >
-                {provinces &&
+                {provinces.length > 0 &&
                   provinces.filter(
                     (province) => province.value === student.current_province
                   )[0].label}
@@ -124,7 +124,8 @@ const StudentListBody = (
                         color={
                           status.value == 'dismissed'
                             ? 'danger'
-                            : status.value == 'inprogress'
+                            : status.value == 'inprogress' ||
+                              status.value == 'active'
                             ? 'success'
                             : status.value == 'freeze'
                             ? 'secondary'

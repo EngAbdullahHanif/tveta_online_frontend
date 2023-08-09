@@ -98,75 +98,110 @@ const TeacherRegister = ({ intl }, values) => {
   if (teacherId) {
     useEffect(() => {
       async function fetchTeacher() {
-        const { data } = await callApi(`teachers/${teacherId}`, '', null);
-        console.log('DATA in teacher UPDATE:', data);
-        setInitialName(data.name);
-        setInitialFatherName(data.father_name);
-        setInitialGrandFatherName(data.grand_father_name);
-        setInitialregistrationNumber(data.sukuk_number);
-        setInitialLastName(data.last_name);
-        setInitialEnglishName(data.english_name);
-        setInitialEnglishLastName(data.english_last_name);
-        setInitialEnglishFatherName(data.english_father_name);
-        setInitialGrandFatherName(data.grandfather_name);
-        setInitialregistrationNumber(data.registration_number);
-        setInitialPlaceOfBirth(data.place_of_birth);
+        try {
+          const { data } = await callApi(`teachers/${teacherId}`, '', null);
 
-        setInitialPhoneNumber(data.phone_number);
-        setInitialpageNumber(data.page_number);
-        setInitialEmail(data.email);
-        setInitialcoverNumber(data.cover_number);
-        setInitialMainVillage(data.main_village);
-        setInitialCurrentVillage(data.current_village);
+          console.log('DATA in teacher UPDATE:', data);
 
-        dateOfBirthOptoions.map((teacherBirth) => {
-          if (teacherBirth.value === data.year_of_birth.toString()) {
-            setYearOfBirth(teacherBirth);
-          }
-        });
+          const {
+            name,
+            father_name,
+            grand_father_name,
+            sukuk_number,
+            last_name,
+            english_name,
+            english_last_name,
+            english_father_name,
+            grandfather_name,
+            registration_number,
+            place_of_birth,
+            phone_number,
+            page_number,
+            email,
+            cover_number,
+            main_village,
+            current_village,
+            year_of_birth,
+            grade,
+            gender,
+            status,
+            current_province,
+            main_province,
+            main_district,
+            current_district,
+            step,
+          } = data;
 
-        gradeOptions.map((teacherGrade) => {
-          if (teacherGrade.value === data.grade) {
-            setInitialGrade(teacherGrade);
-          }
-        });
-        genderOptions.map((teacherGender) => {
-          if (teacherGender.value === data.gender) {
-            setInitialGender(teacherGender);
-          }
-        });
+          setInitialName(name);
+          setInitialFatherName(father_name);
+          setInitialGrandFatherName(grand_father_name);
+          setInitialregistrationNumber(sukuk_number);
+          setInitialLastName(last_name);
+          setInitialEnglishName(english_name);
+          setInitialEnglishLastName(english_last_name);
+          setInitialEnglishFatherName(english_father_name);
+          setInitialGrandFatherName(grandfather_name);
+          setInitialregistrationNumber(registration_number);
+          setInitialPlaceOfBirth(place_of_birth);
 
-        teacherCurrentStatusOptions.map((teacherStatus) => {
-          if (teacherStatus.value == data.status) {
-            setinitialStatus(teacherStatus);
-          }
-        });
-        provinces.map((province) => {
-          if (province.value == data.current_province) {
-            setInitialCurrentProvince(province);
-          }
-          if (province.value == data.main_province) {
-            setInitialMainProvince(province);
-          }
-        });
+          setInitialPhoneNumber(phone_number);
+          setInitialpageNumber(page_number);
+          setInitialEmail(email);
+          setInitialcoverNumber(cover_number);
+          setInitialMainVillage(main_village);
+          setInitialCurrentVillage(current_village);
 
-        districts.map((district) => {
-          if (district.value == data.main_district) {
-            setInitialMainDistrict(district);
-          }
-        });
-        currentDistricts.map((district) => {
-          console.log(district);
-          if (district.id == data.current_district) {
-            setInitialCurrentDistrict(district);
-          }
-        });
+          dateOfBirthOptoions.forEach((teacherBirth) => {
+            if (teacherBirth.value === year_of_birth.toString()) {
+              setYearOfBirth(teacherBirth);
+            }
+          });
 
-        stepOptions.map((teacherStep) => {
-          if (teacherStep.value == data.step) {
-            setInitialStep(teacherStep);
-          }
-        });
+          gradeOptions.forEach((teacherGrade) => {
+            if (teacherGrade.value === grade) {
+              setInitialGrade(teacherGrade);
+            }
+          });
+          genderOptions.forEach((teacherGender) => {
+            if (teacherGender.value === gender) {
+              setInitialGender(teacherGender);
+            }
+          });
+
+          teacherCurrentStatusOptions.forEach((teacherStatus) => {
+            if (teacherStatus.value === status) {
+              setinitialStatus(teacherStatus);
+            }
+          });
+          provinces.forEach((province) => {
+            if (province.value === current_province) {
+              setInitialCurrentProvince(province);
+            }
+            if (province.value === main_province) {
+              setInitialMainProvince(province);
+            }
+          });
+
+          districts.forEach((district) => {
+            if (district.value === main_district) {
+              setInitialMainDistrict(district);
+            }
+          });
+          currentDistricts.forEach((district) => {
+            console.log(district);
+            if (district.id === current_district) {
+              setInitialCurrentDistrict(district);
+            }
+          });
+
+          stepOptions.forEach((teacherStep) => {
+            if (teacherStep.value === step) {
+              setInitialStep(teacherStep);
+            }
+          });
+        } catch (error) {
+          console.error('Error fetching teacher:', error);
+        }
       }
       fetchTeacher();
     }, []);
@@ -191,7 +226,7 @@ const TeacherRegister = ({ intl }, values) => {
           'خطا',
           5000,
           () => {
-            alert('callback');
+            // alert('callback');
           },
           null,
           cName
@@ -262,7 +297,7 @@ const TeacherRegister = ({ intl }, values) => {
       apiParams.endPoint = `teachers/${teacherId}/`;
       apiParams.method = 'PATCH';
     }
-    alert('Form Submitted');
+    // alert('Form Submitted');
     console.log('Form Data: ', newFields);
 
     const data = {
@@ -365,199 +400,205 @@ const TeacherRegister = ({ intl }, values) => {
               setFieldValue,
               isSubmitting,
               handleSubmit,
-            }) => (
-              <Form className="av-tooltip tooltip-label-right style">
-                <Row className="justify-content-center">
-                  <Colxx xxs="5" className="ml-5">
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.NameLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field className="form-control fieldStyle" name="name" />
-                      {errors.name && touched.name ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.name}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+            }) =>
+              isSubmitting ? (
+                'Updating...'
+              ) : (
+                <Form className="av-tooltip tooltip-label-right style">
+                  <Row className="justify-content-center">
+                    <Colxx xxs="5" className="ml-5">
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="teacher.NameLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="name"
+                        />
+                        {errors.name && touched.name ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.name}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* lastname */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="forms.lastName" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="lastName"
-                      />
-                      {errors.lastName && touched.lastName ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.lastName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* lastname */}
+                      <FormGroup className="form-group has-float-label">
+                        <Label>
+                          <IntlMessages id="forms.lastName" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="lastName"
+                        />
+                        {errors.lastName && touched.lastName ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.lastName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Father Name */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.FatherNameLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="fatherName"
-                      />
-                      {errors.fatherName && touched.fatherName ? (
-                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                          {errors.fatherName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    {/* Tazkira Type */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="forms.TazkiraType" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
+                      {/* Father Name */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="teacher.FatherNameLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="fatherName"
+                        />
+                        {errors.fatherName && touched.fatherName ? (
+                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                            {errors.fatherName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Tazkira Type */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.TazkiraType" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
 
-                      <FormikReactSelect
-                        name="tazkiraType"
-                        id="tazkiraType"
-                        value={values.tazkiraType}
-                        options={tazkiraOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                      />
-                      {errors.tazkiraType && touched.tazkiraType ? (
-                        <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
-                          {errors.tazkiraType}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                        <FormikReactSelect
+                          name="tazkiraType"
+                          id="tazkiraType"
+                          value={values.tazkiraType}
+                          options={tazkiraOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.tazkiraType && touched.tazkiraType ? (
+                          <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
+                            {errors.tazkiraType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {values.tazkiraType.value === 'paper' ? (
-                      <div>
-                        <FormGroup className="form-group has-float-label error-l-175">
-                          <Label>
-                            <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                          </Label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="coverNumber"
-                            type="number"
-                          />
-                          {errors.coverNumber && touched.coverNumber ? (
-                            <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                              {errors.coverNumber}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                        <FormGroup className="form-group has-float-label error-l-175">
-                          <Label>
-                            <IntlMessages id="teacher.IdcardPageNoLabel" />
-                          </Label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="pageNumber"
-                            type="number"
-                          />
-                          {errors.pageNumber && touched.pageNumber ? (
-                            <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                              {errors.pageNumber}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                      </div>
-                    ) : (
-                      <div></div>
-                    )}
+                      {values.tazkiraType.value === 'paper' ? (
+                        <div>
+                          <FormGroup className="form-group has-float-label error-l-175">
+                            <Label>
+                              <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                            </Label>
+                            <Field
+                              className="form-control fieldStyle"
+                              name="coverNumber"
+                              type="number"
+                            />
+                            {errors.coverNumber && touched.coverNumber ? (
+                              <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                {errors.coverNumber}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+                          <FormGroup className="form-group has-float-label error-l-175">
+                            <Label>
+                              <IntlMessages id="teacher.IdcardPageNoLabel" />
+                            </Label>
+                            <Field
+                              className="form-control fieldStyle"
+                              name="pageNumber"
+                              type="number"
+                            />
+                            {errors.pageNumber && touched.pageNumber ? (
+                              <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                {errors.pageNumber}
+                              </div>
+                            ) : null}
+                          </FormGroup>
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
 
-                    <FormGroup className="form-group has-float-label error-l-100 ">
-                      <Label>
-                        <IntlMessages id="teacher.DoBLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <FormikReactSelect
-                        name="yearOfBirth"
-                        id="yearOfBirth"
-                        value={values.yearOfBirth}
-                        options={dateOfBirthOptoions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.yearOfBirth && touched.yearOfBirth ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.yearOfBirth}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      <FormGroup className="form-group has-float-label error-l-100 ">
+                        <Label>
+                          <IntlMessages id="teacher.DoBLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="yearOfBirth"
+                          id="yearOfBirth"
+                          value={values.yearOfBirth}
+                          options={dateOfBirthOptoions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.yearOfBirth && touched.yearOfBirth ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.yearOfBirth}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* Education */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.GradeLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <FormikReactSelect
-                        name="grade"
-                        id="grade"
-                        value={values.grade}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        options={gradeOptions}
-                        required
-                      />
-                      {errors.grade && touched.grade ? (
-                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                          {errors.grade}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.StepLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <FormikReactSelect
-                        name="step"
-                        id="step"
-                        value={values.step}
-                        options={stepOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.step && touched.step ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.step}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.StatusLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <FormikReactSelect
-                        name="status"
-                        id="status"
-                        value={values.status}
-                        options={teacherCurrentStatusOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.status && touched.status ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.status}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      {/* Education */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="teacher.GradeLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="grade"
+                          id="grade"
+                          value={values.grade}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          options={gradeOptions}
+                          required
+                        />
+                        {errors.grade && touched.grade ? (
+                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                            {errors.grade}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="teacher.StepLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="step"
+                          id="step"
+                          value={values.step}
+                          options={stepOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.step && touched.step ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.step}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="teacher.StatusLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="status"
+                          id="status"
+                          value={values.status}
+                          options={teacherCurrentStatusOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                        {errors.status && touched.status ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.status}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    {/* <div
+                      {/* <div
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
@@ -605,229 +646,17 @@ const TeacherRegister = ({ intl }, values) => {
                         ) : null}
                       </FormGroup>
                     </div> */}
-                  </Colxx>
-                  <Colxx xxs="5" className="mr-5">
-                    {/* Teacher English Name */}
-                    <FormGroup className="form-group has-float-label error-l-100">
-                      <Label>
-                        <IntlMessages id="forms.Eng_name" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="englishName"
-                      />
-                      {errors.englishName && touched.englishName ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.englishName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {/* englishLastname */}
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="forms.lastNameEng" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="englishLastName"
-                      />
-                      {errors.englishLastName && touched.englishLastName ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.englishLastName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {/* Teacher Father English Name */}
-                    <FormGroup className="form-group has-float-label error-l-100">
-                      <Label>
-                        <IntlMessages id="forms.Std_father_Eng_Name" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="englishFatherName"
-                      />
-                      {errors.englishFatherName && touched.englishFatherName ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.englishFatherName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    {/* Grand Father Name */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.GrandFatherNameLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="grandFatherName"
-                      />
-                      {errors.grandFatherName && touched.grandFatherName ? (
-                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                          {errors.grandFatherName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    {/* Gender */}
-
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="gender.gender" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <FormikReactSelect
-                        name="gender"
-                        id="gender"
-                        value={values.gender}
-                        options={genderOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                      />
-                      {touched.gender && errors.gender ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.gender}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {/* Tazkira Number */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.TazkiraNoLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="registrationNumber"
-                        type="number"
-                      />
-                      {errors.registrationNumber &&
-                      touched.registrationNumber ? (
-                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                          {errors.registrationNumber}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {/* Contact No */}
-                    <FormGroup className="form-group has-float-label error-l-175 ">
-                      <Label>
-                        <IntlMessages id="teacher.PhoneNoLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="phoneNumber"
-                        type="number"
-                      />
-                      {errors.phoneNumber && touched.phoneNumber ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.phoneNumber}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    {/* Email Address */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.EmailLabel" />
-                        {/* <span style={{ color: 'red' }}>*</span> */}
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="email"
-                        type="email"
-                      />
-                      {errors.email && touched.email ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.email}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                    {/* Place of birth */}
-                    <FormGroup className="form-group has-float-label error-l-100">
-                      <Label>
-                        <IntlMessages id="forms.PlaceOfBirthLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="placeOfBirth"
-                      />
-                      {errors.placeOfBirth && touched.placeOfBirth ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.placeOfBirth}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-                  </Colxx>
-                </Row>
-
-                <Row className="justify-content-center">
-                  <Colxx xxs="5">
-                    <div className="pt-5">
-                      <h1 className=" mb-4">
-                        {<IntlMessages id="forms.PermanentAddressLabel" />}
-                      </h1>
-
-                      {/* province permanent*/}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.ProvinceLabel" />
-                          <span style={{ color: 'red' }}>*</span>
-                        </Label>
-                        <FormikReactSelect
-                          name="mainProvince"
-                          id="mainProvince"
-                          value={values.mainProvince}
-                          options={provinces}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          onClick={setSelectedMainProvince(
-                            values.mainProvince.value
-                          )}
-                        />
-                        {errors.mainProvince && touched.mainProvince ? (
-                          <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
-                            {errors.mainProvince}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
-                      {/* District  permanent*/}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          <IntlMessages id="forms.DistrictLabel" />
-                        </Label>
-                        <FormikReactSelect
-                          name="mainDistrict"
-                          id="mainDistrict"
-                          value={values.mainDistrict}
-                          options={districts.filter(
-                            (district) =>
-                              district.province === values.mainProvince.value
-                          )}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                        />
-                        {errors.mainDistrict && touched.mainDistrict ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.mainDistrict}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-                      {/* Village  Main*/}
+                    </Colxx>
+                    <Colxx xxs="5" className="mr-5">
+                      {/* Teacher English Name */}
                       <FormGroup className="form-group has-float-label error-l-100">
                         <Label>
-                          <IntlMessages id="forms.VillageLabel" />
+                          <IntlMessages id="forms.Eng_name" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
                           className="form-control fieldStyle"
-                          name="mainVillage"
+                          name="englishName"
                         />
                         {errors.englishName && touched.englishName ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -835,92 +664,307 @@ const TeacherRegister = ({ intl }, values) => {
                           </div>
                         ) : null}
                       </FormGroup>
-                    </div>
-                  </Colxx>
 
-                  <Colxx xxs="5">
-                    <div className="pt-5">
-                      <h1 className=" mb-4">
-                        {<IntlMessages id="forms.CurrentAddresslabel" />}
-                      </h1>
-
-                      {/* Current Address */}
-                      {/* province Current */}
-                      <FormGroup className="form-group has-float-label error-l-175">
+                      {/* englishLastname */}
+                      <FormGroup className="form-group has-float-label">
                         <Label>
-                          <IntlMessages id="forms.ProvinceLabel" />
+                          <IntlMessages id="forms.lastNameEng" />
                           <span style={{ color: 'red' }}>*</span>
-                        </Label>
-                        <FormikReactSelect
-                          name="currentProvince"
-                          id="currentProvince"
-                          value={values.currentProvince}
-                          options={provinces}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          onClick={setSelectedCurrentProvince(
-                            values.currentProvince.value
-                          )}
-                        />
-                        {errors.currentProvince && touched.currentProvince ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.currentProvince}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
-                      {/* Current District */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          <IntlMessages id="forms.DistrictLabel" />
-                        </Label>
-                        <FormikReactSelect
-                          name="currentDistrict"
-                          id="currentDistrict"
-                          value={values.currentDistrict}
-                          options={districts.filter(
-                            (district) =>
-                              district.province === values.currentProvince.value
-                          )}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                        />
-                        {errors.currentDistrict && touched.currentDistrict ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.currentDistrict}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-                      {/* Village  Current*/}
-                      <FormGroup className="form-group has-float-label error-l-100">
-                        <Label>
-                          <IntlMessages id="forms.VillageLabel" />
                         </Label>
                         <Field
                           className="form-control fieldStyle"
-                          name="currentVillage"
+                          name="englishLastName"
                         />
-                        {errors.englishName && touched.englishName ? (
+                        {errors.englishLastName && touched.englishLastName ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.englishName}
+                            {errors.englishLastName}
                           </div>
                         ) : null}
                       </FormGroup>
-                    </div>
-                  </Colxx>
-                </Row>
-                <NavLink
-                  to={{
-                    pathname: `app/teachers/`,
-                    state: { data: 'TEACHER' },
-                  }}
-                >
-                  <Button className="mt-5 bg-primary" onClick={handleSubmit}>
-                    <IntlMessages id="ثبت" />
-                  </Button>
-                </NavLink>
-              </Form>
-            )}
+
+                      {/* Teacher Father English Name */}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label>
+                          <IntlMessages id="forms.Std_father_Eng_Name" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="englishFatherName"
+                        />
+                        {errors.englishFatherName &&
+                        touched.englishFatherName ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.englishFatherName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Grand Father Name */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="teacher.GrandFatherNameLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="grandFatherName"
+                        />
+                        {errors.grandFatherName && touched.grandFatherName ? (
+                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                            {errors.grandFatherName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Gender */}
+
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="gender.gender" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="gender"
+                          id="gender"
+                          value={values.gender}
+                          options={genderOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {touched.gender && errors.gender ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.gender}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Tazkira Number */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="teacher.TazkiraNoLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="registrationNumber"
+                          type="number"
+                        />
+                        {errors.registrationNumber &&
+                        touched.registrationNumber ? (
+                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                            {errors.registrationNumber}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Contact No */}
+                      <FormGroup className="form-group has-float-label error-l-175 ">
+                        <Label>
+                          <IntlMessages id="teacher.PhoneNoLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="phoneNumber"
+                          type="number"
+                        />
+                        {errors.phoneNumber && touched.phoneNumber ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.phoneNumber}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Email Address */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="teacher.EmailLabel" />
+                          {/* <span style={{ color: 'red' }}>*</span> */}
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="email"
+                          type="email"
+                        />
+                        {errors.email && touched.email ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.email}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Place of birth */}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label>
+                          <IntlMessages id="forms.PlaceOfBirthLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="placeOfBirth"
+                        />
+                        {errors.placeOfBirth && touched.placeOfBirth ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.placeOfBirth}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </Colxx>
+                  </Row>
+
+                  <Row className="justify-content-center">
+                    <Colxx xxs="5">
+                      <div className="pt-5">
+                        <h1 className=" mb-4">
+                          {<IntlMessages id="forms.PermanentAddressLabel" />}
+                        </h1>
+
+                        {/* province permanent*/}
+                        <FormGroup className="form-group has-float-label error-l-175">
+                          <Label>
+                            <IntlMessages id="forms.ProvinceLabel" />
+                            <span style={{ color: 'red' }}>*</span>
+                          </Label>
+                          <FormikReactSelect
+                            name="mainProvince"
+                            id="mainProvince"
+                            value={values.mainProvince}
+                            options={provinces}
+                            onChange={setFieldValue}
+                            onBlur={setFieldTouched}
+                            onClick={setSelectedMainProvince(
+                              values.mainProvince.value
+                            )}
+                          />
+                          {errors.mainProvince && touched.mainProvince ? (
+                            <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
+                              {errors.mainProvince}
+                            </div>
+                          ) : null}
+                        </FormGroup>
+
+                        {/* District  permanent*/}
+                        <FormGroup className="form-group has-float-label error-l-175">
+                          <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                            <IntlMessages id="forms.DistrictLabel" />
+                          </Label>
+                          <FormikReactSelect
+                            name="mainDistrict"
+                            id="mainDistrict"
+                            value={values.mainDistrict}
+                            options={districts?.filter(
+                              (district) =>
+                                district.province === values.mainProvince.value
+                            )}
+                            onChange={setFieldValue}
+                            onBlur={setFieldTouched}
+                          />
+                          {errors.mainDistrict && touched.mainDistrict ? (
+                            <div className="invalid-feedback d-block bg-danger text-white">
+                              {errors.mainDistrict}
+                            </div>
+                          ) : null}
+                        </FormGroup>
+                        {/* Village  Main*/}
+                        <FormGroup className="form-group has-float-label error-l-100">
+                          <Label>
+                            <IntlMessages id="forms.VillageLabel" />
+                          </Label>
+                          <Field
+                            className="form-control fieldStyle"
+                            name="mainVillage"
+                          />
+                          {errors.englishName && touched.englishName ? (
+                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                              {errors.englishName}
+                            </div>
+                          ) : null}
+                        </FormGroup>
+                      </div>
+                    </Colxx>
+
+                    <Colxx xxs="5">
+                      <div className="pt-5">
+                        <h1 className=" mb-4">
+                          {<IntlMessages id="forms.CurrentAddresslabel" />}
+                        </h1>
+
+                        {/* Current Address */}
+                        {/* province Current */}
+                        <FormGroup className="form-group has-float-label error-l-175">
+                          <Label>
+                            <IntlMessages id="forms.ProvinceLabel" />
+                            <span style={{ color: 'red' }}>*</span>
+                          </Label>
+                          <FormikReactSelect
+                            name="currentProvince"
+                            id="currentProvince"
+                            value={values.currentProvince}
+                            options={provinces}
+                            onChange={setFieldValue}
+                            onBlur={setFieldTouched}
+                            onClick={setSelectedCurrentProvince(
+                              values.currentProvince.value
+                            )}
+                          />
+                          {errors.currentProvince && touched.currentProvince ? (
+                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                              {errors.currentProvince}
+                            </div>
+                          ) : null}
+                        </FormGroup>
+
+                        {/* Current District */}
+                        <FormGroup className="form-group has-float-label error-l-175">
+                          <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                            <IntlMessages id="forms.DistrictLabel" />
+                          </Label>
+                          <FormikReactSelect
+                            name="currentDistrict"
+                            id="currentDistrict"
+                            value={values.currentDistrict}
+                            options={districts.filter(
+                              (district) =>
+                                district.province ===
+                                values.currentProvince.value
+                            )}
+                            onChange={setFieldValue}
+                            onBlur={setFieldTouched}
+                          />
+                          {errors.currentDistrict && touched.currentDistrict ? (
+                            <div className="invalid-feedback d-block bg-danger text-white">
+                              {errors.currentDistrict}
+                            </div>
+                          ) : null}
+                        </FormGroup>
+                        {/* Village  Current*/}
+                        <FormGroup className="form-group has-float-label error-l-100">
+                          <Label>
+                            <IntlMessages id="forms.VillageLabel" />
+                          </Label>
+                          <Field
+                            className="form-control fieldStyle"
+                            name="currentVillage"
+                          />
+                          {errors.englishName && touched.englishName ? (
+                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                              {errors.englishName}
+                            </div>
+                          ) : null}
+                        </FormGroup>
+                      </div>
+                    </Colxx>
+                  </Row>
+                  <NavLink
+                    to={{
+                      pathname: `app/teachers/`,
+                      state: { data: 'TEACHER' },
+                    }}
+                  >
+                    <Button className="mt-5 bg-primary" onClick={handleSubmit}>
+                      <IntlMessages id="ثبت" />
+                    </Button>
+                  </NavLink>
+                </Form>
+              )
+            }
           </Formik>
         </div>
       </CardBody>

@@ -120,12 +120,12 @@ const TeacherListBody = ({ teacher, isSelect, collect, onCheckItem }) => {
                   </div>
                 </NavLink>
                 <div className="ml-2">
-                  <BsTrashFill
+                  {/* <BsTrashFill
                     id="deleteIcon"
                     outline
                     onClick={() => setModalBasic(true)}
                     style={{ fontSize: '20px' }}
-                  />
+                  /> */}
                 </div>
               </div>
               <Modal

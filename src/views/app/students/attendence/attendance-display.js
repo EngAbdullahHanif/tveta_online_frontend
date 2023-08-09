@@ -517,60 +517,43 @@ const StudentAttendance = ({ match }) => {
                         </th>
                       </tr>
                     </thead>
+                    <tbody>
+                      {students.map((student, index) => (
+                        <tr>
+                          <th scope="row">{index + 1}</th>
+                          <td>{student.student.name}</td>
+                          <td>{student.student.father_name}</td>
+                          <td>{student.student.student_id}</td>
+                          <td>{student.present_hours}</td>
+                          <td>{student.absent_hours}</td>
+                          <td>{student.necessary_work_hours}</td>
+                          <td>{student.sickness_hours}</td>
+                        </tr>
+                      ))}
+                    </tbody>
                   </table>
                 ) : (
                   <DisplayMessage type="error" message="معلومات شتون نلری" />
                 )}
+                <table class="table">
+                  <tbody
+                    className="border"
+                    // style={{
+                    //   height: '200px',
+                    //   overflowY: 'scroll',
+                    //   overflowX: 'hidden',
+                    // }}
+                  ></tbody>
+                </table>
               </Row>
 
               <Row
                 className="justify-content-center  border border"
                 style={{
                   marginInline: '10%',
-                  height: '30rem',
-                  overflowY: 'scroll',
-                  overflowX: 'hidden',
                 }}
               >
                 <table class="table ">
-                  <tbody
-                    className="border border "
-                    style={{
-                      height: '200px',
-                      overflowY: 'scroll',
-                      overflowX: 'hidden',
-                    }}
-                  >
-                    {students.map((student, index) => (
-                      <tr>
-                        <th scope="row">{index + 1}</th>
-                        <td>{student.student.name}</td>
-                        <td>{student.student.father_name}</td>
-                        <td>{student.student.student_id}</td>
-                        <td>{student.present_hours}</td>
-                        <td>{student.absent_hours}</td>
-                        <td>{student.necessary_work_hours}</td>
-                        <td>{student.sickness_hours}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </Row>
-              <Row
-                className="justify-content-center  border border"
-                style={{
-                  marginInline: '10%',
-                }}
-              >
-                <table class="table ">
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
                   <tfoot className="thead-dark">
                     <tr>
                       <th

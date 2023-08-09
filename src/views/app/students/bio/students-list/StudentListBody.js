@@ -35,14 +35,10 @@ const StudentListBody = (
 
   const handleClick = async (event, student_id) => {
     console.log(student_id, 'student_id');
-    const response = await callApi(
-      `api/student_delete/${student_id}/`,
-      'patch',
-      null
-    );
+    const response = await callApi(`students/${student_id}/`, 'DELETE', null);
     if (response.data && response.status === 200) {
       setDeletion(event);
-      const deletedStudent = student.student_id;
+      student;
     } else {
       console.log('student delete error');
     }
@@ -161,14 +157,15 @@ const StudentListBody = (
                     />
                   </div>
                 </NavLink>
-                <div className="ml-2">
+
+                {/* <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"
                     outline
                     onClick={() => setModalBasic(true)}
                     style={{ fontSize: '20px' }}
                   />
-                </div>
+                </div> */}
               </div>
               <Modal
                 isOpen={modalBasic}
@@ -192,7 +189,7 @@ const StudentListBody = (
                     color="danger"
                     onClick={() => {
                       setModalBasic(false);
-                      handleClick(true, student.student_id);
+                      handleClick(true, student.id);
                     }}
                     style={{ marginLeft: '5%' }}
                   >

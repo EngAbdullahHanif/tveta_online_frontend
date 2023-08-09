@@ -101,10 +101,10 @@ const initialValues = {
   department: [],
   totolEducationalDays: '',
   educationalYear: [],
-  present: '',
-  absent: '',
-  necessaryWork: '',
-  sickness: '',
+  present_hours: [],
+  absent_hours: [],
+  necessary_work_hours: [],
+  sickness_hours: [],
 };
 
 const StudentAttendance = ({ match }) => {
@@ -163,7 +163,7 @@ const StudentAttendance = ({ match }) => {
   const [initalClass, setInitialClass] = useState([]);
   const [initailDepartment, setInitialDepartment] = useState([]);
   const [initalSubject, setInitialSubject] = useState([]);
-
+  const [arr, setArr] = useState({});
   const {
     provinces,
     districts,
@@ -225,6 +225,13 @@ const StudentAttendance = ({ match }) => {
   };
 
   const onSubmit = async (values) => {
+    console.log('values in arr: ', arr);
+
+    const newStudents = [];
+    Object.keys(arr).forEach((id) => {
+      newStudents.push({ student_id: id, ...arr[id] });
+    });
+    console.log('newStudents is: ', newStudents);
     // setIsSubmitted(true);
     const educationalYear = selectedEducationalYear.value;
     const instituteId = selectedInstitute.value;
@@ -240,15 +247,15 @@ const StudentAttendance = ({ match }) => {
     //create an array which first node has exam_id and the rest of the nodes has student_id and marks
     // values.score[student.student_id]
     console.log('values are: ', values);
-    const newStudents = students.map((student, index) => {
-      return {
-        student_id: student.student_id,
-        present_hours: values[`present[${student.student_id}]`],
-        absent_hours: values[`absent[${student.student_id}]`],
-        necessary_work_hours: values[`necessaryWork[${student.student_id}]`],
-        sickness_hours: values[`sickness[${student.student_id}]`],
-      };
-    });
+    // const newStudents = students.map((student, index) => {
+    //   return {
+    //     student_id: student.student_id,
+    //     present_hours: values[`present[${student.student_id}]`],
+    //     absent_hours: values[`absent[${student.student_id}]`],
+    //     necessary_work_hours: values[`necessaryWork[${student.student_id}]`],
+    //     sickness_hours: values[`sickness[${student.student_id}]`],
+    //   };
+    // });
 
     let data = [
       {
@@ -514,6 +521,7 @@ const StudentAttendance = ({ match }) => {
                   </Row>
 
                   <Formik
+                    enableReinitialize={true}
                     initialValues={initialValues}
                     onSubmit={onSubmit}
                     // validationSchema={InnerInpufieldsValidation}
@@ -669,24 +677,18 @@ const StudentAttendance = ({ match }) => {
                                       <input
                                         type="number"
                                         className="form-control"
-                                        name={`present[${student.student_id}]`}
-                                        onChange={(event) => {
-                                          console.log(
-                                            'value is: ',
-                                            event.target.value
-                                          );
-                                          setFieldValue(
-                                            `present[${student.student_id}]`,
-                                            event.target.value
-                                          );
+                                        // name={`present[${student.student_id}]`}
+                                        name="present_hours"
+                                        onChange={(e) => {
+                                          const newArr = arr;
+                                          newArr[student.student_id] = {
+                                            ...newArr[student.student_id],
+                                            [e.target.name]: e.target.value,
+                                          };
+                                          setArr(newArr);
                                         }}
-                                        value={
-                                          values[
-                                            `present[${student.student_id}]`
-                                          ]
-                                        }
-                                        min="0"
-                                        max="300"
+                                        min={0}
+                                        max={300}
                                         required
                                       />
                                       {errors.present && touched.present ? (
@@ -700,11 +702,20 @@ const StudentAttendance = ({ match }) => {
                                       <input
                                         type="number"
                                         className="form-control"
-                                        name={`absent[${student.student_id}]`}
-                                        // name={`${index}`}
+                                        // name={`absent[${student.student_id}]`}
+                                        name="absent_hours"
                                         min="0"
                                         max="300"
                                         required
+                                        // onChange={handleChange('absent')}
+                                        onChange={(e) => {
+                                          const newArr = arr;
+                                          newArr[student.student_id] = {
+                                            ...newArr[student.student_id],
+                                            [e.target.name]: e.target.value,
+                                          };
+                                          setArr(newArr);
+                                        }}
                                       />
                                       {errors.absent && touched.absent ? (
                                         <div className="invalid-feedback d-block">
@@ -717,11 +728,20 @@ const StudentAttendance = ({ match }) => {
                                       <input
                                         type="number"
                                         className="form-control"
-                                        name={`necessaryWork[${student.student_id}]`}
-                                        // name={`${index}`}
+                                        // name={`necessaryWork[${student.student_id}]`}
+                                        name="necessary_work_hours"
                                         min="0"
                                         max="300"
                                         required
+                                        // onChange={handleChange('necessaryWork')}
+                                        onChange={(e) => {
+                                          const newArr = arr;
+                                          newArr[student.student_id] = {
+                                            ...newArr[student.student_id],
+                                            [e.target.name]: e.target.value,
+                                          };
+                                          setArr(newArr);
+                                        }}
                                       />
                                       {errors.necessaryWork &&
                                       touched.necessaryWork ? (
@@ -736,11 +756,20 @@ const StudentAttendance = ({ match }) => {
                                       <input
                                         type="number"
                                         className="form-control"
-                                        name={`sickness[${student.student_id}]`}
-                                        // name={`${index}`}
+                                        // name={`sickness[${student.student_id}]`}
+                                        name="sickness_hours"
                                         min="0"
                                         max="300"
                                         required
+                                        // onChange={handleChange('sickness')}
+                                        onChange={(e) => {
+                                          const newArr = arr;
+                                          newArr[student.student_id] = {
+                                            ...newArr[student.student_id],
+                                            [e.target.name]: e.target.value,
+                                          };
+                                          setArr(newArr);
+                                        }}
                                       />
                                       {errors.sickness && touched.sickness ? (
                                         <div className="invalid-feedback d-block">
@@ -833,9 +862,9 @@ const StudentAttendance = ({ match }) => {
                               color="primary"
                               className=" float-right buttonStyle1"
                               size="lg"
-                              type="submit"
+                              // type="submit"
                               style={{ margin: '5% 0% 10% 6%' }}
-                              // onClick={onSubmit}
+                              onClick={handleSubmit}
                             >
                               <IntlMessages id="button.SubmitButton" />
                             </Button>

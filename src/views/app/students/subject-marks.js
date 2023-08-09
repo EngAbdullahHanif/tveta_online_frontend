@@ -206,91 +206,99 @@ const MarksDisplay = ({ match }) => {
 
   let gpa = null;
   let grad = null;
+  let tbodies;
+  if (students.length > 0) {
+    tbodies = students.map((student, index) => {
+      const scores = Object.values(student.subject_id);
+      const studentRows = scores.map((score, i) => {
+        const student_name =
+          i === 0 ? (
+            <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+              {student.student_name}
+            </td>
+          ) : null;
+        const student_father_name =
+          i === 0 ? (
+            <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+              {student.student_father_name}
+            </td>
+          ) : null;
+        const student_id =
+          i === 0 ? (
+            <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
+              {student.student}
+            </td>
+          ) : null;
+        const index_no =
+          i === 0 ? (
+            <td rowSpan={index.length + 1} style={{ borderStyle: 'hidden' }}>
+              {index + 1}
+            </td>
+          ) : null;
 
-  const tbodies = students.map((student, index) => {
-    const scores = Object.values(student.subject_id);
-    const studentRows = scores.map((score, i) => {
-      const student_name =
-        i === 0 ? (
-          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-            {student.student_name}
-          </td>
-        ) : null;
-      const student_father_name =
-        i === 0 ? (
-          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-            {student.student_father_name}
-          </td>
-        ) : null;
-      const student_id =
-        i === 0 ? (
-          <td rowSpan={scores.length + 1} style={{ borderStyle: 'hidden' }}>
-            {student.student}
-          </td>
-        ) : null;
-      const index_no =
-        i === 0 ? (
-          <td rowSpan={index.length + 1} style={{ borderStyle: 'hidden' }}>
-            {index + 1}
-          </td>
-        ) : null;
-
+        return (
+          <>
+            <tr key={i} className="red-background">
+              <td className="red-background">{index_no}</td>
+              <td className="red-background"> {student_name}</td>
+              <td className="red-background">{student_father_name}</td>
+              <td className="red-background">{student_id}</td>
+              <td className="red-background">
+                {<td style={{ borderStyle: 'hidden' }}>{score.marks}</td>}
+              </td>
+              <td className="red-background">
+                {
+                  <td style={{ borderStyle: 'hidden' }}>
+                    {score.second_chance_marks}
+                  </td>
+                }
+              </td>
+              {score.grad
+                ? (grad = score.grad) && (
+                    <td className="red-background">
+                      {' '}
+                      {score.grad && (
+                        <td style={{ borderStyle: 'hidden' }}>{score.grad}</td>
+                      )}
+                    </td>
+                  )
+                : null}
+              {score.Gpa
+                ? (gpa = score.Gpa) && (
+                    <td className="red-background">
+                      {' '}
+                      {score.Gpa && (
+                        <td style={{ borderStyle: 'hidden' }}>{score.Gpa}</td>
+                      )}
+                    </td>
+                  )
+                : null}
+              <td className="red-background">
+                {score.marks >= 50 || score.second_chance_marks >= 50 ? (
+                  <div className="text-success pt-3">کامیاب </div>
+                ) : (
+                  <div className="text-danger pt-3">ناکام </div>
+                )}
+              </td>
+            </tr>
+          </>
+        );
+      });
       return (
         <>
-          <tr key={i} className="red-background">
-            <td className="red-background">{index_no}</td>
-            <td className="red-background"> {student_name}</td>
-            <td className="red-background">{student_father_name}</td>
-            <td className="red-background">{student_id}</td>
-            <td className="red-background">
-              {<td style={{ borderStyle: 'hidden' }}>{score.marks}</td>}
-            </td>
-            <td className="red-background">
-              {
-                <td style={{ borderStyle: 'hidden' }}>
-                  {score.second_chance_marks}
-                </td>
-              }
-            </td>
-            {score.grad
-              ? (grad = score.grad) && (
-                  <td className="red-background">
-                    {' '}
-                    {score.grad && (
-                      <td style={{ borderStyle: 'hidden' }}>{score.grad}</td>
-                    )}
-                  </td>
-                )
-              : null}
-            {score.Gpa
-              ? (gpa = score.Gpa) && (
-                  <td className="red-background">
-                    {' '}
-                    {score.Gpa && (
-                      <td style={{ borderStyle: 'hidden' }}>{score.Gpa}</td>
-                    )}
-                  </td>
-                )
-              : null}
-            <td className="red-background">
-              {score.marks >= 50 || score.second_chance_marks >= 50 ? (
-                <div className="text-success pt-3">کامیاب </div>
-              ) : (
-                <div className="text-danger pt-3">ناکام </div>
-              )}
-            </td>
-          </tr>
+          <tbody key={index} className={student.name + ' ' + ' border border '}>
+            {studentRows}
+          </tbody>
         </>
       );
     });
-    return (
-      <>
-        <tbody key={index} className={student.name + ' ' + ' border border '}>
-          {studentRows}
-        </tbody>
-      </>
+  } else {
+    tbodies = (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <h1>معلومات شتون نلری</h1>
+      </div>
     );
-  });
+  }
 
   const onSubmit = async (values) => {
     const response = await callApi(
@@ -298,6 +306,7 @@ const MarksDisplay = ({ match }) => {
       '',
       null
     );
+
     console.log('responseeeeeeeeeeeeeeE', response.data);
 
     if (response.data && response.status === 200) {

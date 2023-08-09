@@ -1,7 +1,7 @@
 {
-  "name": "gogo-react",
-  "version": "5.3.1",
-  "description": "Gogo - React Bootstrap 4 Admin Dashboard Template",
+  "name": "tveta-online",
+  "version": "5.1.2",
+  "description": "د تخنیکی و مسلکی زده کړو ادارې آنلاین سیستم/سیستم آنلان اداره تعلیمات تخنیکی و مسلکی",
   "private": true,
   "proxy": "http://0.0.0.0:8000",
   "dependencies": {

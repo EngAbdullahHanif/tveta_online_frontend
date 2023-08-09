@@ -138,18 +138,18 @@ const data = [
         ],
         newWindow: false,
       },
-      {
-        icon: 'MD.MdAddBox',
-        label: 'ده شاګرد تبدیلی صنف',
-        to: `${adminRoot}/students/class-transfer`,
-        roles: [
-          userRole.admin,
-          userRole.instituteDataentry,
-          userRole.provinceDataentry,
-          userRole.authorityDataentry,
-        ],
-        newWindow: false,
-      },
+      // {
+      //   icon: 'MD.MdAddBox',
+      //   label: 'ده شاګرد تبدیلی صنف',
+      //   to: `${adminRoot}/students/class-transfer`,
+      //   roles: [
+      //     userRole.admin,
+      //     userRole.instituteDataentry,
+      //     userRole.provinceDataentry,
+      //     userRole.authorityDataentry,
+      //   ],
+      //   newWindow: false,
+      // },
       //Changes ended
       {
         icon: 'GR.GrUserAdd',

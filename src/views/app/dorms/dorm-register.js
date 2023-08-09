@@ -67,7 +67,7 @@ const SignupSchema = Yup.object().shape({
   //   : null,
 
   totalRooms: Yup.string().required(<IntlMessages id="dorm.TotalRoomsErr" />),
-  quota: Yup.string().required(<IntlMessages id="dorm.QuotaErr" />),
+  // quota: Yup.string().required(<IntlMessages id="dorm.QuotaErr" />),
 
   totalKitchens: Yup.string().required(
     <IntlMessages id="dorm.TotalKitchensErr" />
@@ -269,8 +269,9 @@ const DormRegistration = (values) => {
       console.log('class error');
     }
   };
+
   const onRegister = (values, { resetForm }) => {
-    resetForm();
+    // resetForm();
     let DormTypeOptions;
     if (values.buildingType.value === 'governmental') {
       //setDormTypeOption(values.PublicBuildingOwner.value);
@@ -293,7 +294,7 @@ const DormRegistration = (values) => {
       number_of_rooms: values.totalRooms,
       number_of_kitchens: values.totalKitchens,
       number_of_toilets: values.toilet,
-      quota: values.quota,
+      quota: values.quota || null,
       capacity: values.capicity,
     };
     console.log('object of data', data);
@@ -461,6 +462,25 @@ const DormRegistration = (values) => {
                           </div>
                         ) : null}
                       </FormGroup>
+                      {/* District  permanent*/}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                          <IntlMessages id="forms.DistrictLabel" />
+                        </Label>
+                        <FormikReactSelect
+                          name="district"
+                          id="district"
+                          // value={values.district.value}
+                          options={districts}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.district && touched.district ? (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.district}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                     </Colxx>
 
                     <Colxx xxs="">
@@ -486,7 +506,7 @@ const DormRegistration = (values) => {
                       </FormGroup>
 
                       {/* Dorm Quota(Sahmiya) */}
-                      <FormGroup className="form-group has-float-label">
+                      {/* <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="dorm.QuotaLabel" />
                         </Label>
@@ -500,7 +520,7 @@ const DormRegistration = (values) => {
                             {errors.quota}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
 
                       {/* Total Number of Buildings*/}
                       <FormGroup className="form-group has-float-label">
@@ -549,26 +569,6 @@ const DormRegistration = (values) => {
                         {errors.toilet && touched.toilet ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.toilet}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
-                      {/* District  permanent*/}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          <IntlMessages id="forms.DistrictLabel" />
-                        </Label>
-                        <FormikReactSelect
-                          name="district"
-                          id="district"
-                          // value={values.district.value}
-                          options={districts}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                        />
-                        {errors.district && touched.district ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.district}
                           </div>
                         ) : null}
                       </FormGroup>

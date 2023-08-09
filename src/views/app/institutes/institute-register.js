@@ -487,7 +487,7 @@ const InstituteRegister = () => {
                       <FormGroup className="form-group has-float-label">
                         <Label>
                           {/* <IntlMessages id="inst.name" /> */}
-                          code
+                          کوډ/کود
                         </Label>
                         <Field className="form-control" name="code" />
                         {errors.code && touched.code && (
@@ -567,7 +567,7 @@ const InstituteRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-                      <FormGroup className="form-group has-float-label">
+                      {/* <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="inst.type" />
                         </Label>
@@ -584,7 +584,7 @@ const InstituteRegister = () => {
                             {errors.instType}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
                     </Colxx>
                     <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
@@ -610,7 +610,7 @@ const InstituteRegister = () => {
 
                       <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          <IntlMessages id="institue type" />
+                          ډول/نوع
                         </Label>
                         <FormikReactSelect
                           name="instituteType"
@@ -630,7 +630,7 @@ const InstituteRegister = () => {
                       {/* institue city options */}
                       <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          <IntlMessages id="City Type" />
+                          ځای/موقعیت
                         </Label>
                         <FormikReactSelect
                           name="institueCityType"
@@ -650,7 +650,7 @@ const InstituteRegister = () => {
                       {/* institute language  */}
                       <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          <IntlMessages id="institute langugage" />
+                          ژبې/زبان ها
                         </Label>
                         <FormikReactSelect
                           name="institueLanguage"
@@ -671,7 +671,7 @@ const InstituteRegister = () => {
 
                       <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          <IntlMessages id="institute climate" />
+                          اقلیم
                         </Label>
                         <FormikReactSelect
                           name="instituteClimate"
@@ -690,7 +690,7 @@ const InstituteRegister = () => {
                       <FormGroup className="form-group has-float-label error-l-100 ">
                         <Label>
                           {/* <IntlMessages id="forms.StdGraduationYearLabel" /> */}
-                          foundation year
+                          د تأسیس کال/ سال تأسیس
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect

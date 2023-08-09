@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Row, Card, CardTitle, Label, FormGroup, Button } from 'reactstrap';
+import {
+  Row,
+  Card,
+  CardTitle,
+  Label,
+  FormGroup,
+  Button,
+  Spinner,
+} from 'reactstrap';
 import { NavLink, Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../../assets/img/logo2.png';
@@ -24,6 +32,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
   const [password] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -40,6 +49,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
   }, [error]);
 
   const onUserLogin = (values) => {
+    setIsLoading(true);
     callApi(`auth/login/`, 'POST', {
       username: values.username,
       password: values.password,
@@ -58,21 +68,22 @@ const Login = ({ history, loading, error, loginUserAction }) => {
           localStorage.setItem('access_token', response.data.access);
           history.push('/');
         }
-
         console.log('response is: ', response);
-
         // return response.data;
       })
       .catch((err) => {
         console.log('error inside login: ', err);
-        if (err.response.status === 400) {
+        if (err?.response && err.response.status === 400) {
           setLoginError(true);
           console.log('status is 400');
         }
-
         console.log('error of response', err);
         // message.error('Network Error');
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
+
     if (!loading) {
       if (values.username !== '' && values.password !== '') {
       }
@@ -94,15 +105,26 @@ const Login = ({ history, loading, error, loginUserAction }) => {
           </div>
           <div className="form-side">
             <CardTitle className="mb-4">
-              {loginError && (
+              {!isLoading && loginError && (
                 <div className="alert alert-danger">
-                  <h2>
-                    {'کارن نوم او یا پاسورډ سم ندی. / یوزر یا پسورد اشتباه است'}
-                  </h2>
+                  <>
+                    <h2>
+                      {
+                        'کارن نوم او یا پاسورډ سم ندی. / یوزر یا پسورد اشتباه است'
+                      }
+                    </h2>
 
-                  <h6>{'بیا ځلې کوشش وکړی/ دوباره کوشش کنید'}</h6>
+                    <h6>{'بیا ځلې کوشش وکړی/ دوباره کوشش کنید'}</h6>
+                  </>
                 </div>
               )}
+              {isLoading && (
+                <div className="alert  text-center">
+                  {' '}
+                  <Spinner />
+                </div>
+              )}
+
               <IntlMessages id="user.login-title" />
             </CardTitle>
 

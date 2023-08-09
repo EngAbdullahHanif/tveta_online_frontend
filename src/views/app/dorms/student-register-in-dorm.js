@@ -451,7 +451,8 @@ const DormRegistration = (values) => {
 
                             <FormGroup className="form-group has-float-label">
                               <Label>
-                                <IntlMessages id="forms.educationYear" />
+                                {/* <IntlMessages id="forms.educationYear" /> */}
+                                تعلیمی کال/ سال تعلیمی
                               </Label>
                               <FormikReactSelect
                                 name="educationalYear"

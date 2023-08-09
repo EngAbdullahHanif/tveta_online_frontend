@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
@@ -15,18 +15,44 @@ import {
 import Application from 'context/Application';
 import Authentication from 'context/Authentication';
 import callApi from 'helpers/callApi';
+import { Button } from 'reactstrap';
 
 const App = ({ locale }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-  const [provinces, setProvinces] = useState();
-  const [districts, setDistricts] = useState();
-  const [classes, setClasses] = useState();
-  const [subjects, setSubjects] = useState();
-  const [departments, setDepartments] = useState();
-  const [institutes, setInstitutes] = useState();
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [institutes, setInstitutes] = useState([]);
   const [contextFields, setContextFields] = useState();
   const [options, setOptions] = useState({});
   const [isTokenValid, setIsTokenValid] = useState(false);
+
+  const handleLogout = async () => {
+    // logoutUserAction(history);
+    setUser(null);
+    window.location.href = window.location.origin;
+    console.log('clearing from localstorage');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('current_user');
+    console.log('calling backend logout');
+
+    const response = await callApi('auth/logout/', 'POST', null);
+    console.log('response: ', response);
+    // if (response.status === 200) {
+    //   console.log('logged out from backend');
+    // }
+  };
+
+  const getUser = async () => {
+    callApi('auth/user/').then((response) => {
+      if (response.status == 200) {
+        setUser(response.data);
+      }
+    });
+  };
 
   const direction = getDirection();
   const currentAppLocale = AppLocale[locale];
@@ -42,30 +68,53 @@ const App = ({ locale }) => {
 
   const checkTokenValidity = async () => {
     setIsTokenValid(false);
-    console.log('checking token validity');
+    console.log('Checking token validity');
+
     const token = localStorage.getItem('access_token');
-    console.log('token is:', token);
-    if (token) {
+    console.log('Token is:', token);
+
+    if (!token) {
+      removeUserAndToken();
+      return;
+    }
+
+    const response = await verifyToken(token);
+
+    if (!response) {
+      console.log('Cannot connect to the server');
+      removeUserAndToken();
+      return;
+    }
+
+    if (response.status >= 200 && response.status <= 299) {
+      console.log('Token is valid');
+      setIsTokenValid(true);
+    } else {
+      handleInvalidToken();
+    }
+  };
+
+  const removeUserAndToken = () => {
+    console.log('Removing token and user from local storage');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+
+  const handleInvalidToken = () => {
+    console.log('Token is invalid. Removing it from local storage');
+    removeUserAndToken();
+  };
+
+  const verifyToken = async (token) => {
+    try {
       const response = await callApi('auth/token/verify/', 'POST', {
         token: token,
       });
-      if (!response) {
-        console.log('cannot connect to server');
-        return;
-      }
-      if (response.status >= 200 && response.status <= 299) {
-        console.log('token is valid');
-        setIsTokenValid(true);
-      } else {
-        setIsTokenValid(false);
-        console.log('token is invalid. removing it from local storage');
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user');
-        setUser(null);
-      }
-    } else {
-      localStorage.removeItem('user');
-      setUser(null);
+      return response;
+    } catch (error) {
+      console.error('Error verifying token:', error);
+      return null;
     }
   };
 
@@ -107,6 +156,8 @@ const App = ({ locale }) => {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.name + '-' + item.semester + '-' + item.section,
+        grade: item.grade,
+        semester: item.semester,
       }));
       setClasses(updatedData);
     } else {
@@ -183,6 +234,7 @@ const App = ({ locale }) => {
     fetchDepartments();
     fetchInstitutes();
     fetchFields();
+    getUser();
   }, [isTokenValid]);
 
   return (
@@ -211,7 +263,27 @@ const App = ({ locale }) => {
                 {isMultiColorActive && <ColorSwitcher />}
                 <Suspense fallback={<div className="loading" />}>
                   <Router>
-                    {!user ? <Authentication /> : <Application />}
+                    {!user ? (
+                      <Authentication />
+                    ) : user.groups.length > 0 ? (
+                      <Application />
+                    ) : (
+                      <div
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 400,
+                          width: '100%',
+                        }}
+                      >
+                        <h1>
+                          شما در هیچ گروپی نیستید. لطفاً با آدمین تان تماس
+                          بگیرید/ تاسو هیڅ ګروپ نلری،‌مهربانی وکړی له اډمین سره
+                          اړیکه ونیسی.‌
+                        </h1>
+                        <br />
+                        <Button onClick={handleLogout}>وتل/خروج از حساب</Button>
+                      </div>
+                    )}
                   </Router>
                 </Suspense>
               </>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import './../dorms/dorm-register.css';
 import { NotificationManager } from 'components/common/react-notifications';
@@ -11,6 +11,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
+import { AuthContext } from 'context/AuthContext';
 const SignupSchema = Yup.object().shape({
   departmentId: Yup.object()
     .shape({
@@ -46,56 +47,59 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Curriculum = (values) => {
-  const [departments, setDepartments] = useState([]);
-  const [classs, setClasss] = useState([]);
-  const [subjects, setSubjects] = useState([]);
+  // later on, fetch only related subjects
+  const { departments, classes, subjects } = useContext(AuthContext);
+  // const [subjects, setSubjects] = useState([]);
 
-  // fetch department list
-  const fetchDepartments = async () => {
-    const response = await callApi('institute/department/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setDepartments(updatedData);
-    } else {
-      console.log('department error');
-    }
-  };
-  //fetch class list
-  const fetchClasses = async () => {
-    const response = await callApi('institute/classs/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name + ' - ' + item.semester,
-      }));
-      setClasss(updatedData);
-    } else {
-      console.log('class error');
-    }
-  };
+  // // fetch department list
+  // const fetchDepartments = async () => {
+  //   const response = await callApi('institute/department/', 'GET', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     setDepartments(updatedData);
+  //   } else {
+  //     console.log('department error');
+  //   }
+  // };
+  // //fetch class list
+  // const fetchClasses = async () => {
+  //   const response = await callApi('institute/classs/', 'GET', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name + ' - ' + item.semester,
+  //     }));
+  //     setClasss(updatedData);
+  //   } else {
+  //     console.log('class error');
+  //   }
+  // };
 
-  // fetch subjects list
-  const fetchSubjects = async () => {
-    const response = await callApi('institute/subject/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setSubjects(updatedData);
-    } else {
-      console.log('class error');
-    }
-  };
+  // // fetch subjects list
+  // const fetchSubjects = async () => {
+  //   const response = await callApi('institute/subject/', 'GET', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     setSubjects(updatedData);
+  //   } else {
+  //     console.log('class error');
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchDepartments();
-    fetchClasses();
-    fetchSubjects();
-  }, []);
+  // useEffect(() => {
+  //   fetchDepartments();
+  //   fetchClasses();
+  //   fetchSubjects();
+  // }, []);
+
+  console.log('classes from context are: ', classes);
+  const classs = classes;
 
   const [initialDepartment, setInitialDepartment] = useState([]);
   const [initialSubject, setInitialSubject] = useState([]);

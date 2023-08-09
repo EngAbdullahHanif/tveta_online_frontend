@@ -839,7 +839,7 @@ export const verificationValueOptions = [
 
 export const tazkiraOptions = [
   {
-    value: 'ٍ electronic',
+    value: 'electronic',
     label: <IntlMessages id="forms.StdTazkiraElectronic" />,
   },
   { value: 'paper', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
@@ -861,6 +861,7 @@ export const teacherCurrentStatusOptions = [
 ];
 
 export const studentStatusOptions = [
+  { value: 'active', label: <IntlMessages id="جاری" /> },
   { value: 'inprogress', label: <IntlMessages id="جاری" /> },
   { value: 'dismissed', label: <IntlMessages id="منفک" /> },
   { value: 'freeze', label: <IntlMessages id="تعجیل" /> },

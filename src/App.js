@@ -134,9 +134,9 @@ const App = ({ locale }) => {
     }
   };
 
-  const fetchDistricts = async (provinceId) => {
+  const fetchDistricts = async () => {
     if (!user) return;
-    const response = await callApi(`core/districts/?province`, 'GET', null);
+    const response = await callApi(`core/districts/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,

@@ -17,6 +17,7 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap';
+
 import DatePicker from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
@@ -47,7 +48,7 @@ import {
   teacherContractValidationSchema,
   teacherEducationValidationSchema,
 } from 'views/app/global-data/forms-validation';
-import { message, Col, InputNumber, Slider, Spac } from 'antd';
+import { message, Col, InputNumber, Slider, Table as TB } from 'antd';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import { Spinner } from 'react-bootstrap';
 const servicePath = config.API_URL;
@@ -58,32 +59,93 @@ const teacherTransferApiUrl = `${servicePath}/teachers/institute`;
 // const { RangePicker } = DatePicker;
 
 const TeacherProfile = () => {
-  const { departments, classes, subjects } = useContext(AuthContext);
+  const {
+    departments,
+    classes,
+    subjects,
+    institutes,
+    contextFields,
+    provinces,
+    districts,
+  } = useContext(AuthContext);
+  console.log('INSTITUTES: ', institutes);
   const [isNext, setIsNext] = useState(true);
   const { teacherId } = useParams();
   const [teacher, setTeacher] = useState([]);
-  const [teacherInstitute, setTeacherInstitute] = useState([]);
   const [teacherEvaluation, setTeacherEvaluation] = useState([]);
   const [teacherHREvaluation, setTeacherHREvaluation] = useState([]);
   const [teacherTransfer, setTeacherTransfer] = useState([]);
   const [teacherEducation, setTeacherEducation] = useState([]);
   const [teacherContracts, setTeacherContracts] = useState([]);
   const [teacherIncentives, setTeacherIncentives] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
-  const [fields, setFields] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [cvFile, setCVFile] = useState();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [score, setScore] = useState(1);
   const [evaluationDate, setEvaluationDate] = useState();
-  const [modalBasic, setModalBasic] = useState(false);
   const [contractAlert, setContractAlert] = useState(false);
   const [educationAlert, setEducationAlert] = useState(false);
   const [evaluationAlert, setEvaluationAlert] = useState(false);
   const [insentiveAlert, setInsentiveAlert] = useState(false);
   const [updatingRecord, setUpdatingRecord] = useState({});
   const [loading, setLoading] = useState(false);
+  // const [tableParams, setTableParams] = useState({
+  //   pagination: {
+  //     current: 1,
+  //     pageSize: 10,
+  //   },
+  // });
+  // const columns = [
+  //   {
+  //     title: 'ID',
+  //     dataIndex: 'id',
+  //     sorter: (a, b) => a.id - b.id,
+  //     width: '5%',
+  //   },
+  //   {
+  //     title: 'Institution',
+  //     dataIndex: 'institution',
+  //     sorter: (a, b) => a.institution - b.institution,
+  //     // render: (institution) => `${institution.first} ${institution.last}`,
+  //     width: '20%',
+  //   },
+  //   {
+  //     title: 'Degree',
+  //     dataIndex: 'degree',
+  //     filters: [
+  //       { text: 'Bachelor', value: 'bachelor' },
+  //       { text: 'Master', value: 'master' },
+  //       { text: 'Associate', value: 'associate' },
+  //     ],
+  //     onFilter: (value, record) => record.degree.indexOf(value) === 0,
+  //     width: '15%',
+  //   },
+  //   {
+  //     title: 'Field of Study',
+  //     dataIndex: 'field_of_study',
+  //     width: '20%',
+  //   },
+  //   {
+  //     title: 'Year Completed',
+  //     dataIndex: 'year_completed',
+  //     width: '10%',
+  //   },
+  //   {
+  //     title: 'Document',
+  //     dataIndex: 'document',
+  //     width: '20%',
+  //   },
+  //   {
+  //     title: 'Description',
+  //     dataIndex: 'description',
+  //   },
+  //   {
+  //     title: 'Action',
+  //     dataIndex: 'action',
+  //   },
+  // ];
+
   console.log('Teacher ID: ', teacherId);
   const resetUpdate = () => {
     setUpdatingRecord(null);
@@ -93,33 +155,12 @@ const TeacherProfile = () => {
     setScore(null);
     setEvaluationDate(null);
   };
-  const fetchInstitutes = async () => {
-    const response = await callApi(`/institute/`, '', null);
-    const data = response.data;
-    console.log('All Institutes in Profile: ', data);
-    let obj = data.map((item) => ({ value: item.id, label: item.name }));
-    setInstitutes(obj);
-  };
-  const fetchFields = async () => {
-    const response = await callApi(`/institute/field/`, '', null);
-    const data = response.data;
-    console.log('All Institutes in Profile: ', data);
-    let obj = data.map((item) => ({ value: item.id, label: item.name }));
-    setFields(obj);
-  };
+
   async function fetchTeacher() {
     const response = await callApi(`teachers/?id=${teacherId}`, '', null);
     const data = response.data;
     setTeacher(data);
     setIsLoaded(true);
-    const instituteResponse = await callApi(
-      `teachers/institute/${teacherId}/`,
-      '',
-      null
-    );
-    const instituteData = await instituteResponse.data;
-    console.log('Data Institute: ', instituteData);
-    setTeacherInstitute(instituteData);
   }
   async function fetchTeacherEvaluation() {
     const response = await callApi(
@@ -207,9 +248,9 @@ const TeacherProfile = () => {
     fetchTeacherTransfer();
     fetchTeacherEducation();
     fetchTeacherContracts();
-    fetchInstitutes();
+    // fetchInstitutes();
     fetchTeacherIncentives();
-    fetchFields();
+    // fetchFields();
   }, []);
 
   const handleClick = (event) => {
@@ -628,14 +669,24 @@ const TeacherProfile = () => {
                             <Label>
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>{teacher[0].main_province}</h3>
+                            <h3>
+                              {provinces.map((pro) => {
+                                if (teacher[0].main_province === pro.value)
+                                  return pro.label;
+                              })}
+                            </h3>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label>
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>{teacher[0].main_district}</h3>
+                            <h3>
+                              {districts.map((pro) => {
+                                if (teacher[0].main_district === pro.value)
+                                  return pro.label;
+                              })}
+                            </h3>
                           </Colxx>
                         </Row>
                       </Colxx>
@@ -656,14 +707,24 @@ const TeacherProfile = () => {
                             <Label>
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>{teacher[0].current_province}</h3>
+                            <h3>
+                              {provinces.map((pro) => {
+                                if (teacher[0].current_province === pro.value)
+                                  return pro.label;
+                              })}
+                            </h3>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label>
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>{teacher[0].current_district}</h3>
+                            <h3>
+                              {districts.map((pro) => {
+                                if (teacher[0].current_district === pro.value)
+                                  return pro.label;
+                              })}
+                            </h3>
                           </Colxx>
                         </Row>
                       </Colxx>
@@ -691,6 +752,83 @@ const TeacherProfile = () => {
 
                   <Row className="justify-content-center   rounded ">
                     <Colxx style={{ paddingInline: '4%' }}>
+                      {/* <TB
+                        columns={columns}
+                        // rowKey={(record) => record.login.uuid}
+                        pagination={tableParams.pagination}
+                        loading={loading}
+                        // onChange={handleTableChange}
+                        dataSource={teacherEducation.map((item, index) => ({
+                          key: index,
+                          id: item.id,
+                          institution: item.institution,
+                          degree: item.degree,
+                          field_of_study: item.field_of_study,
+                          year_completed: item.year_completed,
+
+                          document: (
+                            <a
+                              href={item.document}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Resume
+                            </a>
+                          ),
+                          description: item.description,
+                          action: (
+                            <>
+                              <BsPencilSquare
+                                color="green"
+                                data-toggle="modal"
+                                data-target="#exampleModal"
+                                data-whatever="@getbootstrap"
+                                outline
+                                style={{ fontSize: '20px' }}
+                                id="updateIcon"
+                                onClick={() => handleRecord(item)}
+                              />
+                              <BsTrashFill
+                                color="red"
+                                id="deleteIcon"
+                                outline
+                                onClick={() => setEducationAlert(true)}
+                                style={{ fontSize: '20px' }}
+                              />
+                            </>
+                          ),
+                        }))}
+                      /> */}
+                      <Modal
+                        isOpen={educationAlert}
+                        toggle={() => setEducationAlert(!educationAlert)}
+                        style={{ marginTop: '10%' }}
+                      >
+                        <ModalHeader>
+                          <IntlMessages id="modal.deletion-message-title" />
+                        </ModalHeader>
+                        <ModalBody className="text-center">
+                          <IntlMessages id="modal.deletion-message-details" />
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button
+                            onClick={() => setEducationAlert(false)}
+                            style={{ marginLeft: '55%' }}
+                          >
+                            نه/ نخیر
+                          </Button>
+                          <Button
+                            color="danger"
+                            onClick={() => {
+                              setEducationAlert(false);
+                              deleteEducation(item.id);
+                            }}
+                            style={{ marginLeft: '5%' }}
+                          >
+                            هو / بلی
+                          </Button>{' '}
+                        </ModalFooter>
+                      </Modal>
                       <table class="table table-lg" style={{ fontSize: 18 }}>
                         <thead>
                           <tr>
@@ -791,6 +929,7 @@ const TeacherProfile = () => {
                           })}
                         </tbody>
                       </table>
+
                       <br />
                       <br />
                       <Button
@@ -1063,11 +1202,52 @@ const TeacherProfile = () => {
                                 }
                               >
                                 <th scope="row">{item.id}</th>
-                                <td>{item.contract_type}</td>
-                                <td>{item.grade}</td>
-                                <td>{item.step}</td>
-                                <td>{item.job_type}</td>
-                                <td>{item.teaching_language}</td>
+                                <td>
+                                  {contractTypeOptions.map((inst) => {
+                                    if (inst.value === item.contract_type)
+                                      return (
+                                        <IntlMessages
+                                          id={inst.label.props.id}
+                                        />
+                                      );
+                                  })}
+                                </td>
+                                <td>
+                                  {gradeOptions.map((inst) => {
+                                    if (inst.value === item.grade)
+                                      return (
+                                        <IntlMessages
+                                          id={inst.label.props.id}
+                                        />
+                                      );
+                                  })}
+                                </td>
+                                <td>
+                                  {stepOptions.map((inst) => {
+                                    if (inst.value === item.step)
+                                      return (
+                                        <IntlMessages
+                                          id={inst.label.props.id}
+                                        />
+                                      );
+                                  })}
+                                </td>
+                                <td>
+                                  {jobTypeOptions.map((inst) => {
+                                    if (inst.value === item.job_type)
+                                      return inst.label;
+                                  })}
+                                </td>
+                                <td>
+                                  {langOptions.map((inst) => {
+                                    if (inst.value === item.teaching_language)
+                                      return (
+                                        <IntlMessages
+                                          id={inst.label.props.id}
+                                        />
+                                      );
+                                  })}
+                                </td>
                                 <td>
                                   {item.start_date}-{item.end_date}
                                 </td>
@@ -1077,7 +1257,7 @@ const TeacherProfile = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >
-                                    Download
+                                    ډاونلوډ
                                   </a>
                                 </td>
                                 <td>{item.description}</td>
@@ -1190,44 +1370,78 @@ const TeacherProfile = () => {
                                         status: '',
                                       }
                                     : {
-                                        jobType: {
-                                          value: updatingRecord.job_type,
-                                          label: updatingRecord.job_type,
-                                        },
-                                        grade: {
-                                          value: updatingRecord.grade,
-                                          label: updatingRecord.grade,
-                                        },
-                                        step: {
-                                          value: updatingRecord.step,
-                                          label: updatingRecord.step,
-                                        },
-                                        teaching_language: {
-                                          value:
-                                            updatingRecord.teaching_language,
-                                          label:
-                                            updatingRecord.teaching_language,
-                                        },
-                                        hireType: {
-                                          value: updatingRecord.hire_type,
-                                          label: updatingRecord.hire_type,
-                                        },
-                                        contract_type: {
-                                          value: updatingRecord.contract_type,
-                                          label: updatingRecord.contract_type,
-                                        },
-                                        institute: {
-                                          value: updatingRecord.institute,
-                                          label: updatingRecord.institute,
-                                        },
-                                        field: {
-                                          value: updatingRecord.teaching_field,
-                                          label: updatingRecord.teaching_field,
-                                        },
-                                        status: {
-                                          value: updatingRecord.status,
-                                          label: updatingRecord.status,
-                                        },
+                                        jobType: jobTypeOptions.filter(
+                                          (inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.job_type
+                                            )
+                                              return inst;
+                                          }
+                                        ),
+                                        grade: gradeOptions.filter((inst) => {
+                                          if (
+                                            inst.value === updatingRecord.grade
+                                          )
+                                            return inst;
+                                        }),
+                                        step: stepOptions.filter((inst) => {
+                                          if (
+                                            inst.value === updatingRecord.step
+                                          )
+                                            return inst;
+                                        }),
+                                        teaching_language: langOptions.filter(
+                                          (inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.teaching_language
+                                            )
+                                              return inst;
+                                          }
+                                        ),
+                                        hireType: hireTypeOptions.filter(
+                                          (inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.hire_type
+                                            )
+                                              return inst;
+                                          }
+                                        ),
+                                        contract_type:
+                                          contractTypeOptions.filter((inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.contract_type
+                                            )
+                                              return inst;
+                                          }),
+                                        institute: institutes.filter((inst) => {
+                                          if (
+                                            inst.value ===
+                                            updatingRecord.institute
+                                          )
+                                            return inst;
+                                        }),
+
+                                        field: contextFields.filter((inst) => {
+                                          if (
+                                            inst.value ===
+                                            updatingRecord.teaching_field
+                                          )
+                                            return inst;
+                                        }),
+                                        status:
+                                          teacherContractStatusOptions.filter(
+                                            (inst) => {
+                                              if (
+                                                inst.value ===
+                                                updatingRecord.status
+                                              )
+                                                return inst;
+                                            }
+                                          ),
                                       }
                                 }
                                 // validationSchema={
@@ -1293,7 +1507,7 @@ const TeacherProfile = () => {
                                             name="field"
                                             id="field"
                                             value={values.field}
-                                            options={fields}
+                                            options={contextFields}
                                             onChange={setFieldValue}
                                             onBlur={setFieldTouched}
                                             required

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import { Table as TB } from 'antd';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 import {
@@ -7,15 +7,18 @@ import {
   studentType,
   genderOptionsForList,
   studyTimeOptionsForList,
+  StdInteranceOptions,
 } from '../../../global-data/options';
+import { Badge } from 'reactstrap';
 // import { servicePath } from 'constants/defaultValues';
 import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
 import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
-import config from '../../../../../config';
 import { ProvincesContext } from 'context/AuthContext';
-
+import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
+import { studentStatusOptions } from './../../../global-data/options';
+import { NavLink } from 'react-router-dom';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -25,11 +28,65 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = config.API_URL;
-const apiUrl = `${servicePath}/cakes/paging`;
-const studentApiUrl = `${servicePath}/api/`;
-const studentInstituteApiUrl = `${servicePath}/api/student_institutes/`;
-const instituteApiUrl = `${servicePath}/institute/`;
+const columns = [
+  {
+    title: 'نمبر اساس',
+    dataIndex: 'student_id',
+    sorter: (a, b) => a.student_id - b.student_id,
+    width: '5%',
+  },
+  {
+    title: 'نوم/نام',
+    dataIndex: 'name',
+    sorter: (a, b) => a.name - b.name,
+    // render: (name) => `${name.first} ${name.last}`,
+    width: '15%',
+  },
+  {
+    title: 'جنسیت',
+    dataIndex: 'gender',
+    filters: [
+      { text: 'Male', value: 'male' },
+      { text: 'Female', value: 'female' },
+    ],
+    onFilter: (value, record) => record.gender.indexOf(value) === 0,
+    width: '10%',
+  },
+  {
+    title: 'د پلار نوم',
+    dataIndex: 'father_name',
+    filters: [
+      { text: 'Bachelor', value: 'bachelor' },
+      { text: 'Master', value: 'master' },
+      { text: 'Associate', value: 'associate' },
+    ],
+    onFilter: (value, record) => record.father_name.indexOf(value) === 0,
+    width: '10%',
+  },
+  {
+    title: 'ولایت',
+    dataIndex: 'province',
+    width: '10%',
+  },
+  {
+    title: 'تلفون شمیره',
+    dataIndex: 'phone_number',
+    width: '10%',
+  },
+  {
+    title: 'ده جزت نوعیت',
+    dataIndex: 'std_status',
+    width: '20%',
+  },
+  {
+    title: 'شاګرد ډول',
+    dataIndex: 'student_type',
+  },
+  {
+    title: 'اپډیټ',
+    dataIndex: 'action',
+  },
+];
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -39,6 +96,13 @@ const orderOptions = [
 const pageSizes = [10, 20, 40, 80];
 
 const ThumbListPages = ({ match }) => {
+  const [loading, setLoading] = useState(false);
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  });
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -517,6 +581,65 @@ const ThumbListPages = ({ match }) => {
             onChangePage={setCurrentPage}
           />
         </table>
+        <TB
+          columns={columns}
+          // rowKey={(record) => record.login.uuid}
+          pagination={tableParams.pagination}
+          loading={loading}
+          // onChange={handleTableChange}
+          dataSource={items.map((item, index) => ({
+            key: index,
+            student_id: item.student_id,
+            name: item.name,
+            gender: item.gender,
+            father_name: item.father_name,
+            province: item.place_of_birth,
+            phone_number: item.phone_number,
+
+            student_type: studentStatusOptions.map((status) => {
+              if (status.value == item.status) {
+                return (
+                  <div
+                    className="mb-1 text-small"
+                    style={{ fontSize: '20px', width: '10%' }}
+                  >
+                    <Badge
+                      color={
+                        status.value == 'dismissed'
+                          ? 'danger'
+                          : status.value == 'inprogress' ||
+                            status.value == 'active'
+                          ? 'success'
+                          : status.value == 'freeze'
+                          ? 'secondary'
+                          : 'warning'
+                      }
+                      pill
+                    >
+                      {status.label}
+                    </Badge>
+                  </div>
+                );
+              }
+            }),
+            description: item.description,
+            action: (
+              <NavLink
+                to={`/app/students/student-update/${item.id}`}
+                // style={{ width: '10%' }}
+              >
+                <div>
+                  <BsPencilSquare
+                    color="green"
+                    outline
+                    style={{ fontSize: '20px' }}
+                    id="updateIcon"
+                  />
+                </div>
+              </NavLink>
+            ),
+          }))}
+        />
       </div>
     </>
   );

@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
+import { Table as TB, Input, Popconfirm, Button } from 'antd';
 import IntlMessages from 'helpers/IntlMessages';
 import './list.css';
 import callApi from 'helpers/callApi';
-import { provincesOptionsForList } from '../../../global-data/options';
+import {
+  gradeOptions,
+  provincesOptionsForList,
+  teacherCurrentStatusOptions,
+} from '../../../global-data/options';
 import { levelOfEdcationForList } from '../../../global-data/options';
 import { genderOptionsForList } from '../../../global-data/options';
 import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
 import ListPageListing from 'views/app/teachers/bio/teacher-list/TeacherListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
-
+import { Badge } from 'reactstrap';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -20,28 +24,20 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-import config from '../../../../../config';
-const servicePath = config.API_URL;
-
-const apiUrl = `${servicePath}/cakes/paging`;
-const teacherApiUrl = `${servicePath}/teachers/`;
-const instituteApiUrl = `${servicePath}/institute/`;
-const teacherInstituteApiUrl = `${servicePath}/teachers/institute/`;
-
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
+import { NavLink } from 'react-router-dom';
+import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
+import PromptInput from 'components/prompInput';
 
 const pageSizes = [4, 8, 12, 20];
-const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
-];
 
 const ThumbListPages = ({ match }) => {
+  const [loading, setLoading] = useState(false);
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  });
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,6 +70,64 @@ const ThumbListPages = ({ match }) => {
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
 
+  const columns = [
+    {
+      title: (
+        <PromptInput title="اساس نمبر" colName="gender" endpoint="teachers" />
+      ),
+      dataIndex: 'student_id',
+      // sorter: (a, b) => a.student_id - b.student_id,
+      width: '5%',
+    },
+    {
+      title: 'نوم/نام',
+      dataIndex: 'name',
+      sorter: (a, b) => a.name - b.name,
+      // render: (name) => `${name.first} ${name.last}`,
+      width: '15%',
+    },
+    {
+      title: 'جنسیت',
+      dataIndex: 'gender',
+      filters: [
+        { text: 'Male', value: 'male' },
+        { text: 'Female', value: 'female' },
+      ],
+      filterSearch: true,
+      onFilter: (value, record) => {
+        record.gender.indexOf(value) === 0;
+      },
+      width: '10%',
+    },
+    {
+      title: 'د پلار نوم',
+      dataIndex: 'father_name',
+      width: '10%',
+    },
+    {
+      title: 'ولایت',
+      dataIndex: 'province',
+      width: '10%',
+    },
+    {
+      title: 'تلفون شمیره',
+      dataIndex: 'phone_number',
+      width: '10%',
+    },
+    {
+      title: 'بست',
+      dataIndex: 'grade',
+      width: '20%',
+    },
+    {
+      title: 'حالت',
+      dataIndex: 'status',
+    },
+    {
+      title: 'اپډیټ',
+      dataIndex: 'action',
+    },
+  ];
   useEffect(() => {
     setCurrentPage(1);
   }, [
@@ -526,7 +580,7 @@ const ThumbListPages = ({ match }) => {
           institutes={institutes}
           onInstituteSelect={setInstitute}
         />
-        <table className="table">
+        {/* <table className="table">
           <thead
             style={{ maxHeight: '55px ' }}
             className="pl-2 d-flex flex-grow-1  table-dark"
@@ -637,7 +691,70 @@ const ThumbListPages = ({ match }) => {
             onContextMenu={onContextMenu}
             onChangePage={setCurrentPage}
           />
-        </table>
+        </table> */}
+
+        <TB
+          columns={columns}
+          // rowKey={(record) => record.login.uuid}
+          pagination={tableParams.pagination}
+          loading={loading}
+          // onChange={handleTableChange}
+          dataSource={items.map((item, index) => ({
+            key: index,
+            student_id: item.id,
+            name: item.name,
+            gender: item.gender,
+            father_name: item.father_name,
+            province: item.place_of_birth,
+            phone_number: item.phone_number,
+            status: teacherCurrentStatusOptions.map((status) => {
+              if (status.value == item.status) {
+                return (
+                  <div
+                    className="mb-1 text-small"
+                    style={{ fontSize: '20px', width: '10%' }}
+                  >
+                    <Badge
+                      color={
+                        status.value == 'dismissed'
+                          ? 'danger'
+                          : status.value == 'inprogress' ||
+                            status.value == 'active'
+                          ? 'success'
+                          : status.value == 'freeze'
+                          ? 'secondary'
+                          : 'warning'
+                      }
+                      pill
+                    >
+                      {status.label}
+                    </Badge>
+                  </div>
+                );
+              }
+            }),
+            grade: gradeOptions.map((g) => {
+              if (g.value === item.grade)
+                return <IntlMessages id={g.label.props.id} />;
+            }),
+
+            action: (
+              <NavLink
+                to={`/app/teachers/register/${item.id}`}
+                // style={{ width: '10%' }}
+              >
+                <div>
+                  <BsPencilSquare
+                    color="green"
+                    outline
+                    style={{ fontSize: '20px' }}
+                    id="updateIcon"
+                  />
+                </div>
+              </NavLink>
+            ),
+          }))}
+        />
       </div>
     </>
   );

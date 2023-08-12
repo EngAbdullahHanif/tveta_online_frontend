@@ -12,12 +12,9 @@ message.config({
 import axios from 'axios';
 
 // const servicePath = 'http://172.16.105.244/tveta'; #production mood
-const servicePath = 'http://0.0.0.0:8000';
+// const servicePath = 'http://0.0.0.0:8000';
 // const servicePath = 'http://172.16.105.108:8000';
-// const servicePath = 'https://online.tveta.gov.af:8000';
-
-const start_date = '2023-06-01';
-const end_date = '2023-06-30';
+const servicePath = 'https://online.tveta.gov.af:8000';
 
 //  sets authentication header and content-type
 const getHeaders = (data) => {
@@ -104,8 +101,8 @@ const callApi = async (
       );
     }
     console.log(error);
-    // throw error;
-    return false;
+    throw error;
+    // return false;
   }
 };
 

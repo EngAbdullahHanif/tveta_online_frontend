@@ -95,6 +95,83 @@ const TeacherRegister = ({ intl }, values) => {
   // const [fields, setFields] = useState({});
   const { teacherId } = useParams();
 
+  if (teacherId) {
+    useEffect(() => {
+      async function fetchTeacher() {
+        const { data } = await callApi(`teachers/${teacherId}`, '', null);
+        console.log('DATA in teacher UPDATE:', data);
+        setInitialName(data.name);
+        setInitialFatherName(data.father_name);
+        setInitialGrandFatherName(data.grand_father_name);
+        setInitialregistrationNumber(data.sukuk_number);
+        setInitialLastName(data.last_name);
+        setInitialEnglishName(data.english_name);
+        setInitialEnglishLastName(data.english_last_name);
+        setInitialEnglishFatherName(data.english_father_name);
+        setInitialGrandFatherName(data.grandfather_name);
+        setInitialregistrationNumber(data.registration_number);
+        setInitialPlaceOfBirth(data.place_of_birth);
+
+        setInitialPhoneNumber(data.phone_number);
+        setInitialpageNumber(data.page_number);
+        setInitialEmail(data.email);
+        setInitialcoverNumber(data.cover_number);
+        setInitialMainVillage(data.main_village);
+        setInitialCurrentVillage(data.current_village);
+
+        dateOfBirthOptoions.map((teacherBirth) => {
+          if (teacherBirth.value === data.year_of_birth.toString()) {
+            setYearOfBirth(teacherBirth);
+          }
+        });
+
+        gradeOptions.map((teacherGrade) => {
+          if (teacherGrade.value === data.grade) {
+            setInitialGrade(teacherGrade);
+          }
+        });
+        genderOptions.map((teacherGender) => {
+          if (teacherGender.value === data.gender) {
+            setInitialGender(teacherGender);
+          }
+        });
+
+        teacherCurrentStatusOptions.map((teacherStatus) => {
+          if (teacherStatus.value == data.status) {
+            setinitialStatus(teacherStatus);
+          }
+        });
+        provinces.map((province) => {
+          if (province.value == data.current_province) {
+            setInitialCurrentProvince(province);
+          }
+          if (province.value == data.main_province) {
+            setInitialMainProvince(province);
+          }
+        });
+
+        districts.map((district) => {
+          if (district.value == data.main_district) {
+            setInitialMainDistrict(district);
+          }
+        });
+        currentDistricts.map((district) => {
+          console.log(district);
+          if (district.id == data.current_district) {
+            setInitialCurrentDistrict(district);
+          }
+        });
+
+        stepOptions.map((teacherStep) => {
+          if (teacherStep.value == data.step) {
+            setInitialStep(teacherStep);
+          }
+        });
+      }
+      fetchTeacher();
+    }, []);
+  }
+
   const createNotification = (type, className) => {
     const cName = className || '';
     switch (type) {

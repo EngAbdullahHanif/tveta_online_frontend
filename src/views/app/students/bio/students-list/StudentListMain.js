@@ -15,7 +15,7 @@ import ListPageHeading from 'views/app/students/bio/students-list/StudentListHea
 import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
-import { ProvincesContext } from 'context/AuthContext';
+import { AuthContext, ProvincesContext } from 'context/AuthContext';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import { studentStatusOptions } from './../../../global-data/options';
 import { NavLink } from 'react-router-dom';
@@ -55,12 +55,6 @@ const columns = [
   {
     title: 'د پلار نوم',
     dataIndex: 'father_name',
-    filters: [
-      { text: 'Bachelor', value: 'bachelor' },
-      { text: 'Master', value: 'master' },
-      { text: 'Associate', value: 'associate' },
-    ],
-    onFilter: (value, record) => record.father_name.indexOf(value) === 0,
     width: '10%',
   },
   {
@@ -71,16 +65,17 @@ const columns = [
   {
     title: 'تلفون شمیره',
     dataIndex: 'phone_number',
-    width: '10%',
-  },
-  {
-    title: 'ده جزت نوعیت',
-    dataIndex: 'std_status',
     width: '20%',
   },
+  // {
+  //   title: 'ده جزت نوعیت',
+  //   dataIndex: 'std_status',
+  //   width: '20%',
+  // },
   {
     title: 'شاګرد ډول',
     dataIndex: 'student_type',
+    width: '8%',
   },
   {
     title: 'اپډیټ',
@@ -96,6 +91,7 @@ const orderOptions = [
 const pageSizes = [10, 20, 40, 80];
 
 const ThumbListPages = ({ match }) => {
+  const { provinces } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
@@ -154,13 +150,6 @@ const ThumbListPages = ({ match }) => {
 
   useEffect(async () => {
     async function fetchData() {
-      console.log('institute', institute);
-      console.log('province', province);
-      console.log('district', district);
-      console.log('studentId', studentId);
-      console.log('selectedGenderOption', selectedGenderOption);
-      console.log('currentPage', currentPage);
-
       // if institute not selected
       if (institute !== '') {
         const params = {
@@ -479,7 +468,7 @@ const ThumbListPages = ({ match }) => {
           studentType={studentType}
           setSelectedDistrict={setSelectedDistrict}
         />
-        <table className="table">
+        {/* <table className="table">
           <thead
             className="pl-2 d-flex flex-grow-1  table-dark mb-2"
             style={{ maxHeight: '55px' }}
@@ -580,7 +569,7 @@ const ThumbListPages = ({ match }) => {
             onContextMenu={onContextMenu}
             onChangePage={setCurrentPage}
           />
-        </table>
+        </table> */}
         <TB
           columns={columns}
           // rowKey={(record) => record.login.uuid}
@@ -590,10 +579,16 @@ const ThumbListPages = ({ match }) => {
           dataSource={items.map((item, index) => ({
             key: index,
             student_id: item.student_id,
-            name: item.name,
+            name: (
+              <NavLink to={`student/${item.id}`} style={{ width: '10%' }}>
+                {item.name}
+              </NavLink>
+            ),
             gender: item.gender,
             father_name: item.father_name,
-            province: item.place_of_birth,
+            province: provinces.map((pro) => {
+              if (pro.value == item.current_province) return pro.label;
+            }),
             phone_number: item.phone_number,
 
             student_type: studentStatusOptions.map((status) => {

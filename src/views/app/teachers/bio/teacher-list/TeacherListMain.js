@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { Table as TB, Input, Popconfirm, Button } from 'antd';
 import IntlMessages from 'helpers/IntlMessages';
@@ -6,7 +6,6 @@ import './list.css';
 import callApi from 'helpers/callApi';
 import {
   gradeOptions,
-  provincesOptionsForList,
   teacherCurrentStatusOptions,
 } from '../../../global-data/options';
 import { levelOfEdcationForList } from '../../../global-data/options';
@@ -27,10 +26,12 @@ const getIndex = (value, arr, prop) => {
 import { NavLink } from 'react-router-dom';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import PromptInput from 'components/prompInput';
+import { AuthContext } from 'context/AuthContext';
 
 const pageSizes = [4, 8, 12, 20];
 
 const ThumbListPages = ({ match }) => {
+  const { provinces } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
@@ -38,6 +39,11 @@ const ThumbListPages = ({ match }) => {
       pageSize: 10,
     },
   });
+
+  const provincesOptionsForList = provinces.map((province) => ({
+    column: province.value,
+    label: province.label,
+  }));
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -140,278 +146,47 @@ const ThumbListPages = ({ match }) => {
   useEffect(() => {
     console.log('institute', institute);
     console.log('current page', currentPage);
-    // async function fetchData() {
-    //   if (institute !== '') {
-    //     const res = await axios.get(
-    //       `${teacherInstituteApiUrl}?institute_id=${institute.value}&page=${currentPage}&limit=${selectedPageSize}`
-    //     );
-    //     console.log('res', res.data);
-    //     setInstituteTeachers(res.data);
-    //     setItems(res.data);
-    //     setTotalItemCount(res.data.count);
-    //     //setIsLoaded(true);
-    //   } else if (
-    //     selectedProvinceOption.column === 'all' &&
-    //     selectedGenderOption.column === 'all'
-    //   ) {
-    //     if (rest == true) {
-    //       setDistrict('');
-    //       setTeacherId('');
-    //       setRest(false);
-    //     }
-    //     const response = await callApi('institute/classs/', '', null);
-    //     if (response.data && response.status === 200) {
-    //       setItems(response.data);
-    //       // setTotalPage(response.data.total_pages);
-    //       setSelectedItems([]);
-    //       // setTotalItemCount(response.data.totalItem);
-    //       setIsLoaded(true);
-    //     } else {
-    //       setItems([]);
-    //       console.log('insttutes error');
-    //     }
-
-    //     // axios
-    //     //   .get(
-    //     //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-    //     //   )
-    //     //   .then((res) => {
-    //     //     return res.data;
-    //     //   })
-    //     //   .then((data) => {
-    //     //     console.log(
-    //     //       `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-    //     //     );
-
-    //     //     setItems(data);
-    //     //     setTotalPage(data.total_pages);
-    //     //     setSelectedItems([]);
-    //     //     setTotalItemCount(data.totalItem);
-    //     //     setIsLoaded(true);
-    //     //   });
-    //   } else if (selectedProvinceOption.column === 'all') {
-    //     axios
-    //       .get(
-    //         `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-    //       )
-    //       .then((res) => {
-    //         return res.data;
-    //       })
-    //       .then((data) => {
-    //         console.log(
-    //           `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-    //         );
-
-    //         setItems(data);
-    //         setSelectedItems([]);
-    //         setTotalItemCount(data.totalItem);
-    //         setIsLoaded(true);
-    //       });
-    //   } else if (selectedGenderOption.column === 'all') {
-    //     axios
-    //       .get(
-    //         `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-    //       )
-    //       .then((res) => {
-    //         return res.data;
-    //       })
-    //       .then((data) => {
-    //         console.log(
-    //           `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-    //         );
-
-    //         setItems(data);
-    //         setSelectedItems([]);
-    //         setTotalItemCount(data.totalItem);
-    //         setIsLoaded(true);
-    //       });
-    //   } else {
-    //     axios
-    //       // get data from localhost:8000/teachers
-    //       .get(
-    //         `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-    //       )
-    //       .then((res) => {
-    //         return res.data;
-    //       })
-    //       .then((data) => {
-    //         console.log(
-    //           `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-    //         );
-    //         setItems(data);
-
-    //         setSelectedItems([]);
-    //         setTotalItemCount(data.totalItem);
-    //         setIsLoaded(true);
-    //       });
-    //   }
-    // }
-
     async function fetchData() {
+      const params = {
+        id: teacherId,
+        // current_district: district,
+        page: currentPage,
+        limit: selectedPageSize,
+        gender: selectedGenderOption?.value,
+        current_province:
+          selectedProvinceOption?.column === 'all'
+            ? ''
+            : selectedProvinceOption?.column,
+      };
+      console.log('GENDER OPT', selectedProvinceOption);
       if (institute !== '') {
-        // const res = await axios.get(
-        //   `${teacherInstituteApiUrl}?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`
-        // );
-        // console.log('res', response.data);
-        // setItems(response.data);
-        // setTotalItemCount(response.data.count);
-        // setIsLoaded(true);
-
-        const response = await callApi(
-          `teachers/institute/?institute_id=${institute.id}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setInstituteTeachers(response.data);
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
+        params.institute_id = institute.id;
       } else if (
-        selectedProvinceOption.column === 'all' &&
-        selectedGenderOption.column === 'all'
+        selectedProvinceOption?.column === 'all' &&
+        selectedGenderOption?.column === 'all'
       ) {
         if (rest == true) {
           setDistrict('');
           setTeacherId('');
           setRest(false);
         }
-        // axios
-        //   .get(
-        //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-
-        const response = await callApi(
-          `teachers/?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-        // setTotalPage(response.data.total_pages);
-        // setSelectedItems([]);
-        // setTotalItemCount(response.data.totalItem);
-        // setIsLoaded(true);
-        // .then((data) => {
-        //   console.log(
-        //     `${teacherApiUrl}?id=${teacherId}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   );
-
-        //   setItems(data);
-        //   setTotalPage(data.total_pages);
-        //   setSelectedItems([]);
-        //   setTotalItemCount(data.totalItem);
-        //   setIsLoaded(true);
-        // });
-      } else if (selectedProvinceOption.column === 'all') {
-        // axios
-        //   .get(
-        //     `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //     );
-
-        //     setItems(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-
-        const response = await callApi(
-          `teachers/?id=${teacherId}&gender=${selectedGenderOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
-      } else if (selectedGenderOption.column === 'all') {
-        // axios
-        //   .get(
-        //     `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${teacherApiUrl}?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //     );
-
-        //     setItems(data);
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-        const response = await callApi(
-          `teachers/?id=${teacherId}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
+        params.current_province = null;
+        params.gender = null;
+      } else if (selectedProvinceOption?.column === 'all') {
+        params.province = null;
+        params.gender = selectedGenderOption?.value;
+      } else if (selectedGenderOption?.column === 'all') {
+        params.gender = null;
+      }
+      const response = await callApi(`teachers/`, '', null, params);
+      if (response.data && response.status === 200) {
+        setInstituteTeachers(response.data);
+        setItems(response.data);
+        setSelectedItems([]);
+        // setTotalItemCount(data);
+        setIsLoaded(true);
       } else {
-        // axios
-        //   // get data from localhost:8000/teachers
-        //   .get(
-        //     `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //   )
-        //   .then((res) => {
-        //     return res.data;
-        //   })
-        //   .then((data) => {
-        //     console.log(
-        //       `${teacherApiUrl}?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`
-        //     );
-        //     setItems(data);
-
-        //     setSelectedItems([]);
-        //     setTotalItemCount(data.totalItem);
-        //     setIsLoaded(true);
-        //   });
-        const response = await callApi(
-          `teachers/?id=${teacherId}&gender=${selectedGenderOption.column}&current_province=${selectedProvinceOption.column}&current_district=${district}&page=${currentPage}&limit=${selectedPageSize}`,
-          '',
-          null
-        );
-
-        if (response.data && response.status === 200) {
-          setItems(response.data);
-          setSelectedItems([]);
-          // setTotalItemCount(data);
-          setIsLoaded(true);
-        } else {
-          console.log('students error');
-        }
+        console.log('students error');
       }
     }
 
@@ -530,7 +305,7 @@ const ThumbListPages = ({ match }) => {
           // following code is used for order the list based on different element of the prod
           changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptionsForList.find((x) => x.column === column)
+              genderOptionsForList.find((x) => x.value === column)
             );
           }}
           changeProvinceBy={(column) => {
@@ -692,7 +467,6 @@ const ThumbListPages = ({ match }) => {
             onChangePage={setCurrentPage}
           />
         </table> */}
-
         <TB
           columns={columns}
           // rowKey={(record) => record.login.uuid}
@@ -702,10 +476,12 @@ const ThumbListPages = ({ match }) => {
           dataSource={items.map((item, index) => ({
             key: index,
             student_id: item.id,
-            name: item.name,
+            name: <NavLink to={`teacher/${item.id}`}>{item.name}</NavLink>,
             gender: item.gender,
             father_name: item.father_name,
-            province: item.place_of_birth,
+            province: provinces.map((pro) => {
+              if (pro.value == item.current_province) return pro.label;
+            }),
             phone_number: item.phone_number,
             status: teacherCurrentStatusOptions.map((status) => {
               if (status.value == item.status) {

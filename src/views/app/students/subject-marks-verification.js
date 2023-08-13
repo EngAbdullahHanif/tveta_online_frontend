@@ -633,7 +633,12 @@ const SubjectMarksVerification = ({ match }) => {
                                         }}
                                       >
                                         {student.subject_id.map((subject) => {
-                                          return <>{subject.marks}</>;
+                                          return (
+                                            <>
+                                              {subject.second_chance_marks ||
+                                                subject.marks}
+                                            </>
+                                          );
                                         })}
                                       </td>
 

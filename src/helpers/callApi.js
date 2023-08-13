@@ -104,8 +104,8 @@ const callApi = async (
       );
     }
     console.log(error);
-    // throw error;
-    return false;
+    throw error;
+    // return false;
   }
 };
 

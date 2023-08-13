@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import {
   stepOptions,
@@ -13,7 +13,15 @@ import {
 import { teacherRegisterFormStep_1 } from '../../global-data/forms-validation';
 import { NavLink } from 'react-router-dom';
 import './../../../../assets/css/global-style.css';
-import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
+import {
+  Row,
+  Card,
+  CardBody,
+  FormGroup,
+  Label,
+  Button,
+  Spinner,
+} from 'reactstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
 import { Formik, Form, Field } from 'formik';
@@ -24,6 +32,7 @@ import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 
 const TeacherRegister = ({ intl }, values) => {
+  // why used seperate states for each field?
   const { provinces, districts } = useContext(AuthContext);
   const [initialName, setInitialName] = useState('');
   const [initialLastName, setInitialLastName] = useState('');
@@ -50,13 +59,19 @@ const TeacherRegister = ({ intl }, values) => {
   const [initialMainProvince, setInitialMainProvince] = useState([]);
   const [initialMainDistrict, setInitialMainDistrict] = useState([]);
   const [initialMainVillage, setInitialMainVillage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUpdateForm, setIsUpdateForm] = useState(false);
 
   const forms = [createRef(null), createRef(null), createRef(null)];
+  const history = useHistory();
   const { teacherId } = useParams();
 
+  // if teacher id is present, then it is an update form
   if (teacherId) {
     useEffect(() => {
+      setIsUpdateForm(true);
       async function fetchTeacher() {
+        setIsLoading(true);
         const { data } = await callApi(`teachers/${teacherId}`, '', null);
         console.log('DATA in teacher UPDATE:', data);
         setInitialName(data.name);
@@ -77,54 +92,57 @@ const TeacherRegister = ({ intl }, values) => {
         setInitialMainVillage(data.main_village);
         setInitialCurrentVillage(data.current_village);
 
-        dateOfBirthOptoions.map((teacherBirth) => {
+        dateOfBirthOptoions.forEach((teacherBirth) => {
           if (teacherBirth.value === data.year_of_birth.toString()) {
             setYearOfBirth(teacherBirth);
           }
         });
 
-        gradeOptions.map((teacherGrade) => {
+        gradeOptions.forEach((teacherGrade) => {
           if (teacherGrade.value === data.grade) {
             setInitialGrade(teacherGrade);
           }
         });
-        genderOptions.map((teacherGender) => {
+        genderOptions.forEach((teacherGender) => {
           if (teacherGender.value === data.gender) {
             setInitialGender(teacherGender);
           }
         });
 
-        teacherCurrentStatusOptions.map((teacherStatus) => {
+        teacherCurrentStatusOptions.forEach((teacherStatus) => {
           if (teacherStatus.value == data.status) {
             setinitialStatus(teacherStatus);
           }
         });
 
-        provinces.map((province) => {
+        provinces.forEach((province) => {
           if (province.value == data.current_province) {
             setInitialCurrentProvince(province);
           }
+        });
+        provinces.forEach((province) => {
           if (province.value == data.main_province) {
             setInitialMainProvince(province);
           }
         });
 
-        districts.map((district) => {
+        districts.forEach((district) => {
           if (district.value == data.main_district) {
             setInitialMainDistrict(district);
           }
         });
-        districts.map((district) => {
+        districts.forEach((district) => {
           if (district.value == data.current_district) {
             setInitialCurrentDistrict(district);
           }
         });
 
-        stepOptions.map((teacherStep) => {
+        stepOptions.forEach((teacherStep) => {
           if (teacherStep.value == data.step) {
             setInitialStep(teacherStep);
           }
         });
+        setIsLoading(false);
       }
       fetchTeacher();
     }, []);
@@ -162,11 +180,12 @@ const TeacherRegister = ({ intl }, values) => {
   };
 
   const RegisterTeacher = async (newFields) => {
+    setIsLoading(true);
     let apiParams = {
       endPoint: 'teachers/',
       method: 'POST',
     };
-    if (teacherId) {
+    if (isUpdateForm && teacherId) {
       apiParams.endPoint = `teachers/${teacherId}/`;
       apiParams.method = 'PATCH';
     }
@@ -197,13 +216,31 @@ const TeacherRegister = ({ intl }, values) => {
       year_of_birth: newFields.yearOfBirth?.value,
       status: newFields.status?.value,
     };
-    await callApi(apiParams.endPoint, apiParams.method, data)
-      .then((response) => {
-        message.success('استاد ثبت شو');
-        window.location.replace(`/`);
-      })
-      .catch((err) => console.log('Error in Teacher Save: ', err));
+
+    // remove all key-value pairs where value is undefined
+    if (isUpdateForm && teacherId) {
+      Object.keys(data).forEach(
+        (key) => data[key] === undefined && delete data[key]
+      );
+    }
+    try {
+      const response = await callApi(
+        apiParams.endPoint,
+        apiParams.method,
+        data
+      );
+      message.success('استاد ثبت شو');
+      // nagivate back to teacher profile
+      history.push(`/app/teachers/teacher/${teacherId}`);
+    } catch (error) {
+      message.error('استاد ثبت نشو/استاد ثبت نشد');
+    }
+    setIsLoading(false);
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Card>
       <div className="mt-4 ml-5">
@@ -216,6 +253,7 @@ const TeacherRegister = ({ intl }, values) => {
           <Formik
             enableReinitialize={true}
             innerRef={forms[0]}
+            // disabled={isLoading}
             initialValues={{
               name: initialName,
               englishName: initialEnglishName,
@@ -373,19 +411,48 @@ const TeacherRegister = ({ intl }, values) => {
                         <div></div>
                       )}
 
+                      {/* Tazkira Number */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="teacher.TazkiraNoLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="registrationNumber"
+                          type="number"
+                        />
+                        {errors.registrationNumber &&
+                        touched.registrationNumber ? (
+                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                            {errors.registrationNumber}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
                       <FormGroup className="form-group has-float-label error-l-100 ">
                         <Label>
                           <IntlMessages id="teacher.DoBLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
-                        <FormikReactSelect
+                        {/* <Field
+                          className="form-control fieldStyle"
+                          type="number"
+                          min={1300}
+                          max={1400}
                           name="yearOfBirth"
                           id="yearOfBirth"
-                          value={values.yearOfBirth}
-                          options={dateOfBirthOptoions}
+                          // value={values.yearOfBirth}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           required
+                        /> */}
+                        <Field
+                          className="form-control fieldStyle"
+                          name="yearOfBirth"
+                          type="number"
+                          min={1300}
+                          max={1450}
                         />
                         {errors.yearOfBirth && touched.yearOfBirth ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -461,7 +528,6 @@ const TeacherRegister = ({ intl }, values) => {
                       <FormGroup className="form-group has-float-label error-l-100">
                         <Label>
                           <IntlMessages id="forms.Eng_name" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
                           className="form-control fieldStyle"
@@ -478,7 +544,6 @@ const TeacherRegister = ({ intl }, values) => {
                       <FormGroup className="form-group has-float-label">
                         <Label>
                           <IntlMessages id="forms.lastNameEng" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
                           className="form-control fieldStyle"
@@ -495,7 +560,6 @@ const TeacherRegister = ({ intl }, values) => {
                       <FormGroup className="form-group has-float-label error-l-100">
                         <Label>
                           <IntlMessages id="forms.Std_father_Eng_Name" />
-                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
                           className="form-control fieldStyle"
@@ -542,25 +606,6 @@ const TeacherRegister = ({ intl }, values) => {
                         {touched.gender && errors.gender ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.gender}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
-                      {/* Tazkira Number */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="teacher.TazkiraNoLabel" />
-                          <span style={{ color: 'red' }}>*</span>
-                        </Label>
-                        <Field
-                          className="form-control fieldStyle"
-                          name="registrationNumber"
-                          type="number"
-                        />
-                        {errors.registrationNumber &&
-                        touched.registrationNumber ? (
-                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                            {errors.registrationNumber}
                           </div>
                         ) : null}
                       </FormGroup>

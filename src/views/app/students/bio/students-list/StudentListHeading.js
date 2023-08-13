@@ -184,14 +184,8 @@ const ListPageHeading = ({
                 </UncontrolledDropdown>
 
                 {/* District */}
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 ">
-                  {/* <input
-                    type="text"
-                    name="district"
-                    id="district"
-                    placeholder={messages['search.district']}
-                    style={{ fontSize: '17px' }}
-                  /> */}
+                {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 ">
+                  
                   <ReactAutoSugegst
                     data={districts}
                     select={(district) => {
@@ -200,15 +194,13 @@ const ListPageHeading = ({
                     style={{ fontSize: '17px' }}
                     placeholder={messages['search.district']}
                   />
-                </div>
+                </div> */}
 
                 {/* Educational Year */}
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle caret color="outline-dark">
                     <IntlMessages id="filter" />
                     {selectedEducationalYearOption?.label || 'سال تعلیمی'}
-                    {/* {Educationnal} */}
-                    {/* <span>fdsg</span> */}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -229,10 +221,10 @@ const ListPageHeading = ({
                       );
                     })}
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown> */}
 
                 {/* Timing Shift */}
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle
                     caret
                     color="outline-dark"
@@ -255,7 +247,7 @@ const ListPageHeading = ({
                       );
                     })}
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown> */}
 
                 {/* Student Id */}
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
@@ -270,7 +262,7 @@ const ListPageHeading = ({
                 </div>
 
                 {/* Institute */}
-                <div style={{ marginLeft: '90px', fontSize: '17px' }}>
+                {/* <div style={{ marginLeft: '90px', fontSize: '17px' }}>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(institute) => {
@@ -278,10 +270,10 @@ const ListPageHeading = ({
                     }}
                     placeholder={messages['search.institute.name']}
                   />
-                </div>
+                </div> */}
 
                 {/* Education Level */}
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle
                     caret
                     color="outline-dark"
@@ -304,10 +296,10 @@ const ListPageHeading = ({
                       );
                     })}
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown> */}
 
                 {/* INTEGRATE THIS BASE ON DEPARTMENT */}
-                <div style={{ fontSize: '17px' }}>
+                {/* <div style={{ fontSize: '17px' }}>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(opt) => {
@@ -315,7 +307,7 @@ const ListPageHeading = ({
                     }}
                     placeholder={messages['search.department.name']}
                   />
-                </div>
+                </div> */}
               </div>
               <Button
                 color="outline-red"

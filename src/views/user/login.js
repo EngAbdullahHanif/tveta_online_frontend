@@ -8,7 +8,7 @@ import {
   Button,
   Spinner,
 } from 'reactstrap';
-import { NavLink, Redirect, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../../assets/img/logo2.png';
 import { Formik, Form, Field } from 'formik';
@@ -20,20 +20,33 @@ import IntlMessages from 'helpers/IntlMessages';
 import { loginUser } from 'redux/actions';
 import { AuthContext } from 'context/AuthContext';
 import jwt_decode from 'jwt-decode';
-import axios from 'axios';
 import callApi from 'helpers/callApi';
-
-const productionURL = 'http://172.16.105.244/tveta';
-const localURL = 'http://localhost:8000';
+import * as Yup from 'yup';
 
 const Login = ({ history, loading, error, loginUserAction }) => {
   const authContext = useContext(AuthContext);
   const [email] = useState('');
   const [password] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const userLoginSchema = Yup.object().shape({
+    username: Yup.string()
+      .required()
+      .test(
+        'len',
+        'Username Must be at least 5 characters',
+        (val) => val?.length >= 5
+      )
+      .label('username'),
+    password: Yup.string()
+      .required()
+      .test(
+        'len',
+        'Passwor Must be at least 5 characters',
+        (val) => val?.length >= 5
+      )
+      .label('password'),
+  });
   useEffect(() => {
     if (error) {
       NotificationManager.error(
@@ -50,6 +63,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
 
   const onUserLogin = (values) => {
     setIsLoading(true);
+
     callApi(`auth/login/`, 'POST', {
       username: values.username,
       password: values.password,
@@ -128,31 +142,39 @@ const Login = ({ history, loading, error, loginUserAction }) => {
               <IntlMessages id="user.login-title" />
             </CardTitle>
 
-            <Formik initialValues={initialValues} onSubmit={onUserLogin}>
-              {({ errors, touched }) => (
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onUserLogin}
+              validationSchema={userLoginSchema}
+            >
+              {({ errors, touched, handleSubmit }) => (
                 <Form className="av-tooltip tooltip-label-bottom">
                   <FormGroup className="form-group has-float-label">
                     <Label>
                       <IntlMessages id="user.email-Id" />
                     </Label>
-                    <Field className="form-control" name="username" />
+                    <Field
+                      className="form-control fieldStyle"
+                      name="username"
+                    />
                     {errors.username && touched.username && (
-                      <div className="invalid-feedback d-block">
+                      <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                         {errors.username}
                       </div>
                     )}
                   </FormGroup>
+
                   <FormGroup className="form-group has-float-label">
                     <Label>
                       <IntlMessages id="user.password" />
                     </Label>
                     <Field
-                      className="form-control"
+                      className="form-control fieldStyle"
                       type="password"
                       name="password"
                     />
                     {errors.password && touched.password && (
-                      <div className="invalid-feedback d-block">
+                      <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                         {errors.password}
                       </div>
                     )}

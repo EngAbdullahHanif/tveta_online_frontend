@@ -17,6 +17,7 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap';
+
 import DatePicker from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
@@ -46,10 +47,15 @@ import config from '../../../../config';
 import {
   teacherContractValidationSchema,
   teacherEducationValidationSchema,
+  teacherHREvaluationValidationSchema,
 } from 'views/app/global-data/forms-validation';
-import { message, Col, InputNumber, Slider, Spac } from 'antd';
+import { message, Col, InputNumber, Slider, Table as TB, Spin } from 'antd';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import { Spinner } from 'react-bootstrap';
+import {
+  teacherEvaluationValidationSchema,
+  teacherIncentivesValidationSchema,
+} from './../../global-data/forms-validation';
 const servicePath = config.API_URL;
 const teacherApiUrl = `${servicePath}/teachers/`;
 const teacherEvaluationApiUrl = `${servicePath}/teachers/evaluation`;
@@ -58,33 +64,38 @@ const teacherTransferApiUrl = `${servicePath}/teachers/institute`;
 // const { RangePicker } = DatePicker;
 
 const TeacherProfile = () => {
-  const { departments, classes, subjects } = useContext(AuthContext);
+  const {
+    departments,
+    classes,
+    subjects,
+    institutes,
+    contextFields,
+    provinces,
+    districts,
+  } = useContext(AuthContext);
+  console.log('INSTITUTES: ', institutes);
   const [isNext, setIsNext] = useState(true);
   const { teacherId } = useParams();
   const [teacher, setTeacher] = useState([]);
-  const [teacherInstitute, setTeacherInstitute] = useState([]);
   const [teacherEvaluation, setTeacherEvaluation] = useState([]);
   const [teacherHREvaluation, setTeacherHREvaluation] = useState([]);
   const [teacherTransfer, setTeacherTransfer] = useState([]);
   const [teacherEducation, setTeacherEducation] = useState([]);
   const [teacherContracts, setTeacherContracts] = useState([]);
   const [teacherIncentives, setTeacherIncentives] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
-  const [fields, setFields] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [cvFile, setCVFile] = useState();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [score, setScore] = useState(1);
   const [evaluationDate, setEvaluationDate] = useState();
-  const [modalBasic, setModalBasic] = useState(false);
   const [contractAlert, setContractAlert] = useState(false);
   const [educationAlert, setEducationAlert] = useState(false);
   const [evaluationAlert, setEvaluationAlert] = useState(false);
   const [insentiveAlert, setInsentiveAlert] = useState(false);
   const [updatingRecord, setUpdatingRecord] = useState({});
   const [loading, setLoading] = useState(false);
-  console.log('Teacher ID: ', teacherId);
+
   const resetUpdate = () => {
     setUpdatingRecord(null);
     recId = null;
@@ -93,33 +104,12 @@ const TeacherProfile = () => {
     setScore(null);
     setEvaluationDate(null);
   };
-  const fetchInstitutes = async () => {
-    const response = await callApi(`/institute/`, '', null);
-    const data = response.data;
-    console.log('All Institutes in Profile: ', data);
-    let obj = data.map((item) => ({ value: item.id, label: item.name }));
-    setInstitutes(obj);
-  };
-  const fetchFields = async () => {
-    const response = await callApi(`/institute/field/`, '', null);
-    const data = response.data;
-    console.log('All Institutes in Profile: ', data);
-    let obj = data.map((item) => ({ value: item.id, label: item.name }));
-    setFields(obj);
-  };
+
   async function fetchTeacher() {
     const response = await callApi(`teachers/?id=${teacherId}`, '', null);
     const data = response.data;
     setTeacher(data);
     setIsLoaded(true);
-    const instituteResponse = await callApi(
-      `teachers/institute/${teacherId}/`,
-      '',
-      null
-    );
-    const instituteData = await instituteResponse.data;
-    console.log('Data Institute: ', instituteData);
-    setTeacherInstitute(instituteData);
   }
   async function fetchTeacherEvaluation() {
     const response = await callApi(
@@ -190,11 +180,9 @@ const TeacherProfile = () => {
   }
   let recId;
   const handleRecord = (item) => {
+    console.log('ITEMMMMM: ', item);
     recId = item.id;
-    console.log('RECCCCCCCCC', recId);
     setUpdatingRecord(item);
-    console.log('EEEEEEEEEEEE', updatingRecord);
-    console.log('EEEEEEEEEEEE2', item);
     setStartDate(item.startDate);
     setEndDate(item.endDate);
     setScore(item.score);
@@ -207,9 +195,9 @@ const TeacherProfile = () => {
     fetchTeacherTransfer();
     fetchTeacherEducation();
     fetchTeacherContracts();
-    fetchInstitutes();
+    // fetchInstitutes();
     fetchTeacherIncentives();
-    fetchFields();
+    // fetchFields();
   }, []);
 
   const handleClick = (event) => {
@@ -285,7 +273,10 @@ const TeacherProfile = () => {
           setLoading(false);
           message.success('Education Added');
           fetchTeacherEducation();
+          // window.location.reload();
           resetUpdate();
+        } else {
+          message.error('Data Not Saved Check your Payload');
         }
       }
     );
@@ -332,6 +323,7 @@ const TeacherProfile = () => {
           setLoading(false);
           message.success('Data Saved Successfully');
           fetchTeacherContracts();
+          // window.location.reload();
           resetUpdate();
         } else {
           message.error('Data Not Saved Check your Payload');
@@ -375,6 +367,7 @@ const TeacherProfile = () => {
           setLoading(false);
           message.success('Data Saved Successfully');
           fetchTeacherEvaluation();
+          // window.location.reload();
           resetUpdate();
         } else {
           message.error('Data Not Saved Check your Payload');
@@ -411,6 +404,7 @@ const TeacherProfile = () => {
           setLoading(false);
           message.success('Data Saved Successfully');
           fetchTeacherHREvaluation();
+          // window.location.reload();
           resetUpdate();
         } else {
           message.error('Data Not Saved Check your Payload');
@@ -418,7 +412,8 @@ const TeacherProfile = () => {
       }
     );
   };
-  const addIncentive = async (inputData) => {
+  console.log('ID: ', recId, updatingRecord);
+  const addIncentive = async (inputData, { resetForm }) => {
     setLoading(true);
     let apiParams = {
       endPoint: `teachers/${teacherId}/feedbacks/`,
@@ -437,19 +432,22 @@ const TeacherProfile = () => {
     console.log('Incentive Data Data: ', data);
     await callApi(apiParams.endPoint, apiParams.method, data).then(
       (response) => {
-        console.log('RESPONSE in teacher Incentive Data;: ', response.data);
+        console.log('RESPONSE in teacher Incentive Data: ', response.data);
         resetUpdate();
         if (response.status >= 200 && response.status < 300) {
           setLoading(false);
           message.success('Data Saved Successfully');
           fetchTeacherIncentives();
+          resetForm();
           resetUpdate();
         } else {
           message.error('Data Not Saved Check your Payload');
         }
       }
     );
+    setLoading(false);
   };
+
   return (
     <>
       <Row>
@@ -628,14 +626,24 @@ const TeacherProfile = () => {
                             <Label>
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>{teacher[0].main_province}</h3>
+                            <h3>
+                              {provinces.map((pro) => {
+                                if (teacher[0].main_province === pro.value)
+                                  return pro.label;
+                              })}
+                            </h3>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label>
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>{teacher[0].main_district}</h3>
+                            <h3>
+                              {districts.map((pro) => {
+                                if (teacher[0].main_district === pro.value)
+                                  return pro.label;
+                              })}
+                            </h3>
                           </Colxx>
                         </Row>
                       </Colxx>
@@ -656,14 +664,24 @@ const TeacherProfile = () => {
                             <Label>
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>{teacher[0].current_province}</h3>
+                            <h3>
+                              {provinces.map((pro) => {
+                                if (teacher[0].current_province === pro.value)
+                                  return pro.label;
+                              })}
+                            </h3>
                           </Colxx>
                           <Colxx>
                             {' '}
                             <Label>
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>{teacher[0].current_district}</h3>
+                            <h3>
+                              {districts.map((pro) => {
+                                if (teacher[0].current_district === pro.value)
+                                  return pro.label;
+                              })}
+                            </h3>
                           </Colxx>
                         </Row>
                       </Colxx>
@@ -691,6 +709,36 @@ const TeacherProfile = () => {
 
                   <Row className="justify-content-center   rounded ">
                     <Colxx style={{ paddingInline: '4%' }}>
+                      <Modal
+                        isOpen={educationAlert}
+                        toggle={() => setEducationAlert(!educationAlert)}
+                        style={{ marginTop: '10%' }}
+                      >
+                        <ModalHeader>
+                          <IntlMessages id="modal.deletion-message-title" />
+                        </ModalHeader>
+                        <ModalBody className="text-center">
+                          <IntlMessages id="modal.deletion-message-details" />
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button
+                            onClick={() => setEducationAlert(false)}
+                            style={{ marginLeft: '55%' }}
+                          >
+                            نه/ نخیر
+                          </Button>
+                          <Button
+                            color="danger"
+                            onClick={() => {
+                              setEducationAlert(false);
+                              deleteEducation(item.id);
+                            }}
+                            style={{ marginLeft: '5%' }}
+                          >
+                            هو / بلی
+                          </Button>{' '}
+                        </ModalFooter>
+                      </Modal>
                       <table class="table table-lg" style={{ fontSize: 18 }}>
                         <thead>
                           <tr>
@@ -723,19 +771,11 @@ const TeacherProfile = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >
-                                    Resume
+                                    Download
                                   </a>
                                 </td>
                                 <td>{item.description}</td>
                                 <td>
-                                  {/* <a
-                                    data-toggle="modal"
-                                    data-target="#exampleModal"
-                                    data-whatever="@getbootstrap"
-                                  >
-                                    Edit
-                                  </a>
-                                  /<a>Delete</a> */}
                                   <BsPencilSquare
                                     color="green"
                                     data-toggle="modal"
@@ -791,6 +831,7 @@ const TeacherProfile = () => {
                           })}
                         </tbody>
                       </table>
+
                       <br />
                       <br />
                       <Button
@@ -832,31 +873,40 @@ const TeacherProfile = () => {
                                 initialValues={
                                   !updatingRecord
                                     ? {
-                                        degree: '',
+                                        degree: [],
                                         institute: '',
                                         field_of_study: '',
-                                        year_of_completion: '',
+                                        year_of_completion: [],
                                         description: '',
                                       }
                                     : {
-                                        degree: {
-                                          value: updatingRecord.degree,
-                                          label: updatingRecord.degree,
-                                        },
+                                        degree: degreeTypeOptions.filter(
+                                          (inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.degree
+                                            )
+                                              return inst;
+                                          }
+                                        ),
                                         institute: updatingRecord?.institution,
 
                                         field_of_study:
                                           updatingRecord.field_of_study,
-                                        year_of_completion: {
-                                          value: updatingRecord.year_completed,
-                                          label: updatingRecord.year_completed,
-                                        },
+                                        year_of_completion:
+                                          dateOfBirthOptoions.filter((inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.year_completed
+                                            )
+                                              return inst;
+                                          }),
                                         description: updatingRecord.description,
                                       }
                                 }
-                                // validationSchema={
-                                //   teacherEducationValidationSchema
-                                // }
+                                validationSchema={
+                                  teacherEducationValidationSchema
+                                }
                                 onSubmit={(formData) => {
                                   addEducation(formData);
                                 }}
@@ -868,7 +918,6 @@ const TeacherProfile = () => {
                                   setFieldTouched,
                                   setFieldValue,
                                   handleSubmit,
-                                  resetForm,
                                 }) => (
                                   <>
                                     <form>
@@ -891,7 +940,7 @@ const TeacherProfile = () => {
                                           onBlur={setFieldTouched}
                                           required
                                         />
-                                        {errors.degree && touched.degree ? (
+                                        {touched.degree && errors.degree ? (
                                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                             {errors.degree}
                                           </div>
@@ -911,6 +960,12 @@ const TeacherProfile = () => {
                                           className="form-control fieldStyle"
                                           name="institute"
                                         />
+                                        {errors.institute &&
+                                        touched.institute ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.institute}
+                                          </div>
+                                        ) : null}
                                       </div>
                                       <div class="form-group">
                                         <label
@@ -926,6 +981,12 @@ const TeacherProfile = () => {
                                           className="form-control fieldStyle"
                                           name="field_of_study"
                                         />
+                                        {errors.field_of_study &&
+                                        touched.field_of_study ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.field_of_study}
+                                          </div>
+                                        ) : null}
                                       </div>
                                       <div class="form-group">
                                         <label
@@ -941,7 +1002,9 @@ const TeacherProfile = () => {
                                         <FormikReactSelect
                                           name="year_of_completion"
                                           id="year_of_completion"
-                                          value={values.year_of_completion}
+                                          defaultValue={
+                                            values?.year_of_completion
+                                          }
                                           options={dateOfBirthOptoions}
                                           onChange={setFieldValue}
                                           onBlur={setFieldTouched}
@@ -961,9 +1024,6 @@ const TeacherProfile = () => {
                                           class="col-form-label"
                                         >
                                           Description
-                                          <span style={{ color: 'red' }}>
-                                            *
-                                          </span>
                                         </label>
                                         <Field
                                           className="form-control fieldStyle"
@@ -1002,12 +1062,12 @@ const TeacherProfile = () => {
                                       <button
                                         type="submit"
                                         class="btn btn-primary"
-                                        data-dismiss="modal"
+                                        // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
                                         Add Education
                                       </button>
-                                    </div>{' '}
+                                    </div>
                                   </>
                                 )}
                               </Formik>
@@ -1063,11 +1123,52 @@ const TeacherProfile = () => {
                                 }
                               >
                                 <th scope="row">{item.id}</th>
-                                <td>{item.contract_type}</td>
-                                <td>{item.grade}</td>
-                                <td>{item.step}</td>
-                                <td>{item.job_type}</td>
-                                <td>{item.teaching_language}</td>
+                                <td>
+                                  {contractTypeOptions.map((inst) => {
+                                    if (inst.value === item.contract_type)
+                                      return (
+                                        <IntlMessages
+                                          id={inst.label.props.id}
+                                        />
+                                      );
+                                  })}
+                                </td>
+                                <td>
+                                  {gradeOptions.map((inst) => {
+                                    if (inst.value === item.grade)
+                                      return (
+                                        <IntlMessages
+                                          id={inst.label.props.id}
+                                        />
+                                      );
+                                  })}
+                                </td>
+                                <td>
+                                  {stepOptions.map((inst) => {
+                                    if (inst.value === item.step)
+                                      return (
+                                        <IntlMessages
+                                          id={inst.label.props.id}
+                                        />
+                                      );
+                                  })}
+                                </td>
+                                <td>
+                                  {jobTypeOptions.map((inst) => {
+                                    if (inst.value === item.job_type)
+                                      return inst.label;
+                                  })}
+                                </td>
+                                <td>
+                                  {langOptions.map((inst) => {
+                                    if (inst.value === item.teaching_language)
+                                      return (
+                                        <IntlMessages
+                                          id={inst.label.props.id}
+                                        />
+                                      );
+                                  })}
+                                </td>
                                 <td>
                                   {item.start_date}-{item.end_date}
                                 </td>
@@ -1077,7 +1178,7 @@ const TeacherProfile = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >
-                                    Download
+                                    ډاونلوډ
                                   </a>
                                 </td>
                                 <td>{item.description}</td>
@@ -1179,60 +1280,94 @@ const TeacherProfile = () => {
                                 initialValues={
                                   !updatingRecord
                                     ? {
-                                        jobType: '',
-                                        grade: '',
-                                        step: '',
-                                        teaching_language: '',
-                                        hireType: '',
-                                        contract_type: '',
-                                        institute: '',
-                                        field: '',
-                                        status: '',
+                                        jobType: [],
+                                        grade: [],
+                                        step: [],
+                                        teaching_language: [],
+                                        hireType: [],
+                                        contract_type: [],
+                                        institute: [],
+                                        field: [],
+                                        status: [],
                                       }
                                     : {
-                                        jobType: {
-                                          value: updatingRecord.job_type,
-                                          label: updatingRecord.job_type,
-                                        },
-                                        grade: {
-                                          value: updatingRecord.grade,
-                                          label: updatingRecord.grade,
-                                        },
-                                        step: {
-                                          value: updatingRecord.step,
-                                          label: updatingRecord.step,
-                                        },
-                                        teaching_language: {
-                                          value:
-                                            updatingRecord.teaching_language,
-                                          label:
-                                            updatingRecord.teaching_language,
-                                        },
-                                        hireType: {
-                                          value: updatingRecord.hire_type,
-                                          label: updatingRecord.hire_type,
-                                        },
-                                        contract_type: {
-                                          value: updatingRecord.contract_type,
-                                          label: updatingRecord.contract_type,
-                                        },
-                                        institute: {
-                                          value: updatingRecord.institute,
-                                          label: updatingRecord.institute,
-                                        },
-                                        field: {
-                                          value: updatingRecord.teaching_field,
-                                          label: updatingRecord.teaching_field,
-                                        },
-                                        status: {
-                                          value: updatingRecord.status,
-                                          label: updatingRecord.status,
-                                        },
+                                        jobType: jobTypeOptions.filter(
+                                          (inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.job_type
+                                            )
+                                              return inst;
+                                          }
+                                        ),
+                                        grade: gradeOptions.filter((inst) => {
+                                          if (
+                                            inst.value === updatingRecord.grade
+                                          )
+                                            return inst;
+                                        }),
+                                        step: stepOptions.filter((inst) => {
+                                          if (
+                                            inst.value === updatingRecord.step
+                                          )
+                                            return inst;
+                                        }),
+                                        teaching_language: langOptions.filter(
+                                          (inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.teaching_language
+                                            )
+                                              return inst;
+                                          }
+                                        ),
+                                        hireType: hireTypeOptions.filter(
+                                          (inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.hire_type
+                                            )
+                                              return inst;
+                                          }
+                                        ),
+                                        contract_type:
+                                          contractTypeOptions.filter((inst) => {
+                                            if (
+                                              inst.value ===
+                                              updatingRecord.contract_type
+                                            )
+                                              return inst;
+                                          }),
+                                        institute: institutes.filter((inst) => {
+                                          if (
+                                            inst.value ===
+                                            updatingRecord.institute
+                                          )
+                                            return inst;
+                                        }),
+
+                                        field: contextFields.filter((inst) => {
+                                          if (
+                                            inst.value ===
+                                            updatingRecord.teaching_field
+                                          )
+                                            return inst;
+                                        }),
+                                        status:
+                                          teacherContractStatusOptions.filter(
+                                            (inst) => {
+                                              if (
+                                                inst.value ===
+                                                updatingRecord.status
+                                              )
+                                                return inst;
+                                            }
+                                          ),
                                       }
                                 }
-                                // validationSchema={
-                                //   teacherContractValidationSchema
-                                // }
+                                validationSchema={
+                                  teacherContractValidationSchema
+                                }
                                 onSubmit={(formData) => {
                                   addContract(formData);
                                 }}
@@ -1293,7 +1428,7 @@ const TeacherProfile = () => {
                                             name="field"
                                             id="field"
                                             value={values.field}
-                                            options={fields}
+                                            options={contextFields}
                                             onChange={setFieldValue}
                                             onBlur={setFieldTouched}
                                             required
@@ -1482,9 +1617,6 @@ const TeacherProfile = () => {
                                             class="col-form-label"
                                           >
                                             Contract Start Date
-                                            <span style={{ color: 'red' }}>
-                                              *
-                                            </span>
                                           </label>
                                           <br />
 
@@ -1516,9 +1648,6 @@ const TeacherProfile = () => {
                                             class="col-form-label"
                                           >
                                             Contract End Date
-                                            <span style={{ color: 'red' }}>
-                                              *
-                                            </span>
                                           </label>
                                           <br />
 
@@ -1605,7 +1734,7 @@ const TeacherProfile = () => {
                                       <button
                                         type="submit"
                                         class="btn btn-primary"
-                                        data-dismiss="modal"
+                                        // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
                                         Add Contract
@@ -1782,51 +1911,59 @@ const TeacherProfile = () => {
                                     ? {
                                         topic: '',
                                         evaluator_name: '',
-                                        evaluation_type: '',
+                                        evaluation_type: [],
                                         strong_points: '',
                                         weak_points: '',
                                         suggestions: '',
                                         evaluation_date: '',
-                                        institute: '',
-                                        department: '',
-                                        classs: '',
-                                        subject: '',
+                                        institute: [],
+                                        department: [],
+                                        classs: [],
+                                        subject: [],
                                       }
                                     : {
                                         topic: updatingRecord.topic,
                                         evaluator_name:
                                           updatingRecord.evaluator_name,
-                                        evaluation_type: {
-                                          value: updatingRecord.evaluation_type,
-                                          label: updatingRecord.evaluation_type,
-                                        },
+                                        evaluation_type:
+                                          evaluationTypeOptions.filter(
+                                            (inst) => {
+                                              if (
+                                                inst.value ===
+                                                updatingRecord.evaluation_type
+                                              )
+                                                return inst;
+                                            }
+                                          ),
                                         strong_points:
                                           updatingRecord.strong_points,
                                         weak_points: updatingRecord.weak_points,
                                         suggestions: updatingRecord.suggestions,
                                         evaluation_date:
                                           updatingRecord.evaluation_date,
-                                        institute: {
-                                          value: updatingRecord.institute,
-                                          label: updatingRecord.institute,
-                                        },
-                                        department: {
-                                          value: updatingRecord.department,
-                                          label: updatingRecord.department,
-                                        },
-                                        classs: {
-                                          value: updatingRecord.classs,
-                                          label: updatingRecord.classs,
-                                        },
-                                        subject: {
-                                          value: updatingRecord.subject,
-                                          label: updatingRecord.subject,
-                                        },
+                                        institute: institutes.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.institute
+                                        ),
+                                        department: departments.find(
+                                          (dep) =>
+                                            dep.value ===
+                                            updatingRecord.department
+                                        ),
+                                        classs: classes.find(
+                                          (dep) =>
+                                            dep.value === updatingRecord.classs
+                                        ),
+                                        subject: subjects.find(
+                                          (dep) =>
+                                            dep.value === updatingRecord.subject
+                                        ),
                                       }
                                 }
-                                // validationSchema={
-                                //   teacherContractValidationSchema
-                                // }
+                                validationSchema={
+                                  teacherEvaluationValidationSchema
+                                }
                                 onSubmit={(formData) => {
                                   addEvaluation(formData);
                                 }}
@@ -2185,7 +2322,7 @@ const TeacherProfile = () => {
                                       <button
                                         type="submit"
                                         class="btn btn-primary"
-                                        data-dismiss="modal"
+                                        // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
                                         Add Contract
@@ -2351,32 +2488,41 @@ const TeacherProfile = () => {
                                     ? {
                                         evaluator_name: '',
                                         evaluation_date: '',
-                                        institute: '',
-                                        grade: '',
-                                        step: '',
+                                        institute: [],
+                                        grade: [],
+                                        step: [],
                                       }
                                     : {
                                         evaluator_name:
                                           updatingRecord.evaluator_name,
                                         evaluation_date:
                                           updatingRecord.evaluation_date,
-                                        institute: {
-                                          value: updatingRecord.institute,
-                                          label: updatingRecord.institute,
-                                        },
-                                        grade: {
-                                          value: updatingRecord.new_grade,
-                                          label: updatingRecord.new_grade,
-                                        },
-                                        step: {
-                                          value: updatingRecord.new_step,
-                                          label: updatingRecord.new_step,
-                                        },
+                                        institute: institutes.filter((inst) => {
+                                          if (
+                                            inst.value ===
+                                            updatingRecord.institute
+                                          )
+                                            return inst;
+                                        }),
+                                        grade: gradeOptions.filter((inst) => {
+                                          if (
+                                            inst.value ===
+                                            updatingRecord.new_grade
+                                          )
+                                            return inst;
+                                        }),
+                                        step: stepOptions.filter((inst) => {
+                                          if (
+                                            inst.value ===
+                                            updatingRecord.new_step
+                                          )
+                                            return inst;
+                                        }),
                                       }
                                 }
-                                // validationSchema={
-                                //   teacherContractValidationSchema
-                                // }
+                                validationSchema={
+                                  teacherHREvaluationValidationSchema
+                                }
                                 onSubmit={(formData) => {
                                   addHREvaluation(formData);
                                 }}
@@ -2601,10 +2747,10 @@ const TeacherProfile = () => {
                                       <button
                                         type="submit"
                                         class="btn btn-primary"
-                                        data-dismiss="modal"
+                                        // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
-                                        Add Contract
+                                        Add HR Evaluation
                                       </button>
                                     </div>{' '}
                                   </>
@@ -2761,28 +2907,33 @@ const TeacherProfile = () => {
                                 initialValues={
                                   !updatingRecord
                                     ? {
-                                        institute: '',
-                                        type: '',
+                                        institute: [],
+                                        type: [],
                                         details: '',
                                       }
                                     : {
-                                        institute: {
-                                          value: updatingRecord.institute,
-                                          label: updatingRecord.institute,
-                                        },
-                                        type: {
-                                          value: updatingRecord.type,
-                                          label: updatingRecord.type,
-                                        },
+                                        institute: institutes.filter((inst) => {
+                                          if (
+                                            inst.value ===
+                                            updatingRecord.institute
+                                          )
+                                            return inst;
+                                        }),
+                                        type: teacherFeedbackOptions.filter(
+                                          (inst) => {
+                                            if (
+                                              inst.value === updatingRecord.type
+                                            )
+                                              return inst;
+                                          }
+                                        ),
                                         details: updatingRecord.details,
                                       }
                                 }
-                                // validationSchema={
-                                //   teacherContractValidationSchema
-                                // }
-                                onSubmit={(formData) => {
-                                  addIncentive(formData);
-                                }}
+                                validationSchema={
+                                  teacherIncentivesValidationSchema
+                                }
+                                onSubmit={addIncentive}
                               >
                                 {({
                                   errors,
@@ -2791,6 +2942,7 @@ const TeacherProfile = () => {
                                   setFieldTouched,
                                   setFieldValue,
                                   handleSubmit,
+                                  resetForm,
                                 }) => (
                                   <>
                                     <form>
@@ -2859,6 +3011,11 @@ const TeacherProfile = () => {
                                           className="form-control fieldStyle"
                                           name="details"
                                         />
+                                        {errors.details && touched.details ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.details}
+                                          </div>
+                                        ) : null}
                                       </div>
                                     </form>
                                     <div class="modal-footer">
@@ -2873,12 +3030,13 @@ const TeacherProfile = () => {
                                       <button
                                         type="submit"
                                         class="btn btn-primary"
-                                        data-dismiss="modal"
+                                        // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
                                         Add Insentive
+                                        {loading && <Spin />}
                                       </button>
-                                    </div>{' '}
+                                    </div>
                                   </>
                                 )}
                               </Formik>

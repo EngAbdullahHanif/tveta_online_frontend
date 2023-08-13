@@ -1,30 +1,16 @@
 /* eslint-disable no-param-reassign */
-import React, {
-  createRef,
-  useState,
-  Controller,
-  useEffect,
-  useContext,
-} from 'react';
+import React, { createRef, useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import {
-  provinceOptions,
-  langOptions,
   stepOptions,
   gradeOptions,
-  contractTypeOptions,
   genderOptions,
-  appointmentTypeOptions,
   tazkiraOptions,
-  workersGrade,
   teacherCurrentStatusOptions,
   dateOfBirthOptoions,
 } from '../../global-data/options';
-import {
-  teacherRegisterFormStep_1,
-  teacherRegisterFormStep_2,
-} from '../../global-data/forms-validation';
+import { teacherRegisterFormStep_1 } from '../../global-data/forms-validation';
 import { NavLink } from 'react-router-dom';
 import './../../../../assets/css/global-style.css';
 import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
@@ -32,20 +18,13 @@ import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
 import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
-import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
 import { Colxx } from 'components/common/CustomBootstrap';
-
-import config from '../../../../config';
 import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
-const servicePath = config.API_URL;
-const teacherResitgerAPIUrl = `${servicePath}/teachers/create_teachers/`;
-const gettingSingleTeacherAPI = `${servicePath}/teachers/institute`;
-// http://localhost:8000/teachers/?id=1
 
 const TeacherRegister = ({ intl }, values) => {
-  const { contextFields, provinces, districts } = useContext(AuthContext);
+  const { provinces, districts } = useContext(AuthContext);
   const [initialName, setInitialName] = useState('');
   const [initialLastName, setInitialLastName] = useState('');
   const [initialEnglishName, setInitialEnglishName] = useState('');
@@ -61,20 +40,10 @@ const TeacherRegister = ({ intl }, values) => {
   const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState('');
   const [initialEmail, setInitialEmail] = useState('');
   const [initialpageNumber, setInitialpageNumber] = useState('');
-  // const [initialTazkiraType, setInitialTazkiraType] = useState([]);
-  // const [initialLevelOfEducation, setInitialLevelOfEducation] = useState([]);
-  // const [initialMajor, setInitialMajor] = useState('');
-  // const [initialYearCompleted, setInitialYearCompleted] = useState([]);
-  // const [initialInstitution, setInitialInstitution] = useState('');
   const [initialcoverNumber, setInitialcoverNumber] = useState('');
   const [initialStatus, setinitialStatus] = useState([]);
   const [initialGrade, setInitialGrade] = useState([]);
-  // const [initialTeachingField, setInitialTeachingField] = useState([]);
-  // const [initialAppointmentType, setInitialAppointmentType] = useState([]);
-  // const [initialJobLocation, setInitialJobLocation] = useState([]);
-  // const [initialTeachingLang, setInitialTeachingLang] = useState([]);
   const [initialStep, setInitialStep] = useState([]);
-  // const [initialContractType, setInitialContractType] = useState([]);
   const [initialCurrentProvince, setInitialCurrentProvince] = useState([]);
   const [initialCurrentDistrict, setInitialCurrentDistrict] = useState([]);
   const [initialCurrentVillage, setInitialCurrentVillage] = useState('');
@@ -82,18 +51,84 @@ const TeacherRegister = ({ intl }, values) => {
   const [initialMainDistrict, setInitialMainDistrict] = useState([]);
   const [initialMainVillage, setInitialMainVillage] = useState('');
 
-  // const [provinces, setProvinces] = useState([]);
-  const [mainDistricts, setMainDistricts] = useState(districts);
-  const [currentDistricts, setCurrentDistricts] = useState([]);
-  const [selectedMainProvince, setSelectedMainProvince] = useState('');
-  const [selectedCurrentProvince, setSelectedCurrentProvince] = useState('');
-  // const [institutes, setInstitutes] = useState([]);
-  const [fieldsOfStudy, setFieldsOfStudy] = useState(contextFields);
   const forms = [createRef(null), createRef(null), createRef(null)];
-  // const [bottomNavHidden, setBottomNavHidden] = useState(false);
-  // const [loading, setLoading] = useState(false);
-  // const [fields, setFields] = useState({});
   const { teacherId } = useParams();
+
+  if (teacherId) {
+    useEffect(() => {
+      async function fetchTeacher() {
+        const { data } = await callApi(`teachers/${teacherId}`, '', null);
+        console.log('DATA in teacher UPDATE:', data);
+        setInitialName(data.name);
+        setInitialFatherName(data.father_name);
+        setInitialGrandFatherName(data.grand_father_name);
+        setInitialregistrationNumber(data.sukuk_number);
+        setInitialLastName(data.last_name);
+        setInitialEnglishName(data.english_name);
+        setInitialEnglishLastName(data.english_last_name);
+        setInitialEnglishFatherName(data.english_father_name);
+        setInitialGrandFatherName(data.grandfather_name);
+        setInitialregistrationNumber(data.registration_number);
+        setInitialPlaceOfBirth(data.place_of_birth);
+        setInitialPhoneNumber(data.phone_number);
+        setInitialpageNumber(data.page_number);
+        setInitialEmail(data.email);
+        setInitialcoverNumber(data.cover_number);
+        setInitialMainVillage(data.main_village);
+        setInitialCurrentVillage(data.current_village);
+
+        dateOfBirthOptoions.map((teacherBirth) => {
+          if (teacherBirth.value === data.year_of_birth.toString()) {
+            setYearOfBirth(teacherBirth);
+          }
+        });
+
+        gradeOptions.map((teacherGrade) => {
+          if (teacherGrade.value === data.grade) {
+            setInitialGrade(teacherGrade);
+          }
+        });
+        genderOptions.map((teacherGender) => {
+          if (teacherGender.value === data.gender) {
+            setInitialGender(teacherGender);
+          }
+        });
+
+        teacherCurrentStatusOptions.map((teacherStatus) => {
+          if (teacherStatus.value == data.status) {
+            setinitialStatus(teacherStatus);
+          }
+        });
+
+        provinces.map((province) => {
+          if (province.value == data.current_province) {
+            setInitialCurrentProvince(province);
+          }
+          if (province.value == data.main_province) {
+            setInitialMainProvince(province);
+          }
+        });
+
+        districts.map((district) => {
+          if (district.value == data.main_district) {
+            setInitialMainDistrict(district);
+          }
+        });
+        districts.map((district) => {
+          if (district.value == data.current_district) {
+            setInitialCurrentDistrict(district);
+          }
+        });
+
+        stepOptions.map((teacherStep) => {
+          if (teacherStep.value == data.step) {
+            setInitialStep(teacherStep);
+          }
+        });
+      }
+      fetchTeacher();
+    }, []);
+  }
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -126,56 +161,6 @@ const TeacherRegister = ({ intl }, values) => {
     }
   };
 
-  const fetchDistricts = async (provinceId) => {
-    console.log('provinceId', provinceId);
-    const response = await callApi(
-      `core/districts/?province=${provinceId}`,
-      'GET',
-      null
-    );
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.native_name,
-      }));
-      setMainDistricts(updatedData);
-    } else {
-      console.log('district error');
-    }
-  };
-
-  const fetchCurrentDistricts = async (provinceId) => {
-    console.log('provinceId', provinceId);
-    const response = await callApi(
-      `core/districts/?province=${provinceId}`,
-      'GET',
-      null
-    );
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setCurrentDistricts(updatedData);
-    } else {
-      console.log('district error');
-    }
-  };
-
-  useEffect(() => {
-    console.log('selectedmainProvince', selectedMainProvince);
-    if (selectedMainProvince) {
-      fetchDistricts(selectedMainProvince);
-    }
-  }, [selectedMainProvince]);
-
-  useEffect(() => {
-    console.log('selectedProvince', selectedCurrentProvince);
-    if (selectedCurrentProvince) {
-      fetchCurrentDistricts(selectedCurrentProvince);
-    }
-  }, [selectedCurrentProvince]);
-
   const RegisterTeacher = async (newFields) => {
     let apiParams = {
       endPoint: 'teachers/',
@@ -185,11 +170,7 @@ const TeacherRegister = ({ intl }, values) => {
       apiParams.endPoint = `teachers/${teacherId}/`;
       apiParams.method = 'PATCH';
     }
-    // alert('Form Submitted');
-    console.log('Form Data: ', newFields);
-
     const data = {
-      // contract_type: newFields.appointmentType?.value,
       cover_number: newFields.coverNumber,
       current_district: newFields.currentDistrict?.value,
       current_province: newFields.currentProvince?.value,
@@ -202,15 +183,10 @@ const TeacherRegister = ({ intl }, values) => {
       gender: newFields.gender?.value,
       grade: newFields.grade?.value,
       grandfather_name: newFields.grandFatherName,
-      // hire_date: newFields.hireDate,
-      // institution: newFields.institution,
-      // institute: newFields.jobLocation?.value,
       last_name: newFields.lastName,
-      // degree: newFields.levelOfEducation?.value,
       main_district: newFields.mainDistrict?.value,
       main_province: newFields.mainProvince?.value,
       main_village: newFields.mainVillage,
-      // field_of_study: newFields.major,
       tazkira_type: newFields.tazkiraType?.value,
       name: newFields.name,
       page_number: newFields.pageNumber || null,
@@ -218,19 +194,13 @@ const TeacherRegister = ({ intl }, values) => {
       place_of_birth: newFields.placeOfBirth,
       registration_number: newFields.registrationNumber,
       step: newFields.step?.value,
-      // teaching_field: newFields.teachingField?.value,
-      // teaching_language: newFields.teachingLang?.value,
-      // year_completed: newFields.yearCompleted?.value,
       year_of_birth: newFields.yearOfBirth?.value,
       status: newFields.status?.value,
     };
-
-    console.log('apiParas: ', apiParams);
     await callApi(apiParams.endPoint, apiParams.method, data)
       .then((response) => {
         message.success('استاد ثبت شو');
         window.location.replace(`/`);
-        console.log('RESPONSE in Teacher register: ', response.data);
       })
       .catch((err) => console.log('Error in Teacher Save: ', err));
   };
@@ -485,55 +455,6 @@ const TeacherRegister = ({ intl }, values) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
-                      {/* <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                      }}
-                    >
-                      <FormGroup className="form-group has-float-label error-l-175 w-100">
-                        <label for="grade" class="col-form-label">
-                          Grade
-                          <span style={{ color: 'red' }}>*</span>
-                        </label>
-
-                        <FormikReactSelect
-                          name="grade"
-                          id="grade"
-                          value={values.grade}
-                          options={gradeOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          required
-                        />
-                        {errors.grade && touched.grade ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.grade}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-                      <FormGroup className="form-group has-float-label error-l-175 w-100">
-                        <label for="step" class="col-form-label">
-                          Step
-                          <span style={{ color: 'red' }}>*</span>
-                        </label>
-                        <FormikReactSelect
-                          name="step"
-                          id="step"
-                          value={values.step}
-                          options={stepOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          required
-                        />
-                        {errors.step && touched.step ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.step}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-                    </div> */}
                     </Colxx>
                     <Colxx xxs="5" className="mr-5">
                       {/* Teacher English Name */}
@@ -715,11 +636,11 @@ const TeacherRegister = ({ intl }, values) => {
                             id="mainProvince"
                             value={values.mainProvince}
                             options={provinces}
-                            onChange={setFieldValue}
+                            onChange={(name, value) => {
+                              setFieldValue('mainDistrict', '');
+                              setFieldValue(name, value);
+                            }}
                             onBlur={setFieldTouched}
-                            onClick={setSelectedMainProvince(
-                              values.mainProvince.value
-                            )}
                           />
                           {errors.mainProvince && touched.mainProvince ? (
                             <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
@@ -786,11 +707,11 @@ const TeacherRegister = ({ intl }, values) => {
                             id="currentProvince"
                             value={values.currentProvince}
                             options={provinces}
-                            onChange={setFieldValue}
+                            onChange={(name, value) => {
+                              setFieldValue('currentDistrict', '');
+                              setFieldValue(name, value);
+                            }}
                             onBlur={setFieldTouched}
-                            onClick={setSelectedCurrentProvince(
-                              values.currentProvince.value
-                            )}
                           />
                           {errors.currentProvince && touched.currentProvince ? (
                             <div className="invalid-feedback d-block bg-danger text-white messageStyle">

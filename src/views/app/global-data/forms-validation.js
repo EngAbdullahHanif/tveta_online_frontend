@@ -637,6 +637,7 @@ export const teacherEducationValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="Degree is Required Field" />),
+
   description: Yup.string(),
 
   institute: Yup.string().required('Institute is Required Field'),
@@ -658,44 +659,147 @@ export const teacherContractValidationSchema = Yup.object().shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="Degree is Required Field" />),
+    .required('Job Type is Required Field'),
+
+  grade: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Please Select a Grade'),
+
   step: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="Step is Required Field" />),
+    .required('Step is Required Field'),
 
   teaching_language: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="Teaching Language is Required Field" />),
+    .required('Teaching Language is Required Field'),
 
   hireType: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="Hire Type is Required Field" />),
+    .required('Hire Type is Required Field'),
 
   contract_type: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="Contract Type is Required" />),
+    .required('Contract Type is Required'),
+
   institute: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="Institute is Required Field" />),
+    .required('Institute is Required Field'),
+
   field: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required(<IntlMessages id="Please Select a Field" />),
+    .required('Please Select a Grade'),
+
+  status: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Status is Required'),
+});
+
+export const teacherEvaluationValidationSchema = Yup.object().shape({
+  topic: Yup.string().required('Topic is Required Field'),
+  evaluator_name: Yup.string().required('Evaluator name is required'),
+  strong_points: Yup.string().required('Strong Point Required'),
+
+  weak_points: Yup.string().required('Weak Point Required'),
+  suggestions: Yup.string().required('Suggestion Required'),
+  evaluation_type: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Evaluation Type is Required Field'),
+
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Institute is Required Field'),
+
+  department: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Department is Required Field'),
+
+  classs: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Class is Required'),
+
+  subject: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Subject is Required Field'),
+});
+
+export const teacherHREvaluationValidationSchema = Yup.object().shape({
+  evaluator_name: Yup.string().required('Evaluator name is Required Field'),
+
+  grade: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Grade is Required Field'),
+
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Institute is Required Field'),
+
+  step: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Step is Required Field'),
+});
+
+export const teacherIncentivesValidationSchema = Yup.object().shape({
+  details: Yup.string().required('Details is Required Field'),
+
+  type: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Type is Required Field'),
+
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required('Institute is Required Field'),
 });

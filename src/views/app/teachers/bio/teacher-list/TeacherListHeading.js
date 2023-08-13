@@ -1,35 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
+import React, { useState } from 'react';
 
 import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import {
   Row,
   Button,
-  ButtonDropdown,
   UncontrolledDropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-  CustomInput,
   Collapse,
-  Label,
-  FormGroup,
-  Input,
-  Card,
-  CardBody,
-  CardTitle,
 } from 'reactstrap';
 
 import { injectIntl } from 'react-intl';
-import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 
-import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
-import { province } from 'lang/locales/fa_IR';
+import { ThumbListIcon, ImageListIcon } from 'components/svg';
 // import Breadcrumb from '../navs/Breadcrumb';
 
 const ListPageHeading = ({
@@ -129,17 +117,17 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedGenderOption.label}
+                    {selectedGenderOption?.label || 'جنسیت'}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {genderOptionsForList.map((order, index) => {
+                    {genderOptionsForList.map((gender, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeGenderBy(order.column)}
-                          style={{ fontSize: '18px' }}
+                          onClick={() => changeGenderBy(gender.value)}
+                          style={{ fontSize: '17px' }}
                         >
-                          {order.label}
+                          {gender.label}
                         </DropdownItem>
                       );
                     })}
@@ -153,7 +141,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                   >
                     <IntlMessages id="filter" />
-                    {selectedProvinceOption.label}
+                    {selectedProvinceOption?.label || 'ولایت'}
                   </DropdownToggle>
                   <DropdownMenu
                     style={{
@@ -175,7 +163,7 @@ const ListPageHeading = ({
                     })}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-                <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                {/* <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
                     name="district"
@@ -184,7 +172,7 @@ const ListPageHeading = ({
                     placeholder={messages['search.district']}
                     onKeyPress={(e) => onDistrictSearchKey(e)}
                   />
-                </div>
+                </div> */}
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
                     type="text"
@@ -196,7 +184,7 @@ const ListPageHeading = ({
                   />
                 </div>
 
-                <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
+                {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">
                   <DropdownToggle
                     caret
                     color="outline-dark"
@@ -219,9 +207,9 @@ const ListPageHeading = ({
                       );
                     })}
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown> */}
 
-                <div
+                {/* <div
                   style={{ fontSize: '18px' }}
                   className=" d-inline-block float-md-left mr-1 mb-1 align-top"
                 >
@@ -233,7 +221,7 @@ const ListPageHeading = ({
                     style={{ fontSize: '18px' }}
                     placeholder={messages['search.institute.name']}
                   />
-                </div>
+                </div> */}
               </div>
 
               <Button
@@ -242,10 +230,11 @@ const ListPageHeading = ({
                 size="xs"
                 className="float-md-left mb-1"
                 onClick={() => {
+                  document.getElementById('search').value = '';
                   changeGenderBy('all');
                   changeProvinceBy('all');
-                  document.getElementById('district').value = '';
-                  document.getElementById('search').value = '';
+                  // document.getElementById('district').value = null;
+
                   setSelectedInstitute('');
                   onResetClick(!reset);
                 }}

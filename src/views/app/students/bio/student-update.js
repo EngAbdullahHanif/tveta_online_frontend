@@ -180,8 +180,12 @@ const StudentUpdate = ({ intl }, values) => {
     coverNumber: student?.cover_number,
     sabtNo: student?.sabt_no,
     gender: genderOptions.find((gen) => gen.value === student?.gender),
-    tazkiraType:
-      student?.page_number > 0 ? tazkiraOptions[1] : tazkiraOptions[0],
+    tazkiraType: tazkiraOptions.find(
+      (option) => option.value == student?.tazkira_type
+    ),
+    idCardJoldNo: student?.cover_number,
+    idCardPageNo: student?.page_number,
+    sabtNo: student?.sabt_number,
 
     currentDistrict: districts.find(
       (district) => district.value == student?.current_district
@@ -326,7 +330,7 @@ const StudentUpdate = ({ intl }, values) => {
                       ) : null}
                     </FormGroup>
 
-                    {values.tazkiraType.value === 'paper' ? (
+                    {values?.tazkiraType?.value === 'paper' ? (
                       <>
                         <div>
                           {/* Jold Number */}

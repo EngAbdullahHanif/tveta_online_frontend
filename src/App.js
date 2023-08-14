@@ -15,7 +15,7 @@ import {
 import Application from 'context/Application';
 import Authentication from 'context/Authentication';
 import callApi from 'helpers/callApi';
-import { Button } from 'reactstrap';
+import { Button, Spinner } from 'reactstrap';
 
 const App = ({ locale }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
@@ -30,7 +30,7 @@ const App = ({ locale }) => {
   const [options, setOptions] = useState({});
   const [isTokenValid, setIsTokenValid] = useState(false);
   const [settings, setSettings] = useState({ current_educational_year: 1390 });
-
+  const [isLoadingInitialData, setIsLoadingInitialData] = useState(true);
   const handleLogout = async () => {
     // logoutUserAction(history);
     setUser(null);
@@ -239,15 +239,24 @@ const App = ({ locale }) => {
   };
 
   const fetchInitialData = async () => {
-    fetchProvinces();
-    fetchDistricts();
-    fetchClasses();
-    fetchSubjects();
-    fetchDepartments();
-    fetchInstitutes();
-    fetchFields();
-    getUser();
-    fetchSectors();
+    // check token validity
+    if (!isTokenValid) {
+      return;
+    }
+
+    await Promise.all([
+      fetchProvinces(),
+      fetchDistricts(),
+      fetchClasses(),
+      fetchSubjects(),
+      fetchDepartments(),
+      fetchInstitutes(),
+      fetchFields(),
+      getUser(),
+      fetchSectors(),
+    ]).finally(() => {
+      setIsLoadingInitialData(false);
+    });
   };
 
   // check if token is still valid
@@ -256,11 +265,20 @@ const App = ({ locale }) => {
   }, []);
 
   useEffect(() => {
-    if (!isTokenValid) {
-      return;
-    }
     fetchInitialData();
   }, [isTokenValid]);
+
+  if (isLoadingInitialData) {
+    return (
+      // make this at center of screen
+      <div className="text-center ">
+        <Spinner />;
+        <p>
+          اولیه ډاټا ښکته کول په جریان کې دي. / دانلود داتا اولیه در جریان است
+        </p>
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider

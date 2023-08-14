@@ -559,7 +559,8 @@ const Admin = (values, { className = '', displayRate = false }) => {
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle style={{ fontSize: 25, fontWeight: 'bold' }}>
-                    <IntlMessages id="charts.schoolStudentGenderChart" />
+                    {/* <IntlMessages id="charts.schoolStudentGenderChart" /> */}
+                    د ځانګړو زده کړو زده کوونکي/ شاگردان تعلیمات خاص
                   </CardSubtitle>
                   <div style={{ fontSize: 20, fontWeight: 'bold' }}>
                     {studentsRaport && (

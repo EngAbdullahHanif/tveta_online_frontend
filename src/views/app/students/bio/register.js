@@ -742,7 +742,6 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.Eng_name" />
-                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -759,7 +758,6 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label">
                               <Label>
                                 <IntlMessages id="forms.lastNameEng" />
-                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -776,7 +774,6 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
                                 <IntlMessages id="forms.Std_father_Eng_Name" />
-                                <span style={{ color: 'red' }}>*</span>
                               </Label>
                               <Field
                                 className="form-control fieldStyle"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Table as TB } from 'antd';
+import { Spin, Table as TB } from 'antd';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 import {
@@ -8,8 +8,9 @@ import {
   genderOptionsForList,
   studyTimeOptionsForList,
   StdInteranceOptions,
+  genderOptions,
 } from '../../../global-data/options';
-import { Badge } from 'reactstrap';
+import { Badge, Spinner } from 'reactstrap';
 // import { servicePath } from 'constants/defaultValues';
 import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
 import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
@@ -43,6 +44,11 @@ const columns = [
     width: '15%',
   },
   {
+    title: 'د پلار نوم',
+    dataIndex: 'father_name',
+    width: '10%',
+  },
+  {
     title: 'جنسیت',
     dataIndex: 'gender',
     filters: [
@@ -52,11 +58,7 @@ const columns = [
     onFilter: (value, record) => record.gender.indexOf(value) === 0,
     width: '10%',
   },
-  {
-    title: 'د پلار نوم',
-    dataIndex: 'father_name',
-    width: '10%',
-  },
+
   {
     title: 'ولایت',
     dataIndex: 'province',
@@ -73,7 +75,7 @@ const columns = [
   //   width: '20%',
   // },
   {
-    title: 'شاګرد ډول',
+    title: 'حالت',
     dataIndex: 'student_type',
     width: '8%',
   },
@@ -132,6 +134,7 @@ const ThumbListPages = ({ match }) => {
   const [selectedEducationalYearOption, seSelectedEducationalYearOption] =
     useState();
   const [studentTypeOptions, setStudentTypeOptions] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   // if any filter changes, go to first page
   useEffect(() => {
@@ -148,120 +151,77 @@ const ThumbListPages = ({ match }) => {
 
   const itemsPerPage = 10;
 
-  useEffect(async () => {
-    async function fetchData() {
-      // if institute not selected
-      if (institute !== '') {
-        const params = {
-          institute_id: institute.id,
-          page: currentPage,
-        };
-        const response = await callApi(
-          `students/student_institutes/`,
-          '',
-          null,
-          params
-        );
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setItems(response.data.results);
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          setIsLoaded(false);
-        } else {
-          console.log('students error');
-        }
-      }
-      // if institute and shift selected, but province and gender are not selected
-      else if (
-        !selectedProvinceOption &&
-        !selectedGenderOption &&
-        selectedShiftOption
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setStudentId('');
-          setRest(false);
-        }
-
-        const params = {
-          student_id: studentId,
-          current_district: district,
-          p: currentPage,
-          page: 1,
-        };
-        // here
-        const response = await callApi(`students/`, '', null, params);
-        console.table('respons', response);
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setIsLoaded(false);
-          setItems(response.data.results);
-
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          console.log('response of the result ', response.data.results);
-          console.log('isLoaded sadf', isLoaded);
-        } else {
-          console.log('students error');
-        }
-      } else if (!selectedProvinceOption) {
-        const params = {
-          student_id: studentId,
-          gender: selectedGenderOption?.value,
-          current_district: district?.value,
-          page: currentPage,
-        };
-        const response = await callApi(`students/`, '', null, params);
-
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setItems(response.data.results);
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          setIsLoaded(false);
-        } else {
-          console.log('students error');
-        }
-      } else if (!selectedGenderOption) {
-        const params = {
-          student_id: studentId,
-          current_province: selectedProvinceOption.value,
-          current_district: district,
-          page: currentPage,
-        };
-        const response = await callApi(`students/`, '', null, params);
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setItems(response.data.results);
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          setIsLoaded(false);
-        } else {
-          console.log('students error');
-        }
-      } else {
-        // setTotalItemCount(response.data.totalItem);
-        const params = {
-          student_id: studentId,
-          gender: selectedGenderOption.value,
-          current_province: selectedProvinceOption.value,
-          current_district: district.value,
-          page: currentPage,
-        };
-        const response = await callApi(`students`, '', null, params);
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setItems(response.data.results);
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          setIsLoaded(false);
-        } else {
-          console.log('students error');
-        }
-      }
+  async function fetchData() {
+    // if institute not selected
+    let endpoint = 'students/';
+    const params = {
+      page: currentPage,
+    };
+    if (institute) {
+      params.institute = institute.id;
+      endpoint = 'students/student_institutes/';
     }
 
+    if (rest) {
+      setDistrict('');
+      setStudentId('');
+      setRest(false);
+    }
+
+    // if institute and shift selected, but province and gender are not selected
+    else if (
+      !selectedProvinceOption &&
+      !selectedGenderOption &&
+      selectedShiftOption
+    ) {
+      const params = {
+        student_id: studentId,
+        current_district: district,
+        p: currentPage,
+        page: 1,
+      };
+      // here
+    } else if (!selectedProvinceOption) {
+      const params = {
+        student_id: studentId,
+        gender: selectedGenderOption?.value,
+        current_district: district?.value,
+        page: currentPage,
+      };
+      const response = await callApi(`students/`, '', null, params);
+    } else if (!selectedGenderOption) {
+      const params = {
+        student_id: studentId,
+        current_province: selectedProvinceOption.value,
+        current_district: district,
+        page: currentPage,
+      };
+      const response = await callApi(`students/`, '', null, params);
+    } else {
+      // setTotalItemCount(response.data.totalItem);
+      const params = {
+        student_id: studentId,
+        gender: selectedGenderOption.value,
+        current_province: selectedProvinceOption.value,
+        current_district: district.value,
+        page: currentPage,
+      };
+    }
+
+    // fetch filtered data
+    const response = await callApi(endpoint, '', null, params);
+    if (response.data && response.status === 200) {
+      setTotalPage(Math.ceil(response.data.count / itemsPerPage));
+      setItems(response.data.results);
+      setSelectedItems([]);
+      setTotalItemCount(response.data.count);
+      setIsLoaded(false);
+    } else {
+      console.log('students error');
+    }
+  }
+
+  useEffect(async () => {
     fetchData();
   }, [
     selectedPageSize,
@@ -370,9 +330,16 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
   console.log('isLoadedsdfsd', isLoaded);
-  return isLoaded ? (
-    <div className="loading" />
-  ) : (
+
+  const genderLabels = {
+    male: 'نارینه/ مذکر',
+    female: 'ښځینه/ موٌنث',
+  };
+
+  if (isLoaded) {
+    return <Spinner />;
+  }
+  return (
     <>
       <div className="disable-text-selection">
         {/* This is he */}
@@ -570,71 +537,75 @@ const ThumbListPages = ({ match }) => {
             onChangePage={setCurrentPage}
           />
         </table> */}
-        <TB
-          columns={columns}
-          // rowKey={(record) => record.login.uuid}
-          pagination={tableParams.pagination}
-          loading={loading}
-          // onChange={handleTableChange}
-          dataSource={items.map((item, index) => ({
-            key: index,
-            student_id: item.student_id,
-            name: (
-              <NavLink to={`student/${item.id}`} style={{ width: '10%' }}>
-                {item.name}
-              </NavLink>
-            ),
-            gender: item.gender,
-            father_name: item.father_name,
-            province: provinces.map((pro) => {
-              if (pro.value == item.current_province) return pro.label;
-            }),
-            phone_number: item.phone_number,
+        {isLoading && <Spinner />}
+        {!isLoading && (
+          <TB
+            columns={columns}
+            // rowKey={(record) => record.login.uuid}
+            pagination={tableParams.pagination}
+            loading={loading}
+            // onChange={handleTableChange}
+            dataSource={items.map((item, index) => ({
+              key: index,
+              student_id: item.student_id,
+              name: (
+                <NavLink to={`student/${item.id}`} style={{ width: '10%' }}>
+                  {item.name}
+                </NavLink>
+              ),
+              father_name: item.father_name,
+              gender: genderLabels[item.gender],
+              province: provinces.find(
+                (pro) => pro.value == item.current_province
+              )?.label,
+              phone_number: item.phone_number,
 
-            student_type: studentStatusOptions.map((status) => {
-              if (status.value == item.status) {
-                return (
-                  <div
-                    className="mb-1 text-small"
-                    style={{ fontSize: '20px', width: '10%' }}
-                  >
-                    <Badge
-                      color={
-                        status.value == 'dismissed'
-                          ? 'danger'
-                          : status.value == 'inprogress' ||
-                            status.value == 'active'
-                          ? 'success'
-                          : status.value == 'freeze'
-                          ? 'secondary'
-                          : 'warning'
-                      }
-                      pill
+              student_type: studentStatusOptions.map((status) => {
+                if (status.value == item.status) {
+                  return (
+                    <div
+                      className="mb-1 text-small"
+                      style={{ fontSize: '20px', width: '10%' }}
                     >
-                      {status.label}
-                    </Badge>
+                      <Badge
+                        color={
+                          status.value == 'dismissed'
+                            ? 'danger'
+                            : status.value == 'inprogress'
+                            ? 'success'
+                            : status.value == 'active'
+                            ? 'success'
+                            : status.value == 'freeze'
+                            ? 'secondary'
+                            : 'warning'
+                        }
+                        pill
+                      >
+                        {status.label}
+                      </Badge>
+                    </div>
+                  );
+                }
+              }),
+              description: item.description,
+              action: (
+                <NavLink
+                  to={`/app/students/student-update/${item.id}`}
+                  // style={{ width: '10%' }}
+                >
+                  <div>
+                    <BsPencilSquare
+                      color="green"
+                      outline
+                      style={{ fontSize: '20px' }}
+                      id="updateIcon"
+                    />
                   </div>
-                );
-              }
-            }),
-            description: item.description,
-            action: (
-              <NavLink
-                to={`/app/students/student-update/${item.id}`}
-                // style={{ width: '10%' }}
-              >
-                <div>
-                  <BsPencilSquare
-                    color="green"
-                    outline
-                    style={{ fontSize: '20px' }}
-                    id="updateIcon"
-                  />
-                </div>
-              </NavLink>
-            ),
-          }))}
-        />
+                </NavLink>
+              ),
+            }))}
+          />
+        )}
       </div>
     </>
   );

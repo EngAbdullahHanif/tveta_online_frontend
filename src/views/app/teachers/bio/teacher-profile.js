@@ -49,7 +49,15 @@ import {
   teacherEducationValidationSchema,
   teacherHREvaluationValidationSchema,
 } from 'views/app/global-data/forms-validation';
-import { message, Col, InputNumber, Slider, Table as TB, Spin } from 'antd';
+import {
+  message,
+  Col,
+  InputNumber,
+  Slider,
+  Table as TB,
+  Spin,
+  Popconfirm,
+} from 'antd';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import { Spinner } from 'react-bootstrap';
 import {
@@ -790,46 +798,31 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setEducationAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
+
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() => deleteEducation(item.id)}
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
                                 </td>
-                                <Modal
-                                  isOpen={educationAlert}
-                                  toggle={() =>
-                                    setEducationAlert(!educationAlert)
-                                  }
-                                  style={{ marginTop: '10%' }}
-                                >
-                                  <ModalHeader>
-                                    <IntlMessages id="modal.deletion-message-title" />
-                                  </ModalHeader>
-                                  <ModalBody className="text-center">
-                                    <IntlMessages id="modal.deletion-message-details" />
-                                  </ModalBody>
-                                  <ModalFooter>
-                                    <Button
-                                      onClick={() => setEducationAlert(false)}
-                                      style={{ marginLeft: '55%' }}
-                                    >
-                                      نه/ نخیر
-                                    </Button>
-                                    <Button
-                                      color="danger"
-                                      onClick={() => {
-                                        setEducationAlert(false);
-                                        deleteEducation(item.id);
-                                      }}
-                                      style={{ marginLeft: '5%' }}
-                                    >
-                                      هو / بلی
-                                    </Button>{' '}
-                                  </ModalFooter>
-                                </Modal>
                               </tr>
                             );
                           })}
@@ -1196,46 +1189,32 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setContractAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
+
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() => deleteContract(item.id)}
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      // onClick={() => setInsentiveAlert(true)}
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
                                 </td>
-                                <Modal
-                                  isOpen={contractAlert}
-                                  toggle={() =>
-                                    setContractAlert(!contractAlert)
-                                  }
-                                  style={{ marginTop: '10%' }}
-                                >
-                                  <ModalHeader>
-                                    <IntlMessages id="modal.deletion-message-title" />
-                                  </ModalHeader>
-                                  <ModalBody className="text-center">
-                                    <IntlMessages id="modal.deletion-message-details" />
-                                  </ModalBody>
-                                  <ModalFooter>
-                                    <Button
-                                      onClick={() => setContractAlert(false)}
-                                      style={{ marginLeft: '55%' }}
-                                    >
-                                      نه/ نخیر
-                                    </Button>
-                                    <Button
-                                      color="danger"
-                                      onClick={() => {
-                                        setContractAlert(false);
-                                        deleteContract(item.id);
-                                      }}
-                                      style={{ marginLeft: '5%' }}
-                                    >
-                                      هو / بلی
-                                    </Button>{' '}
-                                  </ModalFooter>
-                                </Modal>
                               </tr>
                             );
                           })}
@@ -1801,47 +1780,32 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setEvaluationAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
-                                </td>
 
-                                <Modal
-                                  isOpen={evaluationAlert}
-                                  toggle={() =>
-                                    setEvaluationAlert(!evaluationAlert)
-                                  }
-                                  style={{ marginTop: '10%' }}
-                                >
-                                  <ModalHeader>
-                                    <IntlMessages id="modal.deletion-message-title" />
-                                  </ModalHeader>
-                                  <ModalBody className="text-center">
-                                    <IntlMessages id="modal.deletion-message-details" />
-                                  </ModalBody>
-                                  <ModalFooter>
-                                    <Button
-                                      onClick={() => setEvaluationAlert(false)}
-                                      style={{ marginLeft: '55%' }}
-                                    >
-                                      نه/ نخیر
-                                    </Button>
-                                    <Button
-                                      color="danger"
-                                      onClick={() => {
-                                        setEvaluationAlert(false);
-                                        deleteEvaluation(item.id);
-                                      }}
-                                      style={{ marginLeft: '5%' }}
-                                    >
-                                      هو / بلی
-                                    </Button>{' '}
-                                  </ModalFooter>
-                                </Modal>
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() => deleteEvaluation(item.id)}
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      // onClick={() => setInsentiveAlert(true)}
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
+                                </td>
                               </tr>
                             );
                           })}
@@ -2371,47 +2335,34 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setEvaluationAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
-                                </td>
 
-                                <Modal
-                                  isOpen={evaluationAlert}
-                                  toggle={() =>
-                                    setEvaluationAlert(!evaluationAlert)
-                                  }
-                                  style={{ marginTop: '10%' }}
-                                >
-                                  <ModalHeader>
-                                    <IntlMessages id="modal.deletion-message-title" />
-                                  </ModalHeader>
-                                  <ModalBody className="text-center">
-                                    <IntlMessages id="modal.deletion-message-details" />
-                                  </ModalBody>
-                                  <ModalFooter>
-                                    <Button
-                                      onClick={() => setEvaluationAlert(false)}
-                                      style={{ marginLeft: '55%' }}
-                                    >
-                                      نه/ نخیر
-                                    </Button>
-                                    <Button
-                                      color="danger"
-                                      onClick={() => {
-                                        setEvaluationAlert(false);
-                                        deleteHREvaluation(item.id);
-                                      }}
-                                      style={{ marginLeft: '5%' }}
-                                    >
-                                      هو / بلی
-                                    </Button>{' '}
-                                  </ModalFooter>
-                                </Modal>
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() =>
+                                      deleteHREvaluation(item.id)
+                                    }
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      // onClick={() => setInsentiveAlert(true)}
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
+                                </td>
                               </tr>
                             );
                           })}
@@ -2776,6 +2727,7 @@ const TeacherProfile = () => {
                                 className={
                                   index % 2 == 0 ? 'table-danger' : 'table-info'
                                 }
+                                key={item.id}
                               >
                                 <th scope="row">{item.id}</th>
                                 <td>{item.teacher}</td>
@@ -2793,13 +2745,30 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setInsentiveAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() => deleteInsentive(item.id)}
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      // onClick={() => setInsentiveAlert(true)}
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
                                 </td>
                                 <Modal
                                   isOpen={insentiveAlert}
@@ -2830,7 +2799,7 @@ const TeacherProfile = () => {
                                       style={{ marginLeft: '5%' }}
                                     >
                                       هو / بلی
-                                    </Button>{' '}
+                                    </Button>
                                   </ModalFooter>
                                 </Modal>
                               </tr>

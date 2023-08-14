@@ -26,7 +26,7 @@ const App = ({ locale }) => {
   const [departments, setDepartments] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [contextFields, setContextFields] = useState();
-  const [sectors, setSectors] = useState();
+  const [sectors, setSectors] = useState([]);
   const [options, setOptions] = useState({});
   const [isTokenValid, setIsTokenValid] = useState(false);
   const [settings, setSettings] = useState({ current_educational_year: 1390 });
@@ -195,6 +195,7 @@ const App = ({ locale }) => {
     }
   };
   const fetchInstitutes = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map(({ id, name, ...rest }) => ({
@@ -209,6 +210,7 @@ const App = ({ locale }) => {
     }
   };
   const fetchFields = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/field/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -222,6 +224,7 @@ const App = ({ locale }) => {
   };
 
   const fetchSectors = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/sectors/`, 'GET', null);
     if (response.data && response.status === 200) {
       console.log('SECTS: ', response.data);
@@ -235,15 +238,7 @@ const App = ({ locale }) => {
     }
   };
 
-  // check if token is still valid
-  useEffect(async () => {
-    checkTokenValidity();
-  }, []);
-
-  useEffect(async () => {
-    if (!isTokenValid) {
-      return;
-    }
+  const fetchInitialData = async () => {
     fetchProvinces();
     fetchDistricts();
     fetchClasses();
@@ -253,6 +248,18 @@ const App = ({ locale }) => {
     fetchFields();
     getUser();
     fetchSectors();
+  };
+
+  // check if token is still valid
+  useEffect(() => {
+    checkTokenValidity();
+  }, []);
+
+  useEffect(() => {
+    if (!isTokenValid) {
+      return;
+    }
+    fetchInitialData();
   }, [isTokenValid]);
 
   return (

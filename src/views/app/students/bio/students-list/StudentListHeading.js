@@ -103,7 +103,7 @@ const ListPageHeading = ({
               >
                 <DataListIcon />
               </a> */}
-              <a
+              {/* <a
                 href="#/"
                 className={`mr-2 view-icon ${
                   displayMode === 'thumblist' ? 'active' : ''
@@ -120,7 +120,7 @@ const ListPageHeading = ({
                 onClick={() => changeDisplayMode('imagelist')}
               >
                 <ImageListIcon />
-              </a>
+              </a> */}
             </span>
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
@@ -262,7 +262,7 @@ const ListPageHeading = ({
                 </div>
 
                 {/* Institute */}
-                {/* <div style={{ marginLeft: '90px', fontSize: '17px' }}>
+                <div style={{ marginLeft: '90px', fontSize: '17px' }}>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(institute) => {
@@ -270,7 +270,7 @@ const ListPageHeading = ({
                     }}
                     placeholder={messages['search.institute.name']}
                   />
-                </div> */}
+                </div>
 
                 {/* Education Level */}
                 {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">

@@ -23,7 +23,6 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
   lastNameEng: Yup.string()
-    .required(<IntlMessages id="forms.lastNameEngErr" />)
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
@@ -38,12 +37,10 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
   englishName: Yup.string()
-    .required(<IntlMessages id="forms.englishNameError" />)
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
   fatherEngName: Yup.string()
-    .required(<IntlMessages id="forms.FatherEnglishNameErr" />)
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
@@ -234,13 +231,11 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
 
   englishName: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required('english name is required'),
+    .max(50, <IntlMessages id="max.maxInputValue" />),
 
   englishLastName: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required('english last name is required'),
+    .max(50, <IntlMessages id="max.maxInputValue" />),
 
   fatherName: Yup.string()
     .required(<IntlMessages id="teacher.FatherNameErr" />)
@@ -248,7 +243,6 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
   englishFatherName: Yup.string()
-    .required('english father name is required')
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
@@ -268,11 +262,16 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     <IntlMessages id="teacher.TazkiraNoErr" />
   ),
   phoneNumber: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
-  yearOfBirth: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
+  yearOfBirth: Yup.number()
     .nullable()
+    .min(
+      1300,
+      'د زوکړې کال باید له ۱۳۰۰ نه لوړ وي/ سال تولد باید از ۱۳۰۰ بزرگتر باشد'
+    )
+    .max(
+      1400,
+      'د زوکړې کال باید له ۱۴۰۰ نه کوچنی وي/ سال تولد باید از ۱۴۰۰ کوچکتر باشد'
+    )
     .required(<IntlMessages id="forms.StdDoBErr" />),
 
   grade: Yup.object()

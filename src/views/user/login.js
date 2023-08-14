@@ -34,7 +34,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       .required()
       .test(
         'len',
-        'Username Must be at least 5 characters',
+        'کارن نوم باید له پنځه حروفو زیات وي',
         (val) => val?.length >= 5
       )
       .label('username'),
@@ -42,7 +42,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       .required()
       .test(
         'len',
-        'Passwor Must be at least 5 characters',
+        'پاسورډ باید له پنځه حروفو زیات وي',
         (val) => val?.length >= 5
       )
       .label('password'),

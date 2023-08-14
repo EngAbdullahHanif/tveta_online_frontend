@@ -37,7 +37,7 @@ import {
   teacherFeedbackOptions,
 } from '../../global-data/options';
 import logo from './../../../../assets/logos/AdminLogo.png';
-import profilePhoto from './../../../../assets/img/profiles/22.jpg';
+import profilePhoto from './../../../../assets/img/profiles/user.png';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
@@ -469,7 +469,11 @@ const TeacherProfile = () => {
       <Row>
         <Colxx xxs="1"></Colxx>
         <Colxx>
-          <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
+          <img
+            src={teacher[0]?.photo || profilePhoto}
+            alt="Photo"
+            width={'10%'}
+          />{' '}
         </Colxx>
       </Row>
       <Row>
@@ -479,7 +483,7 @@ const TeacherProfile = () => {
         >
           {' '}
           <div className="d-inline-block">
-            <Button
+            {/* <Button
               style={{ backgroundColor: !isNext ? 'blue' : '' }}
               size="lg"
               className="m-2"
@@ -495,7 +499,7 @@ const TeacherProfile = () => {
               <span className="label">
                 <IntlMessages id="button.TeacherBackround" />
               </span>
-            </Button>{' '}
+            </Button> */}
             <Button
               style={{ backgroundColor: isNext ? 'blue' : '' }}
               size="lg"
@@ -951,7 +955,7 @@ const TeacherProfile = () => {
                                           for="recipient-name"
                                           class="col-form-label"
                                         >
-                                          انستیتوت
+                                          پوهنتون/انستیتوت
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -1023,7 +1027,7 @@ const TeacherProfile = () => {
                                           for="description"
                                           class="col-form-label"
                                         >
-                                          Description
+                                          جزئیات
                                         </label>
                                         <Field
                                           className="form-control fieldStyle"
@@ -1081,7 +1085,6 @@ const TeacherProfile = () => {
               </Card>
               {/* Education Details End */}
               {/* Contract Details Start */}
-
               <Card className="rounded m-4 mt-5">
                 <CardBody>
                   <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
@@ -1291,86 +1294,61 @@ const TeacherProfile = () => {
                                         status: [],
                                       }
                                     : {
-                                        jobType: jobTypeOptions.filter(
-                                          (inst) => {
-                                            if (
-                                              inst.value ===
-                                              updatingRecord.job_type
-                                            )
-                                              return inst;
-                                          }
+                                        jobType: jobTypeOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.job_type
                                         ),
-                                        grade: gradeOptions.filter((inst) => {
-                                          if (
+                                        grade: gradeOptions.find(
+                                          (inst) =>
                                             inst.value === updatingRecord.grade
-                                          )
-                                            return inst;
-                                        }),
-                                        step: stepOptions.filter((inst) => {
-                                          if (
+                                        ),
+                                        step: stepOptions.find(
+                                          (inst) =>
                                             inst.value === updatingRecord.step
-                                          )
-                                            return inst;
-                                        }),
-                                        teaching_language: langOptions.filter(
-                                          (inst) => {
-                                            if (
-                                              inst.value ===
-                                              updatingRecord.teaching_language
-                                            )
-                                              return inst;
-                                          }
                                         ),
-                                        hireType: hireTypeOptions.filter(
-                                          (inst) => {
-                                            if (
-                                              inst.value ===
-                                              updatingRecord.hire_type
-                                            )
-                                              return inst;
-                                          }
+                                        teaching_language: langOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.teaching_language
                                         ),
-                                        contract_type:
-                                          contractTypeOptions.filter((inst) => {
-                                            if (
-                                              inst.value ===
-                                              updatingRecord.contract_type
-                                            )
-                                              return inst;
-                                          }),
-                                        institute: institutes.filter((inst) => {
-                                          if (
+                                        hireType: hireTypeOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.hire_type
+                                        ),
+                                        contract_type: contractTypeOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.contract_type
+                                        ),
+                                        institute: institutes.find(
+                                          (inst) =>
                                             inst.value ===
                                             updatingRecord.institute
-                                          )
-                                            return inst;
-                                        }),
-
-                                        field: contextFields.filter((inst) => {
-                                          if (
+                                        ),
+                                        field: contextFields.find(
+                                          (inst) =>
                                             inst.value ===
                                             updatingRecord.teaching_field
-                                          )
-                                            return inst;
-                                        }),
+                                        ),
                                         status:
-                                          teacherContractStatusOptions.filter(
-                                            (inst) => {
-                                              if (
-                                                inst.value ===
-                                                updatingRecord.status
-                                              )
-                                                return inst;
-                                            }
+                                          teacherContractStatusOptions.find(
+                                            (inst) =>
+                                              inst.value ===
+                                              updatingRecord.status
                                           ),
+                                        jobType: jobTypeOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.job_type
+                                        ),
                                       }
                                 }
                                 validationSchema={
                                   teacherContractValidationSchema
                                 }
-                                onSubmit={(formData) => {
-                                  addContract(formData);
-                                }}
+                                onSubmit={addContract}
                               >
                                 {({
                                   errors,
@@ -1926,14 +1904,10 @@ const TeacherProfile = () => {
                                         evaluator_name:
                                           updatingRecord.evaluator_name,
                                         evaluation_type:
-                                          evaluationTypeOptions.filter(
-                                            (inst) => {
-                                              if (
-                                                inst.value ===
-                                                updatingRecord.evaluation_type
-                                              )
-                                                return inst;
-                                            }
+                                          evaluationTypeOptions.find(
+                                            (inst) =>
+                                              inst.value ===
+                                              updatingRecord.evaluation_type
                                           ),
                                         strong_points:
                                           updatingRecord.strong_points,

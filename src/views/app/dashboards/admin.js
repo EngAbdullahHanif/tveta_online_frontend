@@ -18,20 +18,76 @@ import {
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import callApi from 'helpers/callApi';
 
 const Admin = (values, { className = '', displayRate = false }) => {
-  const { user, institutes } = useContext(AuthContext);
+  const { user, institutes, contextFields, settings, sectors } =
+    useContext(AuthContext);
   const [isNext, setIsNext] = useState(true);
+  const [studentsRaport, setStudentsReport] = useState();
+  const [dorms, setDorms] = useState();
+  const [teachers, setTeachers] = useState();
+  const [instituteReports, setInstituteReport] = useState();
+  const [fieldReport, setFieldReport] = useState();
+  const [sectorReport, setSectorReport] = useState();
+
   const handleClick = (event) => {
     setIsNext(event);
   };
+  const fetchReportData = async () => {
+    await callApi('reports/students/national/all/').then((response) => {
+      console.log('Students National Report: ', response.data[0]);
+      setStudentsReport(response.data[0]);
+    });
+  };
+  const fetchDorms = async () => {
+    await callApi('institute/dorms/').then((response) => {
+      console.log('Dorms: ', response.data);
+      setDorms(response.data);
+    });
+  };
+  const fetchTeachers = async () => {
+    await callApi(
+      `reports/teachers/national/all/?year=${settings?.current_educational_year}`
+    ).then((response) => {
+      console.log('Teachers: ', response.data);
+      setTeachers(response.data[0]);
+    });
+  };
+
+  const fetchInstitutesReport = async () => {
+    await callApi(`reports/institutes/national/`).then((response) => {
+      console.log('fetchInstitutesReport: ', response.data);
+      setInstituteReport(response.data);
+    });
+  };
+
+  const fetchFieldReport = async () => {
+    await callApi(`reports/institutes/national/fields/`).then((response) => {
+      console.log('fetchFieldReport: ', response.data);
+      setFieldReport(response.data);
+    });
+  };
+
+  const fetchSectorReport = async () => {
+    await callApi(`reports/institutes/national/sectors/`).then((response) => {
+      console.log('fetchSectorReport: ', response.data);
+      setSectorReport(response.data);
+    });
+  };
   useEffect(() => {
+    fetchReportData();
+    fetchDorms();
+    fetchTeachers();
+    fetchInstitutesReport();
+    fetchFieldReport();
+    fetchSectorReport();
     console.log('Auth User in Dashboard: ', user);
     console.log(
       'Auth User in Dashboard Local Storage: ',
       JSON.parse(localStorage.getItem('user'))
     );
-  });
+  }, []);
   const onRegister = (values) => {
     console.log(' The Values', values);
   };
@@ -50,7 +106,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
           {/* <Card style={{ minHeight: '530px', marginBottom: '7% ' }} id="divId"> */}{' '}
           {/* we commented this line because we wanna stop howering*/}{' '}
-          <Card style={{ minHeight: '530px', marginBottom: '7% ' }}>
+          <Card style={{ minHeight: 'auto', marginBottom: '7% ' }}>
             <CardBody>
               <CardTitle style={{ fontSize: 35 }}>
                 <IntlMessages id="dash.totalNumberOfTeachers" />
@@ -66,7 +122,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="institute.totalStudentsMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>90</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.male_teachers}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ fontSize: 20 }}>
@@ -75,7 +133,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="institute.totalStudentsFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>500</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.female_teachers}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ fontSize: 20 }}>
@@ -84,7 +144,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.14YearsGreduatedMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>25</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.education[0].male}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ fontSize: 20 }}>
@@ -93,7 +155,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.14YearsGreduatedFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>32</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.education[0].female}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ fontSize: 20 }}>
@@ -102,7 +166,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.bachelorMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>45</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.education[1].male}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ fontSize: 20 }}>
@@ -111,7 +177,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.bachelorFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>58</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.education[1].female}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ fontSize: 20 }}>
@@ -120,7 +188,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.phdMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>23</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.education[3].male}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ fontSize: 20 }}>
@@ -129,7 +199,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="dash.phdFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>78</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.education[3].female}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ fontSize: 20 }}>
@@ -138,7 +210,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="teacher.EvaluatedMale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>54</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.evaluations.male}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p style={{ fontSize: 20 }}>
@@ -147,7 +221,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                         <IntlMessages id="teacher.EvaluatedFemale" />
                       </b>
                     </p>
-                    <p style={{ marginRight: '10%', fontSize: 20 }}>78</p>
+                    <p style={{ marginRight: '10%', fontSize: 20 }}>
+                      {teachers?.evaluations.female}
+                    </p>
                   </div>
                   <br />
                   <br />
@@ -176,15 +252,20 @@ const Admin = (values, { className = '', displayRate = false }) => {
               <Row>
                 <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle style={{ fontSize: 20, fontWeight: 'bold' }}>
-                    <IntlMessages id="dash.teacherGender" />
+                    <IntlMessages id="dash.teacherlocation_type" />
                   </CardSubtitle>
 
                   <div style={{ fontSize: 20, fontWeight: 'bold' }}>
-                    <CustomePieChart
-                      data={[90, 50]}
-                      labels={['ذکور', 'اناث']}
-                      backgroundColor={['#FF6384', '#36A2EB']}
-                    />
+                    {teachers && (
+                      <CustomePieChart
+                        data={[
+                          teachers?.male_teachers,
+                          teachers?.female_teachers,
+                        ]}
+                        labels={['ذکور', 'اناث']}
+                        backgroundColor={['#FF6384', '#36A2EB']}
+                      />
+                    )}
                   </div>
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
@@ -192,16 +273,23 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     <IntlMessages id="forms.EducationLevelLabel" />
                   </CardSubtitle>
                   <div style={{ fontSize: 20, fontWeight: 'bold' }}>
-                    <CustomeBarChart
-                      data={[30, 20, 40, 50]}
-                      labels={['چهارده پاس', 'لیسانس', 'ماستر', 'دوکتور']}
-                      backgroundColor={[
-                        '#FF6384',
-                        '#36A2EB',
-                        '#FFCE56',
-                        '#FF6333',
-                      ]}
-                    />
+                    {teachers && (
+                      <CustomeBarChart
+                        data={[
+                          teachers?.education[0].count,
+                          teachers?.education[1].count,
+                          teachers?.education[2].count,
+                          teachers?.education[3].count,
+                        ]}
+                        labels={['چهارده پاس', 'لیسانس', 'ماستر', 'دوکتور']}
+                        backgroundColor={[
+                          '#FF6384',
+                          '#36A2EB',
+                          '#FFCE56',
+                          '#FF6333',
+                        ]}
+                      />
+                    )}
                   </div>
                 </Colxx>
               </Row>
@@ -216,7 +304,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         <Colxx xxs="12" sm="4" md="4" className="mb-4 ">
           {/* <Card style={{ minHeight: '180px' }} id="divId"> */}{' '}
           {/* commented because of stoping hower*/}
-          <Card style={{ minHeight: '180px' }}>
+          <Card style={{ minHeight: 'auto' }}>
             <CardBody>
               <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.totalStudentsInst" />
@@ -230,7 +318,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>7867</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.total_institute_students}
+                  </p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -240,7 +330,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>1576</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.male_institute_students}
+                  </p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -250,7 +342,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>2543</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.female_institute_students}
+                  </p>
                   <br />
                 </Colxx>
               </Row>
@@ -267,7 +361,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>1232</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.total_sp_school_students}
+                  </p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -277,7 +373,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>5646</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.male_sp_school_students}
+                  </p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -287,7 +385,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>7865</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.female_sp_school_students}
+                  </p>
                   <br />
                 </Colxx>
               </Row>
@@ -305,7 +405,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>3453</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.total_schoole_students}
+                  </p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -315,7 +417,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>654</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.male_schoole_students}
+                  </p>
                 </Colxx>
                 <Colxx>
                   <p style={{ fontSize: 20 }}>
@@ -324,7 +428,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>3453</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.female_schoole_students}
+                  </p>
                   <br />
                 </Colxx>
               </Row>
@@ -341,7 +447,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>76856</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.male_dorm_students}
+                  </p>
                 </Colxx>
                 <Colxx>
                   <p style={{ fontSize: 20 }}>
@@ -350,7 +458,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>3453</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.female_dorm_students}
+                  </p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -360,7 +470,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.DormStudentType_1" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>23454</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.dorm_student_badalasha}
+                  </p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -370,7 +482,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.DormStudentType_2" />
                     </b>
                   </p>
-                  <p style={{ fontSize: 20 }}>456456</p>
+                  <p style={{ fontSize: 20 }}>
+                    {studentsRaport?.dorm_student_badeelasha}
+                  </p>
                   <br />
                 </Colxx>
               </Row>
@@ -397,11 +511,16 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     <IntlMessages id="charts.ّInstituteStudentGenderChart" />
                   </CardSubtitle>
                   <div style={{ fontSize: 20, fontWeight: 'bold' }}>
-                    <CustomePieChart
-                      data={[876, 552]}
-                      labels={['ذکور', 'اناث']}
-                      backgroundColor={['#FF6384', '#36A2EB']}
-                    />
+                    {studentsRaport && (
+                      <CustomePieChart
+                        data={[
+                          studentsRaport?.male_institute_students,
+                          studentsRaport?.female_institute_students,
+                        ]}
+                        labels={['ذکور', 'اناث']}
+                        backgroundColor={['#FF6384', '#36A2EB']}
+                      />
+                    )}
                   </div>
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
@@ -409,11 +528,16 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     <IntlMessages id="dash.totalStudentsDorm" />
                   </CardSubtitle>
                   <div style={{ fontSize: 20, fontWeight: 'bold' }}>
-                    <CustomePieChart
-                      data={[467, 789]}
-                      labels={['ذکور', 'اناث']}
-                      backgroundColor={['#FFCE56', '#FF6333']}
-                    />{' '}
+                    {studentsRaport && (
+                      <CustomePieChart
+                        data={[
+                          studentsRaport?.male_dorm_students,
+                          studentsRaport?.female_dorm_students,
+                        ]}
+                        labels={['ذکور', 'اناث']}
+                        backgroundColor={['#FFCE56', '#FF6333']}
+                      />
+                    )}
                   </div>
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
@@ -421,11 +545,16 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     <IntlMessages id="charts.schoolStudentGenderChart" />
                   </CardSubtitle>
                   <div style={{ fontSize: 20, fontWeight: 'bold' }}>
-                    <CustomePieChart
-                      data={[534, 876]}
-                      labels={['ذکور', 'اناث']}
-                      backgroundColor={['#f062ba', '#34eb77']}
-                    />{' '}
+                    {studentsRaport && (
+                      <CustomePieChart
+                        data={[
+                          studentsRaport?.male_schoole_students,
+                          studentsRaport?.female_schoole_students,
+                        ]}
+                        labels={['ذکور', 'اناث']}
+                        backgroundColor={['#f062ba', '#34eb77']}
+                      />
+                    )}
                   </div>
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
@@ -433,11 +562,16 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     <IntlMessages id="charts.schoolStudentGenderChart" />
                   </CardSubtitle>
                   <div style={{ fontSize: 20, fontWeight: 'bold' }}>
-                    <CustomePieChart
-                      data={[376, 267]}
-                      labels={['ذکور', 'اناث']}
-                      backgroundColor={['#f0e80c', '#FF6333']}
-                    />{' '}
+                    {studentsRaport && (
+                      <CustomePieChart
+                        data={[
+                          studentsRaport?.male_sp_school_students,
+                          studentsRaport?.female_sp_school_students,
+                        ]}
+                        labels={['ذکور', 'اناث']}
+                        backgroundColor={['#f0e80c', '#FF6333']}
+                      />
+                    )}
                   </div>
                 </Colxx>
               </Row>
@@ -459,23 +593,18 @@ const Admin = (values, { className = '', displayRate = false }) => {
                 <thead>
                   <tr style={{ fontSize: 20 }}>
                     <th>
-                      {' '}
-                      <IntlMessages id="marks.No" />{' '}
+                      <IntlMessages id="marks.No" />
                     </th>
                     <th>
-                      {' '}
                       <IntlMessages id="inst.type" />
                     </th>
                     <th>
-                      {' '}
                       <IntlMessages id="menu.instituteT" />
                     </th>
                     <th>
-                      {' '}
                       <IntlMessages id="menu.SchoolsT" />
                     </th>
                     <th>
-                      {' '}
                       <IntlMessages id="dash.specialEducationS" />
                     </th>
                   </tr>
@@ -484,93 +613,88 @@ const Admin = (values, { className = '', displayRate = false }) => {
                   <tr>
                     <th scope="row">1</th>
                     <td>
-                      {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </td>
-                    <td>23</td>
-                    <td>345</td>
-                    <td>324</td>
+                    <td>{instituteReports?.gender[0].institutes}</td>
+                    <td>{instituteReports?.gender[0].schools}</td>
+                    <td>{instituteReports?.gender[0].special_educations}</td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
                     <td>
-                      {' '}
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </td>
-                    <td>234</td>
-                    <td>456</td>
-                    <td>67</td>
+                    <td>{instituteReports?.gender[1].institutes}</td>
+                    <td>{instituteReports?.gender[1].schools}</td>
+                    <td>{instituteReports?.gender[1].special_educations}</td>
                   </tr>
                   <tr>
                     <th scope="row">3</th>
                     <td>
-                      {' '}
                       <IntlMessages id="dash.instituteComplex" />
                     </td>
-                    <td>345</td>
-                    <td>234</td>
-                    <td>546</td>
+                    <td>{instituteReports?.gender[2].institutes}</td>
+                    <td>{instituteReports?.gender[2].schools}</td>
+                    <td>{instituteReports?.gender[2].special_educations}</td>
                   </tr>
                   <tr>
                     <th scope="row">4</th>
                     <td>
-                      {' '}
                       <IntlMessages id="dash.instituteShahri" />
                     </td>
-                    <td>456</td>
-                    <td>45</td>
-                    <td>345</td>
+                    <td>{instituteReports?.location_type[0].institutes}</td>
+                    <td>{instituteReports?.location_type[0].schools}</td>
+                    <td>
+                      {instituteReports?.location_type[0].special_educations}
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row">5</th>
                     <td>
-                      {' '}
                       <IntlMessages id="dash.instituteRural" />
                     </td>
-                    <td>345</td>
-                    <td>345</td>
-                    <td>67</td>
+                    <td>{instituteReports?.location_type[1].institutes}</td>
+                    <td>{instituteReports?.location_type[1].schools}</td>
+                    <td>
+                      {instituteReports?.location_type[1].special_educations}
+                    </td>
                   </tr>
                   <tr>
                     <th scope="row">6</th>
                     <td>
-                      {' '}
                       <IntlMessages id="dash.instituteColdArea" />
                     </td>
-                    <td>78</td>
-                    <td>56</td>
-                    <td>345</td>
+                    <td>{instituteReports?.climate[0].institutes}</td>
+                    <td>{instituteReports?.climate[0].schools}</td>
+                    <td>{instituteReports?.climate[0].special_educations}</td>
                   </tr>
                   <tr>
                     <th scope="row">7</th>
                     <td>
-                      {' '}
                       <IntlMessages id="dash.instituteWarmArea" />
                     </td>
-                    <td>657</td>
-                    <td>4356</td>
-                    <td>345</td>
+                    <td>{instituteReports?.climate[1].institutes}</td>
+                    <td>{instituteReports?.climate[1].schools}</td>
+                    <td>{instituteReports?.climate[1].special_educations}</td>
                   </tr>
 
                   <tr>
                     <th scope="row">8</th>
                     <td>
-                      {' '}
                       <IntlMessages id="dash.institutePublic" />
                     </td>
-                    <td>23</td>
-                    <td>567</td>
-                    <td>56</td>
+                    <td>{instituteReports?.ownership[0].institutes}</td>
+                    <td>{instituteReports?.ownership[0].schools}</td>
+                    <td>{instituteReports?.ownership[0].special_educations}</td>
                   </tr>
                   <tr>
                     <th scope="row">9</th>
                     <td>
-                      {' '}
                       <IntlMessages id="dash.institutePrivate" />
                     </td>
-                    <td>23</td>
-                    <td>765</td>
-                    <td>345</td>
+                    <td>{instituteReports?.ownership[1].institutes}</td>
+                    <td>{instituteReports?.ownership[1].schools}</td>
+                    <td>{instituteReports?.ownership[1].special_educations}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -608,88 +732,19 @@ const Admin = (values, { className = '', displayRate = false }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.sectorType_1" />
-                    </td>
-                    <td>234</td>
-                    <td>5654</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.sectorType_2" />
-                    </td>
-                    <td>345</td>
-                    <td>345</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.sectorType_3" />
-                    </td>
-                    <td>786</td>
-                    <td>456</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.sectorType_4" />
-                    </td>
-                    <td>345</td>
-                    <td>78</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.sectorType_5" />
-                    </td>
-                    <td>567</td>
-                    <td>54</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">6</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.sectorType_6" />
-                    </td>
-                    <td>34</td>
-                    <td>78</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">7</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.sectorType_7" />
-                    </td>
-                    <td>45</td>
-                    <td>78</td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">8</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.sectorType_8" />
-                    </td>
-                    <td>456</td>
-                    <td>34</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.sectorType_9" />
-                    </td>
-                    <td>78</td>
-                    <td>234</td>
-                  </tr>
+                  {console.log('SECTORS', sectors)}
+                  {sectorReport?.map((report, index) => {
+                    return (
+                      <tr>
+                        <th scope="row">{index + 1}</th>
+                        <td>
+                          {sectors.find((f) => f.value === report.sector).label}
+                        </td>
+                        <td>{report.total_institutes}</td>
+                        <td>{report.total_schools}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </Table>
             </CardBody>
@@ -698,14 +753,14 @@ const Admin = (values, { className = '', displayRate = false }) => {
 
         {/* Based On Field */}
         <Colxx xxs="12" sm="4" md="8" className="mb-4">
-          <Card className={className} style={{ minHeight: '900px' }}>
+          <Card className={className} style={{ minHeight: 'auto' }}>
             <CardBody>
               <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.insituteField" />
               </CardTitle>
               <div
                 className="dashboard-list-with-user"
-                style={{ minHeight: '900px' }}
+                style={{ minHeight: 'auto' }}
               >
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
@@ -732,582 +787,22 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_1" />
-                        </td>
-                        <td>23</td>
-                        <td>67</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_2" />
-                        </td>
-                        <td>67</td>
-                        <td>54</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_3" />
-                        </td>
-                        <td>58</td>
-                        <td>345</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">4</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_4" />
-                        </td>
-                        <td>67</td>
-                        <td>234</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">5</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_5" />
-                        </td>
-                        <td>456</td>
-                        <td>67</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">6</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_6" />
-                        </td>
-                        <td>58</td>
-                        <td>345</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">7</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_7" />
-                        </td>
-                        <td>768</td>
-                        <td>58</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">8</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_8" />
-                        </td>
-                        <td>23</td>
-                        <td>67</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">9</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_9" />
-                        </td>
-                        <td>75</td>
-                        <td>34</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">10</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_10" />
-                        </td>
-                        <td>78</td>
-                        <td>32</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">11</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_11" />
-                        </td>
-                        <td>876</td>
-                        <td>234</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">12</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_12" />
-                        </td>
-                        <td>87</td>
-                        <td>234</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">13</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_13" />
-                        </td>
-                        <td>78</td>
-                        <td>234</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">14</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_14" />
-                        </td>
-                        <td>67</td>
-                        <td>345</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">15</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_15" />
-                        </td>
-                        <td>78</td>
-                        <td>345</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">16</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_16" />
-                        </td>
-                        <td>67</td>
-                        <td>234</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">17</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_17" />
-                        </td>
-                        <td>56</td>
-                        <td>58</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">18</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_18" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">19</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_19" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">20</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_20" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">21</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_21" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">22</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_22" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">23</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_23" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">24</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_24" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">25</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_25" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">26</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_26" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">27</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_27" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">28</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_28" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">29</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_29" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">30</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_30" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">31</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_31" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">32</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_32" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">33</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_33" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">34</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_34" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">35</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_35" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">36</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_36" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">37</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_37" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">38</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_38" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">39</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_39" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">40</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_40" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">41</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_41" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">42</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_42" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">43</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_43" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">44</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_44" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">45</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_45" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">46</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_46" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">47</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_47" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">48</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_48" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">49</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_49" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">50</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_50" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">51</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_51" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">52</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_52" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">53</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_53" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">54</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_54" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">55</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_55" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">56</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_56" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">57</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_57" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">58</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_58" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">59</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_59" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">60</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_60" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">61</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_61" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">62</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_62" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">63</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_63" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
-                      <tr>
-                        <th scope="row">64</th>
-                        <td>
-                          {' '}
-                          <IntlMessages id="dash.field_64" />
-                        </td>
-                        <td>58</td>
-                        <td>58</td>
-                      </tr>{' '}
+                      {fieldReport?.map((report, index) => {
+                        return (
+                          <tr>
+                            <th scope="row">{index + 1}</th>
+                            <td>
+                              {
+                                contextFields.find(
+                                  (f) => f.value === report.field_of_study
+                                ).label
+                              }
+                            </td>
+                            <td>{report.total_institutes}</td>
+                            <td>{report.total_schools}</td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                     <thead>
                       <tr>
@@ -1338,20 +833,23 @@ const Admin = (values, { className = '', displayRate = false }) => {
 
         {/* Institute List */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
-          <Card className={className} style={{ minHeight: '900px' }}>
+          <Card className={className} style={{ minHeight: 'auto' }}>
             <CardBody>
               <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.instituteList" />
               </CardTitle>
               <div
                 className="dashboard-list-with-user"
-                style={{ minHeight: '900px' }}
+                style={{ minHeight: 'auto' }}
               >
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
                   <ol style={{ fontSize: 20 }}>
-                    <li>Nima</li>
+                    {institutes?.map((inst) => {
+                      return <li>{inst.label}</li>;
+                    })}
+                    {/* <li>Nima</li>
                     <li>کثیر الرشتوی بغلان</li>
                     <li>تکنالوژی بغلان</li>
                     <li>زراعت بغلان</li>
@@ -1382,7 +880,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     <li>تکنالوژی ۰۱ بغلان</li>
                     <li>زراعت بغلان</li>
                     <li>نابینایان</li>
-                    <li>نابینایان</li>
+                    <li>نابینایان</li> */}
                   </ol>
                 </PerfectScrollbar>
               </div>
@@ -1391,7 +889,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
         </Colxx>
 
         {/* Based On Based on Provinces */}
-        <Colxx xxs="12" sm="4" md="12" className="mb-4">
+        {/* <Colxx xxs="12" sm="4" md="12" className="mb-4">
           <Card className={className} style={{ minHeight: '900px' }}>
             <CardBody>
               <CardTitle style={{ fontSize: 30 }}>
@@ -1928,27 +1426,28 @@ const Admin = (values, { className = '', displayRate = false }) => {
               </div>
             </CardBody>
           </Card>
-        </Colxx>
+        </Colxx> */}
 
         {/* Schools list */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
-          <Card className={className} style={{ minHeight: '700px' }}>
+          <Card className={className} style={{ minHeight: 'auto' }}>
             <CardBody>
               <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.schoolsList" />
               </CardTitle>
               <div
                 className="dashboard-list-with-user"
-                style={{ minHeight: '600px' }}
+                style={{ minHeight: 'auto' }}
               >
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
                   <ol style={{ fontSize: 20 }}>
-                    {/* {institutes.map((item) => {
-                      <li>{item.label}</li>;
-                    })} */}
-                    <li>Nima</li>
+                    {institutes?.map((school) => {
+                      if (school?.rest.institute_type === 'high_school')
+                        return <li>{school.label}</li>;
+                    })}
+                    {/* <li>Nima</li>
                     <li>کثیر الرشتوی بغلان</li>
                     <li>تکنالوژی بغلان</li>
                     <li>زراعت بغلان</li>
@@ -1963,7 +1462,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     <li>تکنالوژی ۰۱ بغلان</li>
                     <li>زراعت بغلان</li>
                     <li>نابینایان</li>
-                    <li>نابینایان</li>
+                    <li>نابینایان</li> */}
                   </ol>
                 </PerfectScrollbar>
               </div>
@@ -1973,20 +1472,23 @@ const Admin = (values, { className = '', displayRate = false }) => {
 
         {/* Dorms list */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
-          <Card className={className} style={{ minHeight: '700px' }}>
+          <Card className={className} style={{ minHeight: 'auto' }}>
             <CardBody>
               <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.dormsList" />
               </CardTitle>
               <div
                 className="dashboard-list-with-user"
-                style={{ minHeight: '500px' }}
+                style={{ minHeight: 'auto' }}
               >
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
                   <ol style={{ fontSize: 20 }}>
-                    <li>Nima</li>
+                    {dorms?.map((dorm) => {
+                      return <li>{dorm?.name}</li>;
+                    })}
+                    {/* <li>Nima</li>
                     <li>کثیر الرشتوی بغلان</li>
                     <li>تکنالوژی بغلان</li>
                     <li>زراعت بغلان</li>
@@ -2001,7 +1503,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     <li>تکنالوژی ۰۱ بغلان</li>
                     <li>زراعت بغلان</li>
                     <li>نابینایان</li>
-                    <li>نابینایان</li>
+                    <li>نابینایان</li> */}
                   </ol>
                 </PerfectScrollbar>
               </div>
@@ -2011,20 +1513,23 @@ const Admin = (values, { className = '', displayRate = false }) => {
 
         {/* Fields List */}
         <Colxx xxs="12" sm="4" md="4" className="mb-4">
-          <Card className={className} style={{ minHeight: '700px' }}>
+          <Card className={className} style={{ minHeight: 'auto' }}>
             <CardBody>
               <CardTitle style={{ fontSize: 30 }}>
                 <IntlMessages id="dash.fieldsList" />
               </CardTitle>
               <div
                 className="dashboard-list-with-user"
-                style={{ minHeight: '600px' }}
+                style={{ minHeight: 'auto' }}
               >
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
                   <ol style={{ fontSize: 20 }}>
-                    <li>Nima</li>
+                    {contextFields?.map((field) => {
+                      return <li>{field.label}</li>;
+                    })}
+                    {/* <li>Nima</li>
                     <li>کثیر الرشتوی بغلان</li>
                     <li>تکنالوژی بغلان</li>
                     <li>زراعت بغلان</li>
@@ -2039,7 +1544,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                     <li>تکنالوژی ۰۱ بغلان</li>
                     <li>زراعت بغلان</li>
                     <li>نابینایان</li>
-                    <li>نابینایان</li>
+                    <li>نابینایان</li> */}
                   </ol>
                 </PerfectScrollbar>
               </div>
@@ -2129,7 +1634,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalNumberOfInstitute" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%', fontSize: 20 }}>2700</p>
+                  <p style={{ marginRight: '10%', fontSize: 20 }}>
+                    {institutes?.length}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p style={{ fontSize: 20 }}>
@@ -2138,7 +1645,13 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalNumberOfSchool" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%', fontSize: 20 }}>67989</p>
+                  <p style={{ marginRight: '10%', fontSize: 20 }}>
+                    {
+                      institutes?.filter(
+                        (inst) => inst.rest.institute_type === 'high_school'
+                      )?.length
+                    }
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p style={{ fontSize: 20 }}>
@@ -2147,7 +1660,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalNumberOfDorms" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%', fontSize: 20 }}>234345</p>
+                  <p style={{ marginRight: '10%', fontSize: 20 }}>
+                    {dorms?.length}
+                  </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <p style={{ fontSize: 20 }}>
@@ -2156,7 +1671,9 @@ const Admin = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalNumberOfTeachers" />
                     </b>
                   </p>
-                  <p style={{ marginRight: '10%', fontSize: 20 }}>234</p>
+                  <p style={{ marginRight: '10%', fontSize: 20 }}>
+                    {teachers?.total_teachers}
+                  </p>
                 </div>
               </Colxx>
             </CardBody>

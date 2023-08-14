@@ -78,7 +78,7 @@ const TeacherRegister = ({ intl }, values) => {
         setInitialCurrentVillage(data.current_village);
 
         dateOfBirthOptoions.map((teacherBirth) => {
-          if (teacherBirth.value === data.year_of_birth.toString()) {
+          if (teacherBirth.value === data.year_of_birth) {
             setYearOfBirth(teacherBirth);
           }
         });

@@ -26,8 +26,10 @@ const App = ({ locale }) => {
   const [departments, setDepartments] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [contextFields, setContextFields] = useState();
+  const [sectors, setSectors] = useState();
   const [options, setOptions] = useState({});
   const [isTokenValid, setIsTokenValid] = useState(false);
+  const [settings, setSettings] = useState({ current_educational_year: 1390 });
 
   const handleLogout = async () => {
     // logoutUserAction(history);
@@ -195,9 +197,10 @@ const App = ({ locale }) => {
   const fetchInstitutes = async (provinceId) => {
     const response = await callApi(`institute/`, 'GET', null);
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
+      const updatedData = await response.data.map(({ id, name, ...rest }) => ({
+        value: id,
+        label: name,
+        rest: rest,
       }));
       setInstitutes(updatedData);
       console.log('institues fetched in app.js: ', response.data);
@@ -218,6 +221,20 @@ const App = ({ locale }) => {
     }
   };
 
+  const fetchSectors = async (provinceId) => {
+    const response = await callApi(`institute/sectors/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      console.log('SECTS: ', response.data);
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.sector,
+      }));
+      setSectors(updatedData);
+    } else {
+      console.log('Sector error');
+    }
+  };
+
   // check if token is still valid
   useEffect(async () => {
     checkTokenValidity();
@@ -235,6 +252,7 @@ const App = ({ locale }) => {
     fetchInstitutes();
     fetchFields();
     getUser();
+    fetchSectors();
   }, [isTokenValid]);
 
   return (
@@ -249,6 +267,8 @@ const App = ({ locale }) => {
         departments,
         institutes,
         contextFields,
+        settings,
+        sectors,
       }}
     >
       <ProvincesContext.Provider value={{ provinces }}>

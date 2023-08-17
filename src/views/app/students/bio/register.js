@@ -538,7 +538,7 @@ const StudentRegistration = ({ intl }, values) => {
                   enableReinitialize={true}
                   initialValues={initialValues[0]}
                   validateOnMount
-                  validationSchema={studentRegisterFormStep_1}
+                  // validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -988,7 +988,7 @@ const StudentRegistration = ({ intl }, values) => {
                   enableReinitialize={true}
                   initialValues={initialValues[1]}
                   onSubmit={() => {}}
-                  validationSchema={studentRegisterFormStep_2}
+                  // validationSchema={studentRegisterFormStep_2}
                   validateOnMount
                 >
                   {({

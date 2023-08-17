@@ -248,6 +248,8 @@ const App = ({ locale }) => {
         getUser(),
         fetchSectors(),
       ]);
+    } catch (error) {
+      console.log('Error fetching initial data: ', error);
     } finally {
       setIsLoadingInitialData(false);
     }

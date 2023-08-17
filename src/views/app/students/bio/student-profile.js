@@ -92,7 +92,7 @@ const StudentProfile = () => {
         if (instituteResponse.data && instituteResponse.status === 200) {
           const instituteData = await instituteResponse.data;
           console.log('instituteData', instituteData);
-          setInstitute(instituteData);
+          setInstitute(instituteData?.results);
         }
 
         //type =1 means current class or current continued class

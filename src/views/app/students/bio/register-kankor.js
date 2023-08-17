@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import callApi from 'helpers/callApi';
 import { useParams } from 'react-router-dom';
@@ -8,7 +8,6 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { genderOptions } from '../../global-data/options';
-import { provinceOptions } from '../../global-data/options';
 import { educationalYearsOptions } from '../../global-data/options';
 import { studyTimeOptions } from '../../global-data/options';
 import { NotificationManager } from 'components/common/react-notifications';
@@ -16,6 +15,7 @@ import './../../.././../assets/css/global-style.css';
 import axios from 'axios';
 
 import config from '../../../../config';
+import { AuthContext } from 'context/AuthContext';
 const servicePath = config.API_URL;
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
 const StudentRegistraion = ({ history }) => {
@@ -83,8 +83,9 @@ const StudentRegistraion = ({ history }) => {
   const [initialProvince, setInitialProvince] = useState([]);
   const [initialDistrict, setInitialDistrict] = useState([]);
 
-  const [provinces, setProvinces] = useState([]);
-  const [districts, setDistricts] = useState([]);
+  const { provinces, districts, fields, institutes, departments } =
+    useContext(AuthContext);
+
   const [selectedProvince, setSelectedProvince] = useState('');
 
   const initialValues = {
@@ -100,91 +101,9 @@ const StudentRegistraion = ({ history }) => {
     province: initialProvince,
     district: initialDistrict,
   };
-  const [fields, setFields] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
-  const [departments, setDepartments] = useState([]);
+
   const [isNext, setIsNext] = useState(false);
   const [StudyTime, setStudyTIme] = useState('0');
-
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-  const fetchFields = async () => {
-    const response = await callApi('institute/field/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setFields(updatedData);
-    } else {
-      console.log('field error');
-    }
-  };
-  const fetchDepartments = async () => {
-    const response = await callApi('institute/department/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setDepartments(updatedData);
-    } else {
-      console.log('department error');
-    }
-  };
-
-  const fetchProvinces = async () => {
-    const response = await callApi('core/provinces/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.native_name,
-      }));
-
-      setProvinces(updatedData);
-    } else {
-      console.log('province error');
-    }
-  };
-
-  const fetchDistricts = async (provinceId) => {
-    console.log('provinceId', provinceId);
-    const response = await callApi(
-      `core/districts/?province=${provinceId}`,
-      'GET',
-      null
-    );
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.native_name,
-      }));
-      setDistricts(updatedData);
-    } else {
-      console.log('district error');
-    }
-  };
-
-  useEffect(() => {
-    fetchProvinces();
-  }, []);
-
-  useEffect(() => {
-    console.log('selectedProvince', selectedProvince);
-    if (selectedProvince) {
-      fetchDistricts(selectedProvince);
-    }
-  }, [selectedProvince]);
 
   const updateMode = true;
 
@@ -254,12 +173,6 @@ const StudentRegistraion = ({ history }) => {
       console.log('kankor result error');
     }
   };
-
-  useEffect(() => {
-    fetchInstitutes();
-    fetchFields();
-    fetchDepartments();
-  }, []);
 
   return (
     <>
@@ -368,26 +281,31 @@ const StudentRegistraion = ({ history }) => {
                         ) : null}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                      {/* province*/}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
                           <IntlMessages id="forms.ProvinceLabel" />
+                          <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="province"
                           id="province"
-                          // value={values.province.value}
+                          value={values.province}
                           options={provinces}
-                          onChange={setFieldValue} //onChange should conatain single line
+                          onChange={(name, value) => {
+                            setFieldValue('district', []);
+                            setFieldValue(name, value);
+                          }}
                           onBlur={setFieldTouched}
-                          onClick={setSelectedProvince(values.province.value)}
                         />
                         {errors.province && touched.province ? (
-                          <div className="invalid-feedback d-block bg-danger text-white">
+                          <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
                             {errors.province}
                           </div>
                         ) : null}
                       </FormGroup>
 
+                      {/* District */}
                       <FormGroup className="form-group has-float-label error-l-175">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="forms.DistrictLabel" />
@@ -395,8 +313,11 @@ const StudentRegistraion = ({ history }) => {
                         <FormikReactSelect
                           name="district"
                           id="district"
-                          // value={values.district.value}
-                          options={districts}
+                          value={values.district}
+                          options={districts?.filter(
+                            (district) =>
+                              district.province === values.province.value
+                          )}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />

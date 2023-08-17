@@ -149,7 +149,7 @@ const StudentUpdate = ({ intl }, values) => {
       place_of_birth: newFields.placeOfBirth,
       registration_number: newFields.registrationNumber,
       year_of_birth: newFields.yearOfBirth?.value,
-      status: newFields.status?.value,
+      // status: newFields.status?.value,
       admission_method: newFields.admission_method?.value,
     };
     callApi(`students/${studentId}/`, 'PATCH', data)
@@ -199,9 +199,9 @@ const StudentUpdate = ({ intl }, values) => {
     ),
     currentVillage: student?.current_village,
     mainVillage: student?.main_village,
-    status: studentStatusOptions.find(
-      (status) => status.value == student?.status
-    ),
+    // status: studentStatusOptions.find(
+    //   (status) => status.value == student?.status
+    // ),
 
     admission_method: StdInteranceOptions.find(
       (type) => type.value == student?.admission_method
@@ -392,7 +392,7 @@ const StudentUpdate = ({ intl }, values) => {
                       ) : null}
                     </FormGroup>
 
-                    <FormGroup className="form-group has-float-label error-l-175">
+                    {/* <FormGroup className="form-group has-float-label error-l-175">
                       <Label>
                         <IntlMessages id="teacher.status" />
                         <span style={{ color: 'red' }}>*</span>
@@ -411,7 +411,7 @@ const StudentUpdate = ({ intl }, values) => {
                           {errors.status}
                         </div>
                       ) : null}
-                    </FormGroup>
+                    </FormGroup> */}
                     <FormGroup className="form-group has-float-label error-l-175">
                       <Label>
                         <IntlMessages id="Admission Method" />

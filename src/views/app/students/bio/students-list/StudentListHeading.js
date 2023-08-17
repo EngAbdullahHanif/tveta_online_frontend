@@ -171,6 +171,10 @@ const ListPageHeading = ({
                       overflowX: 'hidden',
                     }}
                   >
+                    {console.log(
+                      'provincesOptionsForList',
+                      provincesOptionsForList
+                    )}
                     {provincesOptionsForList &&
                       provincesOptionsForList.map((province, index) => {
                         return (
@@ -267,7 +271,7 @@ const ListPageHeading = ({
                 </div>
 
                 {/* Institute */}
-                <div style={{ marginLeft: '90px', fontSize: '17px' }}>
+                {/* <div style={{ marginLeft: '90px', fontSize: '17px' }}>
                   <ReactAutoSugegst
                     data={institutes}
                     select={(institute) => {
@@ -276,7 +280,7 @@ const ListPageHeading = ({
                     value={selectedInstitute}
                     placeholder={messages['search.institute.name']}
                   />
-                </div>
+                </div> */}
 
                 {/* Education Level */}
                 {/* <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">

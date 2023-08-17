@@ -7,6 +7,7 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { NavLink } from 'react-router-dom';
 import './../../.././../assets/css/global-style.css';
+import profilePhoto from './../../../../assets/img/profiles/user.png';
 
 import * as Yup from 'yup';
 import {
@@ -21,10 +22,10 @@ import {
   InputGroup,
   InputGroupAddon,
   Input,
+  Badge,
 } from 'reactstrap';
 import Select from 'react-select';
 import logo from './../../../../assets/logos/AdminLogo.png';
-import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
@@ -67,19 +68,18 @@ const StudentProfile = () => {
   districts.forEach((districts) => {
     districtsList[districts.value] = districts.label;
   });
-  console.log('provincesList: ', provincesList);
-  console.log('districtsList: ', districtsList);
 
   //load data of student from database
   useEffect(() => {
     async function fetchStudent() {
       try {
-        const response = await callApi(`students/?id=${studentId}`, '', null);
+        const response = await callApi(`students/${studentId}/`, '', null);
+
         console.log('student response', response.data);
         if (response.data && response.status === 200) {
-          const data = await response.data.results;
+          const data = await response.data;
           console.log('student data', data);
-          setStudent(data);
+          setStudent([data]);
           setIsLoaded(true);
         }
 
@@ -176,8 +176,6 @@ const StudentProfile = () => {
             <Colxx xxs="1"></Colxx>
             {student.length > 0 && (
               <Colxx>
-                {console.log('here', `${student[0].photo}`)}
-                {/* <img src={student.student_photo} alt="Photo" width={'10%'} />{' '} */}
                 <a
                   href={student[0].photo}
                   className="w-40 w-sm-100"
@@ -186,7 +184,7 @@ const StudentProfile = () => {
                   <img
                     top
                     alt={student[0].name}
-                    src={`${student[0].photo}`}
+                    src={student[0].photo || profilePhoto}
                     style={{
                       maxWidth: '12%',
                       maxHeight: '130%',
@@ -265,11 +263,38 @@ const StudentProfile = () => {
                     <Row className="justify-content-center   rounded ">
                       <Colxx style={{ paddingInline: '4%' }} xxs="">
                         <Label className="data-style">
+                          <IntlMessages id="ایدی" />
+                        </Label>
+                        <h2>
+                          {student[0].student_id}{' '}
+                          {
+                            <Badge
+                              color={
+                                student[0].status == 'dismissed'
+                                  ? 'danger'
+                                  : student[0].status == 'inprogress'
+                                  ? 'success'
+                                  : student[0].status == 'active'
+                                  ? 'success'
+                                  : student[0].status == 'freeze'
+                                  ? 'secondary'
+                                  : 'warning'
+                              }
+                              pill
+                            >
+                              {student[0].status}
+                            </Badge>
+                          }
+                        </h2>
+                        <Label className="data-style">
                           <IntlMessages id="teacher.NameLabel" />
                         </Label>
                         <h2>
-                          {console.log('student object', student)}
-                          {student[0].name + '  "' + student[0].last_name + '"'}
+                          {student[0].name +
+                            '"' +
+                            ' ' +
+                            student[0].last_name +
+                            '"'}
                         </h2>
                         <Label className="data-style">
                           <IntlMessages id="forms.Eng_name" />

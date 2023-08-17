@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Spin, Table as TB } from 'antd';
+import { Select, Spin, Table as TB } from 'antd';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 import {
@@ -10,7 +10,7 @@ import {
   StdInteranceOptions,
   genderOptions,
 } from '../../../global-data/options';
-import { Badge, Spinner } from 'reactstrap';
+import { Badge, FormGroup, Input, Label, Spinner } from 'reactstrap';
 // import { servicePath } from 'constants/defaultValues';
 import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
 import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
@@ -18,8 +18,13 @@ import useMousetrap from 'hooks/use-mousetrap';
 
 import { AuthContext } from 'context/AuthContext';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
-import { studentStatusOptions } from './../../../global-data/options';
+import {
+  studentStatusOptions,
+  provinceOptions,
+} from './../../../global-data/options';
 import { NavLink } from 'react-router-dom';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { Field, Formik } from 'formik';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -33,13 +38,13 @@ const columns = [
   {
     title: 'نمبر اساس',
     dataIndex: 'student_id',
-    sorter: (a, b) => a.student_id - b.student_id,
+    // sorter: (a, b) => a.student_id - b.student_id,
     width: '5%',
   },
   {
     title: 'نوم/نام',
     dataIndex: 'name',
-    sorter: (a, b) => a.name - b.name,
+    // sorter: (a, b) => a.name - b.name,
     // render: (name) => `${name.first} ${name.last}`,
     width: '15%',
   },
@@ -93,12 +98,12 @@ const orderOptions = [
 const pageSizes = [10, 20, 40, 80];
 
 const ThumbListPages = ({ match }) => {
-  const { provinces } = useContext(AuthContext);
+  const { provinces, institutes } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
-      pageSize: 5,
+      pageSize: 10,
     },
   });
   const [isLoaded, setIsLoaded] = useState(false);
@@ -120,13 +125,13 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState();
+  // const [institutes, setInstitutes] = useState();
   const [institute, setInstitute] = useState('');
 
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
-  const { provinces: provincesOptionsForList } = useContext(AuthContext);
+  // const { provinces: provincesOptionsForList } = useContext(AuthContext);
 
   const [selectedGenderOption, setSelectedGenderOption] = useState();
   const [selectedProvinceOption, setSelectedProvinceOption] = useState();
@@ -135,6 +140,9 @@ const ThumbListPages = ({ match }) => {
     useState();
   const [studentTypeOptions, setStudentTypeOptions] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [filterId, setFilterId] = useState();
+  const [filterProvince, setFilterProvince] = useState({});
+  const [filterInstitute, setFilterInstitute] = useState();
 
   // if any filter changes, go to first page
   useEffect(() => {
@@ -151,12 +159,13 @@ const ThumbListPages = ({ match }) => {
 
   const itemsPerPage = 10;
 
-  async function fetchData() {
+  async function fetchData(params) {
+    console.log('PARAMSSSSSSSSSSSSSSS', params);
     // if institute not selected
     let endpoint = 'students/';
-    const params = {
-      page: currentPage,
-    };
+    // const params = {
+    //   page: currentPage,
+    // };
     console.log('institute: ', institute);
     if (institute) {
       params.institute = institute.value;
@@ -165,10 +174,15 @@ const ThumbListPages = ({ match }) => {
 
     console.log('institute is: ', institute);
 
-    params.gender = selectedGenderOption?.value;
-    params.current_province = selectedProvinceOption?.value;
-    params.current_district = district?.value;
-    params.student_id = studentId || null;
+    // params.gender = selectedGenderOption?.value;
+    // params.current_province = selectedProvinceOption?.value;
+    // params.current_district = district?.value;
+    // params.student_id = studentId || null;
+
+    // params.gender = selectedGenderOption?.value;
+    // params.current_province = filterData.filterInsitute?.value;
+    // params.current_province = filterData.filterProvince?.value;
+    // params.student_id = filterData.filterId || null;
 
     try {
       // fetch filtered data
@@ -220,23 +234,6 @@ const ThumbListPages = ({ match }) => {
     institute,
     studentTypeOptions,
   ]);
-
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-
-  useEffect(() => {
-    fetchInstitutes();
-  }, []);
 
   const onCheckItem = (event, id) => {
     if (
@@ -329,11 +326,90 @@ const ThumbListPages = ({ match }) => {
   if (isLoaded) {
     return <Spinner />;
   }
+
+  const onFilter = async (filterData) => {
+    let params = {
+      page: currentPage,
+    };
+    params.current_province = filterData.filterInsitute?.value;
+    params.current_province = filterData.filterProvince?.value;
+    params.student_id = filterData.filterId || null;
+    fetchData(params);
+    console.log('Filter Data', filterId, filterProvince, filterInstitute);
+  };
+  const resetFilter = () => {
+    setFilterId('');
+    setFilterInstitute('');
+    setFilterProvince({});
+    fetchData();
+  };
   return (
     <>
       <div className="disable-text-selection">
         {/* This is he */}
-        <ListPageHeading
+        <h1>د شاگرد لست/لست شاگردان</h1>
+        <br />
+
+        <div
+          style={{
+            padding: 10,
+            display: 'flex',
+          }}
+        >
+          <Formik
+            initialValues={{
+              filterId: '',
+              filterInstitute: [],
+              filterProvince: [],
+            }}
+            onSubmit={onFilter}
+          >
+            {({
+              values,
+              setFieldValue,
+              handleSubmit,
+              setFieldTouched,
+              onBlur,
+            }) => (
+              <>
+                <Field
+                  id="filterId"
+                  name="filterId"
+                  // style={{ width: 200, borderRadius: 10, height: 32 }}
+                  placeholder="ایدی"
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="ولایت"
+                  id="filterProvince"
+                  name="filterProvince"
+                  value={filterProvince?.label}
+                  options={provinces}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="انستیتوت"
+                  name="filterInstitute"
+                  id="filterInstitute"
+                  value={filterInstitute?.label}
+                  options={institutes}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <button className="btn btn-secondary" onClick={handleSubmit}>
+                  Filter
+                </button>
+                <button className="btn btn-warning" onClick={resetFilter}>
+                  Reset
+                </button>
+              </>
+            )}
+          </Formik>
+        </div>
+
+        {/* <ListPageHeading
           heading="د شاگرد لست/لست شاگردان"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
@@ -372,9 +448,7 @@ const ThumbListPages = ({ match }) => {
           }}
           changeProvinceBy={(provinceId) => {
             setSelectedProvinceOption(
-              provincesOptionsForList.find(
-                (province) => province.value === provinceId
-              )
+              provinces.find((province) => province.value === provinceId)
             );
           }}
           selectedGenderOption={selectedGenderOption}
@@ -384,7 +458,7 @@ const ThumbListPages = ({ match }) => {
           selectedShiftOption={selectedShiftOption}
           genderOptionsForList={genderOptionsForList}
           studyTimeOptionsForList={studyTimeOptionsForList}
-          provincesOptionsForList={provincesOptionsForList}
+          provincesOptionsForList={provinces}
           onIdSearchKey={handleStudentIdSearch}
           // Province
           onProvinceSearchKey={(e) => {
@@ -424,7 +498,8 @@ const ThumbListPages = ({ match }) => {
           }}
           studentType={studentType}
           setSelectedDistrict={setSelectedDistrict}
-        />
+        /> */}
+
         {/* <table className="table">
           <thead
             className="pl-2 d-flex flex-grow-1  table-dark mb-2"
@@ -527,9 +602,13 @@ const ThumbListPages = ({ match }) => {
             onChangePage={setCurrentPage}
           />
         </table> */}
+
         {isLoading && <Spinner />}
+
         {!isLoading && (
           <TB
+            style={{ fontSize: 20 }}
+            size="large"
             columns={columns}
             // rowKey={(record) => record.login.uuid}
             pagination={tableParams.pagination}

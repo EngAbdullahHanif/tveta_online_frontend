@@ -77,6 +77,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
           let loggedUser = jwt_decode(response.data.access);
           console.log('Logged User in Token: ', loggedUser);
           authContext.setUser(response.data.user);
+          authContext.setFromSuccessfulLogin(true);
           localStorage.setItem('user', JSON.stringify(response.data.user));
           localStorage.setItem('current_user', response.data.user); //this should be removed after conflict resolved
           localStorage.setItem('access_token', response.data.access);
@@ -104,7 +105,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
     }
   };
 
-  const initialValues = { email, password };
+  const initialValues = { email: '', password: '' };
 
   return (
     <Row className="h-100">
@@ -143,11 +144,17 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             </CardTitle>
 
             <Formik
-              initialValues={initialValues}
               onSubmit={onUserLogin}
               validationSchema={userLoginSchema}
+              initialValues={initialValues}
             >
-              {({ errors, touched, handleSubmit }) => (
+              {({
+                errors,
+                touched,
+                handleSubmit,
+                setFieldValue,
+                setFieldTouched,
+              }) => (
                 <Form className="av-tooltip tooltip-label-bottom">
                   <FormGroup className="form-group has-float-label">
                     <Label>
@@ -187,6 +194,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                     <Colxx className="text-left">
                       {' '}
                       <Button
+                        type="submit"
                         color="primary"
                         className={`btn-shadow btn-multiple-state ${
                           loading ? 'show-spinner' : ''

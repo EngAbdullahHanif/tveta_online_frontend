@@ -18,7 +18,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
-import { DistrictsContext } from 'context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
 // import Breadcrumb from '../navs/Breadcrumb';
 
 const ListPageHeading = ({
@@ -54,14 +54,17 @@ const ListPageHeading = ({
   institutes,
   onInstituteSelect,
   setSelectedDistrict,
+  selectedStudentId,
+  selectedInstitute,
+  setSelectedStudentId,
+  handleReset,
 }) => {
   console.log('provincesOptionsForList:', provincesOptionsForList);
   const [dropdownSplitOpen, setDropdownSplitOpen] = useState(false);
   const [displayOptionsIsOpen, setDisplayOptionsIsOpen] = useState(false);
   const { messages } = intl;
-  const [selectedInstitute, setSelectedInstitute] = useState('');
   onInstituteSelect(selectedInstitute);
-  const { districts: districtsFromContext } = useContext(DistrictsContext);
+  const { districts: districtsFromContext } = useContext(AuthContext);
   console.log('districts from context: ', districtsFromContext);
   let districts = districtsFromContext;
   if (selectedProvinceOption) {
@@ -255,8 +258,10 @@ const ListPageHeading = ({
                     type="text"
                     name="student_id"
                     id="student_id"
+                    value={selectedStudentId}
                     placeholder={messages['search.id']}
-                    onKeyPress={(e) => onIdSearchKey(e)}
+                    onChange={(e) => setSelectedStudentId(e.target.value)}
+                    onKeyUp={(e) => onIdSearchKey(e)}
                     style={{ fontSize: '17px' }}
                   />
                 </div>
@@ -266,8 +271,9 @@ const ListPageHeading = ({
                   <ReactAutoSugegst
                     data={institutes}
                     select={(institute) => {
-                      setSelectedInstitute(institute);
+                      onInstituteSelect(institute);
                     }}
+                    value={selectedInstitute}
                     placeholder={messages['search.institute.name']}
                   />
                 </div>
@@ -314,16 +320,7 @@ const ListPageHeading = ({
                 size="xs"
                 className="float-md-left mb-1"
                 style={{ fontSize: '17px' }}
-                onClick={() => {
-                  changeGenderBy(null);
-                  changeProvinceBy(null);
-                  changeShiftBy(null);
-                  // changeLevelOfEducationBy(null);
-                  changeEducationalYearBy(null);
-                  setSelectedInstitute('');
-                  onResetClick(!reset);
-                  setSelectedDistrict('');
-                }}
+                onClick={handleReset}
               >
                 <IntlMessages id="pages.reset" />
               </Button>

@@ -16,7 +16,7 @@ import ListPageHeading from 'views/app/students/bio/students-list/StudentListHea
 import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
-import { AuthContext, ProvincesContext } from 'context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import { studentStatusOptions } from './../../../global-data/options';
 import { NavLink } from 'react-router-dom';
@@ -98,7 +98,7 @@ const ThumbListPages = ({ match }) => {
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
-      pageSize: 10,
+      pageSize: 5,
     },
   });
   const [isLoaded, setIsLoaded] = useState(false);
@@ -126,7 +126,7 @@ const ThumbListPages = ({ match }) => {
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
-  const { provinces: provincesOptionsForList } = useContext(ProvincesContext);
+  const { provinces: provincesOptionsForList } = useContext(AuthContext);
 
   const [selectedGenderOption, setSelectedGenderOption] = useState();
   const [selectedProvinceOption, setSelectedProvinceOption] = useState();
@@ -157,69 +157,53 @@ const ThumbListPages = ({ match }) => {
     const params = {
       page: currentPage,
     };
+    console.log('institute: ', institute);
     if (institute) {
-      params.institute = institute.id;
+      params.institute = institute.value;
       endpoint = 'students/student_institutes/';
     }
 
-    if (rest) {
-      setDistrict('');
-      setStudentId('');
-      setRest(false);
-    }
+    console.log('institute is: ', institute);
 
-    // if institute and shift selected, but province and gender are not selected
-    else if (
-      !selectedProvinceOption &&
-      !selectedGenderOption &&
-      selectedShiftOption
-    ) {
-      const params = {
-        student_id: studentId,
-        current_district: district,
-        p: currentPage,
-        page: 1,
-      };
-      // here
-    } else if (!selectedProvinceOption) {
-      const params = {
-        student_id: studentId,
-        gender: selectedGenderOption?.value,
-        current_district: district?.value,
-        page: currentPage,
-      };
-      const response = await callApi(`students/`, '', null, params);
-    } else if (!selectedGenderOption) {
-      const params = {
-        student_id: studentId,
-        current_province: selectedProvinceOption.value,
-        current_district: district,
-        page: currentPage,
-      };
-      const response = await callApi(`students/`, '', null, params);
-    } else {
-      // setTotalItemCount(response.data.totalItem);
-      const params = {
-        student_id: studentId,
-        gender: selectedGenderOption.value,
-        current_province: selectedProvinceOption.value,
-        current_district: district.value,
-        page: currentPage,
-      };
-    }
+    params.gender = selectedGenderOption?.value;
+    params.current_province = selectedProvinceOption?.value;
+    params.current_district = district?.value;
+    params.student_id = studentId || null;
 
-    // fetch filtered data
-    const response = await callApi(endpoint, '', null, params);
-    if (response.data && response.status === 200) {
-      setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-      setItems(response.data.results);
-      setSelectedItems([]);
-      setTotalItemCount(response.data.count);
-      setIsLoaded(false);
-    } else {
-      console.log('students error');
+    try {
+      // fetch filtered data
+      const response = await callApi(endpoint, null, null, params);
+      if (response.data && response.status === 200) {
+        setTotalPage(Math.ceil(response.data.count / itemsPerPage));
+        if (institute) {
+          setItems(
+            response?.data?.map((item) => ({
+              ...item.student,
+              institute: item.institute,
+            }))
+          );
+        } else {
+          setItems(response.data.results);
+        }
+        setSelectedItems([]);
+        setTotalItemCount(response.data.count);
+        setIsLoaded(false);
+      } else {
+        console.log('students error');
+      }
+    } catch (error) {
+      console.log('error: ', error);
     }
   }
+
+  const handleReset = () => {
+    setStudentId('');
+    setInstitute('');
+    setProvince('');
+    setSelectedGenderOption('');
+    setSelectedProvinceOption('');
+    fetchData();
+  };
 
   useEffect(async () => {
     fetchData();
@@ -230,7 +214,6 @@ const ThumbListPages = ({ match }) => {
     search,
     selectedGenderOption,
     selectedProvinceOption,
-    studentId,
     province,
     district,
     rest,
@@ -336,6 +319,13 @@ const ThumbListPages = ({ match }) => {
     female: 'ښځینه/ موٌنث',
   };
 
+  const handleStudentIdSearch = (e) => {
+    if (e.key === 'Enter') {
+      // handleStudentSearch(e.target.value.trim().toLowerCase());
+      fetchData();
+    }
+  };
+
   if (isLoaded) {
     return <Spinner />;
   }
@@ -364,6 +354,7 @@ const ThumbListPages = ({ match }) => {
           endIndex={endIndex}
           selectedItemsLength={selectedItems ? selectedItems.length : 0}
           itemsLength={items ? items.length : 0}
+          setSelectedStudentId={setStudentId}
           onSearchKey={(e) => {
             if (e.key === 'Enter') {
               setSearch(e.target.value.toLowerCase());
@@ -394,11 +385,7 @@ const ThumbListPages = ({ match }) => {
           genderOptionsForList={genderOptionsForList}
           studyTimeOptionsForList={studyTimeOptionsForList}
           provincesOptionsForList={provincesOptionsForList}
-          onIdSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setStudentId(e.target.value.toLowerCase());
-            }
-          }}
+          onIdSearchKey={handleStudentIdSearch}
           // Province
           onProvinceSearchKey={(e) => {
             if (e.key === 'Enter') {
@@ -411,10 +398,13 @@ const ThumbListPages = ({ match }) => {
               setDistrict(e.target.value.toLowerCase());
             }
           }}
-          onResetClick={setRest}
+          onResetClick={handleReset}
           reset={rest}
           institutes={institutes}
           onInstituteSelect={setInstitute}
+          selectedStudentId={studentId}
+          selectedInstitute={institute}
+          handleReset={handleReset}
           // Shift
           changeShiftBy={(column) => {
             setSelectedShiftOption(
@@ -545,7 +535,7 @@ const ThumbListPages = ({ match }) => {
             pagination={tableParams.pagination}
             loading={loading}
             // onChange={handleTableChange}
-            dataSource={items.map((item, index) => ({
+            dataSource={items?.map((item, index) => ({
               key: index,
               student_id: item.student_id,
               name: (

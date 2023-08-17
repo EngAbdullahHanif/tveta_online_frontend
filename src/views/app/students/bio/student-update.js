@@ -178,14 +178,12 @@ const StudentUpdate = ({ intl }, values) => {
     registrationNumber: student?.registration_number,
     pageNumber: student?.page_number,
     coverNumber: student?.cover_number,
-    sabtNo: student?.sabt_no,
     gender: genderOptions.find((gen) => gen.value === student?.gender),
     tazkiraType: tazkiraOptions.find(
       (option) => option.value == student?.tazkira_type
     ),
     idCardJoldNo: student?.cover_number,
     idCardPageNo: student?.page_number,
-    sabtNo: student?.sabt_number,
 
     currentDistrict: districts.find(
       (district) => district.value == student?.current_district
@@ -368,24 +366,6 @@ const StudentUpdate = ({ intl }, values) => {
                               {errors.idCardPageNo && touched.idCardPageNo ? (
                                 <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
                                   {errors.idCardPageNo}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-                          </div>
-                        </div>
-                        <div>
-                          {/* Sabt */}
-                          <div>
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>شماره ثبت</Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="sabtNo"
-                                type="number"
-                              />
-                              {errors.sabtNo && touched.sabtNo ? (
-                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                  {errors.sabtNo}
                                 </div>
                               ) : null}
                             </FormGroup>

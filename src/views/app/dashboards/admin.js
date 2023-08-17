@@ -796,7 +796,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                               {
                                 contextFields.find(
                                   (f) => f.value === report.field_of_study
-                                ).label
+                                )?.label
                               }
                             </td>
                             <td>{report.total_institutes}</td>

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 
-import { ProvincesContext } from 'context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
 
 import {
   Card,
@@ -65,7 +65,7 @@ const InstituteListBody = ({
   const [modalBasic, setModalBasic] = useState(false);
   const [dataDeletion, setDeletion] = useState(false);
 
-  const { provinces } = useContext(ProvincesContext);
+  const { provinces } = useContext(AuthContext);
   console.log('provinces from context: ', provinces);
 
   const handleClick = async (instituteId) => {

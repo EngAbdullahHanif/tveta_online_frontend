@@ -36,7 +36,7 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import Classes from 'views/app/classes';
-import { DistrictsContext, ProvincesContext } from 'context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
 
 const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
@@ -51,8 +51,8 @@ const StudentProfile = () => {
   const [marks, setMarks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const { provinces } = useContext(ProvincesContext);
-  const { districts } = useContext(DistrictsContext);
+  const { provinces } = useContext(AuthContext);
+  const { districts } = useContext(AuthContext);
 
   console.log('districts from context: ', districts);
 
@@ -178,10 +178,14 @@ const StudentProfile = () => {
               <Colxx>
                 {console.log('here', `${student[0].photo}`)}
                 {/* <img src={student.student_photo} alt="Photo" width={'10%'} />{' '} */}
-                <NavLink to={`?p=${student.student}`} className="w-40 w-sm-100">
+                <a
+                  href={student[0].photo}
+                  className="w-40 w-sm-100"
+                  target="_blank"
+                >
                   <img
                     top
-                    alt={student.name}
+                    alt={student[0].name}
                     src={`${student[0].photo}`}
                     style={{
                       maxWidth: '12%',
@@ -189,7 +193,7 @@ const StudentProfile = () => {
                       borderRadius: '5px',
                     }}
                   />
-                </NavLink>
+                </a>
               </Colxx>
             )}
           </Row>
@@ -273,7 +277,7 @@ const StudentProfile = () => {
                         <h2>
                           {student[0].english_name +
                             ' ' +
-                            student[0].english_last_name}{' '}
+                            student[0].english_last_name}
                         </h2>
                         <Label className="data-style">
                           <IntlMessages id="teacher.FatherNameLabel" />

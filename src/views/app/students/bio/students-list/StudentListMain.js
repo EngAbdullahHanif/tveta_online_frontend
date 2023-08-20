@@ -210,14 +210,14 @@ const ThumbListPages = ({ match }) => {
     }
   }
 
-  const handleReset = () => {
-    setStudentId('');
-    setInstitute('');
-    setProvince('');
-    setSelectedGenderOption('');
-    setSelectedProvinceOption('');
-    fetchData();
-  };
+  // const handleReset = () => {
+  //   setStudentId('');
+  //   setInstitute('');
+  //   setProvince('');
+  //   setSelectedGenderOption('');
+  //   setSelectedProvinceOption('');
+  //   fetchData();
+  // };
 
   useEffect(async () => {
     fetchData();
@@ -327,22 +327,22 @@ const ThumbListPages = ({ match }) => {
     return <Spinner />;
   }
 
-  const onFilter = async (filterData) => {
+  const onFilter = async (values) => {
     let params = {
       page: currentPage,
     };
-    params.current_province = filterData.filterInsitute?.value;
-    params.current_province = filterData.filterProvince?.value;
-    params.student_id = filterData.filterId || null;
+    params.current_province = values.filterInsitute?.value;
+    params.current_province = values.filterProvince?.value;
+    params.student_id = values.filterId || null;
     fetchData(params);
     console.log('Filter Data', filterId, filterProvince, filterInstitute);
   };
-  const resetFilter = () => {
-    setFilterId('');
-    setFilterInstitute('');
-    setFilterProvince({});
+  const resetFilter = (values, { resetForm, setFieldValue }) => {
+    resetForm();
+    setFieldValue('filterInstitute', []);
     fetchData();
   };
+
   return (
     <>
       <div className="disable-text-selection">
@@ -363,13 +363,15 @@ const ThumbListPages = ({ match }) => {
               filterProvince: [],
             }}
             onSubmit={onFilter}
+            // onReset={resetFilter}
           >
             {({
               values,
               setFieldValue,
               handleSubmit,
+              handleReset,
               setFieldTouched,
-              onBlur,
+              resetForm,
             }) => (
               <>
                 <Field
@@ -381,10 +383,9 @@ const ThumbListPages = ({ match }) => {
                 <FormikReactSelect
                   className="w-100"
                   placeholder="ولایت"
-                  id="filterProvince"
                   name="filterProvince"
-                  value={filterProvince?.label}
                   options={provinces}
+                  // value={values.filterProvince}
                   onChange={setFieldValue}
                   onBlur={setFieldTouched}
                 />
@@ -392,16 +393,19 @@ const ThumbListPages = ({ match }) => {
                   className="w-100"
                   placeholder="انستیتوت"
                   name="filterInstitute"
-                  id="filterInstitute"
-                  value={filterInstitute?.label}
                   options={institutes}
+                  // value={values.filterInsitute}
                   onChange={setFieldValue}
                   onBlur={setFieldTouched}
                 />
                 <button className="btn btn-secondary" onClick={handleSubmit}>
                   Filter
                 </button>
-                <button className="btn btn-warning" onClick={resetFilter}>
+                <button
+                  type="reset"
+                  className="btn btn-warning"
+                  onClick={resetForm}
+                >
                   Reset
                 </button>
               </>

@@ -2894,7 +2894,6 @@ const TeacherProfile = () => {
                                   setFieldTouched,
                                   setFieldValue,
                                   handleSubmit,
-                                  resetForm,
                                 }) => (
                                   <>
                                     <form>

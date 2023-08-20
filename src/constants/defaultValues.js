@@ -13,6 +13,7 @@ export const userRole = {
   provinceSupervisor: 'pr_supervisor',
   dataentry: 'dataentry',
   supervisor: 'supervisor',
+  authenticated: 'authenticated',
 };
 
 export const roleRoots = {
@@ -21,6 +22,7 @@ export const roleRoots = {
   ins_manager: '/app/students',
   ins_dataentry: '/app/students',
   dataentry: '/app/students',
+  pr_supervisor: '/app/dashboards/provincial',
 };
 
 /* 

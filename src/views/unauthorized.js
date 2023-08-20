@@ -1,11 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Row, Card, CardTitle } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { adminRoot } from 'constants/defaultValues';
+import { AuthContext } from 'context/AuthContext';
 
 const Unauthorized = ({ location, ...rest }) => {
+  const { setUser } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    setUser(null);
+    window.location.href = window.location.origin;
+    console.log('clearing from localstorage');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('current_user');
+    console.log('calling backend logout');
+
+    const response = await callApi('auth/logout/', 'POST', null);
+    console.log('response: ', response);
+    // if (response.status === 200) {
+    //   console.log('logged out from backend');
+    // }
+  };
+
   useEffect(() => {
     document.body.classList.add('background');
     document.body.classList.add('no-footer');
@@ -27,16 +46,8 @@ const Unauthorized = ({ location, ...rest }) => {
           <Row className="h-100">
             <Colxx xxs="12" md="10" className="mx-auto my-auto m-all-outo">
               <Card className="auth-card">
-                <div className="position-relative image-side ">
-                  <p className="text-white h2">
-                    جادوی کاره مارو توی جزئیاتش ببین
-                  </p>
-                  <p className="white mb-0">واقعا هم همینه و داری می بینی :)</p>
-                </div>
                 <div className="form-side">
-                  <NavLink to="/" className="white">
-                    <span className="logo-single" />
-                  </NavLink>
+                  {/* <NavLink to="/">لوگو </NavLink> */}
                   <CardTitle className="mb-4">
                     <IntlMessages id="unauthorized.title" />
                   </CardTitle>
@@ -44,12 +55,21 @@ const Unauthorized = ({ location, ...rest }) => {
                     <IntlMessages id="unauthorized.detail" />
                   </p>
                   <p className="display-1 font-weight-bold mb-5">503</p>
-                  <NavLink
-                    to={location?.state?.returnPath || adminRoot}
-                    className="btn btn-primary btn-shadow btn-lg"
-                  >
-                    <IntlMessages id="pages.go-back-home" />
-                  </NavLink>
+                  <div className="d-flex justify-content-between flex-wrap">
+                    <NavLink
+                      to={location?.state?.returnPath || adminRoot}
+                      className="btn btn-primary btn-shadow btn-lg"
+                    >
+                      <IntlMessages id="pages.go-back-home" />
+                    </NavLink>
+                    <div classname="pr-2">&nbsp;</div>
+                    <button
+                      className="btn btn-secondary btn-shadow btn-lg "
+                      onClick={handleLogout}
+                    >
+                      خروج از حساب/ وتل
+                    </button>
+                  </div>
                 </div>
               </Card>
             </Colxx>

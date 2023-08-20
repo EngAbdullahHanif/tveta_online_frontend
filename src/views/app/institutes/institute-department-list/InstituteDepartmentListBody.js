@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
@@ -21,6 +21,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import { BsTrashFill } from 'react-icons/bs';
 import { BsPencilSquare } from 'react-icons/bs';
 import { async } from 'q';
+import { AuthContext } from 'context/AuthContext';
 
 const createNotification = (type, className) => {
   const cName = className || '';
@@ -62,6 +63,7 @@ const InstituteDepartmentListBody = ({
 }) => {
   const [modalBasic, setModalBasic] = useState(false);
   const [dataDeletion, setDeletion] = useState(false);
+  const { institutes, departments } = useContext(AuthContext);
 
   const handleClick = async (instituteId) => {
     const instituteResponse = await callApi(
@@ -111,11 +113,18 @@ const InstituteDepartmentListBody = ({
                   className="list-item-heading mb-1 truncate"
                   style={{ width: '30%', fontSize: '20px' }}
                 >
-                  {institute.institute.name}
+                  {
+                    institutes.find(
+                      (inst) => inst.value === institute.institute
+                    ).label
+                  }
                 </p>
               </div>
               <p className="mb-1 " style={{ width: '18%', fontSize: '20px' }}>
-                {institute.department.name}
+                {
+                  departments.find((dep) => dep.value === institute.department)
+                    .label
+                }
               </p>
               {institute.is_active === true ? (
                 <p className="mb-1 " style={{ width: '18%', fontSize: '20px' }}>
@@ -128,60 +137,6 @@ const InstituteDepartmentListBody = ({
                 </p>
               )}
             </div>
-            <>
-              <div
-                style={{ display: 'flex', flexDirection: 'row' }}
-                className="align-self-center pr-4"
-              >
-                <NavLink to={`/app/institutes/register/${institute.id}`}>
-                  <div>
-                    <BsPencilSquare
-                      outline
-                      style={{ fontSize: '20px' }}
-                      id="updateIcon"
-                    />
-                  </div>
-                </NavLink>
-                <div className="ml-2">
-                  <BsTrashFill
-                    id="deleteIcon"
-                    outline
-                    onClick={() => setModalBasic(true)}
-                    style={{ fontSize: '20px' }}
-                  />
-                </div>
-              </div>
-              <Modal
-                isOpen={modalBasic}
-                toggle={() => setModalBasic(!modalBasic)}
-                style={{ marginTop: '10%' }}
-              >
-                <ModalHeader>
-                  <IntlMessages id="modal.deletion-message-title" />
-                </ModalHeader>
-                <ModalBody className="text-center">
-                  <IntlMessages id="modal.deletion-message-details" />
-                </ModalBody>
-                <ModalFooter>
-                  <Button
-                    onClick={() => setModalBasic(false)}
-                    style={{ marginLeft: '55%' }}
-                  >
-                    نه/ نخیر
-                  </Button>
-                  <Button
-                    color="danger"
-                    onClick={() => {
-                      // setModalBasic(false);
-                      handleClick(`${institute.id}`);
-                    }}
-                    style={{ marginLeft: '5%' }}
-                  >
-                    هو / بلی
-                  </Button>{' '}
-                </ModalFooter>
-              </Modal>{' '}
-            </>
           </div>
         </Card>
       </ContextMenuTrigger>

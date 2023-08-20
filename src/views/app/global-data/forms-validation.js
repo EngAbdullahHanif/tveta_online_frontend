@@ -486,13 +486,15 @@ export const kankorRegisterValidationSchema = Yup.object().shape({
 
   province: Yup.object()
     .shape({
+      label: Yup.string().required(),
       value: Yup.string().required(),
     })
-    .nullable()
+
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
   district: Yup.object()
     .shape({
+      label: Yup.string().required(),
       value: Yup.string().required(),
     })
     .nullable()

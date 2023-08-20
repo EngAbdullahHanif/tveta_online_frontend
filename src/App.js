@@ -13,8 +13,12 @@ import Authentication from 'context/Authentication';
 import callApi from 'helpers/callApi';
 import { Button, Spinner } from 'reactstrap';
 
+import { userRole as userRoles } from './constants/defaultValues';
+
 const App = ({ locale }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem('user')) || {}
+  );
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -235,6 +239,35 @@ const App = ({ locale }) => {
     }
   };
 
+  // show institutes based on user group
+  useEffect(() => {
+    if (!user || !user?.groups) return;
+
+    console.log("user's groups: ", user.groups);
+    if (user.groups.some((group) => group.name === userRoles.admin)) {
+      return;
+    }
+    if (
+      user.groups.some(
+        (group) =>
+          group.name === 'pr_dataentry' || group.name === 'pr_supervisor'
+      )
+    ) {
+      const newInstitutesList = institutes.filter(
+        (institute) => institute.rest.province === user.province
+      );
+      setInstitutes(newInstitutesList);
+      return;
+    }
+
+    // if ('ins_dataentry' in user.groups || 'ins_manager' in user.groups) {
+    //   const newInstitutesList = institutes.filter(
+    //     (institute) => institute.value === user.institute
+    //   );
+    //   setInstitutes(newInstitutesList);
+    // }
+  }, [user]);
+
   const fetchInitialData = async () => {
     try {
       await Promise.all([
@@ -248,6 +281,8 @@ const App = ({ locale }) => {
         getUser(),
         fetchSectors(),
       ]);
+    } catch (error) {
+      console.log('Error fetching initial data: ', error);
     } finally {
       setIsLoadingInitialData(false);
     }

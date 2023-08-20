@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Row,
   Modal,
@@ -13,6 +13,7 @@ import ContextMenuContainer from '../../../../containers/pages/ContextMenuContai
 import DataListView from '../../../../containers/pages/DataListView';
 import ImageListView from '../../../../containers/pages/ImageListView';
 import InstituteListBody from './InstituteDepartmentListBody';
+import { AuthContext } from 'context/AuthContext';
 
 function collect(props) {
   return { data: props.data };
@@ -30,6 +31,7 @@ const ListPageListing = ({
   onChangePage,
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
+  const { institutes, departments } = useContext(AuthContext);
 
   return (
     <>

@@ -15,6 +15,7 @@ const data = [
       userRole.provinceSupervisor,
       userRole.authoritySupervisor,
       userRole.authorityDataentry,
+      userRole.authenticated,
     ],
     subs: [
       {

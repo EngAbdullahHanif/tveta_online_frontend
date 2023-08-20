@@ -7,17 +7,13 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const Admin = React.lazy(() =>
   import(/* webpackChunkName: "dashboard-default" */ './admin')
 );
+
 const Provincial = React.lazy(() =>
-  import(/* webpackChunkName: "dashboard-provincial" */ './provincial')
+  import(/* webpackChunkName: "dashboard-provincial" */ './ProvincialDashboard')
 );
-const ContentDefault = React.lazy(() =>
-  import(/* webpackChunkName: "dashboard-content" */ './content')
-);
-const AnalyticsDefault = React.lazy(() =>
-  import(/* webpackChunkName: "dashboard-analytics" */ './analytics')
-);
-const EcommerceDefault = React.lazy(() =>
-  import(/* webpackChunkName: "dashboard-ecommerce" */ './ecommerce')
+
+const InstituteDashboard = React.lazy(() =>
+  import(/* webpackChunkName: "dashboard-provincial" */ './InstituteDashboard')
 );
 
 const Dashboards = ({ match, props }) => (
@@ -38,71 +34,27 @@ const Dashboards = ({ match, props }) => (
         props={props}
       />
       <ProtectedRoute
-        path={`${match.url}/content`}
-        component={ContentDefault}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
-        props={props}
-      />
-      <ProtectedRoute
-        path={`${match.url}/ecommerce`}
-        component={EcommerceDefault}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
-        props={props}
-      />
-      <ProtectedRoute
-        path={`${match.url}/analytics`}
-        component={AnalyticsDefault}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
-        props={props}
-      />
-      <ProtectedRoute
         path={`${match.url}/provincial`}
         component={Provincial}
         roles={[
           userRole.superUser,
           userRole.admin,
-          userRole.provincial,
-          userRole.institute,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
         ]}
         props={props}
       />
-      {/* 
       <ProtectedRoute
-        path={`${match.url}/default`}
-        component={DashboardDefault}
-        roles={[userRole.admin]}
+        path={`${match.url}/institute`}
+        component={InstituteDashboard}
+        roles={[
+          userRole.superUser,
+          userRole.admin,
+          userRole.instituteManager,
+          userRole.instituteDataentry,
+        ]}
+        props={props}
       />
-      <ProtectedRoute
-        path={`${match.url}/content`}
-        component={ContentDefault}
-        roles={[userRole.admin]}
-      />
-      <ProtectedRoute
-        path={`${match.url}/ecommerce`}
-        component={EcommerceDefault}
-        roles={[userRole.Editor]}
-      />
-      <ProtectedRoute
-        path={`${match.url}/analytics`}
-        component={AnalyticsDefault}
-        roles={[userRole.Editor]}
-      />
-      */}
 
       <Redirect to="/error" />
     </Switch>

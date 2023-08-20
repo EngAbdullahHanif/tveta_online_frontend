@@ -14,6 +14,10 @@ const ProtectedRoute = ({
     if (isAuthGuardActive) {
       if (user) {
         if (roles) {
+          // if a route is allowed for all logged-in users, allow them
+          if (roles.includes('authenticated')) {
+            return <Component />;
+          }
           console.log('roles are', roles);
           const groups = user.groups;
           console.log('groups are', groups);

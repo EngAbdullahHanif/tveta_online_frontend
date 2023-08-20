@@ -103,7 +103,7 @@ const ThumbListPages = ({ match }) => {
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
-      pageSize: 10,
+      pageSize: 5,
     },
   });
   const [isLoaded, setIsLoaded] = useState(false);
@@ -159,13 +159,15 @@ const ThumbListPages = ({ match }) => {
 
   const itemsPerPage = 10;
 
-  async function fetchData(params) {
+  async function fetchData(params = {}) {
     console.log('PARAMSSSSSSSSSSSSSSS', params);
     // if institute not selected
     let endpoint = 'students/';
     // const params = {
     //   page: currentPage,
     // };
+    params.page = currentPage;
+    params.page_size = tableParams.pagination.pageSize;
     console.log('institute: ', institute);
     if (institute) {
       params.institute = institute.value;

@@ -237,7 +237,7 @@ const StudentProfile = () => {
       )}
 
       {/* if student is loaded show it, if not show empty  */}
-      {student.length > 0 && institute.length > 0 && classs.length > 0 && (
+      {student?.length > 0 && institute?.length > 0 && classs?.length > 0 && (
         <>
           {isNext ? (
             <>

@@ -42,6 +42,12 @@ const columns = [
     width: '5%',
   },
   {
+    title: 'تذکره',
+    dataIndex: 'registration_number',
+    // sorter: (a, b) => a.student_id - b.student_id,
+    width: '5%',
+  },
+  {
     title: 'نوم/نام',
     dataIndex: 'name',
     // sorter: (a, b) => a.name - b.name,
@@ -56,11 +62,11 @@ const columns = [
   {
     title: 'جنسیت',
     dataIndex: 'gender',
-    filters: [
-      { text: 'Male', value: 'male' },
-      { text: 'Female', value: 'female' },
-    ],
-    onFilter: (value, record) => record.gender.indexOf(value) === 0,
+    // filters: [
+    //   { text: 'Male', value: 'male' },
+    //   { text: 'Female', value: 'female' },
+    // ],
+    // onFilter: (value, record) => record.gender.indexOf(value) === 0,
     width: '10%',
   },
 
@@ -119,39 +125,34 @@ const ThumbListPages = ({ match }) => {
   const [institute, setInstitute] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
-  const [filterId, setFilterId] = useState();
-  const [filterProvince, setFilterProvince] = useState([]);
-  const [filterInstitute, setFilterInstitute] = useState([]);
-
-  const itemsPerPage = 10;
-
+  // const [filterId, setFilterId] = useState();
+  // const [filterProvince, setFilterProvince] = useState([]);
+  // const [filterInstitute, setFilterInstitute] = useState([]);
+  const [isFilter, setIsFilter] = useState(false);
+  console.log(isFilter);
   const handleTableChange = (pagination, filter, sorter) => {
+    setIsFilter(false);
     setTableParams({ pagination, filter, ...sorter });
-
-    // fetchData();
-    // `dataSource` is useless since `pageSize` changed
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
       setItems([]);
     }
   };
 
   async function fetchData(params = {}) {
-    console.log('PARRRRRRRR', params);
+    console.log('PARAMSSSSSSSSSS: ', params);
     setIsLoading(true);
-    // if institute not selected
     let endpoint = 'students/';
     if (institute) {
       params.institute = institute.value;
       endpoint = 'students/student_institutes/';
     }
-
-    console.log('institute is: ', institute);
-
+    console.log('institute is: ', institute, 'isFilter', isFilter);
     const params1 = {
       ...params,
-      page: tableParams.pagination.current || null,
+      page: !isFilter ? tableParams.pagination.current : params.page,
       page_size: tableParams.pagination.pageSize || null,
     };
+
     try {
       const response = await callApi(endpoint, null, null, params1);
       setIsLoading(false);
@@ -164,10 +165,8 @@ const ThumbListPages = ({ match }) => {
             }))
           );
         } else {
-          console.log('response.data.results: ', response);
           setItems(response.data.results);
         }
-        console.log('count is: ', response.data.count);
         setTableParams({
           ...tableParams,
           pagination: {
@@ -223,26 +222,35 @@ const ThumbListPages = ({ match }) => {
   }
 
   const onFilter = async (values) => {
+    setIsFilter(true);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
+    });
     let params = {
       page: 1,
     };
     params.current_institute = values.filterInstitute?.value;
     params.current_province = values.filterProvince?.value;
     params.student_id = values.filterId || null;
-    // setTableParams({});
-    fetchData(params);
-  };
 
-  const resetFilter = () => {
-    setFilterId('');
-    setFilterInstitute([]);
-    setFilterProvince([]);
-    fetchData();
+    fetchData(params);
   };
 
   useEffect(() => {
     fetchData();
-  }, [JSON.stringify(tableParams)]);
+  }, [!isFilter ? JSON.stringify(tableParams) : null]);
+
+  const handleResetFields = (resetForm) => {
+    resetForm({
+      values: { filterId: '', filterInstitute: [], filterProvince: [] },
+    });
+    setIsFilter(false);
+    fetchData();
+  };
 
   return (
     <>
@@ -259,12 +267,11 @@ const ThumbListPages = ({ match }) => {
         >
           <Formik
             initialValues={{
-              filterId,
-              filterInstitute,
-              filterProvince,
+              filterId: '',
+              filterInstitute: [],
+              filterProvince: [],
             }}
             onSubmit={onFilter}
-            onReset={resetFilter}
           >
             {({
               values,
@@ -272,13 +279,10 @@ const ThumbListPages = ({ match }) => {
               handleSubmit,
               handleReset,
               setFieldTouched,
+              resetForm,
             }) => (
               <>
-                <Field
-                  name="filterId"
-                  placeholder="ایدی"
-                  value={values.filterId}
-                />
+                <Field name="filterId" placeholder="ایدی" />
                 <FormikReactSelect
                   className="w-100"
                   placeholder="ولایت"
@@ -300,10 +304,11 @@ const ThumbListPages = ({ match }) => {
                 <button className="btn btn-secondary" onClick={handleSubmit}>
                   Filter
                 </button>
+
                 <button
-                  type="reset"
+                  type="button"
                   className="btn btn-warning"
-                  onClick={handleReset}
+                  onClick={() => handleResetFields(resetForm)}
                 >
                   Reset
                 </button>
@@ -324,6 +329,7 @@ const ThumbListPages = ({ match }) => {
           dataSource={items?.map((item, index) => ({
             key: index,
             student_id: item.student_id,
+            registration_number: item.registration_number,
             name: (
               <NavLink to={`student/${item.id}`} style={{ width: '10%' }}>
                 {item.name}

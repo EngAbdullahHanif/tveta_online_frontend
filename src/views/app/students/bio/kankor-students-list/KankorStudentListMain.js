@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
-import { provincesOptionsForList } from '../../../global-data/options';
+import {
+  educationalYearsOptions,
+  provincesOptionsForList,
+} from '../../../global-data/options';
 import callApi from 'helpers/callApi';
-
+import { Select, Spin, Table as TB } from 'antd';
 // import { servicePath } from 'constants/defaultValues';
 import ListPageHeading from 'views/app/students/bio/kankor-students-list/KankorStudentListHeading';
 import ListPageListing from 'views/app/students/bio/kankor-students-list/KankorStudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import { department } from 'lang/locales/fa_IR';
+import { FormGroup, Label, NavLink } from 'reactstrap';
+import { BsPencilSquare } from 'react-icons/bs';
+import { Field, Formik } from 'formik';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { AuthContext } from 'context/AuthContext';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -44,6 +52,7 @@ const genderOptions = [
 ];
 
 const ThumbListPages = ({ match }) => {
+  const { provinces, institutes, departments } = useContext(AuthContext);
   const [isLoaded, setIsLoaded] = useState(true);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -99,7 +108,7 @@ const ThumbListPages = ({ match }) => {
       registrationDate: '1401/3/6',
     },
   ];
-
+  const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
@@ -108,7 +117,7 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState();
+  // const [institutes, setInstitutes] = useState();
   const [institute, setInstitute] = useState('');
 
   const [studentId, setStudentId] = useState('');
@@ -123,6 +132,13 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 5,
+    },
+  });
+  const [isFilter, setIsFilter] = useState(false);
   useEffect(() => {
     setCurrentPage(1);
   }, [
@@ -131,53 +147,179 @@ const ThumbListPages = ({ match }) => {
     selectedGenderOption,
     selectedProvinceOption,
   ]);
-
-  useEffect(() => {
-    console.log('studentId', studentId);
-    async function fetchData() {
-      const response = await callApi(`students/kankorResults/`, 'get', null);
-      setItems(response.data);
-      console.log('fetching data from the server', response);
-      if (response.data && response.status === 200) {
-        setItems(response.data);
-        setSelectedItems([]);
-        // setTotalItemCount(data);
-        setIsLoaded(true);
-      } else {
-        console.log('Kankor students error');
-      }
+  // async function fetchData() {
+  //   const response = await callApi(`students/kankorResults/`, 'get', null);
+  //   setItems(response.data);
+  //   console.log('fetching data from the server', response);
+  //   if (response.data && response.status === 200) {
+  //     setItems(response.data);
+  //     setSelectedItems([]);
+  //     // setTotalItemCount(data);
+  //     setIsLoaded(true);
+  //   } else {
+  //     console.log('Kankor students error');
+  //   }
+  // }
+  async function fetchData(params = {}) {
+    setIsLoading(true);
+    let endpoint = 'students/kankorResults/';
+    if (institute) {
+      params.institute = institute.value;
+      endpoint = 'students/student_institutes/';
     }
-    fetchData();
-    //console.log('items', items)
-  }, [
-    selectedPageSize,
-    currentPage,
-    selectedOrderOption,
-    search,
-    selectedGenderOption,
-    selectedProvinceOption,
-    studentId,
-    province,
-    district,
-    rest,
-    institute,
-    educationYear,
-  ]);
+    console.log('institute is: ', institute, 'isFilter', isFilter);
+    const params1 = {
+      ...params,
+      page: !isFilter ? tableParams.pagination.current : params.page,
+      page_size: tableParams.pagination.pageSize || null,
+    };
+    try {
+      const response = await callApi(endpoint, null, null, params1);
+      setIsLoading(false);
+      if (response.data && response.status === 200) {
+        if (institute) {
+          setItems(
+            response?.data?.map((item) => ({
+              ...item.student,
+              institute: item.institute,
+            }))
+          );
+        } else {
+          setItems(response.data.results);
+        }
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: response?.data?.count,
+          },
+        });
+      } else {
+        console.log('students error');
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
+  // useEffect(() => {
+  //   console.log('studentId', studentId);
+
+  //   fetchData();
+  //   //console.log('items', items)
+  // }, [
+  //   selectedPageSize,
+  //   currentPage,
+  //   selectedOrderOption,
+  //   search,
+  //   selectedGenderOption,
+  //   selectedProvinceOption,
+  //   studentId,
+  //   province,
+  //   district,
+  //   rest,
+  //   institute,
+  //   educationYear,
+  // ]);
   // console.log('items', items)
 
-  const fetchInstitutes = async () => {
-    const response = await axios.get(instituteApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      id: item.id,
-      name: item.name,
-    }));
-    setInstitutes(updatedData);
+  // const fetchInstitutes = async () => {
+  //   const response = await axios.get(instituteApiUrl);
+  //   const updatedData = await response.data.map((item) => ({
+  //     id: item.id,
+  //     name: item.name,
+  //   }));
+  //   setInstitutes(updatedData);
+  // };
+
+  // useEffect(() => {
+  //   // fetchInstitutes();
+  // }, []);
+  const columns = [
+    {
+      title: 'شماره',
+      dataIndex: 'id',
+      // sorter: (a, b) => a.student_id - b.student_id,
+      width: '5%',
+    },
+
+    {
+      title: 'نوم/نام',
+      dataIndex: 'name',
+      // sorter: (a, b) => a.name - b.name,
+      // render: (name) => `${name.first} ${name.last}`,
+      width: '15%',
+    },
+    {
+      title: 'انستیتوت',
+      dataIndex: 'institute',
+      width: '10%',
+    },
+    {
+      title: 'دپارتمنت',
+      dataIndex: 'department',
+      // filters: [
+      //   { text: 'Male', value: 'male' },
+      //   { text: 'Female', value: 'female' },
+      // ],
+      // onFilter: (value, record) => record.gender.indexOf(value) === 0,
+      width: '10%',
+    },
+
+    {
+      title: 'نمری',
+      dataIndex: 'score',
+      width: '10%',
+    },
+    {
+      title: 'سال',
+      dataIndex: 'year',
+      width: '10%',
+    },
+  ];
+  const handleTableChange = (pagination, filter, sorter) => {
+    setIsFilter(false);
+    setTableParams({ pagination, filter, ...sorter });
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setItems([]);
+    }
+  };
+  const onFilter = async (values) => {
+    setIsFilter(true);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
+    });
+    let params = {
+      page: 1,
+    };
+    params.institute = values.filterInstitute?.value;
+    params.department = values.department?.value;
+    params.educational_year = values.educationalYear?.value;
+    params.province = values.filterProvince?.value;
+    params.id = values.filterId || null;
+    fetchData(params);
   };
 
   useEffect(() => {
-    // fetchInstitutes();
-  }, []);
+    fetchData();
+  }, [!isFilter ? JSON.stringify(tableParams) : null]);
 
+  const handleResetFields = (resetForm) => {
+    resetForm({
+      values: {
+        filterId: '',
+        filterInstitute: [],
+        filterProvince: [],
+        educationalYear: [],
+        department: [],
+      },
+    });
+    setIsFilter(false);
+    fetchData();
+  };
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||
@@ -258,7 +400,7 @@ const ThumbListPages = ({ match }) => {
   ) : (
     <>
       <div className="disable-text-selection">
-        <ListPageHeading
+        {/* <ListPageHeading
           heading="د کانکور د شاگردانو لست/لست شاگردان کانکوریان"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
@@ -326,7 +468,7 @@ const ThumbListPages = ({ match }) => {
             }
           }}
         />
-
+        {console.log('ITEMMMMMMMMMMMMMMMM', items)}
         <table className="table">
           <thead
             className="pl-2 d-flex flex-grow-1  table-dark"
@@ -429,7 +571,120 @@ const ThumbListPages = ({ match }) => {
             onContextMenu={onContextMenu}
             onChangePage={setCurrentPage}
           />
-        </table>
+        </table> */}
+        <h1>د کانکور د شاگردانو لست/لست شاگردان کانکوریان</h1>
+        <br />
+        <div
+          style={{
+            padding: 10,
+            display: 'flex',
+          }}
+        >
+          <Formik
+            initialValues={{
+              filterId: '',
+              filterInstitute: [],
+              filterProvince: [],
+              educationalYear: [],
+              department: [],
+            }}
+            onSubmit={onFilter}
+          >
+            {({
+              values,
+              setFieldValue,
+              handleSubmit,
+              setFieldTouched,
+              resetForm,
+            }) => (
+              <>
+                <FormGroup className="form-group has-float-label error-l-150">
+                  <Label>ایدی</Label>
+                  <Field
+                    name="filterId"
+                    placeholder="ایدی"
+                    style={{ height: 37 }}
+                  />
+                </FormGroup>
+
+                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                  <Label>ولایت</Label>
+                  <FormikReactSelect
+                    placeholder="ولایت"
+                    name="filterProvince"
+                    options={provinces}
+                    value={values.filterProvince}
+                    onChange={setFieldValue}
+                    onBlur={setFieldTouched}
+                  />
+                </FormGroup>
+                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                  <Label>انستیتوت</Label>
+                  <FormikReactSelect
+                    placeholder="انستیتوت"
+                    name="filterInstitute"
+                    options={institutes}
+                    value={values.filterInstitute}
+                    onChange={setFieldValue}
+                    onBlur={setFieldTouched}
+                  />
+                </FormGroup>
+                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                  <Label>دپارتمنت</Label>
+                  <FormikReactSelect
+                    name="department"
+                    id="department"
+                    options={departments}
+                    onChange={setFieldValue}
+                    onBlur={setFieldTouched}
+                  />
+                </FormGroup>
+                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                  <Label>سال تحصیل</Label>
+                  <FormikReactSelect
+                    name="educationalYear"
+                    id="educationalYear"
+                    options={educationalYearsOptions}
+                    onChange={setFieldValue}
+                    onBlur={setFieldTouched}
+                  />
+                </FormGroup>
+                <FormGroup className="form-group" style={{ display: 'flex' }}>
+                  <button className="btn btn-secondary" onClick={handleSubmit}>
+                    Filter
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                    onClick={() => handleResetFields(resetForm)}
+                  >
+                    Reset
+                  </button>
+                </FormGroup>
+              </>
+            )}
+          </Formik>
+        </div>
+        <TB
+          style={{ fontSize: 20 }}
+          size="large"
+          columns={columns}
+          pagination={tableParams.pagination}
+          loading={isLoading}
+          onChange={handleTableChange}
+          dataSource={items?.map((item, index) => ({
+            key: index,
+            id: item.id,
+            name: <NavLink to={`student/${item.id}`}>{item.name}</NavLink>,
+            institute: institutes.find((pro) => pro.value == item.institute)
+              ?.label,
+            department: departments.find((pro) => pro.value == item.department)
+              ?.label,
+            score: item.marks,
+            year: item.educational_year,
+          }))}
+        />
       </div>
     </>
   );

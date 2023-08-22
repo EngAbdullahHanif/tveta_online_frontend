@@ -6,13 +6,16 @@ import {
   provincesOptionsForList,
   genderOptionsForList,
 } from '../../../global-data/options';
-
+import { Select, Spin, Table as TB } from 'antd';
 import ListPageListing from './AttendanceListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import { useAsyncDebounce } from 'react-table';
 import callApi from 'helpers/callApi';
 import DisplayMessage from 'components/messages/DisplayMessage';
 import config from '../../../../../config';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import { AuthContext } from 'context/AuthContext';
+import { useContext } from 'react';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -45,6 +48,8 @@ const genderOptions = [
 ];
 
 const ThumbListPages = ({ match }) => {
+  const { provinces, institutes, departments } = useContext(AuthContext);
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,10 +67,10 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState();
+  // const [institutes, setInstitutes] = useState();
   const [institute, setInstitute] = useState('');
   const [attendance, setAttendance] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
@@ -77,7 +82,13 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
-
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 5,
+    },
+  });
+  const [isFilter, setIsFilter] = useState(false);
   const fetchAttendance = async () => {
     const response = await callApi(`students/stdatten/`, '', null);
     console.log('ATTENDANCE: ', response.data);
@@ -90,6 +101,133 @@ const ThumbListPages = ({ match }) => {
     }
   };
 
+  async function fetchData(params = {}) {
+    setIsLoading(true);
+    let endpoint = 'students/stdatten/';
+    if (institute) {
+      params.institute = institute.value;
+      endpoint = 'students/student_institutes/';
+    }
+    console.log('institute is: ', institute, 'isFilter', isFilter);
+    const params1 = {
+      ...params,
+      page: !isFilter ? tableParams.pagination.current : params.page,
+      page_size: tableParams.pagination.pageSize || null,
+    };
+    try {
+      const response = await callApi(endpoint, null, null, params1);
+      setIsLoading(false);
+      if (response.data && response.status === 200) {
+        if (institute) {
+          setItems(
+            response?.data?.map((item) => ({
+              ...item.student,
+              institute: item.institute,
+            }))
+          );
+        } else {
+          setItems(response.data);
+        }
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: response?.data?.count,
+          },
+        });
+      } else {
+        console.log('students error');
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
+  const columns = [
+    {
+      title: 'شماره',
+      dataIndex: 'id',
+      // sorter: (a, b) => a.student_id - b.student_id,
+      width: '5%',
+    },
+
+    {
+      title: 'نوم/نام',
+      dataIndex: 'name',
+      // sorter: (a, b) => a.name - b.name,
+      // render: (name) => `${name.first} ${name.last}`,
+      width: '15%',
+    },
+    {
+      title: 'انستیتوت',
+      dataIndex: 'institute',
+      width: '10%',
+    },
+    {
+      title: 'دپارتمنت',
+      dataIndex: 'department',
+      // filters: [
+      //   { text: 'Male', value: 'male' },
+      //   { text: 'Female', value: 'female' },
+      // ],
+      // onFilter: (value, record) => record.gender.indexOf(value) === 0,
+      width: '10%',
+    },
+
+    {
+      title: 'نمری',
+      dataIndex: 'score',
+      width: '10%',
+    },
+    {
+      title: 'سال',
+      dataIndex: 'year',
+      width: '10%',
+    },
+  ];
+  const handleTableChange = (pagination, filter, sorter) => {
+    setIsFilter(false);
+    setTableParams({ pagination, filter, ...sorter });
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setItems([]);
+    }
+  };
+  const onFilter = async (values) => {
+    setIsFilter(true);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
+    });
+    let params = {
+      page: 1,
+    };
+    params.institute = values.filterInstitute?.value;
+    params.department = values.department?.value;
+    params.educational_year = values.educationalYear?.value;
+    params.province = values.filterProvince?.value;
+    params.id = values.filterId || null;
+    fetchData(params);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [!isFilter ? JSON.stringify(tableParams) : null]);
+
+  const handleResetFields = (resetForm) => {
+    resetForm({
+      values: {
+        filterId: '',
+        filterInstitute: [],
+        filterProvince: [],
+        educationalYear: [],
+        department: [],
+      },
+    });
+    setIsFilter(false);
+    fetchData();
+  };
   useEffect(() => {
     fetchAttendance();
     console.log('ATT: ', attendance);
@@ -404,6 +542,29 @@ const ThumbListPages = ({ match }) => {
         ) : (
           <DisplayMessage type="error" message="معلومات شتون نلری" />
         )}
+
+        <TB
+          style={{ fontSize: 20 }}
+          size="large"
+          columns={columns}
+          pagination={tableParams.pagination}
+          loading={isLoading}
+          onChange={handleTableChange}
+          dataSource={items?.map((item, index) => ({
+            key: index,
+            id: item.id,
+            name: (
+              <NavLink to={`student/${item.id}`}>{item.student.name}</NavLink>
+            ),
+            institute: institutes?.find((pro) => pro.value == item.institute.id)
+              ?.label,
+            department: departments?.find(
+              (pro) => pro.value == item.department.id
+            )?.label,
+            score: item.marks,
+            year: item.educational_year,
+          }))}
+        />
       </div>
     </>
   );

@@ -980,7 +980,7 @@ const StudentRegistration = ({ intl }, values) => {
             </Step>
 
             <Step id="step2">
-              <h3>سکونت تعلیمات قبلی</h3>
+              <h3>سکونت</h3>
               <hr />
               <div className="wizard-basic-step">
                 <Formik
@@ -1162,6 +1162,8 @@ const StudentRegistration = ({ intl }, values) => {
                         </Row>
 
                         <h3>تعلیمات قبلی</h3>
+                        <hr />
+
                         <Row style={{ marginInline: '2%' }}>
                           <Colxx xxs="6" className="pt-3">
                             <div className="square p-3 ">

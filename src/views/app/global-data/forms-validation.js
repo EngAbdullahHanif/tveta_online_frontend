@@ -57,13 +57,27 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
 
   // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
   DoB: Yup.number()
-    .min(1350, 'د تولد کال سم ندی')
-    .max(1420, 'د تولد کال سم ندی')
+    .min(1350, 'سال تولد درست نیست/د تولد کال سم ندی')
+    .max(1420, 'سال تولد درست نیست/د تولد کال سم ندی')
     // .shape({
     //   value: Yup.string().required(),
     // })
     .nullable()
     .required(<IntlMessages id="forms.StdDoBErr" />),
+  monthOfBirth: Yup.number()
+    .min(1, 'ماه تولد درست نیست / د تولد میاشت سم ندی')
+    .max(12, 'ماه تولد درست نیست / د تولد میاشت سم ندی')
+    // .shape({
+    //   value: Yup.string().required(),
+    // })
+    .nullable(),
+  dayOfBirth: Yup.number()
+    .min(1, ' روز تولد درست نیست / د تولد ورځ سم ندی')
+    .max(31, ' روز تولد درست نیست / د تولد ورځ سم ندی')
+    // .shape({
+    //   value: Yup.string().required(),
+    // })
+    .nullable(),
 
   tazkiraType: Yup.object()
     .shape({
@@ -87,6 +101,35 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .nullable(),
 
   phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
+  idCardJoldNo: Yup.string().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.string().required(
+      'شماره جلد الزامی است وقتی نوع تذکره کاغذی است'
+    ),
+    otherwise: Yup.string(),
+  }),
+
+  idCardPageNo: Yup.number().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.number().required('صفحه الزامی است وقتی نوع تذکره کاغذی است'),
+    otherwise: Yup.number(),
+  }),
+
+  sabtNo: Yup.number().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.number().required(
+      'شماره ثبت الزامی است وقتی نوع تذکره کاغذی است'
+    ),
+    otherwise: Yup.number(),
+  }),
+
+  sokokNo: Yup.string().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.string().required(
+      'شماره صکوک الزامی است وقتی نوع تذکره کاغذی است'
+    ),
+    otherwise: Yup.string(),
+  }),
 });
 
 //  Student Registration form validation step two
@@ -191,20 +234,20 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.mediumOfInstructionErr" />),
 
-  batch: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.batchErr" />),
+  // batch: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.batchErr" />),
   studentId: Yup.number().required(<IntlMessages id="student.studentIdErr" />),
 
-  field: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.fieldErr" />),
+  // field: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.fieldErr" />),
 
   sector: Yup.object()
     .shape({

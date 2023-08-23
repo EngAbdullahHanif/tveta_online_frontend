@@ -53,7 +53,13 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
-  tazkiraNo: Yup.string().required(<IntlMessages id="teacher.TazkiraNoErr" />),
+  tazkiraNo: Yup.string().when('tazkiraType.value', {
+    is: 'electronic',
+    then: Yup.string().required(
+      'نمبر تذکره الکترونی الزامی است وقتی نوع تذکره الکترونی باشد'
+    ),
+    otherwise: Yup.string(),
+  }),
 
   // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
   DoB: Yup.number()
@@ -94,11 +100,6 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .required(<IntlMessages id="forms.genderErr" />),
 
   email: Yup.string().email(<IntlMessages id="teacher.EmailRequiredErr" />),
-  disability: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable(),
 
   phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
   idCardJoldNo: Yup.string().when('tazkiraType.value', {
@@ -187,6 +188,14 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
+
+  disability: Yup.object().when('institute.rest.type', {
+    is: 'special_education',
+    then: Yup.string().required(
+      'وقتی که انستتیوت تعلیمات خاص باشد، اضافه کردن معلولیت/معیوبیت الزامی است.'
+    ),
+    otherwise: Yup.object().nullable(),
+  }),
 
   studyTime: Yup.object()
     .shape({

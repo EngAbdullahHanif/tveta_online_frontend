@@ -80,11 +80,11 @@ const columns = [
     dataIndex: 'phone_number',
     width: '20%',
   },
-  // {
-  //   title: 'ده جزت نوعیت',
-  //   dataIndex: 'std_status',
-  //   width: '20%',
-  // },
+  {
+    title: 'شمولیت انستیتوت',
+    dataIndex: 'institute_enrollment',
+    width: '20%',
+  },
   {
     title: 'حالت',
     dataIndex: 'student_type',
@@ -139,6 +139,8 @@ const ThumbListPages = ({ match }) => {
   };
 
   async function fetchData(params = {}) {
+    // params['institute_enrollment__status'] = 'inprogress';
+
     console.log('PARAMSSSSSSSSSS: ', params);
     setIsLoading(true);
     let endpoint = 'students/';
@@ -277,7 +279,6 @@ const ThumbListPages = ({ match }) => {
               values,
               setFieldValue,
               handleSubmit,
-              handleReset,
               setFieldTouched,
               resetForm,
             }) => (
@@ -341,7 +342,19 @@ const ThumbListPages = ({ match }) => {
               (pro) => pro.value == item.current_province
             )?.label,
             phone_number: item.phone_number,
-
+            institute_enrollment: item.institute_enrollment?.map((inst) => {
+              return (
+                <div style={{ display: 'flex' }}>
+                  <p style={{ fontSize: 18, color: 'green' }}>
+                    {institutes.find(
+                      (pro) =>
+                        pro.value == inst.institute &&
+                        inst.status == 'inprogress'
+                    )?.label || null}
+                  </p>
+                </div>
+              );
+            }),
             student_type: studentStatusOptions.map((status) => {
               if (status.value == item.status) {
                 return (

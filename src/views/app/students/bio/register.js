@@ -70,6 +70,7 @@ import currentUser from 'helpers/currentUser';
 import data from 'constants/menu';
 import { AuthContext } from 'context/AuthContext';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { message } from 'antd';
 
 const StudentRegistration = ({ intl }, values) => {
   const {
@@ -81,12 +82,7 @@ const StudentRegistration = ({ intl }, values) => {
     sectors,
     departments,
   } = useContext(AuthContext);
-  const [isNext, setIsNext] = useState(false);
-  // const [institutes, setInstitutes] = useState([]);
-  // const [fieldList, setFieldList] = useState([]);
-  // const [departments, setDepartments] = useState([]);
-  // const [classs, setClasss] = useState([]);
-  // const [sectors, setSectors] = useState([]);
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [fields, setFields] = useState({
     name1: '',
@@ -135,42 +131,18 @@ const StudentRegistration = ({ intl }, values) => {
     sector: '',
     file: '',
   });
-  const [stepOneData, setStepOneData] = useState({});
-
-  // const [provinceOptions, setProvinceOptions] = useState([]);
-  // const [districts, setDistricts] = useState([]);
-  const [currentProvince, setCurrentProvince] = useState('');
-  const [mainProvince, setMainProvince] = useState('');
 
   const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
   const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
-  const [initialName1, setInitialname1] = useState('');
-  const [initialLastName, setInitialLastName] = useState('');
-  const [initialLastNameEng, setInitialLastNameEng] = useState('');
-  const [initialFatherName, setInitialFatherName] = useState('');
-  const [initialFatherEngName, setInitialFatherEngName] = useState('');
-  const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
-  const [initialFatherDuty, setInitialFatherDuty] = useState('');
-  const [initialEngLastName, setInitialEnglishName] = useState('');
-  const [initialFatherDutyLocation, setInitialFatherDutyLocation] =
-    useState('');
-  const [initialGender, setInitialGender] = useState([]);
-  const [initialTazkiraType, setInitialTazkiraType] = useState([]);
-  const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState([]);
-  const [initialTazkiraNo, setInitialTazkiraNo] = useState([]);
 
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const [initialPhoneNo, setInitialPhoneNo] = useState('');
-
   // get data of each step from localstorage
   const step0Data = JSON.parse(localStorage.getItem('step0'));
   const step1Data = JSON.parse(localStorage.getItem('step1'));
   const step2Data = JSON.parse(localStorage.getItem('step2'));
-
-  const history = useHistory();
 
   console.log('step0Data: ', step0Data);
   // used arrays as intial values because other things will throw error
@@ -273,107 +245,6 @@ const StudentRegistration = ({ intl }, values) => {
     setSelectedFile(file);
   };
 
-  // const fetchInstitutes = async () => {
-  //   const response = await callApi('institute/', '', null);
-  //   if (response) {
-  //     if (response && response.status === 200) {
-  //       console.log('the response is', response);
-  //       const institutes = await response.data.map((item) => ({
-  //         value: item.id,
-  //         label: item.name,
-  //       }));
-  //       setInstitutes(institutes);
-  //     } else {
-  //       console.log('Could not fetch list of institutes from server');
-  //     }
-  //   }
-  // };
-
-  // const fetchFields = async () => {
-  //   const response = await callApi('institute/field/', 'GET', null);
-  //   if (response) {
-  //     if (response.data && response.status === 200) {
-  //       const fields = await response.data.map((item) => ({
-  //         value: item.id,
-  //         label: item.name,
-  //       }));
-  //       setFieldList(fields);
-  //     } else {
-  //       console.log('Could not fetch field of studies from server');
-  //     }
-  //   }
-  // };
-
-  // const fetchDepartments = async () => {
-  //   const response = await callApi('institute/department/', 'GET', null);
-  //   if (response) {
-  //     if (response.data && response.status === 200) {
-  //       const departments = await response.data.map((item) => ({
-  //         value: item.id,
-  //         label: item.name,
-  //       }));
-  //       setDepartments(departments);
-  //     } else {
-  //       console.log('Could not fetch departments from server');
-  //     }
-  //   }
-  // };
-
-  // const fetchClasses = async () => {
-  //   const response = await callApi('institute/classs/', 'GET', null);
-  //   console.log('class repspossdfsde', response);
-  //   if (response) {
-  //     if (response.data && response.status === 200) {
-  //       const listOfClasses = await response.data.map((item) => ({
-  //         value: item.id,
-  //         label: item.name + ' - ' + item.semester + ' - ' + item.section,
-  //         grade: item.grade,
-  //         semester: item.semester,
-  //       }));
-
-  //       setClasss(
-  //         listOfClasses.filter(
-  //           (classs) =>
-  //             (classs.grade === 10 && classs.semester === 1) ||
-  //             (classs.grade === 13 && classs.semester === 1)
-  //         )
-  //       );
-  //     } else {
-  //       console.log('Could not fetch list of classes from server');
-  //     }
-  //   }
-  // };
-
-  // const fetchSectors = async () => {
-  //   const response = await callApi('institute/sectors/', 'GET', null);
-  //   if (response) {
-  //     if (response.data && response.status === 200) {
-  //       const sectors = await response.data.map((item) => ({
-  //         value: item.id,
-  //         label: item.sector,
-  //       }));
-  //       setSectors(sectors);
-  //     } else {
-  //       console.log('Could not fetch list of sectors from server');
-  //     }
-  //   }
-  // };
-
-  // const fetchProvincesList = async () => {
-  //   const provinces = await fetchProvinces();
-  //   setProvinceOptions(provinces);
-  // };
-
-  // fetch the following when the component is first loaded
-  // useEffect(async () => {
-  //   fetchInstitutes();
-  //   fetchFields();
-  //   fetchDepartments();
-  //   fetchClasses();
-  //   fetchSectors();
-  //   fetchProvincesList();
-  // }, []);
-
   const handleProvinceChange = async (name, value, setFieldValue) => {
     console.log('name is ', name);
     console.log('value is ', value);
@@ -426,9 +297,6 @@ const StudentRegistration = ({ intl }, values) => {
       createNotification('success', 'filled');
       console.log('success message', response.data);
       setIsSuccess(true);
-      // localStorage.removeItem('step0');
-      // localStorage.removeItem('step1');
-      // localStorage.removeItem('step2');
 
       // history.push(`app/students/student/${response.data.id}`);
     } catch (error) {
@@ -437,10 +305,20 @@ const StudentRegistration = ({ intl }, values) => {
       console.log('class error');
       console.log('error from student registration: ', error.response);
     }
-    // const response = await callApi('api/student_create', 'POST', data);
-    // console.log('response of call api', response);
-
     setLoading(false);
+  };
+
+  const resetformFields = () => {
+    if (
+      localStorage.getItem('step0') ||
+      localStorage.getItem('step1') ||
+      localStorage.getItem('step2')
+    ) {
+      localStorage.removeItem('step0');
+      localStorage.removeItem('step1');
+      localStorage.removeItem('step2');
+      window.location.reload();
+    } else message.warning('فورم پاک هست');
   };
 
   const handleInitialValues = (steps, step) => {
@@ -599,7 +477,17 @@ const StudentRegistration = ({ intl }, values) => {
           {<IntlMessages id="forms.studentRegisterTitle" />}
         </h2>
       </CardHeader>
+
       <CardBody className="wizard wizard-default">
+        <div
+          style={{
+            width: '90%',
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Button onClick={() => resetformFields()}>پاک کردن فورم</Button>
+        </div>
         <Wizard>
           <Steps>
             <Step id="step1">
@@ -1399,6 +1287,7 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
                             {/*  Class name  */}
+                            {console.log('CLASSES: ', classs)}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="marks.ClassLabel" />
@@ -1540,6 +1429,7 @@ const StudentRegistration = ({ intl }, values) => {
                           </Colxx>
                           <Colxx xxs="6">
                             {/* Departement  */}
+                            {console.log('DEPARTMENTS: ', departments)}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.studyDepartment" />
@@ -1683,6 +1573,7 @@ const StudentRegistration = ({ intl }, values) => {
                 </Formik>
               </div>
             </Step>
+
             <Step id="step4" hideTopNav>
               <div className="wizard-basic-step text-center pt-3">
                 {loading && (

@@ -1,137 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import './provincail-dashboard.css';
-import Calendar from 'containers/dashboards/Calendar';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { NavLink } from 'react-router-dom';
-import { adminRoot } from 'constants/defaultValues';
-import axios from 'axios';
 
-import * as Yup from 'yup';
 import {
   Row,
   Card,
   CardBody,
   Table,
-  FormGroup,
-  Label,
-  Button,
   CardTitle,
   CardSubtitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
-import {
-  DoughnutChart,
-  LineChart,
-  PolarAreaChart,
-  AreaChart,
-  ScatterChart,
-  BarChart,
-  RadarChart,
-  PieChart,
-} from 'components/charts';
+
 import CustomePieChart from 'components/charts/custom-pie-chart';
 import CustomeBarChart from 'components/charts/custom-bar-chart';
-import {
-  lineChartData,
-  polarAreaChartData,
-  polarAreaChartData1,
-  areaChartData,
-  scatterChartData,
-  barChartData,
-  radarChartData,
-  pieChartData,
-  doughnutChartData,
-  doughnutChartData1,
-} from 'data/charts';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import { comments } from 'data/comments';
-import Rating from 'components/common/Rating';
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-
-import config from '../../../config';
-
-const servicePath = config.API_URL;
-const provinceTeachersCountApiUrl = `${servicePath}/teachers/province_teacher_count/`;
-const provinceDormsCountApiUrl = `${servicePath}/api/province_dorm_statistics/`;
-const provinceStuentsCountApiUrl = `${servicePath}/api/province_student_statistics/`;
-const proviceDormslistApiUrl = `${servicePath}/api/each_dorm_students/`;
+import callApi from 'helpers/callApi';
 
 const Provincail = (values, { className = '', displayRate = false }) => {
-  const [isNext, setIsNext] = useState(true);
-  const [provinceTeachersCount, setProvinceTeachersCount] = useState([]);
-  const [provinceDormsCount, setProvinceDormsCount] = useState([]);
-  const [provinceStuentsCount, setProvinceStuentsCount] = useState([]);
-  const [provinceDormsList, setProvinceDormsList] = useState([]);
+  const [provincialReport, setProvincialReport] = useState();
 
-  function fetchProvinceTeachersCount() {
-    axios
-      .get(provinceTeachersCountApiUrl)
-      .then((res) => {
-        setProvinceTeachersCount(res.data);
-        console.log(res.data);
+  const fetchProvincalReport = async () => {
+    await callApi('reports/students/provincial/')
+      .then((report) => {
+        console.log('Provincial Report Dashboard: ', report.data);
+        setProvincialReport(report.data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.log('Error in fetching Provincial Report: ', error);
       });
-  }
-
-  function fetchProvinceDormsCount() {
-    axios
-      .get(provinceDormsCountApiUrl)
-      .then((res) => {
-        setProvinceDormsCount(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function fetchProvinceInstituteCount() {
-    axios
-      .get(provinceStuentsCountApiUrl)
-      .then((res) => {
-        setProvinceStuentsCount(res.data);
-        console.log('Data01', res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function fetchProvinceDormList() {
-    axios
-      .get(proviceDormslistApiUrl)
-      .then((res) => {
-        setProvinceDormsList(res.data);
-        console.log('res.data', res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  useEffect(() => {
-    fetchProvinceTeachersCount();
-    fetchProvinceDormsCount();
-    fetchProvinceInstituteCount();
-    fetchProvinceDormList();
-  }, []);
-
-  const handleClick = (event) => {
-    setIsNext(event);
   };
+  useEffect(() => {
+    fetchProvincalReport();
+  }, []);
 
   return (
     <>
@@ -172,8 +75,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="dash.totalStudents" />
                     </td>
-                    {/* <td> {provinceTeachersCount['total_teachers']}</td> */}
-                    <td>34554</td>
+                    <td>{provincialReport?.total_teachers}</td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
@@ -181,8 +83,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="institute.totalStudentsMale" />
                     </td>
-                    {/* <td> {provinceTeachersCount['male_teachers']}</td> */}
-                    <td>7686</td>
+                    <td>{provincialReport?.male_teachers}</td>
                   </tr>
                   <tr>
                     <th scope="row">3</th>
@@ -190,105 +91,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       {' '}
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </td>
-                    {/* <td>{provinceTeachersCount['female_teachers']}</td> */}
-                    <td>567</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.14YearsGreduatedTotal" />
-                    </td>
-                    {/* <td> {provinceTeachersCount['14_teachers']}</td> */}
-                    <td>6756</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>
-                      <IntlMessages id="dash.14YearsGreduatedMale" />
-                    </td>
-                    <td>5435</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.14YearsGreduatedFemale" />
-                    </td>
-                    <td>675</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">6</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.bachelorTotal" />
-                    </td>
-                    <td>234</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">7</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.bachelorMale" />
-                    </td>
-                    <td>56765</td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">8</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.bachelorFemale" />
-                    </td>
-                    <td>657</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.masterTotal" />
-                    </td>
-                    <td> {provinceTeachersCount['master_teachers']}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.masterMale" />
-                    </td>
-                    <td>345</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.masterFemale" />
-                    </td>
-                    <td>78</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.phdTotal" />
-                    </td>
-                    <td>456</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.phdMale" />
-                    </td>
-                    <td>345</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>
-                      {' '}
-                      <IntlMessages id="dash.phdFemale" />
-                    </td>
-                    <td>2345</td>
+                    <td>{provincialReport?.female_teachers}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -308,27 +111,44 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                   <CardSubtitle>
                     <IntlMessages id="dash.teacherGender" />
                   </CardSubtitle>
-
-                  <CustomePieChart
-                    data={[90, 50]}
-                    labels={['ذکور', 'اناث']}
-                    backgroundColor={['#FF6384', '#36A2EB']}
-                  />
+                  {provincialReport && (
+                    <CustomePieChart
+                      data={[
+                        provincialReport?.male_teachers,
+                        provincialReport?.female_teachers,
+                      ]}
+                      labels={['ذکور', 'اناث']}
+                      backgroundColor={['#FF6384', '#36A2EB']}
+                    />
+                  )}
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle>
-                    <IntlMessages id="forms.EducationLevelLabel" />
+                    {/* <IntlMessages id="forms.EducationLevelLabel" /> */}
+                    تعداد مراکز/ د مرکزونو شمېر
                   </CardSubtitle>
-                  <CustomeBarChart
-                    data={[30, 20, 40, 50]}
-                    labels={['چهارده پاس', 'لیسانس', 'ماستر', 'دوکتور']}
-                    backgroundColor={[
-                      '#FF6384',
-                      '#36A2EB',
-                      '#FFCE56',
-                      '#FF6333',
-                    ]}
-                  />
+                  {provincialReport && (
+                    <CustomeBarChart
+                      data={[
+                        provincialReport?.count_of_institutes,
+                        provincialReport?.count_of_schools,
+                        provincialReport?.count_of_sectors,
+                        provincialReport?.total_dorms,
+                      ]}
+                      labels={[
+                        'انستیتوت ها',
+                        'مکاتب ها',
+                        'سیکتور ها',
+                        'لیلیه ها',
+                      ]}
+                      backgroundColor={[
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                        '#FF6333',
+                      ]}
+                    />
+                  )}
                 </Colxx>
               </Row>
             </CardBody>
@@ -339,7 +159,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
           <br />
           <br />
           {/* Teacher Evaluation Statistics */}
-          <Colxx xxs="13">
+          {/* <Colxx xxs="13">
             <Card className="">
               <CardBody>
                 <CardTitle>
@@ -400,7 +220,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                 </Table>
               </CardBody>
             </Card>
-          </Colxx>
+          </Colxx> */}
         </Colxx>
 
         {/* Students */}
@@ -419,7 +239,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.totalStudents" />
                     </b>
                   </p>
-                  <p>4546</p>
+                  <p>{provincialReport?.total_students}</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -429,7 +249,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>345</p>
+                  <p>{provincialReport?.male_students}</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -439,11 +259,11 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>7687</p>
+                  <p>{provincialReport?.female_students}</p>
                   <br />
                 </Colxx>
               </Row>
-
+              {/* 
               <CardTitle>
                 <IntlMessages id="dash.specialEducationStudents" />
               </CardTitle>
@@ -516,7 +336,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                   <p>2345</p>
                   <br />
                 </Colxx>
-              </Row>
+              </Row> */}
               <CardTitle>
                 <IntlMessages id="dash.totalStudentsDorm" />
               </CardTitle>
@@ -529,7 +349,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsMale" />
                     </b>
                   </p>
-                  <p>98796</p>
+                  <p>{provincialReport?.male_dorm_student}</p>
                 </Colxx>
                 <Colxx>
                   <p>
@@ -538,7 +358,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="institute.totalStudentsFemale" />
                     </b>
                   </p>
-                  <p>5467</p>
+                  <p>{provincialReport?.female_dorm_student}</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -548,7 +368,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.DormStudentType_1" />
                     </b>
                   </p>
-                  <p>2345</p>
+                  <p>{provincialReport?.badal_eyasha_student}</p>
                   <br />
                 </Colxx>
                 <Colxx>
@@ -558,16 +378,11 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                       <IntlMessages id="dash.DormStudentType_2" />
                     </b>
                   </p>
-                  <p>56757</p>
+                  <p>{provincialReport?.badeel_eyasha_student}</p>
                   <br />
                 </Colxx>
               </Row>
             </CardBody>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <br />
           </Card>
         </Colxx>
@@ -584,24 +399,33 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                   <CardSubtitle>
                     <IntlMessages id="charts.ّInstituteStudentGenderChart" />
                   </CardSubtitle>
-
-                  <CustomePieChart
-                    data={[876, 552]}
-                    labels={['ذکور', 'اناث']}
-                    backgroundColor={['#FF6384', '#36A2EB']}
-                  />
+                  {provincialReport && (
+                    <CustomePieChart
+                      data={[
+                        provincialReport?.male_students,
+                        provincialReport?.female_students,
+                      ]}
+                      labels={['ذکور', 'اناث']}
+                      backgroundColor={['#FF6384', '#36A2EB']}
+                    />
+                  )}
                 </Colxx>
                 <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle>
                     <IntlMessages id="dash.totalStudentsDorm" />
                   </CardSubtitle>
-                  <CustomePieChart
-                    data={[467, 789]}
-                    labels={['ذکور', 'اناث']}
-                    backgroundColor={['#FFCE56', '#FF6333']}
-                  />
+                  {provincialReport && (
+                    <CustomePieChart
+                      data={[
+                        provincialReport?.male_dorm_student,
+                        provincialReport?.female_dorm_student,
+                      ]}
+                      labels={['ذکور', 'اناث']}
+                      backgroundColor={['#FFCE56', '#FF6333']}
+                    />
+                  )}
                 </Colxx>
-                <Colxx xxs="12" lg="6" className="mb-5">
+                {/* <Colxx xxs="12" lg="6" className="mb-5">
                   <CardSubtitle>
                     <IntlMessages id="charts.schoolStudentGenderChart" />
                   </CardSubtitle>
@@ -620,14 +444,14 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                     labels={['ذکور', 'اناث']}
                     backgroundColor={['#f0e80c', '#FF6333']}
                   />
-                </Colxx>
+                </Colxx> */}
               </Row>
             </CardBody>
           </Card>
         </Colxx>
 
         {/* Institute List */}
-        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+        {/* <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '600px' }}>
             <CardBody>
               <CardTitle>
@@ -678,10 +502,10 @@ const Provincail = (values, { className = '', displayRate = false }) => {
               </div>
             </CardBody>
           </Card>
-        </Colxx>
+        </Colxx> */}
 
         {/* Schools list */}
-        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+        {/* <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '600px' }}>
             <CardBody>
               <CardTitle>
@@ -716,10 +540,10 @@ const Provincail = (values, { className = '', displayRate = false }) => {
               </div>
             </CardBody>
           </Card>
-        </Colxx>
+        </Colxx> */}
 
         {/* Dorms list */}
-        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+        {/* <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '600px' }}>
             <CardBody>
               <CardTitle>
@@ -758,10 +582,10 @@ const Provincail = (values, { className = '', displayRate = false }) => {
               </div>
             </CardBody>
           </Card>
-        </Colxx>
+        </Colxx> */}
 
         {/* Fields List */}
-        <Colxx xxs="12" sm="4" md="4" className="mb-4">
+        {/* <Colxx xxs="12" sm="4" md="4" className="mb-4">
           <Card className={className} style={{ minHeight: '600px' }}>
             <CardBody>
               <CardTitle>
@@ -796,10 +620,10 @@ const Provincail = (values, { className = '', displayRate = false }) => {
               </div>
             </CardBody>
           </Card>
-        </Colxx>
+        </Colxx> */}
 
         {/* Total Statistics */}
-        <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
+        {/* <Colxx xxs="12" sm="4" md="4" className="mb-4  ">
           <Card style={{ minHeight: '180px', marginBottom: '7%' }}>
             <CardBody>
               <CardTitle>
@@ -816,7 +640,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                     </b>
                   </p>
                   <p style={{ marginRight: '10%' }}>
-                    {/* {provinceTeachersCount['institute_count']} */}
+                    
                     5674
                   </p>
                 </div>
@@ -828,7 +652,6 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                     </b>
                   </p>
                   <p style={{ marginRight: '10%' }}>
-                    {/* {provinceTeachersCount['school_count']} */}
                     3245
                   </p>
                 </div>
@@ -840,7 +663,6 @@ const Provincail = (values, { className = '', displayRate = false }) => {
                     </b>
                   </p>
                   <p style={{ marginRight: '10%' }}>
-                    {/* {provinceDormsCount['total_dorms']} */}
                     345
                   </p>
                 </div>
@@ -856,7 +678,7 @@ const Provincail = (values, { className = '', displayRate = false }) => {
               </Colxx>
             </CardBody>
           </Card>
-        </Colxx>
+        </Colxx> */}
       </Row>
     </>
   );

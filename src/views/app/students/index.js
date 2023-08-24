@@ -154,6 +154,7 @@ const Students = ({ match, props }) => {
     <Suspense fallback={<div className="loading" />}>
       <Switch>
         {/* redirect from / to students */}
+        {console.log('match.user', match.url)}
         <Redirect exact from={`${match.url}/`} to={`${match.url}/students`} />
 
         <ProtectedRoute
@@ -248,6 +249,7 @@ const Students = ({ match, props }) => {
           component={StudentList}
           roles={[
             userRole.admin,
+            userRole.provinceSupervisor,
             userRole.institute,
             userRole.superUser,
             userRole.provincial,

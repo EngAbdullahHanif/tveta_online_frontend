@@ -310,6 +310,9 @@ const data = [
     to: `${adminRoot}/teacher`,
     roles: [
       userRole.admin,
+      userRole.instituteManager,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
       // userRole.instituteDataentry,
       // userRole.provinceDataentry,
     ],

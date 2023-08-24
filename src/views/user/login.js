@@ -72,7 +72,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         if (response.status === 200) {
           setLoginError(false);
           message.success(' شه راغلاست / خوش امدید');
-          console.log('Data: ', response.data);
+          console.log('Logged User Data: ', response.data);
           console.log('Token: ', response.data.access);
           let loggedUser = jwt_decode(response.data.access);
           console.log('Logged User in Token: ', loggedUser);

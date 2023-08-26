@@ -250,6 +250,13 @@ const ThumbListPages = ({ match }) => {
       width: '15%',
     },
     {
+      title: 'ولایت',
+      dataIndex: 'province',
+      // sorter: (a, b) => a.name - b.name,
+      // render: (name) => `${name.first} ${name.last}`,
+      width: '10%',
+    },
+    {
       title: 'انستیتوت',
       dataIndex: 'institute',
       width: '10%',
@@ -295,11 +302,11 @@ const ThumbListPages = ({ match }) => {
     let params = {
       page: 1,
     };
-    params.institute = values.filterInstitute?.value;
-    params.department = values.department?.value;
+    // params.institute = values.filterInstitute?.value;
+    params.department_id = values.department?.value;
     params.educational_year = values.educationalYear?.value;
     params.province = values.filterProvince?.value;
-    params.id = values.filterId || null;
+    // params.id = values.filterId || null;
     fetchData(params);
   };
 
@@ -598,14 +605,14 @@ const ThumbListPages = ({ match }) => {
               resetForm,
             }) => (
               <>
-                <FormGroup className="form-group has-float-label error-l-150">
+                {/* <FormGroup className="form-group has-float-label error-l-150">
                   <Label>ایدی</Label>
                   <Field
                     name="filterId"
                     placeholder="ایدی"
                     style={{ height: 37 }}
                   />
-                </FormGroup>
+                </FormGroup> */}
 
                 <FormGroup className="form-group has-float-label error-l-150 w-100 ">
                   <Label>ولایت</Label>
@@ -618,7 +625,7 @@ const ThumbListPages = ({ match }) => {
                     onBlur={setFieldTouched}
                   />
                 </FormGroup>
-                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                {/* <FormGroup className="form-group has-float-label error-l-150 w-100 ">
                   <Label>انستیتوت</Label>
                   <FormikReactSelect
                     placeholder="انستیتوت"
@@ -628,7 +635,7 @@ const ThumbListPages = ({ match }) => {
                     onChange={setFieldValue}
                     onBlur={setFieldTouched}
                   />
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup className="form-group has-float-label error-l-150 w-100 ">
                   <Label>دپارتمنت</Label>
                   <FormikReactSelect
@@ -677,6 +684,8 @@ const ThumbListPages = ({ match }) => {
             key: index,
             id: item.id,
             name: <NavLink to={`student/${item.id}`}>{item.name}</NavLink>,
+            province: provinces.find((pro) => pro.value == item.province)
+              ?.label,
             institute: institutes.find((pro) => pro.value == item.institute)
               ?.label,
             department: departments.find((pro) => pro.value == item.department)

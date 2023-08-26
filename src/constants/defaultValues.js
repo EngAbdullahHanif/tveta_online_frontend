@@ -19,8 +19,8 @@ export const userRole = {
 export const roleRoots = {
   admin: '/app',
   dorm_manager: '/app/dorms/students',
-  ins_manager: '/app/students',
-  ins_dataentry: '/app/students/students',
+  ins_manager: '/app/dashboards/institute',
+  ins_dataentry: '/app/students',
   dataentry: '/app/students',
   pr_supervisor: '/app/dashboards/provincial',
 };

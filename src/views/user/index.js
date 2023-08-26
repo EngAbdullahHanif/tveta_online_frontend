@@ -1,6 +1,8 @@
 import React, { Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import UserLayout from 'layout/UserLayout';
+import { useContext } from 'react';
+import { AuthContext } from 'context/AuthContext';
 
 const Login = React.lazy(() =>
   import(/* webpackChunkName: "user-login" */ './login')
@@ -16,11 +18,16 @@ const ResetPassword = React.lazy(() =>
 );
 
 const User = ({ match }) => {
+  const { user } = useContext(AuthContext);
   return (
     <UserLayout>
       <Suspense fallback={<div className="loading" />}>
         <Switch>
-          <Redirect exact from={`${match.url}/`} to={`${match.url}/login`} />
+          {!user ? (
+            <Redirect exact from={`${match.url}/`} to={`${match.url}/login`} />
+          ) : (
+            <Redirect exact to="/" />
+          )}
           <Route
             path={`${match.url}/login`}
             render={(props) => <Login {...props} />}

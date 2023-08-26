@@ -5,12 +5,17 @@ import React, {
   Controller,
   useEffect,
   useRef,
+  useContext,
 } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { FormControl, FormLabel } from 'react-bootstrap';
 import './../../.././../assets/css/global-style.css';
 
-import { fetchProvinces, fetchDistricts } from '../../global-data/options';
+import {
+  fetchProvinces,
+  fetchDistricts,
+  langOptions,
+} from '../../global-data/options';
 
 import {
   Row,
@@ -63,14 +68,21 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 import currentUser from 'helpers/currentUser';
 import data from 'constants/menu';
+import { AuthContext } from 'context/AuthContext';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { message } from 'antd';
 
 const StudentRegistration = ({ intl }, values) => {
-  const [isNext, setIsNext] = useState(false);
-  const [institutes, setInstitutes] = useState([]);
-  const [fieldList, setFieldList] = useState([]);
-  const [departments, setDepartments] = useState([]);
-  const [classs, setClasss] = useState([]);
-  const [sectors, setSectors] = useState([]);
+  const {
+    provinces,
+    districts,
+    institutes,
+    classes: classs,
+    contextFields: fieldList,
+    sectors,
+    departments,
+  } = useContext(AuthContext);
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [fields, setFields] = useState({
     name1: '',
@@ -119,87 +131,110 @@ const StudentRegistration = ({ intl }, values) => {
     sector: '',
     file: '',
   });
-  const [stepOneData, setStepOneData] = useState({});
-
-  const [provinceOptions, setProvinceOptions] = useState([]);
-  const [districts, setDistricts] = useState([]);
-  const [currentProvince, setCurrentProvince] = useState('');
-  const [mainProvince, setMainProvince] = useState('');
 
   const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
   const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
-  const [initialName1, setInitialname1] = useState('');
-  const [initialLastName, setInitialLastName] = useState('');
-  const [initialLastNameEng, setInitialLastNameEng] = useState('');
-  const [initialFatherName, setInitialFatherName] = useState('');
-  const [initialFatherEngName, setInitialFatherEngName] = useState('');
-  const [initialGrandFatherName, setInitialGrandFatherName] = useState('');
-  const [initialFatherDuty, setInitialFatherDuty] = useState('');
-  const [initialEngLastName, setInitialEnglishName] = useState('');
-  const [initialFatherDutyLocation, setInitialFatherDutyLocation] =
-    useState('');
-  const [initialGender, setInitialGender] = useState([]);
-  const [initialTazkiraType, setInitialTazkiraType] = useState([]);
-  const [initialPlaceOfBirth, setInitialPlaceOfBirth] = useState([]);
-  const [initialTazkiraNo, setInitialTazkiraNo] = useState([]);
 
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const [initialPhoneNo, setInitialPhoneNo] = useState('');
+  // get data of each step from localstorage
+  const step0Data = JSON.parse(localStorage.getItem('step0'));
+  const step1Data = JSON.parse(localStorage.getItem('step1'));
+  const step2Data = JSON.parse(localStorage.getItem('step2'));
+
+  console.log('step0Data: ', step0Data);
   // used arrays as intial values because other things will throw error
   const [initialValues, setInitialValues] = useState([
     {
-      name1: '',
-      englishName: '',
-      lastName: '',
-      lastNameEng: '',
-      fatherName: '',
-      fatherDuty: '',
-      fatherEngName: '',
-      grandFatherName: '',
-      fatherDutyLocation: '',
-      DoB: '',
-      monthOfBirth: '',
-      dayOfBirth: '',
-      gender: [],
-      tazkiraNo: '',
-      idCardPageNo: '',
-      idCardJoldNo: '',
-      sabtNo: '',
-      tazkiraType: tazkiraOptions[0],
-      phoneNo: '',
-      email: '',
-      placeOfBirth: '',
-      disability: [],
+      name1: step0Data?.name1 || '',
+      englishName: step0Data?.englishName || '',
+      lastName: step0Data?.lastName || '',
+      lastNameEng: step0Data?.lastNameEng || '',
+      fatherName: step0Data?.fatherName || '',
+      fatherDuty: step0Data?.fatherDuty || '',
+      fatherEngName: step0Data?.fatherEngName || '',
+      grandFatherName: step0Data?.grandFatherName || '',
+      fatherDutyLocation: step0Data?.fatherDutyLocation || '',
+      DoB: step0Data?.DoB || '',
+      monthOfBirth: step0Data?.monthOfBirth || '',
+      dayOfBirth: step0Data?.dayOfBirth || '',
+      gender:
+        genderOptions.find((op) => op.value == step0Data?.gender.value) || [],
+      tazkiraNo: step0Data?.tazkiraNo || '',
+      sokokNo: step0Data?.sokokNo || '',
+      idCardPageNo: step0Data?.idCardPageNo || '',
+      idCardJoldNo: step0Data?.idCardJoldNo || '',
+      sabtNo: step0Data?.sabtNo || '',
+      tazkiraType:
+        tazkiraOptions.find(
+          (op) => op.value === step0Data?.tazkiraType.value
+        ) || tazkiraOptions[0],
+      phoneNo: step0Data?.phoneNo || '',
+      email: step0Data?.email || '',
+      placeOfBirth: step0Data?.placeOfBirth || '',
     },
     {
-      levelOfEducation: [],
-      preSchool: '',
-      graduationYear: [],
-      schoolProvince: [],
-      province: [],
-      C_Province: [],
-      C_District: [],
-      district: [],
-      village: '',
-      C_Village: '',
+      levelOfEducation:
+        educationLevelOptions.find(
+          (op) => op.value === step1Data?.levelOfEducation.value
+        ) || [],
+      preSchool: step1Data?.preSchool || '',
+      graduationYear:
+        educationalYearsOptions.find(
+          (op) => op.value === step1Data?.graduationYear.value
+        ) || [],
+      schoolProvince:
+        provinces.find((op) => op.value === step1Data?.schoolProvince.value) ||
+        [],
+      province:
+        provinces.find((op) => op.value === step1Data?.province.value) || [],
+      C_Province:
+        provinces.find((op) => op.value === step1Data?.C_Province.value) || [],
+      C_District:
+        districts.find((op) => op.value === step1Data?.C_District.value) || [],
+      district:
+        districts.find((op) => op.value === step1Data?.district.value) || [],
+      village: step1Data?.village || '',
+      C_Village: step1Data?.C_Village || '',
     },
     {
-      institute: [],
-      class: [],
-      educationalYear: [],
-      department: [],
-      mediumOfInstruction: [],
+      institute:
+        institutes.find((op) => op.value === step2Data?.institute.value) || [],
+      class: classs.find((op) => op.value === step2Data?.class.value) || [],
+      educationalYear:
+        educationalYearsOptions.find(
+          (op) => op.value === step2Data?.educationalYear.value
+        ) || [],
+      department:
+        departments.find((op) => op.value === step2Data?.department.value) ||
+        [],
+      mediumOfInstruction:
+        langOptions.find(
+          (op) => op.value === step2Data?.mediumOfInstruction.value
+        ) || [],
       studentId: '',
-      studyTime: [],
-      interanceType: [],
-      studentType: [],
-      batch: [],
-      field: [],
-      sector: [],
+      studyTime:
+        studyTimeOptions.find(
+          (op) => op.value === step2Data?.studyTime.value
+        ) || [],
+      interanceType:
+        StdInteranceOptions.find(
+          (op) => op.value === step2Data?.interanceType.value
+        ) || [],
+      studentType:
+        StudentTypeOptions.find(
+          (op) => op.value === step2Data?.studentType.value
+        ) || [],
+      // batch: [],
+      // field: [],
+      sector: sectors.find((op) => op.value === step2Data?.sector.value) || [],
       file: [],
+      disability:
+        disabilityOptions.find(
+          (op) => op.value === step2Data?.disability?.value
+        ) || [],
     },
   ]);
 
@@ -209,107 +244,6 @@ const StudentRegistration = ({ intl }, values) => {
     const file = event.currentTarget.files[0];
     setSelectedFile(file);
   };
-
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response) {
-      if (response && response.status === 200) {
-        console.log('the response is', response);
-        const institutes = await response.data.map((item) => ({
-          value: item.id,
-          label: item.name,
-        }));
-        setInstitutes(institutes);
-      } else {
-        console.log('Could not fetch list of institutes from server');
-      }
-    }
-  };
-
-  const fetchFields = async () => {
-    const response = await callApi('institute/field/', 'GET', null);
-    if (response) {
-      if (response.data && response.status === 200) {
-        const fields = await response.data.map((item) => ({
-          value: item.id,
-          label: item.name,
-        }));
-        setFieldList(fields);
-      } else {
-        console.log('Could not fetch field of studies from server');
-      }
-    }
-  };
-
-  const fetchDepartments = async () => {
-    const response = await callApi('institute/department/', 'GET', null);
-    if (response) {
-      if (response.data && response.status === 200) {
-        const departments = await response.data.map((item) => ({
-          value: item.id,
-          label: item.name,
-        }));
-        setDepartments(departments);
-      } else {
-        console.log('Could not fetch departments from server');
-      }
-    }
-  };
-
-  const fetchClasses = async () => {
-    const response = await callApi('institute/classs/', 'GET', null);
-    console.log('class repspossdfsde', response);
-    if (response) {
-      if (response.data && response.status === 200) {
-        const listOfClasses = await response.data.map((item) => ({
-          value: item.id,
-          label: item.name + ' - ' + item.semester + ' - ' + item.section,
-          grade: item.grade,
-          semester: item.semester,
-        }));
-
-        setClasss(
-          listOfClasses.filter(
-            (classs) =>
-              (classs.grade === 10 && classs.semester === 1) ||
-              (classs.grade === 13 && classs.semester === 1)
-          )
-        );
-      } else {
-        console.log('Could not fetch list of classes from server');
-      }
-    }
-  };
-
-  const fetchSectors = async () => {
-    const response = await callApi('institute/sectors/', 'GET', null);
-    if (response) {
-      if (response.data && response.status === 200) {
-        const sectors = await response.data.map((item) => ({
-          value: item.id,
-          label: item.sector,
-        }));
-        setSectors(sectors);
-      } else {
-        console.log('Could not fetch list of sectors from server');
-      }
-    }
-  };
-
-  const fetchProvincesList = async () => {
-    const provinces = await fetchProvinces();
-    setProvinceOptions(provinces);
-  };
-
-  // fetch the following when the component is first loaded
-  useEffect(async () => {
-    fetchInstitutes();
-    fetchFields();
-    fetchDepartments();
-    fetchClasses();
-    fetchSectors();
-    fetchProvincesList();
-  }, []);
 
   const handleProvinceChange = async (name, value, setFieldValue) => {
     console.log('name is ', name);
@@ -359,20 +293,32 @@ const StudentRegistration = ({ intl }, values) => {
   const postStudentRecord = async (data) => {
     setLoading(true);
     try {
-      const response = await callApi('students/register', 'POST', data);
+      const response = await callApi('students/register/', 'POST', data);
       createNotification('success', 'filled');
       console.log('success message', response.data);
       setIsSuccess(true);
+
+      // history.push(`app/students/student/${response.data.id}`);
     } catch (error) {
       setIsSuccess(false);
       createNotification('error', 'filled');
       console.log('class error');
       console.log('error from student registration: ', error.response);
     }
-    // const response = await callApi('api/student_create', 'POST', data);
-    // console.log('response of call api', response);
-
     setLoading(false);
+  };
+
+  const resetformFields = () => {
+    if (
+      localStorage.getItem('step0') ||
+      localStorage.getItem('step1') ||
+      localStorage.getItem('step2')
+    ) {
+      localStorage.removeItem('step0');
+      localStorage.removeItem('step1');
+      localStorage.removeItem('step2');
+      window.location.reload();
+    } else message.warning('فورم پاک هست');
   };
 
   const handleInitialValues = (steps, step) => {
@@ -414,6 +360,9 @@ const StudentRegistration = ({ intl }, values) => {
         const newFields = { ...fields, ...form.values };
         handleInitialValues(steps, step);
         setFields(newFields);
+        // store data in localstorage data loss prevention
+        localStorage.setItem('step' + formIndex, JSON.stringify(form.values));
+
         // if last step, submit the form
         // if next on last step is clicked, call the api to register student
         if (steps.length - 2 <= steps.indexOf(step)) {
@@ -441,7 +390,9 @@ const StudentRegistration = ({ intl }, values) => {
             cover_number: newFields.idCardJoldNo,
             page_number: newFields.idCardPageNo,
             sabt_number: newFields.sabtNo,
+            // tazkira_type: newFields.tazkiraType,
             registration_number: newFields.tazkiraNo,
+            sokok_number: newFields.sokokNo,
             main_province: newFields.province.value,
             main_district: newFields.district.value,
             main_village: newFields.village,
@@ -526,7 +477,17 @@ const StudentRegistration = ({ intl }, values) => {
           {<IntlMessages id="forms.studentRegisterTitle" />}
         </h2>
       </CardHeader>
+
       <CardBody className="wizard wizard-default">
+        <div
+          style={{
+            width: '90%',
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Button onClick={() => resetformFields()}>پاک کردن فورم</Button>
+        </div>
         <Wizard>
           <Steps>
             <Step id="step1">
@@ -538,7 +499,7 @@ const StudentRegistration = ({ intl }, values) => {
                   enableReinitialize={true}
                   initialValues={initialValues[0]}
                   validateOnMount
-                  // validationSchema={studentRegisterFormStep_1}
+                  validationSchema={studentRegisterFormStep_1}
                   onSubmit={() => {}}
                 >
                   {({
@@ -808,26 +769,6 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
 
-                            <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>disability</Label>
-                              <FormikReactSelect
-                                name="disability"
-                                id="disability"
-                                value={values.disability}
-                                options={disabilityOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                isSearchable={false}
-                                isClearable={true}
-                                // style={{ fontSize: '100%' }}
-                              />
-                              {errors.disability && touched.disability ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.disability}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
                             {/* Tazkira Type */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label>
@@ -852,22 +793,24 @@ const StudentRegistration = ({ intl }, values) => {
                               ) : null}
                             </FormGroup>
                             {/* Tazkira Number */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                نمبر تذکره الکترونی/صکوک نمبر
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="tazkiraNo"
-                                type="number"
-                              />
-                              {errors.tazkiraNo && touched.tazkiraNo ? (
-                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                  {errors.tazkiraNo}
-                                </div>
-                              ) : null}
-                            </FormGroup>
+                            {values.tazkiraType.value === 'electronic' && (
+                              <FormGroup className="form-group has-float-label error-l-100">
+                                <Label>
+                                  نمبر تذکره الکترونی
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <Field
+                                  className="form-control fieldStyle"
+                                  name="tazkiraNo"
+                                  type="number"
+                                />
+                                {errors.tazkiraNo && touched.tazkiraNo ? (
+                                  <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                    {errors.tazkiraNo}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+                            )}
 
                             {values.tazkiraType.value === 'paper' ? (
                               <>
@@ -932,6 +875,23 @@ const StudentRegistration = ({ intl }, values) => {
                                     </FormGroup>
                                   </div>
                                 </div>
+                                <div>
+                                  <div>
+                                    <FormGroup className="form-group has-float-label error-l-100">
+                                      <Label>شماره صکوک</Label>
+                                      <Field
+                                        className="form-control fieldStyle"
+                                        name="sokokNo"
+                                        type="number"
+                                      />
+                                      {errors.sokokNo && touched.sokokNo ? (
+                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                          {errors.sokokNo}
+                                        </div>
+                                      ) : null}
+                                    </FormGroup>
+                                  </div>
+                                </div>
                               </>
                             ) : null}
 
@@ -988,7 +948,7 @@ const StudentRegistration = ({ intl }, values) => {
                   enableReinitialize={true}
                   initialValues={initialValues[1]}
                   onSubmit={() => {}}
-                  // validationSchema={studentRegisterFormStep_2}
+                  validationSchema={studentRegisterFormStep_2}
                   validateOnMount
                 >
                   {({
@@ -1020,7 +980,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   name="province"
                                   id="province"
                                   value={values.province}
-                                  options={provinceOptions}
+                                  options={provinces}
                                   onChange={(name, value) => {
                                     handleProvinceChange(
                                       name,
@@ -1100,7 +1060,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   name="C_Province"
                                   id="C_Province"
                                   value={values.C_Province}
-                                  options={provinceOptions}
+                                  options={provinces}
                                   isSearchable={true}
                                   onChange={(name, value) => {
                                     handleProvinceChange(
@@ -1177,7 +1137,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   name="schoolProvince"
                                   id="schoolProvince"
                                   value={values.schoolProvince}
-                                  options={provinceOptions}
+                                  options={provinces}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                   isSearchable={true}
@@ -1309,8 +1269,27 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
-
+                            <FormGroup className="form-group has-float-label error-l-100 ">
+                              <Label>معلولیت/معیوبیت</Label>
+                              <FormikReactSelect
+                                name="disability"
+                                id="disability"
+                                value={values.disability}
+                                options={disabilityOptions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                isSearchable={false}
+                                isClearable={true}
+                                // style={{ fontSize: '100%' }}
+                              />
+                              {errors.disability && touched.disability ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.disability}
+                                </div>
+                              ) : null}
+                            </FormGroup>
                             {/*  Class name  */}
+                            {console.log('CLASSES: ', classs)}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="marks.ClassLabel" />
@@ -1452,6 +1431,7 @@ const StudentRegistration = ({ intl }, values) => {
                           </Colxx>
                           <Colxx xxs="6">
                             {/* Departement  */}
+                            {console.log('DEPARTMENTS: ', departments)}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.studyDepartment" />
@@ -1475,7 +1455,7 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* field  */}
-                            <FormGroup className="form-group has-float-label ">
+                            {/* <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="dash.field-1" />
                                 <span style={{ color: 'red' }}>*</span>
@@ -1495,10 +1475,10 @@ const StudentRegistration = ({ intl }, values) => {
                                   {errors.field}
                                 </div>
                               ) : null}
-                            </FormGroup>
+                            </FormGroup> */}
 
                             {/* Batch */}
-                            <FormGroup className="form-group has-float-label ">
+                            {/* <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.batch" />
                                 <span style={{ color: 'red' }}>*</span>
@@ -1518,7 +1498,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   {errors.batch}
                                 </div>
                               ) : null}
-                            </FormGroup>
+                            </FormGroup> */}
 
                             {/* medium OfInstruction (Teaching Language) */}
                             <FormGroup className="form-group has-float-label ">
@@ -1595,6 +1575,7 @@ const StudentRegistration = ({ intl }, values) => {
                 </Formik>
               </div>
             </Step>
+
             <Step id="step4" hideTopNav>
               <div className="wizard-basic-step text-center pt-3">
                 {loading && (

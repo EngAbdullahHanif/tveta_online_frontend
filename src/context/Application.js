@@ -23,7 +23,9 @@ const ViewUser = React.lazy(() =>
 function Application(props) {
   const { user } = useContext(AuthContext);
 
+  // const root = '/app/dashboards/provincial';
   const root = roleRoots[user?.groups[0]?.name] || '/';
+
   return (
     <Switch>
       <Redirect exact from="/" to={`${root}`} />

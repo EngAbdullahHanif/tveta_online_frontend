@@ -1,2 +1,0 @@
-(this["webpackJsonptveta-online"]=this["webpackJsonptveta-online"]||[]).push([[187],{713:function(t,n,e){"use strict";e.r(n);e(6);var s=e(12);n.default=function(){return Object(s.jsx)(s.Fragment,{})}}}]);
-//# sourceMappingURL=187.513b2006.chunk.js.map

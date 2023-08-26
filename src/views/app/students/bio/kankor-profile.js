@@ -9,11 +9,7 @@ import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import config from '../../../../config';
-import {
-  AuthContext,
-  DistrictsContext,
-  ProvincesContext,
-} from 'context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
 const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
 
@@ -26,8 +22,8 @@ const StudentProfile = () => {
   const [marks, setMarks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const { provinces } = useContext(ProvincesContext);
-  const { districts } = useContext(DistrictsContext);
+  const { provinces } = useContext(AuthContext);
+  const { districts } = useContext(AuthContext);
 
   console.log('provinces from context: ', provinces);
 

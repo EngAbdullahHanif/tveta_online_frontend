@@ -10,11 +10,12 @@ const data = [
     roles: [
       userRole.admin,
       userRole.instituteDataentry,
-      userRole.provinceDataentry,
       userRole.instituteManager,
+      userRole.provinceDataentry,
       userRole.provinceSupervisor,
       userRole.authoritySupervisor,
       userRole.authorityDataentry,
+      userRole.authenticated,
     ],
     subs: [
       {
@@ -29,7 +30,6 @@ const data = [
           userRole.dataentry,
         ],
       },
-
       {
         icon: 'FA.FaList',
         label: 'menu.kankor-student-list',
@@ -158,6 +158,7 @@ const data = [
         roles: [
           userRole.admin,
           userRole.instituteDataentry,
+          userRole.instituteManager,
           userRole.provinceDataentry,
           userRole.authorityDataentry,
         ],
@@ -310,6 +311,9 @@ const data = [
     to: `${adminRoot}/teacher`,
     roles: [
       userRole.admin,
+      userRole.instituteManager,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
       // userRole.instituteDataentry,
       // userRole.provinceDataentry,
     ],
@@ -348,14 +352,21 @@ const data = [
     to: `${adminRoot}/institutes`,
     roles: [
       userRole.admin,
-      userRole.instituteDataentry,
       userRole.provinceDataentry,
+      userRole.provinceSupervisor,
+      userRole.authoritySupervisor,
+      userRole.authorityDataentry,
     ],
     subs: [
       {
         icon: 'FA.FaList',
         label: 'menu.institute_list',
         to: `${adminRoot}/institutes/institutes`,
+        roles: [
+          userRole.admin,
+          userRole.authoritySupervisor,
+          userRole.authorityDataentry,
+        ],
       },
       // {
       //   icon: "FA.FaList",
@@ -366,6 +377,7 @@ const data = [
         icon: 'MD.MdAddBox',
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
+        roles: [userRole.admin],
       },
       {
         icon: 'MD.MdAddBox',
@@ -395,15 +407,22 @@ const data = [
     icon: 'FA.FaHotel',
     label: 'menu.dorms',
     to: `${adminRoot}/dorms`,
-    roles: [userRole.admin, userRole.dormManager],
+    roles: [
+      userRole.admin,
+      userRole.dormManager,
+      userRole.provinceSupervisor,
+      userRole.provinceDataentry,
+      userRole.authoritySupervisor,
+      userRole.authorityDataentry,
+    ],
     subs: [
       {
         icon: 'FA.FaList',
         label: 'dorm.list',
         to: `${adminRoot}/dorms/dorms`,
         roles: [
-          userRole.provinceSupervisor,
           userRole.admin,
+          userRole.provinceSupervisor,
           userRole.authoritySupervisor,
         ],
       },
@@ -434,6 +453,7 @@ const data = [
         icon: 'IO.IoPersonRemoveSharp',
         label: 'menu.dorm-student-dismissal',
         to: `${adminRoot}/dorms/student-dismissal`,
+        roles: [userRole.admin, userRole.dormManager],
       },
     ],
   },

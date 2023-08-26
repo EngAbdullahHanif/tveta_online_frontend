@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { NotificationManager } from 'components/common/react-notifications';
@@ -23,6 +23,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { message } from 'antd';
+import { AuthContext } from 'context/AuthContext';
 
 const ValidationSchema = Yup.object().shape({
   className: Yup.string().required(<IntlMessages id="class.nameErr" />),
@@ -75,11 +76,12 @@ const semesterOptions = [
   },
 ];
 const ClassRegister = () => {
+  const { fetchClasses } = useContext(AuthContext);
   const [initialClassName, setInitialClassName] = useState();
   const [initialGrade, setInitialGrade] = useState();
   const [initialSemester, setInitialSemester] = useState();
   const [initialSeason, setInitialSeason] = useState([]);
-  const [initialSection, setInitialSection] = useState([]);
+  const [initialSection, setInitialSection] = useState('');
 
   const [isNext, setIsNext] = useState(false);
 
@@ -127,12 +129,13 @@ const ClassRegister = () => {
       grade: values.grade,
       semester: values.semester.value,
       season: values.season.value,
-      section: values.section.value,
+      section: values.section,
     };
     console.log('data', data);
     const response = await callApi('institute/classs_create/', 'POST', data);
     if (response) {
       createNotification('success', 'filled');
+      fetchClasses();
 
       // setLoader(false);
       resetForm();
@@ -188,8 +191,8 @@ const ClassRegister = () => {
                           className="form-control"
                           name="grade"
                           type="number"
-                          max="14"
-                          min="10"
+                          // max="14"
+                          // min="10"
                         />
                         {errors.grade && touched.grade && (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -238,13 +241,11 @@ const ClassRegister = () => {
                         <Label>
                           <IntlMessages id="section" />
                         </Label>
-                        <FormikReactSelect
+                        <Field
                           name="section"
-                          id="section"
-                          value={values.section}
-                          options={sectionOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
+                          // value={values.section}
+                          // options={sectionOptions}
+                          maxLength={1}
                         />
                         {errors.section && touched.section ? (
                           <div className="invalid-feedback d-block bg-danger text-white">

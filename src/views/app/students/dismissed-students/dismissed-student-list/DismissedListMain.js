@@ -109,11 +109,7 @@ const ThumbListPages = ({ match, item_list }) => {
     return false;
   };
 
-  const onContextMenuClick = (e, data) => {
-    // params : (e,data,target)
-    console.log('onContextMenuClick - selected items', selectedItems);
-    console.log('onContextMenuClick - action : ', data.action);
-  };
+  const onContextMenuClick = (e, data) => {};
 
   const onContextMenu = (e, data) => {
     const clickedProductId = data.data;
@@ -134,7 +130,6 @@ const ThumbListPages = ({ match, item_list }) => {
 
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
-  console.log('item data', items);
   return !isLoaded ? (
     <div className="loading" />
   ) : (
@@ -228,7 +223,7 @@ const ThumbListPages = ({ match, item_list }) => {
             </tr>
           </thead>
           <ListPageListing
-            items={item_list}
+            items={item_list?.results}
             displayMode={displayMode}
             selectedItems={selectedItems}
             onCheckItem={onCheckItem}

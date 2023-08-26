@@ -28,9 +28,10 @@ const ListPageListing = ({
   onContextMenuClick,
   onContextMenu,
   onChangePage,
+  fetchInstitutes = { fetchInstitutes },
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
-  console.log()
+  console.log();
   return (
     <>
       <Row>
@@ -61,6 +62,7 @@ const ListPageListing = ({
                 collect={collect}
                 onCheckItem={onCheckItem}
                 index={index}
+                fetchInstitutes={fetchInstitutes}
               />
             );
           }

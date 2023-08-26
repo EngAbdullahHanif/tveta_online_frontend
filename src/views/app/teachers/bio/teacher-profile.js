@@ -37,7 +37,7 @@ import {
   teacherFeedbackOptions,
 } from '../../global-data/options';
 import logo from './../../../../assets/logos/AdminLogo.png';
-import profilePhoto from './../../../../assets/img/profiles/22.jpg';
+import profilePhoto from './../../../../assets/img/profiles/user.png';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
@@ -49,7 +49,15 @@ import {
   teacherEducationValidationSchema,
   teacherHREvaluationValidationSchema,
 } from 'views/app/global-data/forms-validation';
-import { message, Col, InputNumber, Slider, Table as TB, Spin } from 'antd';
+import {
+  message,
+  Col,
+  InputNumber,
+  Slider,
+  Table as TB,
+  Spin,
+  Popconfirm,
+} from 'antd';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import { Spinner } from 'react-bootstrap';
 import {
@@ -469,7 +477,11 @@ const TeacherProfile = () => {
       <Row>
         <Colxx xxs="1"></Colxx>
         <Colxx>
-          <img src={profilePhoto} alt="Photo" width={'10%'} />{' '}
+          <img
+            src={teacher[0]?.photo || profilePhoto}
+            alt="Photo"
+            width={'10%'}
+          />{' '}
         </Colxx>
       </Row>
       <Row>
@@ -479,7 +491,7 @@ const TeacherProfile = () => {
         >
           {' '}
           <div className="d-inline-block">
-            <Button
+            {/* <Button
               style={{ backgroundColor: !isNext ? 'blue' : '' }}
               size="lg"
               className="m-2"
@@ -495,7 +507,7 @@ const TeacherProfile = () => {
               <span className="label">
                 <IntlMessages id="button.TeacherBackround" />
               </span>
-            </Button>{' '}
+            </Button> */}
             <Button
               style={{ backgroundColor: isNext ? 'blue' : '' }}
               size="lg"
@@ -739,7 +751,10 @@ const TeacherProfile = () => {
                           </Button>{' '}
                         </ModalFooter>
                       </Modal>
-                      <table class="table table-lg" style={{ fontSize: 18 }}>
+                      <table
+                        className="table table-striped  table-lg"
+                        style={{ fontSize: 18 }}
+                      >
                         <thead>
                           <tr>
                             <th scope="col">ID</th>
@@ -755,11 +770,7 @@ const TeacherProfile = () => {
                         <tbody>
                           {teacherEducation.map((item, index) => {
                             return (
-                              <tr
-                                className={
-                                  index % 2 == 0 ? 'table-danger' : 'table-info'
-                                }
-                              >
+                              <tr>
                                 <th scope="row">{item.id}</th>
                                 <td>{item.institution}</td>
                                 <td>{item.degree}</td>
@@ -786,46 +797,31 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setEducationAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
+
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() => deleteEducation(item.id)}
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
                                 </td>
-                                <Modal
-                                  isOpen={educationAlert}
-                                  toggle={() =>
-                                    setEducationAlert(!educationAlert)
-                                  }
-                                  style={{ marginTop: '10%' }}
-                                >
-                                  <ModalHeader>
-                                    <IntlMessages id="modal.deletion-message-title" />
-                                  </ModalHeader>
-                                  <ModalBody className="text-center">
-                                    <IntlMessages id="modal.deletion-message-details" />
-                                  </ModalBody>
-                                  <ModalFooter>
-                                    <Button
-                                      onClick={() => setEducationAlert(false)}
-                                      style={{ marginLeft: '55%' }}
-                                    >
-                                      نه/ نخیر
-                                    </Button>
-                                    <Button
-                                      color="danger"
-                                      onClick={() => {
-                                        setEducationAlert(false);
-                                        deleteEducation(item.id);
-                                      }}
-                                      style={{ marginLeft: '5%' }}
-                                    >
-                                      هو / بلی
-                                    </Button>{' '}
-                                  </ModalFooter>
-                                </Modal>
                               </tr>
                             );
                           })}
@@ -835,7 +831,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
-                        class="btn btn-primary"
+                        className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#exampleModal"
                         data-whatever="@getbootstrap"
@@ -844,22 +840,25 @@ const TeacherProfile = () => {
                       </Button>
 
                       <div
-                        class="modal fade"
+                        className="modal fade"
                         id="exampleModal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="exampleModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="exampleModalLabel"
+                              >
                                 ثبت تحصیل استاد
                               </h5>
                               <button
                                 type="button"
-                                class="close"
+                                className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
                                 onClick={resetUpdate}
@@ -867,7 +866,7 @@ const TeacherProfile = () => {
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <Formik
                                 enableReinitialize={true}
                                 initialValues={
@@ -921,10 +920,10 @@ const TeacherProfile = () => {
                                 }) => (
                                   <>
                                     <form>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="degree"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           دگری
                                           <span style={{ color: 'red' }}>
@@ -946,12 +945,12 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="recipient-name"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
-                                          انستیتوت
+                                          پوهنتون/انستیتوت
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -967,10 +966,10 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="field_of_study"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           رشته
                                           <span style={{ color: 'red' }}>
@@ -988,10 +987,10 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="year_of_completion"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           سال تکمیل
                                           <span style={{ color: 'red' }}>
@@ -1018,22 +1017,22 @@ const TeacherProfile = () => {
                                         ) : null}
                                       </div>
 
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="description"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
-                                          Description
+                                          جزئیات
                                         </label>
                                         <Field
                                           className="form-control fieldStyle"
                                           name="description"
                                         />
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="recipient-name"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Document
                                           <span style={{ color: 'red' }}>
@@ -1041,7 +1040,7 @@ const TeacherProfile = () => {
                                           </span>
                                         </label>
                                         <input
-                                          class="form-control"
+                                          className="form-control"
                                           type="file"
                                           id="formFile"
                                           onChange={(e) => {
@@ -1050,10 +1049,10 @@ const TeacherProfile = () => {
                                         />
                                       </div>
                                     </form>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                       <button
                                         type="button"
-                                        class="btn btn-secondary"
+                                        className="btn btn-secondary"
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
@@ -1061,7 +1060,7 @@ const TeacherProfile = () => {
                                       </button>
                                       <button
                                         type="submit"
-                                        class="btn btn-primary"
+                                        className="btn btn-primary"
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
@@ -1081,7 +1080,6 @@ const TeacherProfile = () => {
               </Card>
               {/* Education Details End */}
               {/* Contract Details Start */}
-
               <Card className="rounded m-4 mt-5">
                 <CardBody>
                   <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
@@ -1100,7 +1098,10 @@ const TeacherProfile = () => {
 
                   <Row className="justify-content-center   rounded">
                     <Colxx style={{ paddingInline: '4%' }}>
-                      <table class="table table-lg" style={{ fontSize: 18 }}>
+                      <table
+                        className="table table-striped table-lg"
+                        style={{ fontSize: 18 }}
+                      >
                         <thead>
                           <tr>
                             <th scope="col">ID</th>
@@ -1117,11 +1118,7 @@ const TeacherProfile = () => {
                         <tbody>
                           {teacherContracts.map((item, index) => {
                             return (
-                              <tr
-                                className={
-                                  index % 2 == 0 ? 'table-danger' : 'table-info'
-                                }
-                              >
+                              <tr>
                                 <th scope="row">{item.id}</th>
                                 <td>
                                   {contractTypeOptions.map((inst) => {
@@ -1193,46 +1190,32 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setContractAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
+
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() => deleteContract(item.id)}
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      // onClick={() => setInsentiveAlert(true)}
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
                                 </td>
-                                <Modal
-                                  isOpen={contractAlert}
-                                  toggle={() =>
-                                    setContractAlert(!contractAlert)
-                                  }
-                                  style={{ marginTop: '10%' }}
-                                >
-                                  <ModalHeader>
-                                    <IntlMessages id="modal.deletion-message-title" />
-                                  </ModalHeader>
-                                  <ModalBody className="text-center">
-                                    <IntlMessages id="modal.deletion-message-details" />
-                                  </ModalBody>
-                                  <ModalFooter>
-                                    <Button
-                                      onClick={() => setContractAlert(false)}
-                                      style={{ marginLeft: '55%' }}
-                                    >
-                                      نه/ نخیر
-                                    </Button>
-                                    <Button
-                                      color="danger"
-                                      onClick={() => {
-                                        setContractAlert(false);
-                                        deleteContract(item.id);
-                                      }}
-                                      style={{ marginLeft: '5%' }}
-                                    >
-                                      هو / بلی
-                                    </Button>{' '}
-                                  </ModalFooter>
-                                </Modal>
                               </tr>
                             );
                           })}
@@ -1242,7 +1225,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
-                        class="btn btn-primary"
+                        className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#contractModal"
                         data-whatever="@getbootstrap"
@@ -1251,22 +1234,25 @@ const TeacherProfile = () => {
                       </Button>
 
                       <div
-                        class="modal fade"
+                        className="modal fade"
                         id="contractModal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="contractModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="contractModalLabel">
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="contractModalLabel"
+                              >
                                 ثبت قرارداد استاد
                               </h5>
                               <button
                                 type="button"
-                                class="close"
+                                className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
                                 // onClick={resetUpdate}
@@ -1274,7 +1260,7 @@ const TeacherProfile = () => {
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <Formik
                                 enableReinitialize={true}
                                 initialValues={
@@ -1291,86 +1277,61 @@ const TeacherProfile = () => {
                                         status: [],
                                       }
                                     : {
-                                        jobType: jobTypeOptions.filter(
-                                          (inst) => {
-                                            if (
-                                              inst.value ===
-                                              updatingRecord.job_type
-                                            )
-                                              return inst;
-                                          }
+                                        jobType: jobTypeOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.job_type
                                         ),
-                                        grade: gradeOptions.filter((inst) => {
-                                          if (
+                                        grade: gradeOptions.find(
+                                          (inst) =>
                                             inst.value === updatingRecord.grade
-                                          )
-                                            return inst;
-                                        }),
-                                        step: stepOptions.filter((inst) => {
-                                          if (
+                                        ),
+                                        step: stepOptions.find(
+                                          (inst) =>
                                             inst.value === updatingRecord.step
-                                          )
-                                            return inst;
-                                        }),
-                                        teaching_language: langOptions.filter(
-                                          (inst) => {
-                                            if (
-                                              inst.value ===
-                                              updatingRecord.teaching_language
-                                            )
-                                              return inst;
-                                          }
                                         ),
-                                        hireType: hireTypeOptions.filter(
-                                          (inst) => {
-                                            if (
-                                              inst.value ===
-                                              updatingRecord.hire_type
-                                            )
-                                              return inst;
-                                          }
+                                        teaching_language: langOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.teaching_language
                                         ),
-                                        contract_type:
-                                          contractTypeOptions.filter((inst) => {
-                                            if (
-                                              inst.value ===
-                                              updatingRecord.contract_type
-                                            )
-                                              return inst;
-                                          }),
-                                        institute: institutes.filter((inst) => {
-                                          if (
+                                        hireType: hireTypeOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.hire_type
+                                        ),
+                                        contract_type: contractTypeOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.contract_type
+                                        ),
+                                        institute: institutes.find(
+                                          (inst) =>
                                             inst.value ===
                                             updatingRecord.institute
-                                          )
-                                            return inst;
-                                        }),
-
-                                        field: contextFields.filter((inst) => {
-                                          if (
+                                        ),
+                                        field: contextFields.find(
+                                          (inst) =>
                                             inst.value ===
                                             updatingRecord.teaching_field
-                                          )
-                                            return inst;
-                                        }),
+                                        ),
                                         status:
-                                          teacherContractStatusOptions.filter(
-                                            (inst) => {
-                                              if (
-                                                inst.value ===
-                                                updatingRecord.status
-                                              )
-                                                return inst;
-                                            }
+                                          teacherContractStatusOptions.find(
+                                            (inst) =>
+                                              inst.value ===
+                                              updatingRecord.status
                                           ),
+                                        jobType: jobTypeOptions.find(
+                                          (inst) =>
+                                            inst.value ===
+                                            updatingRecord.job_type
+                                        ),
                                       }
                                 }
                                 validationSchema={
                                   teacherContractValidationSchema
                                 }
-                                onSubmit={(formData) => {
-                                  addContract(formData);
-                                }}
+                                onSubmit={addContract}
                               >
                                 {({
                                   errors,
@@ -1388,10 +1349,10 @@ const TeacherProfile = () => {
                                           flexDirection: 'row',
                                         }}
                                       >
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="institute"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Institute
                                             <span style={{ color: 'red' }}>
@@ -1414,10 +1375,10 @@ const TeacherProfile = () => {
                                             </div>
                                           ) : null}
                                         </div>
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="field"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Field
                                             <span style={{ color: 'red' }}>
@@ -1441,10 +1402,10 @@ const TeacherProfile = () => {
                                         </div>
                                       </div>
 
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="jobType"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           job type
                                           <span style={{ color: 'red' }}>
@@ -1473,10 +1434,10 @@ const TeacherProfile = () => {
                                           flexDirection: 'row',
                                         }}
                                       >
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="grade"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Grade
                                             <span style={{ color: 'red' }}>
@@ -1499,10 +1460,10 @@ const TeacherProfile = () => {
                                             </div>
                                           ) : null}
                                         </div>
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="step"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Step
                                             <span style={{ color: 'red' }}>
@@ -1526,10 +1487,10 @@ const TeacherProfile = () => {
                                         </div>
                                       </div>
 
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="teaching_language"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Teaching Language
                                           <span style={{ color: 'red' }}>
@@ -1552,10 +1513,10 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="contractType"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Contract Type
                                           <span style={{ color: 'red' }}>
@@ -1578,10 +1539,10 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="hireType"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           hireType
                                           <span style={{ color: 'red' }}>
@@ -1614,7 +1575,7 @@ const TeacherProfile = () => {
                                         <div>
                                           <label
                                             for="year_of_completion"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Contract Start Date
                                           </label>
@@ -1645,7 +1606,7 @@ const TeacherProfile = () => {
                                         <div>
                                           <label
                                             for="year_of_completion"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Contract End Date
                                           </label>
@@ -1676,10 +1637,10 @@ const TeacherProfile = () => {
                                         </div>
                                       </div>
 
-                                      <div class="form-group w-100">
+                                      <div className="form-group w-100">
                                         <label
                                           for="institute"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           حالت قرارداد
                                           <span style={{ color: 'red' }}>
@@ -1702,10 +1663,10 @@ const TeacherProfile = () => {
                                         ) : null}
                                       </div>
 
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="recipient-name"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Document
                                           <span style={{ color: 'red' }}>
@@ -1713,7 +1674,7 @@ const TeacherProfile = () => {
                                           </span>
                                         </label>
                                         <input
-                                          class="form-control"
+                                          className="form-control"
                                           type="file"
                                           id="formFile"
                                           onChange={(e) => {
@@ -1722,10 +1683,10 @@ const TeacherProfile = () => {
                                         />
                                       </div>
                                     </form>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                       <button
                                         type="button"
-                                        class="btn btn-secondary"
+                                        className="btn btn-secondary"
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
@@ -1733,7 +1694,7 @@ const TeacherProfile = () => {
                                       </button>
                                       <button
                                         type="submit"
-                                        class="btn btn-primary"
+                                        className="btn btn-primary"
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
@@ -1771,7 +1732,10 @@ const TeacherProfile = () => {
 
                   <Row className="justify-content-center   rounded">
                     <Colxx style={{ paddingInline: '4%' }}>
-                      <table class="table table-lg" style={{ fontSize: 18 }}>
+                      <table
+                        className="table table-striped table-lg"
+                        style={{ fontSize: 18 }}
+                      >
                         <thead>
                           <tr>
                             <th scope="col">ID</th>
@@ -1789,11 +1753,7 @@ const TeacherProfile = () => {
                         <tbody>
                           {teacherEvaluation.map((item, index) => {
                             return (
-                              <tr
-                                className={
-                                  index % 2 == 0 ? 'table-danger' : 'table-info'
-                                }
-                              >
+                              <tr>
                                 <th scope="row">{item.id}</th>
                                 <td>{item.evaluator_name}</td>
                                 <td>{item.evaluation_type}</td>
@@ -1823,47 +1783,32 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setEvaluationAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
-                                </td>
 
-                                <Modal
-                                  isOpen={evaluationAlert}
-                                  toggle={() =>
-                                    setEvaluationAlert(!evaluationAlert)
-                                  }
-                                  style={{ marginTop: '10%' }}
-                                >
-                                  <ModalHeader>
-                                    <IntlMessages id="modal.deletion-message-title" />
-                                  </ModalHeader>
-                                  <ModalBody className="text-center">
-                                    <IntlMessages id="modal.deletion-message-details" />
-                                  </ModalBody>
-                                  <ModalFooter>
-                                    <Button
-                                      onClick={() => setEvaluationAlert(false)}
-                                      style={{ marginLeft: '55%' }}
-                                    >
-                                      نه/ نخیر
-                                    </Button>
-                                    <Button
-                                      color="danger"
-                                      onClick={() => {
-                                        setEvaluationAlert(false);
-                                        deleteEvaluation(item.id);
-                                      }}
-                                      style={{ marginLeft: '5%' }}
-                                    >
-                                      هو / بلی
-                                    </Button>{' '}
-                                  </ModalFooter>
-                                </Modal>
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() => deleteEvaluation(item.id)}
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      // onClick={() => setInsentiveAlert(true)}
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
+                                </td>
                               </tr>
                             );
                           })}
@@ -1872,7 +1817,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
-                        class="btn btn-primary"
+                        className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#evaluationModal"
                         data-whatever="@getbootstrap"
@@ -1881,29 +1826,32 @@ const TeacherProfile = () => {
                       </Button>
 
                       <div
-                        class="modal fade"
+                        className="modal fade"
                         id="evaluationModal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="evaluationModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="evaluationModalLabel">
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="evaluationModalLabel"
+                              >
                                 ثبت ارزیابی
                               </h5>
                               <button
                                 type="button"
-                                class="close"
+                                className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
                               >
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <Formik
                                 enableReinitialize={true}
                                 initialValues={
@@ -1926,14 +1874,10 @@ const TeacherProfile = () => {
                                         evaluator_name:
                                           updatingRecord.evaluator_name,
                                         evaluation_type:
-                                          evaluationTypeOptions.filter(
-                                            (inst) => {
-                                              if (
-                                                inst.value ===
-                                                updatingRecord.evaluation_type
-                                              )
-                                                return inst;
-                                            }
+                                          evaluationTypeOptions.find(
+                                            (inst) =>
+                                              inst.value ===
+                                              updatingRecord.evaluation_type
                                           ),
                                         strong_points:
                                           updatingRecord.strong_points,
@@ -1984,10 +1928,10 @@ const TeacherProfile = () => {
                                           flexDirection: 'row',
                                         }}
                                       >
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="evaluator_name"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Evaluator
                                             <span style={{ color: 'red' }}>
@@ -2005,10 +1949,10 @@ const TeacherProfile = () => {
                                             </div>
                                           ) : null}
                                         </div>
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="evaluation_type"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Evaluation Type
                                             <span style={{ color: 'red' }}>
@@ -2039,10 +1983,10 @@ const TeacherProfile = () => {
                                           flexDirection: 'row',
                                         }}
                                       >
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="institute"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             institute
                                             <span style={{ color: 'red' }}>
@@ -2065,10 +2009,10 @@ const TeacherProfile = () => {
                                             </div>
                                           ) : null}
                                         </div>
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="department"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             department
                                             <span style={{ color: 'red' }}>
@@ -2092,10 +2036,10 @@ const TeacherProfile = () => {
                                           ) : null}
                                         </div>
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="classs"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Class
                                           <span style={{ color: 'red' }}>
@@ -2123,10 +2067,10 @@ const TeacherProfile = () => {
                                           flexDirection: 'row',
                                         }}
                                       >
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="subject"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             subject
                                             <span style={{ color: 'red' }}>
@@ -2152,7 +2096,7 @@ const TeacherProfile = () => {
                                         <div className="">
                                           <label
                                             for="year_of_completion"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Evaluation Date
                                             <span style={{ color: 'red' }}>
@@ -2192,10 +2136,10 @@ const TeacherProfile = () => {
                                         </div>
                                       </div>
 
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="topic"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Topic
                                           <span style={{ color: 'red' }}>
@@ -2212,10 +2156,10 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="strong_points"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Strong Points
                                           <span style={{ color: 'red' }}>
@@ -2233,10 +2177,10 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="weak_points"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Weak Points
                                           <span style={{ color: 'red' }}>
@@ -2255,10 +2199,10 @@ const TeacherProfile = () => {
                                         ) : null}
                                       </div>
 
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="suggestions"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Suggestions
                                           <span style={{ color: 'red' }}>
@@ -2276,7 +2220,10 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <label for="score" class="col-form-label">
+                                      <label
+                                        for="score"
+                                        className="col-form-label"
+                                      >
                                         Score
                                         <span style={{ color: 'red' }}>*</span>
                                       </label>
@@ -2310,10 +2257,10 @@ const TeacherProfile = () => {
                                         </Col>
                                       </div>
                                     </form>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                       <button
                                         type="button"
-                                        class="btn btn-secondary"
+                                        className="btn btn-secondary"
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
@@ -2321,7 +2268,7 @@ const TeacherProfile = () => {
                                       </button>
                                       <button
                                         type="submit"
-                                        class="btn btn-primary"
+                                        className="btn btn-primary"
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
@@ -2355,7 +2302,10 @@ const TeacherProfile = () => {
 
                   <Row className="justify-content-center   rounded">
                     <Colxx style={{ paddingInline: '4%' }}>
-                      <table class="table table-lg" style={{ fontSize: 18 }}>
+                      <table
+                        className="table table-striped table-lg"
+                        style={{ fontSize: 18 }}
+                      >
                         <thead>
                           <tr>
                             <th scope="col">ID</th>
@@ -2372,11 +2322,7 @@ const TeacherProfile = () => {
                         <tbody>
                           {teacherHREvaluation.map((item, index) => {
                             return (
-                              <tr
-                                className={
-                                  index % 2 == 0 ? 'table-danger' : 'table-info'
-                                }
-                              >
+                              <tr>
                                 <th scope="row">{item.id}</th>
                                 <td>{item.evaluator_name}</td>
                                 <td>{item.evaluation_date}</td>
@@ -2397,47 +2343,34 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setEvaluationAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
-                                </td>
 
-                                <Modal
-                                  isOpen={evaluationAlert}
-                                  toggle={() =>
-                                    setEvaluationAlert(!evaluationAlert)
-                                  }
-                                  style={{ marginTop: '10%' }}
-                                >
-                                  <ModalHeader>
-                                    <IntlMessages id="modal.deletion-message-title" />
-                                  </ModalHeader>
-                                  <ModalBody className="text-center">
-                                    <IntlMessages id="modal.deletion-message-details" />
-                                  </ModalBody>
-                                  <ModalFooter>
-                                    <Button
-                                      onClick={() => setEvaluationAlert(false)}
-                                      style={{ marginLeft: '55%' }}
-                                    >
-                                      نه/ نخیر
-                                    </Button>
-                                    <Button
-                                      color="danger"
-                                      onClick={() => {
-                                        setEvaluationAlert(false);
-                                        deleteHREvaluation(item.id);
-                                      }}
-                                      style={{ marginLeft: '5%' }}
-                                    >
-                                      هو / بلی
-                                    </Button>{' '}
-                                  </ModalFooter>
-                                </Modal>
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() =>
+                                      deleteHREvaluation(item.id)
+                                    }
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      // onClick={() => setInsentiveAlert(true)}
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
+                                </td>
                               </tr>
                             );
                           })}
@@ -2446,7 +2379,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
-                        class="btn btn-primary"
+                        className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#hrEvaluationModal"
                         data-whatever="@getbootstrap"
@@ -2455,32 +2388,32 @@ const TeacherProfile = () => {
                       </Button>
 
                       <div
-                        class="modal fade"
+                        className="modal fade"
                         id="hrEvaluationModal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="hrEvaluationModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
                               <h5
-                                class="modal-title"
+                                className="modal-title"
                                 id="hrEvaluationModalLabel"
                               >
                                 ثبت ارزیابی
                               </h5>
                               <button
                                 type="button"
-                                class="close"
+                                className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
                               >
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <Formik
                                 enableReinitialize={true}
                                 initialValues={
@@ -2537,10 +2470,10 @@ const TeacherProfile = () => {
                                 }) => (
                                   <>
                                     <form>
-                                      <div class="form-group w-100">
+                                      <div className="form-group w-100">
                                         <label
                                           for="evaluator_name"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Evaluator
                                           <span style={{ color: 'red' }}>
@@ -2565,10 +2498,10 @@ const TeacherProfile = () => {
                                           flexDirection: 'row',
                                         }}
                                       >
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="institute"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             institute
                                             <span style={{ color: 'red' }}>
@@ -2598,10 +2531,10 @@ const TeacherProfile = () => {
                                           flexDirection: 'row',
                                         }}
                                       >
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="grade"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Grade
                                             <span style={{ color: 'red' }}>
@@ -2624,10 +2557,10 @@ const TeacherProfile = () => {
                                             </div>
                                           ) : null}
                                         </div>
-                                        <div class="form-group w-100">
+                                        <div className="form-group w-100">
                                           <label
                                             for="step"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Step
                                             <span style={{ color: 'red' }}>
@@ -2660,7 +2593,7 @@ const TeacherProfile = () => {
                                         <div className="">
                                           <label
                                             for="year_of_completion"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Evaluation Date
                                             <span style={{ color: 'red' }}>
@@ -2701,7 +2634,10 @@ const TeacherProfile = () => {
                                         </div>
                                       </div>
 
-                                      <label for="score" class="col-form-label">
+                                      <label
+                                        for="score"
+                                        className="col-form-label"
+                                      >
                                         Score
                                         <span style={{ color: 'red' }}>*</span>
                                       </label>
@@ -2735,10 +2671,10 @@ const TeacherProfile = () => {
                                         </Col>
                                       </div>
                                     </form>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                       <button
                                         type="button"
-                                        class="btn btn-secondary"
+                                        className="btn btn-secondary"
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
@@ -2746,7 +2682,7 @@ const TeacherProfile = () => {
                                       </button>
                                       <button
                                         type="submit"
-                                        class="btn btn-primary"
+                                        className="btn btn-primary"
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
@@ -2785,7 +2721,10 @@ const TeacherProfile = () => {
 
                   <Row className="justify-content-center   rounded">
                     <Colxx style={{ paddingInline: '4%' }}>
-                      <table class="table table-lg" style={{ fontSize: 18 }}>
+                      <table
+                        className="table table-striped table-lg"
+                        style={{ fontSize: 18 }}
+                      >
                         <thead>
                           <tr>
                             <th scope="col">ID</th>
@@ -2798,11 +2737,7 @@ const TeacherProfile = () => {
                         <tbody>
                           {teacherIncentives.map((item, index) => {
                             return (
-                              <tr
-                                className={
-                                  index % 2 == 0 ? 'table-danger' : 'table-info'
-                                }
-                              >
+                              <tr key={item.id}>
                                 <th scope="row">{item.id}</th>
                                 <td>{item.teacher}</td>
                                 <td>{item.institute}</td>
@@ -2819,13 +2754,30 @@ const TeacherProfile = () => {
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
                                   />
-                                  <BsTrashFill
-                                    color="red"
-                                    id="deleteIcon"
-                                    outline
-                                    onClick={() => setInsentiveAlert(true)}
-                                    style={{ fontSize: '20px' }}
-                                  />
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې  (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() => deleteInsentive(item.id)}
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      // onClick={() => setInsentiveAlert(true)}
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
                                 </td>
                                 <Modal
                                   isOpen={insentiveAlert}
@@ -2856,7 +2808,7 @@ const TeacherProfile = () => {
                                       style={{ marginLeft: '5%' }}
                                     >
                                       هو / بلی
-                                    </Button>{' '}
+                                    </Button>
                                   </ModalFooter>
                                 </Modal>
                               </tr>
@@ -2868,7 +2820,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
-                        class="btn btn-primary"
+                        className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#incentiveModal"
                         data-whatever="@getbootstrap"
@@ -2877,23 +2829,23 @@ const TeacherProfile = () => {
                       </Button>
 
                       <div
-                        class="modal fade"
+                        className="modal fade"
                         id="incentiveModal"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="incentiveModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
                               <h5
-                                class="modal-title"
+                                className="modal-title"
                                 id="incentiveModalLabel"
                               ></h5>
                               <button
                                 type="button"
-                                class="close"
+                                className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
                                 onClick={resetUpdate}
@@ -2901,7 +2853,7 @@ const TeacherProfile = () => {
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <Formik
                                 enableReinitialize={true}
                                 initialValues={
@@ -2942,14 +2894,13 @@ const TeacherProfile = () => {
                                   setFieldTouched,
                                   setFieldValue,
                                   handleSubmit,
-                                  resetForm,
                                 }) => (
                                   <>
                                     <form>
-                                      <div class="form-group w-100">
+                                      <div className="form-group w-100">
                                         <label
                                           for="type"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Type
                                           <span style={{ color: 'red' }}>
@@ -2971,10 +2922,10 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <div class="form-group w-100">
+                                      <div className="form-group w-100">
                                         <label
                                           for="institute"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           institute
                                           <span style={{ color: 'red' }}>
@@ -2997,10 +2948,10 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
-                                      <div class="form-group">
+                                      <div className="form-group">
                                         <label
                                           for="recipient-name"
-                                          class="col-form-label"
+                                          className="col-form-label"
                                         >
                                           Description
                                           <span style={{ color: 'red' }}>
@@ -3018,10 +2969,10 @@ const TeacherProfile = () => {
                                         ) : null}
                                       </div>
                                     </form>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                       <button
                                         type="button"
-                                        class="btn btn-secondary"
+                                        className="btn btn-secondary"
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
@@ -3029,7 +2980,7 @@ const TeacherProfile = () => {
                                       </button>
                                       <button
                                         type="submit"
-                                        class="btn btn-primary"
+                                        className="btn btn-primary"
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >

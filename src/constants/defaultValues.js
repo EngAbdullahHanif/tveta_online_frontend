@@ -1,7 +1,7 @@
 export const userRole = {
   superUser: 'super_admin',
   admin: 'admin',
-  provincial: 'ins_dataentry',
+  provincial: 'pr_supervisor',
   institute: 'institute',
   user: 'user',
   dormManager: 'dorm_manager',
@@ -13,14 +13,18 @@ export const userRole = {
   provinceSupervisor: 'pr_supervisor',
   dataentry: 'dataentry',
   supervisor: 'supervisor',
+  authenticated: 'authenticated',
 };
+
+export const CURRENT_SHAMSI_YEAR = 1403;
 
 export const roleRoots = {
   admin: '/app',
   dorm_manager: '/app/dorms/students',
-  ins_manager: '/app/students',
+  ins_manager: '/app/dashboards/institute',
   ins_dataentry: '/app/students',
   dataentry: '/app/students',
+  pr_supervisor: '/app/dashboards/provincial',
 };
 
 /* 

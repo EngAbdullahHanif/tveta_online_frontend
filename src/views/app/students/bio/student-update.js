@@ -12,10 +12,21 @@ import {
   StdInteranceOptions,
   studentStatusOptions,
 } from '../../global-data/options';
-import { teacherRegisterFormStep_1 } from '../../global-data/forms-validation';
+import {
+  studentRegisterFormStep_1,
+  teacherRegisterFormStep_1,
+} from '../../global-data/forms-validation';
 import { NavLink } from 'react-router-dom';
 import './../../../../assets/css/global-style.css';
-import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
+import {
+  Row,
+  Card,
+  CardBody,
+  FormGroup,
+  Label,
+  Button,
+  Spinner,
+} from 'reactstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
@@ -25,6 +36,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import config from '../../../../config';
 import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const StudentUpdate = ({ intl }, values) => {
   const { contextFields, provinces, districts } = useContext(AuthContext);
@@ -34,16 +46,23 @@ const StudentUpdate = ({ intl }, values) => {
   const [selectedMainProvince, setSelectedMainProvince] = useState('');
   const [selectedCurrentProvince, setSelectedCurrentProvince] = useState('');
   const [student, setStudent] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
   const forms = [createRef(null), createRef(null), createRef(null)];
+
+  async function fetchStudent() {
+    const { data } = await callApi(`students/${studentId}/`, '', null);
+    console.log('already existing data:', data);
+    setStudent(data);
+  }
 
   const { studentId } = useParams();
   useEffect(() => {
-    async function fetchTeacher() {
-      const { data } = await callApi(`students/${studentId}/`, '', null);
-      console.log('DATA in teacher UPDATE:', data);
-      setStudent(data);
+    if (studentId) {
+      setIsLoading(true);
+      fetchStudent();
+      setIsLoading(false);
     }
-    fetchTeacher();
   }, []);
 
   const createNotification = (type, className) => {
@@ -78,39 +97,15 @@ const StudentUpdate = ({ intl }, values) => {
   };
 
   const fetchDistricts = async (provinceId) => {
-    console.log('provinceId', provinceId);
-    const response = await callApi(
-      `core/districts/?province=${provinceId}`,
-      'GET',
-      null
+    setMainDistricts(
+      districts.filter((district) => district.province === provinceId)
     );
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.native_name,
-      }));
-      setMainDistricts(updatedData);
-    } else {
-      console.log('district error');
-    }
   };
 
   const fetchCurrentDistricts = async (provinceId) => {
-    console.log('provinceId', provinceId);
-    const response = await callApi(
-      `core/districts/?province=${provinceId}`,
-      'GET',
-      null
+    setCurrentDistricts(
+      districts.filter((district) => district.province === provinceId)
     );
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setCurrentDistricts(updatedData);
-    } else {
-      console.log('district error');
-    }
   };
 
   useEffect(() => {
@@ -127,10 +122,10 @@ const StudentUpdate = ({ intl }, values) => {
     }
   }, [selectedCurrentProvince]);
 
-  const updateStudent = async (newFields) => {
+  const updateStudent = (newFields) => {
     // alert('Form Submitted');
     console.log('Form Data: ', newFields);
-
+    setIsLoading(true);
     const data = {
       cover_number: newFields.coverNumber,
       current_district: newFields.currentDistrict?.value,
@@ -147,24 +142,27 @@ const StudentUpdate = ({ intl }, values) => {
       main_province: newFields.mainProvince?.value,
       main_village: newFields.mainVillage,
       name: newFields.name,
-      page_number: newFields.pageNumber,
+      cover_number: newFields.idCardJoldNo,
+      page_number: newFields.idCardPageNo,
+      sabt_number: newFields.sabtNo,
       phone_number: newFields.phoneNumber,
       place_of_birth: newFields.placeOfBirth,
       registration_number: newFields.registrationNumber,
       year_of_birth: newFields.yearOfBirth?.value,
-      status: newFields.status?.value,
+      // status: newFields.status?.value,
       admission_method: newFields.admission_method?.value,
     };
-    await callApi(`students/${studentId}/`, 'PATCH', data)
+    callApi(`students/${studentId}/`, 'PATCH', data)
       .then((response) => {
         if (response.data) {
           message.success('شاګرد آپډیټ شو');
-          window.history.back();
-          console.log('RESPONSE in Student Update: ', response.data);
+          history.push(`/app/students/student/${studentId}`);
         }
       })
-      .catch((err) => console.log('Error in Teacher Save: ', err));
+      .catch((err) => console.log('Error in Teacher Save: ', err))
+      .finally(() => setIsLoading(false));
   };
+
   const initValues = {
     name: student?.name,
     englishName: student?.english_name,
@@ -173,67 +171,52 @@ const StudentUpdate = ({ intl }, values) => {
     fatherName: student?.father_name,
     englishFatherName: student?.english_father_name,
     grandFatherName: student?.grandfather_name,
-    yearOfBirth: dateOfBirthOptoions.filter((teacherBirth) => {
-      if (teacherBirth.value === student?.year_of_birth.toString()) {
-        return teacherBirth;
-      }
-    }),
+    yearOfBirth: student?.year_of_birth,
     placeOfBirth: student?.place_of_birth,
-    registrationNumber: student?.registration_number,
     phoneNumber: student?.phone_number,
 
+    registrationNumber: student?.registration_number,
     pageNumber: student?.page_number,
     coverNumber: student?.cover_number,
-    gender: genderOptions.filter((gendr) => {
-      if (gendr.value === student?.gender) {
-        return gendr;
-      }
-    }),
-    tazkiraType:
-      student?.page_number > 0 ? tazkiraOptions[1] : tazkiraOptions[0],
+    gender: genderOptions.find((gen) => gen.value === student?.gender),
+    tazkiraType: tazkiraOptions.find(
+      (option) => option.value == student?.tazkira_type
+    ),
+    idCardJoldNo: student?.cover_number,
+    idCardPageNo: student?.page_number,
 
-    currentDistrict: districts.filter((district) => {
-      if (district.value == student?.current_district) {
-        return district;
-      }
-    }),
-    currentProvince: provinces.filter((province) => {
-      if (province.value == student?.current_province) {
-        return province;
-      }
-    }),
-    mainProvince: provinces.filter((province) => {
-      if (province.value == student?.main_province) {
-        return province;
-      }
-    }),
-    mainDistrict: districts.filter((district) => {
-      if (district.value == student?.main_district) {
-        return district;
-      }
-    }),
+    currentDistrict: districts.find(
+      (district) => district.value == student?.current_district
+    ),
+    currentProvince: provinces.find(
+      (province) => province.value == student?.current_province
+    ),
+    mainProvince: provinces.find(
+      (province) => province.value == student?.main_province
+    ),
+    mainDistrict: districts.find(
+      (district) => district.value == student?.main_district
+    ),
     currentVillage: student?.current_village,
     mainVillage: student?.main_village,
-    status: studentStatusOptions.filter((status) => {
-      if (status.value == student?.status) {
-        return status;
-      }
-    }),
-    admission_method: StdInteranceOptions.map((type) => {
-      if (type.value == student?.admission_method) {
-        return type;
-      }
-    }),
+    // status: studentStatusOptions.find(
+    //   (status) => status.value == student?.status
+    // ),
+
+    admission_method: StdInteranceOptions.find(
+      (type) => type.value == student?.admission_method
+    ),
   };
   //   console.log('Student: ', student);
   console.log('Student Init Values: ', initValues);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Card>
       <div className="mt-4 ml-5">
-        <h2 className="mt-5 m-5 titleStyle">
-          {<IntlMessages id="teacher.RegisterTitle" />}
-        </h2>
+        <h2 className="mt-5 m-5 titleStyle">د زده کوونکي آپډټ/ آپدیت شاگرد</h2>
       </div>
       <CardBody className="wizard wizard-default">
         <div className="wizard-basic-step">
@@ -242,11 +225,9 @@ const StudentUpdate = ({ intl }, values) => {
             enableReinitialize={true}
             innerRef={forms[0]}
             initialValues={initValues}
-            validateOnMount
-            // validationSchema={teacherRegisterFormStep_1}
-            onSubmit={(formData) => {
-              updateStudent(formData);
-            }}
+            // validateOnMount
+            // validationSchema={studentRegisterFormStep_1}
+            onSubmit={updateStudent}
           >
             {({
               errors,
@@ -328,55 +309,80 @@ const StudentUpdate = ({ intl }, values) => {
                       ) : null}
                     </FormGroup>
 
-                    {values.tazkiraType.value === 'paper' ? (
-                      <div>
-                        <FormGroup className="form-group has-float-label error-l-175">
-                          <Label>
-                            <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                          </Label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="coverNumber"
-                            type="number"
-                          />
-                          {errors.coverNumber && touched.coverNumber ? (
-                            <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                              {errors.coverNumber}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                        <FormGroup className="form-group has-float-label error-l-175">
-                          <Label>
-                            <IntlMessages id="teacher.IdcardPageNoLabel" />
-                          </Label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="pageNumber"
-                            type="number"
-                          />
-                          {errors.pageNumber && touched.pageNumber ? (
-                            <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                              {errors.pageNumber}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                      </div>
-                    ) : (
-                      <div></div>
-                    )}
+                    {/* Tazkira Number */}
+                    <FormGroup className="form-group has-float-label error-l-175">
+                      <Label>
+                        نمبر تذکره الکترونی/صکوک نمبر
+                        <span style={{ color: 'red' }}>*</span>
+                      </Label>
+                      <Field
+                        className="form-control fieldStyle"
+                        name="registrationNumber"
+                        type="number"
+                      />
+                      {errors.registrationNumber &&
+                      touched.registrationNumber ? (
+                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                          {errors.registrationNumber}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+
+                    {values?.tazkiraType?.value === 'paper' ? (
+                      <>
+                        <div>
+                          {/* Jold Number */}
+                          <div>
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="idCardJoldNo"
+                                type="string"
+                              />
+                              {errors.idCardJoldNo && touched.idCardJoldNo ? (
+                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                  {errors.idCardJoldNo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+                          </div>
+                        </div>
+
+                        <div>
+                          {/* Safha */}
+                          <div>
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label>
+                                <IntlMessages id="teacher.IdCardPageNoLabel" />
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="idCardPageNo"
+                                type="number"
+                              />
+                              {errors.idCardPageNo && touched.idCardPageNo ? (
+                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                  {errors.idCardPageNo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+                          </div>
+                        </div>
+                      </>
+                    ) : null}
 
                     <FormGroup className="form-group has-float-label error-l-100 ">
                       <Label>
                         <IntlMessages id="teacher.DoBLabel" />
                         <span style={{ color: 'red' }}>*</span>
                       </Label>
-                      <FormikReactSelect
+                      <Field
+                        className="form-control fieldStyle"
                         name="yearOfBirth"
                         id="yearOfBirth"
-                        value={values.yearOfBirth}
-                        options={dateOfBirthOptoions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
                         required
                       />
                       {errors.yearOfBirth && touched.yearOfBirth ? (
@@ -386,7 +392,7 @@ const StudentUpdate = ({ intl }, values) => {
                       ) : null}
                     </FormGroup>
 
-                    <FormGroup className="form-group has-float-label error-l-175">
+                    {/* <FormGroup className="form-group has-float-label error-l-175">
                       <Label>
                         <IntlMessages id="teacher.status" />
                         <span style={{ color: 'red' }}>*</span>
@@ -405,7 +411,7 @@ const StudentUpdate = ({ intl }, values) => {
                           {errors.status}
                         </div>
                       ) : null}
-                    </FormGroup>
+                    </FormGroup> */}
                     <FormGroup className="form-group has-float-label error-l-175">
                       <Label>
                         <IntlMessages id="Admission Method" />
@@ -432,7 +438,6 @@ const StudentUpdate = ({ intl }, values) => {
                     <FormGroup className="form-group has-float-label error-l-100">
                       <Label>
                         <IntlMessages id="forms.Eng_name" />
-                        <span style={{ color: 'red' }}>*</span>
                       </Label>
                       <Field
                         className="form-control fieldStyle"
@@ -449,7 +454,6 @@ const StudentUpdate = ({ intl }, values) => {
                     <FormGroup className="form-group has-float-label">
                       <Label>
                         <IntlMessages id="forms.lastNameEng" />
-                        <span style={{ color: 'red' }}>*</span>
                       </Label>
                       <Field
                         className="form-control fieldStyle"
@@ -466,7 +470,6 @@ const StudentUpdate = ({ intl }, values) => {
                     <FormGroup className="form-group has-float-label error-l-100">
                       <Label>
                         <IntlMessages id="forms.Std_father_Eng_Name" />
-                        <span style={{ color: 'red' }}>*</span>
                       </Label>
                       <Field
                         className="form-control fieldStyle"
@@ -512,25 +515,6 @@ const StudentUpdate = ({ intl }, values) => {
                       {touched.gender && errors.gender ? (
                         <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                           {errors.gender}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {/* Tazkira Number */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        <IntlMessages id="teacher.TazkiraNoLabel" />
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="registrationNumber"
-                        type="number"
-                      />
-                      {errors.registrationNumber &&
-                      touched.registrationNumber ? (
-                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                          {errors.registrationNumber}
                         </div>
                       ) : null}
                     </FormGroup>
@@ -605,7 +589,10 @@ const StudentUpdate = ({ intl }, values) => {
                           id="mainProvince"
                           value={values.mainProvince}
                           options={provinces}
-                          onChange={setFieldValue}
+                          onChange={(name, value) => {
+                            setFieldValue(name, value);
+                            setFieldValue('mainDistrict', null);
+                          }}
                           onBlur={setFieldTouched}
                           onClick={setSelectedMainProvince(
                             values.mainProvince?.value
@@ -627,10 +614,7 @@ const StudentUpdate = ({ intl }, values) => {
                           name="mainDistrict"
                           id="mainDistrict"
                           value={values.mainDistrict}
-                          options={districts.filter(
-                            (district) =>
-                              district.province === values.mainProvince.value
-                          )}
+                          options={mainDistricts}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
@@ -676,10 +660,13 @@ const StudentUpdate = ({ intl }, values) => {
                           id="currentProvince"
                           value={values.currentProvince}
                           options={provinces}
-                          onChange={setFieldValue}
+                          onChange={(name, value) => {
+                            setFieldValue(name, value);
+                            setFieldValue('currentDistrict', null);
+                          }}
                           onBlur={setFieldTouched}
                           onClick={setSelectedCurrentProvince(
-                            values.currentProvince.value
+                            values?.currentProvince?.value
                           )}
                         />
                         {errors.currentProvince && touched.currentProvince ? (
@@ -698,10 +685,7 @@ const StudentUpdate = ({ intl }, values) => {
                           name="currentDistrict"
                           id="currentDistrict"
                           value={values.currentDistrict}
-                          options={districts.filter(
-                            (district) =>
-                              district.province === values.currentProvince.value
-                          )}
+                          options={currentDistricts}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
@@ -729,16 +713,10 @@ const StudentUpdate = ({ intl }, values) => {
                     </div>
                   </Colxx>
                 </Row>
-                <NavLink
-                  to={{
-                    pathname: `app/teachers/`,
-                    state: { data: 'TEACHER' },
-                  }}
-                >
-                  <Button className="mt-5 bg-primary" onClick={handleSubmit}>
-                    <IntlMessages id="ثبت" />
-                  </Button>
-                </NavLink>
+
+                <Button className="mt-5 bg-primary" onClick={handleSubmit}>
+                  <IntlMessages id="ثبت" />
+                </Button>
               </Form>
             )}
           </Formik>

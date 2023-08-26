@@ -35,12 +35,12 @@ const ListPageListing = ({
   return (
     <>
       <Row>
-        {items.length === 0 ? (
+        {items?.length === 0 ? (
           <div className="no-result m-3">
             <h5>هیچ داده ای برای نمایش وجود ندارد</h5>
           </div>
         ) : null}
-        {items.map((transferedStudents) => {
+        {items?.map((transferedStudents) => {
           if (displayMode === 'imagelist') {
             return (
               <ImageListView

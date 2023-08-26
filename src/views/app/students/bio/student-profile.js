@@ -7,7 +7,18 @@ import { Formik, Form, Field } from 'formik';
 import CustomSelectInput from 'components/common/CustomSelectInput';
 import { NavLink } from 'react-router-dom';
 import './../../.././../assets/css/global-style.css';
+import profilePhoto from './../../../../assets/img/profiles/user.png';
 
+import {
+  message,
+  Col,
+  InputNumber,
+  Slider,
+  Table as TB,
+  Spin,
+  Popconfirm,
+} from 'antd';
+import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import * as Yup from 'yup';
 import {
   Row,
@@ -17,14 +28,18 @@ import {
   Label,
   Button,
   CardTitle,
-  Table,
+  // Table,
   InputGroup,
   InputGroupAddon,
   Input,
+  Badge,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from 'reactstrap';
 import Select from 'react-select';
 import logo from './../../../../assets/logos/AdminLogo.png';
-import profilePhoto from './../../../../assets/img/profiles/22.jpg';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
@@ -36,12 +51,14 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import Classes from 'views/app/classes';
-import { DistrictsContext, ProvincesContext } from 'context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
+import { teacherFeedbackOptions } from 'views/app/global-data/options';
 
 const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
 
 const StudentProfile = () => {
+  const { institutes, provinces, districts } = useContext(AuthContext);
   const { studentId } = useParams();
   const [isNext, setIsNext] = useState(true);
   const [student, setStudent] = useState([]);
@@ -50,13 +67,13 @@ const StudentProfile = () => {
   const [dorm, setDorm] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [insentiveAlert, setInsentiveAlert] = useState(false);
+  const [updatingRecord, setUpdatingRecord] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [studentInstitute, setStudentInstitutes] = useState();
 
-  const { provinces } = useContext(ProvincesContext);
-  const { districts } = useContext(DistrictsContext);
-
-  console.log('districts from context: ', districts);
-
-  console.log('provinces from context: ', provinces);
   const provincesList = {};
   const districtsList = {};
 
@@ -67,19 +84,77 @@ const StudentProfile = () => {
   districts.forEach((districts) => {
     districtsList[districts.value] = districts.label;
   });
-  console.log('provincesList: ', provincesList);
-  console.log('districtsList: ', districtsList);
+  async function fetchStudentInstitutes() {
+    const response = await callApi(
+      `teachers/${teacherId}/feedbacks/`,
+      '',
+      null
+    );
 
+    const data = response.data;
+    setStudentInstitutes(data);
+  }
+  let recId;
+  const resetUpdate = () => {
+    setUpdatingRecord(null);
+    recId = null;
+    setStartDate(null);
+    setEndDate(null);
+  };
+  const handleRecord = (item) => {
+    recId = item.id;
+    setUpdatingRecord(item);
+    setStartDate(item.startDate);
+    setEndDate(item.endDate);
+  };
+  const deleteInsentive = async (item) => {
+    await callApi(`students/${studentId}/feedbacks/${item}/`, 'DELETE').then(
+      (response) => {
+        fetchStudentInstitutes();
+      }
+    );
+  };
+  const addInstitute = async (inputData, { resetForm }) => {
+    setLoading(true);
+    let apiParams = {
+      endPoint: `students/${studentId}/institute/`,
+      method: 'POST',
+    };
+    if (recId || updatingRecord.id) {
+      apiParams.endPoint = `students/${studentId}/institute/${updatingRecord.id}/`;
+      apiParams.method = 'PATCH';
+    }
+    const data = {
+      type: inputData.type?.value,
+      teacher: teacher[0].id,
+      institute: inputData.institute?.value,
+      details: inputData.details,
+    };
+    await callApi(apiParams.endPoint, apiParams.method, data).then(
+      (response) => {
+        resetUpdate();
+        if (response.status >= 200 && response.status < 300) {
+          setLoading(false);
+          message.success('Data Saved Successfully');
+          fetchTeacherIncentives();
+          resetForm();
+          resetUpdate();
+        } else {
+          message.error('Data Not Saved Check your Payload');
+        }
+      }
+    );
+    setLoading(false);
+  };
   //load data of student from database
   useEffect(() => {
     async function fetchStudent() {
       try {
-        const response = await callApi(`students/?id=${studentId}`, '', null);
-        console.log('student response', response.data);
+        const response = await callApi(`students/${studentId}/`, '', null);
+
         if (response.data && response.status === 200) {
-          const data = await response.data.results;
-          console.log('student data', data);
-          setStudent(data);
+          const data = await response.data;
+          setStudent([data]);
           setIsLoaded(true);
         }
 
@@ -91,8 +166,7 @@ const StudentProfile = () => {
 
         if (instituteResponse.data && instituteResponse.status === 200) {
           const instituteData = await instituteResponse.data;
-          console.log('instituteData', instituteData);
-          setInstitute(instituteData);
+          setInstitute(instituteData?.results);
         }
 
         //type =1 means current class or current continued class
@@ -104,7 +178,6 @@ const StudentProfile = () => {
 
         if (classResponse.data && classResponse.status === 200) {
           const classData = await classResponse.data;
-          console.log('classData', classData);
           setClasss(classData);
         }
 
@@ -115,7 +188,6 @@ const StudentProfile = () => {
         );
         if (dormResponse.data && dormResponse.status === 200) {
           const dormData = await dormResponse.data;
-          console.log('dormData', dormData);
           setDorm(dormData);
         }
 
@@ -126,7 +198,6 @@ const StudentProfile = () => {
         );
         if (marksResponse.data && marksResponse.status === 200) {
           const marksData = await marksResponse.data;
-          console.log('marksData', marksData);
           setMarks(marksData);
         }
       } catch (error) {
@@ -176,20 +247,22 @@ const StudentProfile = () => {
             <Colxx xxs="1"></Colxx>
             {student.length > 0 && (
               <Colxx>
-                {console.log('here', `${student[0].photo}`)}
-                {/* <img src={student.student_photo} alt="Photo" width={'10%'} />{' '} */}
-                <NavLink to={`?p=${student.student}`} className="w-40 w-sm-100">
+                <a
+                  href={student[0].photo}
+                  className="w-40 w-sm-100"
+                  target="_blank"
+                >
                   <img
                     top
-                    alt={student.name}
-                    src={`${student[0].photo}`}
+                    alt={student[0].name}
+                    src={student[0].photo || profilePhoto}
                     style={{
                       maxWidth: '12%',
                       maxHeight: '130%',
                       borderRadius: '5px',
                     }}
                   />
-                </NavLink>
+                </a>
               </Colxx>
             )}
           </Row>
@@ -233,9 +306,8 @@ const StudentProfile = () => {
           </Row>
         </div>
       )}
-
       {/* if student is loaded show it, if not show empty  */}
-      {student.length > 0 && institute.length > 0 && classs.length > 0 && (
+      {student?.length > 0 && institute?.length > 0 && classs?.length > 0 && (
         <>
           {isNext ? (
             <>
@@ -261,11 +333,39 @@ const StudentProfile = () => {
                     <Row className="justify-content-center   rounded ">
                       <Colxx style={{ paddingInline: '4%' }} xxs="">
                         <Label className="data-style">
+                          <IntlMessages id="ایدی" />
+                        </Label>
+
+                        <h2>
+                          {student[0].student_id}{' '}
+                          {
+                            <Badge
+                              color={
+                                student[0].status == 'dismissed'
+                                  ? 'danger'
+                                  : student[0].status == 'inprogress'
+                                  ? 'success'
+                                  : student[0].status == 'active'
+                                  ? 'success'
+                                  : student[0].status == 'freeze'
+                                  ? 'secondary'
+                                  : 'warning'
+                              }
+                              pill
+                            >
+                              {student[0].status}
+                            </Badge>
+                          }
+                        </h2>
+                        <Label className="data-style">
                           <IntlMessages id="teacher.NameLabel" />
                         </Label>
                         <h2>
-                          {console.log('student object', student)}
-                          {student[0].name + '  "' + student[0].last_name + '"'}
+                          {student[0].name +
+                            '"' +
+                            ' ' +
+                            student[0].last_name +
+                            '"'}
                         </h2>
                         <Label className="data-style">
                           <IntlMessages id="forms.Eng_name" />
@@ -273,7 +373,7 @@ const StudentProfile = () => {
                         <h2>
                           {student[0].english_name +
                             ' ' +
-                            student[0].english_last_name}{' '}
+                            student[0].english_last_name}
                         </h2>
                         <Label className="data-style">
                           <IntlMessages id="teacher.FatherNameLabel" />
@@ -517,6 +617,309 @@ const StudentProfile = () => {
                   </div>
                 </CardBody>
               </Card>
+              {/* <Card className="rounded m-4 mt-5">
+                <CardBody>
+                  <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                    {' '}
+                    <h2
+                      className="bg-primary "
+                      style={{
+                        padding: '8px',
+                        paddingInline: '30px',
+                        borderRadius: '10px',
+                      }}
+                    >
+                      <IntlMessages id="Student Institute" />
+                    </h2>
+                  </Colxx>
+
+                  <Row className="justify-content-center   rounded">
+                    <Colxx style={{ paddingInline: '4%' }}>
+                      <table
+                        className="table table-striped table-lg"
+                        style={{ fontSize: 18 }}
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Teacher</th>
+                            <th scope="col">Institute</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Details</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {[
+                            {
+                              id: 123,
+                              name: 'name',
+                              institute: 'institute',
+                              type: 'type',
+                            },
+                          ].map((item, index) => {
+                            return (
+                              <tr key={item.id}>
+                                <th scope="row">{item.id}</th>
+                                <td>{item.teacher}</td>
+                                <td>{item.institute}</td>
+                                <td>{item.type}</td>
+                                <td>{item.details}</td>
+                                <td>
+                                  <BsPencilSquare
+                                    color="green"
+                                    data-toggle="modal"
+                                    data-target="#instituteModal"
+                                    data-whatever="@getbootstrap"
+                                    outline
+                                    style={{ fontSize: '20px' }}
+                                    id="updateIcon"
+                                    onClick={() => handleRecord(item)}
+                                  />
+                                  <Popconfirm
+                                    title="ډلیټ"
+                                    icon={
+                                      <BsTrashFill
+                                        color="red"
+                                        id="deleteIcon"
+                                        outline
+                                        style={{ fontSize: '20px' }}
+                                      />
+                                    }
+                                    description={`مطمعین یاست چې   برای ${studentId} (${item.id})  ډیلیټ کړی. `}
+                                    onConfirm={() => deleteInsentive(item.id)}
+                                    okText="ډیلیټ"
+                                    okType="danger"
+                                    cancelText="نه"
+                                  >
+                                    <BsTrashFill
+                                      color="red"
+                                      id="deleteIcon"
+                                      outline
+                                      // onClick={() => setInsentiveAlert(true)}
+                                      style={{ fontSize: '20px' }}
+                                    />
+                                  </Popconfirm>
+                                </td>
+                                <Modal
+                                  isOpen={insentiveAlert}
+                                  toggle={() =>
+                                    setInsentiveAlert(!insentiveAlert)
+                                  }
+                                  style={{ marginTop: '10%' }}
+                                >
+                                  <ModalHeader>
+                                    <IntlMessages id="modal.deletion-message-title" />
+                                  </ModalHeader>
+                                  <ModalBody className="text-center">
+                                    <IntlMessages id="modal.deletion-message-details" />
+                                  </ModalBody>
+                                  <ModalFooter>
+                                    <Button
+                                      onClick={() => setInsentiveAlert(false)}
+                                      style={{ marginLeft: '55%' }}
+                                    >
+                                      نه/ نخیر
+                                    </Button>
+                                    <Button
+                                      color="danger"
+                                      onClick={() => {
+                                        setInsentiveAlert(false);
+                                        deleteInsentive(item.id);
+                                      }}
+                                      style={{ marginLeft: '5%' }}
+                                    >
+                                      هو / بلی
+                                    </Button>
+                                  </ModalFooter>
+                                </Modal>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+
+                      <br />
+                      <Button
+                        className="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#instituteModal"
+                        data-whatever="@getbootstrap"
+                      >
+                        Save Institute
+                      </Button>
+
+                      <div
+                        className="modal fade"
+                        id="instituteModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="instituteModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="instituteModalLabel"
+                              ></h5>
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={resetUpdate}
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div className="modal-body">
+                              <Formik
+                                enableReinitialize={true}
+                                initialValues={
+                                  !updatingRecord
+                                    ? {
+                                        institute: [],
+                                        type: [],
+                                        details: '',
+                                      }
+                                    : {
+                                        institute: institutes.filter((inst) => {
+                                          if (
+                                            inst.value ===
+                                            updatingRecord.institute
+                                          )
+                                            return inst;
+                                        }),
+                                        type: teacherFeedbackOptions.filter(
+                                          (inst) => {
+                                            if (
+                                              inst.value === updatingRecord.type
+                                            )
+                                              return inst;
+                                          }
+                                        ),
+                                        details: updatingRecord.details,
+                                      }
+                                }
+                                // validationSchema={
+                                //   teacherInstitutesValidationSchema
+                                // }
+                                onSubmit={addInstitute}
+                              >
+                                {({
+                                  errors,
+                                  touched,
+                                  values,
+                                  setFieldTouched,
+                                  setFieldValue,
+                                  handleSubmit,
+                                }) => (
+                                  <>
+                                    <form>
+                                      <div className="form-group w-100">
+                                        <label
+                                          for="institute"
+                                          className="col-form-label"
+                                        >
+                                          institute
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="institute"
+                                          id="institute"
+                                          value={values.institute}
+                                          options={institutes}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.institute &&
+                                        touched.institute ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.institute}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div className="form-group w-100">
+                                        <label
+                                          for="type"
+                                          className="col-form-label"
+                                        >
+                                          Type
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <FormikReactSelect
+                                          name="type"
+                                          id="type"
+                                          value={values.type}
+                                          options={teacherFeedbackOptions}
+                                          onChange={setFieldValue}
+                                          onBlur={setFieldTouched}
+                                          required
+                                        />
+                                        {errors.type && touched.type ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.type}
+                                          </div>
+                                        ) : null}
+                                      </div>
+
+                                      <div className="form-group">
+                                        <label
+                                          for="recipient-name"
+                                          className="col-form-label"
+                                        >
+                                          Description
+                                          <span style={{ color: 'red' }}>
+                                            *
+                                          </span>
+                                        </label>
+                                        <Field
+                                          className="form-control fieldStyle"
+                                          name="details"
+                                        />
+                                        {errors.details && touched.details ? (
+                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                            {errors.details}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                    </form>
+                                    <div className="modal-footer">
+                                      <button
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        data-dismiss="modal"
+                                        onClick={resetUpdate}
+                                      >
+                                        Close
+                                      </button>
+                                      <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                        // data-dismiss="modal"
+                                        onClick={handleSubmit}
+                                      >
+                                        Add Institute
+                                        {loading && <Spin />}
+                                      </button>
+                                    </div>
+                                  </>
+                                )}
+                              </Formik>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Colxx>
+                  </Row>
+                </CardBody>
+              </Card> */}
             </>
           ) : (
             <>

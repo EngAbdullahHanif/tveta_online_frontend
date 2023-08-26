@@ -34,7 +34,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       .required()
       .test(
         'len',
-        'Username Must be at least 5 characters',
+        'کارن نوم باید له پنځه حروفو زیات وي',
         (val) => val?.length >= 5
       )
       .label('username'),
@@ -42,7 +42,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       .required()
       .test(
         'len',
-        'Passwor Must be at least 5 characters',
+        'پاسورډ باید له پنځه حروفو زیات وي',
         (val) => val?.length >= 5
       )
       .label('password'),
@@ -72,11 +72,12 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         if (response.status === 200) {
           setLoginError(false);
           message.success(' شه راغلاست / خوش امدید');
-          console.log('Data: ', response.data);
+          console.log('Logged User Data: ', response.data);
           console.log('Token: ', response.data.access);
           let loggedUser = jwt_decode(response.data.access);
           console.log('Logged User in Token: ', loggedUser);
           authContext.setUser(response.data.user);
+          authContext.setFromSuccessfulLogin(true);
           localStorage.setItem('user', JSON.stringify(response.data.user));
           localStorage.setItem('current_user', response.data.user); //this should be removed after conflict resolved
           localStorage.setItem('access_token', response.data.access);
@@ -104,7 +105,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
     }
   };
 
-  const initialValues = { email, password };
+  const initialValues = { email: '', password: '' };
 
   return (
     <Row className="h-100">
@@ -143,11 +144,17 @@ const Login = ({ history, loading, error, loginUserAction }) => {
             </CardTitle>
 
             <Formik
-              initialValues={initialValues}
               onSubmit={onUserLogin}
               validationSchema={userLoginSchema}
+              initialValues={initialValues}
             >
-              {({ errors, touched, handleSubmit }) => (
+              {({
+                errors,
+                touched,
+                handleSubmit,
+                setFieldValue,
+                setFieldTouched,
+              }) => (
                 <Form className="av-tooltip tooltip-label-bottom">
                   <FormGroup className="form-group has-float-label">
                     <Label>
@@ -187,6 +194,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                     <Colxx className="text-left">
                       {' '}
                       <Button
+                        type="submit"
                         color="primary"
                         className={`btn-shadow btn-multiple-state ${
                           loading ? 'show-spinner' : ''

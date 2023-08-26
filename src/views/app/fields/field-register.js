@@ -87,7 +87,11 @@ const FieldRegister = () => {
 
   // post student record to server
   const postStudentRecord = async (data) => {
-    const response = await callApi('institute/field-create/', 'POST', data);
+    const response = await callApi(
+      'institute/department-create/',
+      'POST',
+      data
+    );
     if (response) {
       createNotification('success', 'filled');
       // resetForm();

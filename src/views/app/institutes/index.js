@@ -29,23 +29,13 @@ const Institues = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/institutes`}
         component={InstituteList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/promotion-demotion-list`}
         component={PromotionDemotionList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
 
@@ -53,79 +43,44 @@ const Institues = ({ match, props }) => (
         exact
         path={`${match.url}/register`}
         component={InstituteRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/register/:instituteId`}
         component={InstituteRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/institute-create`}
         component={InstitueCreate}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
 
       <ProtectedRoute
         path={`${match.url}/institute-upgrade`}
         component={InstituteUpgrade}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/institute/:instituteId`}
         component={InstituteProfile}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/institute-department/register`}
         component={InstituteDepartmentRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/institute-department/list`}
         component={InstituteDepartmentList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <Redirect to="/error" />

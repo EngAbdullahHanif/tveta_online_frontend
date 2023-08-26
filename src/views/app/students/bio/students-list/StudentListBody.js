@@ -18,11 +18,11 @@ import { BsPencilSquare } from 'react-icons/bs';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { ProvincesContext } from 'context/AuthContext';
 import {
   StdInteranceOptions,
   studentStatusOptions,
 } from 'views/app/global-data/options';
+import { AuthContext } from 'context/AuthContext';
 
 const StudentListBody = (
   { student, isSelect, collect, onCheckItem },
@@ -31,7 +31,7 @@ const StudentListBody = (
   const [modalBasic, setModalBasic] = useState(false);
   const [Deletion, setDeletion] = useState(false);
 
-  const { provinces } = useContext(ProvincesContext);
+  const { provinces } = useContext(AuthContext);
 
   const handleClick = async (event, student_id) => {
     console.log(student_id, 'student_id');

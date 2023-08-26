@@ -23,47 +23,27 @@ const Applications = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/todo`}
         component={Todo}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.institute,
-          userRole.provincial,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/survey/:surveyid`}
         component={SurveyDetail}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.institute,
-          userRole.provincial,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
         isExact
       />
       <ProtectedRoute
         path={`${match.url}/survey`}
         component={Survey}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.institute,
-          userRole.provincial,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
         isExact
       />
       <ProtectedRoute
         path={`${match.url}/chat`}
         component={Chat}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.institute,
-          userRole.provincial,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <Redirect to="/error" />

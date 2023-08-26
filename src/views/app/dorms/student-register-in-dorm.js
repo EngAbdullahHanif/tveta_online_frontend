@@ -28,13 +28,12 @@ const SignupSchema = Yup.object().shape({
 });
 
 import config from '../../../config';
+import { AuthContext } from 'context/AuthContext';
 
 const dormTypeOptions = [
   { value: 'in_dorm', label: 'بدل عاشه' },
   { value: 'cash', label: 'بدیل عاشه' },
 ];
-
-import { ProvincesContext, DistrictsContext } from 'context/AuthContext';
 
 const DormRegistration = (values) => {
   const initialValues = {
@@ -52,8 +51,8 @@ const DormRegistration = (values) => {
   const [dorms, setDorms] = useState();
   const [successMessage, setSuccessMessage] = useState(false);
   const [isNext, setIsNext] = useState(true);
-  const provinces = useContext(ProvincesContext).provinces;
-  const districts = useContext(DistrictsContext).districts;
+
+  const { provinces, districts } = useContext(AuthContext);
 
   console.log('provinces context', provinces);
   console.log('districts from context', districts);

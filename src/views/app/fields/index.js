@@ -44,91 +44,51 @@ const Fields = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/register`}
         component={FieldRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/field-list`}
         component={FieldList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/institute-field-department-register`}
         component={InstituteFieldDepartmentRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/new-sector`}
         component={SectorRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
 
       <ProtectedRoute
         path={`${match.url}/department-register`}
         component={DepartmentRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/department-list`}
         component={DepartmentList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
 
       <ProtectedRoute
         path={`${match.url}/sector-list`}
         component={SectorList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/sector-register`}
         component={SectorRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
 

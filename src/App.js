@@ -7,51 +7,54 @@ import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
 import { isMultiColorActive } from './constants/defaultValues';
 import { getDirection, getCurrentUser } from './helpers/Utils';
-import {
-  AuthContext,
-  ProvincesContext,
-  DistrictsContext,
-} from './context/AuthContext';
+import { AuthContext } from './context/AuthContext';
 import Application from 'context/Application';
 import Authentication from 'context/Authentication';
 import callApi from 'helpers/callApi';
-import { Button } from 'reactstrap';
+import { Button, Spinner } from 'reactstrap';
+
+import { userRole as userRoles } from './constants/defaultValues';
 
 const App = ({ locale }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem('user')) || {}
+  );
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [institutes, setInstitutes] = useState([]);
-  const [contextFields, setContextFields] = useState();
+  const [contextFields, setContextFields] = useState([]);
+  const [sectors, setSectors] = useState([]);
   const [options, setOptions] = useState({});
-  const [isTokenValid, setIsTokenValid] = useState(false);
-
+  const token = localStorage.getItem('access_token') ? true : false;
+  const [isTokenValid, setIsTokenValid] = useState(token);
+  const [settings, setSettings] = useState({ current_educational_year: 1390 });
+  const [isLoadingInitialData, setIsLoadingInitialData] = useState(true);
+  const [fromSuccessfulLogin, setFromSuccessfulLogin] = useState(false);
   const handleLogout = async () => {
     // logoutUserAction(history);
     setUser(null);
     window.location.href = window.location.origin;
-    console.log('clearing from localstorage');
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
     localStorage.removeItem('current_user');
-    console.log('calling backend logout');
 
     const response = await callApi('auth/logout/', 'POST', null);
-    console.log('response: ', response);
-    // if (response.status === 200) {
-    //   console.log('logged out from backend');
-    // }
+    if (response?.status === 200) {
+      console.log('logged out from backend');
+    }
   };
 
   const getUser = async () => {
-    callApi('auth/user/').then((response) => {
-      if (response.status == 200) {
-        setUser(response.data);
-      }
-    });
+    callApi('auth/user/')
+      .then((response) => {
+        if (response.status == 200) {
+          setUser(response.data);
+        }
+      })
+      .catch((error) => console.log('error: ', error));
   };
 
   const direction = getDirection();
@@ -67,7 +70,6 @@ const App = ({ locale }) => {
   }, [direction]);
 
   const checkTokenValidity = async () => {
-    setIsTokenValid(false);
     console.log('Checking token validity');
 
     const token = localStorage.getItem('access_token');
@@ -82,7 +84,6 @@ const App = ({ locale }) => {
 
     if (!response) {
       console.log('Cannot connect to the server');
-      removeUserAndToken();
       return;
     }
 
@@ -90,7 +91,7 @@ const App = ({ locale }) => {
       console.log('Token is valid');
       setIsTokenValid(true);
     } else {
-      handleInvalidToken();
+      removeUserAndToken();
     }
   };
 
@@ -101,11 +102,6 @@ const App = ({ locale }) => {
     setUser(null);
   };
 
-  const handleInvalidToken = () => {
-    console.log('Token is invalid. Removing it from local storage');
-    removeUserAndToken();
-  };
-
   const verifyToken = async (token) => {
     try {
       const response = await callApi('auth/token/verify/', 'POST', {
@@ -113,6 +109,9 @@ const App = ({ locale }) => {
       });
       return response;
     } catch (error) {
+      if (error?.response?.status === 401) {
+        removeUserAndToken();
+      }
       console.error('Error verifying token:', error);
       return null;
     }
@@ -192,20 +191,27 @@ const App = ({ locale }) => {
       console.log('district error');
     }
   };
+
   const fetchInstitutes = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/`, 'GET', null);
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
+      console.log('response.data: ', response.data);
+
+      const updatedData = await response.data.map(({ id, name, ...rest }) => ({
+        value: id,
+        label: name,
+        rest: rest,
       }));
+      console.log('updatedData: ', updatedData);
       setInstitutes(updatedData);
-      console.log('institues fetched in app.js: ', response.data);
     } else {
       console.log('institutes error');
     }
   };
+
   const fetchFields = async (provinceId) => {
+    if (!user) return;
     const response = await callApi(`institute/field/`, 'GET', null);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -218,79 +224,126 @@ const App = ({ locale }) => {
     }
   };
 
-  // check if token is still valid
-  useEffect(async () => {
-    checkTokenValidity();
-  }, []);
+  // localstorage
+  const fetchSectors = async (provinceId) => {
+    if (!user) return;
+    const response = await callApi(`institute/sectors/`, 'GET', null);
+    if (response.data && response.status === 200) {
+      const updatedData = await response.data.map((item) => ({
+        value: item.id,
+        label: item.sector,
+      }));
+      setSectors(updatedData);
+    } else {
+      console.log('Sector error');
+    }
+  };
 
-  useEffect(async () => {
-    if (!isTokenValid) {
+  const fetchInitialData = async () => {
+    try {
+      await Promise.all([
+        fetchProvinces(),
+        fetchDistricts(),
+        fetchClasses(),
+        fetchSubjects(),
+        fetchDepartments(),
+        fetchInstitutes(),
+        fetchFields(),
+        getUser(),
+        fetchSectors(),
+      ]);
+    } catch (error) {
+      console.log('Error fetching initial data: ', error);
+    } finally {
+      setIsLoadingInitialData(false);
+    }
+  };
+
+  useEffect(() => {
+    if (fromSuccessfulLogin) {
+      setIsTokenValid(true);
       return;
     }
-    fetchProvinces();
-    fetchDistricts();
-    fetchClasses();
-    fetchSubjects();
-    fetchDepartments();
-    fetchInstitutes();
-    fetchFields();
-    getUser();
+    checkTokenValidity();
+  }, [fromSuccessfulLogin]);
+
+  useEffect(async () => {
+    if (isTokenValid) {
+      fetchInitialData();
+    }
   }, [isTokenValid]);
+
+  const InitialDataSpinner = () => {
+    return (
+      // make this at center of screen
+      <div className="text-center ">
+        <Spinner />;
+        <p>
+          اولیه ډاټا ښکته کول په جریان کې دي. / دانلود داتا اولیه در جریان است
+        </p>
+      </div>
+    );
+  };
+
+  const NoGroupScreen = () => {
+    return (
+      <div style={{ textAlign: 'center', marginTop: 400, width: '100%' }}>
+        <h1>
+          شما در هیچ گروپی نیستید. لطفاً با آدمین تان تماس بگیرید/ تاسو هیڅ ګروپ
+          نلری،‌مهربانی وکړی له اډمین سره اړیکه ونیسی.‌
+        </h1>
+        <br />
+        <Button onClick={handleLogout}>وتل/خروج از حساب</Button>
+      </div>
+    );
+  };
+
+  let content;
+
+  if (!isTokenValid) {
+    content = <Authentication />;
+  } else {
+    if (isLoadingInitialData) {
+      content = <InitialDataSpinner />;
+    } else if (user?.groups?.length > 0) {
+      content = <Application />;
+    } else {
+      content = <NoGroupScreen />;
+    }
+  }
 
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
+        setFromSuccessfulLogin,
         provinces,
         districts,
         classes,
+        fetchClasses,
         subjects,
         departments,
         institutes,
         contextFields,
+        settings,
+        sectors,
       }}
     >
-      <ProvincesContext.Provider value={{ provinces }}>
-        <DistrictsContext.Provider value={{ districts }}>
-          <div className="h-100">
-            <IntlProvider
-              locale={currentAppLocale.locale}
-              messages={currentAppLocale.messages}
-            >
-              <>
-                <NotificationContainer />
-                {isMultiColorActive && <ColorSwitcher />}
-                <Suspense fallback={<div className="loading" />}>
-                  <Router>
-                    {!user ? (
-                      <Authentication />
-                    ) : user.groups.length > 0 ? (
-                      <Application />
-                    ) : (
-                      <div
-                        style={{
-                          textAlign: 'center',
-                          marginTop: 400,
-                          width: '100%',
-                        }}
-                      >
-                        <h1>
-                          شما در هیچ گروپی نیستید. لطفاً با آدمین تان تماس
-                          بگیرید/ تاسو هیڅ ګروپ نلری،‌مهربانی وکړی له اډمین سره
-                          اړیکه ونیسی.‌
-                        </h1>
-                        <br />
-                        <Button onClick={handleLogout}>وتل/خروج از حساب</Button>
-                      </div>
-                    )}
-                  </Router>
-                </Suspense>
-              </>
-            </IntlProvider>
-          </div>
-        </DistrictsContext.Provider>
-      </ProvincesContext.Provider>
+      <div className="h-100">
+        <IntlProvider
+          locale={currentAppLocale.locale}
+          messages={currentAppLocale.messages}
+        >
+          <>
+            <NotificationContainer />
+            {isMultiColorActive && <ColorSwitcher />}
+            <Suspense fallback={<div className="loading" />}>
+              <Router>{content}</Router>
+            </Suspense>
+          </>
+        </IntlProvider>
+      </div>
     </AuthContext.Provider>
   );
 };

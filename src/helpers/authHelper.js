@@ -14,12 +14,14 @@ const ProtectedRoute = ({
     if (isAuthGuardActive) {
       if (user) {
         if (roles) {
-          console.log('roles are', roles);
-          const groups = user.groups;
-          console.log('groups are', groups);
-          console.log('groups[0].name', groups[0].name);
+          // if a route is allowed for all logged-in users, allow them
+          if (roles.includes('authenticated')) {
+            return <Component />;
+          }
+          const groups = user?.groups;
+          console.log('user.groups: ', user?.groups);
+          console.log('roles: ', roles);
           for (let i = 0; i < groups.length; i++) {
-            console.log('groups inside loop', groups, i);
             if (roles.includes(groups[i].name)) {
               return <Component {...props} />;
             }

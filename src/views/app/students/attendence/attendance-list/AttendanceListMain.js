@@ -5,14 +5,21 @@ import ListPageHeading from './AttendanceListHeading';
 import {
   provincesOptionsForList,
   genderOptionsForList,
+  educationalYearsOptions,
 } from '../../../global-data/options';
-
+import { Select, Spin, Table as TB } from 'antd';
 import ListPageListing from './AttendanceListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import { useAsyncDebounce } from 'react-table';
 import callApi from 'helpers/callApi';
 import DisplayMessage from 'components/messages/DisplayMessage';
 import config from '../../../../../config';
+// import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import { FormGroup, Label, NavLink } from 'reactstrap';
+import { Field, Formik } from 'formik';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { AuthContext } from 'context/AuthContext';
+import { useContext } from 'react';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -21,7 +28,6 @@ const getIndex = (value, arr, prop) => {
   }
   return -1;
 };
-
 const servicePath = config.API_URL;
 const apiUrl = `${servicePath}/cakes/paging`;
 const studentApiUrl = `${servicePath}/api/`;
@@ -45,6 +51,8 @@ const genderOptions = [
 ];
 
 const ThumbListPages = ({ match }) => {
+  const { provinces, institutes, departments } = useContext(AuthContext);
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,10 +70,10 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState();
+  // const [institutes, setInstitutes] = useState();
   const [institute, setInstitute] = useState('');
   const [attendance, setAttendance] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [studentId, setStudentId] = useState('');
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
@@ -77,7 +85,13 @@ const ThumbListPages = ({ match }) => {
     column: 'all',
     label: 'ولایت',
   });
-
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 5,
+    },
+  });
+  const [isFilter, setIsFilter] = useState(false);
   const fetchAttendance = async () => {
     const response = await callApi(`students/stdatten/`, '', null);
     console.log('ATTENDANCE: ', response.data);
@@ -90,6 +104,148 @@ const ThumbListPages = ({ match }) => {
     }
   };
 
+  async function fetchData(params = {}) {
+    setIsLoading(true);
+    let endpoint = 'students/stdatten/';
+    if (institute) {
+      params.institute = institute.value;
+      endpoint = 'students/student_institutes/';
+    }
+    console.log('institute is: ', institute, 'isFilter', isFilter);
+    const params1 = {
+      ...params,
+      page: !isFilter ? tableParams.pagination.current : params.page,
+      page_size: tableParams.pagination.pageSize || null,
+    };
+    try {
+      const response = await callApi(endpoint, null, null, params1);
+      setIsLoading(false);
+      if (response.data && response.status === 200) {
+        if (institute) {
+          setItems(
+            response?.data?.map((item) => ({
+              ...item.student,
+              institute: item.institute,
+            }))
+          );
+        } else {
+          setItems(response.data.results);
+        }
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: response?.data?.count,
+          },
+        });
+      } else {
+        console.log('students error');
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
+  const columns = [
+    {
+      title: 'شماره',
+      dataIndex: 'id',
+      // sorter: (a, b) => a.student_id - b.student_id,
+      width: '5%',
+    },
+
+    {
+      title: 'نوم/نام',
+      dataIndex: 'name',
+      // sorter: (a, b) => a.name - b.name,
+      // render: (name) => `${name.first} ${name.last}`,
+      width: '15%',
+    },
+    {
+      title: 'انستیتوت',
+      dataIndex: 'institute',
+      width: '10%',
+    },
+    {
+      title: 'دپارتمنت',
+      dataIndex: 'department',
+      // filters: [
+      //   { text: 'Male', value: 'male' },
+      //   { text: 'Female', value: 'female' },
+      // ],
+      // onFilter: (value, record) => record.gender.indexOf(value) === 0,
+      width: '10%',
+    },
+
+    {
+      title: 'حاضر',
+      dataIndex: 'present_hours',
+      width: '10%',
+    },
+    {
+      title: 'ضروری',
+      dataIndex: 'necessary_work_hours',
+      width: '10%',
+    },
+    {
+      title: 'مریضی',
+      dataIndex: 'sickness_hours',
+      width: '10%',
+    },
+    {
+      title: 'غیر حاضر',
+      dataIndex: 'absent_hours',
+      width: '10%',
+    },
+    {
+      title: 'سال',
+      dataIndex: 'year',
+      width: '10%',
+    },
+  ];
+  const handleTableChange = (pagination, filter, sorter) => {
+    setIsFilter(false);
+    setTableParams({ pagination, filter, ...sorter });
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setItems([]);
+    }
+  };
+  const onFilter = async (values) => {
+    setIsFilter(true);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
+    });
+    let params = {
+      page: 1,
+    };
+    params.institute = values.filterInstitute?.value;
+    params.department = values.department?.value;
+    params.educational_year = values.educationalYear?.value;
+    // params.province = values.filterProvince?.value;
+    params.id = values.filterId || null;
+    fetchData(params);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [!isFilter ? JSON.stringify(tableParams) : null]);
+
+  const handleResetFields = (resetForm) => {
+    resetForm({
+      values: {
+        filterId: '',
+        filterInstitute: [],
+
+        educationalYear: [],
+        department: [],
+      },
+    });
+    setIsFilter(false);
+    fetchData();
+  };
   useEffect(() => {
     fetchAttendance();
     console.log('ATT: ', attendance);
@@ -176,7 +332,8 @@ const ThumbListPages = ({ match }) => {
   ) : (
     <>
       <div className="disable-text-selection">
-        <ListPageHeading
+        <h1>د حاضری لست/لست حاضری</h1>
+        {/* <ListPageHeading
           heading="د حاضری لست/لست حاضری"
           // Using display mode we can change the display of the list.
           displayMode={displayMode}
@@ -266,27 +423,7 @@ const ThumbListPages = ({ match }) => {
                 >
                   <IntlMessages id="نام/نوم" />
                 </th>
-                {/* <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="صنف/ټولګۍ" />
-              </th> */}
-                {/* <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="سمستر." />
-              </th> */}
+             
                 <th
                   style={{
                     width: '13%',
@@ -309,17 +446,7 @@ const ThumbListPages = ({ match }) => {
                   {' '}
                   <IntlMessages id="انستیتوت" />
                 </th>
-                {/* <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="دیپارتمنت" />
-              </th> */}
+           
                 <th
                   style={{
                     width: '10%',
@@ -353,17 +480,7 @@ const ThumbListPages = ({ match }) => {
                   {' '}
                   <IntlMessages id="مریض" />
                 </th>
-                {/* <th
-                  style={{
-                    width: '11%',
-                    padding: '0%',
-                    textAlign: 'right',
-                    borderStyle: 'hidden',
-                  }}
-                >
-                  {' '}
-                  <IntlMessages id="روز ها تعلیمی" />
-                </th> */}
+             
                 <th
                   style={{
                     width: '10%',
@@ -403,7 +520,129 @@ const ThumbListPages = ({ match }) => {
           </table>
         ) : (
           <DisplayMessage type="error" message="معلومات شتون نلری" />
-        )}
+        )} */}
+        <br />
+        <div
+          style={{
+            padding: 10,
+            display: 'flex',
+          }}
+        >
+          <Formik
+            initialValues={{
+              filterId: '',
+              filterInstitute: [],
+              // filterProvince: [],
+              educationalYear: [],
+              department: [],
+            }}
+            onSubmit={onFilter}
+          >
+            {({
+              values,
+              setFieldValue,
+              handleSubmit,
+              setFieldTouched,
+              resetForm,
+            }) => (
+              <>
+                {/* <FormGroup className="form-group has-float-label error-l-150">
+                  <Label>ایدی</Label>
+                  <Field
+                    name="filterId"
+                    placeholder="ایدی"
+                    style={{ height: 37 }}
+                  />
+                </FormGroup> */}
+
+                {/* <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                  <Label>ولایت</Label>
+                  <FormikReactSelect
+                    placeholder="ولایت"
+                    name="filterProvince"
+                    options={provinces}
+                    value={values.filterProvince}
+                    onChange={setFieldValue}
+                    onBlur={setFieldTouched}
+                  />
+                </FormGroup> */}
+                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                  <Label>انستیتوت</Label>
+                  <FormikReactSelect
+                    placeholder="انستیتوت"
+                    name="filterInstitute"
+                    options={institutes}
+                    value={values.filterInstitute}
+                    onChange={setFieldValue}
+                    onBlur={setFieldTouched}
+                  />
+                </FormGroup>
+                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                  <Label>دپارتمنت</Label>
+                  <FormikReactSelect
+                    name="department"
+                    id="department"
+                    options={departments}
+                    value={values.department}
+                    onChange={setFieldValue}
+                    onBlur={setFieldTouched}
+                  />
+                </FormGroup>
+                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                  <Label>سال تحصیل</Label>
+                  <FormikReactSelect
+                    name="educationalYear"
+                    id="educationalYear"
+                    options={educationalYearsOptions}
+                    value={values.educationalYear}
+                    onChange={setFieldValue}
+                    onBlur={setFieldTouched}
+                  />
+                </FormGroup>
+                <FormGroup className="form-group" style={{ display: 'flex' }}>
+                  <button className="btn btn-secondary" onClick={handleSubmit}>
+                    Filter
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                    onClick={() => handleResetFields(resetForm)}
+                  >
+                    Reset
+                  </button>
+                </FormGroup>
+              </>
+            )}
+          </Formik>
+        </div>
+        <TB
+          style={{ fontSize: 20 }}
+          size="large"
+          columns={columns}
+          pagination={tableParams.pagination}
+          loading={isLoading}
+          onChange={handleTableChange}
+          dataSource={items?.map((item, index) => ({
+            key: index,
+            id: item.id,
+            name: (
+              <NavLink to={`student/${item.id}`}>{item.student.name}</NavLink>
+            ),
+            institute: institutes.find((pro) => pro.value == item.institute)
+              ?.label,
+            department: departments?.find((pro) => pro.value == item.department)
+              ?.label,
+            present_hours: item.present_hours,
+            necessary_work_hours: item.necessary_work_hours,
+
+            absent_hours: item.absent_hours,
+
+            sickness_hours: item.sickness_hours,
+
+            year: item.educational_year,
+          }))}
+        />
       </div>
     </>
   );

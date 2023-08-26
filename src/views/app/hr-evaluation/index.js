@@ -28,8 +28,8 @@ const HREvaluations = ({ match, props }) => (
         roles={[
           userRole.superUser,
           userRole.admin,
-          userRole.provincial,
-          userRole.institute,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
         ]}
         props={props}
       />
@@ -39,8 +39,8 @@ const HREvaluations = ({ match, props }) => (
         roles={[
           userRole.superUser,
           userRole.admin,
-          userRole.provincial,
-          userRole.institute,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
         ]}
         props={props}
       />

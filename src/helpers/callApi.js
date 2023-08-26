@@ -13,8 +13,8 @@ import axios from 'axios';
 
 // const servicePath = 'http://172.16.105.244/tveta'; #production mood
 // const servicePath = 'http://0.0.0.0:8000';
-// const servicePath = 'http://172.16.105.108:8000';
-const servicePath = 'https://online.tveta.gov.af:8000';
+const servicePath = 'http://172.16.105.108:8000';
+// const servicePath = 'https://online.tveta.gov.af:8000';
 
 //  sets authentication header and content-type
 const getHeaders = (data) => {
@@ -25,7 +25,6 @@ const getHeaders = (data) => {
 
     // if data includes files, send request as multipart/form-data
     if (data instanceof FormData) {
-      console.log('data instanceof FormData', data instanceof FormData);
       headers['Content-Type'] = 'multipart/form-data';
     }
     return headers;
@@ -42,10 +41,7 @@ const callApi = async (
   params = null
 ) => {
   const headers = getHeaders(data);
-  console.log('headers are: ', headers);
   const url = `${servicePath}/${endpoint}`;
-  console.log('DATA in API Call: ' + endpoint, data);
-  console.log('the url is', url);
 
   try {
     const response = await axios({
@@ -56,7 +52,6 @@ const callApi = async (
       params,
     });
 
-    console.log('CALL API Response: on ' + endpoint, response.data);
     return response;
   } catch (error) {
     if (error.response) {

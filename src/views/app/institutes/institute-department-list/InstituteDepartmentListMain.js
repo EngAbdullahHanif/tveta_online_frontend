@@ -173,29 +173,6 @@ const ThumbListPages = ({ match }) => {
     rest,
     institute,
   ]);
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-
-  const fetchProvincesList = async () => {
-    console.log('provinces');
-    const provinces = await fetchProvinces();
-    setProvinceOptions(provinces);
-  };
-
-  useEffect(() => {
-    fetchInstitutes();
-    fetchProvincesList();
-  }, []);
 
   const onCheckItem = (event, id) => {
     if (

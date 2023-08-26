@@ -30,46 +30,26 @@ const Evaluations = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/evaluations`}
         component={EvaluationList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         exact
         path={`${match.url}/teacher-evalaution`}
         component={TeacherEvaluation}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/promotion-demotion`}
         component={PromotionDemotion}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/evaluation-details`}
         component={EvaluationDetails}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
 

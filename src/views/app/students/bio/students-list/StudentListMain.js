@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Table as TB } from 'antd';
+import { Select, Spin, Table as TB } from 'antd';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 import {
@@ -8,17 +8,23 @@ import {
   genderOptionsForList,
   studyTimeOptionsForList,
   StdInteranceOptions,
+  genderOptions,
 } from '../../../global-data/options';
-import { Badge } from 'reactstrap';
+import { Badge, FormGroup, Input, Label, Spinner } from 'reactstrap';
 // import { servicePath } from 'constants/defaultValues';
 import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
 import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
-import { AuthContext, ProvincesContext } from 'context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
-import { studentStatusOptions } from './../../../global-data/options';
+import {
+  studentStatusOptions,
+  provinceOptions,
+} from './../../../global-data/options';
 import { NavLink } from 'react-router-dom';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { Field, Formik } from 'formik';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -32,31 +38,38 @@ const columns = [
   {
     title: 'نمبر اساس',
     dataIndex: 'student_id',
-    sorter: (a, b) => a.student_id - b.student_id,
+    // sorter: (a, b) => a.student_id - b.student_id,
+    width: '5%',
+  },
+  {
+    title: 'تذکره',
+    dataIndex: 'registration_number',
+    // sorter: (a, b) => a.student_id - b.student_id,
     width: '5%',
   },
   {
     title: 'نوم/نام',
     dataIndex: 'name',
-    sorter: (a, b) => a.name - b.name,
+    // sorter: (a, b) => a.name - b.name,
     // render: (name) => `${name.first} ${name.last}`,
     width: '15%',
-  },
-  {
-    title: 'جنسیت',
-    dataIndex: 'gender',
-    filters: [
-      { text: 'Male', value: 'male' },
-      { text: 'Female', value: 'female' },
-    ],
-    onFilter: (value, record) => record.gender.indexOf(value) === 0,
-    width: '10%',
   },
   {
     title: 'د پلار نوم',
     dataIndex: 'father_name',
     width: '10%',
   },
+  {
+    title: 'جنسیت',
+    dataIndex: 'gender',
+    // filters: [
+    //   { text: 'Male', value: 'male' },
+    //   { text: 'Female', value: 'female' },
+    // ],
+    // onFilter: (value, record) => record.gender.indexOf(value) === 0,
+    width: '10%',
+  },
+
   {
     title: 'ولایت',
     dataIndex: 'province',
@@ -67,13 +80,13 @@ const columns = [
     dataIndex: 'phone_number',
     width: '20%',
   },
-  // {
-  //   title: 'ده جزت نوعیت',
-  //   dataIndex: 'std_status',
-  //   width: '20%',
-  // },
   {
-    title: 'شاګرد ډول',
+    title: 'شمولیت انستیتوت',
+    dataIndex: 'institute_enrollment',
+    width: '20%',
+  },
+  {
+    title: 'حالت',
     dataIndex: 'student_type',
     width: '8%',
   },
@@ -91,17 +104,16 @@ const orderOptions = [
 const pageSizes = [10, 20, 40, 80];
 
 const ThumbListPages = ({ match }) => {
-  const { provinces } = useContext(AuthContext);
+  const { provinces, institutes } = useContext(AuthContext);
+  console.log('iniiiiiiiiiii', institutes);
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
-      pageSize: 10,
+      pageSize: 5,
     },
   });
   const [isLoaded, setIsLoaded] = useState(false);
-  const [displayMode, setDisplayMode] = useState('thumblist');
-  const [currentPage, setCurrentPage] = useState(1);
 
   const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -109,227 +121,65 @@ const ThumbListPages = ({ match }) => {
     column: 'title',
     label: 'Product Name',
   });
-  const [selectedDistrict, setSelectedDistrict] = useState();
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [totalItemCount, setTotalItemCount] = useState(0);
-  const [totalPage, setTotalPage] = useState(1);
-  const [search, setSearch] = useState('');
   const [items, setItems] = useState([]);
-  const [lastChecked, setLastChecked] = useState(null);
-  const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState();
   const [institute, setInstitute] = useState('');
 
-  const [studentId, setStudentId] = useState('');
-  const [province, setProvince] = useState('');
-  const [district, setDistrict] = useState('');
-  const { provinces: provincesOptionsForList } = useContext(ProvincesContext);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [filterId, setFilterId] = useState();
+  // const [filterProvince, setFilterProvince] = useState([]);
+  // const [filterInstitute, setFilterInstitute] = useState([]);
+  const [isFilter, setIsFilter] = useState(false);
+  console.log(isFilter);
+  const handleTableChange = (pagination, filter, sorter) => {
+    setIsFilter(false);
+    setTableParams({ pagination, filter, ...sorter });
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setItems([]);
+    }
+  };
 
-  const [selectedGenderOption, setSelectedGenderOption] = useState();
-  const [selectedProvinceOption, setSelectedProvinceOption] = useState();
-  const [selectedShiftOption, setSelectedShiftOption] = useState();
-  const [selectedEducationalYearOption, seSelectedEducationalYearOption] =
-    useState();
-  const [studentTypeOptions, setStudentTypeOptions] = useState();
+  async function fetchData(params = {}) {
+    // params['institute_enrollment__status'] = 'inprogress';
 
-  // if any filter changes, go to first page
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [
-    selectedPageSize,
-    selectedOrderOption,
-    selectedGenderOption,
-    selectedProvinceOption,
-    selectedShiftOption,
-    selectedEducationalYearOption,
-    studentTypeOptions,
-  ]);
+    console.log('PARAMSSSSSSSSSS: ', params);
+    setIsLoading(true);
+    let endpoint = 'students/';
+    console.log('institute is: ', institute, 'isFilter', isFilter);
+    const params1 = {
+      ...params,
+      page: !isFilter ? tableParams.pagination.current : params.page,
+      page_size: tableParams.pagination.pageSize || null,
+    };
 
-  const itemsPerPage = 10;
-
-  useEffect(async () => {
-    async function fetchData() {
-      // if institute not selected
-      if (institute !== '') {
-        const params = {
-          institute_id: institute.id,
-          page: currentPage,
-        };
-        const response = await callApi(
-          `students/student_institutes/`,
-          '',
-          null,
-          params
-        );
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setItems(response.data.results);
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          setIsLoaded(false);
+    try {
+      const response = await callApi(endpoint, null, null, params1);
+      setIsLoading(false);
+      if (response.data && response.status === 200) {
+        if (params.institute) {
+          setItems(
+            response?.data?.map((item) => ({
+              ...item.student,
+              institute: item.institute,
+            }))
+          );
         } else {
-          console.log('students error');
-        }
-      }
-      // if institute and shift selected, but province and gender are not selected
-      else if (
-        !selectedProvinceOption &&
-        !selectedGenderOption &&
-        selectedShiftOption
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setStudentId('');
-          setRest(false);
-        }
-
-        const params = {
-          student_id: studentId,
-          current_district: district,
-          p: currentPage,
-          page: 1,
-        };
-        // here
-        const response = await callApi(`students/`, '', null, params);
-        console.table('respons', response);
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setIsLoaded(false);
           setItems(response.data.results);
-
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          console.log('response of the result ', response.data.results);
-          console.log('isLoaded sadf', isLoaded);
-        } else {
-          console.log('students error');
         }
-      } else if (!selectedProvinceOption) {
-        const params = {
-          student_id: studentId,
-          gender: selectedGenderOption?.value,
-          current_district: district?.value,
-          page: currentPage,
-        };
-        const response = await callApi(`students/`, '', null, params);
-
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setItems(response.data.results);
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          setIsLoaded(false);
-        } else {
-          console.log('students error');
-        }
-      } else if (!selectedGenderOption) {
-        const params = {
-          student_id: studentId,
-          current_province: selectedProvinceOption.value,
-          current_district: district,
-          page: currentPage,
-        };
-        const response = await callApi(`students/`, '', null, params);
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setItems(response.data.results);
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          setIsLoaded(false);
-        } else {
-          console.log('students error');
-        }
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: response?.data?.count,
+          },
+        });
       } else {
-        // setTotalItemCount(response.data.totalItem);
-        const params = {
-          student_id: studentId,
-          gender: selectedGenderOption.value,
-          current_province: selectedProvinceOption.value,
-          current_district: district.value,
-          page: currentPage,
-        };
-        const response = await callApi(`students`, '', null, params);
-        if (response.data && response.status === 200) {
-          setTotalPage(Math.ceil(response.data.count / itemsPerPage));
-          setItems(response.data.results);
-          setSelectedItems([]);
-          setTotalItemCount(response.data.count);
-          setIsLoaded(false);
-        } else {
-          console.log('students error');
-        }
+        console.log('students error');
       }
+    } catch (error) {
+      console.log('error: ', error);
     }
-
-    fetchData();
-  }, [
-    selectedPageSize,
-    currentPage,
-    selectedOrderOption,
-    search,
-    selectedGenderOption,
-    selectedProvinceOption,
-    studentId,
-    province,
-    district,
-    rest,
-    institute,
-    studentTypeOptions,
-  ]);
-
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-
-  useEffect(() => {
-    fetchInstitutes();
-  }, []);
-
-  const onCheckItem = (event, id) => {
-    if (
-      event.target.tagName === 'A' ||
-      (event.target.parentElement && event.target.parentElement.tagName === 'A')
-    ) {
-      return true;
-    }
-    if (lastChecked === null) {
-      setLastChecked(id);
-    }
-
-    let selectedList = [...selectedItems];
-    if (selectedList.includes(id)) {
-      selectedList = selectedList.filter((x) => x !== id);
-    } else {
-      selectedList.push(id);
-    }
-    setSelectedItems(selectedList);
-
-    if (event.shiftKey) {
-      let newItems = [...items];
-      const start = getIndex(id, newItems, 'id');
-      const end = getIndex(lastChecked, newItems, 'id');
-      newItems = newItems.slice(Math.min(start, end), Math.max(start, end) + 1);
-      selectedItems.push(
-        ...newItems.map((item) => {
-          return item.id;
-        })
-      );
-      selectedList = Array.from(new Set(selectedItems));
-      setSelectedItems(selectedList);
-    }
-    document.activeElement.blur();
-    return false;
-  };
+  }
 
   const handleChangeSelectAll = (isToggle) => {
     if (selectedItems.length >= items.length) {
@@ -343,21 +193,6 @@ const ThumbListPages = ({ match }) => {
     return false;
   };
 
-  const onContextMenuClick = (e, data) => {
-    // params : (e,data,target)
-    console.log('onContextMenuClick - selected items', selectedItems);
-    console.log('onContextMenuClick - action : ', data.action);
-  };
-
-  const onContextMenu = (e, data) => {
-    const clickedProductId = data.data;
-    if (!selectedItems.includes(clickedProductId)) {
-      setSelectedItems([clickedProductId]);
-    }
-
-    return true;
-  };
-
   useMousetrap(['ctrl+a', 'command+a'], () => {
     handleChangeSelectAll(false);
   });
@@ -367,230 +202,156 @@ const ThumbListPages = ({ match }) => {
     return false;
   });
 
-  const startIndex = (currentPage - 1) * selectedPageSize;
-  const endIndex = currentPage * selectedPageSize;
   console.log('isLoadedsdfsd', isLoaded);
-  return isLoaded ? (
-    <div className="loading" />
-  ) : (
+
+  const genderLabels = {
+    male: 'نارینه/ مذکر',
+    female: 'ښځینه/ موٌنث',
+  };
+
+  // const handleStudentIdSearch = (e) => {
+  //   if (e.key === 'Enter') {
+  //     // handleStudentSearch(e.target.value.trim().toLowerCase());
+  //     fetchData();
+  //   }
+  // };
+
+  if (isLoaded) {
+    return <Spinner />;
+  }
+
+  const onFilter = async (values) => {
+    setIsFilter(true);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
+    });
+    let params = {
+      page: 1,
+    };
+    params.institute_enrollment__institute = values.filterInstitute?.value;
+    params.current_province = values.filterProvince?.value;
+    params.student_id = values.filterId || null;
+
+    fetchData(params);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [!isFilter ? JSON.stringify(tableParams) : null]);
+
+  const handleResetFields = (resetForm) => {
+    resetForm({
+      values: { filterId: '', filterInstitute: [], filterProvince: [] },
+    });
+    setIsFilter(false);
+    fetchData();
+  };
+
+  return (
     <>
       <div className="disable-text-selection">
         {/* This is he */}
-        <ListPageHeading
-          heading="د شاگرد لست/لست شاگردان"
-          // Using display mode we can change the display of the list.
-          displayMode={displayMode}
-          changeDisplayMode={setDisplayMode}
-          handleChangeSelectAll={handleChangeSelectAll}
-          // following code is used for order the list based on different element of the prod
-          changeOrderBy={(column) => {
-            setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
-            );
-          }}
-          changePageSize={setSelectedPageSize}
-          selectedPageSize={selectedPageSize}
-          totalItemCount={totalItemCount}
-          selectedOrderOption={selectedOrderOption}
-          match={match}
-          startIndex={startIndex}
-          endIndex={endIndex}
-          selectedItemsLength={selectedItems ? selectedItems.length : 0}
-          itemsLength={items ? items.length : 0}
-          onSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setSearch(e.target.value.toLowerCase());
-            }
-          }}
-          orderOptions={orderOptions}
-          pageSizes={pageSizes}
-          toggleModal={() => setModalOpen(!modalOpen)}
-          // Gender
-          changeGenderBy={(value) => {
-            console.log('changeGenderBy: ', value);
-            setSelectedGenderOption(
-              genderOptionsForList.find((x) => x.value == value)
-            );
-          }}
-          changeProvinceBy={(provinceId) => {
-            setSelectedProvinceOption(
-              provincesOptionsForList.find(
-                (province) => province.value === provinceId
-              )
-            );
-          }}
-          selectedGenderOption={selectedGenderOption}
-          selectedEducationalYearOption={selectedEducationalYearOption}
-          studentTypeOptions={studentTypeOptions}
-          selectedProvinceOption={selectedProvinceOption}
-          selectedShiftOption={selectedShiftOption}
-          genderOptionsForList={genderOptionsForList}
-          studyTimeOptionsForList={studyTimeOptionsForList}
-          provincesOptionsForList={provincesOptionsForList}
-          onIdSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setStudentId(e.target.value.toLowerCase());
-            }
-          }}
-          // Province
-          onProvinceSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setProvince(e.target.value.toLowerCase());
-            }
-          }}
-          // District
-          onDistrictSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setDistrict(e.target.value.toLowerCase());
-            }
-          }}
-          onResetClick={setRest}
-          reset={rest}
-          institutes={institutes}
-          onInstituteSelect={setInstitute}
-          // Shift
-          changeShiftBy={(column) => {
-            setSelectedShiftOption(
-              studyTimeOptionsForList.find((x) => x.column === column)
-            );
-          }}
-          // Educational Year
-          changeEducationalYearBy={(column) => {
-            seSelectedEducationalYearOption(
-              educationalYearsOptionsForList.find((x) => x.column === column)
-            );
-          }}
-          educationalYearsOptionsForList={educationalYearsOptionsForList}
-          // Level of Education
-          changeStudentTypeBy={(column) => {
-            setStudentTypeOptions(studentType.find((x) => x.column === column));
-          }}
-          studentType={studentType}
-          setSelectedDistrict={setSelectedDistrict}
-        />
-        {/* <table className="table">
-          <thead
-            className="pl-2 d-flex flex-grow-1  table-dark mb-2"
-            style={{ maxHeight: '55px' }}
-          >
-            <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
-              <th
-                style={{
-                  width: '11%',
-                  fontSize: '20px',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="student.rollNo" />
-              </th>
-              <th
-                style={{
-                  width: '14%',
-                  fontSize: '20px',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="forms.StdName" />
-              </th>
-              <th
-                style={{
-                  width: '15%',
-                  fontSize: '20px',
-                  padding: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                <IntlMessages id="forms.StdFatherName" />
-              </th>
-              <th
-                style={{
-                  width: '15%',
-                  padding: '0%',
-                  fontSize: '20px',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="forms.ProvinceLabel" />
-              </th>
-              <th
-                style={{
-                  width: '15%',
-                  padding: '0%',
-                  fontSize: '20px',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="student.PhoneNo" />
-              </th>
-              <th
-                style={{
-                  width: '15%',
-                  padding: '0%',
-                  fontSize: '20px',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="student.interenaceType" />
-              </th>
-              <th
-                style={{
-                  width: '10%',
-                  padding: '0%',
-                  fontSize: '20px',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                }}
-              >
-                {' '}
-                <IntlMessages id="study.type" />
-              </th>
-            </tr>
-          </thead>
+        <h1>د شاگرد لست/لست شاگردان</h1>
+        <br />
 
-          <ListPageListing
-            items={items}
-            displayMode={displayMode}
-            selectedItems={selectedItems}
-            onCheckItem={onCheckItem}
-            currentPage={currentPage}
-            totalPage={totalPage}
-            onContextMenuClick={onContextMenuClick}
-            onContextMenu={onContextMenu}
-            onChangePage={setCurrentPage}
-          />
-        </table> */}
+        <div
+          style={{
+            padding: 10,
+            display: 'flex',
+          }}
+        >
+          <Formik
+            initialValues={{
+              filterId: '',
+              filterInstitute: [],
+              filterProvince: [],
+            }}
+            onSubmit={onFilter}
+          >
+            {({
+              values,
+              setFieldValue,
+              handleSubmit,
+              setFieldTouched,
+              resetForm,
+            }) => (
+              <>
+                <Field name="filterId" placeholder="ایدی" />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="ولایت"
+                  name="filterProvince"
+                  options={provinces}
+                  value={values.filterProvince}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="انستیتوت"
+                  name="filterInstitute"
+                  options={institutes}
+                  value={values.filterInstitute}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <button className="btn btn-secondary" onClick={handleSubmit}>
+                  Filter
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  onClick={() => handleResetFields(resetForm)}
+                >
+                  Reset
+                </button>
+              </>
+            )}
+          </Formik>
+        </div>
+        {console.log('STUDENTS', items)}
         <TB
+          style={{ fontSize: 20 }}
+          size="large"
           columns={columns}
           // rowKey={(record) => record.login.uuid}
           pagination={tableParams.pagination}
-          loading={loading}
+          onChange={handleTableChange}
+          loading={isLoading}
           // onChange={handleTableChange}
-          dataSource={items.map((item, index) => ({
+          dataSource={items?.map((item, index) => ({
             key: index,
             student_id: item.student_id,
+            registration_number: item.registration_number,
             name: (
               <NavLink to={`student/${item.id}`} style={{ width: '10%' }}>
                 {item.name}
               </NavLink>
             ),
-            gender: item.gender,
             father_name: item.father_name,
-            province: provinces.map((pro) => {
-              if (pro.value == item.current_province) return pro.label;
-            }),
+            gender: genderLabels[item.gender],
+            province: provinces.find(
+              (pro) => pro.value == item.current_province
+            )?.label,
             phone_number: item.phone_number,
-
+            institute_enrollment: item.institute_enrollment?.map((inst) => {
+              return (
+                <div style={{ display: 'flex' }}>
+                  <p style={{ fontSize: 18, color: 'green' }}>
+                    {institutes.find(
+                      (pro) =>
+                        pro.value == inst.institute &&
+                        inst.status == 'inprogress'
+                    )?.label || null}
+                  </p>
+                </div>
+              );
+            }),
             student_type: studentStatusOptions.map((status) => {
               if (status.value == item.status) {
                 return (
@@ -602,8 +363,9 @@ const ThumbListPages = ({ match }) => {
                       color={
                         status.value == 'dismissed'
                           ? 'danger'
-                          : status.value == 'inprogress' ||
-                            status.value == 'active'
+                          : status.value == 'inprogress'
+                          ? 'success'
+                          : status.value == 'active'
                           ? 'success'
                           : status.value == 'freeze'
                           ? 'secondary'

@@ -861,7 +861,6 @@ export const teacherCurrentStatusOptions = [
 ];
 
 export const studentStatusOptions = [
-  { value: 'active', label: <IntlMessages id="جاری" /> },
   { value: 'inprogress', label: <IntlMessages id="جاری" /> },
   { value: 'dismissed', label: <IntlMessages id="منفک" /> },
   { value: 'freeze', label: <IntlMessages id="تعجیل" /> },
@@ -872,6 +871,12 @@ export const teacherContractStatusOptions = [
   { value: 'active', label: <IntlMessages id="teacher.StatusOption_1" /> },
   { value: 'inactive', label: <IntlMessages id="teacher.StatusOption_3" /> },
   { value: 'dismissed', label: <IntlMessages id="teacher.StatusOption_2" /> },
+];
+
+export const instTypeOptions = [
+  { value: 'institute', label: 'انستیتوت' },
+  { value: 'high_school', label: 'لیسه' },
+  { value: 'special_education', label: 'تعلیمات خاص' },
 ];
 
 export const teacherFeedbackOptions = [

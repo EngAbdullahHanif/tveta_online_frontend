@@ -873,6 +873,12 @@ export const teacherContractStatusOptions = [
   { value: 'dismissed', label: <IntlMessages id="teacher.StatusOption_2" /> },
 ];
 
+export const instTypeOptions = [
+  { value: 'institute', label: 'انستیتوت' },
+  { value: 'high_school', label: 'لیسه' },
+  { value: 'special_education', label: 'تعلیمات خاص' },
+];
+
 export const teacherFeedbackOptions = [
   { value: 'incentive', label: <IntlMessages id="teacher.promotionLabel" /> },
   { value: 'discipline', label: <IntlMessages id="teacher.demotionLabel" /> },

@@ -9,7 +9,6 @@ import { AuthContext } from 'context/AuthContext';
 
 const AppLayout = ({ containerClassnames, children, history }) => {
   const { user } = useContext(AuthContext);
-  console.log('user from context is: ', user);
   return (
     <div id="app-container" className={containerClassnames}>
       <TopNav history={history} />

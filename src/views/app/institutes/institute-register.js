@@ -35,6 +35,7 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { message, Spin } from 'antd';
+import { CURRENT_SHAMSI_YEAR } from 'constants/defaultValues';
 message.config({
   top: 100,
   duration: 2,
@@ -49,7 +50,7 @@ const options = [
 
 const instTypeOptions = [
   { value: 'governmental', label: 'دولتی' },
-  { value: 'private', label: 'شخصی' },
+  { value: 'private', label: 'خصوصی' },
 ];
 
 const instituteCityOptions = [
@@ -65,7 +66,7 @@ const instituteLanguageOptions = [
 const instituteClimateOptions = [
   { value: 'cold', label: 'سرد سیر' },
   { value: 'warm', label: 'گرم سیر' },
-  { value: 'very_cold', label: 'زیاد سرد سیر' },
+  { value: 'very_cold', label: 'نهایت سرد سیر' },
 ];
 const instituteTypeOptions = [
   { value: 'institute', label: 'انستیتوت' },
@@ -94,6 +95,7 @@ const InstituteRegister = () => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState('');
+  const [initialOwnershipType, setInitialOwnershipType] = useState([]);
 
   const [initialGender, setInitialGender] = useState([]);
 
@@ -120,6 +122,7 @@ const InstituteRegister = () => {
     province: initialProvince,
     district: initialDistrict,
     village: initialVillage,
+    ownershipType: initialOwnershipType,
     instType: initialInstType,
     instituteType: instituteTypeGVT,
     institueCityType: cityType,
@@ -412,15 +415,16 @@ const InstituteRegister = () => {
       province: values.province.value,
       district: values.district.value,
       village: values.village,
-      ownership: values.instType.value,
+      ownership: values.ownershipType.value,
       location_type: values.institueCityType.value,
       shift: values.shift.value,
       status: 'active', //as it is registered for the first time so it is considered to be active
       climate: values.instituteClimate.value,
-      institute_type: values.instituteType.value,
+      institute_type: values.instType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
       foundation_year: values.foundationYear.value,
+
       // created_by: '1',
     };
     console.log('data of the form', data);
@@ -448,6 +452,7 @@ const InstituteRegister = () => {
                 province: initialProvince,
                 district: initialDistrict,
                 village: initialVillage,
+                ownershipType: initialOwnershipType,
                 instType: initialInstType,
                 foundationYear: initialFoundationYear,
                 gender: initialGender,
@@ -455,7 +460,6 @@ const InstituteRegister = () => {
                 instituteClimate: climate,
                 cityType: cityType,
                 institueLanguage: language,
-                initialOwnerhip,
               }}
               // validationSchema={ValidationSchema}
               onSubmit={onRegister}
@@ -567,24 +571,24 @@ const InstituteRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-                      {/* <FormGroup className="form-group has-float-label">
+                      <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          <IntlMessages id="inst.type" />
+                          ملکیت
                         </Label>
                         <FormikReactSelect
-                          name="instType"
-                          id="instType"
-                          value={values.initialOwnerhip}
+                          name="ownershipType"
+                          id="ownershipType"
+                          value={values.ownershipType}
                           options={instTypeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.instType && touched.instType ? (
+                        {errors.ownershipType && touched.ownershipType ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.instType}
+                            {errors.ownershipType}
                           </div>
                         ) : null}
-                      </FormGroup> */}
+                      </FormGroup>
                     </Colxx>
                     <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
@@ -613,16 +617,16 @@ const InstituteRegister = () => {
                           ډول/نوع
                         </Label>
                         <FormikReactSelect
-                          name="instituteType"
-                          id="instituteType"
+                          name="instType"
+                          id="instType"
                           value={values.instType}
                           options={instituteTypeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.instituteType && touched.instituteType ? (
+                        {errors.instType && touched.instType ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.instituteType}
+                            {errors.instType}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -687,20 +691,21 @@ const InstituteRegister = () => {
                           </div>
                         ) : null}
                       </FormGroup>
-                      <FormGroup className="form-group has-float-label error-l-100 ">
+                      <FormGroup className="form-group has-float-label error-l-100">
                         <Label>
                           {/* <IntlMessages id="forms.StdGraduationYearLabel" /> */}
                           د تأسیس کال/ سال تأسیس
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
-                        <FormikReactSelect
+                        <Field
+                          className="w-100"
                           name="foundationYear"
                           id="foundationYear"
-                          value={values.foundationYear}
+                          type="number"
+                          min={1300}
+                          max={CURRENT_SHAMSI_YEAR}
                           // later create years options and then pass it here
-                          options={dateOfBirthOptoions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
+                          // options={dateOfBirthOptoions}
                           required
                         />
                         {errors.foundationYear && touched.foundationYear ? (

@@ -49,27 +49,14 @@ import {
 } from '../../global-data/forms-validation';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-  useField,
-  useFormikContext,
-  useFormik,
-} from 'formik';
+import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 import { NotificationManager } from 'components/common/react-notifications';
 
-import * as Yup from 'yup';
-
 import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
-import currentUser from 'helpers/currentUser';
-import data from 'constants/menu';
 import { AuthContext } from 'context/AuthContext';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { message } from 'antd';
 
 const StudentRegistration = ({ intl }, values) => {
@@ -138,13 +125,12 @@ const StudentRegistration = ({ intl }, values) => {
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
+  const [instDepartments, setInstDepartments] = useState(departments);
   // get data of each step from localstorage
   const step0Data = JSON.parse(localStorage.getItem('step0'));
   const step1Data = JSON.parse(localStorage.getItem('step1'));
   const step2Data = JSON.parse(localStorage.getItem('step2'));
 
-  console.log('step0Data: ', step0Data);
   // used arrays as intial values because other things will throw error
   const [initialValues, setInitialValues] = useState([
     {
@@ -238,6 +224,23 @@ const StudentRegistration = ({ intl }, values) => {
     },
   ]);
 
+  const fetchInstDepts = (inst) => {
+    const instId = inst.value;
+    callApi(`institute/${instId}/departments/`).then((inst) => {
+      console.log('Institutes Departments: ', inst.data);
+      const newOptions = departments.filter((dep) => {
+        // if department id is in data.department
+        let department_ids = inst.data.reduce(
+          (acc, cur, i) => acc.add(cur.department),
+          new Set()
+        );
+        console.log(department_ids);
+        return department_ids.has(dep.value);
+      });
+      setInstDepartments(newOptions);
+    });
+  };
+
   const forms = [createRef(null), createRef(null), createRef(null)];
 
   const handleFileChange = (event) => {
@@ -257,7 +260,6 @@ const StudentRegistration = ({ intl }, values) => {
       setFieldValue('district', '');
     }
   };
-
   const createNotification = (type, className) => {
     const cName = className || '';
     switch (type) {
@@ -1257,7 +1259,10 @@ const StudentRegistration = ({ intl }, values) => {
                                 id="institute"
                                 value={values.institute}
                                 options={institutes}
-                                onChange={setFieldValue}
+                                onChange={(name, value) => {
+                                  setFieldValue('institute', value);
+                                  fetchInstDepts(value);
+                                }}
                                 onBlur={setFieldTouched}
                                 isSearchable={false}
                               />
@@ -1429,7 +1434,6 @@ const StudentRegistration = ({ intl }, values) => {
                           </Colxx>
                           <Colxx xxs="6">
                             {/* Departement  */}
-                            {console.log('DEPARTMENTS: ', departments)}
                             <FormGroup className="form-group has-float-label ">
                               <Label>
                                 <IntlMessages id="forms.studyDepartment" />
@@ -1439,7 +1443,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="department"
                                 id="department"
                                 value={values.department}
-                                options={departments}
+                                options={instDepartments}
                                 onChange={setFieldValue}
                                 onBlur={setFieldTouched}
                                 isSearchable={false}

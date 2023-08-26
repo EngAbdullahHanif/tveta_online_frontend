@@ -22,25 +22,9 @@ import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
 
 const ListPageHeading = ({
   intl,
-  displayMode,
-  changeDisplayMode,
-  handleChangeSelectAll,
-  changeOrderBy,
-  changePageSize,
-  selectedPageSize,
-  totalItemCount,
-  selectedOrderOption,
-  match,
-  startIndex,
-  endIndex,
-  selectedItemsLength,
-  itemsLength,
-  onSearchKey,
-  orderOptions,
-  pageSizes,
+
   // toggleModal,
   heading,
-  onIdSearchKey,
   // Gender
   selectedGenderOption,
   changeGenderBy,
@@ -57,8 +41,6 @@ const ListPageHeading = ({
   selectedProvinceOption,
   provincesOptionsForList,
   changeProvinceBy,
-  onDistrictSearchKey,
-  onProvinceSearchKey,
   onResetClick,
   reset,
   institutes,
@@ -77,103 +59,16 @@ const ListPageHeading = ({
           <h1>
             <IntlMessages id={heading} />
           </h1>
-          <div className="text-zero top-right-button-container">
-            {/* <Button
-              color="primary"
-              size="lg"
-              className="top-right-button"
-              onClick={() => toggleModal()}
-            >
-              <IntlMessages id="pages.add-new" />
-            </Button> */}
-            {'  '}
-            <ButtonDropdown
-              isOpen={dropdownSplitOpen}
-              toggle={() => setDropdownSplitOpen(!dropdownSplitOpen)}
-            >
-              <div className="btn btn-primary btn-lg pl-4 pr-0 check-button check-all">
-                <CustomInput
-                  className="custom-checkbox mb-0 d-inline-block"
-                  type="checkbox"
-                  id="checkAll"
-                  checked={selectedItemsLength >= itemsLength}
-                  onChange={() => handleChangeSelectAll(true)}
-                  label={
-                    <span
-                      className={`custom-control-label ${
-                        selectedItemsLength > 0 &&
-                        selectedItemsLength < itemsLength
-                          ? 'indeterminate'
-                          : ''
-                      }`}
-                    />
-                  }
-                />
-              </div>
-              <DropdownToggle
-                caret
-                color="primary"
-                className="dropdown-toggle-split btn-lg"
-              />
-              <DropdownMenu right>
-                <DropdownItem>
-                  <IntlMessages id="pages.delete" />
-                </DropdownItem>
-                <DropdownItem>
-                  <IntlMessages id="pages.another-action" />
-                </DropdownItem>
-              </DropdownMenu>
-            </ButtonDropdown>
-          </div>
+
           {/* <Breadcrumb match={match} /> */}
         </div>
 
         <div className="mb-2">
-          <Button
-            color="empty"
-            className="pt-0 pl-0 d-inline-block d-md-none"
-            onClick={() => setDisplayOptionsIsOpen(!displayOptionsIsOpen)}
-          >
-            <IntlMessages id="pages.display-options" />{' '}
-            <i className="simple-icon-arrow-down align-middle" />
-          </Button>
           <Collapse
             isOpen={displayOptionsIsOpen}
             className="d-md-block"
             id="displayOptions"
           >
-            <span className="mr-3 d-inline-block float-md-left">
-              <a
-                href="#/"
-                className={`mr-2 view-icon ${
-                  displayMode === 'list' ? 'active' : ''
-                }`}
-                onClick={() => changeDisplayMode('list')}
-              >
-                <DataListIcon />
-              </a>
-              <a
-                href="#/"
-                className={`mr-2 view-icon ${
-                  displayMode === 'thumblist' ? 'active' : ''
-                }`}
-                onClick={() => changeDisplayMode('thumblist')}
-              >
-                <ThumbListIcon />
-              </a>
-              <a
-                href="#/"
-                className={`mr-2 view-icon ${
-                  displayMode === 'imagelist' ? 'active' : ''
-                }`}
-                onClick={() => changeDisplayMode('imagelist')}
-              >
-                <ImageListIcon />
-              </a>
-            </span>
-            <br />
-            <br />
-
             <div className="d-block d-md-inline-block pt-1">
               <div className="row">
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1 ">

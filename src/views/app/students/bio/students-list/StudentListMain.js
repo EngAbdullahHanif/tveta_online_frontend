@@ -105,6 +105,7 @@ const pageSizes = [10, 20, 40, 80];
 
 const ThumbListPages = ({ match }) => {
   const { provinces, institutes } = useContext(AuthContext);
+  console.log('iniiiiiiiiiii', institutes);
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
@@ -144,10 +145,6 @@ const ThumbListPages = ({ match }) => {
     console.log('PARAMSSSSSSSSSS: ', params);
     setIsLoading(true);
     let endpoint = 'students/';
-    if (institute) {
-      params.institute = institute.value;
-      endpoint = 'students/student_institutes/';
-    }
     console.log('institute is: ', institute, 'isFilter', isFilter);
     const params1 = {
       ...params,
@@ -159,7 +156,7 @@ const ThumbListPages = ({ match }) => {
       const response = await callApi(endpoint, null, null, params1);
       setIsLoading(false);
       if (response.data && response.status === 200) {
-        if (institute) {
+        if (params.institute) {
           setItems(
             response?.data?.map((item) => ({
               ...item.student,
@@ -235,7 +232,7 @@ const ThumbListPages = ({ match }) => {
     let params = {
       page: 1,
     };
-    params.current_institute = values.filterInstitute?.value;
+    params.institute_enrollment__institute = values.filterInstitute?.value;
     params.current_province = values.filterProvince?.value;
     params.student_id = values.filterId || null;
 
@@ -317,7 +314,7 @@ const ThumbListPages = ({ match }) => {
             )}
           </Formik>
         </div>
-
+        {console.log('STUDENTS', items)}
         <TB
           style={{ fontSize: 20 }}
           size="large"

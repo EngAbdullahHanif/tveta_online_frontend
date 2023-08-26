@@ -18,23 +18,13 @@ const Classes = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/classes`}
         component={ClassList}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/register`}
         component={ClassRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
 

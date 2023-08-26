@@ -18,23 +18,13 @@ const Groups = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/register`}
         component={GroupRegister}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.admin]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/premissions`}
         component={GroupPremssions}
-        roles={[
-          userRole.superUser,
-          userRole.admin,
-          userRole.provincial,
-          userRole.institute,
-        ]}
+        roles={[userRole.superUser, userRole.admin]}
         props={props}
       />
 

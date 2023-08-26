@@ -376,6 +376,7 @@ const data = [
         icon: 'MD.MdAddBox',
         label: 'menu.institute_register',
         to: `${adminRoot}/institutes/register`,
+        roles: [userRole.admin],
       },
       {
         icon: 'MD.MdAddBox',

@@ -42,7 +42,6 @@ const App = ({ locale }) => {
     localStorage.removeItem('current_user');
 
     const response = await callApi('auth/logout/', 'POST', null);
-    console.log('response: ', response);
     if (response?.status === 200) {
       console.log('logged out from backend');
     }
@@ -197,13 +196,15 @@ const App = ({ locale }) => {
     if (!user) return;
     const response = await callApi(`institute/`, 'GET', null);
     if (response.data && response.status === 200) {
+      console.log('response.data: ', response.data);
+
       const updatedData = await response.data.map(({ id, name, ...rest }) => ({
         value: id,
         label: name,
         rest: rest,
       }));
+      console.log('updatedData: ', updatedData);
       setInstitutes(updatedData);
-      console.log('institues fetched in app.js: ', response.data);
     } else {
       console.log('institutes error');
     }
@@ -228,7 +229,6 @@ const App = ({ locale }) => {
     if (!user) return;
     const response = await callApi(`institute/sectors/`, 'GET', null);
     if (response.data && response.status === 200) {
-      console.log('SECTS: ', response.data);
       const updatedData = await response.data.map((item) => ({
         value: item.id,
         label: item.sector,
@@ -238,35 +238,6 @@ const App = ({ locale }) => {
       console.log('Sector error');
     }
   };
-
-  // show institutes based on user group
-  useEffect(() => {
-    if (!user || !user?.groups) return;
-
-    console.log("user's groups: ", user.groups);
-    if (user.groups.some((group) => group.name === userRoles.admin)) {
-      return;
-    }
-    if (
-      user.groups.some(
-        (group) =>
-          group.name === 'pr_dataentry' || group.name === 'pr_supervisor'
-      )
-    ) {
-      const newInstitutesList = institutes.filter(
-        (institute) => institute.rest.province === user.province
-      );
-      setInstitutes(newInstitutesList);
-      return;
-    }
-
-    // if ('ins_dataentry' in user.groups || 'ins_manager' in user.groups) {
-    //   const newInstitutesList = institutes.filter(
-    //     (institute) => institute.value === user.institute
-    //   );
-    //   setInstitutes(newInstitutesList);
-    // }
-  }, [user]);
 
   const fetchInitialData = async () => {
     try {
@@ -350,6 +321,7 @@ const App = ({ locale }) => {
         provinces,
         districts,
         classes,
+        fetchClasses,
         subjects,
         departments,
         institutes,

@@ -345,9 +345,6 @@ class Sidebar extends Component {
 
   // eslint-disable-next-line no-shadow
   filteredList = (menuItems) => {
-    console.log(this.props);
-    console.log('current user is: ', this.currentUser);
-    console.log(menuItems);
     const currentUser = this.currentUser;
     if (currentUser) {
       return menuItems.filter((item) => {
@@ -570,9 +567,6 @@ class Sidebar extends Component {
 }
 
 const mapStateToProps = ({ menu, currentUser, ...rest }) => {
-  console.log('menu is', menu);
-  console.log('current_user is', currentUser);
-  console.log('rest is', rest);
   const {
     containerClassnames,
     subHiddenBreakpoint,

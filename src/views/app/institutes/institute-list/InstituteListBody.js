@@ -23,6 +23,9 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import { BsTrashFill } from 'react-icons/bs';
 import { BsPencilSquare } from 'react-icons/bs';
 import { async } from 'q';
+import { instTypeOptions } from 'views/app/global-data/options';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { localeOptions } from './../../../../constants/defaultValues';
 
 const createNotification = (type, className) => {
   const cName = className || '';
@@ -61,11 +64,13 @@ const InstituteListBody = ({
   collect,
   onCheckItem,
   index,
+  fetchInstitutes,
 }) => {
   const [modalBasic, setModalBasic] = useState(false);
   const [dataDeletion, setDeletion] = useState(false);
 
-  const { provinces } = useContext(AuthContext);
+  const { provinces, districts } = useContext(AuthContext);
+  const history = useHistory();
   console.log('provinces from context: ', provinces);
 
   const handleClick = async (instituteId) => {
@@ -78,9 +83,8 @@ const InstituteListBody = ({
       console.log('succesfully deleted');
       createNotification('success', 'filled');
       // relaoad after 3 seconds to see the changes
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      fetchInstitutes();
+      window.location.reload();
     } else {
       console.log('error');
       createNotification('error', 'filled');
@@ -88,6 +92,7 @@ const InstituteListBody = ({
 
     // setDeletion(event);
   };
+
   return (
     <Colxx xxs="12" key={institute.id} className="mt-2">
       <ContextMenuTrigger id="menu_id" data={institute.id} collect={collect}>
@@ -141,9 +146,20 @@ const InstituteListBody = ({
                     (province) => province.value === institute.province
                   )[0].label}
               </p>
-              {institute.type === 'governmental' ? (
+              <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
+                {districts &&
+                  districts.filter(
+                    (province) => province.value === institute.district
+                  )[0].label}
+              </p>
+
+              {institute.ownership === 'governmental' ? (
                 <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
-                  <IntlMessages id="dash.institutePublic" />
+                  {
+                    instTypeOptions.find(
+                      (op) => op.value === institute.institute_type
+                    ).label
+                  }
                 </p>
               ) : (
                 <p className="mb-1 " style={{ width: '15%', fontSize: '20px' }}>
@@ -219,7 +235,7 @@ const InstituteListBody = ({
                   <Button
                     color="danger"
                     onClick={() => {
-                      // setModalBasic(false);
+                      setModalBasic(false);
                       handleClick(`${institute.id}`);
                     }}
                     style={{ marginLeft: '5%' }}

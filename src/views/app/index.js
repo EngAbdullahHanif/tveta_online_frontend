@@ -92,7 +92,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -103,7 +104,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -115,7 +117,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -127,7 +130,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -139,7 +143,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -151,7 +156,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -170,7 +176,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -182,7 +189,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -194,7 +202,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -206,7 +215,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -218,7 +228,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -230,7 +241,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -242,7 +254,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -254,7 +267,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -266,7 +280,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />
@@ -278,7 +293,8 @@ const App = ({ match, props }) => {
                 userRole.superUser,
                 userRole.admin,
                 userRole.institute,
-                userRole.provincial,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
               ]}
               props={props}
             />

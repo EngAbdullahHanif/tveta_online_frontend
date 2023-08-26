@@ -130,7 +130,7 @@ const ThumbListPages = ({ match }) => {
       console.log('instituteId instituteId', instituteId);
       if (institute !== '') {
         const response = await callApi(
-          `institute/?id=${institute.value}`,
+          `institute/${institute.value}/`,
           '',
           null
         );
@@ -548,6 +548,18 @@ const ThumbListPages = ({ match }) => {
                 }}
               >
                 {' '}
+                <IntlMessages id="forms.DistrictLabel" />
+              </th>
+              <th
+                style={{
+                  width: '13%',
+                  padding: '0%',
+                  textAlign: 'right',
+                  borderStyle: 'hidden',
+                  fontSize: '20px',
+                }}
+              >
+                {' '}
                 <IntlMessages id="inst.type" />
               </th>
               <th
@@ -579,6 +591,7 @@ const ThumbListPages = ({ match }) => {
 
           <ListPageListing
             items={items}
+            fetchInstitutes={fetchInstitutes}
             displayMode={displayMode}
             selectedItems={selectedItems}
             onCheckItem={onCheckItem}

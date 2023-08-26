@@ -186,12 +186,7 @@ const Students = ({ match, props }) => {
         <ProtectedRoute
           path={`${match.url}/student-update/:studentId`}
           component={StudentUpdate}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
 
@@ -200,59 +195,41 @@ const Students = ({ match, props }) => {
           exact
           path={`${match.url}/single-subject`}
           component={singleStudentSingleSubjectMarks}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           exact
           path={`${match.url}/single-student-attendance`}
           component={singleStudentAttendace}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           exact
           path={`${match.url}/class-transfer`}
           component={ClassTransfer}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         {/* Changes Ended */}
         <ProtectedRoute
           path={`${match.url}/register-kankor/:kankorStudentId`}
           component={RegisterKankor}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
+        {console.log('print match url: ', match.url)}
         <ProtectedRoute
           path={`${match.url}/students`}
           component={StudentList}
           roles={[
             userRole.admin,
             userRole.provinceSupervisor,
-            userRole.institute,
+            userRole.provinceDataentry,
             userRole.superUser,
-            userRole.provincial,
+            userRole.provinceDataentry,
+            userRole.provinceSupervisor,
             userRole.dataentry,
           ]}
           props={props}
@@ -261,301 +238,166 @@ const Students = ({ match, props }) => {
           exact
           path={`${match.url}/attendance-list`}
           component={AttendanceList}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/attendance-list/:attendance_id`}
           component={AttendanceUpdate}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/dismissed-list`}
           component={DismissedStudentList}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/transfered-list`}
           component={TransferedStudentList}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/kankor-students`}
           component={KankorStudentList}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/kankor-student/:kankorId`}
           component={KankorProfile}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           exact
           path={`${match.url}/marks-register`}
           component={MarksRegistration}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/marks-register/:id`}
           component={MarksRegistration}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/second-chance`}
           component={SecondChanceMarks}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           exact
           path={`${match.url}/attendance-register`}
           component={AttendanceRegistration}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/attendance-register/:studentAttendanceId`}
           component={AttendanceRegistration}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/student/:studentId`}
           component={StudentProfile}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/student-transfer`}
           component={StudentTransfer}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/marks-display`}
           component={MarksDisplay}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/subject-marks-verification`}
           component={SubjectMarksVerification}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
 
         <ProtectedRoute
           path={`${match.url}/rejected-marks-update`}
           component={RejectedMarksUpdate}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/class-marks`}
           component={MarksDisplayAllSubs}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/attendance`}
           component={AttendanceDisplay}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/reports`}
           component={Reports}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/test`}
           component={Test}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/student-dismissal`}
           component={Dismissal}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/reregister`}
           component={Reregister}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/marks-update`}
           component={SingleStudentMarksUpdate}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/attendance-update`}
           component={AttendanceUpdate}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/register-1`}
           component={Main}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/student-upgrade`}
           component={StudentUpgrade}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/student-upgrade`}
           component={StudentUpgrade}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         {/* <ProtectedRoute
@@ -567,46 +409,26 @@ const Students = ({ match, props }) => {
         <ProtectedRoute
           path={`${match.url}/students-class-status-upgrade`}
           component={StudentClassStatusUpgrade}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/marks-status-cheked-students`}
           component={MarkStatusCheckedStudents}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
         <ProtectedRoute
           path={`${match.url}/department-change`}
           component={DepartmentChange}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
 
         <ProtectedRoute
           path={`${match.url}/section-change`}
           component={SectionChange}
-          roles={[
-            userRole.admin,
-            userRole.institute,
-            userRole.superUser,
-            userRole.provincial,
-          ]}
+          roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
 

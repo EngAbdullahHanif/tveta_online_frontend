@@ -52,7 +52,10 @@ import {
 } from 'containers/form-validations/FormikFields';
 import Classes from 'views/app/classes';
 import { AuthContext } from 'context/AuthContext';
-import { teacherFeedbackOptions } from 'views/app/global-data/options';
+import {
+  studentStatusOptions,
+  teacherFeedbackOptions,
+} from 'views/app/global-data/options';
 
 const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
@@ -353,7 +356,11 @@ const StudentProfile = () => {
                               }
                               pill
                             >
-                              {student[0].status}
+                              {
+                                studentStatusOptions.find(
+                                  (op) => op.value === student[0].status
+                                )?.label
+                              }
                             </Badge>
                           }
                         </h2>

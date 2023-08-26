@@ -305,7 +305,7 @@ const App = ({ locale }) => {
   } else {
     if (isLoadingInitialData) {
       content = <InitialDataSpinner />;
-    } else if (user.groups.length > 0) {
+    } else if (user?.groups?.length > 0) {
       content = <Application />;
     } else {
       content = <NoGroupScreen />;

@@ -28,7 +28,7 @@ import {
   Label,
   Button,
   CardTitle,
-  // Table,
+  Table,
   InputGroup,
   InputGroupAddon,
   Input,
@@ -581,7 +581,13 @@ const StudentProfile = () => {
                         <Label className="data-style">
                           <IntlMessages id="menu.institutes" />
                         </Label>
-                        <h2>{institute[0].institute.name}</h2>
+                        <h2>
+                          {
+                            institutes.find(
+                              (ins) => ins.value === institute[0].institute
+                            )?.label
+                          }
+                        </h2>
                         <Label className="data-style">
                           <IntlMessages id="field.SemesterLabel" />
                         </Label>

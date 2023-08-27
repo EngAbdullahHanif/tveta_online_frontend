@@ -845,6 +845,12 @@ export const tazkiraOptions = [
   { value: 'paper', label: <IntlMessages id="forms.StdTazkiraPaper" /> },
 ];
 
+export const InstiutteGenderOptions = [
+  { value: 'male', label: 'ذکور' },
+  { value: 'female', label: 'اناث' },
+  { value: 'coed', label: 'مختلط' },
+];
+
 export const educationLevelOptions = [
   { value: '9', label: <IntlMessages id="forms.EducationalLevel_9th" /> },
   { value: '10', label: <IntlMessages id="forms.EducationalLevel_10th" /> },
@@ -871,6 +877,11 @@ export const teacherContractStatusOptions = [
   { value: 'active', label: <IntlMessages id="teacher.StatusOption_1" /> },
   { value: 'inactive', label: <IntlMessages id="teacher.StatusOption_3" /> },
   { value: 'dismissed', label: <IntlMessages id="teacher.StatusOption_2" /> },
+];
+
+export const instituteStatusOptions = [
+  { value: 'active', label: <IntlMessages id="teacher.StatusOption_1" /> },
+  { value: 'inactive', label: <IntlMessages id="teacher.StatusOption_3" /> },
 ];
 
 export const instTypeOptions = [

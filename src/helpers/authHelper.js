@@ -18,22 +18,28 @@ const ProtectedRoute = ({
           if (roles.includes('authenticated')) {
             return <Component />;
           }
-          const groups = user?.groups;
-          console.log('user.groups: ', user?.groups);
+
+          const groups = user?.groups || [];
+          console.log('user.groups: ', groups);
           console.log('roles: ', roles);
-          for (let i = 0; i < groups.length; i++) {
-            if (roles.includes(groups[i].name)) {
-              return <Component {...props} />;
-            }
+
+          const matchingGroups = groups.filter((group) =>
+            roles.includes(group.name)
+          );
+          console.log('matched --------', matchingGroups);
+          console.log('component: ', Component.name);
+          if (matchingGroups.length !== 0) {
+            return <Component {...props} />;
           }
-          console.log('could not found user group in roles');
+
+          console.log('could not find user group in roles');
           return (
             <Redirect
               to={{
                 pathname: '/unauthorized',
                 state: {
                   from: props.location,
-                  returnPath: roleRoots[user.groups[0].name],
+                  returnPath: roleRoots[groups[0]?.name],
                 },
               }}
             />

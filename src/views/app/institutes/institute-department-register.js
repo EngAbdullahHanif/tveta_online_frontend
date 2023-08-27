@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -34,6 +34,7 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { message, Spin } from 'antd';
+import { AuthContext } from 'context/AuthContext';
 message.config({
   top: 100,
   duration: 2,
@@ -75,9 +76,10 @@ const instituteApiUrl = `${servicePath}/institute/institute_create`;
 //http://localhost:8000/institute/institute_create
 
 const InstituteDepartmentRegister = () => {
+  const { institutes } = useContext(AuthContext);
   const [loader, setLoader] = useState(false);
   const [updateMode, setUpdateMode] = useState(false);
-  const [institutes, setInstitutes] = useState([]);
+  // const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
 
   const [isNext, setIsNext] = useState(false);
@@ -114,20 +116,20 @@ const InstituteDepartmentRegister = () => {
     }
   };
 
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    console.warn('Reponse Institutes: ', response);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      console.warn('Updated Institutes: ', updatedData);
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
+  // const fetchInstitutes = async () => {
+  //   const response = await callApi('institute/all/', '', null);
+  //   console.warn('Reponse Institutes: ', response);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     console.warn('Updated Institutes: ', updatedData);
+  //     setInstitutes(updatedData);
+  //   } else {
+  //     console.log('institute error');
+  //   }
+  // };
 
   const fetchDepartments = async () => {
     const response = await callApi(`institute/department/`, '', null);
@@ -145,7 +147,7 @@ const InstituteDepartmentRegister = () => {
   };
 
   useEffect(() => {
-    fetchInstitutes();
+    // fetchInstitutes();
     fetchDepartments();
   }, []);
 

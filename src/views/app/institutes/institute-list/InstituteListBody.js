@@ -118,14 +118,12 @@ const InstituteListBody = ({
               style={{ width: '100%' }}
             >
               <div style={{ width: '10%', fontSize: '20px' }}>
-                <NavLink to={`institute/${institute.id}`} className="">
-                  <p
-                    className="list-item-heading mb-1 "
-                    style={{ fontSize: '20px' }}
-                  >
-                    {index + 1}
-                  </p>
-                </NavLink>
+                <p
+                  className="list-item-heading mb-1 "
+                  style={{ fontSize: '20px' }}
+                >
+                  {index + 1}
+                </p>
               </div>
               <div style={{ width: '18%', fontSize: '20px' }}>
                 <NavLink to={`institute/${institute.id}`} className="">
@@ -137,9 +135,11 @@ const InstituteListBody = ({
                   </p>
                 </NavLink>
               </div>
-              <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
-                {institute.name}
-              </p>
+              <NavLink to={`institute/${institute.id}`} className="">
+                <p className="mb-1 " style={{ fontSize: '20px' }}>
+                  {institute.name}
+                </p>
+              </NavLink>
               <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
                 {provinces &&
                   provinces.filter(

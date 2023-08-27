@@ -589,6 +589,7 @@ const StudentProfile = () => {
                           <IntlMessages id="menu.institutes" />
                         </Label>
                         <h2>
+                          {console.log('iiiiiiiii', institutes)}
                           {
                             institutes.find(
                               (ins) => ins.value === institute[0].institute

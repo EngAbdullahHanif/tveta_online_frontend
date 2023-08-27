@@ -335,7 +335,10 @@ const InstituteDetails = (values) => {
                         {' '}
                         <Colxx>
                           <div>
-                            <h2>Add Class to Institute</h2>
+                            <h2>
+                              ډیپارټمنټ ته د ټولګي زیاتول / اضافه کردن صنف به
+                              دیپارتمنت
+                            </h2>
                             <FormGroup className="form-group has-float-label w-100">
                               <Label>
                                 <IntlMessages id="forms.studyDepartment" />
@@ -380,7 +383,7 @@ const InstituteDetails = (values) => {
                             </FormGroup>
                           </div>
                           <button
-                            className="btn-primary"
+                            className="btn btn-primary"
                             onClick={handleSubmit}
                           >
                             Add Class

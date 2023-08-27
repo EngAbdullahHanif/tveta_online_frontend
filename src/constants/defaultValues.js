@@ -2,7 +2,7 @@ export const userRole = {
   superUser: 'super_admin',
   admin: 'admin',
   provincial: 'pr_supervisor',
-  institute: 'institute',
+  institute: 'ins_manager',
   user: 'user',
   dormManager: 'dorm_manager',
   instituteDataentry: 'ins_dataentry',
@@ -25,6 +25,7 @@ export const roleRoots = {
   ins_dataentry: '/app/students',
   dataentry: '/app/students',
   pr_supervisor: '/app/dashboards/provincial',
+  pr_dataentry: '/app/dashboards/provincial',
 };
 
 /* 

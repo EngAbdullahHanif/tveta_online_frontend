@@ -179,6 +179,7 @@ const Students = ({ match, props }) => {
             userRole.institute,
             userRole.superUser,
             userRole.instituteDataentry,
+            userRole.provinceDataentry,
           ]}
           props={props}
         />
@@ -219,7 +220,6 @@ const Students = ({ match, props }) => {
           roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
-        {console.log('print match url: ', match.url)}
         <ProtectedRoute
           path={`${match.url}/students`}
           component={StudentList}
@@ -228,8 +228,8 @@ const Students = ({ match, props }) => {
             userRole.provinceSupervisor,
             userRole.provinceDataentry,
             userRole.superUser,
-            userRole.provinceDataentry,
-            userRole.provinceSupervisor,
+            userRole.instituteDataentry,
+            userRole.instituteManager,
             userRole.dataentry,
           ]}
           props={props}

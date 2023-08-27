@@ -194,7 +194,7 @@ const App = ({ locale }) => {
 
   const fetchInstitutes = async (provinceId) => {
     if (!user) return;
-    const response = await callApi(`institute/`, 'GET', null);
+    const response = await callApi(`institute/all/`, 'GET', null);
     if (response.data && response.status === 200) {
       console.log('response.data: ', response.data);
 

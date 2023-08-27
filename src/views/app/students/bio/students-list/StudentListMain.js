@@ -314,7 +314,6 @@ const ThumbListPages = ({ match }) => {
             )}
           </Formik>
         </div>
-        {console.log('STUDENTS', items)}
         <TB
           style={{ fontSize: 20 }}
           size="large"

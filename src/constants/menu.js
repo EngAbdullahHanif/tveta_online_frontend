@@ -31,6 +31,20 @@ const data = [
         ],
       },
       {
+        icon: 'GR.GrUserAdd',
+        label: 'forms.studentRegisterTitle',
+        to: `${adminRoot}/students/register`,
+        roles: [
+          userRole.admin,
+          userRole.institute,
+          userRole.superUser,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
+          userRole.dataentry,
+        ],
+      },
+      {
         icon: 'FA.FaList',
         label: 'menu.kankor-student-list',
         to: `${adminRoot}/students/kankor-students`,
@@ -151,19 +165,7 @@ const data = [
       //   newWindow: false,
       // },
       //Changes ended
-      {
-        icon: 'GR.GrUserAdd',
-        label: 'forms.studentRegisterTitle',
-        to: `${adminRoot}/students/register`,
-        roles: [
-          userRole.admin,
-          userRole.instituteDataentry,
-          userRole.instituteManager,
-          userRole.provinceDataentry,
-          userRole.authorityDataentry,
-        ],
-        newWindow: false,
-      },
+
       {
         icon: 'GR.GrUserAdd',
         label: 'menu.student_register_kankor',
@@ -366,6 +368,8 @@ const data = [
           userRole.admin,
           userRole.authoritySupervisor,
           userRole.authorityDataentry,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
         ],
       },
       // {

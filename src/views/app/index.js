@@ -91,7 +91,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -103,7 +104,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -116,7 +118,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -129,7 +132,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -142,7 +146,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -155,7 +160,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -175,7 +181,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -188,7 +195,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -201,7 +209,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -214,7 +223,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -227,7 +237,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -240,7 +251,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -253,7 +265,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -266,7 +279,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -279,7 +293,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}
@@ -292,7 +307,8 @@ const App = ({ match, props }) => {
               roles={[
                 userRole.superUser,
                 userRole.admin,
-                userRole.institute,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
                 userRole.provinceSupervisor,
                 userRole.provinceDataentry,
               ]}

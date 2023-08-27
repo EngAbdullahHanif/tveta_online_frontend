@@ -34,6 +34,7 @@ const FormikReactSelect = ({
   isClearable,
   isRtl,
   isSearchable,
+  placeholder,
 }) => {
   const handleChange = (val) => {
     onChange(name, val);
@@ -47,7 +48,9 @@ const FormikReactSelect = ({
     <Select
       className={`react-select ${className}`}
       classNamePrefix="react-select"
-      placeholder={<IntlMessages id="forms.EducationLevelDefaultValue" />}
+      placeholder={
+        placeholder || <IntlMessages id="forms.EducationLevelDefaultValue" />
+      }
       options={options}
       isMulti={isMulti}
       initial

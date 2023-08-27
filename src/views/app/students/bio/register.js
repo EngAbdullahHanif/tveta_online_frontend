@@ -125,7 +125,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [instDepartments, setInstDepartments] = useState(departments);
+  const [instDepartments, setInstDepartments] = useState([]);
   // get data of each step from localstorage
   const step0Data = JSON.parse(localStorage.getItem('step0'));
   const step1Data = JSON.parse(localStorage.getItem('step1'));
@@ -804,7 +804,9 @@ const StudentRegistration = ({ intl }, values) => {
                                 <Field
                                   className="form-control fieldStyle"
                                   name="tazkiraNo"
-                                  type="number"
+                                  type="text"
+                                  maxLength="14"
+                                  minLength="12"
                                 />
                                 {errors.tazkiraNo && touched.tazkiraNo ? (
                                   <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
@@ -906,7 +908,7 @@ const StudentRegistration = ({ intl }, values) => {
                               <Field
                                 className="form-control fieldStyle"
                                 name="phoneNo"
-                                type="number"
+                                type="text"
                               />
                               {errors.phoneNo && touched.phoneNo ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">

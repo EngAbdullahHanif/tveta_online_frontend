@@ -132,7 +132,7 @@ const ThumbListPages = ({ match }) => {
   const fetchDorms = async () => {
     const response = await callApi('institute/dorms/', '', null);
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
+      const updatedData = await response.data?.results.map((item) => ({
         value: item.id,
         label: item.name,
       }));

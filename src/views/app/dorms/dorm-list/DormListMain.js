@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { provincesOptionsForList } from '../../global-data/options';
+import React, { useState, useEffect, useContext } from 'react';
+import {
+  BuildingTypeOptions,
+  dormGenderOptions,
+  instituteStatusOptions,
+  provincesOptionsForList,
+} from '../../global-data/options';
 
 import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
-
+import { Field, Formik } from 'formik';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { Badge, FormGroup, Input, Label, Spinner } from 'reactstrap';
+import { Select, Spin, Table as TB } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 // import { servicePath } from 'constants/defaultValues';
 
 import ListPageHeading from './DormListHeading';
@@ -12,6 +22,8 @@ import ListPageHeading from './DormListHeading';
 import ListPageListing from './DormListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import config from '../../../../config';
+import { AuthContext } from 'context/AuthContext';
+import { userRole } from 'constants/defaultValues';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -92,7 +104,8 @@ const buildingTypeOptions = [
   },
 ];
 
-const ThumbListPages = ({ match }) => {
+const ThumbListPages = ({ match, roles }) => {
+  const { user, provinces, districts } = useContext(AuthContext);
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -101,7 +114,6 @@ const ThumbListPages = ({ match }) => {
     column: 'title',
     label: 'Product Name',
   });
-
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
@@ -111,6 +123,12 @@ const ThumbListPages = ({ match }) => {
   const [selectedFilter, setSelectFilter] = useState({
     column: 'all',
     label: 'تول / همه',
+  });
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 5,
+    },
   });
   const [rest, setRest] = useState(0);
   const [dormsFilterList, setDormsFilterList] = useState([]);
@@ -136,7 +154,9 @@ const ThumbListPages = ({ match }) => {
     label: 'نوع تعمیر',
   });
   const [provinceOptions, setProvinceOptions] = useState([]);
-
+  const [isFilter, setIsFilter] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [districtsOptions, setDistrictsOptions] = useState([]);
   // useEffect(() => {
   //   setCurrentPage(1);
   // }, [
@@ -145,13 +165,119 @@ const ThumbListPages = ({ match }) => {
   //   selectedStatusOptions,
   //   selectedBuildingType,
   // ]);
+  const columns = [
+    {
+      title: 'نمبر اساس',
+      dataIndex: 'number',
+      width: '5%',
+      responsive: ['sm'],
+    },
+
+    {
+      title: 'نوم/نام',
+      dataIndex: 'name',
+      width: '22%',
+      responsive: ['sm'],
+    },
+    {
+      title: 'ولایت',
+      dataIndex: 'province',
+      width: '10%',
+    },
+    {
+      title: 'ولسوالی/تاحیه',
+      dataIndex: 'district',
+      width: '15%',
+      responsive: ['sm'],
+    },
+
+    {
+      title: 'ظرفیت',
+      dataIndex: 'capacity',
+      width: '10%',
+    },
+    {
+      title: 'سهمیه',
+      dataIndex: 'quota',
+      width: '10%',
+    },
+    {
+      title: 'جنسیت',
+      dataIndex: 'gender',
+      width: '10%',
+      responsive: ['sm'],
+    },
+    {
+      title: 'د تعمیر ډول',
+      dataIndex: 'building_ownership',
+      width: '10%',
+    },
+    {
+      title: 'اپډیټ',
+      dataIndex: 'action',
+    },
+  ];
+
+  const canUpdateRoles = [
+    userRole.dormManager,
+    userRole.provinceDataentry,
+    userRole.admin,
+  ];
+  const authUser = user.groups.filter((group) =>
+    canUpdateRoles.includes(group.name)
+  );
+  if (!authUser) columns.pop();
+
+  const handleTableChange = (pagination, filter, sorter) => {
+    setIsFilter(false);
+    setTableParams({ pagination, filter, ...sorter });
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setItems([]);
+    }
+  };
+  const onFilter = async (values) => {
+    setIsFilter(true);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
+    });
+    let params = {
+      page: 1,
+    };
+    params.building_ownership = values.filterOwnership?.value;
+    params.province = values.filterProvince?.value;
+    params.district = values.filterDistrict?.value;
+    params.gender = values.filterGender?.value;
+    params.status = values.filterStatus?.value;
+    params.id = values.filterId || null;
+    fetchData(params);
+  };
+
+  const handleResetFields = (resetForm) => {
+    resetForm({
+      values: {
+        filterId: '',
+        filterInstitute: [],
+        filterProvince: [],
+        filterOwnership: [],
+        filterDistrict: [],
+      },
+    });
+    setDistrictsOptions([]);
+    setIsFilter(false);
+    fetchData();
+  };
   const fetchDorms = async () => {
     // const response = await axios.get(`institute/dorms`);
-    const response = await callApi('institute/', '', null);
+    const response = await callApi('institute/all', '', null);
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
+      const updatedData = await response?.data.map((item) => ({
         id: item.id,
         name: item.name,
+        label: item.name,
       }));
       setDormsFilterList(updatedData);
       console.log('dormsFilterList', dormsFilterList);
@@ -179,65 +305,79 @@ const ThumbListPages = ({ match }) => {
     fetchProvinces();
   }, []);
 
-  async function fetchData() {
+  async function fetchData(params = {}) {
+    console.log('PARAMSSSSSSSSSS: ', params);
+    setIsLoading(true);
     let endpoint = `institute/dorms/`;
-    let params = {};
-
-    if (dormName !== '') {
-      params['id'] = dormName.value;
-    } else {
-      if (selectedProvinceOption?.value !== 'all') {
-        params['province'] = selectedProvinceOption.value;
-      }
-
-      if (district !== '') {
-        params['district'] = district;
-      }
-
-      if (selectedGenderOption?.value !== 'all') {
-        params['gender'] = selectedGenderOption.value;
-      }
-
-      if (selectedBuildingType?.value !== 'all') {
-        params['building_type_option'] = selectedBuildingType.value;
-      }
-
-      if (selectedStatusOptions?.value !== 'all') {
-        params['building_ownership'] = selectedStatusOptions.value;
-      }
-    }
-
+    const params1 = {
+      ...params,
+      // if filters reseted, goto first page
+      page: !isFilter ? tableParams.pagination.current : params.page,
+      page_size: tableParams.pagination.pageSize || null,
+    };
     try {
-      const response = await callApi(endpoint, '', null, params);
-
+      const response = await callApi(endpoint, null, null, params1);
+      setIsLoading(false);
       if (response.data && response.status === 200) {
-        setDorms(response.data);
-        setSelectedItems([]);
-        setIsLoaded(true);
+        setDorms(response.data?.results);
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: response?.data?.count,
+          },
+        });
       } else {
-        console.log('Error fetching data from API');
+        console.log('students error');
       }
     } catch (error) {
-      console.log('API request failed:', error);
+      console.log('error: ', error);
     }
+    // let endpoint = `institute/dorms/`;
+    // let params = {};
+
+    // if (dormName !== '') {
+    //   params['id'] = dormName.value;
+    // } else {
+    //   if (selectedProvinceOption?.value !== 'all') {
+    //     params['province'] = selectedProvinceOption.value;
+    //   }
+
+    //   if (district !== '') {
+    //     params['district'] = district;
+    //   }
+
+    //   if (selectedGenderOption?.value !== 'all') {
+    //     params['gender'] = selectedGenderOption.value;
+    //   }
+
+    //   if (selectedBuildingType?.value !== 'all') {
+    //     params['building_type_option'] = selectedBuildingType.value;
+    //   }
+
+    //   if (selectedStatusOptions?.value !== 'all') {
+    //     params['building_ownership'] = selectedStatusOptions.value;
+    //   }
+    // }
+
+    // try {
+    //   const response = await callApi(endpoint, '', null, params);
+
+    //   if (response.data && response.status === 200) {
+    //     setDorms(response.data);
+    //     setSelectedItems([]);
+    //     setIsLoaded(true);
+    //   } else {
+    //     console.log('Error fetching data from API');
+    //   }
+    // } catch (error) {
+    //   console.log('API request failed:', error);
+    // }
   }
 
   useEffect(() => {
-    console.log('district', district);
     fetchData();
-  }, [
-    selectedPageSize,
-    currentPage,
-    selectedOrderOption,
-    dormName,
-    rest,
-    district,
-    selectedBuildingType,
-    selectedGenderOption,
-    selectedProvinceOption,
-    selectedStatusOptions,
-    province,
-  ]);
+  }, [!isFilter ? JSON.stringify(tableParams) : null]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -287,21 +427,6 @@ const ThumbListPages = ({ match }) => {
     return false;
   };
 
-  const onContextMenuClick = (e, data) => {
-    // params : (e,data,target)
-    console.log('onContextMenuClick - selected items', selectedItems);
-    console.log('onContextMenuClick - action : ', data.action);
-  };
-
-  const onContextMenu = (e, data) => {
-    const clickedProductId = data.data;
-    if (!selectedItems.includes(clickedProductId)) {
-      setSelectedItems([clickedProductId]);
-    }
-
-    return true;
-  };
-
   useMousetrap(['ctrl+a', 'command+a'], () => {
     handleChangeSelectAll(false);
   });
@@ -314,18 +439,15 @@ const ThumbListPages = ({ match }) => {
   const startIndex = (currentPage - 1) * selectedPageSize;
   const endIndex = currentPage * selectedPageSize;
 
-  return !isLoaded ? (
-    <div className="loading" />
-  ) : (
+  return (
     <>
       <div className="disable-text-selection">
-        <ListPageHeading
+        <h1>د لیلیو لست/ لست لیله ها</h1>
+        {/* <ListPageHeading
           heading="د لیلیو لست/ لست لیله ها"
-          // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
-          // following code is used for order the list based on different element of the prod
           changeOrderBy={(column) => {
             setSelectedOrderOption(
               orderOptions.find((x) => x.column === column)
@@ -484,7 +606,159 @@ const ThumbListPages = ({ match }) => {
             onContextMenu={onContextMenu}
             onChangePage={setCurrentPage}
           />
-        </table>
+        </table> */}
+        <div
+          style={{
+            padding: 10,
+            display: 'flex',
+          }}
+        >
+          <Formik
+            initialValues={{
+              filterId: '',
+              filterInstitute: [],
+              filterProvince: [],
+            }}
+            onSubmit={onFilter}
+          >
+            {({
+              values,
+              setFieldValue,
+              handleSubmit,
+              setFieldTouched,
+              resetForm,
+            }) => (
+              <>
+                <Field name="filterId" placeholder="ایدی" />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="ولایت"
+                  name="filterProvince"
+                  options={provinces}
+                  value={values.filterProvince}
+                  onChange={(name, option) => {
+                    setFieldValue(name, option);
+                    const dd = districts.filter(
+                      (dis) => dis.province === option.value
+                    );
+                    setDistrictsOptions(dd);
+                  }}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="ولسوالی"
+                  name="filterDistrict"
+                  options={districtsOptions}
+                  value={values.filterDistrict}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="نوعیت"
+                  name="filterOwnership"
+                  options={BuildingTypeOptions}
+                  value={values.filterOwnership}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="جنسیت"
+                  name="filterGender"
+                  options={dormGenderOptions}
+                  value={values.filterGender}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+
+                <button className="btn btn-secondary" onClick={handleSubmit}>
+                  Filter
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  onClick={() => handleResetFields(resetForm)}
+                >
+                  Reset
+                </button>
+              </>
+            )}
+          </Formik>
+        </div>
+        {console.log('ITTTTTTTTTTTTTTTTTT', dorms)}
+        <TB
+          style={{ fontSize: 20 }}
+          size="large"
+          columns={columns}
+          pagination={tableParams.pagination}
+          onChange={handleTableChange}
+          loading={isLoading}
+          dataSource={dorms?.map((item, index) => ({
+            key: item?.id,
+            number: item?.id,
+            name: (
+              <NavLink to={`dorm/${item?.id}`} style={{ width: '10%' }}>
+                {item?.name}
+              </NavLink>
+            ),
+            province: provinces.find((pro) => pro.value == item?.province)
+              ?.label,
+            district: districts.find((pro) => pro.value == item?.district)
+              ?.label,
+            gender: dormGenderOptions.find((pro) => pro.value == item?.gender)
+              ?.label,
+            capacity: item.capacity,
+            quota: item.quota,
+            building_ownership: BuildingTypeOptions.find(
+              (op) => op.value === item.building_ownership
+            ).label,
+            status: instituteStatusOptions.map((status) => {
+              if (status.value == item?.status) {
+                return (
+                  <div
+                    className="mb-1 text-small"
+                    style={{ fontSize: '20px', width: '10%' }}
+                  >
+                    <Badge
+                      color={
+                        status.value == 'dismissed'
+                          ? 'danger'
+                          : status.value == 'inprogress'
+                          ? 'success'
+                          : status.value == 'active'
+                          ? 'success'
+                          : status.value == 'freeze'
+                          ? 'secondary'
+                          : 'warning'
+                      }
+                      pill
+                    >
+                      {status.label}
+                    </Badge>
+                  </div>
+                );
+              }
+            }),
+            action: (
+              <NavLink
+                to={`register/${item?.id}`}
+                // style={{ width: '10%' }}
+              >
+                <div>
+                  <BsPencilSquare
+                    color="green"
+                    outline
+                    style={{ fontSize: '20px' }}
+                    id="updateIcon"
+                  />
+                </div>
+              </NavLink>
+            ),
+          }))}
+        />
       </div>
     </>
   );

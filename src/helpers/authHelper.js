@@ -29,7 +29,7 @@ const ProtectedRoute = ({
           console.log('matched --------', matchingGroups);
           console.log('component: ', Component.name);
           if (matchingGroups.length !== 0) {
-            return <Component {...props} />;
+            return <Component {...props} roles={roles} />;
           }
 
           console.log('could not find user group in roles');

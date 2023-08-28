@@ -36,6 +36,8 @@ import {
 } from 'containers/form-validations/FormikFields';
 import { message, Spin } from 'antd';
 import { CURRENT_SHAMSI_YEAR } from 'constants/defaultValues';
+import { useContext } from 'react';
+import { AuthContext } from 'context/AuthContext';
 message.config({
   top: 100,
   duration: 2,
@@ -92,10 +94,13 @@ const InstituteRegister = () => {
   const [initialFoundationYear, setInitialFoundationYear] = useState('');
   const [initialShift, setInitialShift] = useState([]);
   const [initialOwnerhip, setInitialOwnership] = useState([]);
-  const [provinces, setProvinces] = useState([]);
-  const [districts, setDistricts] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState('');
   const [initialOwnershipType, setInitialOwnershipType] = useState([]);
+
+  const { institutes, fetchInstitutes, provinces, districts } =
+    useContext(AuthContext);
+
+  const [districtsOptions, setDistrictsOptions] = useState([]);
 
   const [initialGender, setInitialGender] = useState([]);
 
@@ -236,51 +241,6 @@ const InstituteRegister = () => {
     }, []);
   }
 
-  const fetchProvinces = async () => {
-    const response = await callApi('core/provinces/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.native_name,
-      }));
-
-      setProvinces(updatedData);
-    } else {
-      console.log('province error');
-    }
-  };
-
-  const fetchDistricts = async (provinceId) => {
-    console.log('provinceId', provinceId);
-    const response = await callApi(
-      `core/districts/?province=${provinceId}`,
-      'GET',
-      null
-    );
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.native_name,
-      }));
-      setDistricts(updatedData);
-      console.log('district areeeeeeeeee: ', updatedData);
-    } else {
-      console.log('district error');
-    }
-  };
-
-  useEffect(() => {
-    fetchProvinces();
-    fetchDistricts();
-  }, []);
-
-  useEffect(() => {
-    console.log('selectedProvince', selectedProvince);
-    if (selectedProvince) {
-      fetchDistricts(selectedProvince);
-    }
-  }, [selectedProvince]);
-
   const createNotification = (type, className) => {
     const cName = className || '';
     switch (type) {
@@ -402,6 +362,7 @@ const InstituteRegister = () => {
       // resetForm();
       setIsNext(true);
       console.log('success message from backend', response);
+      fetchInstitutes();
     } else {
       createNotification('error', 'filled');
     }
@@ -510,7 +471,13 @@ const InstituteRegister = () => {
                           id="province"
                           value={values.province}
                           options={provinces}
-                          onChange={setFieldValue} //onChange should conatain single line
+                          onChange={(name, option) => {
+                            setFieldValue(name, option);
+                            const dd = districts.filter(
+                              (dis) => dis.province === option.value
+                            );
+                            setDistrictsOptions(dd);
+                          }}
                           onBlur={setFieldTouched}
                           onClick={setSelectedProvince(values.province.value)}
                         />
@@ -529,7 +496,7 @@ const InstituteRegister = () => {
                           name="district"
                           id="district"
                           value={values.district}
-                          options={districts}
+                          options={districtsOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />

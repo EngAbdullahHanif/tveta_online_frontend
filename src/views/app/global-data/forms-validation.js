@@ -276,12 +276,13 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="teacher.NameErr" />),
 
-  last_name: Yup.string()
+  father_name: Yup.string()
+    .required(<IntlMessages id="teacher.FatherNameErr" />)
     .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />)
-    .required('last name is required'),
+    .max(50, <IntlMessages id="max.maxInputValue" />),
 
-  english_name: Yup.string()
+  last_name: Yup.string()
+    .required(<IntlMessages id="forms.lastNameErr" />)
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
@@ -289,14 +290,62 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
-  father_name: Yup.string()
-    .required(<IntlMessages id="teacher.FatherNameErr" />)
+  grandfather_name: Yup.string()
+    .required(<IntlMessages id="forms.grandFatherNameErr" />)
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  english_name: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
   english_father_name: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  place_of_birth: Yup.string()
+    .required(<IntlMessages id="forms.StdPlaceOfBirthErr" />)
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  tazkiraNo: Yup.string().when('tazkiraType.value', {
+    is: 'electronic',
+    then: Yup.string().required(
+      'نمبر تذکره الکترونی الزامی است وقتی نوع تذکره الکترونی باشد'
+    ),
+    otherwise: Yup.string(),
+  }),
+
+  // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
+  year_of_birth: Yup.number()
+    .min(1350, 'سال تولد درست نیست/د تولد کال سم ندی')
+    .max(1420, 'سال تولد درست نیست/د تولد کال سم ندی')
+    // .shape({
+    //   value: Yup.string().required(),
+    // })
+    .nullable()
+    .required(<IntlMessages id="forms.StdDoBErr" />),
+  month_of_birth: Yup.number()
+    .min(1, 'ماه تولد درست نیست / د تولد میاشت سم ندی')
+    .max(12, 'ماه تولد درست نیست / د تولد میاشت سم ندی')
+    // .shape({
+    //   value: Yup.string().required(),
+    // })
+    .nullable(),
+  day_of_birth: Yup.number()
+    .min(1, ' روز تولد درست نیست / د تولد ورځ سم ندی')
+    .max(31, ' روز تولد درست نیست / د تولد ورځ سم ندی')
+    // .shape({
+    //   value: Yup.string().required(),
+    // })
+    .nullable(),
+
+  tazkiraType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
 
   gender: Yup.object()
     .shape({
@@ -305,44 +354,66 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="forms.genderErr" />),
 
-  grandfather_name: Yup.string()
-    .required(<IntlMessages id="teacher.GrandFatherNameErr" />)
-    .min(3, <IntlMessages id="min.minInputValue" />)
-    .max(50, <IntlMessages id="max.maxInputValue" />),
+  email: Yup.string().email(<IntlMessages id="teacher.EmailRequiredErr" />),
 
-  registration_number: Yup.string().required(
-    <IntlMessages id="teacher.TazkiraNoErr" />
-  ),
   phone_number: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
-  year_of_birth: Yup.number()
-    .nullable()
-    .min(
-      1300,
-      'د زوکړې کال باید له ۱۳۰۰ نه لوړ وي/ سال تولد باید از ۱۳۰۰ بزرگتر باشد'
-    )
-    .max(
-      1400,
-      'د زوکړې کال باید له ۱۴۰۰ نه کوچنی وي/ سال تولد باید از ۱۴۰۰ کوچکتر باشد'
-    )
-    .required(<IntlMessages id="forms.StdDoBErr" />),
+  idCardJoldNo: Yup.string().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.string().required(
+      'شماره جلد الزامی است وقتی نوع تذکره کاغذی است'
+    ),
+    otherwise: Yup.string(),
+  }),
 
+  idCardPageNo: Yup.number().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.number().required('صفحه الزامی است وقتی نوع تذکره کاغذی است'),
+    otherwise: Yup.number(),
+  }),
+
+  sabtNo: Yup.number().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.number().required(
+      'شماره ثبت الزامی است وقتی نوع تذکره کاغذی است'
+    ),
+    otherwise: Yup.number(),
+  }),
+
+  sokokNo: Yup.string().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.string().required(
+      'شماره صکوک الزامی است وقتی نوع تذکره کاغذی است'
+    ),
+    otherwise: Yup.string(),
+  }),
   grade: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
-    .nullable()
     .required(<IntlMessages id="teacher.GradeErr" />),
-
-  tazkira_type: Yup.object()
+  step: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
+    .required(<IntlMessages id="teacher.stepErr" />),
+  main_province: Yup.object()
+    .shape({
+      value: Yup.string().required(<IntlMessages id="forms.ProvinceErr" />),
+    })
     .nullable()
-    .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
-
-  email: Yup.string().email(<IntlMessages id="teacher.EmailRequiredErr" />),
-  // .required(<IntlMessages id="teacher.EmailErr" />),
-  place_of_birth: Yup.string().required('place of birth is required'),
+    .required(<IntlMessages id="forms.ProvinceErr" />),
+  current_province: Yup.object()
+    .shape({ value: Yup.string().required() })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  current_district: Yup.object().required(
+    <IntlMessages id="forms.DistrictErr" />
+  ),
+  main_district: Yup.object().required(<IntlMessages id="forms.DistrictErr" />),
+  main_village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+  current_village: Yup.string().required(
+    <IntlMessages id="forms.VillageErr" />
+  ),
 });
 
 //   teacher  form validation step Two

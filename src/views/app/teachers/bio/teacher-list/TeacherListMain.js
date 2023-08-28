@@ -31,7 +31,7 @@ import { AuthContext } from 'context/AuthContext';
 const pageSizes = [4, 8, 12, 20];
 
 const ThumbListPages = ({ match }) => {
-  const { provinces } = useContext(AuthContext);
+  const { provinces, institutes } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
@@ -72,7 +72,6 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
 
@@ -203,21 +202,6 @@ const ThumbListPages = ({ match }) => {
     institute,
   ]);
 
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-  useEffect(() => {
-    fetchInstitutes();
-  }, []);
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||

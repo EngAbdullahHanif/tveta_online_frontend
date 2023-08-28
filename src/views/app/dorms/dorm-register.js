@@ -41,6 +41,8 @@ import {
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from 'context/AuthContext';
 const UpdateMode = true;
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
@@ -91,58 +93,8 @@ const SignupSchema = Yup.object().shape({
 
 const updateMode = true;
 const DormRegistration = (values) => {
-  const { dormId } = useParams();
-  //console.log('Dorm info', dormId);
-
-  if (dormId) {
-    useEffect(() => {
-      async function fetchData() {
-        const { data } = await axios.get(`${dormAPI}/?id=${dormId}`);
-        console.log(data, 'data');
-        setInitialName(data[0].name);
-        setInitialCapicity(data[0].dorm_capacity);
-        setInitialTotalKitchens(data[0].kitchen_qty);
-        const dormTypeOptions = BuildingTypeOptions.map((dormType) => {
-          if (dormType.value === data[0].dorm_type) {
-            setInitialBuildingType(dormType);
-          }
-        });
-        const publicDormTypeOptions = publicBuildingOwnerOptions.map(
-          (publicDorm) => {
-            if (publicDorm.value === data[0].dorm_type_option) {
-              setInitialPublicBuildingOwner(publicDorm);
-            }
-          }
-        );
-        const privateDormTypeOptions = privateBuildingTypeOptions.map(
-          (privateDormType) => {
-            if (privateDormType.value === data[0].dorm_type_option) {
-              setInitialPrivateBuildingType(privateDormType);
-            }
-          }
-        );
-        const provinceOptions = provinceOptions.map((province) => {
-          if (province.value === data[0].provence) {
-            setInitialProvince(province);
-          }
-        });
-        const genderOptions = dormGenderOptions.map((gender) => {
-          if (gender.value === data[0].gender_type) {
-            setInitialGender(gender);
-          }
-        });
-
-        setInitialTotalRooms(data[0].rooms_qty);
-        setInitialTotalBuildingNo(data[0].building_qty);
-        setInitialToilet(data[0].toilet_qty);
-        setInitialDistrict(data[0].district);
-        setInitialQuota(data[0].dorm_quota);
-      }
-      fetchData();
-      //setUpdateMode(true);
-    }, []);
-  }
-
+  const { provinces } = useContext(AuthContext);
+  const [updatingDorm, setUpdatingDorm] = useState([]);
   const [initialName, setInitialName] = useState('');
   const [initialCapicity, setInitialCapicity] = useState('');
   const [initialTotalKitchens, setInitialTotalKitchens] = useState('');
@@ -160,23 +112,95 @@ const DormRegistration = (values) => {
   const [initialToilet, setInitialToilet] = useState('');
   const [initialProvince, setInitialProvince] = useState([]);
   const [initialDistrict, setInitialDistrict] = useState([]);
-  const [provinces, setProvinces] = useState([]);
+  // const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState('');
+  const { dormId } = useParams();
+  //console.log('Dorm info', dormId);
 
-  const fetchProvinces = async () => {
-    const response = await callApi('core/provinces/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.native_name,
-      }));
+  if (dormId) {
+    useEffect(() => {
+      async function fetchData() {
+        // const { data } = await axios.get(`${dormAPI}/?id=${dormId}`);
+        const response = await callApi(`institute/dorms/?id=${dormId}`);
+        const updValues = response?.data.results[0];
+        setUpdatingDorm(updValues);
+        console.log(updValues, 'response?.data');
+        setInitialName(updValues.name);
+        setInitialCapicity(updValues.capacity);
+        setInitialTotalKitchens(updValues.number_of_kitchens);
+        // BuildingTypeOptions.map((dormType) => {
+        //   if (dormType.value === updValues.building_ownership) {
+        //     setInitialBuildingType(dormType);
+        //   }
+        // });
+        setInitialBuildingType(
+          BuildingTypeOptions.find(
+            (option) => option.value === updValues.building_ownership
+          )
+        );
 
-      setProvinces(updatedData);
-    } else {
-      console.log('province error');
-    }
-  };
+        // publicBuildingOwnerOptions.map((publicDorm) => {
+        //   if (publicDorm.value === updValues.dorm_type_option) {
+        //     setInitialPublicBuildingOwner(publicDorm);
+        //   }
+        // });
+        setInitialPublicBuildingOwner(
+          publicBuildingOwnerOptions.find(
+            (option) => option.value === updValues.building_type_option
+          )
+        );
+
+        // privateBuildingTypeOptions.map((privateDormType) => {
+        //   if (privateDormType.value === updValues.dorm_type_option) {
+        //     setInitialPrivateBuildingType(privateDormType);
+        //   }
+        // });
+
+        setInitialPrivateBuildingType(
+          privateBuildingTypeOptions.find(
+            (option) => option.value === updValues.building_type_option
+          )
+        );
+
+        setInitialProvince(
+          provinces.find((option) => option.value === updValues.province)
+        );
+
+        setInitialDistrict(
+          districts.find((option) => option.value === updValues.district)
+        );
+
+        dormGenderOptions.map((gender) => {
+          if (gender.value === updValues.gender) {
+            setInitialGender(gender);
+          }
+        });
+
+        setInitialTotalRooms(updValues.number_of_rooms);
+        setInitialTotalBuildingNo(updValues.number_of_buildings);
+        setInitialToilet(updValues.number_of_toilets);
+        // setInitialDistrict(updValues.district);
+        setInitialQuota(updValues.quota);
+      }
+      fetchData();
+      //setUpdateMode(true);
+    }, []);
+  }
+
+  // const fetchProvinces = async () => {
+  //   const response = await callApi('core/provinces/', 'GET', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response?.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.native_name,
+  //     }));
+
+  //     setProvinces(updatedData);
+  //   } else {
+  //     console.log('province error');
+  //   }
+  // };
 
   const fetchDistricts = async (provinceId) => {
     console.log('provinceId', provinceId);
@@ -186,7 +210,7 @@ const DormRegistration = (values) => {
       null
     );
     if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
+      const updatedData = await response?.data.map((item) => ({
         value: item.id,
         label: item.native_name,
       }));
@@ -196,9 +220,9 @@ const DormRegistration = (values) => {
     }
   };
 
-  useEffect(() => {
-    fetchProvinces();
-  }, []);
+  // useEffect(() => {
+  //   fetchProvinces();
+  // }, []);
 
   useEffect(() => {
     console.log('selectedProvince', selectedProvince);
@@ -213,7 +237,7 @@ const DormRegistration = (values) => {
     totalKitchens: initialTotalKitchens,
     gender: initialGender,
     buildingType: initialBuildingType,
-    publicBuildingOwner: initialPublicBuildingOwner,
+    PublicBuildingOwner: initialPublicBuildingOwner,
     privateBuildingType: initialPrivateBuildingType,
     quota: initialQuota,
     totalRooms: initialTotalRooms,
@@ -254,12 +278,19 @@ const DormRegistration = (values) => {
         break;
     }
   };
-  const [dormTypeOption, setDormTypeOption] = useState('');
   const [isNext, setIsNext] = useState(false);
 
   // post dorm record to the backend
   const postDormRecord = async (data) => {
-    const response = await callApi('institute/dorms_create/', 'POST', data);
+    const apiParams = {
+      endPoint: 'institute/dorms/',
+      method: 'POST',
+    };
+    if (dormId) {
+      apiParams.endPoint = `institute/dorms/${dormId}/`;
+      apiParams.method = 'PATCH';
+    }
+    const response = await callApi(apiParams.endPoint, apiParams.method, data);
     if (response) {
       createNotification('success', 'filled');
       setIsNext(true);
@@ -272,37 +303,30 @@ const DormRegistration = (values) => {
 
   const onRegister = (values, { resetForm }) => {
     // resetForm();
-    let DormTypeOptions;
-    if (values.buildingType.value === 'governmental') {
-      //setDormTypeOption(values.PublicBuildingOwner.value);
-      console.log('condition true', values.PublicBuildingOwner.value);
-      DormTypeOptions = values.publicBuildingOwner.value;
-    } else {
-      //setDormTypeOption(values.PrivateBuildingType.value);
-      console.log('condition false', values.privateBuildingType.value);
-      DormTypeOptions = values.privateBuildingType.value;
-    }
-
+    let DormTypeOptions = '';
+    if (values.buildingType.value === 'governmental')
+      DormTypeOptions = values.PublicBuildingOwner?.value;
+    else DormTypeOptions = values.privateBuildingType?.value;
     const data = {
-      name: values.name,
-      province: values.province.value,
-      district: values.district.value,
-      gender: values.gender.value,
-      building_ownership: values.buildingType.value,
+      name: values?.name,
+      province: values.province?.value,
+      district: values.district?.value,
+      gender: values.gender?.value,
+      building_ownership: values.buildingType?.value,
       building_type_option: DormTypeOptions,
-      number_of_buildings: values.totalBuildingNo,
-      number_of_rooms: values.totalRooms,
-      number_of_kitchens: values.totalKitchens,
-      number_of_toilets: values.toilet,
-      quota: values.quota || null,
-      capacity: values.capicity,
+      number_of_buildings: values?.totalBuildingNo,
+      number_of_rooms: values?.totalRooms,
+      number_of_kitchens: values?.totalKitchens,
+      number_of_toilets: values?.toilet,
+      quota: values?.quota || null,
+      capacity: values?.capicity,
     };
-    console.log('object of data', data);
     postDormRecord(data);
   };
 
   return (
     <>
+      {console.log('updateingDorm', updatingDorm)}
       <Card>
         <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {<IntlMessages id="dorm.RegisterTitle" />}
@@ -313,7 +337,7 @@ const DormRegistration = (values) => {
               enableReinitialize={true}
               initialValues={initialValues}
               onSubmit={onRegister}
-              validationSchema={SignupSchema}
+              // validationSchema={SignupSchema}
             >
               {({
                 errors,
@@ -450,7 +474,7 @@ const DormRegistration = (values) => {
                         <FormikReactSelect
                           name="province"
                           id="province"
-                          // value={values.province.value}
+                          value={values.province}
                           options={provinces}
                           onChange={setFieldValue} //onChange should conatain single line
                           onBlur={setFieldTouched}
@@ -470,7 +494,7 @@ const DormRegistration = (values) => {
                         <FormikReactSelect
                           name="district"
                           id="district"
-                          // value={values.district.value}
+                          value={values.district}
                           options={districts}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

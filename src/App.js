@@ -26,6 +26,7 @@ const App = ({ locale }) => {
   const [departments, setDepartments] = useState([]);
   const [institutes, setInstitutes] = useState([]);
   const [contextFields, setContextFields] = useState([]);
+  const [dorms, setDorms] = useState([]);
   const [sectors, setSectors] = useState([]);
   const [options, setOptions] = useState({});
   const token = localStorage.getItem('access_token') ? true : false;
@@ -238,7 +239,18 @@ const App = ({ locale }) => {
       console.log('Sector error');
     }
   };
-
+  const fetchDorms = async () => {
+    const response = await callApi(`institute/dorms/`, '', null);
+    if (response?.data && response.status === 200) {
+      const updatedData = await response?.data.results.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setDorms(updatedData);
+    } else {
+      console.log('dorm  error');
+    }
+  };
   const fetchInitialData = async () => {
     try {
       await Promise.all([
@@ -251,6 +263,7 @@ const App = ({ locale }) => {
         fetchFields(),
         getUser(),
         fetchSectors(),
+        fetchDorms(),
       ]);
     } catch (error) {
       console.log('Error fetching initial data: ', error);
@@ -325,9 +338,11 @@ const App = ({ locale }) => {
         subjects,
         departments,
         institutes,
+        fetchInstitutes,
         contextFields,
         settings,
         sectors,
+        dorms,
       }}
     >
       <div className="h-100">

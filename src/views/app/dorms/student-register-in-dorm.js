@@ -48,31 +48,31 @@ const DormRegistration = (values) => {
   const [institute, setInstitute] = useState();
   const [department, setDepartment] = useState();
   const [classs, setClasss] = useState(); //classs is used because class is a reserved word
-  const [dorms, setDorms] = useState();
+  // const [dorms, setDorms] = useState();
   const [successMessage, setSuccessMessage] = useState(false);
   const [isNext, setIsNext] = useState(true);
 
-  const { provinces, districts } = useContext(AuthContext);
+  const { provinces, districts, dorms } = useContext(AuthContext);
 
   console.log('provinces context', provinces);
   console.log('districts from context', districts);
 
-  const fetchDorms = async () => {
-    const response = await callApi(`institute/dorms/`, '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setDorms(updatedData);
-    } else {
-      console.log('dorm  error');
-    }
-  };
+  // const fetchDorms = async () => {
+  //   const response = await callApi(`institute/dorms/`, '', null);
+  //   if (response?.data && response.status === 200) {
+  //     const updatedData = await response?.data.results.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     setDorms(updatedData);
+  //   } else {
+  //     console.log('dorm  error');
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchDorms();
-  }, []);
+  // useEffect(() => {
+  //   fetchDorms();
+  // }, []);
 
   const handleClick = (event) => {
     setIsNext(event);

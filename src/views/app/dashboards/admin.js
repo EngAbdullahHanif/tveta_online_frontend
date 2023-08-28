@@ -43,7 +43,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
   const fetchDorms = async () => {
     await callApi('institute/dorms/').then((response) => {
       console.log('Dorms: ', response.data);
-      setDorms(response.data);
+      setDorms(response.data?.results);
     });
   };
   const fetchTeachers = async () => {
@@ -1485,6 +1485,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                 <PerfectScrollbar
                   options={{ suppressScrollX: true, wheelPropagation: false }}
                 >
+                  {console.log('DDDDDDDDDDDDDDDDDDDDDD', dorms)}
                   <ol style={{ fontSize: 20 }}>
                     {dorms?.map((dorm) => {
                       return <li>{dorm?.name}</li>;

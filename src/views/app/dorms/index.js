@@ -38,7 +38,12 @@ const Dorms = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/dorms`}
         component={DormList}
-        roles={[userRole.admin, userRole.dormManager]}
+        roles={[
+          userRole.admin,
+          userRole.dormManager,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
+        ]}
         props={props}
       />
       <ProtectedRoute
@@ -51,13 +56,23 @@ const Dorms = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/register/:dormId`}
         component={DormRegister}
-        roles={[userRole.admin, userRole.dormManager]}
+        roles={[
+          userRole.admin,
+          userRole.dormManager,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
+        ]}
         props={props}
       />
       <ProtectedRoute
         path={`${match.url}/students`}
         component={StudentDormList}
-        roles={[userRole.admin, userRole.dormManager]}
+        roles={[
+          userRole.admin,
+          userRole.dormManager,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
+        ]}
         props={props}
       />
       <ProtectedRoute
@@ -69,7 +84,12 @@ const Dorms = ({ match, props }) => (
       <ProtectedRoute
         path={`${match.url}/dorm/:dormId`}
         component={DormProfile}
-        roles={[userRole.admin, userRole.dormManager]}
+        roles={[
+          userRole.admin,
+          userRole.dormManager,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
+        ]}
         props={props}
       />
       <ProtectedRoute

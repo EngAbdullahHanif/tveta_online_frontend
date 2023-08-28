@@ -27,6 +27,7 @@ import {
   dateOfBirthOptoions,
   degreeTypeOptions,
   evaluationTypeOptions,
+  genderOptions,
   gradeOptions,
   hireTypeOptions,
   jobTypeOptions,
@@ -575,7 +576,13 @@ const TeacherProfile = () => {
                         <Label>
                           <IntlMessages id="gender.gender" />
                         </Label>
-                        <h3>{teacher[0].gender}</h3>
+                        <h3>
+                          {
+                            genderOptions.find(
+                              (op) => op.value === teacher[0].gender
+                            )?.label
+                          }
+                        </h3>
 
                         <Label>
                           <IntlMessages id="teacher.PhoneNoLabel" />
@@ -605,8 +612,9 @@ const TeacherProfile = () => {
                           <IntlMessages id="forms.StdDoBLabel" />
                         </Label>
                         <h3>
-                          {teacher[0].year_of_birth}-{teacher[0].month_of_birth}
-                          -{teacher[0].day_of_birth}
+                          {teacher[0].year_of_birth}-
+                          {teacher[0].month_of_birth || 'میاشت'}-
+                          {teacher[0].day_of_birth || 'ورځ'}
                         </h3>
                         <Label>
                           <IntlMessages id="forms.EducationLevelLabel" />
@@ -757,14 +765,14 @@ const TeacherProfile = () => {
                       >
                         <thead>
                           <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Institution</th>
-                            <th scope="col">Degree</th>
-                            <th scope="col">Field Of Study</th>
-                            <th scope="col">Year Completed</th>
-                            <th scope="col">Document</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">آیدی</th>
+                            <th scope="col">پوهنتون/مرجع</th>
+                            <th scope="col">درجه تحصیلی</th>
+                            <th scope="col">رشته</th>
+                            <th scope="col">د فراغت کال/سال فراغت</th>
+                            <th scope="col">آسناد/ سی وی</th>
+                            <th scope="col">توضیحات</th>
+                            <th scope="col">ایدیت/دیلیت</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1104,15 +1112,15 @@ const TeacherProfile = () => {
                       >
                         <thead>
                           <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Contract Type</th>
-                            <th scope="col">Grade</th>
-                            <th scope="col">Step</th>
-                            <th scope="col">Job Type</th>
-                            <th scope="col">Language</th>
-                            <th scope="col">Contract Duration</th>
-                            <th scope="col">Document</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">آیدی</th>
+                            <th scope="col">نوع قرارداد/ قرارداد ډول</th>
+                            <th scope="col">بست</th>
+                            <th scope="col">قدم</th>
+                            <th scope="col">نوع وظیفه</th>
+                            <th scope="col">زبان</th>
+                            <th scope="col">مدت قرارداد</th>
+                            <th scope="col">آسناد</th>
+                            <th scope="col">آیدیت/ دیلیت</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1738,16 +1746,18 @@ const TeacherProfile = () => {
                       >
                         <thead>
                           <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Evaluator Name</th>
-                            <th scope="col">Evaluation Type</th>
-                            <th scope="col">Evaluation Date</th>
-                            <th scope="col">Institute</th>
-                            <th scope="col">Score</th>
-                            <th scope="col">Strong Points</th>
-                            <th scope="col">Weak Points</th>
-                            <th scope="col">Suggestions</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">آیدی</th>
+                            <th scope="col">
+                              د ارزوونکی نوم/ نام ارزیابی کننده
+                            </th>
+                            <th scope="col">د ارزونی ډول/ نوع ارزیابی</th>
+                            <th scope="col">د ارزیابی نېټه/ تاریخ ارزیابی</th>
+                            <th scope="col">انسستیوت</th>
+                            <th scope="col">نمره</th>
+                            <th scope="col">قوی نقطې/نقاط قوت</th>
+                            <th scope="col">ضعیفې نقطې/ نقاط ضعف</th>
+                            <th scope="col">توسعه</th>
+                            <th scope="col">آیډیټ/ دیلیت</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -2308,15 +2318,15 @@ const TeacherProfile = () => {
                       >
                         <thead>
                           <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Evaluator Name</th>
-                            <th scope="col">Evaluation Date</th>
-                            <th scope="col">Institute</th>
-                            <th scope="col">Score</th>
-                            <th scope="col">Current Grade</th>
-                            <th scope="col">New Grade</th>
-                            <th scope="col">Review</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">آیدی</th>
+                            <th scope="col">اسم ارزیابی کننده</th>
+                            <th scope="col">تاریخ ارزیابی نېټه</th>
+                            <th scope="col">انسستتیوت</th>
+                            <th scope="col">نمره</th>
+                            <th scope="col">بست فعلی</th>
+                            <th scope="col">بست جدید</th>
+                            <th scope="col">حالت</th>
+                            <th scope="col">ایډیټ/ډیلیټ</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -2727,11 +2737,11 @@ const TeacherProfile = () => {
                       >
                         <thead>
                           <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Teacher</th>
-                            <th scope="col">Institute</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Details</th>
+                            <th scope="col">آیدی</th>
+                            <th scope="col">استاد/معلم</th>
+                            <th scope="col">انستتیوت</th>
+                            <th scope="col">نوع</th>
+                            <th scope="col">توضیحات</th>
                           </tr>
                         </thead>
                         <tbody>

@@ -62,52 +62,6 @@ const ThumbListPages = ({ match }) => {
     label: 'Product Name',
   });
 
-  const roughData = [
-    {
-      kankorStudentName: '  نعمان احمدی',
-      kankorStudentFatherName: 'محمد',
-      institute: 'تکنالوژی',
-      timeing: 'سهار',
-      department: 'معلومات تکنالوژی',
-      kankorId: '2412',
-      kankorMarks: '89',
-      field: 'گرافکس',
-      registrationDate: '1401/3/6',
-    },
-    {
-      kankorStudentName: ' شاکر',
-      kankorStudentFatherName: ' محمد',
-      institute: 'تکنالوژی',
-      timeing: 'سهار',
-      department: 'معلومات تکنالوژی',
-      kankorId: '456',
-      kankorMarks: '89',
-      field: 'گرافکس',
-      registrationDate: '1401/3/6',
-    },
-    {
-      kankorStudentName: ' علی',
-      kankorStudentFatherName: ' محمد',
-      institute: 'تکنالوژی',
-      timeing: 'سهار',
-      department: 'معلومات تکنالوژی',
-      kankorId: '78',
-      kankorMarks: '89',
-      field: 'گرافکس',
-      registrationDate: '1401/3/6',
-    },
-    {
-      kankorStudentName: ' احمدی',
-      kankorStudentFatherName: ' محمد',
-      institute: 'تکنالوژی',
-      timeing: 'سهار',
-      department: 'معلومات تکنالوژی',
-      kankorId: '3454',
-      kankorMarks: '89',
-      field: 'گرافکس',
-      registrationDate: '1401/3/6',
-    },
-  ];
   const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [totalItemCount, setTotalItemCount] = useState(0);
@@ -302,7 +256,7 @@ const ThumbListPages = ({ match }) => {
     let params = {
       page: 1,
     };
-    // params.institute = values.filterInstitute?.value;
+    params.institute = values.filterInstitute?.value;
     params.department_id = values.department?.value;
     params.educational_year = values.educationalYear?.value;
     params.province = values.filterProvince?.value;
@@ -625,7 +579,7 @@ const ThumbListPages = ({ match }) => {
                     onBlur={setFieldTouched}
                   />
                 </FormGroup>
-                {/* <FormGroup className="form-group has-float-label error-l-150 w-100 ">
+                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
                   <Label>انستیتوت</Label>
                   <FormikReactSelect
                     placeholder="انستیتوت"
@@ -635,23 +589,25 @@ const ThumbListPages = ({ match }) => {
                     onChange={setFieldValue}
                     onBlur={setFieldTouched}
                   />
-                </FormGroup> */}
+                </FormGroup>
                 <FormGroup className="form-group has-float-label error-l-150 w-100 ">
-                  <Label>دپارتمنت</Label>
+                  <Label>دیپارتمنت</Label>
                   <FormikReactSelect
                     name="department"
                     id="department"
                     options={departments}
+                    value={values.department}
                     onChange={setFieldValue}
                     onBlur={setFieldTouched}
                   />
                 </FormGroup>
                 <FormGroup className="form-group has-float-label error-l-150 w-100 ">
-                  <Label>سال تحصیل</Label>
+                  <Label>سال تحصیل / تعلیمی</Label>
                   <FormikReactSelect
                     name="educationalYear"
                     id="educationalYear"
                     options={educationalYearsOptions}
+                    value={values.educationalYear}
                     onChange={setFieldValue}
                     onBlur={setFieldTouched}
                   />

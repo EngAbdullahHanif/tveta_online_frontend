@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import callApi from 'helpers/callApi';
 
 import axios from 'axios';
@@ -10,6 +10,7 @@ import ListPageListing from './SectorListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 import config from '../../../../config';
+import { AuthContext } from 'context/AuthContext';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -44,6 +45,7 @@ const genderOptions = [
 const pageSizes = [4, 8, 12, 20];
 
 const ThumbListPages = ({ match }) => {
+  const { institutes } = useContext(AuthContext);
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
@@ -67,7 +69,6 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
 
@@ -107,22 +108,6 @@ const ThumbListPages = ({ match }) => {
     ]
   );
 
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-
-  useEffect(() => {
-    fetchInstitutes();
-  }, []);
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||

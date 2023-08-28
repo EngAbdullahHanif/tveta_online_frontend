@@ -71,6 +71,9 @@ const StudentRegistration = ({ intl }, values) => {
   } = useContext(AuthContext);
 
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const [instituteDeps, setInstituteDeps] = useState([]);
+
   const [fields, setFields] = useState({
     name1: '',
     fatherName: '',
@@ -228,6 +231,7 @@ const StudentRegistration = ({ intl }, values) => {
     const instId = inst.value;
     callApi(`institute/${instId}/departments/`).then((inst) => {
       console.log('Institutes Departments: ', inst.data);
+      setInstituteDeps(inst.data);
       const newOptions = departments.filter((dep) => {
         // if department id is in data.department
         let department_ids = inst.data.reduce(
@@ -469,6 +473,8 @@ const StudentRegistration = ({ intl }, values) => {
     }
     goToPrev();
   };
+
+  const [classOptions, setClassOptions] = useState([]);
 
   const { messages } = intl;
 
@@ -1276,6 +1282,67 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
+                            {/* Departement  */}
+                            <FormGroup className="form-group has-float-label ">
+                              <Label>
+                                <IntlMessages id="forms.studyDepartment" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <FormikReactSelect
+                                name="department"
+                                id="department"
+                                value={values.department}
+                                options={instDepartments}
+                                onChange={(name, value) => {
+                                  setFieldValue(name, value);
+                                  setClassOptions(
+                                    classs.filter((c) => {
+                                      // every class whose id is present in selected department classes
+                                      const dep = instituteDeps?.find(
+                                        (dep) => dep.id === value.value
+                                      );
+                                      console.log('--------', dep);
+                                      return dep.classes
+                                        .map((i) => i.classs)
+                                        .includes(c.value);
+                                    })
+                                  );
+                                }}
+                                onBlur={setFieldTouched}
+                                isSearchable={false}
+                                required
+                              />
+                              {errors.department && touched.department ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.department}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/*  Class name  */}
+                            {console.log('CLASSES: ', classs)}
+                            <FormGroup className="form-group has-float-label ">
+                              <Label>
+                                <IntlMessages id="marks.ClassLabel" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <FormikReactSelect
+                                name="class"
+                                id="class"
+                                value={values.class}
+                                options={classOptions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                isSearchable={false}
+                                required
+                              />
+                              {errors.class && touched.class ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.class}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
                             <FormGroup className="form-group has-float-label error-l-100 ">
                               <Label>معلولیت/معیوبیت</Label>
                               <FormikReactSelect
@@ -1292,29 +1359,6 @@ const StudentRegistration = ({ intl }, values) => {
                               {errors.disability && touched.disability ? (
                                 <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                   {errors.disability}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-                            {/*  Class name  */}
-                            {console.log('CLASSES: ', classs)}
-                            <FormGroup className="form-group has-float-label ">
-                              <Label>
-                                <IntlMessages id="marks.ClassLabel" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <FormikReactSelect
-                                name="class"
-                                id="class"
-                                value={values.class}
-                                options={classs}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                isSearchable={false}
-                                required
-                              />
-                              {errors.class && touched.class ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.class}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -1437,29 +1481,6 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
                           </Colxx>
                           <Colxx xxs="6">
-                            {/* Departement  */}
-                            <FormGroup className="form-group has-float-label ">
-                              <Label>
-                                <IntlMessages id="forms.studyDepartment" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <FormikReactSelect
-                                name="department"
-                                id="department"
-                                value={values.department}
-                                options={instDepartments}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                isSearchable={false}
-                                required
-                              />
-                              {errors.department && touched.department ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.department}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
                             {/* field  */}
                             {/* <FormGroup className="form-group has-float-label ">
                               <Label>

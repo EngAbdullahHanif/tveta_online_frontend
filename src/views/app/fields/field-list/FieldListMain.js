@@ -10,6 +10,8 @@ import ListPageListing from './FieldListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 import config from '../../../../config';
+import { useContext } from 'react';
+import { AuthContext } from 'context/AuthContext';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -70,10 +72,10 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [rest, setRest] = useState(0);
-  const [institutes, setInstitutes] = useState([]);
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
-  const [sectors, setSectors] = useState([]);
+
+  const { institutes, sectors } = useContext(AuthContext);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -88,7 +90,7 @@ const ThumbListPages = ({ match }) => {
         if (selectedSectorOption?.value === 'all') {
           selectedSectorOption.value = '';
         }
-        const response = await callApi('institute/field/', '', null);
+        const response = await callApi('institute/department/', '', null);
         if (response.data && response.status === 200) {
           setItems(response.data);
           setSelectedItems([]);
@@ -125,37 +127,7 @@ const ThumbListPages = ({ match }) => {
 
     fetchData();
   }, [selectedPageSize, currentPage, selectedSectorOption, rest]);
-  const fetchSectors = async () => {
-    const response = await callApi('institute/sectors/', 'GET', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.sector,
-      }));
-      const all = { value: 'all', label: 'همه' };
-      updatedData.unshift(all);
-      setSectors(updatedData);
-    } else {
-      console.log('field error');
-    }
-  };
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
 
-  useEffect(() => {
-    fetchInstitutes();
-    fetchSectors();
-  }, []);
   const onCheckItem = (event, id) => {
     if (
       event.target.tagName === 'A' ||

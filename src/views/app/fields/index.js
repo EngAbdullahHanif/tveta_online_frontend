@@ -21,11 +21,11 @@ const FieldList = React.lazy(() =>
 const DepartmentRegister = React.lazy(() =>
   import(/* webpackChunkName: "subject-register" */ './department-register')
 );
-const DepartmentList = React.lazy(() =>
-  import(
-    /* webpackChunkName: "subject-register" */ './department-list/DepartmentListMain'
-  )
-);
+// const DepartmentList = React.lazy(() =>
+//   import(
+//     /* webpackChunkName: "subject-register" */ './department-list/DepartmentListMain'
+//   )
+// );
 
 const SectorList = React.lazy(() =>
   import(
@@ -72,12 +72,12 @@ const Fields = ({ match, props }) => (
         roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
-      <ProtectedRoute
+      {/* <ProtectedRoute
         path={`${match.url}/department-list`}
         component={DepartmentList}
         roles={[userRole.superUser, userRole.authenticated]}
         props={props}
-      />
+      /> */}
 
       <ProtectedRoute
         path={`${match.url}/sector-list`}

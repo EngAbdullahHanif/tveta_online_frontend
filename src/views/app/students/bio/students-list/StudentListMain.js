@@ -318,11 +318,9 @@ const ThumbListPages = ({ match }) => {
           style={{ fontSize: 20 }}
           size="large"
           columns={columns}
-          // rowKey={(record) => record.login.uuid}
           pagination={tableParams.pagination}
           onChange={handleTableChange}
           loading={isLoading}
-          // onChange={handleTableChange}
           dataSource={items?.map((item, index) => ({
             key: index,
             student_id: item.student_id,

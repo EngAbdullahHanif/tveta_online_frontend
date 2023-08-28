@@ -524,34 +524,23 @@ const data = [
     subs: [
       {
         icon: 'FA.FaList',
-        label: 'menu.field-list',
-        to: `${adminRoot}/fields/field-list`,
-      },
-      {
-        icon: 'FA.FaList',
-        label: 'menu.department-list',
-        to: `${adminRoot}/fields/department-list`,
-      },
-      {
-        icon: 'FA.FaList',
         label: 'menu.sector-list',
         to: `${adminRoot}/fields/sector-list`,
       },
       {
         icon: 'MD.MdAddBox',
-        label: 'menu.field-register',
-        to: `${adminRoot}/fields/register`,
-      },
-
-      {
-        icon: 'MD.MdAddBox',
-        label: 'menu.department-register',
-        to: `${adminRoot}/fields/department-register`,
-      },
-      {
-        icon: 'MD.MdAddBox',
         label: 'sector.sectorRegisterlabel',
         to: `${adminRoot}/fields/new-sector`,
+      },
+      {
+        icon: 'FA.FaList',
+        label: 'menu.field-list',
+        to: `${adminRoot}/fields/field-list`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.field-register',
+        to: `${adminRoot}/fields/register`,
       },
     ],
   },

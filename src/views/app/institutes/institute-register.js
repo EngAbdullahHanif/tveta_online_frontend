@@ -2,7 +2,12 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { dormGenderOptions } from '../global-data/options';
+import {
+  BuildingTypeOptions,
+  dormGenderOptions,
+  genderOptions,
+  langOptions,
+} from '../global-data/options';
 import {
   provincesOptionsForList,
   dateOfBirthOptoions,
@@ -130,7 +135,7 @@ const InstituteRegister = () => {
     ownershipType: initialOwnershipType,
     instType: initialInstType,
     instituteType: instituteTypeGVT,
-    institueCityType: cityType,
+    cityType: cityType,
     gender: initialGender,
     instituteClimate: climate,
     institueLanguage: language,
@@ -140,13 +145,13 @@ const InstituteRegister = () => {
     let data;
     useEffect(() => {
       async function fetchInstitute() {
-        const response = await callApi('institute/', '', null);
+        const response = await callApi('institute/all/', '', null);
         if (response.data && response.status === 200) {
           console.log(
             'RESPONSE in Fetch Institute for update: ',
             response.data
           );
-          const updatedData = await response.data.filter(
+          const updatedData = await response?.data.filter(
             (item) => item.id == instituteId
           );
           data = updatedData[0];
@@ -164,32 +169,35 @@ const InstituteRegister = () => {
               return prov.value === data.province;
             })
           );
+          setInitialOwnershipType(
+            BuildingTypeOptions.find((op) => op.value === data.ownership)
+          );
           setInstituteTypeGVT({
             value: data.school_type,
             label: data.school_type,
           });
-          setInitialGender({ value: data.gender, label: data.gender });
+          setInitialGender(
+            genderOptions.find((op) => op.value === data.gender)
+          );
           setInitialInstType(
             instituteTypeOptions.filter((sh) => {
               return sh.value == data.institute_type;
             })
           );
-          setCityType({
-            value: data.location_type,
-            label: data.location_type,
-          });
+          setCityType(
+            instituteCityOptions.find((op) => op.value === data.location_type)
+          );
           setInitialShift(
             InstituteShiftOptions.filter((sh) => {
               return sh.value == data.shift;
             })
           );
-          setClimate({ value: data.climate, label: data.climate });
+          setClimate(
+            instituteClimateOptions.find((op) => op.value === data.climate)
+          );
           setInitialCode(data.code);
-          setLanguage({ value: data.language, label: data.language });
-          setInitialFoundationYear({
-            value: data.foundation_year,
-            label: data.foundation_year,
-          });
+          setLanguage(langOptions.find((op) => op.value === data.language));
+          setInitialFoundationYear(data.foundation_year);
           setInitialOwnership(
             instTypeOptions.filter((sh) => {
               return sh.value == data.ownership;
@@ -273,7 +281,6 @@ const InstituteRegister = () => {
   };
 
   // this function is used to update all the state of the fields in case we are updating a record
-  function updateFormFields() {}
 
   // const ValidationSchema = Yup.object().shape({
   //   institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
@@ -356,7 +363,15 @@ const InstituteRegister = () => {
 
   // post student record to server
   const postInstituteRecord = async (data) => {
-    const response = await callApi('institute/create/', 'POST', data);
+    const apiParams = {
+      endPoint: 'institute/create/',
+      method: 'POST',
+    };
+    if (instituteId) {
+      apiParams.endPoint = `institute/${instituteId}/`;
+      apiParams.method = 'PATCH';
+    }
+    const response = await callApi(apiParams.endPoint, apiParams.method, data);
     if (response) {
       createNotification('success', 'filled');
       // resetForm();
@@ -377,14 +392,14 @@ const InstituteRegister = () => {
       district: values.district.value,
       village: values.village,
       ownership: values.ownershipType.value,
-      location_type: values.institueCityType.value,
+      location_type: values.cityType.value,
       shift: values.shift.value,
       status: 'active', //as it is registered for the first time so it is considered to be active
       climate: values.instituteClimate.value,
       institute_type: values.instType.value,
       language: values.institueLanguage.value,
       gender: values.gender.value,
-      foundation_year: values.foundationYear.value,
+      foundation_year: values.foundationYear,
 
       // created_by: '1',
     };
@@ -477,6 +492,7 @@ const InstituteRegister = () => {
                               (dis) => dis.province === option.value
                             );
                             setDistrictsOptions(dd);
+                            setFieldValue('district', '');
                           }}
                           onBlur={setFieldTouched}
                           onClick={setSelectedProvince(values.province.value)}
@@ -606,7 +622,7 @@ const InstituteRegister = () => {
                         <FormikReactSelect
                           name="institueCityType"
                           id="institueCityType"
-                          value={values.cityType.value}
+                          value={values.cityType}
                           options={instituteCityOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

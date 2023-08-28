@@ -884,7 +884,7 @@ module.exports = {
   'marks.eligable_Deprive': 'شامل امتحان/ محرومله',
 
   // Field Registration
-  'field.FieldRegisterTitle': 'ثبت رشته / درشتې ثبت',
+  'field.FieldRegisterTitle': 'ثبت رشته یا دیپارتمنت / درشتې یا دیپارتمنت ثبت',
   'field.FieldNameLabel': 'نوم/ نام',
   'field.FieldNameErr': 'نوم اړین دی/ نام ضروری است',
   'field.FieldEngNameLabel': 'انګریزی نوم/ نام انگلسی',

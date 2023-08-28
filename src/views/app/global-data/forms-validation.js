@@ -101,7 +101,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
 
   email: Yup.string().email(<IntlMessages id="teacher.EmailRequiredErr" />),
 
-  phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
+  // phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
   idCardJoldNo: Yup.string().when('tazkiraType.value', {
     is: 'paper',
     then: Yup.string().required(

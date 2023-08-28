@@ -118,7 +118,7 @@ const FieldListBody = ({ field, isSelect, collect, onCheckItem, index }) => {
               </p>
             </div>
             <>
-              <div
+              {/* <div
                 style={{ display: 'flex', flexDirection: 'row' }}
                 className="align-self-center pr-4"
               >
@@ -137,7 +137,7 @@ const FieldListBody = ({ field, isSelect, collect, onCheckItem, index }) => {
                     style={{ fontSize: '20px' }}
                   />
                 </div>
-              </div>
+              </div> */}
               <Modal
                 isOpen={modalBasic}
                 toggle={() => setModalBasic(!modalBasic)}

@@ -185,7 +185,7 @@ const ClassRegister = () => {
                       <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           {/* <IntlMessages id="class.nameLabel" /> */}
-                          numeric name
+                          درجه (عدد)
                         </Label>
                         <Field
                           className="form-control"
@@ -202,7 +202,7 @@ const ClassRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label error-l-150">
-                        <Label>
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
                           <IntlMessages id="class.semesterLabel" />
                         </Label>
                         <FormikReactSelect
@@ -220,8 +220,8 @@ const ClassRegister = () => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
-                        <Label>
-                          <IntlMessages id="season" />
+                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                          گرمسیر/سردسیر
                         </Label>
                         <FormikReactSelect
                           name="season"
@@ -238,10 +238,9 @@ const ClassRegister = () => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
-                        <Label>
-                          <IntlMessages id="section" />
-                        </Label>
+                        <Label>سیکشن</Label>
                         <Field
+                          className="form-control"
                           name="section"
                           // value={values.section}
                           // options={sectionOptions}

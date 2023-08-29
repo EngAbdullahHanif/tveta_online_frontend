@@ -1,7 +1,7 @@
 import { adminRoot } from './defaultValues';
 import { userRole } from './defaultValues';
 
-const data = [
+const menuItems = [
   {
     id: 'students',
     icon: 'FA.FaUserGraduate',
@@ -76,6 +76,7 @@ const data = [
           userRole.instituteManager,
           userRole.provinceSupervisor,
           userRole.authoritySupervisor,
+          userRole.tester,
         ],
         // roles: [userRole.admin],
       },
@@ -88,6 +89,7 @@ const data = [
           userRole.instituteManager,
           userRole.provinceSupervisor,
           userRole.authoritySupervisor,
+          userRole.tester,
         ],
         // roles: [userRole.admin],
       },
@@ -100,6 +102,7 @@ const data = [
           userRole.instituteManager,
           userRole.provinceSupervisor,
           userRole.authoritySupervisor,
+          userRole.tester,
         ],
         newWindow: false,
       },
@@ -112,6 +115,7 @@ const data = [
           userRole.instituteManager,
           userRole.provinceSupervisor,
           userRole.authoritySupervisor,
+          userRole.tester,
         ],
         newWindow: false,
       },
@@ -125,6 +129,7 @@ const data = [
           userRole.instituteManager,
           userRole.provinceSupervisor,
           userRole.authoritySupervisor,
+          userRole.tester,
         ],
       },
       //Changes started
@@ -137,6 +142,7 @@ const data = [
           userRole.instituteDataentry,
           userRole.provinceDataentry,
           userRole.authorityDataentry,
+          userRole.tester,
         ],
         newWindow: false,
       },
@@ -149,6 +155,7 @@ const data = [
           userRole.instituteDataentry,
           userRole.provinceDataentry,
           userRole.authorityDataentry,
+          userRole.tester,
         ],
         newWindow: false,
       },
@@ -178,13 +185,6 @@ const data = [
           userRole.authorityDataentry,
         ],
       },
-
-      // {
-      //   // icon: 'MD.MdOutlineTransferWithinAStation',
-      //   label: 'Kankor Profille',
-      //   to: `${adminRoot}/students/kankor-profile`,
-      //   newWindow: false,
-      // },
       {
         icon: 'MD.MdAddBox',
         label: 'menu.student-marks-register',
@@ -193,6 +193,7 @@ const data = [
           userRole.admin,
           userRole.instituteDataentry,
           userRole.provinceDataentry,
+          userRole.tester,
         ],
       },
       {
@@ -203,6 +204,7 @@ const data = [
           userRole.admin,
           userRole.instituteDataentry,
           userRole.provinceDataentry,
+          userRole.tester,
         ],
       },
       {
@@ -213,6 +215,7 @@ const data = [
           userRole.admin,
           userRole.instituteDataentry,
           userRole.provinceDataentry,
+          userRole.tester,
         ],
       },
       // {
@@ -229,6 +232,7 @@ const data = [
           userRole.admin,
           userRole.instituteDataentry,
           userRole.provinceDataentry,
+          userRole.tester,
         ],
         newWindow: false,
       },
@@ -241,6 +245,7 @@ const data = [
           userRole.admin,
           userRole.instituteDataentry,
           userRole.provinceDataentry,
+          userRole.tester,
         ],
         newWindow: false,
       },
@@ -253,6 +258,7 @@ const data = [
           userRole.admin,
           userRole.instituteDataentry,
           userRole.provinceDataentry,
+          userRole.tester,
         ],
         newWindow: false,
       },
@@ -261,17 +267,20 @@ const data = [
         label: 'student.assignment-to-class',
         to: `${adminRoot}/students/marks-status-cheked-students`,
         newWindow: false,
+        roles: [userRole.tester],
       },
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'student.subject-marks-verification',
         to: `${adminRoot}/students/subject-marks-verification`,
+        roles: [userRole.tester],
         newWindow: false,
       },
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'student.rejected-marks-update',
         to: `${adminRoot}/students/rejected-marks-updates`,
+        roles: [userRole.tester],
         newWindow: false,
       },
 
@@ -283,6 +292,7 @@ const data = [
           userRole.admin,
           userRole.instituteDataentry,
           userRole.provinceDataentry,
+          userRole.tester,
         ],
         newWindow: false,
       },
@@ -295,6 +305,7 @@ const data = [
           userRole.admin,
           userRole.instituteDataentry,
           userRole.provinceDataentry,
+          userRole.tester,
         ],
         newWindow: false,
       },
@@ -319,6 +330,7 @@ const data = [
       userRole.provinceDataentry,
       // userRole.instituteDataentry,
       // userRole.provinceDataentry,
+      userRole.tester,
     ],
 
     subs: [
@@ -333,17 +345,16 @@ const data = [
         label: 'menu.teacher-registration',
         to: `${adminRoot}/teachers/register`,
       },
-
       // {
       //   icon: 'IM.ImProfile',
       //   label: 'menu.teacher-profile',
       //   to: `${adminRoot}/teachers/profile`,
       // },
-
       {
         icon: 'MD.MdOutlineTransferWithinAStation',
         label: 'menu.teacher-transfer',
         to: `${adminRoot}/teachers/teacher-transfer`,
+        roles: ['tester'],
       },
     ],
   },
@@ -555,6 +566,7 @@ const data = [
       userRole.admin,
       // userRole.instituteDataentry,
       // userRole.provinceDataentry,
+      userRole.tester,
     ],
     subs: [
       {
@@ -589,6 +601,7 @@ const data = [
       userRole.admin,
       // userRole.instituteDataentry,
       // userRole.provinceDataentry,
+      userRole.tester,
     ],
     subs: [
       {
@@ -609,7 +622,7 @@ const data = [
     icon: 'MD.MdManageAccounts',
     label: 'menu.group-label',
     to: `${adminRoot}/groups`,
-    roles: [userRole.admin],
+    roles: [userRole.admin, userRole.tester],
     subs: [
       // {
       //   icon: 'FA.FaList',
@@ -638,6 +651,7 @@ const data = [
       userRole.admin,
       // userRole.instituteDataentry,
       // userRole.provinceDataentry,
+      userRole.tester,
     ],
 
     subs: [
@@ -667,7 +681,7 @@ const data = [
     icon: 'BS.BsCardChecklist',
     label: 'Users',
     to: `${adminRoot}/users`,
-    roles: [userRole.admin],
+    roles: [userRole.admin, userRole.tester],
 
     subs: [
       {
@@ -686,4 +700,4 @@ const data = [
   //   newWindow: true,
   // },
 ];
-export default data;
+export default menuItems;

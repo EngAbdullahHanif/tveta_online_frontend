@@ -14,6 +14,7 @@ export const userRole = {
   dataentry: 'dataentry',
   supervisor: 'supervisor',
   authenticated: 'authenticated',
+  tester: 'tester',
 };
 
 export const CURRENT_SHAMSI_YEAR = 1403;

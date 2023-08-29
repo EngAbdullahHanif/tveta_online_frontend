@@ -19,6 +19,21 @@ const ProtectedRoute = ({
             return <Component />;
           }
 
+          if (roles.includes('tester')) {
+            if (user.groups.map((group) => group.name).includes('tester')) {
+              return <Component {...props} roles={roles} />;
+            } else {
+              return (
+                <Redirect
+                  to={{
+                    pathname: '/auth/login',
+                    state: { from: props.location },
+                  }}
+                />
+              );
+            }
+          }
+
           const groups = user?.groups || [];
           console.log('user.groups: ', groups);
           console.log('roles: ', roles);

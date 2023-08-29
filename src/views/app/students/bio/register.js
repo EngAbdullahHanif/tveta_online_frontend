@@ -416,7 +416,7 @@ const StudentRegistration = ({ intl }, values) => {
             gender: newFields.gender.value,
             institute: newFields.institute.value,
             educational_year: newFields.educationalYear.label,
-            student_type: 'continuous',
+            student_type: newFields.studentType.value,
             teaching_language: newFields.mediumOfInstruction.value,
             shift: newFields.studyTime.value,
 

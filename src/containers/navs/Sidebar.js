@@ -349,9 +349,20 @@ class Sidebar extends Component {
     if (currentUser) {
       return menuItems.filter((item) => {
         if (item.roles) {
-          for (const i = 0; i < currentUser.groups.length; i++) {
-            return item.roles.includes(currentUser.groups[i].name);
+          // if roles include 'tester', and user doesn't have tester, return false
+          if (
+            item.roles.includes('tester') &&
+            !currentUser.groups.map((group) => group.name).includes('tester')
+          ) {
+            return false;
           }
+
+          for (const i = 0; i < item.roles.length; i++) {
+            if (currentUser.groups.map((g) => g.name).includes(item.roles[i]))
+              return true;
+            else continue;
+          }
+          return false;
         }
         return true;
       });

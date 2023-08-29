@@ -699,6 +699,9 @@ module.exports = {
     'د پلار د دندې ځای اړین دی/محل وظیفه پدر ضروری است',
   'forms.TazkiraTypeDefaultValue': 'ټاکل/ انتخاب',
   'forms.StdTazkiraNoLabel': 'د تذکرې شمیره/ نمبر تذکره',
+  'forms.tazkiraSabt': 'د تذکرې ثبت شمیره/ نمبر ثبت تذکره',
+  'forms.electronicTazkiraLabel':
+    ' د الکترونی تذکرې شمیره/ نمبر تذکره الکترونی',
   'forms.StdTazkiraTypeErr': 'د تذکرې  ډول اړین دی /نوع تذکره ضروری است',
   'forms.StdTazkiraNoErr': 'د تذکرې شمیره اړینه ده /نمبر تذکره ضروری است',
   'forms.StdTazkiraElectronic': 'الکترونیکی',
@@ -828,6 +831,7 @@ module.exports = {
   'forms.InstituteLabel': 'انستیتوت/لیسه',
   'forms.InstituteErr': 'انستیتوت اړین دی / انستیتوت ضروری است',
   'forms.FieldLabel': 'رشته',
+  'forms.FieldDepLabel': 'رشته/ دیپارتمنت',
   'forms.FieldErr': 'رشته اړین دی/ رشته ضروری است',
   'forms.StudyTimeLabel': 'وخت/ وقت',
   'forms.StudyTimeErr': 'وخت اړین دی/ درج شفت ضروری است',

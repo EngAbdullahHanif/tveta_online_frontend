@@ -258,12 +258,12 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
   //   .nullable()
   //   .required(<IntlMessages id="forms.fieldErr" />),
 
-  sector: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.sectorErr" />),
+  // sector: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.sectorErr" />),
   // student_image: Yup.mixed().required(<IntlMessages id="student.photoErr" />),
 });
 
@@ -591,12 +591,12 @@ export const kankorRegisterValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required(<IntlMessages id="forms.InstituteErr" />),
-  field: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.FieldErr" />),
+  // field: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.FieldErr" />),
   studyTime: Yup.object()
     .shape({
       value: Yup.string().required(),

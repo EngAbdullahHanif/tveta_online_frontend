@@ -378,9 +378,9 @@ const StudentProfile = () => {
                           <IntlMessages id="forms.Eng_name" />
                         </Label>
                         <h2>
-                          {student[0].english_name +
-                            ' ' +
-                            student[0].english_last_name}
+                          {`${student[0].english_name || '-'} ${
+                            student[0].english_last_name || '-'
+                          }`}
                         </h2>
                         <Label className="data-style">
                           <IntlMessages id="teacher.FatherNameLabel" />
@@ -390,7 +390,7 @@ const StudentProfile = () => {
                         <Label className="data-style">
                           <IntlMessages id="forms.Std_father_Eng_Name" />
                         </Label>
-                        <h2>{student[0].english_father_name}</h2>
+                        <h2>{student[0].english_father_name || '-'}</h2>
 
                         <Label className="data-style">
                           <IntlMessages id="teacher.PhoneNoLabel" />
@@ -399,17 +399,21 @@ const StudentProfile = () => {
                         <Label className="data-style">
                           <IntlMessages id="teacher.EmailLabel" />
                         </Label>
-                        <h2>{student[0].email}</h2>
-                        <Label className="data-style">
-                          <IntlMessages id="forms.StdTazkiraNoLabel" />
-                        </Label>
-                        <h2>{student[0].registration_number}</h2>
+                        <h2>{student[0].email || '-'}</h2>
+                        {student[0].tazkira_type === 'electronic' && (
+                          <>
+                            <Label className="data-style">
+                              <IntlMessages id="forms.electronicTazkiraLabel" />
+                            </Label>
+                            <h2>{student[0].registration_number}</h2>
+                          </>
+                        )}
                         <br />
                         <br />
                       </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
                         {/* if person has paper-based ID card, not electronic */}
-                        {student[0].cover_number && (
+                        {student[0].tazkira_type === 'paper' && (
                           <>
                             <Label className="data-style">
                               <IntlMessages id="forms.StdIdCardCoverLabel" />
@@ -419,6 +423,14 @@ const StudentProfile = () => {
                               <IntlMessages id="forms.StdIdCardPageNoLabel" />
                             </Label>
                             <h2>{student[0].page_number}</h2>
+                            <Label className="data-style">
+                              <IntlMessages id="forms.tazkiraSabt" />
+                            </Label>
+                            <h2>{student[0].sabt_number}</h2>
+                            <Label className="data-style">
+                              <IntlMessages id="forms.StdIdCardSakukNoLabel" />
+                            </Label>
+                            <h2>{student[0].sokok_number}</h2>
                           </>
                         )}
                         <Label className="data-style">
@@ -554,7 +566,7 @@ const StudentProfile = () => {
                         <Label className="data-style">
                           <IntlMessages id="forms.StPreShcoolLabel" />
                         </Label>
-                        <h2>{student[0].previous_school_name}</h2>
+                        <h2>{student[0].previous_school_name || '-'}</h2>
 
                         <Label className="data-style">
                           <IntlMessages id="students.previousProvince" />

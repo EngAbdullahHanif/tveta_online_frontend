@@ -492,6 +492,7 @@ const InstituteRegister = () => {
                               (dis) => dis.province === option.value
                             );
                             setDistrictsOptions(dd);
+                            setFieldValue('district', '');
                           }}
                           onBlur={setFieldTouched}
                           onClick={setSelectedProvince(values.province.value)}

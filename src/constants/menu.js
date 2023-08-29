@@ -173,6 +173,7 @@ const data = [
         roles: [
           userRole.admin,
           userRole.instituteDataentry,
+          userRole.instituteManager,
           userRole.provinceDataentry,
           userRole.authorityDataentry,
         ],

@@ -91,7 +91,7 @@ const InstituteRegister = () => {
   const { instituteId } = useParams();
   const [institute, setInstitute] = useState([]);
   const [initialInstituteName, setInitialInstituteName] = useState('');
-  const [initialCode, setInitialCode] = useState('');
+  const [initialCode, setInitialCode] = useState();
   const [initialProvince, setInitialProvince] = useState([]);
   const [initialDistrict, setInitialDistrict] = useState([]);
   const [initialInstType, setInitialInstType] = useState([]);
@@ -159,15 +159,13 @@ const InstituteRegister = () => {
           setInstitute(data);
           setInitialInstituteName(data.name);
           setInitialDistrict(
-            districts.filter((dist) => {
+            districts.find((dist) => {
               return dist.value === data.district;
             })
           );
           setInitialVillage(data.village);
           setInitialProvince(
-            provinces.filter((prov) => {
-              return prov.value === data.province;
-            })
+            provinces.find((prov) => prov.value === data.province)
           );
           setInitialOwnershipType(
             BuildingTypeOptions.find((op) => op.value === data.ownership)
@@ -180,7 +178,7 @@ const InstituteRegister = () => {
             genderOptions.find((op) => op.value === data.gender)
           );
           setInitialInstType(
-            instituteTypeOptions.filter((sh) => {
+            instituteTypeOptions.find((sh) => {
               return sh.value == data.institute_type;
             })
           );
@@ -280,86 +278,133 @@ const InstituteRegister = () => {
     }
   };
 
-  // this function is used to update all the state of the fields in case we are updating a record
+  const debounce = (func, delay) => {
+    let timer;
 
-  // const ValidationSchema = Yup.object().shape({
-  //   institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
+    return (...args) => {
+      clearTimeout(timer);
 
-  //   province: updateMode
-  //     ? Yup.object()
-  //         .shape({
-  //           value: Yup.string().required(),
-  //         })
-  //         .nullable()
-  //         .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-  //     : null,
+      return new Promise((resolve) => {
+        timer = setTimeout(() => {
+          resolve(func.apply(this, args));
+        }, delay);
+      });
+    };
+  };
 
-  //   instituteType: Yup.object()
-  //     .shape({
-  //       value: Yup.string().required(),
-  //     })
-  //     .nullable()
-  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  const debouncedUniqueCodeValidation = debounce(async (code) => {
+    try {
+      const response = await callApi(
+        `institute/check-code-unique/`,
+        'GET',
+        null,
+        { code }
+      );
+      const isUnique = response.data.is_unique;
+      if (!isUnique) {
+        throw new Error('انستتیوت دیگری همین کود را دارد');
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }, 1000);
+  // Adjust the debounce delay as needed (in milliseconds)
 
-  //   institueCityType: Yup.object()
-  //     .shape({
-  //       value: Yup.string().required(),
-  //     })
-  //     .nullable()
-  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  const ValidationSchema = Yup.object().shape({
+    institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
+    // province: updateMode
+    //   ? Yup.object()
+    //       .shape({
+    //         value: Yup.string().required(),
+    //       })
+    //       .nullable()
+    //       .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
+    //   : null,
+    // code: Yup.number()
+    //   .min(1000, 'کود باید از 1000 بزرگتر باشد')
+    //   .max(9999, 'کود باید از 10000 کوچکتر باشد')
+    //   .required('کد مورد نیاز است'),
+    code: Yup.number()
+      .required('کد مورد نیاز است')
+      .min(1000, 'کود باید از 1000 بزرگتر باشد')
+      .max(9999, 'کود باید از 10000 کوچکتر باشد'),
 
-  //   institueLanguage: Yup.object()
-  //     .shape({
-  //       value: Yup.string().required(),
-  //     })
-  //     .nullable()
-  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+    // instType: Yup.object()
+    //   .shape({
+    //     value: Yup.string().required(),
+    //   })
+    //   .nullable()
+    //   .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-  //   province: Yup.object()
-  //     .shape({
-  //       value: Yup.string().required(),
-  //     })
-  //     .nullable()
-  //     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+    foundationYear: Yup.number()
+      .min(1300, 'از 1300 باید بیشتر باشد')
+      .max(CURRENT_SHAMSI_YEAR, 'باید از سال فعلی کوچکتر باشد')
+      .required('سال تاسیس الزامی است'),
 
-  //   district: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
+    cityType: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-  //   village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+    institueLanguage: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-  //   instType: updateMode
-  //     ? Yup.object()
-  //         .shape({
-  //           value: Yup.string().required(),
-  //         })
-  //         .nullable()
-  //         .required(<IntlMessages id="inst.typeErr" />)
-  //     : null,
+    province: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
-  //   gender: updateMode
-  //     ? Yup.object()
-  //         .shape({
-  //           value: Yup.string().required(),
-  //         })
-  //         .nullable()
-  //         .required(<IntlMessages id="institute.gender" />)
-  //     : null,
+    district: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="forms.DistrictErr" />),
 
-  // image validation
-  // // image: Yup.mixed()
-  // // .required("You need to provide a file")
-  // // .test("fileSize", "The file is too large", (value) => {
-  // //     return value && value[0].sienter <= 2000000;
-  // // })
-  // // .test("type", "Only the following formats are accepted: .jpeg, .jpg, .bmp, .pdf and .doc", (value) => {
-  // //     return value && (
-  // //         value[0].type === "image/jpeg" ||
-  // //         value[0].type === "image/bmp" ||
-  // //         value[0].type === "image/png" ||
-  // //         value[0].type === 'application/pdf' ||
-  // //         value[0].type === "application/msword"
-  // //     );
-  // }),
-  // });
+    village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+
+    instType: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="inst.typeErr" />),
+    gender: Yup.object()
+      .shape({
+        value: Yup.string().required(),
+      })
+      .nullable()
+      .required(<IntlMessages id="institute.gender" />),
+
+    // image validation
+    // image: Yup.mixed()
+    //   .required('You need to provide a file')
+    //   .test('fileSize', 'The file is too large', (value) => {
+    //     return value && value[0].sienter <= 2000000;
+    //   })
+    //   .test(
+    //     'type',
+    //     'Only the following formats are accepted: .jpeg, .jpg, .bmp, .pdf and .doc',
+    //     (value) => {
+    //       return (
+    //         value &&
+    //         (value[0].type === 'image/jpeg' ||
+    //           value[0].type === 'image/bmp' ||
+    //           value[0].type === 'image/png' ||
+    //           value[0].type === 'application/pdf' ||
+    //           value[0].type === 'application/msword')
+    //       );
+    //     }
+    //   ),
+  });
 
   // post student record to server
   const postInstituteRecord = async (data) => {
@@ -437,8 +482,20 @@ const InstituteRegister = () => {
                 cityType: cityType,
                 institueLanguage: language,
               }}
-              // validationSchema={ValidationSchema}
+              validationSchema={ValidationSchema}
               onSubmit={onRegister}
+              validate={async (values, props) => {
+                const errors = {};
+                if (!instituteId && values.code > 1000 && values.code < 10000) {
+                  const response = await callApi(
+                    `institute/check-code-unique/?code=${values.code}`
+                  );
+                  if (response && response?.data && !response.data.is_unique) {
+                    errors.code = 'انستتیوت با این کود وجود دارد';
+                  } else errors.code = '';
+                }
+                return errors;
+              }}
             >
               {({
                 errors,
@@ -469,7 +526,12 @@ const InstituteRegister = () => {
                           {/* <IntlMessages id="inst.name" /> */}
                           کوډ/کود
                         </Label>
-                        <Field className="form-control" name="code" />
+                        <Field
+                          className="form-control"
+                          name="code"
+                          type="number"
+                          disabled={instituteId ? true : false}
+                        />
                         {errors.code && touched.code && (
                           <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.code}
@@ -492,7 +554,7 @@ const InstituteRegister = () => {
                               (dis) => dis.province === option.value
                             );
                             setDistrictsOptions(dd);
-                            setFieldValue('district', '');
+                            setFieldValue('district', []);
                           }}
                           onBlur={setFieldTouched}
                           onClick={setSelectedProvince(values.province.value)}
@@ -620,16 +682,16 @@ const InstituteRegister = () => {
                           ځای/موقعیت
                         </Label>
                         <FormikReactSelect
-                          name="institueCityType"
-                          id="institueCityType"
+                          name="cityType"
+                          id="cityType"
                           value={values.cityType}
                           options={instituteCityOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
-                        {errors.institueCityType && touched.institueCityType ? (
+                        {errors.cityType && touched.cityType ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.institueCityType}
+                            {errors.cityType}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -681,15 +743,10 @@ const InstituteRegister = () => {
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Field
-                          className="w-100"
+                          className="form-control"
                           name="foundationYear"
                           id="foundationYear"
                           type="number"
-                          min={1300}
-                          max={CURRENT_SHAMSI_YEAR}
-                          // later create years options and then pass it here
-                          // options={dateOfBirthOptoions}
-                          required
                         />
                         {errors.foundationYear && touched.foundationYear ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">

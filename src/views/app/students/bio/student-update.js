@@ -414,7 +414,7 @@ const StudentUpdate = ({ intl }, values) => {
                     </FormGroup> */}
                     <FormGroup className="form-group has-float-label error-l-175">
                       <Label>
-                        <IntlMessages id="Admission Method" />
+                        <IntlMessages id="forms.StdInteranceTypeLabel" />
                         <span style={{ color: 'red' }}>*</span>
                       </Label>
                       <FormikReactSelect

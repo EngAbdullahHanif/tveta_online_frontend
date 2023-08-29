@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import './../../dorms/dorm-register.css';
 import profilePhoto from './../../../../../src/assets/img/profiles/22.jpg';
@@ -28,6 +28,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import config from '../../../../config';
+import { AuthContext } from 'context/AuthContext';
 const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;
 const fieldsApiUrl = `${servicePath}/institute/field/`;
@@ -51,43 +52,13 @@ const initialValues = {
 };
 
 const TeacherTransfer = (values) => {
+  const { institutes, departments } = useContext(AuthContext);
   const [data, setData] = useState(false);
   const [teacherId, setTeacherId] = useState();
   const [teacher, setTeacher] = useState('');
   const [isNext, setIsNext] = useState(true);
-  const [institutes, setInstitutes] = useState([]);
-  const [fields, setFields] = useState([]);
   const [searchResult, setSearchResult] = useState(true);
-
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-  const fetchFields = async () => {
-    const response = await callApi('institute/field/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setFields(updatedData);
-    } else {
-      console.log('field error');
-    }
-  };
-
-  useEffect(() => {
-    fetchInstitutes();
-    fetchFields();
-  }, []);
+  const [instDepartments, setInstDepartments] = useState([]);
   const handleClick = (event) => {
     setIsNext(event);
   };
@@ -145,7 +116,23 @@ const TeacherTransfer = (values) => {
         console.log(error, 'error');
       });
   };
-  console.log('institutes', institutes);
+  const fetchInstDepts = (inst) => {
+    const instId = inst.value;
+    callApi(`institute/${instId}/departments/`).then((inst) => {
+      console.log('Institutes Departments: ', inst.data);
+      // setInstituteDeps(inst.data);
+      const newOptions = departments.filter((dep) => {
+        // if department id is in data.department
+        let department_ids = inst.data.reduce(
+          (acc, cur, i) => acc.add(cur.department),
+          new Set()
+        );
+        console.log(department_ids);
+        return department_ids.has(dep.value);
+      });
+      setInstDepartments(newOptions);
+    });
+  };
   return (
     <>
       <Card>
@@ -427,7 +414,10 @@ const TeacherTransfer = (values) => {
                                   id="institute"
                                   value={values.institute}
                                   options={institutes}
-                                  onChange={setFieldValue}
+                                  onChange={(name, value) => {
+                                    setFieldValue(name, value);
+                                    fetchInstDepts(value);
+                                  }}
                                   onBlur={setFieldTouched}
                                 />
                                 {errors.institute && touched.institute ? (
@@ -465,7 +455,7 @@ const TeacherTransfer = (values) => {
                                   name="major"
                                   id="major"
                                   value={values.major}
-                                  options={fields}
+                                  options={instDepartments}
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                 />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -30,6 +30,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import TransferedStudentList from './transfered-student-list/TransferedListMain';
 import config from '../../../../config';
+import { AuthContext } from 'context/AuthContext';
 const servicePath = config.API_URL;
 const studentApi = `${servicePath}/api`;
 const transferedStudentsAPI = `${servicePath}/api/student_institutes`;
@@ -61,8 +62,8 @@ const initialValues = {
   educationalYear: [],
 };
 const MarksRegistration = ({ match }) => {
+  const { institutes } = useContext(AuthContext);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [institutes, setInstitutes] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState('');
   const [selectedEducationalYear, setSelectedEducationalYear] = useState([]);
   const [transferedStudents, setTransferedStudents] = useState([]);
@@ -88,22 +89,6 @@ const MarksRegistration = ({ match }) => {
       //setUpdateMode(true);
     }, []);
   }
-
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-  useEffect(() => {
-    fetchInstitutes();
-  }, []);
 
   const fetchTransferedStudents = async (values) => {
     const response = await callApi(

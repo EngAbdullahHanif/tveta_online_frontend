@@ -357,7 +357,7 @@ class Sidebar extends Component {
             return false;
           }
 
-          for (const i = 0; i < item.roles.length; i++) {
+          for (let i = 0; i < item.roles.length; i++) {
             if (currentUser.groups.map((g) => g.name).includes(item.roles[i]))
               return true;
             else continue;

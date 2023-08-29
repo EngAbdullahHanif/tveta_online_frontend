@@ -318,11 +318,8 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
 
   // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
   year_of_birth: Yup.number()
-    .min(1350, 'سال تولد درست نیست/د تولد کال سم ندی')
+    .min(1300, 'سال تولد درست نیست/د تولد کال سم ندی')
     .max(1420, 'سال تولد درست نیست/د تولد کال سم ندی')
-    // .shape({
-    //   value: Yup.string().required(),
-    // })
     .nullable()
     .required(<IntlMessages id="forms.StdDoBErr" />),
   month_of_birth: Yup.number()
@@ -390,11 +387,13 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .shape({
       value: Yup.string().required(),
     })
+    .nullable()
     .required(<IntlMessages id="teacher.GradeErr" />),
   step: Yup.object()
     .shape({
       value: Yup.string().required(),
     })
+    .nullable()
     .required(<IntlMessages id="teacher.stepErr" />),
   main_province: Yup.object()
     .shape({
@@ -406,10 +405,14 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .shape({ value: Yup.string().required() })
     .nullable()
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  current_district: Yup.object().required(
-    <IntlMessages id="forms.DistrictErr" />
-  ),
-  main_district: Yup.object().required(<IntlMessages id="forms.DistrictErr" />),
+  current_district: Yup.object()
+    .shape({ value: Yup.string().required() })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
+  main_district: Yup.object()
+    .shape({ value: Yup.string().required() })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
   main_village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
   current_village: Yup.string().required(
     <IntlMessages id="forms.VillageErr" />

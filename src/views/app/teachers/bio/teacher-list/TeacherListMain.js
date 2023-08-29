@@ -4,8 +4,15 @@ import { Table as TB, Input, Popconfirm, Button } from 'antd';
 import IntlMessages from 'helpers/IntlMessages';
 import './list.css';
 import callApi from 'helpers/callApi';
+import { Field, Formik } from 'formik';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+
 import {
+  BuildingTypeOptions,
+  dormGenderOptions,
+  genderOptions,
   gradeOptions,
+  instituteStatusOptions,
   teacherCurrentStatusOptions,
 } from '../../../global-data/options';
 import { levelOfEdcationForList } from '../../../global-data/options';
@@ -74,14 +81,14 @@ const ThumbListPages = ({ match }) => {
   const [rest, setRest] = useState(0);
   const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
-
+  const [isFilter, setIsFilter] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const columns = [
     {
-      title: (
-        <PromptInput title="اساس نمبر" colName="gender" endpoint="teachers" />
-      ),
+      // title: <PromptInput title="اساس نمبر" colName="id" endpoint="teachers" />,
+      title: 'اساس نمبر',
       dataIndex: 'student_id',
-      // sorter: (a, b) => a.student_id - b.student_id,
+      sorter: (a, b) => a.student_id - b.student_id,
       width: '5%',
     },
     {
@@ -92,21 +99,21 @@ const ThumbListPages = ({ match }) => {
       width: '15%',
     },
     {
-      title: 'جنسیت',
-      dataIndex: 'gender',
-      filters: [
-        { text: 'Male', value: 'male' },
-        { text: 'Female', value: 'female' },
-      ],
-      filterSearch: true,
-      onFilter: (value, record) => {
-        record.gender.indexOf(value) === 0;
-      },
-      width: '10%',
-    },
-    {
       title: 'د پلار نوم',
       dataIndex: 'father_name',
+      width: '15%',
+    },
+    {
+      title: 'جنسیت',
+      dataIndex: 'gender',
+      // filters: [
+      //   { text: 'Male', value: 'male' },
+      //   { text: 'Female', value: 'female' },
+      // ],
+      // filterSearch: true,
+      // onFilter: (value, record) => {
+      //   record.gender.indexOf(value) === 0;
+      // },
       width: '10%',
     },
     {
@@ -117,20 +124,22 @@ const ThumbListPages = ({ match }) => {
     {
       title: 'تلفون شمیره',
       dataIndex: 'phone_number',
-      width: '10%',
+      width: '12%',
     },
     {
       title: 'بست',
       dataIndex: 'grade',
-      width: '20%',
+      width: '15%',
     },
     {
       title: 'حالت',
       dataIndex: 'status',
+      width: '5%',
     },
     {
       title: 'اپډیټ',
       dataIndex: 'action',
+      width: '5%',
     },
   ];
   useEffect(() => {
@@ -141,66 +150,102 @@ const ThumbListPages = ({ match }) => {
     selectedProvinceOption,
     selectLevelOfEducationOption,
   ]);
-
-  useEffect(() => {
-    console.log('institute', institute);
-    console.log('current page', currentPage);
-    async function fetchData() {
-      const params = {
-        id: teacherId,
-        // current_district: district,
-        page: currentPage,
-        limit: selectedPageSize,
-        gender: selectedGenderOption?.value,
-        current_province:
-          selectedProvinceOption?.column === 'all'
-            ? ''
-            : selectedProvinceOption?.column,
-      };
-      console.log('GENDER OPT', selectedProvinceOption);
-      if (institute !== '') {
-        params.institute_id = institute.id;
-      } else if (
-        selectedProvinceOption?.column === 'all' &&
-        selectedGenderOption?.column === 'all'
-      ) {
-        if (rest == true) {
-          setDistrict('');
-          setTeacherId('');
-          setRest(false);
-        }
-        params.current_province = null;
-        params.gender = null;
-      } else if (selectedProvinceOption?.column === 'all') {
-        params.province = null;
-        params.gender = selectedGenderOption?.value;
-      } else if (selectedGenderOption?.column === 'all') {
-        params.gender = null;
-      }
-      const response = await callApi(`teachers/`, '', null, params);
-      if (response.data && response.status === 200) {
-        setInstituteTeachers(response.data);
-        setItems(response.data);
-        setSelectedItems([]);
-        // setTotalItemCount(data);
-        setIsLoaded(true);
-      } else {
-        console.log('students error');
-      }
+  async function fetchData(params = {}) {
+    console.log('PARAMSSSSSSSSSS: ', params);
+    setIsLoading(true);
+    let endpoint = `institute/`;
+    const params1 = {
+      ...params,
+      // if filters reseted, goto first page
+      page: !isFilter ? tableParams.pagination.current : params.page,
+      page_size: tableParams.pagination.pageSize || null,
+    };
+    // const params = {
+    //   id: teacherId,
+    //   // current_district: district,
+    //   page: currentPage,
+    //   limit: selectedPageSize,
+    //   gender: selectedGenderOption?.value,
+    //   current_province:
+    //     selectedProvinceOption?.column === 'all'
+    //       ? ''
+    //       : selectedProvinceOption?.column,
+    // };
+    // console.log('GENDER OPT', selectedProvinceOption);
+    // if (institute !== '') {
+    //   params.institute_id = institute.id;
+    // } else if (
+    //   selectedProvinceOption?.column === 'all' &&
+    //   selectedGenderOption?.column === 'all'
+    // ) {
+    //   if (rest == true) {
+    //     setDistrict('');
+    //     setTeacherId('');
+    //     setRest(false);
+    //   }
+    //   params.current_province = null;
+    //   params.gender = null;
+    // } else if (selectedProvinceOption?.column === 'all') {
+    //   params.province = null;
+    //   params.gender = selectedGenderOption?.value;
+    // } else if (selectedGenderOption?.column === 'all') {
+    //   params.gender = null;
+    // }
+    const response = await callApi(`teachers/`, '', null, params1);
+    setIsLoading(false);
+    if (response.data && response.status === 200) {
+      setInstituteTeachers(response.data);
+      console.log('TTTTTTTTTTTTTTTTTTTTTTTTT', response?.data);
+      setItems(response?.data.results);
+      setSelectedItems([]);
+      // setTotalItemCount(data);
+      setIsLoaded(true);
+    } else {
+      console.log('students error');
     }
+  }
 
+  const handleTableChange = (pagination, filter, sorter) => {
+    setIsFilter(false);
+    setTableParams({ pagination, filter, ...sorter });
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setItems([]);
+    }
+  };
+  const onFilter = async (values) => {
+    setIsFilter(true);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
+    });
+    let params = {
+      page: 1,
+    };
+
+    params.current_province = values.filterProvince?.value;
+    params.gender = values.filterGender?.value;
+    params.status = values.filterStatus?.value;
+    params.id = values.filterId || null;
+    fetchData(params);
+  };
+  const handleResetFields = (resetForm) => {
+    resetForm({
+      values: {
+        filterId: '',
+        filterInstitute: [],
+        filterProvince: [],
+        filterGender: [],
+      },
+    });
+    setIsFilter(false);
     fetchData();
-  }, [
-    selectedPageSize,
-    currentPage,
-    selectedGenderOption,
-    selectedProvinceOption,
-    teacherId,
-    province,
-    district,
-    rest,
-    institute,
-  ]);
+  };
+  useEffect(() => {
+    fetchData();
+  }, [!isFilter ? JSON.stringify(tableParams) : null]);
 
   const onCheckItem = (event, id) => {
     if (
@@ -237,7 +282,6 @@ const ThumbListPages = ({ match }) => {
     document.activeElement.blur();
     return false;
   };
-
   const handleChangeSelectAll = (isToggle) => {
     if (selectedItems.length >= items.length) {
       if (isToggle) {
@@ -280,13 +324,12 @@ const ThumbListPages = ({ match }) => {
   ) : (
     <>
       <div className="disable-text-selection">
-        <ListPageHeading
+        <h1>د استاد لست/ لست استادان</h1>
+        {/* <ListPageHeading
           heading="د استاد لست/ لست استادان"
-          // Using display mode we can change the display of the list.
           displayMode={displayMode}
           changeDisplayMode={setDisplayMode}
           handleChangeSelectAll={handleChangeSelectAll}
-          // following code is used for order the list based on different element of the prod
           changeGenderBy={(column) => {
             setSelectedGenderOption(
               genderOptionsForList.find((x) => x.value === column)
@@ -338,7 +381,7 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           institutes={institutes}
           onInstituteSelect={setInstitute}
-        />
+        /> */}
         {/* <table className="table">
           <thead
             style={{ maxHeight: '55px ' }}
@@ -451,21 +494,86 @@ const ThumbListPages = ({ match }) => {
             onChangePage={setCurrentPage}
           />
         </table> */}
+        <div
+          style={{
+            padding: 10,
+            display: 'flex',
+          }}
+        >
+          <Formik
+            initialValues={{
+              filterId: '',
+              filterInstitute: [],
+              filterProvince: [],
+            }}
+            onSubmit={onFilter}
+          >
+            {({
+              values,
+              setFieldValue,
+              handleSubmit,
+              setFieldTouched,
+              resetForm,
+            }) => (
+              <>
+                <Field name="filterId" placeholder="ایدی" />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="ولایت"
+                  name="filterProvince"
+                  options={provinces}
+                  value={values.filterProvince}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="جنسیت"
+                  name="filterGender"
+                  options={genderOptions}
+                  value={values.filterGender}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="حالت"
+                  name="filterStatus"
+                  options={instituteStatusOptions}
+                  value={values.filterStatus}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <button className="btn btn-secondary" onClick={handleSubmit}>
+                  فلټر
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  onClick={() => handleResetFields(resetForm)}
+                >
+                  ریسیټ
+                </button>
+              </>
+            )}
+          </Formik>
+        </div>
         <TB
           columns={columns}
           // rowKey={(record) => record.login.uuid}
           pagination={tableParams.pagination}
-          loading={loading}
-          // onChange={handleTableChange}
+          loading={isLoading}
+          onChange={handleTableChange}
           dataSource={items.map((item, index) => ({
             key: index,
             student_id: item.id,
             name: <NavLink to={`teacher/${item.id}`}>{item.name}</NavLink>,
-            gender: item.gender,
+            gender: genderOptions.find((op) => op.value === item.gender).label,
             father_name: item.father_name,
-            province: provinces.map((pro) => {
-              if (pro.value == item.current_province) return pro.label;
-            }),
+            province: provinces.find(
+              (pro) => pro.value == item.current_province
+            ).label,
             phone_number: item.phone_number,
             status: teacherCurrentStatusOptions.map((status) => {
               if (status.value == item.status) {

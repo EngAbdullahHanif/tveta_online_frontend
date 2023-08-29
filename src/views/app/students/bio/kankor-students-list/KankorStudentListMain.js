@@ -614,7 +614,7 @@ const ThumbListPages = ({ match }) => {
                 </FormGroup>
                 <FormGroup className="form-group" style={{ display: 'flex' }}>
                   <button className="btn btn-secondary" onClick={handleSubmit}>
-                    Filter
+                    فلټر
                   </button>
 
                   <button
@@ -622,7 +622,7 @@ const ThumbListPages = ({ match }) => {
                     className="btn btn-warning"
                     onClick={() => handleResetFields(resetForm)}
                   >
-                    Reset
+                    ریسیټ
                   </button>
                 </FormGroup>
               </>

@@ -71,7 +71,7 @@ const TeacherRegister = ({ intl }, values) => {
     father_name: '',
     english_father_name: '',
     grandfather_name: '',
-    year_of_birth: [],
+    year_of_birth: '',
     month_of_birth: '',
     day_of_birth: '',
     place_of_birth: '',
@@ -877,7 +877,7 @@ const TeacherRegister = ({ intl }, values) => {
                   }}
                 >
                   <Button className="mt-5 bg-primary" onClick={handleSubmit}>
-                    <IntlMessages id="ثبت" />
+                    ثبت
                   </Button>
                 </NavLink>
               </Form>

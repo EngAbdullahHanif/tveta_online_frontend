@@ -216,6 +216,22 @@ const StudentRegistraion = ({ history }) => {
                           </div>
                         ) : null}
                       </FormGroup>
+                      {/*Father Name  */}
+                      <FormGroup className="form-group has-float-label error-l-175">
+                        <Label>
+                          <IntlMessages id="forms.StdFatherName" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="fatherName"
+                        />
+                        {errors.fatherName && touched.fatherName ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.fatherName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
                       {/* Gender */}
                       <FormGroup className="form-group has-float-label error-l-175">
@@ -263,7 +279,7 @@ const StudentRegistraion = ({ history }) => {
                       {/* Department */}
                       <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
-                          <IntlMessages id="forms.studyDepartment" />
+                          <IntlMessages id="forms.FieldDepLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
@@ -330,23 +346,6 @@ const StudentRegistraion = ({ history }) => {
                     </Colxx>
 
                     <Colxx xxs="5" className=" mt-5">
-                      {/*Father Name  */}
-                      <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
-                          <IntlMessages id="forms.StdFatherName" />
-                          <span style={{ color: 'red' }}>*</span>
-                        </Label>
-                        <Field
-                          className="form-control fieldStyle"
-                          name="fatherName"
-                        />
-                        {errors.fatherName && touched.fatherName ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.fatherName}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-
                       {/* <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.StdKankorIdLabel" />
@@ -380,7 +379,7 @@ const StudentRegistraion = ({ history }) => {
                       </FormGroup>
 
                       {/* Field */}
-                      <FormGroup className="form-group has-float-label error-l-175">
+                      {/* <FormGroup className="form-group has-float-label error-l-175">
                         <Label>
                           <IntlMessages id="forms.FieldLabel" />
                           <span style={{ color: 'red' }}>*</span>
@@ -398,7 +397,7 @@ const StudentRegistraion = ({ history }) => {
                             {errors.field}
                           </div>
                         ) : null}
-                      </FormGroup>
+                      </FormGroup> */}
 
                       {/* Eduactional Year*/}
                       <FormGroup className="form-group has-float-label error-l-175 ">

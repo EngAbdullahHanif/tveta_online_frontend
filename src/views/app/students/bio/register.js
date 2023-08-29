@@ -382,7 +382,7 @@ const StudentRegistration = ({ intl }, values) => {
             student_id: newFields.studentId,
             kankor_id: newFields.kankorId,
             previous_grade_year: newFields.graduationYear.label,
-            previous_grade_school_name: newFields.preSchool,
+            previous_school_name: newFields.preSchool,
             previous_school_province: newFields.schoolProvince.value,
             previous_grade: newFields.levelOfEducation.value,
             student_type: newFields.studentType.value,
@@ -397,7 +397,7 @@ const StudentRegistration = ({ intl }, values) => {
             cover_number: newFields.idCardJoldNo,
             page_number: newFields.idCardPageNo,
             sabt_number: newFields.sabtNo,
-            tazkira_type: newFields.tazkiraType,
+            tazkira_type: newFields.tazkiraType.value,
             registration_number: newFields.tazkiraNo,
             sokok_number: newFields.sokokNo,
             main_province: newFields.province.value,
@@ -1406,7 +1406,7 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             {/* Sector */}
-                            <FormGroup className="form-group has-float-label ">
+                            {/* <FormGroup className="form-group has-float-label ">
                               <span style={{ color: 'red' }}>*</span>
                               <Label>
                                 <IntlMessages id="forms.sector" />
@@ -1426,7 +1426,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   {errors.sector}
                                 </div>
                               ) : null}
-                            </FormGroup>
+                            </FormGroup> */}
 
                             {/* kankor Id */}
                             {/* <FormGroup className="form-group has-float-label">

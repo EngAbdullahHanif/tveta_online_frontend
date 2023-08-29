@@ -1,6 +1,6 @@
 // this compoenent is used to show the list of students whose marks have been uploaded and verified, but students upgraded/degraded class has not been assigned yet
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -38,6 +38,7 @@ import {
 } from 'containers/form-validations/FormikFields';
 import userEvent from '@testing-library/user-event';
 import { async } from 'q';
+import { AuthContext } from 'context/AuthContext';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -94,13 +95,12 @@ const submitInitialValues = {
 };
 
 const MarskStatusCheckedStudents = ({ match }) => {
+  const { institutes, classes } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(false);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [fields, setFields] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
-  const [classes, setClasses] = useState([]);
   const [students, setStudents] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
@@ -135,30 +135,6 @@ const MarskStatusCheckedStudents = ({ match }) => {
   //     }, []);
   //   }
 
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-  const fetchFields = async () => {
-    const response = await callApi('institute/field/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setFields(updatedData);
-    } else {
-      console.log('field error');
-    }
-  };
   const fetchDepartments = async (instituteId) => {
     if (!instituteId || !instituteId.value) {
       return;
@@ -188,25 +164,6 @@ const MarskStatusCheckedStudents = ({ match }) => {
       fetchDepartments(selectedInstitute);
     }
   }, [selectedInstitute]);
-
-  const fetchClasses = async () => {
-    const response = await callApi('institute/classs/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name + ' - ' + item.semester + ' - ' + item.section,
-      }));
-      setClasses(updatedData);
-    } else {
-      console.log('class error');
-    }
-  };
-
-  useEffect(() => {
-    fetchInstitutes();
-    fetchFields();
-    fetchClasses();
-  }, []);
 
   // notification message
   const createNotification = (type, className) => {

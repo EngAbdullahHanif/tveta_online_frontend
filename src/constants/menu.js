@@ -328,8 +328,8 @@ const menuItems = [
       userRole.instituteManager,
       userRole.instituteDataentry,
       userRole.provinceDataentry,
-      // userRole.instituteDataentry,
-      // userRole.provinceDataentry,
+      userRole.instituteDataentry,
+      userRole.provinceDataentry,
       userRole.tester,
     ],
 
@@ -370,6 +370,8 @@ const menuItems = [
       userRole.provinceSupervisor,
       userRole.authoritySupervisor,
       userRole.authorityDataentry,
+      userRole.instituteManager,
+      userRole.instituteDataentry,
     ],
     subs: [
       {
@@ -404,6 +406,7 @@ const menuItems = [
         icon: 'MD.MdAddBox',
         label: 'menu.institute_department_register',
         to: `${adminRoot}/institutes/institute-department/register`,
+        roles: [userRole.instituteDataentry, userRole.instituteManager],
       },
       // {
       //   icon: "FA.FaLevelUpAlt",

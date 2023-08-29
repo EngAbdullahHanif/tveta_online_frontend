@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import './../../dorms/dorm-register.css';
-import profilePhoto from './../../../../../src/assets/img/profiles/22.jpg';
+import profilePhoto from './../../../../../src/assets/img/profiles/user.png';
 import { appointmentTypeOptions } from '../../global-data/options';
 import { contractTypeOptions } from '../../global-data/options';
 import { teacherTransferValidationSchema } from '../../global-data/forms-validation';
@@ -219,7 +219,7 @@ const TeacherTransfer = (values) => {
                               <Colxx xxs="1"></Colxx>
                               <Colxx>
                                 <img
-                                  src={profilePhoto}
+                                  src={teacher.photo || profilePhoto}
                                   alt="Photo"
                                   width={'10%'}
                                 />{' '}

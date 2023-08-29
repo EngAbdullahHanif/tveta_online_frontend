@@ -26,6 +26,7 @@ import {
   Button,
   CardTitle,
   Input,
+  Spinner,
 } from 'reactstrap';
 
 import callApi from 'helpers/callApi';
@@ -101,6 +102,7 @@ const InstituteRegister = () => {
   const [initialOwnerhip, setInitialOwnership] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState('');
   const [initialOwnershipType, setInitialOwnershipType] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { institutes, fetchInstitutes, provinces, districts } =
     useContext(AuthContext);
@@ -327,7 +329,25 @@ const InstituteRegister = () => {
     code: Yup.number()
       .required('کد مورد نیاز است')
       .min(1000, 'کود باید از 1000 بزرگتر باشد')
-      .max(9999, 'کود باید از 10000 کوچکتر باشد'),
+      .max(9999, 'کود باید از 10000 کوچکتر باشد')
+      .test(
+        'unique-code',
+        'انستتیوت با این کود وجود دارد',
+        async function (value) {
+          if (value > 1000 && value < 10000) {
+            try {
+              const response = await callApi(
+                `institute/check-code-unique/?code=${value}`
+              );
+              return response.data.is_unique;
+            } catch (error) {
+              console.error('API error:', error);
+              return false; // Return false in case of API error
+            }
+          }
+          return true;
+        }
+      ),
 
     // instType: Yup.object()
     //   .shape({
@@ -416,15 +436,26 @@ const InstituteRegister = () => {
       apiParams.endPoint = `institute/${instituteId}/`;
       apiParams.method = 'PATCH';
     }
-    const response = await callApi(apiParams.endPoint, apiParams.method, data);
-    if (response) {
-      createNotification('success', 'filled');
-      // resetForm();
-      setIsNext(true);
-      console.log('success message from backend', response);
-      fetchInstitutes();
-    } else {
-      createNotification('error', 'filled');
+    setIsLoading(true);
+    try {
+      const response = await callApi(
+        apiParams.endPoint,
+        apiParams.method,
+        data
+      );
+      if (response && response.status >= 200 && response.status < 300) {
+        createNotification('success', 'filled');
+        // resetForm();
+        setIsNext(true);
+        console.log('success message from backend', response);
+        fetchInstitutes();
+      } else {
+        createNotification('error', 'filled');
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -484,18 +515,6 @@ const InstituteRegister = () => {
               }}
               validationSchema={ValidationSchema}
               onSubmit={onRegister}
-              validate={async (values, props) => {
-                const errors = {};
-                if (!instituteId && values.code > 1000 && values.code < 10000) {
-                  const response = await callApi(
-                    `institute/check-code-unique/?code=${values.code}`
-                  );
-                  if (response && response?.data && !response.data.is_unique) {
-                    errors.code = 'انستتیوت با این کود وجود دارد';
-                  } else errors.code = '';
-                }
-                return errors;
-              }}
             >
               {({
                 errors,
@@ -791,7 +810,7 @@ const InstituteRegister = () => {
                   className="m-5 bg-primary"
                   onClick={() => setIsNext(false)}
                 >
-                  <IntlMessages id="button.back" />
+                  {isLoading ? <Spinner /> : <IntlMessages id="button.back" />}
                 </Button>
               </div>
             </div>

@@ -300,7 +300,7 @@ const ThumbListPages = ({ match }) => {
                   onBlur={setFieldTouched}
                 />
                 <button className="btn btn-secondary" onClick={handleSubmit}>
-                  Filter
+                  فلټر
                 </button>
 
                 <button
@@ -308,7 +308,7 @@ const ThumbListPages = ({ match }) => {
                   className="btn btn-warning"
                   onClick={() => handleResetFields(resetForm)}
                 >
-                  Reset
+                  ریسیټ
                 </button>
               </>
             )}

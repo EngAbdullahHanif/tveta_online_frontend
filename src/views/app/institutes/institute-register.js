@@ -503,8 +503,6 @@ const InstituteRegister = () => {
                 values,
                 setFieldTouched,
                 setFieldValue,
-                handleChange,
-                resetForm,
               }) => (
                 <Form className="av-tooltip tooltip-label-right  error-l-200">
                   <Row className="justify-content-center">
@@ -522,10 +520,7 @@ const InstituteRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
-                          {/* <IntlMessages id="inst.name" /> */}
-                          کوډ/کود
-                        </Label>
+                        <Label>کوډ/کود</Label>
                         <Field
                           className="form-control"
                           name="code"

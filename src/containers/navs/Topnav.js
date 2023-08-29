@@ -297,11 +297,13 @@ const TopNav = ({
       {/* <NavLink to={adminRoot}>
         <img src={logo} alt="Logo" />
       </NavLink> */}
-      <NavLink to="/">
-        {user?.institute && (
-          <h1>{institutes.find((i) => i.value === user.institute)?.label}</h1>
-        )}
-      </NavLink>
+      {user?.institute && (
+        <NavLink to={`/app/institutes/institute/${user?.institute.id}`}>
+          <h1>
+            {institutes.find((i) => i.value === user?.institute?.id)?.label}
+          </h1>
+        </NavLink>
+      )}
       <div className="navbar-right">
         {isDarkSwitchActive && <TopnavDarkSwitch />}
         <div className="header-icons d-inline-block align-middle">

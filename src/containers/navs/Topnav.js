@@ -54,7 +54,7 @@ const TopNav = ({
   logoutUserAction,
   changeLocaleAction,
 }) => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, institutes } = useContext(AuthContext);
   const [isInFullScreen, setIsInFullScreen] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -294,10 +294,14 @@ const TopNav = ({
           </a>
         </div> */}
       </div>
-      {/* <NavLink  to={adminRoot}>
-     <img src={logo} alt="Logo" />
+      {/* <NavLink to={adminRoot}>
+        <img src={logo} alt="Logo" />
       </NavLink> */}
-
+      <NavLink to="/">
+        {user?.institute && (
+          <h1>{institutes.find((i) => i.value === user.institute)?.label}</h1>
+        )}
+      </NavLink>
       <div className="navbar-right">
         {isDarkSwitchActive && <TopnavDarkSwitch />}
         <div className="header-icons d-inline-block align-middle">

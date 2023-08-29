@@ -367,7 +367,7 @@ const TeacherRegister = ({ intl }, values) => {
                       ) : null}
                     </FormGroup>
                     {/* Tazkira Number */}
-                    {values.tazkiraType.value === 'electronic' && (
+                    {values.tazkiraType?.value === 'electronic' && (
                       <FormGroup className="form-group has-float-label error-l-100">
                         <Label>
                           نمبر تذکره الکترونی
@@ -388,7 +388,7 @@ const TeacherRegister = ({ intl }, values) => {
                       </FormGroup>
                     )}
 
-                    {values.tazkiraType.value === 'paper' ? (
+                    {values.tazkiraType?.value === 'paper' ? (
                       <>
                         <div>
                           {/* Jold Number */}

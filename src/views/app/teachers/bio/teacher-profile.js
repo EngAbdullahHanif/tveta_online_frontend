@@ -115,7 +115,7 @@ const TeacherProfile = () => {
   };
 
   async function fetchTeacher() {
-    const response = await callApi(`teachers/?id=${teacherId}`, '', null);
+    const response = await callApi(`teachers/${teacherId}`, '', null);
     const data = response.data;
     setTeacher(data);
     setIsLoaded(true);
@@ -361,7 +361,7 @@ const TeacherProfile = () => {
       suggestions: inputData.suggestions,
       score,
       evaluation_date: evaluationDate,
-      teacher: teacher[0].id,
+      teacher: teacher.id,
       institute: inputData.institute?.value,
       department: inputData.department?.value,
       classs: inputData.classs?.value,
@@ -399,7 +399,7 @@ const TeacherProfile = () => {
       evaluator_name: inputData.evaluator_name,
       score,
       evaluation_date: evaluationDate,
-      teacher: teacher[0].id,
+      teacher: teacher.id,
       institute: inputData.institute?.value,
       new_grade: inputData.grade?.value,
       new_step: inputData.step?.value,
@@ -434,7 +434,7 @@ const TeacherProfile = () => {
     }
     const data = {
       type: inputData.type?.value,
-      teacher: teacher[0].id,
+      teacher: teacher.id,
       institute: inputData.institute?.value,
       details: inputData.details,
     };
@@ -478,11 +478,7 @@ const TeacherProfile = () => {
       <Row>
         <Colxx xxs="1"></Colxx>
         <Colxx>
-          <img
-            src={teacher[0]?.photo || profilePhoto}
-            alt="Photo"
-            width={'10%'}
-          />{' '}
+          <img src={teacher?.photo || profilePhoto} alt="Photo" width={'10%'} />{' '}
         </Colxx>
       </Row>
       <Row>
@@ -509,7 +505,7 @@ const TeacherProfile = () => {
                 <IntlMessages id="button.TeacherBackround" />
               </span>
             </Button> */}
-            <Button
+            {/* <Button
               style={{ backgroundColor: isNext ? 'blue' : '' }}
               size="lg"
               className="m-2"
@@ -525,11 +521,11 @@ const TeacherProfile = () => {
               <span className="label">
                 <IntlMessages id="button.Teacherprofile" />
               </span>
-            </Button>
+            </Button> */}
           </div>
         </Colxx>
       </Row>
-      {teacher.length > 0 && (
+      {teacher && (
         <>
           {isNext ? (
             <>
@@ -556,7 +552,7 @@ const TeacherProfile = () => {
                         <Label>
                           <IntlMessages id="teacher.NameLabel" />
                         </Label>
-                        <h3>{teacher[0].name}</h3>
+                        <h3>{teacher.name}</h3>
                         {/* <Label>
                           <IntlMessages id="forms.Eng_name" />
                         </Label>
@@ -564,11 +560,11 @@ const TeacherProfile = () => {
                         <Label>
                           <IntlMessages id="teacher.FatherNameLabel" />
                         </Label>
-                        <h3>{teacher[0].father_name}</h3>
+                        <h3>{teacher.father_name}</h3>
                         <Label>
                           <IntlMessages id="teacher.GrandFatherNameLabel" />
                         </Label>
-                        <h3>{teacher[0].father_name}</h3>
+                        <h3>{teacher.father_name}</h3>
                         {/* <Label>
                           <IntlMessages id="forms.Std_father_Eng_Name" />
                         </Label>
@@ -579,7 +575,7 @@ const TeacherProfile = () => {
                         <h3>
                           {
                             genderOptions.find(
-                              (op) => op.value === teacher[0].gender
+                              (op) => op.value === teacher.gender
                             )?.label
                           }
                         </h3>
@@ -587,11 +583,11 @@ const TeacherProfile = () => {
                         <Label>
                           <IntlMessages id="teacher.PhoneNoLabel" />
                         </Label>
-                        <h3>{teacher[0].phone_number}</h3>
+                        <h3>{teacher.phone_number}</h3>
                         <Label>
                           <IntlMessages id="teacher.EmailLabel" />
                         </Label>
-                        <h3>{teacher[0].email}</h3>
+                        <h3>{teacher.email}</h3>
                         <br />
                         <br />
                       </Colxx>
@@ -599,22 +595,22 @@ const TeacherProfile = () => {
                         <Label>
                           <IntlMessages id="forms.StdTazkiraNoLabel" />
                         </Label>
-                        <h3>{teacher[0].registration_number}</h3>
+                        <h3>{teacher.registration_number}</h3>
                         <Label>
                           <IntlMessages id="forms.StdIdCardCoverLabel" />
                         </Label>
-                        <h3>{teacher[0].cover_number}</h3>
+                        <h3>{teacher.cover_number}</h3>
                         <Label>
                           <IntlMessages id="forms.StdIdCardPageNoLabel" />
                         </Label>
-                        <h3>{teacher[0].page_number}</h3>
+                        <h3>{teacher.page_number}</h3>
                         <Label>
                           <IntlMessages id="forms.StdDoBLabel" />
                         </Label>
                         <h3>
-                          {teacher[0].year_of_birth}-
-                          {teacher[0].month_of_birth || 'میاشت'}-
-                          {teacher[0].day_of_birth || 'ورځ'}
+                          {teacher.year_of_birth}-
+                          {teacher.month_of_birth || 'میاشت'}-
+                          {teacher.day_of_birth || 'ورځ'}
                         </h3>
                         <Label>
                           <IntlMessages id="forms.EducationLevelLabel" />
@@ -648,7 +644,7 @@ const TeacherProfile = () => {
                             </Label>
                             <h3>
                               {provinces.map((pro) => {
-                                if (teacher[0].main_province === pro.value)
+                                if (teacher.main_province === pro.value)
                                   return pro.label;
                               })}
                             </h3>
@@ -660,7 +656,7 @@ const TeacherProfile = () => {
                             </Label>
                             <h3>
                               {districts.map((pro) => {
-                                if (teacher[0].main_district === pro.value)
+                                if (teacher.main_district === pro.value)
                                   return pro.label;
                               })}
                             </h3>
@@ -686,7 +682,7 @@ const TeacherProfile = () => {
                             </Label>
                             <h3>
                               {provinces.map((pro) => {
-                                if (teacher[0].current_province === pro.value)
+                                if (teacher.current_province === pro.value)
                                   return pro.label;
                               })}
                             </h3>
@@ -698,7 +694,7 @@ const TeacherProfile = () => {
                             </Label>
                             <h3>
                               {districts.map((pro) => {
-                                if (teacher[0].current_district === pro.value)
+                                if (teacher.current_district === pro.value)
                                   return pro.label;
                               })}
                             </h3>
@@ -1072,7 +1068,7 @@ const TeacherProfile = () => {
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
-                                        Add Education
+                                        اضافه تعلیم/تحصیل
                                       </button>
                                     </div>
                                   </>

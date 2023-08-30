@@ -385,15 +385,19 @@ const ThumbListPages = ({ match }) => {
   };
 
   const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data?.results.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
+    try {
+      const response = await callApi('institute/', '', null);
+      if (response.data && response.status === 200) {
+        const updatedData = await response.data?.results.map((item) => ({
+          value: item.id,
+          label: item.name,
+        }));
+        setInstitutes(updatedData);
+      } else {
+        console.log('institute error');
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   // const fetchProvincesList = async () => {

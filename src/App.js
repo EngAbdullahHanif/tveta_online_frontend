@@ -1,4 +1,10 @@
-import React, { Suspense, useContext, useEffect, useState } from 'react';
+import React, {
+  StrictMode,
+  Suspense,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
@@ -326,40 +332,42 @@ const App = ({ locale }) => {
   }
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        setFromSuccessfulLogin,
-        provinces,
-        districts,
-        classes,
-        fetchClasses,
-        subjects,
-        departments,
-        institutes,
-        fetchInstitutes,
-        contextFields,
-        settings,
-        sectors,
-        dorms,
-      }}
-    >
-      <div className="h-100">
-        <IntlProvider
-          locale={currentAppLocale.locale}
-          messages={currentAppLocale.messages}
-        >
-          <>
-            <NotificationContainer />
-            {isMultiColorActive && <ColorSwitcher />}
-            <Suspense fallback={<div className="loading" />}>
-              <Router>{content}</Router>
-            </Suspense>
-          </>
-        </IntlProvider>
-      </div>
-    </AuthContext.Provider>
+    <StrictMode>
+      <AuthContext.Provider
+        value={{
+          user,
+          setUser,
+          setFromSuccessfulLogin,
+          provinces,
+          districts,
+          classes,
+          fetchClasses,
+          subjects,
+          departments,
+          institutes,
+          fetchInstitutes,
+          contextFields,
+          settings,
+          sectors,
+          dorms,
+        }}
+      >
+        <div className="h-100">
+          <IntlProvider
+            locale={currentAppLocale.locale}
+            messages={currentAppLocale.messages}
+          >
+            <>
+              <NotificationContainer />
+              {isMultiColorActive && <ColorSwitcher />}
+              <Suspense fallback={<div className="loading" />}>
+                <Router>{content}</Router>
+              </Suspense>
+            </>
+          </IntlProvider>
+        </div>
+      </AuthContext.Provider>
+    </StrictMode>
   );
 };
 

@@ -30,6 +30,7 @@ class Sidebar extends Component {
       collapsedMenus: [],
     };
     this.currentUser = JSON.parse(localStorage.getItem('user'));
+    this.containerRef = React.createRef();
   }
 
   // eslint-disable-next-line react/sort-comp
@@ -113,7 +114,7 @@ class Sidebar extends Component {
 
   getContainer = () => {
     // eslint-disable-next-line react/no-find-dom-node
-    return ReactDOM.findDOMNode(this);
+    return this.containerRef.current;
   };
 
   toggle = () => {
@@ -375,7 +376,7 @@ class Sidebar extends Component {
       this.state;
 
     return (
-      <div className="sidebar">
+      <div className="sidebar" ref={this.containerRef}>
         <div className="main-menu">
           <div className="scroll">
             <PerfectScrollbar
@@ -384,7 +385,6 @@ class Sidebar extends Component {
               <Nav vertical className="list-unstyled">
                 {menuItems &&
                   this.filteredList(menuItems).map((item) => {
-                    const iconn = `< ${item.icon} />`;
                     return (
                       <NavItem
                         style={{ margin: 10 }}

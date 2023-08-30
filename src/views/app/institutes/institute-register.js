@@ -86,6 +86,16 @@ const servicePath = 'http://localhost:8000';
 const instituteApiUrl = `${servicePath}/institute/institute_create`;
 //http://localhost:8000/institute/institute_create
 
+const MyErrorMessage = ({ name, errors, touched }) => {
+  if (errors[name] && touched[name]) {
+    return (
+      <div className="invalid-feedback d-block bg-danger text-white">
+        {errors[name]}
+      </div>
+    );
+  }
+  return null;
+};
 const InstituteRegister = () => {
   const [loader, setLoader] = useState(false);
   const [updateMode, setUpdateMode] = useState(false);
@@ -117,18 +127,7 @@ const InstituteRegister = () => {
   const [climate, setClimate] = useState([]);
   const [language, setLanguage] = useState([]);
   const [] = useState('وتاکئ / انتخاب کنید');
-  // const initialState = {
-  //   institute: instituteId ? institute.name : "",
-  //   province: instituteId ? institute.province : "",
-  //   district: instituteId ? institute.district : "",
-  //   village: instituteId ? institute.village : "",
-  //   instType: instituteId ? institute.type : "",
-  //   instituteType: instituteId ? institute.school_type : "",
-  //   institueCityType: instituteId ? institute.inst_city_type : "",
-  //   gender: instituteId ? institute.gender : "",
-  //   instituteClimate: instituteId ? institute.inst_climat : "",
-  //   institueLanguage: instituteId ? institute.language : "",
-  // };
+
   const initialState = {
     institute: initialInstituteName,
     province: initialProvince,
@@ -143,111 +142,79 @@ const InstituteRegister = () => {
     institueLanguage: language,
   };
   console.log('InITIAL State: ', initialState);
-  if (instituteId) {
+
+  async function fetchInstitute() {
     let data;
-    useEffect(() => {
-      async function fetchInstitute() {
-        const response = await callApi('institute/all/', '', null);
-        if (response.data && response.status === 200) {
-          console.log(
-            'RESPONSE in Fetch Institute for update: ',
-            response.data
-          );
-          const updatedData = await response?.data.filter(
-            (item) => item.id == instituteId
-          );
-          data = updatedData[0];
-          console.log('UPDATED DATA: ', data);
-          setInstitute(data);
-          setInitialInstituteName(data.name);
-          setInitialDistrict(
-            districts.find((dist) => {
-              return dist.value === data.district;
-            })
-          );
-          setInitialVillage(data.village);
-          setInitialProvince(
-            provinces.find((prov) => prov.value === data.province)
-          );
-          setInitialOwnershipType(
-            BuildingTypeOptions.find((op) => op.value === data.ownership)
-          );
-          setInstituteTypeGVT({
-            value: data.school_type,
-            label: data.school_type,
-          });
-          setInitialGender(
-            genderOptions.find((op) => op.value === data.gender)
-          );
-          setInitialInstType(
-            instituteTypeOptions.find((sh) => {
-              return sh.value == data.institute_type;
-            })
-          );
-          setCityType(
-            instituteCityOptions.find((op) => op.value === data.location_type)
-          );
-          setInitialShift(
-            InstituteShiftOptions.filter((sh) => {
-              return sh.value == data.shift;
-            })
-          );
-          setClimate(
-            instituteClimateOptions.find((op) => op.value === data.climate)
-          );
-          setInitialCode(data.code);
-          setLanguage(langOptions.find((op) => op.value === data.language));
-          setInitialFoundationYear(data.foundation_year);
-          setInitialOwnership(
-            instTypeOptions.filter((sh) => {
-              return sh.value == data.ownership;
-            })
-          );
-          console.log('UPDATED Institute DATA: ', institute);
-        } else {
-          console.log('institute error');
-        }
-        //end
-        // const Instprovince = provincesOptionsForList.map((provName) => {
-        //   if (provName.value === data.province) {
-        //     setInitialProvince([provName]);
-        //   }
-        // });
-        // const instClimat = instituteClimateOptions.map((provName) => {
-        //   if (provName.value === data.inst_climat) {
-        //     setClimate([provName]);
-        //   }
-        // });
-        // const instType = instituteTypeOptions.map((provName) => {
-        //   if (provName.value === data.school_type) {
-        //     setInstituteTypeGVT([provName]);
-        //   }
-        // });
-        // const cityType = instituteCityOptions.map((provName) => {
-        //   if (provName.value === data.inst_city_type) {
-        //     setCityType([provName]);
-        //   }
-        // });
-        // const instTypee = instTypeOptions.map((instType) => {
-        //   if (instType.value === data.type) {
-        //     setInitialInstType([instType]);
-        //   }
-        // });
-        // const languageType = instituteLanguageOptions.map((lang) => {
-        //   if (lang.value === data.language) {
-        //     setLanguage([lang]);
-        //   }
-        // });
-        // const instGender = dormGenderOptions.map((instGender) => {
-        //   if (instGender.value === data.gender) {
-        //     setInitialGender(instGender);
-        //   }
-        // });
+    setIsLoading(true);
+    try {
+      const response = await callApi('institute/all/', '', null);
+      if (response.data && response.status === 200) {
+        console.log('RESPONSE in Fetch Institute for update: ', response.data);
+        const updatedData = await response?.data.filter(
+          (item) => item.id == instituteId
+        );
+        data = updatedData[0];
+        console.log('UPDATED DATA: ', data);
+        setInstitute(data);
+        setInitialInstituteName(data.name);
+        setInitialDistrict(
+          districts.find((dist) => {
+            return dist.value === data.district;
+          })
+        );
+        setInitialVillage(data.village);
+        setInitialProvince(
+          provinces.find((prov) => prov.value === data.province)
+        );
+        setInitialOwnershipType(
+          BuildingTypeOptions.find((op) => op.value === data.ownership)
+        );
+        setInstituteTypeGVT({
+          value: data.school_type,
+          label: data.school_type,
+        });
+        setInitialGender(genderOptions.find((op) => op.value === data.gender));
+        setInitialInstType(
+          instituteTypeOptions.find((sh) => {
+            return sh.value == data.institute_type;
+          })
+        );
+        setCityType(
+          instituteCityOptions.find((op) => op.value === data.location_type)
+        );
+        setInitialShift(
+          InstituteShiftOptions.filter((sh) => {
+            return sh.value == data.shift;
+          })
+        );
+        setClimate(
+          instituteClimateOptions.find((op) => op.value === data.climate)
+        );
+        setInitialCode(data.code);
+        setLanguage(langOptions.find((op) => op.value === data.language));
+        setInitialFoundationYear(data.foundation_year);
+        setInitialOwnership(
+          instTypeOptions.filter((sh) => {
+            return sh.value == data.ownership;
+          })
+        );
+        console.log('UPDATED Institute DATA: ', institute);
+      } else {
+        console.log('institute error');
       }
+    } catch (e) {
+      console.log('error');
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (instituteId) {
       fetchInstitute();
       setUpdateMode(true);
-    }, []);
-  }
+    }
+  }, [instituteId]);
 
   const createNotification = (type, className) => {
     const cName = className || '';
@@ -314,40 +281,30 @@ const InstituteRegister = () => {
 
   const ValidationSchema = Yup.object().shape({
     institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
-    // province: updateMode
-    //   ? Yup.object()
-    //       .shape({
-    //         value: Yup.string().required(),
-    //       })
-    //       .nullable()
-    //       .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-    //   : null,
-    // code: Yup.number()
-    //   .min(1000, 'کود باید از 1000 بزرگتر باشد')
-    //   .max(9999, 'کود باید از 10000 کوچکتر باشد')
-    //   .required('کد مورد نیاز است'),
-    code: Yup.number()
-      .required('کد مورد نیاز است')
-      .min(1000, 'کود باید از 1000 بزرگتر باشد')
-      .max(9999, 'کود باید از 10000 کوچکتر باشد')
-      .test(
-        'unique-code',
-        'انستتیوت با این کود وجود دارد',
-        async function (value) {
-          if (value > 1000 && value < 10000) {
-            try {
-              const response = await callApi(
-                `institute/check-code-unique/?code=${value}`
-              );
-              return response.data.is_unique;
-            } catch (error) {
-              console.error('API error:', error);
-              return false; // Return false in case of API error
+    code:
+      !instituteId &&
+      Yup.number()
+        .required('کد مورد نیاز است')
+        .min(1000, 'کود باید از 1000 بزرگتر باشد')
+        .max(9999, 'کود باید از 10000 کوچکتر باشد')
+        .test(
+          'unique-code',
+          'انستتیوت با این کود وجود دارد',
+          async function (value) {
+            if (value >= 1000 && value < 10000) {
+              try {
+                const response = await callApi(
+                  `institute/check-code-unique/?code=${value}`
+                );
+                return response.data.is_unique;
+              } catch (error) {
+                console.error('API error:', error);
+                return false; // Return false in case of API error
+              }
             }
+            return true;
           }
-          return true;
-        }
-      ),
+        ),
 
     // instType: Yup.object()
     //   .shape({
@@ -443,7 +400,11 @@ const InstituteRegister = () => {
         apiParams.method,
         data
       );
+<<<<<<< HEAD
       if (response && response.status >= 200 && response.status < 300) {
+=======
+      if (response) {
+>>>>>>> development
         createNotification('success', 'filled');
         // resetForm();
         setIsNext(true);
@@ -488,13 +449,18 @@ const InstituteRegister = () => {
       <Card>
         <h3 style={{ fontSize: 25, fontWeight: 'bold' }} className="mt-5 m-5">
           {instituteId ? (
-            <IntlMessages id="ده انستیتوت اپډیډ" />
+            'ده انستیتوت اپډیډ'
           ) : (
             <IntlMessages id="inst.register.title" />
           )}
         </h3>
         <CardBody>
-          {!isNext ? (
+          {isLoading && (
+            <div className="text-center">
+              <Spinner />
+            </div>
+          )}
+          {!isNext && !isLoading && (
             <Formik
               enableReinitialize={true}
               validateOnMount
@@ -515,6 +481,21 @@ const InstituteRegister = () => {
               }}
               validationSchema={ValidationSchema}
               onSubmit={onRegister}
+<<<<<<< HEAD
+=======
+              // validate={async (values, props) => {
+              //   const errors = {};
+              //   if (!instituteId && values.code > 1000 && values.code < 10000) {
+              //     const response = await callApi(
+              //       `institute/check-code-unique/?code=${values.code}`
+              //     );
+              //     if (response && response?.data && !response.data.is_unique) {
+              //       errors.code = 'انستتیوت با این کود وجود دارد';
+              //     } else errors.code = '';
+              //   }
+              //   return errors;
+              // }}
+>>>>>>> development
             >
               {({
                 errors,
@@ -538,20 +519,21 @@ const InstituteRegister = () => {
                         )}
                       </FormGroup>
 
-                      <FormGroup className="form-group has-float-label">
-                        <Label>کوډ/کود</Label>
-                        <Field
-                          className="form-control"
-                          name="code"
-                          type="number"
-                          disabled={instituteId ? true : false}
-                        />
-                        {errors.code && touched.code && (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.code}
-                          </div>
-                        )}
-                      </FormGroup>
+                      {!instituteId && (
+                        <FormGroup className="form-group has-float-label">
+                          <Label>کوډ/کود</Label>
+                          <Field
+                            className="form-control"
+                            name="code"
+                            type="number"
+                          />
+                          <MyErrorMessage
+                            name="code"
+                            errors={errors}
+                            touched={touched}
+                          />
+                        </FormGroup>
+                      )}
 
                       <FormGroup className="form-group has-float-label">
                         <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
@@ -571,7 +553,7 @@ const InstituteRegister = () => {
                             setFieldValue('district', []);
                           }}
                           onBlur={setFieldTouched}
-                          onClick={setSelectedProvince(values.province.value)}
+                          // onClick={setSelectedProvince(values.province.value)}
                         />
                         {errors.province && touched.province ? (
                           <div className="invalid-feedback d-block bg-danger text-white">
@@ -794,7 +776,8 @@ const InstituteRegister = () => {
                 </Form>
               )}
             </Formik>
-          ) : (
+          )}{' '}
+          {isNext && !isLoading && (
             <div
               className="wizard-basic-step text-center pt-3 "
               style={{ minHeight: '400px' }}

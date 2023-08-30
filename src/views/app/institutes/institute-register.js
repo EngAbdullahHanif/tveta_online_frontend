@@ -86,6 +86,16 @@ const servicePath = 'http://localhost:8000';
 const instituteApiUrl = `${servicePath}/institute/institute_create`;
 //http://localhost:8000/institute/institute_create
 
+const MyErrorMessage = ({ name, errors, touched }) => {
+  if (errors[name] && touched[name]) {
+    return (
+      <div className="invalid-feedback d-block bg-danger text-white">
+        {errors[name]}
+      </div>
+    );
+  }
+  return null;
+};
 const InstituteRegister = () => {
   const [loader, setLoader] = useState(false);
   const [updateMode, setUpdateMode] = useState(false);
@@ -117,18 +127,7 @@ const InstituteRegister = () => {
   const [climate, setClimate] = useState([]);
   const [language, setLanguage] = useState([]);
   const [] = useState('وتاکئ / انتخاب کنید');
-  // const initialState = {
-  //   institute: instituteId ? institute.name : "",
-  //   province: instituteId ? institute.province : "",
-  //   district: instituteId ? institute.district : "",
-  //   village: instituteId ? institute.village : "",
-  //   instType: instituteId ? institute.type : "",
-  //   instituteType: instituteId ? institute.school_type : "",
-  //   institueCityType: instituteId ? institute.inst_city_type : "",
-  //   gender: instituteId ? institute.gender : "",
-  //   instituteClimate: instituteId ? institute.inst_climat : "",
-  //   institueLanguage: instituteId ? institute.language : "",
-  // };
+
   const initialState = {
     institute: initialInstituteName,
     province: initialProvince,
@@ -282,18 +281,6 @@ const InstituteRegister = () => {
 
   const ValidationSchema = Yup.object().shape({
     institute: Yup.string().required(<IntlMessages id="inst.nameErr" />),
-    // province: updateMode
-    //   ? Yup.object()
-    //       .shape({
-    //         value: Yup.string().required(),
-    //       })
-    //       .nullable()
-    //       .required(<IntlMessages id="forms.StdSchoolProvinceErr" />)
-    //   : null,
-    // code: Yup.number()
-    //   .min(1000, 'کود باید از 1000 بزرگتر باشد')
-    //   .max(9999, 'کود باید از 10000 کوچکتر باشد')
-    //   .required('کد مورد نیاز است'),
     code:
       !instituteId &&
       Yup.number()
@@ -304,7 +291,7 @@ const InstituteRegister = () => {
           'unique-code',
           'انستتیوت با این کود وجود دارد',
           async function (value) {
-            if (value > 1000 && value < 10000) {
+            if (value >= 1000 && value < 10000) {
               try {
                 const response = await callApi(
                   `institute/check-code-unique/?code=${value}`
@@ -490,18 +477,18 @@ const InstituteRegister = () => {
               }}
               validationSchema={ValidationSchema}
               onSubmit={onRegister}
-              validate={async (values, props) => {
-                const errors = {};
-                if (!instituteId && values.code > 1000 && values.code < 10000) {
-                  const response = await callApi(
-                    `institute/check-code-unique/?code=${values.code}`
-                  );
-                  if (response && response?.data && !response.data.is_unique) {
-                    errors.code = 'انستتیوت با این کود وجود دارد';
-                  } else errors.code = '';
-                }
-                return errors;
-              }}
+              // validate={async (values, props) => {
+              //   const errors = {};
+              //   if (!instituteId && values.code > 1000 && values.code < 10000) {
+              //     const response = await callApi(
+              //       `institute/check-code-unique/?code=${values.code}`
+              //     );
+              //     if (response && response?.data && !response.data.is_unique) {
+              //       errors.code = 'انستتیوت با این کود وجود دارد';
+              //     } else errors.code = '';
+              //   }
+              //   return errors;
+              // }}
             >
               {({
                 errors,
@@ -533,11 +520,11 @@ const InstituteRegister = () => {
                             name="code"
                             type="number"
                           />
-                          {errors.code && touched.code && (
-                            <div className="invalid-feedback d-block bg-danger text-white">
-                              {errors.code}
-                            </div>
-                          )}
+                          <MyErrorMessage
+                            name="code"
+                            errors={errors}
+                            touched={touched}
+                          />
                         </FormGroup>
                       )}
 
@@ -559,7 +546,7 @@ const InstituteRegister = () => {
                             setFieldValue('district', []);
                           }}
                           onBlur={setFieldTouched}
-                          onClick={setSelectedProvince(values.province.value)}
+                          // onClick={setSelectedProvince(values.province.value)}
                         />
                         {errors.province && touched.province ? (
                           <div className="invalid-feedback d-block bg-danger text-white">

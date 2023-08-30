@@ -161,7 +161,7 @@ const App = ({ locale }) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name + '-' + item.semester + '-' + item.section,
+        label: item.name,
         grade: item.grade,
         semester: item.semester,
       }));

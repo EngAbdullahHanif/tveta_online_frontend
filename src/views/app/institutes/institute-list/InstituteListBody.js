@@ -199,7 +199,7 @@ const InstituteListBody = ({
                 <NavLink to={`/app/institutes/register/${institute.id}`}>
                   <div>
                     <BsPencilSquare
-                      outline
+                      outline="true"
                       style={{ fontSize: '20px' }}
                       id="updateIcon"
                     />
@@ -208,7 +208,7 @@ const InstituteListBody = ({
                 <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"
-                    outline
+                    outline="true"
                     onClick={() => setModalBasic(true)}
                     style={{ fontSize: '20px' }}
                   />

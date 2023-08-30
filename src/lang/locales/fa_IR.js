@@ -718,7 +718,7 @@ module.exports = {
   'forms.ProvinceErr': 'ولایت اړین دی/ ولایت ضروری است!',
   'forms.DistrictLabel': 'ولسوالی/ ناحیه',
   'forms.DistrictErr': 'ولسوالی اړین دی/ ولسوالی ضروری است',
-  'forms.VillageLabel': 'کلی/قریه',
+  'forms.VillageLabel': 'کلی/قریه/ناحیه',
   'forms.VillageErr': 'قریه اړین ده/ قریه ضروری است',
   'forms.PlaceOfBirthLabel': 'د زیږیدو ځای /مکان تولد',
   'forms.StdPlaceOfBirthErr': 'د زیږیدو ځای اړین دی /مکان تولد ضروری است',

@@ -400,11 +400,7 @@ const InstituteRegister = () => {
         apiParams.method,
         data
       );
-<<<<<<< HEAD
       if (response && response.status >= 200 && response.status < 300) {
-=======
-      if (response) {
->>>>>>> development
         createNotification('success', 'filled');
         // resetForm();
         setIsNext(true);
@@ -481,21 +477,6 @@ const InstituteRegister = () => {
               }}
               validationSchema={ValidationSchema}
               onSubmit={onRegister}
-<<<<<<< HEAD
-=======
-              // validate={async (values, props) => {
-              //   const errors = {};
-              //   if (!instituteId && values.code > 1000 && values.code < 10000) {
-              //     const response = await callApi(
-              //       `institute/check-code-unique/?code=${values.code}`
-              //     );
-              //     if (response && response?.data && !response.data.is_unique) {
-              //       errors.code = 'انستتیوت با این کود وجود دارد';
-              //     } else errors.code = '';
-              //   }
-              //   return errors;
-              // }}
->>>>>>> development
             >
               {({
                 errors,

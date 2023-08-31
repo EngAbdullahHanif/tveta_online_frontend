@@ -1,0 +1,8 @@
+build/
+node_modules/
+public/
+/dist
+/build
+/out
+/.next
+src/assets

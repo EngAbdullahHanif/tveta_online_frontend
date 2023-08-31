@@ -3,23 +3,19 @@ import {
   BuildingTypeOptions,
   dormGenderOptions,
   instituteStatusOptions,
-  provincesOptionsForList,
 } from '../../global-data/options';
 
-import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 import { Field, Formik } from 'formik';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-import { Badge, FormGroup, Input, Label, Spinner } from 'reactstrap';
-import { Select, Spin, Table as TB } from 'antd';
+import { Badge } from 'reactstrap';
+import { Table as TB } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
+import { BsPencilSquare } from 'react-icons/bs';
 // import { servicePath } from 'constants/defaultValues';
 
-import ListPageHeading from './DormListHeading';
 
-import ListPageListing from './DormListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import config from '../../../../config';
 import { AuthContext } from 'context/AuthContext';

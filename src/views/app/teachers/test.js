@@ -7,9 +7,6 @@ import {
   FormGroup,
   Label,
   Spinner,
-  Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import { levelOfEdcationOptions } from '../global-data/options';
@@ -17,22 +14,17 @@ import { langOptions } from '../global-data/options';
 import { contractTypeOptions } from '../global-data/options';
 import { appointmentTypeOptions } from '../global-data/options';
 import { provinceOptions } from '../global-data/options';
-import { gradeOptions } from '../global-data/options';
 import { stepOptions } from '../global-data/options';
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
   FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import TopNavigation from 'components/wizard/TopNavigation';
-import IconCard from 'components/cards/IconCard';
 import { injectIntl } from 'react-intl';
 import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
 import BottomNavigation from 'components/wizard/BottomNavigation';
 // import TopNavigation from 'components/wizard/TopNavigation';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import axios from 'axios';

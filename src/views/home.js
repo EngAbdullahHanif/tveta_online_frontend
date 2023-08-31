@@ -1,18 +1,10 @@
-/* eslint-disable react/no-array-index-key, react/no-danger */
 import React, { useState, useEffect, useRef } from 'react';
-import { Nav, NavItem, TabContent, TabPane } from 'reactstrap';
 import ReactCardCarousel from 'react-card-carousel';
-import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { scroller } from 'react-scroll';
 import Headroom from 'react-headroom';
-import GlideComponent from 'components/carousel/GlideComponent';
-import { buyUrl, adminRoot } from 'constants/defaultValues';
 import logo from '../assets/img/logo2.png';
-import CarPhoto from '../assets/img/blog/car.png';
 import CarPhotoWithoutBackground from '../assets/img/blog/132.png';
-import CarPhoto2 from '../assets/img/blog/car2.png';
-import CarPhoto3 from '../assets/img/blog/45.png';
 import Shahamat from '../assets/img/blog/9090.JPG';
 import Photo55 from '../assets/img/blog/img1000.jpeg';
 import mansoor from '../assets/img/blog/mansoor.jpeg';
@@ -21,13 +13,8 @@ import sartaj from '../assets/img/blog/sartaj.jpg';
 import suhaib from '../assets/img/blog/suhaib.jpeg';
 
 import hanif from '../assets/img/blog/hanif.jpeg';
-import CarPhoto22 from '../assets/img/blog/Car22.png';
 import CarPhoto12 from '../assets/img/blog/12.png';
-import CarPhoto15 from '../assets/img/blog/15.png';
-import CarPhoto13 from '../assets/img/blog/13.png';
-import CarPhoto14 from '../assets/img/blog/14.png';
 import RahimiPhoto from '../assets/img/blog/rahimi.jpeg';
-import Carousel from 'react-grid-carousel';
 import CS_Sector from '../assets/img/sectors/CS.jpg';
 import SpecialEducationSector from '../assets/img/sectors/Special_Education.png';
 import Economic_Sector from '../assets/img/sectors/Economic.jpg';
@@ -36,19 +23,12 @@ import literature_sector from '../assets/img/sectors/literature.jpg';
 import OilAndGas_Sector from '../assets/img/sectors/oil_gas.jpeg';
 import civil_Eng from '../assets/img/sectors/civil_Engineering.jpg';
 import Industerial from '../assets/img/sectors/Industerial.jpg';
-import IndividualIntervalsExample from './carousel';
-import DemoCarousel from './../views/app/subjects/draftFileJustForTest';
 import ScrollAnimation from 'react-animate-on-scroll';
 import IntlMessages from 'helpers/IntlMessages';
 import './carousel.css';
 import {
   Row,
   Card,
-  CardBody,
-  CardImg,
-  CardSubtitle,
-  CardText,
-  Button,
 } from 'reactstrap';
 import { Colxx } from 'components/common/CustomBootstrap';
 
@@ -613,38 +593,9 @@ const Home = () => {
               </ReactCardCarousel>
             </div>
 
-            {/* 
-                <ControlledCarousel />
-                <div className="row ">
-                  <div className="col-s-12 col-12  d-md-block">
-                    <div className="home-carousel rounded ">
-                      <GlideComponent settings={slideSettings}>
-                        {slideItems.map((f, index) => (
-                          // eslint-disable-next-line react/no-array-index-key
-
-                          <div key={`slide_${index}`} className="card ">
-                            <div className="card-body text-center">
-                              <div>
-                                <i className={`${f.icon} large-icon`} />
-                                <h5 className="font-weight-semibold">
-                                  {f.title}
-                                </h5>
-                              </div>
-                              <div>
-                                <p className="detail-text">{f.detail}</p>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </GlideComponent>
-                    </div>
-                  </div>
-                </div> */}
-
             <div className="section">
               <div className="container" id="goals">
                 {features.map((feature, i) => (
-                  // eslint-disable-next-line react/no-array-index-key
                   <div key={`feature_${i}`}>
                     {i % 2 === 0 && (
                       <div className="row feature-row">

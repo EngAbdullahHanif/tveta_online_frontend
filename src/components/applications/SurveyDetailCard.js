@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger */
 import React from 'react';
 import { Card, CardBody, Badge } from 'reactstrap';
 import { Colxx } from '../common/CustomBootstrap';
@@ -7,7 +6,7 @@ const SurveyDetailCard = ({ survey }) => {
   return (
     <Colxx xxs="12" lg="4" className="mb-4">
       <Card className="mb-4">
-      <CardBody>
+        <CardBody>
           <p className="list-item-heading mb-4">خلاصه</p>
           <p className="text-muted text-small mb-2">نام</p>
           <p className="mb-3">{survey.title}</p>

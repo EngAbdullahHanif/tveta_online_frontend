@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import callApi from 'helpers/callApi';
 
-import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
 import ListPageHeading from './FieldListHeading';
-import { provincesOptionsForList } from '../../global-data/options';
 import ListPageListing from './FieldListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 

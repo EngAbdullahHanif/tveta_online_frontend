@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 export const ThemeColors = () => {
   const rootStyle = getComputedStyle(document.body);
   return {

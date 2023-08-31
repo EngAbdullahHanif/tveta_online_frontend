@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
 import { useParams } from 'react-router-dom';
 import {
   BuildingTypeOptions,
@@ -9,9 +8,6 @@ import {
   langOptions,
 } from '../global-data/options';
 import {
-  provincesOptionsForList,
-  dateOfBirthOptoions,
-  studyTimeOptions,
   InstituteShiftOptions,
 } from '../global-data/options';
 import * as Yup from 'yup';
@@ -24,8 +20,6 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
   Spinner,
 } from 'reactstrap';
 
@@ -33,12 +27,9 @@ import callApi from 'helpers/callApi';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { NotificationManager } from 'components/common/react-notifications';
-import { institute } from 'lang/locales/fa_IR';
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { message, Spin } from 'antd';
 import { CURRENT_SHAMSI_YEAR } from 'constants/defaultValues';

@@ -12,7 +12,6 @@ import {
 } from './actions';
 
 const getSurveyListRequest = async () => {
-  // eslint-disable-next-line no-return-await
   return await new Promise((success) => {
     setTimeout(() => {
       success(surveyListData.data);
@@ -33,12 +32,9 @@ function* getSurveyListItems() {
 
 const addSurveyItemRequest = async (item) => {
   const items = surveyListData.data;
-  // eslint-disable-next-line no-param-reassign
   item.id = items.length + 1;
-  // eslint-disable-next-line no-param-reassign
   item.createDate = getDateWithFormat();
   items.splice(0, 0, item);
-  // eslint-disable-next-line no-return-await,no-unused-vars
   return await new Promise((success) => {
     setTimeout(() => {
       success(items);

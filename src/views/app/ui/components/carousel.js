@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { Row, Card, CardBody, CardTitle } from 'reactstrap';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';

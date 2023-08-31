@@ -1,6 +1,4 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
-import { MDBFile } from 'mdb-react-ui-kit';
 import 'react-datepicker/dist/react-datepicker.css';
 import {
   AvForm,
@@ -8,10 +6,6 @@ import {
   AvGroup,
   AvInput,
   AvFeedback,
-  AvRadioGroup,
-  AvRadio,
-  AvCheckboxGroup,
-  AvCheckbox,
 } from 'availity-reactstrap-validation';
 import { Button, Label, Card, CardBody, Row} from 'reactstrap';
 import { Colxx } from 'components/common/CustomBootstrap';

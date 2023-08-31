@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-cycle
 import {
   SURVEY_GET_DETAILS,
   SURVEY_GET_DETAILS_SUCCESS,

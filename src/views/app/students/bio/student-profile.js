@@ -1,60 +1,33 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import callApi from 'helpers/callApi';
 
-import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-import { NavLink } from 'react-router-dom';
 import './../../.././../assets/css/global-style.css';
 import profilePhoto from './../../../../assets/img/profiles/user.png';
 
 import {
   message,
-  Col,
-  InputNumber,
-  Slider,
-  Table as TB,
-  Spin,
-  Popconfirm,
 } from 'antd';
-import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
-import * as Yup from 'yup';
 import {
   Row,
   Card,
   CardBody,
-  FormGroup,
   Label,
   Button,
-  CardTitle,
   Table,
-  InputGroup,
-  InputGroupAddon,
-  Input,
   Badge,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
 } from 'reactstrap';
-import Select from 'react-select';
 import logo from './../../../../assets/logos/AdminLogo.png';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import config from '../../../../config';
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-import Classes from 'views/app/classes';
+
+
 import { AuthContext } from 'context/AuthContext';
 import {
   studentStatusOptions,
-  teacherFeedbackOptions,
 } from 'views/app/global-data/options';
 
 const servicePath = config.API_URL;

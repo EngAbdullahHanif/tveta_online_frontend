@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Formik, Form, Field } from 'formik';
+import React, { useState, useContext } from 'react';
+import { Formik, Form } from 'formik';
 
 import callApi from 'helpers/callApi';
 
 import { educationalYearsOptions } from '../global-data/options';
 
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import './dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/user.png';
 import { NotificationManager } from 'components/common/react-notifications';
@@ -18,8 +17,6 @@ import { Colxx } from 'components/common/CustomBootstrap';
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
 const SignupSchema = Yup.object().shape({
@@ -27,7 +24,6 @@ const SignupSchema = Yup.object().shape({
   Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 });
 
-import config from '../../../config';
 import { AuthContext } from 'context/AuthContext';
 
 const dormTypeOptions = [

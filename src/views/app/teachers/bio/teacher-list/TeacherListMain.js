@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { Table as TB, Input, Popconfirm, Button } from 'antd';
+import { Table as TB } from 'antd';
 import IntlMessages from 'helpers/IntlMessages';
 import './list.css';
 import callApi from 'helpers/callApi';
@@ -8,17 +8,11 @@ import { Field, Formik } from 'formik';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import {
-  BuildingTypeOptions,
-  dormGenderOptions,
   genderOptions,
   gradeOptions,
   instituteStatusOptions,
   teacherCurrentStatusOptions,
 } from '../../../global-data/options';
-import { levelOfEdcationForList } from '../../../global-data/options';
-import { genderOptionsForList } from '../../../global-data/options';
-import ListPageHeading from 'views/app/teachers/bio/teacher-list/TeacherListHeading';
-import ListPageListing from 'views/app/teachers/bio/teacher-list/TeacherListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 import { Badge } from 'reactstrap';
 const getIndex = (value, arr, prop) => {
@@ -31,8 +25,7 @@ const getIndex = (value, arr, prop) => {
 };
 
 import { NavLink } from 'react-router-dom';
-import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
-import PromptInput from 'components/prompInput';
+import { BsPencilSquare } from 'react-icons/bs';
 import { AuthContext } from 'context/AuthContext';
 
 const pageSizes = [4, 8, 12, 20];

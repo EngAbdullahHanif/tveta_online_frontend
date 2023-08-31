@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import {
   Card,
-  CustomInput,
-  Badge,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Button,
 } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import IntlMessages from 'helpers/IntlMessages';

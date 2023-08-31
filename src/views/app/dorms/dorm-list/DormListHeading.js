@@ -1,5 +1,4 @@
-/* eslint-disable react/no-array-index-key */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Row,
   Button,
@@ -12,7 +11,6 @@ import {
   Collapse,
 } from 'reactstrap';
 import { injectIntl } from 'react-intl';
-import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';

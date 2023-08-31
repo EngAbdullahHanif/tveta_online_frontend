@@ -55,7 +55,6 @@ import {
   Col,
   InputNumber,
   Slider,
-  Table as TB,
   Spin,
   Popconfirm,
 } from 'antd';

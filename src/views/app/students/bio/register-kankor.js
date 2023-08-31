@@ -12,7 +12,6 @@ import { educationalYearsOptions } from '../../global-data/options';
 import { studyTimeOptions } from '../../global-data/options';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../.././../assets/css/global-style.css';
-import axios from 'axios';
 
 import config from '../../../../config';
 import { AuthContext } from 'context/AuthContext';

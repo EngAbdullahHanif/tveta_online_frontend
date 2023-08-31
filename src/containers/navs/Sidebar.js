@@ -1,7 +1,5 @@
-/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 import { Nav, NavItem, Collapse } from 'reactstrap';
 import { NavLink, withRouter } from 'react-router-dom';
 import classnames from 'classnames';
@@ -19,7 +17,6 @@ import {
 } from 'redux/actions';
 
 import menuItems from 'constants/menu';
-import { subjectListBody } from 'views/app/subjects/subject-list/SubjectListBody';
 
 class Sidebar extends Component {
   constructor(props) {
@@ -33,23 +30,20 @@ class Sidebar extends Component {
     this.containerRef = React.createRef();
   }
 
-  // eslint-disable-next-line react/sort-comp
-  handleWindowResize = (event) => {
+  handleWindowResize(event) {
     if (event && !event.isTrusted) {
       return;
     }
     const { containerClassnames } = this.props;
     const nextClasses = this.getMenuClassesForResize(containerClassnames);
-    // eslint-disable-next-line react/destructuring-assignment
     this.props.setContainerClassnames(
       0,
       nextClasses.join(' '),
-      // eslint-disable-next-line react/destructuring-assignment
-      this.props.selectedMenuHasSubItems
+      this.props.selectedMenuHasSubItems,
     );
-  };
+  }
 
-  handleDocumentClick = (e) => {
+  handleDocumentClick(e) {
     const container = this.getContainer();
     let isMenuClick = false;
     if (
@@ -72,7 +66,7 @@ class Sidebar extends Component {
       e.target.parentElement.parentElement.classList &&
       (e.target.parentElement.parentElement.classList.contains('menu-button') ||
         e.target.parentElement.parentElement.classList.contains(
-          'menu-button-mobile'
+          'menu-button-mobile',
         ))
     ) {
       isMenuClick = true;
@@ -84,9 +78,9 @@ class Sidebar extends Component {
       viewingParentMenu: '',
     });
     this.toggle();
-  };
+  }
 
-  getMenuClassesForResize = (classes) => {
+  getMenuClassesForResize(classes) {
     const { menuHiddenBreakpoint, subHiddenBreakpoint } = this.props;
     let nextClasses = classes.split(' ').filter((x) => x !== '');
     const windowWidth = window.innerWidth;
@@ -110,16 +104,14 @@ class Sidebar extends Component {
       }
     }
     return nextClasses;
-  };
+  }
 
-  getContainer = () => {
-    // eslint-disable-next-line react/no-find-dom-node
+  getContainer() {
     return this.containerRef.current;
-  };
+  }
 
-  toggle = () => {
+  toggle() {
     const hasSubItems = this.getIsHasSubItem();
-    // eslint-disable-next-line react/destructuring-assignment
     this.props.changeSelectedMenuHasSubItems(hasSubItems);
     const { containerClassnames, menuClickCount } = this.props;
     const currentClasses = containerClassnames
@@ -156,32 +148,31 @@ class Sidebar extends Component {
       clickIndex = 0;
     }
     if (clickIndex >= 0) {
-      // eslint-disable-next-line react/destructuring-assignment
       this.props.setContainerClassnames(
         clickIndex,
         containerClassnames,
-        hasSubItems
+        hasSubItems,
       );
     }
-  };
+  }
 
-  handleProps = () => {
+  handleProps() {
     this.addEvents();
-  };
+  }
 
-  addEvents = () => {
+  addEvents() {
     ['click', 'touchstart', 'touchend'].forEach((event) =>
-      document.addEventListener(event, this.handleDocumentClick, true)
+      document.addEventListener(event, this.handleDocumentClick, true),
     );
-  };
+  }
 
-  removeEvents = () => {
+  removeEvents() {
     ['click', 'touchstart', 'touchend'].forEach((event) =>
-      document.removeEventListener(event, this.handleDocumentClick, true)
+      document.removeEventListener(event, this.handleDocumentClick, true),
     );
-  };
+  }
 
-  setSelectedLiActive = (callback) => {
+  setSelectedLiActive(callback) {
     const oldli = document.querySelector('.sub-menu  li.active');
     if (oldli != null) {
       oldli.classList.remove('active');
@@ -194,7 +185,7 @@ class Sidebar extends Component {
 
     /* set selected parent menu */
     const selectedSublink = document.querySelector(
-      '.third-level-menu  a.active'
+      '.third-level-menu  a.active',
     );
     if (selectedSublink != null) {
       selectedSublink.parentElement.classList.add('active');
@@ -207,14 +198,14 @@ class Sidebar extends Component {
         {
           selectedParentMenu:
             selectedlink.parentElement.parentElement.getAttribute(
-              'data-parent'
+              'data-parent',
             ),
         },
-        callback
+        callback,
       );
     } else {
       const selectedParentNoSubItem = document.querySelector(
-        '.main-menu  li a.active'
+        '.main-menu  li a.active',
       );
       if (selectedParentNoSubItem != null) {
         this.setState(
@@ -222,38 +213,34 @@ class Sidebar extends Component {
             selectedParentMenu:
               selectedParentNoSubItem.getAttribute('data-flag'),
           },
-          callback
+          callback,
         );
-        // eslint-disable-next-line react/destructuring-assignment
       } else if (this.state.selectedParentMenu === '') {
         this.setState(
           {
             selectedParentMenu: menuItems[0].id,
           },
-          callback
+          callback,
         );
       }
     }
-  };
+  }
 
-  setHasSubItemStatus = () => {
+  setHasSubItemStatus() {
     const hasSubmenu = this.getIsHasSubItem();
-    // eslint-disable-next-line react/destructuring-assignment
     this.props.changeSelectedMenuHasSubItems(hasSubmenu);
     this.toggle();
-  };
+  }
 
-  getIsHasSubItem = () => {
+  getIsHasSubItem() {
     const { selectedParentMenu } = this.state;
     const menuItem = menuItems.find((x) => x.id === selectedParentMenu);
     if (menuItem)
       return !!(menuItem && menuItem.subs && menuItem.subs.length > 0);
     return false;
-  };
+  }
 
-  // eslint-disable-next-line react/sort-comp
   componentDidUpdate(prevProps) {
-    // eslint-disable-next-line react/destructuring-assignment
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.setSelectedLiActive(this.setHasSubItemStatus);
 
@@ -274,10 +261,9 @@ class Sidebar extends Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  openSubMenu = (e, menuItem) => {
+  openSubMenu(e, menuItem) {
     const selectedParent = menuItem.id;
     const hasSubMenu = menuItem.subs && menuItem.subs.length > 0;
-    // eslint-disable-next-line react/destructuring-assignment
     this.props.changeSelectedMenuHasSubItems(hasSubMenu);
     if (!hasSubMenu) {
       this.setState({
@@ -298,36 +284,32 @@ class Sidebar extends Component {
           currentClasses.includes('menu-sub-hidden') &&
           (menuClickCount === 2 || menuClickCount === 0)
         ) {
-          // eslint-disable-next-line react/destructuring-assignment
           this.props.setContainerClassnames(3, containerClassnames, hasSubMenu);
         } else if (
           currentClasses.includes('menu-hidden') &&
           (menuClickCount === 1 || menuClickCount === 3)
         ) {
-          // eslint-disable-next-line react/destructuring-assignment
           this.props.setContainerClassnames(2, containerClassnames, hasSubMenu);
         } else if (
           currentClasses.includes('menu-default') &&
           !currentClasses.includes('menu-sub-hidden') &&
           (menuClickCount === 1 || menuClickCount === 3)
         ) {
-          // eslint-disable-next-line react/destructuring-assignment
           this.props.setContainerClassnames(0, containerClassnames, hasSubMenu);
         }
       } else {
-        // eslint-disable-next-line react/destructuring-assignment
         this.props.addContainerClassname(
           'sub-show-temporary',
-          containerClassnames
+          containerClassnames,
         );
       }
       this.setState({
         viewingParentMenu: selectedParent,
       });
     }
-  };
+  }
 
-  toggleMenuCollapse = (e, menuKey) => {
+  toggleMenuCollapse(e, menuKey) {
     e.preventDefault();
 
     const { collapsedMenus } = this.state;
@@ -342,10 +324,9 @@ class Sidebar extends Component {
       });
     }
     return false;
-  };
+  }
 
-  // eslint-disable-next-line no-shadow
-  filteredList = (menuItems) => {
+  filteredList(menuItems) {
     const currentUser = this.currentUser;
     if (currentUser) {
       return menuItems.filter((item) => {
@@ -369,7 +350,7 @@ class Sidebar extends Component {
       });
     }
     return menuItems;
-  };
+  }
 
   render() {
     const { selectedParentMenu, viewingParentMenu, collapsedMenus } =
@@ -446,11 +427,8 @@ class Sidebar extends Component {
                       key={item.id}
                       className={classnames({
                         'd-block':
-                          // eslint-disable-next-line react/destructuring-assignment
                           (this.state.selectedParentMenu === item.id &&
-                            // eslint-disable-next-line react/destructuring-assignment
                             this.state.viewingParentMenu === '') ||
-                          // eslint-disable-next-line react/destructuring-assignment
                           this.state.viewingParentMenu === item.id,
                       })}
                       data-parent={item.id}
@@ -466,7 +444,6 @@ class Sidebar extends Component {
                                   : ''
                               }`}
                             >
-                              {/* eslint-disable-next-line no-nested-ternary */}
                               {sub.newWindow ? (
                                 <a
                                   href={sub.to}
@@ -481,7 +458,7 @@ class Sidebar extends Component {
                                   <NavLink
                                     className={`rotate-arrow-icon opacity-50 ${
                                       collapsedMenus.indexOf(
-                                        `${item.id}_${index}`
+                                        `${item.id}_${index}`,
                                       ) === -1
                                         ? ''
                                         : 'collapsed'
@@ -491,7 +468,7 @@ class Sidebar extends Component {
                                     onClick={(e) =>
                                       this.toggleMenuCollapse(
                                         e,
-                                        `${item.id}_${index}`
+                                        `${item.id}_${index}`,
                                       )
                                     }
                                   >
@@ -502,7 +479,7 @@ class Sidebar extends Component {
                                   <Collapse
                                     isOpen={
                                       collapsedMenus.indexOf(
-                                        `${item.id}_${index}`
+                                        `${item.id}_${index}`,
                                       ) === -1
                                     }
                                   >
@@ -538,7 +515,7 @@ class Sidebar extends Component {
                                               )}
                                             </NavItem>
                                           );
-                                        }
+                                        },
                                       )}
                                     </Nav>
                                   </Collapse>
@@ -602,5 +579,5 @@ export default withRouter(
     addContainerClassname,
     changeDefaultClassnames,
     changeSelectedMenuHasSubItems,
-  })(Sidebar)
+  })(Sidebar),
 );

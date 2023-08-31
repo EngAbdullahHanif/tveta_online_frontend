@@ -10,13 +10,11 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
 } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
-  FormikTagsInput,
   FormikDatePicker,
 } from '../../../../containers/form-validations/FormikFields';
 

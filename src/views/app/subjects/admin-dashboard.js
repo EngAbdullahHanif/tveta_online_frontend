@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
 import './../dorms/dorm-register.css';
 import './provincail-dashboard.css';
 import Calendar from 'containers/dashboards/Calendar';
@@ -8,39 +7,22 @@ import { NavLink } from 'react-router-dom';
 import { adminRoot } from 'constants/defaultValues';
 import {
   DoughnutChart,
-  LineChart,
   PolarAreaChart,
-  AreaChart,
-  ScatterChart,
-  BarChart,
-  RadarChart,
-  PieChart,
 } from 'components/charts';
 import {
-  lineChartData,
   polarAreaChartData,
   polarAreaChartData1,
-  areaChartData,
-  scatterChartData,
-  barChartData,
-  radarChartData,
-  pieChartData,
   doughnutChartData,
   doughnutChartData1,
 } from 'data/charts';
 
-import * as Yup from 'yup';
 import {
   Row,
   Card,
   CardBody,
   Table,
-  FormGroup,
-  Label,
-  Button,
   CardTitle,
   CardSubtitle,
-  Input,
 } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';

@@ -71,11 +71,9 @@ export default (state = INIT_STATE, action) => {
       if (action.payload === '') {
         return { ...state, contacts: state.allContacts };
       }
-      // eslint-disable-next-line no-case-declarations
       const keyword = action.payload.toLowerCase();
-      // eslint-disable-next-line no-case-declarations
       const searchedContacts = state.allContacts.filter(
-        (item) => item.name.toLowerCase().indexOf(keyword) > -1
+        (item) => item.name.toLowerCase().indexOf(keyword) > -1,
       );
       return { ...state, contacts: searchedContacts };
 

@@ -9,10 +9,6 @@ import {
   AvGroup,
   AvInput,
   AvFeedback,
-  AvRadioGroup,
-  AvRadio,
-  AvCheckboxGroup,
-  AvCheckbox,
 } from 'availity-reactstrap-validation';
 import { Button, Label, Card, CardBody, Row} from 'reactstrap';
 import { Colxx } from 'components/common/CustomBootstrap';

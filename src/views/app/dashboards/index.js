@@ -1,7 +1,7 @@
 import { userRole } from 'constants/defaultValues';
 import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
 // import { ProtectedRoute, userRole } from 'helpers/authHelper';
 
 const Admin = React.lazy(() =>

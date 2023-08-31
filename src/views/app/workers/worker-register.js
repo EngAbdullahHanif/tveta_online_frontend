@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { provinceOptions } from '../global-data/options';
 import { workersGrade } from '../global-data/options';
-import axios from 'axios';
 
 import * as Yup from 'yup';
 import {
@@ -12,12 +11,10 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
 } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-import { studyTimeOptionsForList } from './../global-data/options';
 
 const ValidationSchema = Yup.object().shape({
   workerName: Yup.string()

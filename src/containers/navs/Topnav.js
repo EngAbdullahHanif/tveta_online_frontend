@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable no-use-before-define */
 import React, { useContext, useState } from 'react';
 import { injectIntl } from 'react-intl';
 
@@ -209,7 +206,7 @@ const TopNav = ({
     setContainerClassnamesAction(
       _clickCount + 1,
       _conClassnames,
-      selectedMenuHasSubItems
+      selectedMenuHasSubItems,
     );
   };
 
@@ -366,5 +363,5 @@ export default injectIntl(
     clickOnMobileMenuAction: clickOnMobileMenu,
     logoutUserAction: logoutUser,
     changeLocaleAction: changeLocale,
-  })(TopNav)
+  })(TopNav),
 );

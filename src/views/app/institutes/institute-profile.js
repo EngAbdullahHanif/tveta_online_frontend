@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
+import { Formik, Form } from 'formik';
 import './../dorms/dorm-register.css';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 
@@ -13,11 +11,7 @@ import {
   CardBody,
   FormGroup,
   Label,
-  Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
@@ -25,8 +19,6 @@ import config from '../../../config';
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { useContext } from 'react';
 import { AuthContext } from 'context/AuthContext';

@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import {
   Pagination,
@@ -81,7 +79,7 @@ const DataTablePagination = ({
       pageButtons.push(
         <PaginationItem key={i} active={active}>
           <PaginationLink onClick={() => pageClick(i)}>{i + 1}</PaginationLink>
-        </PaginationItem>
+        </PaginationItem>,
       );
     }
     return pageButtons;
@@ -93,7 +91,7 @@ const DataTablePagination = ({
       pageNumbers.push(
         <DropdownItem key={i} onClick={() => changePage(i)}>
           {i + 1}
-        </DropdownItem>
+        </DropdownItem>,
       );
     }
     return pageNumbers;

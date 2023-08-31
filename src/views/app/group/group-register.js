@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-import axios from 'axios';
 import * as Yup from 'yup';
-import Select from 'react-select';
 
 import {
   Row,
@@ -13,8 +10,6 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';

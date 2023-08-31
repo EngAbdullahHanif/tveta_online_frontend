@@ -39,7 +39,7 @@ const ProtectedRoute = ({
           console.log('roles: ', roles);
 
           const matchingGroups = groups.filter((group) =>
-            roles.includes(group.name)
+            roles.includes(group.name),
           );
           console.log('matched --------', matchingGroups);
           console.log('component: ', Component.name);
@@ -77,5 +77,4 @@ const ProtectedRoute = ({
   return <Route {...rest} render={setComponent} />;
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export { ProtectedRoute };

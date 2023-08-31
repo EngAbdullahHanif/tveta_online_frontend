@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { Component } from 'react';
 import DropzoneComponent from 'react-dropzone-component';
 import 'dropzone/dist/min/dropzone.min.css';
@@ -26,7 +25,6 @@ const dropzoneConfig = {
             </span>
           </div>
           <div className="preview-container">
-            {/*  eslint-disable-next-line jsx-a11y/alt-text */}
             <img data-dz-thumbnail className="img-thumbnail border-0" />
             <i className="simple-icon-doc preview-icon" />
           </div>
@@ -49,7 +47,7 @@ const dropzoneConfig = {
         {' '}
         <i className="glyph-icon simple-icon-trash" />{' '}
       </a>
-    </div>
+    </div>,
   ),
   headers: { 'My-Awesome-Header': 'header value' },
 };

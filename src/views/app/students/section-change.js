@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field, useFormikContext } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
+import { Formik, Form, Field } from 'formik';
 import './../dorms/dorm-register.css';
-import profilePhoto from './../../../assets/img/profiles/22.jpg';
-import { educationalYearsOptions } from '../global-data/options';
-import { mediumOfInstructionOptions } from '../global-data/options';
-import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../../assets/css/global-style.css';
@@ -22,11 +17,6 @@ import {
   FormGroup,
   Label,
   Button,
-  InputGroup,
-  InputGroupAddon,
-  CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
@@ -34,13 +24,9 @@ import { Colxx } from 'components/common/CustomBootstrap';
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import { department } from 'lang/locales/fa_IR';
 
 import config from '../../../config';
-import { isCompositeComponent } from 'react-dom/test-utils';
 
 const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;

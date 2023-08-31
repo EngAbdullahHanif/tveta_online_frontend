@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import Lightbox from 'react-image-lightbox';
 import { NavLink } from 'react-router-dom';

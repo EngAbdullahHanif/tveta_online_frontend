@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import {
   Row,
@@ -33,7 +32,7 @@ const Search = ({ match }) => {
     async function fetchData() {
       axios
         .get(
-          `${apiUrl}?pageSize=${pageSize}&currentPage=${currentPage}&search=${keyword}`
+          `${apiUrl}?pageSize=${pageSize}&currentPage=${currentPage}&search=${keyword}`,
         )
         .then((res) => {
           return res.data;
@@ -92,27 +91,23 @@ const Search = ({ match }) => {
         />
       </Row>
       {/* مودال اطلاعه به کاربر */}
-      <Modal
-        isOpen={modalBasic}
-        toggle={() => setModalBasic(!modalBasic)}
-      >
-        <ModalHeader>
-          یک پیام از طرف طراح محصول (فاطمه کاظمی) :
-        </ModalHeader>
+      <Modal isOpen={modalBasic} toggle={() => setModalBasic(!modalBasic)}>
+        <ModalHeader>یک پیام از طرف طراح محصول (فاطمه کاظمی) :</ModalHeader>
         <ModalBody>
           کاربر عزیزی که الان این صفحه رو باز کردی
           <br />
-          شاید برات سوال باشه که چرا این صفحه انگلیسیه. خب باید بگم داده های این صفحه کاملا داره از وب سرویس خونده میشه و من هیچ دخالتی در ویرایش داده ها ندارم
+          شاید برات سوال باشه که چرا این صفحه انگلیسیه. خب باید بگم داده های این
+          صفحه کاملا داره از وب سرویس خونده میشه و من هیچ دخالتی در ویرایش داده
+          ها ندارم
           <br />
-          میتونم اونو برات بصورت استاتیک و فارسی بزارم ولی دیگه برات این صفحه کاربردی نداره چون اصل استفاده ی این صفحه نمونه ی وب سرویس و فراخوانی داده از اونه
+          میتونم اونو برات بصورت استاتیک و فارسی بزارم ولی دیگه برات این صفحه
+          کاربردی نداره چون اصل استفاده ی این صفحه نمونه ی وب سرویس و فراخوانی
+          داده از اونه
           <br />
           منم بخاطر همین بهش هیچ دست نمیزنم
         </ModalBody>
         <ModalFooter>
-          <Button
-            color="primary"
-            onClick={() => setModalBasic(false)}
-          >
+          <Button color="primary" onClick={() => setModalBasic(false)}>
             اکی فهمیدم!
           </Button>{' '}
         </ModalFooter>

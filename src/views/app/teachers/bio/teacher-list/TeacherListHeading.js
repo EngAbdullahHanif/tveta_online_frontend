@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import {
   Row,

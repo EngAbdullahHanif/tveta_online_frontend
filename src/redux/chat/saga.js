@@ -19,7 +19,6 @@ import {
 
 function* loadContacts() {
   try {
-    // eslint-disable-next-line no-use-before-define
     const response = yield call(loadContactsAsync);
     const { contacts, currentUser } = response;
     yield put(getContactsSuccess(contacts, currentUser));
@@ -31,7 +30,6 @@ function* loadContacts() {
 const loadContactsAsync = async () => {
   const contacts = contactsData.data;
   const currentUser = contacts[0];
-  // eslint-disable-next-line no-return-await
   return await new Promise((success) => {
     setTimeout(() => {
       success({ contacts, currentUser });
@@ -43,7 +41,6 @@ const loadContactsAsync = async () => {
 
 function* loadConversations(userId) {
   try {
-    // eslint-disable-next-line no-use-before-define
     const response = yield call(loadConversationsAsync, userId);
     const { conversations, selectedUser } = response;
     yield put(getConversationsSuccess(conversations, selectedUser));
@@ -56,7 +53,6 @@ const loadConversationsAsync = async ({ payload }) => {
   let conversations = conversationsData.data;
   conversations = conversations.filter((x) => x.users.includes(payload));
   const selectedUser = conversations[0].users.find((x) => x !== payload);
-  // eslint-disable-next-line no-return-await
   return await new Promise((success) => {
     setTimeout(() => {
       success({ conversations, selectedUser });
@@ -72,12 +68,11 @@ function* addMessageToConversation({ payload }) {
       payload;
 
     const response = yield call(
-      // eslint-disable-next-line no-use-before-define
       addMessageToConversationAsync,
       currentUserId,
       selectedUserId,
       message,
-      allConversations
+      allConversations,
     );
     const { conversations, selectedUser } = response;
     yield put(getConversationsSuccess(conversations, selectedUser));
@@ -90,11 +85,10 @@ const addMessageToConversationAsync = async (
   currentUserId,
   selectedUserId,
   message,
-  allConversations
-  // eslint-disable-next-line consistent-return
+  allConversations,
 ) => {
   const conversation = allConversations.find(
-    (x) => x.users.includes(currentUserId) && x.users.includes(selectedUserId)
+    (x) => x.users.includes(currentUserId) && x.users.includes(selectedUserId),
   );
   const time = getCurrentTime();
   if (conversation) {
@@ -105,11 +99,10 @@ const addMessageToConversationAsync = async (
     });
     conversation.lastMessageTime = time;
     const conversations = allConversations.filter(
-      (x) => x.id !== conversation.id
+      (x) => x.id !== conversation.id,
     );
     conversations.splice(0, 0, conversation);
 
-    // eslint-disable-next-line no-return-await
     return await new Promise((success) => {
       setTimeout(() => {
         success({ conversations, selectedUser: selectedUserId });
@@ -124,11 +117,10 @@ function* createNewConversation({ payload }) {
   try {
     const { currentUserId, selectedUserId, allConversations } = payload;
     const response = yield call(
-      // eslint-disable-next-line no-use-before-define
       createNewConversationAsync,
       currentUserId,
       selectedUserId,
-      allConversations
+      allConversations,
     );
     const { conversations, selectedUser } = response;
     yield put(getConversationsSuccess(conversations, selectedUser));
@@ -140,7 +132,7 @@ function* createNewConversation({ payload }) {
 const createNewConversationAsync = async (
   currentUserId,
   selectedUserId,
-  allConversations
+  allConversations,
 ) => {
   const conversation = {
     id: allConversations.length + 1,
@@ -150,7 +142,6 @@ const createNewConversationAsync = async (
   };
 
   allConversations.splice(0, 0, conversation);
-  // eslint-disable-next-line no-return-await
   return await new Promise((success) => {
     setTimeout(() => {
       success({

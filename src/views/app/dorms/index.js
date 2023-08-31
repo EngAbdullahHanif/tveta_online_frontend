@@ -1,6 +1,6 @@
 import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
 import { userRole } from 'constants/defaultValues';
 
 const DormList = React.lazy(() =>

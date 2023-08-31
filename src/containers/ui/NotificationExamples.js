@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React from 'react';
 import { Card, CardBody, CardTitle, Button, CardSubtitle } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
@@ -15,7 +14,7 @@ const NotificationExamples = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'secondary':
@@ -25,7 +24,7 @@ const NotificationExamples = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'info':
@@ -38,7 +37,7 @@ const NotificationExamples = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'warning':
@@ -48,7 +47,7 @@ const NotificationExamples = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -60,7 +59,7 @@ const NotificationExamples = () => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:

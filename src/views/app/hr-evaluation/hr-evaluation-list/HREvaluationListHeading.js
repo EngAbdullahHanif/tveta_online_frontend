@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import {
   Row,
@@ -52,7 +51,6 @@ const ListPageHeading = ({
             <IntlMessages id={heading} />
           </h1>
           <div className="text-zero top-right-button-container">
-
             {/* <Button
               color="primary"
               size="lg"

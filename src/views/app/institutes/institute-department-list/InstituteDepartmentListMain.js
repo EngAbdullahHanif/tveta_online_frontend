@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  provincesOptionsForList,
-  fetchProvinces,
-} from '../../global-data/options';
-import axios from 'axios';
+
+
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 

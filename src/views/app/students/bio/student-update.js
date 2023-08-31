@@ -3,20 +3,12 @@ import React, { createRef, useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import {
-  stepOptions,
-  gradeOptions,
   genderOptions,
   tazkiraOptions,
-  teacherCurrentStatusOptions,
-  dateOfBirthOptoions,
   StdInteranceOptions,
-  studentStatusOptions,
 } from '../../global-data/options';
-import {
-  studentRegisterFormStep_1,
-  teacherRegisterFormStep_1,
-} from '../../global-data/forms-validation';
-import { NavLink } from 'react-router-dom';
+
+
 import './../../../../assets/css/global-style.css';
 import {
   Row,
@@ -33,7 +25,6 @@ import IntlMessages from 'helpers/IntlMessages';
 import { NotificationManager } from 'components/common/react-notifications';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-import config from '../../../../config';
 import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';

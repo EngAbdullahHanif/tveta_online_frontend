@@ -1,5 +1,4 @@
-import { getCurrentUser, setCurrentUser } from 'helpers/Utils';
-import { isAuthGuardActive, currentUser } from 'constants/defaultValues';
+import { getCurrentUser } from 'helpers/Utils';
 import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import IntlMessages from 'helpers/IntlMessages';
 import { ThemeColors } from 'helpers/ThemeColors';
 import CustomePieChart from './custom-pie-chart';
 import CustomeBarChart from './custom-bar-chart';
@@ -12,9 +11,8 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
-  Collapse,
 } from 'reactstrap';
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import { Colxx } from 'components/common/CustomBootstrap';
 import ReactQuill from 'react-quill';
 
 import 'react-quill/dist/quill.snow.css';

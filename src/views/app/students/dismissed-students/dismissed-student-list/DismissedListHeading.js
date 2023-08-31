@@ -1,23 +1,14 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import {
   Row,
-  Button,
-  ButtonDropdown,
-  UncontrolledDropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  CustomInput,
   Collapse,
 } from 'reactstrap';
 import { injectIntl } from 'react-intl';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
-import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
-import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
+import { ThumbListIcon, ImageListIcon } from 'components/svg';
 // import Breadcrumb from '../navs/Breadcrumb';
 
 const ListPageHeading = ({ intl, displayMode, changeDisplayMode, heading }) => {

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { Row, Card, CardBody, Badge } from 'reactstrap';
 import { NavLink } from 'react-router-dom';

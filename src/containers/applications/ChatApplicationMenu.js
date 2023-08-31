@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -67,7 +66,7 @@ const ChatApplicationMenu = ({
     }
 
     const conversation = conversations.find(
-      (x) => x.users.includes(currentUser.id) && x.users.includes(userId)
+      (x) => x.users.includes(currentUser.id) && x.users.includes(userId),
     );
     if (conversation) {
       changeConversationAction(userId);
@@ -134,7 +133,8 @@ const ChatApplicationMenu = ({
                 loadingConversations &&
                 conversations.map((item, index) => {
                   const otherUser = allContacts.find(
-                    (u) => u.id === item.users.find((x) => x !== currentUser.id)
+                    (u) =>
+                      u.id === item.users.find((x) => x !== currentUser.id),
                   );
                   return (
                     <div
@@ -238,5 +238,5 @@ export default injectIntl(
     changeConversationAction: changeConversation,
     createConversationAction: createConversation,
     searchContactAction: searchContact,
-  })(ChatApplicationMenu)
+  })(ChatApplicationMenu),
 );

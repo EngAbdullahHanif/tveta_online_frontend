@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 
-import Photo55 from '../../../assets/img/blog/car1.png';
-import Photo52 from '../../../assets/img/blog/car2.png';
-import Photo53 from '../../../assets/img/blog/45.png';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
-  Row,
   Card,
   CardBody,
   CardTitle,
@@ -14,9 +10,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  FormGroup,
-  Input,
-  Label,
 } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 

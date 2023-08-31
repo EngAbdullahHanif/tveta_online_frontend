@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import {
   Card,
-  CustomInput,
-  Badge,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Button,
 } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
-import { BsTrashFill } from 'react-icons/bs';
-import { BsPencilSquare } from 'react-icons/bs';
 import IntlMessages from 'helpers/IntlMessages';
 import { NotificationManager } from 'components/common/react-notifications';
 

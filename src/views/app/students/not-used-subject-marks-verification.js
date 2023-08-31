@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, isEmptyArray } from 'formik';
-import axios from 'axios';
 import './style.css';
 import callApi from 'helpers/callApi';
 import { studyTimeOptions } from '../global-data/options';
@@ -14,19 +13,14 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
   Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },

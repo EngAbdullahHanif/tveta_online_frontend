@@ -1,39 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
 import { useParams } from 'react-router-dom';
 //import CustomSelectInput from 'components/common/CustomSelectInput';
-import CustomSelectInput from '../../../../components/common/CustomSelectInput';
-import axios from 'axios';
 
-import * as Yup from 'yup';
 import {
   Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-  CardTitle,
-  Table,
-  InputGroup,
-  InputGroupAddon,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 //import logo from './../../../../assets/logos/AdminLogo.png';
 import logo from '../../../../assets/logos/AdminLogo.png';
-import profilePhoto from '../../../../assets/img/profiles/2.jpg';
 
 import IntlMessages from 'helpers/IntlMessages';
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import { Colxx } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-import Classes from 'views/app/classes';
-import { workerAppointedDate } from 'lang/locales/fa_IR';
+
+
 import config from '../../../../config';
 const servicePath = config.API_URL;
 const teacherApiUrl = `${servicePath}/teachers/`;

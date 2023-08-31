@@ -1,7 +1,6 @@
 import React, {
   StrictMode,
   Suspense,
-  useContext,
   useEffect,
   useState,
 } from 'react';
@@ -19,7 +18,6 @@ import Authentication from 'context/Authentication';
 import callApi from 'helpers/callApi';
 import { Button, Spinner } from 'reactstrap';
 
-import { userRole as userRoles } from './constants/defaultValues';
 
 const App = ({ locale }) => {
   const [user, setUser] = useState(

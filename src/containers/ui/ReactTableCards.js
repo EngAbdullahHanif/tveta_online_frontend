@@ -1,8 +1,3 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/display-name */
 import React from 'react';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import { useTable, usePagination, useSortBy } from 'react-table';
@@ -33,7 +28,7 @@ function Table({ columns, data, divided = false, defaultPageSize = 6 }) {
       initialState: { pageIndex: 0, pageSize: defaultPageSize },
     },
     useSortBy,
-    usePagination
+    usePagination,
   );
 
   return (
@@ -131,7 +126,7 @@ export const ReactTableWithPaginationCard = () => {
         Cell: (props) => <>{props.value}</>,
       },
     ],
-    []
+    [],
   );
 
   return (
@@ -174,7 +169,7 @@ export const ReactTableDivided = () => {
         Cell: (props) => <>{props.value}</>,
       },
     ],
-    []
+    [],
   );
   return (
     <div className="mb-4">

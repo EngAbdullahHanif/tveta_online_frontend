@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import Lightbox from 'react-image-lightbox';
 import { NavLink } from 'react-router-dom';
@@ -118,7 +117,7 @@ const GalleryProfile = () => {
           onCloseRequest={() => setIsOpen(false)}
           onMovePrevRequest={() =>
             setPhotoIndex(
-              (photoIndex + getGallery().length - 1) % getGallery().lengt
+              (photoIndex + getGallery().length - 1) % getGallery().lengt,
             )
           }
           onMoveNextRequest={() =>

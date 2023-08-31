@@ -1,26 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import {
   Card,
-  CustomInput,
-  Badge,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
 } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
-import IntlMessages from 'helpers/IntlMessages';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { BsTrashFill } from 'react-icons/bs';
-import { BsPencilSquare } from 'react-icons/bs';
-import { async } from 'q';
 import { AuthContext } from 'context/AuthContext';
 
 const createNotification = (type, className) => {

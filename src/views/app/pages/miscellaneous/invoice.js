@@ -1,175 +1,171 @@
-/* eslint-disable react/no-danger */
 import React from 'react';
 import { Row, Card, CardBody, Table } from 'reactstrap';
 import Breadcrumb from '../../../../containers/navs/Breadcrumb';
 import {
-	Separator,
-	Colxx,
+  Separator,
+  Colxx,
 } from '../../../../components/common/CustomBootstrap';
 import IntlMessages from '../../../../helpers/IntlMessages';
 
 const Invoice = ({ match }) => {
-	return (
-		<>
-			<Row>
-				<Colxx xxs="12">
-					<Breadcrumb heading="menu.invoice" match={match} />
-					<Separator className="mb-5" />
-				</Colxx>
-			</Row>
-			<Row>
-				<Colxx xxs="12">
-					<Card className="mb-5">
-						<CardBody>
-							<IntlMessages id="pages.invoice-info" />
-						</CardBody>
-					</Card>
-				</Colxx>
-			</Row>
+  return (
+    <>
+      <Row>
+        <Colxx xxs="12">
+          <Breadcrumb heading="menu.invoice" match={match} />
+          <Separator className="mb-5" />
+        </Colxx>
+      </Row>
+      <Row>
+        <Colxx xxs="12">
+          <Card className="mb-5">
+            <CardBody>
+              <IntlMessages id="pages.invoice-info" />
+            </CardBody>
+          </Card>
+        </Colxx>
+      </Row>
 
-			<Row>
-				<Colxx xxs="12">
-					<h3 className="mb-4">
-						<IntlMessages id="pages.react-version" />
-					</h3>
-				</Colxx>
-			</Row>
+      <Row>
+        <Colxx xxs="12">
+          <h3 className="mb-4">
+            <IntlMessages id="pages.react-version" />
+          </h3>
+        </Colxx>
+      </Row>
 
-			<Row className="invoice-react">
-				<Colxx xxs="12" className="mb-4">
-					<Card className="mb-5 invoice-contents">
-						<CardBody className="d-flex flex-column justify-content-between">
-							<div className="d-flex flex-column">
-								<div className="d-flex flex-row justify-content-between pt-2 pb-2">
-									<div className="d-flex align-self-center">
-										<img
-											src="https://coloredstrategies.com/mailing/gogo.png"
-											alt="Logo"
-										/>
-									</div>
-									<div className="d-flex w-30 text-right align-self-center">
-										<p className="text-small text-semi-muted mb-0">
-											تهران، بزرگراه خلیج فارس، خیابان امام
-											ایران
+      <Row className="invoice-react">
+        <Colxx xxs="12" className="mb-4">
+          <Card className="mb-5 invoice-contents">
+            <CardBody className="d-flex flex-column justify-content-between">
+              <div className="d-flex flex-column">
+                <div className="d-flex flex-row justify-content-between pt-2 pb-2">
+                  <div className="d-flex align-self-center">
+                    <img
+                      src="https://coloredstrategies.com/mailing/gogo.png"
+                      alt="Logo"
+                    />
+                  </div>
+                  <div className="d-flex w-30 text-right align-self-center">
+                    <p className="text-small text-semi-muted mb-0">
+                      تهران، بزرگراه خلیج فارس، خیابان امام ایران
                       <br />
                       784 451 12 47
                     </p>
-									</div>
-								</div>
-								<div className="border-bottom pt-4 mb-5" />
+                  </div>
+                </div>
+                <div className="border-bottom pt-4 mb-5" />
 
-								<div className="d-flex flex-row justify-content-between mb-5">
-									<div className="d-flex flex-column w-70 mr-2 p-4 text-semi-muted bg-semi-muted">
-										<p className="mb-0">فاطمه کاظمی زاده</p>
-										<p className="mb-0">
-											تهران، ایران
-                    </p>
-									</div>
-									<div className="d-flex w-30 flex-column text-right p-4 text-semi-muted bg-semi-muted">
-										<p className="mb-0">صورت حساب #: 741</p>
-										<p className="mb-0">4 مرداد 1400</p>
-									</div>
-								</div>
+                <div className="d-flex flex-row justify-content-between mb-5">
+                  <div className="d-flex flex-column w-70 mr-2 p-4 text-semi-muted bg-semi-muted">
+                    <p className="mb-0">فاطمه کاظمی زاده</p>
+                    <p className="mb-0">تهران، ایران</p>
+                  </div>
+                  <div className="d-flex w-30 flex-column text-right p-4 text-semi-muted bg-semi-muted">
+                    <p className="mb-0">صورت حساب #: 741</p>
+                    <p className="mb-0">4 مرداد 1400</p>
+                  </div>
+                </div>
 
-								<Table borderless>
-									<thead>
-										<tr>
-											<th className="text-muted text-extra-small mb-2">
-												نام مورد
+                <Table borderless>
+                  <thead>
+                    <tr>
+                      <th className="text-muted text-extra-small mb-2">
+                        نام مورد
                       </th>
-											<th className="text-muted text-extra-small mb-2">
-												تعداد
+                      <th className="text-muted text-extra-small mb-2">
+                        تعداد
                       </th>
-											<th className="text-right text-muted text-extra-small mb-2">
-												قیمت
+                      <th className="text-right text-muted text-extra-small mb-2">
+                        قیمت
                       </th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>کیک هویج</td>
-											<td>3 عدد</td>
-											<td className="text-right">14.82 تومان</td>
-										</tr>
-										<tr>
-											<td>کیک شکلات</td>
-											<td>2 عدد</td>
-											<td className="text-right">8.97 تومان</td>
-										</tr>
-										<tr>
-											<td>فت راسکال</td>
-											<td>2 عدد</td>
-											<td className="text-right">18.24 تومان</td>
-										</tr>
-										<tr>
-											<td>کیک کریسمس</td>
-											<td>2 عدد</td>
-											<td className="text-right">4.24 تومان</td>
-										</tr>
-										<tr>
-											<td>چیزکیک</td>
-											<td>3 عدد</td>
-											<td className="text-right">6.27 تومان</td>
-										</tr>
-										<tr>
-											<td>کیک قهوه</td>
-											<td>2 عدد</td>
-											<td className="text-right">10.97 تومان</td>
-										</tr>
-										<tr>
-											<td>شیرینی زبان</td>
-											<td>2 عدد</td>
-											<td className="text-right">21.24 تومان</td>
-										</tr>
-									</tbody>
-								</Table>
-							</div>
-							<div className="d-flex flex-column">
-								<div className="border-bottom pt-3 mb-5" />
-								<Table borderless className="d-flex justify-content-end">
-									<tbody>
-										<tr>
-											<td className="text-semi-muted">جمع کل :</td>
-											<td className="text-right">61.82 تومان</td>
-										</tr>
-										<tr>
-											<td className="text-semi-muted">مالیات :</td>
-											<td className="text-right">0.82 تومان</td>
-										</tr>
-										<tr>
-											<td className="text-semi-muted">باربری :</td>
-											<td className="text-right">3.21 تومان</td>
-										</tr>
-										<tr className="font-weight-bold">
-											<td className="text-semi-muted">جمع :</td>
-											<td className="text-right">68.14 تومان</td>
-										</tr>
-									</tbody>
-								</Table>
-								<div className="border-bottom pt-3 mb-5" />
-								<p className="text-muted text-small text-center">
-									این فاکتور در سیستم ایجاد شده و بدون مهر و امضا معتبر نیست
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>کیک هویج</td>
+                      <td>3 عدد</td>
+                      <td className="text-right">14.82 تومان</td>
+                    </tr>
+                    <tr>
+                      <td>کیک شکلات</td>
+                      <td>2 عدد</td>
+                      <td className="text-right">8.97 تومان</td>
+                    </tr>
+                    <tr>
+                      <td>فت راسکال</td>
+                      <td>2 عدد</td>
+                      <td className="text-right">18.24 تومان</td>
+                    </tr>
+                    <tr>
+                      <td>کیک کریسمس</td>
+                      <td>2 عدد</td>
+                      <td className="text-right">4.24 تومان</td>
+                    </tr>
+                    <tr>
+                      <td>چیزکیک</td>
+                      <td>3 عدد</td>
+                      <td className="text-right">6.27 تومان</td>
+                    </tr>
+                    <tr>
+                      <td>کیک قهوه</td>
+                      <td>2 عدد</td>
+                      <td className="text-right">10.97 تومان</td>
+                    </tr>
+                    <tr>
+                      <td>شیرینی زبان</td>
+                      <td>2 عدد</td>
+                      <td className="text-right">21.24 تومان</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
+              <div className="d-flex flex-column">
+                <div className="border-bottom pt-3 mb-5" />
+                <Table borderless className="d-flex justify-content-end">
+                  <tbody>
+                    <tr>
+                      <td className="text-semi-muted">جمع کل :</td>
+                      <td className="text-right">61.82 تومان</td>
+                    </tr>
+                    <tr>
+                      <td className="text-semi-muted">مالیات :</td>
+                      <td className="text-right">0.82 تومان</td>
+                    </tr>
+                    <tr>
+                      <td className="text-semi-muted">باربری :</td>
+                      <td className="text-right">3.21 تومان</td>
+                    </tr>
+                    <tr className="font-weight-bold">
+                      <td className="text-semi-muted">جمع :</td>
+                      <td className="text-right">68.14 تومان</td>
+                    </tr>
+                  </tbody>
+                </Table>
+                <div className="border-bottom pt-3 mb-5" />
+                <p className="text-muted text-small text-center">
+                  این فاکتور در سیستم ایجاد شده و بدون مهر و امضا معتبر نیست
                 </p>
-							</div>
-						</CardBody>
-					</Card>
-				</Colxx>
-			</Row>
+              </div>
+            </CardBody>
+          </Card>
+        </Colxx>
+      </Row>
 
-			<Row>
-				<Colxx xxs="12">
-					<h3 className="mb-4">
-						<IntlMessages id="pages.inline-version" />
-					</h3>
-				</Colxx>
-			</Row>
+      <Row>
+        <Colxx xxs="12">
+          <h3 className="mb-4">
+            <IntlMessages id="pages.inline-version" />
+          </h3>
+        </Colxx>
+      </Row>
 
-			<Row className="invoice">
-				<Colxx xxs="12" className="mb-4">
-					<div
-						className="content"
-						dangerouslySetInnerHTML={{
-							__html: `<div className="invoice-contents" style="background-color:#ffffff; height:1200px; max-width:830px; font-family: YEKAN,Arial,sans-serif !important; position: relative;">
+      <Row className="invoice">
+        <Colxx xxs="12" className="mb-4">
+          <div
+            className="content"
+            dangerouslySetInnerHTML={{
+              __html: `<div className="invoice-contents" style="background-color:#ffffff; height:1200px; max-width:830px; font-family: YEKAN,Arial,sans-serif !important; position: relative;">
                                 <table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="width:100%; background-color:#ffffff;border-collapse:separate !important; border-spacing:0;color:#242128; margin:0;padding:30px; padding-top: 20px;"
                                     heigth="auto">
         
@@ -377,12 +373,12 @@ const Invoice = ({ match }) => {
                             </div>
                     
                     `,
-						}}
-					/>
-				</Colxx>
-			</Row>
-		</>
-	);
+            }}
+          />
+        </Colxx>
+      </Row>
+    </>
+  );
 };
 
 export default Invoice;

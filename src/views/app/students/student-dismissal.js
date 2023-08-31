@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
-import profilePhoto from './../../../assets/img/profiles/22.jpg';
 import { NotificationManager } from 'components/common/react-notifications';
 import './../../../assets/css/global-style.css';
-import { studentdismissalvalidationSchema } from './../global-data/forms-validation';
 import DatePicker from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
 import { persianMonthOptions } from '../global-data/options';
 
-import axios from 'axios';
 import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
 import {
@@ -29,11 +25,8 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
+
+
 
 import config from '../../../config';
 const servicePath = config.API_URL;

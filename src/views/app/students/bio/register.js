@@ -2,17 +2,13 @@
 import React, {
   createRef,
   useState,
-  Controller,
-  useEffect,
-  useRef,
   useContext,
 } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
-import { FormControl, FormLabel } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import { FormControl } from 'react-bootstrap';
 import './../../.././../assets/css/global-style.css';
 
 import {
-  fetchProvinces,
   fetchDistricts,
   langOptions,
 } from '../../global-data/options';
@@ -31,8 +27,6 @@ import {
 import { Wizard, Steps, Step } from 'react-albus';
 import {
   educationalYearsOptions,
-  dateOfBirthOptoions,
-  batchOptions,
   genderOptions,
   mediumOfInstructionOptions,
   StdInteranceOptions,

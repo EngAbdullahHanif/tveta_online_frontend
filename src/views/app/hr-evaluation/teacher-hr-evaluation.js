@@ -3,24 +3,14 @@ import { Formik, Form, Field } from 'formik';
 import { evaluationTypeOptions } from '../global-data/options';
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { gradeOptions } from '../global-data/options';
 import { stepOptions } from '../global-data/options';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
-
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const SignupSchema = Yup.object().shape({
   teacherId: Yup.object()
@@ -40,7 +30,7 @@ const SignupSchema = Yup.object().shape({
   marks: Yup.string().required(<IntlMessages id="teacher.marksErr" />),
 
   evaluationDate: Yup.string().required(
-    <IntlMessages id="teacher.evaluationDateErr" />
+    <IntlMessages id="teacher.evaluationDateErr" />,
   ),
 
   grade: Yup.object()

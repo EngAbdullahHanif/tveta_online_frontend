@@ -15,9 +15,7 @@ import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const SignupSchema = Yup.object().shape({
   District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
@@ -98,7 +96,7 @@ const DormRegistration = (values) => {
     const instituteResponse = await callApi(
       `students/${student_id}/institute`,
       '',
-      null
+      null,
     );
     if (instituteResponse.data && instituteResponse.status === 200) {
       console.log('institute response', instituteResponse.data);
@@ -110,7 +108,7 @@ const DormRegistration = (values) => {
     const departmentResponse = await callApi(
       `students/${student_id}/department`,
       '',
-      null
+      null,
     );
     if (departmentResponse.data && departmentResponse.status === 200) {
       setDepartment(departmentResponse.data.department);
@@ -121,7 +119,7 @@ const DormRegistration = (values) => {
     const classResponse = await callApi(
       `students/${student_id}/class`,
       '',
-      null
+      null,
     );
     if (classResponse.data && classResponse.status === 200) {
       setClasss(classResponse.data.classs);
@@ -140,7 +138,7 @@ const DormRegistration = (values) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -152,7 +150,7 @@ const DormRegistration = (values) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -166,7 +164,7 @@ const DormRegistration = (values) => {
     const response = await callApi(
       'students/student_dorms_create/',
       'POST',
-      data
+      data,
     );
     if (response) {
       createNotification('success', 'filled');
@@ -295,13 +293,13 @@ const DormRegistration = (values) => {
                                           {provinces.filter(
                                             (province) =>
                                               province.value ===
-                                              student[0].main_province
+                                              student[0].main_province,
                                           )[0].label +
                                             ' - ' +
                                             districts.filter(
                                               (district) =>
                                                 district.value ===
-                                                student[0].main_district
+                                                student[0].main_district,
                                             )[0].label +
                                             ' - ' +
                                             student[0].main_village}
@@ -314,13 +312,13 @@ const DormRegistration = (values) => {
                                           {provinces.filter(
                                             (province) =>
                                               province.value ===
-                                              student[0].main_province
+                                              student[0].main_province,
                                           )[0].label +
                                             ' - ' +
                                             districts.filter(
                                               (district) =>
                                                 district.value ===
-                                                student[0].main_district
+                                                student[0].main_district,
                                             )[0].label +
                                             ' - ' +
                                             student[0].main_village}

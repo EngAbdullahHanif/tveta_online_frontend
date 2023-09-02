@@ -4,10 +4,10 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 const Forms = React.lazy(() =>
-  import(/* webpackChunkName: "ui-forms" */ './forms')
+  import(/* webpackChunkName: "ui-forms" */ './forms'),
 );
 const Components = React.lazy(() =>
-  import(/* webpackChunkName: "ui-components" */ './components')
+  import(/* webpackChunkName: "ui-components" */ './components'),
 );
 
 const UI = ({ match, props }) => (

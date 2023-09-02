@@ -6,12 +6,12 @@ import { Redirect, Switch } from 'react-router-dom';
 const HREvaluationList = React.lazy(() =>
   import(
     /* webpackChunkName: "evaluation-list" */ './hr-evaluation-list/HREvaluationListMain'
-  )
+  ),
 );
 const HREvaluation = React.lazy(() =>
   import(
     /* webpackChunkName: "teacher-hr-evalaution" */ './teacher-hr-evaluation'
-  )
+  ),
 );
 
 const HREvaluations = ({ match, props }) => (

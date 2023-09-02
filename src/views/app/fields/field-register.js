@@ -16,7 +16,7 @@ const SignupSchema = Yup.object().shape({
     .required(<IntlMessages id="field.FieldNameErr" />),
 
   fieldEnglishName: Yup.string().required(
-    <IntlMessages id="field.FieldEngNameErr" />
+    <IntlMessages id="field.FieldEngNameErr" />,
   ),
 
   sector: Yup.object()
@@ -64,7 +64,7 @@ const FieldRegister = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -76,7 +76,7 @@ const FieldRegister = () => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -90,7 +90,7 @@ const FieldRegister = () => {
     const response = await callApi(
       'institute/department-create/',
       'POST',
-      data
+      data,
     );
     if (response) {
       createNotification('success', 'filled');

@@ -28,6 +28,7 @@ class Sidebar extends Component {
     };
     this.currentUser = JSON.parse(localStorage.getItem('user'));
     this.containerRef = React.createRef();
+    this.handleDocumentClick = this.handleDocumentClick.bind(this);
   }
 
   handleWindowResize(event) {
@@ -43,7 +44,7 @@ class Sidebar extends Component {
     );
   }
 
-  handleDocumentClick(e) {
+  handleDocumentClick = (e) => {
     const container = this.getContainer();
     let isMenuClick = false;
     if (
@@ -78,7 +79,7 @@ class Sidebar extends Component {
       viewingParentMenu: '',
     });
     this.toggle();
-  }
+  };
 
   getMenuClassesForResize(classes) {
     const { menuHiddenBreakpoint, subHiddenBreakpoint } = this.props;
@@ -554,7 +555,7 @@ class Sidebar extends Component {
   }
 }
 
-const mapStateToProps = ({ menu, currentUser, ...rest }) => {
+const mapStateToProps = ({ menu, currentUser }) => {
   const {
     containerClassnames,
     subHiddenBreakpoint,

@@ -7,22 +7,13 @@ import { educationalYearsOptions } from './../../global-data/options';
 // Year  and SHift
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { studyTimeOptions } from '../../global-data/options';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import DisplayMessage from 'components/messages/DisplayMessage';
 
 const LevelOfEdcationOptions = [
@@ -157,7 +148,7 @@ const StudentAttendance = ({ match }) => {
     const response = await callApi(
       `institute/institite-department/?institute=${instituteId.value}`,
       '',
-      null
+      null,
     );
     // console.log('response of department', response);
     if (response.data && response.status === 200) {
@@ -217,7 +208,7 @@ const StudentAttendance = ({ match }) => {
     const response = await callApi(
       `students/stdattendence_by/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}`,
       'GET',
-      null
+      null,
     );
     console.log('attendance repspossdfsde', response);
     if (response.data && response.status === 200) {
@@ -340,7 +331,7 @@ const StudentAttendance = ({ match }) => {
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationalYear
+                            values.educationalYear,
                           )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (

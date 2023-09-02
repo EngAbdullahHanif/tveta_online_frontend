@@ -8,8 +8,7 @@ export const comments = [
   },
   {
     title: 'از خوندن این مقاله ات خیلی لذت بردم. لطفا همینطور ادامه بده',
-    detail:
-      'فاطمه محمدزاده | چیزکیک با کوکی های شکلاتی | 15 آبان 1400 - 01:18',
+    detail: 'فاطمه محمدزاده | چیزکیک با کوکی های شکلاتی | 15 آبان 1400 - 01:18',
     thumb: '/assets/img/profiles/l-2.jpg',
     rate: 4,
     key: 1,
@@ -30,8 +29,7 @@ export const comments = [
   },
   {
     title: 'خواندن این مقاله بسیار لذت بخش بود. لطفا آنها را ادامه دهید.',
-    detail:
-      'مریم رضایی | چیزکیک با توت تازه | 16 شهریور 1400 - 16:45',
+    detail: 'مریم رضایی | چیزکیک با توت تازه | 16 شهریور 1400 - 16:45',
     thumb: '/assets/img/profiles/l-5.jpg',
     rate: 2,
     key: 4,
@@ -72,8 +70,7 @@ export const commentWithLikesData = [
   },
   {
     name: 'ثنا محمدی',
-    detail:
-      'منم هیچ سودی ندیدم اصلا فکر میکنم بی فایده باشه',
+    detail: 'منم هیچ سودی ندیدم اصلا فکر میکنم بی فایده باشه',
     date: '2 ساعت قبل',
     thumb: '/assets/img/profiles/l-4.jpg',
     likes: 5,
@@ -81,8 +78,7 @@ export const commentWithLikesData = [
   },
   {
     name: 'زهرا مهرورز',
-    detail:
-      'شاید اگه مواد خوبی توش استفاده میشد کیفیت بهتری هم داشت!',
+    detail: 'شاید اگه مواد خوبی توش استفاده میشد کیفیت بهتری هم داشت!',
     date: '1 روز قبل',
     thumb: '/assets/img/profiles/l-5.jpg',
     likes: 0,

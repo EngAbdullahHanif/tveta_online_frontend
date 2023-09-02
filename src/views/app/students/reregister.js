@@ -20,9 +20,7 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import config from '../../../config';
 
@@ -93,11 +91,11 @@ const StudentsRergister = (values) => {
       .required(<IntlMessages id="forms.classErr" />),
 
     dismissalDate: Yup.string().required(
-      <IntlMessages id="student.dissmissalDateErr" />
+      <IntlMessages id="student.dissmissalDateErr" />,
     ),
 
     dismissalDocument: Yup.string().required(
-      <IntlMessages id="student.dissmissalDocumentErr" />
+      <IntlMessages id="student.dissmissalDocumentErr" />,
     ),
   });
 

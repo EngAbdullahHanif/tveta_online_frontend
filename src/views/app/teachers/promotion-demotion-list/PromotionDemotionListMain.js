@@ -229,14 +229,14 @@ const ThumbListPages = ({ match }) => {
     async function fetchData() {
       if (institute !== '') {
         const response = await axios.get(
-          `${promotionDemotionAPIUrl}?institute_id=${institute.id}`
+          `${promotionDemotionAPIUrl}?institute_id=${institute.id}`,
         );
         setItems(response.data);
         setTotalItemCount(response.data.totalItem);
         setIsLoaded(true);
       } else {
         const res = await axios.get(
-          `${promotionDemotionAPIUrl}?teacher_id=${teacherId}`
+          `${promotionDemotionAPIUrl}?teacher_id=${teacherId}`,
         );
         console.log('res', res.data);
         setItems(res.data);
@@ -287,7 +287,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -347,12 +347,12 @@ const ThumbListPages = ({ match }) => {
           // following code is used for order the list based on different element of the prod
           changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+              genderOptions.find((x) => x.column === column),
             );
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              Provinces.find((x) => x.column === column)
+              Provinces.find((x) => x.column === column),
             );
           }}
           selectedGenderOption={selectedGenderOption}

@@ -2,10 +2,10 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const Portfolio = React.lazy(() =>
-  import(/* webpackChunkName: "profile-portfolio" */ './portfolio')
+  import(/* webpackChunkName: "profile-portfolio" */ './portfolio'),
 );
 const Social = React.lazy(() =>
-  import(/* webpackChunkName: "profile-social" */ './social')
+  import(/* webpackChunkName: "profile-social" */ './social'),
 );
 
 const PagesProfile = ({ match }) => (

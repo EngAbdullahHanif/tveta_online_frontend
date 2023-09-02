@@ -5,20 +5,11 @@ import { studyTimeOptions } from '../global-data/options';
 
 // Year  and SHift
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const LevelOfEdcationOptions = [
   { value: '1', label: 'اصلی' },
@@ -84,7 +75,7 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.InstituteErr" />),
 
   educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
+    <IntlMessages id="forms.educationYearErr" />,
   ),
 
   studyTime: Yup.object()
@@ -180,7 +171,7 @@ const MarksUpdate = ({ match }) => {
   };
   const fetchDepartments = async () => {
     const response = await axios.get(
-      'http://localhost:8000/institute/department/'
+      'http://localhost:8000/institute/department/',
     );
     const updatedData = await response.data.map((item) => ({
       value: item.id,
@@ -200,7 +191,7 @@ const MarksUpdate = ({ match }) => {
 
   const fetchSubjects = async () => {
     const response = await axios.get(
-      'http://localhost:8000/institute/subject/'
+      'http://localhost:8000/institute/subject/',
     );
     const updatedData = await response.data.map((item) => ({
       value: item.id,
@@ -221,7 +212,7 @@ const MarksUpdate = ({ match }) => {
     // setIsNext(event);
     axios
       .get(
-        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+        `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       )
       .then((response) => {
         console.log('response.data', response.data);
@@ -229,7 +220,7 @@ const MarksUpdate = ({ match }) => {
         setIsNext(false);
       });
     console.log(
-      `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`
+      `http://localhost:8000/api/student-for-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
     );
     console.log('students', students);
   };
@@ -385,7 +376,7 @@ const MarksUpdate = ({ match }) => {
                               name="educationlaYear"
                               // assign value to selectedEducationalYear
                               onClick={setSelectedEducationalYear(
-                                values.educationlaYear
+                                values.educationlaYear,
                               )}
                             />
                             {errors.educationlaYear &&

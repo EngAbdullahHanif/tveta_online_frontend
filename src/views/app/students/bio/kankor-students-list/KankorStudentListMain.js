@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {
-  educationalYearsOptions,
-} from '../../../global-data/options';
+import { educationalYearsOptions } from '../../../global-data/options';
 import callApi from 'helpers/callApi';
 import { Table as TB } from 'antd';
 // import { servicePath } from 'constants/defaultValues';
@@ -129,7 +127,7 @@ const ThumbListPages = ({ match }) => {
             response?.data?.map((item) => ({
               ...item.student,
               institute: item.institute,
-            }))
+            })),
           );
         } else {
           setItems(response.data.results);
@@ -301,7 +299,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);

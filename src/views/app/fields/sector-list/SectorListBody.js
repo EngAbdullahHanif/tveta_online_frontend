@@ -24,7 +24,7 @@ const createNotification = (type, className) => {
         3000,
         null,
         null,
-        cName
+        cName,
       );
       break;
     case 'error':
@@ -36,7 +36,7 @@ const createNotification = (type, className) => {
           alert('callback');
         },
         null,
-        cName
+        cName,
       );
       break;
     default:
@@ -53,7 +53,7 @@ const SectorListBody = ({ sector, isSelect, collect, onCheckItem, index }) => {
     const instituteResponse = await callApi(
       `institute/sectors_details/${sectorId}/`,
       'DELETE',
-      null
+      null,
     );
     if (instituteResponse.status >= 200 && instituteResponse.status < 300) {
       console.log('succesfully deleted');

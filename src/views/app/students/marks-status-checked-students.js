@@ -14,21 +14,12 @@ import './../../../assets/css/global-style.css';
 
 // Year  and SHift
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { AuthContext } from 'context/AuthContext';
 
 const ValidationSchema = Yup.object().shape({
@@ -40,7 +31,7 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.InstituteErr" />),
 
   educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
+    <IntlMessages id="forms.educationYearErr" />,
   ),
 
   studyTime: Yup.object()
@@ -133,7 +124,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
     const response = await callApi(
       `institute/institite-department/?institute=${instituteId.value}`,
       '',
-      null
+      null,
     );
     // console.log('response of department', response);
     if (response.data && response.status === 200) {
@@ -167,7 +158,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -179,7 +170,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -193,7 +184,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
     const response = await callApi(
       `students/marks-status-checked-students/?institute=${selectedInstitute.value}&class_grade=${selectedClass.value}&semester=${selectedSemester.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       console.log('response of students', response);
@@ -233,7 +224,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
     const response = await callApi(
       'students/set-students-to-new-class/',
       'POST',
-      data
+      data,
     );
     if (
       response.status === 200 ||
@@ -328,7 +319,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
                           name="educationlaYear"
                           // assign value to selectedEducationalYear
                           onClick={setSelectedEducationalYear(
-                            values.educationlaYear
+                            values.educationlaYear,
                           )}
                         />
                         {errors.educationlaYear && touched.educationlaYear ? (

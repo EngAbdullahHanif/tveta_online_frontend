@@ -136,12 +136,16 @@ const ProfileSocial = ({ match }) => {
                   <Card className="mb-4">
                     <CardBody>
                       <div className="text-center pt-4">
-                        <p className="list-item-heading pt-2">فاطمه کاظمی زاده</p>
+                        <p className="list-item-heading pt-2">
+                          فاطمه کاظمی زاده
+                        </p>
                       </div>
                       <p className="mb-3">
-                        سلام. من یه برنامه نویس هستم. این قسمت هم درباره ی بیوگرافی منه
+                        سلام. من یه برنامه نویس هستم. این قسمت هم درباره ی
+                        بیوگرافی منه
                         <br />
-                        من هیچوقت منتظر نمیشم که ستاره هام توی یک ردیف قرار بگیرن و سرنوشتمو بسازن، بلکه خودم ستاره هامو میچینم🌜
+                        من هیچوقت منتظر نمیشم که ستاره هام توی یک ردیف قرار
+                        بگیرن و سرنوشتمو بسازن، بلکه خودم ستاره هامو میچینم🌜
                       </p>
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="pages.location" />
@@ -204,8 +208,6 @@ const ProfileSocial = ({ match }) => {
                       </div>
                     </CardBody>
                   </Card>
-
-
 
                   <Card className="mb-4">
                     <CardBody>

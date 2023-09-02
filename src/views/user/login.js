@@ -35,7 +35,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       .test(
         'len',
         'کارن نوم باید له پنځه حروفو زیات وي',
-        (val) => val?.length >= 5
+        (val) => val?.length >= 5,
       )
       .label('username'),
     password: Yup.string()
@@ -43,7 +43,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
       .test(
         'len',
         'پاسورډ باید له پنځه حروفو زیات وي',
-        (val) => val?.length >= 5
+        (val) => val?.length >= 5,
       )
       .label('password'),
   });
@@ -56,7 +56,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         9000,
         null,
         null,
-        ''
+        '',
       );
     }
   }, [error]);

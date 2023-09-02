@@ -37,7 +37,7 @@ const ValidationSchema = Yup.object().shape({
     .max(100)
     .required(<IntlMessages id="sicknessErr" />),
   educationalDays: Yup.number().required(
-    <IntlMessages id="educationalDaysErr" />
+    <IntlMessages id="educationalDaysErr" />,
   ),
 });
 
@@ -69,7 +69,7 @@ const UpdateStudentAttendance = ({ match }) => {
 
   const fetchAttendance = async () => {
     const { data } = await axios.get(
-      `${StudentAttendanceAPI}/?id=${attendance_id}`
+      `${StudentAttendanceAPI}/?id=${attendance_id}`,
     );
     setAttendanceRecord(data[0]);
     setInititalStudentName(data[0].student_id.name);

@@ -110,7 +110,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/field/?sector=${newSector}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setItems(response.data);
@@ -153,7 +153,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -213,7 +213,7 @@ const ThumbListPages = ({ match }) => {
           // following code is used for order the list based on different element of the prod
           changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+              genderOptions.find((x) => x.column === column),
             );
           }}
           selectedGenderOption={selectedGenderOption}

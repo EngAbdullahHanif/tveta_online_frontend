@@ -9,20 +9,11 @@ import { NotificationManager } from 'components/common/react-notifications';
 // Year  and SHift
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import callApi from 'helpers/callApi';
 
@@ -35,7 +26,7 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.InstituteErr" />),
 
   educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
+    <IntlMessages id="forms.educationYearErr" />,
   ),
 
   studyTime: Yup.object()
@@ -163,7 +154,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
     const response = await callApi(
       `students/class_marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&upgrade=1`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       setIsNext(true);
@@ -200,7 +191,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -212,7 +203,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -238,7 +229,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
     const response = await callApi(
       'students/students-class-status-upgrade/',
       'POST',
-      data
+      data,
     );
     if (response.data && response.status === 200) {
       console.log('response.data', response.data);
@@ -270,7 +261,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
     const isChecked = event.target.checked;
     const updatedCheckedItems = Object.keys(checkedItems).reduce(
       (acc, index) => ({ ...acc, [index]: isChecked }),
-      {}
+      {},
     );
     setCheckedItems(updatedCheckedItems);
     setIsMasterChecked(isChecked);
@@ -314,7 +305,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
     console.log('checkedIndesdfxes', checkedIndexes);
     // filter the students array based on the checkedIndexes array
     const selectedStudents = students.filter((student, index) =>
-      checkedIndexes.includes(index)
+      checkedIndexes.includes(index),
     );
     // return the selected students
     // return selectedStudents;
@@ -400,7 +391,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
                               name="educationlaYear"
                               // assign value to selectedEducationalYear
                               onClick={setSelectedEducationalYear(
-                                values.educationlaYear
+                                values.educationlaYear,
                               )}
                             />
                             {errors.educationlaYear &&
@@ -615,7 +606,7 @@ const StudentClassStatusUpgrade = ({ match }) => {
                                                   )}
                                                 </>
                                               );
-                                            }
+                                            },
                                           )}
                                         </>
                                       ) : null}

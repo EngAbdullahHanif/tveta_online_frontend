@@ -125,10 +125,11 @@ const ProfilePortfolio = ({ match }) => {
                         <IntlMessages id="menu.about" />
                       </p>
                       <p className="mb-3">
-                        سلام. من یه برنامه نویس هستم. این قسمت هم درباره ی بیوگرافی منه
+                        سلام. من یه برنامه نویس هستم. این قسمت هم درباره ی
+                        بیوگرافی منه
                         <br />
-                        من هیچوقت منتظر نمیشم که ستاره هام توی یک ردیف قرار بگیرن و سرنوشتمو بسازن، بلکه خودم ستاره هامو میچینم🌜
-
+                        من هیچوقت منتظر نمیشم که ستاره هام توی یک ردیف قرار
+                        بگیرن و سرنوشتمو بسازن، بلکه خودم ستاره هامو میچینم🌜
                       </p>
                       <p className="text-muted text-small mb-2">
                         <IntlMessages id="pages.location" />
@@ -138,7 +139,7 @@ const ProfilePortfolio = ({ match }) => {
                         <IntlMessages id="pages.responsibilities" />
                       </p>
                       <p className="mb-3">
-                      <Badge
+                        <Badge
                           color="outline-secondary"
                           className="mb-1 mr-1"
                           pill

@@ -20,8 +20,6 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-
-
 import config from '../../../config';
 
 const servicePath = config.API_URL;
@@ -49,7 +47,7 @@ const createNotification = (type, className) => {
         3000,
         null,
         null,
-        cName
+        cName,
       );
       break;
     case 'error':
@@ -61,7 +59,7 @@ const createNotification = (type, className) => {
           alert('callback');
         },
         null,
-        cName
+        cName,
       );
       break;
     default:
@@ -93,10 +91,10 @@ const StudentsDismissal = (values) => {
 
   const dismissalSchema = Yup.object().shape({
     checkoutDate: Yup.string().required(
-      <IntlMessages id="student.dissmissalDateErr" />
+      <IntlMessages id="student.dissmissalDateErr" />,
     ),
     checkoutDocument: Yup.mixed().required(
-      <IntlMessages id="student.dissmissalDocumentErr" />
+      <IntlMessages id="student.dissmissalDocumentErr" />,
     ),
   });
 
@@ -121,7 +119,7 @@ const StudentsDismissal = (values) => {
     const response = await callApi(
       `students/student_accademic/?student_id=${studentId}`,
       '',
-      null
+      null,
     );
     console.log(response);
     if (response.data && response.status === 200) {
@@ -139,7 +137,7 @@ const StudentsDismissal = (values) => {
     const response = await callApi(
       `students/student_accademic/?student_id=${values.student_id}`,
       '',
-      null
+      null,
     );
     console.log(response);
     if (response.status === 200) {
@@ -159,7 +157,7 @@ const StudentsDismissal = (values) => {
     const instituteResponse = await callApi(
       `students/${student.id}/institute`,
       '',
-      null
+      null,
     );
     if (instituteResponse.data && instituteResponse.status === 200) {
       setInstitute(instituteResponse.data);
@@ -170,7 +168,7 @@ const StudentsDismissal = (values) => {
     const departmentResponse = await callApi(
       `students/${student.id}/department`,
       '',
-      null
+      null,
     );
     if (departmentResponse.data && departmentResponse.status === 200) {
       setDepartment(departmentResponse.data);
@@ -189,7 +187,7 @@ const StudentsDismissal = (values) => {
     const classResponse = await callApi(
       `students/${student.id}/class`,
       '',
-      null
+      null,
     );
     if (classResponse.data && classResponse.status === 200) {
       setClasss(classResponse.data);
@@ -215,7 +213,7 @@ const StudentsDismissal = (values) => {
     const response = await callApi(
       `students/${student.id}/dorm/checkout`,
       'POST',
-      formData
+      formData,
     );
 
     if (response?.status === 200) {

@@ -2,16 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 //import CustomSelectInput from 'components/common/CustomSelectInput';
 
-import {
-  Row,
-} from 'reactstrap';
+import { Row } from 'reactstrap';
 //import logo from './../../../../assets/logos/AdminLogo.png';
 import logo from '../../../../assets/logos/AdminLogo.png';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-
-
 
 import config from '../../../../config';
 const servicePath = config.API_URL;

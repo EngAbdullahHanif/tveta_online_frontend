@@ -7,60 +7,60 @@ import { ProtectedRoute } from 'helpers/authHelper';
 import { userRole } from 'constants/defaultValues';
 import UsersList from './users/users-list';
 const Dashboards = React.lazy(() =>
-  import(/* webpackChunkName: "dashboards" */ './dashboards')
+  import(/* webpackChunkName: "dashboards" */ './dashboards'),
 );
 const Pages = React.lazy(() =>
-  import(/* webpackChunkName: "pages" */ './pages')
+  import(/* webpackChunkName: "pages" */ './pages'),
 );
 const Applications = React.lazy(() =>
-  import(/* webpackChunkName: "applications" */ './applications')
+  import(/* webpackChunkName: "applications" */ './applications'),
 );
 const Students = React.lazy(() =>
-  import(/* webpackChunkName: "students" */ './students')
+  import(/* webpackChunkName: "students" */ './students'),
 );
 
 const Teachers = React.lazy(() =>
-  import(/* webpackChunkName: "teachers" */ './teachers')
+  import(/* webpackChunkName: "teachers" */ './teachers'),
 );
 
 const Institutes = React.lazy(() =>
-  import(/* webpackChunkName: "institues" */ './institutes')
+  import(/* webpackChunkName: "institues" */ './institutes'),
 );
 
 const Subjects = React.lazy(() =>
-  import(/* webpackChunkName: "subjects" */ './subjects')
+  import(/* webpackChunkName: "subjects" */ './subjects'),
 );
 
 const Classes = React.lazy(() =>
-  import(/* webpackChunkName: "classes" */ './classes')
+  import(/* webpackChunkName: "classes" */ './classes'),
 );
 
 const Fields = React.lazy(() =>
-  import(/* webpackChunkName: "fields" */ './fields')
+  import(/* webpackChunkName: "fields" */ './fields'),
 );
 const Evaluations = React.lazy(() =>
-  import(/* webpackChunkName: "evaluation" */ './evaluations')
+  import(/* webpackChunkName: "evaluation" */ './evaluations'),
 );
 const HREvaluations = React.lazy(() =>
-  import(/* webpackChunkName: "hr-evaluation" */ './hr-evaluation')
+  import(/* webpackChunkName: "hr-evaluation" */ './hr-evaluation'),
 );
 
 const Dorms = React.lazy(() =>
-  import(/* webpackChunkName: "dorms" */ './dorms')
+  import(/* webpackChunkName: "dorms" */ './dorms'),
 );
 
 const Workers = React.lazy(() =>
-  import(/* webpackChunkName: "workers" */ './workers')
+  import(/* webpackChunkName: "workers" */ './workers'),
 );
 
 const Groups = React.lazy(() =>
-  import(/* webpackChunkName: "group" */ './group')
+  import(/* webpackChunkName: "group" */ './group'),
 );
 
 const Ui = React.lazy(() => import(/* webpackChunkName: "ui" */ './ui'));
 const Menu = React.lazy(() => import(/* webpackChunkName: "menu" */ './menu'));
 const BlankPage = React.lazy(() =>
-  import(/* webpackChunkName: "blank-page" */ './blank-page')
+  import(/* webpackChunkName: "blank-page" */ './blank-page'),
 );
 
 const App = ({ match, props }) => {

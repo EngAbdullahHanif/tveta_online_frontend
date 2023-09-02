@@ -4,16 +4,16 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 const Todo = React.lazy(() =>
-  import(/* webpackChunkName: "application-todo" */ './todo')
+  import(/* webpackChunkName: "application-todo" */ './todo'),
 );
 const Survey = React.lazy(() =>
-  import(/* webpackChunkName: "application-survey" */ './survey')
+  import(/* webpackChunkName: "application-survey" */ './survey'),
 );
 const SurveyDetail = React.lazy(() =>
-  import(/* webpackChunkName: "application-survey-detail" */ './survey-detail')
+  import(/* webpackChunkName: "application-survey-detail" */ './survey-detail'),
 );
 const Chat = React.lazy(() =>
-  import(/* webpackChunkName: "application-chat" */ './chat')
+  import(/* webpackChunkName: "application-chat" */ './chat'),
 );
 
 const Applications = ({ match, props }) => (

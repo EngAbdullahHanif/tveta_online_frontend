@@ -4,8 +4,7 @@ const posts = [
     name: 'مطهره تقوی',
     date: '10 دقیقه قبل',
     profilePic: '/assets/img/profiles/l-1.jpg',
-    detail:
-      'چشمتون رو از روی توپ برندارین و نتیجه رو ببینید',
+    detail: 'چشمتون رو از روی توپ برندارین و نتیجه رو ببینید',
     image: '/assets/img/video/poster.jpg',
     video:
       'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4',

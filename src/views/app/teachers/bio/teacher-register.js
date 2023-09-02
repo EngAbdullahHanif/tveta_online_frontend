@@ -13,14 +13,7 @@ import {
 import { teacherRegisterFormStep_1 } from '../../global-data/forms-validation';
 import { NavLink } from 'react-router-dom';
 import './../../../../assets/css/global-style.css';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
 import { Formik, Form, Field } from 'formik';
@@ -108,7 +101,7 @@ const TeacherRegister = ({ intl }, values) => {
         const initialUpdateValues = data;
 
         initialUpdateValues.tazkira_type = tazkiraOptions.find(
-          (option) => option.value === data.tazkira_type
+          (option) => option.value === data.tazkira_type,
         );
 
         dateOfBirthOptoions.map((teacherBirth) => {
@@ -179,7 +172,7 @@ const TeacherRegister = ({ intl }, values) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -191,7 +184,7 @@ const TeacherRegister = ({ intl }, values) => {
             // alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -236,7 +229,7 @@ const TeacherRegister = ({ intl }, values) => {
     // remove all key-value pairs where value is undefined
     if (isUpdateForm && teacherId) {
       Object.keys(data).forEach(
-        (key) => data[key] === undefined && delete data[key]
+        (key) => data[key] === undefined && delete data[key],
       );
     }
 
@@ -245,7 +238,7 @@ const TeacherRegister = ({ intl }, values) => {
       const response = await callApi(
         apiParams.endPoint,
         apiParams.method,
-        data
+        data,
       );
       message.success('استاد ثبت شو');
       // nagivate back to teacher profile
@@ -768,7 +761,7 @@ const TeacherRegister = ({ intl }, values) => {
                           value={values.main_district}
                           options={districts?.filter(
                             (district) =>
-                              district.province === values.main_province.value
+                              district.province === values.main_province.value,
                           )}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
@@ -840,7 +833,7 @@ const TeacherRegister = ({ intl }, values) => {
                           options={districts.filter(
                             (district) =>
                               district.province ===
-                              values.current_province.value
+                              values.current_province.value,
                           )}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

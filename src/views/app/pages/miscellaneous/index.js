@@ -2,24 +2,24 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const Faq = React.lazy(() =>
-  import(/* webpackChunkName: "miscellaneous-faq" */ './faq')
+  import(/* webpackChunkName: "miscellaneous-faq" */ './faq'),
 );
 const Invoice = React.lazy(() =>
-  import(/* webpackChunkName: "miscellaneous-invoice" */ './invoice')
+  import(/* webpackChunkName: "miscellaneous-invoice" */ './invoice'),
 );
 const KnowledgeBase = React.lazy(() =>
   import(
     /* webpackChunkName: "miscellaneous-knowledge-base" */ './knowledge-base'
-  )
+  ),
 );
 const Mailing = React.lazy(() =>
-  import(/* webpackChunkName: "miscellaneous-mailing" */ './mailing')
+  import(/* webpackChunkName: "miscellaneous-mailing" */ './mailing'),
 );
 const Prices = React.lazy(() =>
-  import(/* webpackChunkName: "miscellaneous-prices" */ './prices')
+  import(/* webpackChunkName: "miscellaneous-prices" */ './prices'),
 );
 const Search = React.lazy(() =>
-  import(/* webpackChunkName: "miscellaneous-search" */ './search')
+  import(/* webpackChunkName: "miscellaneous-search" */ './search'),
 );
 
 const PagesMiscellaneous = ({ match }) => (

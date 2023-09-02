@@ -1,7 +1,5 @@
 import React, { useContext, useState } from 'react';
-import {
-  Row,
-} from 'reactstrap';
+import { Row } from 'reactstrap';
 
 import Pagination from '../../../../containers/pages/Pagination';
 import ContextMenuContainer from '../../../../containers/pages/ContextMenuContainer';

@@ -166,7 +166,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `students/student_dorms/?dorm=${dormName?.value}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setDorms(response.data);
@@ -222,7 +222,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `students/student_dorms/?dorm_type=${newCount}&educational_year=${newYear}&district=${district}&status=${selectedStatusOptions?.value}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setDorms(response.data);
@@ -241,7 +241,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `students/student_dorms/?province=${selectedProvinceOption.value}&educational_year=${selectedYearOption.value}&district=${district}&status=${selectedStatusOptions.value}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setDorms(response.data);
@@ -253,7 +253,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `students/student_dorms/?province=${selectedProvinceOption.value}&dorm_type=${selectedDormTypeOption.value}&district=${district}&status=${selectedStatusOptions.value}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setDorms(response.data);
@@ -266,7 +266,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `students/student_dorms/?province=${selectedProvinceOption.value}&dorm_type=${selectedDormTypeOption.value}&educational_year=${selectedYearOption.value}&district=${district}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setDorms(response.data);
@@ -278,7 +278,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `students/student_dorms/?province=${selectedProvinceOption?.value}&dorm_type=${selectedDormTypeOption?.value}&educational_year=${selectedYearOption?.value}&district=${district}&status=${selectedStatusOptions?.value}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           console.log('response.data of student-dorm', response.data);
@@ -330,7 +330,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -413,22 +413,22 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           changeDormTypeBy={(value) => {
             setSelectedDormTypeOption(
-              DormTypeOptions.find((x) => x.value === value)
+              DormTypeOptions.find((x) => x.value === value),
             );
           }}
           changeProvinceBy={(value) => {
             setSelectedProvinceOption(
-              provinceOptions.find((x) => x.value === value)
+              provinceOptions.find((x) => x.value === value),
             );
           }}
           changeYearBy={(value) => {
             setSelectedYearOption(
-              educationalYearsOptions.find((x) => x.value === value)
+              educationalYearsOptions.find((x) => x.value === value),
             );
           }}
           changeStatusBy={(value) => {
             setSelectedStatusOptions(
-              statusOptions.find((x) => x.value === value)
+              statusOptions.find((x) => x.value === value),
             );
           }}
           selectedDormTypeOption={selectedDormTypeOption}

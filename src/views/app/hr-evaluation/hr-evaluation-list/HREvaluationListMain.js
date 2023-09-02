@@ -121,7 +121,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -185,7 +185,7 @@ const ThumbListPages = ({ match }) => {
           // following code is used for order the list based on different element of the prod
           changeOrderBy={(column) => {
             setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
+              orderOptions.find((x) => x.column === column),
             );
           }}
           changePageSize={setSelectedPageSize}

@@ -4,16 +4,16 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 const Product = React.lazy(() =>
-  import(/* webpackChunkName: "pages-product" */ './product')
+  import(/* webpackChunkName: "pages-product" */ './product'),
 );
 const Profile = React.lazy(() =>
-  import(/* webpackChunkName: "pages-profile" */ './profile')
+  import(/* webpackChunkName: "pages-profile" */ './profile'),
 );
 const Miscellaneous = React.lazy(() =>
-  import(/* webpackChunkName: "pages-miscellaneous" */ './miscellaneous')
+  import(/* webpackChunkName: "pages-miscellaneous" */ './miscellaneous'),
 );
 const Blog = React.lazy(() =>
-  import(/* webpackChunkName: "pages-blog" */ './blog')
+  import(/* webpackChunkName: "pages-blog" */ './blog'),
 );
 
 const Pages = ({ match, props }) => (

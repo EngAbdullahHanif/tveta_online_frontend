@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form } from 'formik';
 
-
-
 import {
   Row,
   Card,
@@ -18,9 +16,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { NotificationManager } from 'components/common/react-notifications';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 message.config({
@@ -83,7 +79,7 @@ const InstituteDepartmentRegister = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -95,7 +91,7 @@ const InstituteDepartmentRegister = () => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -144,7 +140,7 @@ const InstituteDepartmentRegister = () => {
     const response = await callApi(
       'institute/institute-department-create/',
       'POST',
-      data
+      data,
     );
     if (response) {
       createNotification('success', 'filled');

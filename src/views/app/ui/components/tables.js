@@ -280,7 +280,7 @@ const TablesUi = ({ match }) => {
         </Colxx>
       </Row>
 
-       <Row>
+      <Row>
         <Colxx xxs="12">
           <h3 className="mb-4">
             <IntlMessages id="table.react-tables" />

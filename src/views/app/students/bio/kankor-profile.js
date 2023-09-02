@@ -32,7 +32,7 @@ const StudentProfile = () => {
       const response = await callApi(
         `students/kankorResults/?id=${kankorId}`,
         'GET',
-        null
+        null,
       );
       if (response.data && response.status === 200) {
         setKankorStudent(response.data);
@@ -174,7 +174,7 @@ const StudentProfile = () => {
                       {
                         provinces.filter(
                           (province) =>
-                            province.value == kankorStudent[0].province
+                            province.value == kankorStudent[0].province,
                         )[0].label
                       }{' '}
                     </h2>
@@ -185,7 +185,7 @@ const StudentProfile = () => {
                       {
                         districts.filter(
                           (district) =>
-                            district.value === kankorStudent[0].district
+                            district.value === kankorStudent[0].district,
                         )[0].label
                       }
                     </h2>

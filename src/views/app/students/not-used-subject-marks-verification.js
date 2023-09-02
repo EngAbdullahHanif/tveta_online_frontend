@@ -18,9 +18,7 @@ import {
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -38,7 +36,7 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.InstituteErr" />),
 
   educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
+    <IntlMessages id="forms.educationYearErr" />,
   ),
 
   studyTime: Yup.object()
@@ -371,7 +369,7 @@ const MarksDisplay = ({ match }) => {
     const response = await callApi(
       `/students/students-marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&study_time=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}&subject=${selectedSubject.value}`,
       '',
-      null
+      null,
     );
 
     if (response.data && response.status === 200) {
@@ -501,7 +499,7 @@ const MarksDisplay = ({ match }) => {
                           name="educationlaYear"
                           // assign value to selectedEducationalYear
                           onClick={setSelectedEducationalYear(
-                            values.educationlaYear
+                            values.educationlaYear,
                           )}
                         />
                         {errors.educationlaYear && touched.educationlaYear ? (

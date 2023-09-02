@@ -154,7 +154,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -214,12 +214,12 @@ const ThumbListPages = ({ match }) => {
           // following code is used for order the list based on different element of the prod
           changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+              genderOptions.find((x) => x.column === column),
             );
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              provincesOptionsForList.find((x) => x.column === column)
+              provincesOptionsForList.find((x) => x.column === column),
             );
           }}
           selectedGenderOption={selectedGenderOption}

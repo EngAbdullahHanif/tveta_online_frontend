@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Row,
-  Card,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, FormGroup, Label, Button } from 'reactstrap';
 import * as Yup from 'yup';
 import logo from '../../assets/img/logo2.png';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from 'redux/actions';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import callApi from 'helpers/callApi';
 
 import IntlMessages from 'helpers/IntlMessages';

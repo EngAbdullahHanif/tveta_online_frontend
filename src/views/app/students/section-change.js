@@ -10,21 +10,12 @@ import { classChangeValidationSchema } from './../global-data/forms-validation';
 import { studyTimeOptions } from '../../app/global-data/options';
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import config from '../../../config';
 
@@ -80,7 +71,7 @@ const DepartmentChange = (props) => {
           9000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'info':
@@ -90,7 +81,7 @@ const DepartmentChange = (props) => {
           9000,
           null,
           null,
-          cName
+          cName,
         );
         break;
 
@@ -103,7 +94,7 @@ const DepartmentChange = (props) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -119,7 +110,7 @@ const DepartmentChange = (props) => {
     const response = await callApi(
       `students/student_accademic/?student_id=${values.searchfield}`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       setStudentIdMatch(true);
@@ -148,7 +139,7 @@ const DepartmentChange = (props) => {
   const fetchClasses = async () => {
     if (student?.grade) {
       const response = await callApi(
-        'institute/classs/?grade=' + student.grade
+        'institute/classs/?grade=' + student.grade,
       );
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -182,7 +173,7 @@ const DepartmentChange = (props) => {
       const response = await callApi(
         `students/${student.id}/class`,
         'PATCH',
-        data
+        data,
       );
       if (response.status === 200 || response.status === 201) {
         console.log('success');

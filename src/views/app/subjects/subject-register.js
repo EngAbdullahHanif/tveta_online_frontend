@@ -36,7 +36,7 @@ const systemOption = [
 const SignupSchema = Yup.object().shape({
   name1: Yup.string().required(<IntlMessages id="subject.NameErr" />),
   englishName: Yup.string().required(
-    <IntlMessages id="subject.englishNameErr" />
+    <IntlMessages id="subject.englishNameErr" />,
   ),
   code: Yup.string().required(<IntlMessages id="subject.codeErr" />),
   credit: Yup.string().required(<IntlMessages id="subject.creditErr" />),
@@ -77,7 +77,7 @@ const SubjectRegister = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -89,7 +89,7 @@ const SubjectRegister = () => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:

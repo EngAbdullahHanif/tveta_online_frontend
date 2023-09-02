@@ -29,7 +29,7 @@ const TeacherEvaluation = () => {
     useEffect(() => {
       async function fetchData() {
         const { data } = await axios.get(
-          `${TeacherEvaluationAPI}/?id=${teacherId}`
+          `${TeacherEvaluationAPI}/?id=${teacherId}`,
         );
         setInitialEvaluator(data[0].evaluator_name);
         setInitialStrengthPoints(data[0].strong_points);
@@ -73,7 +73,7 @@ const TeacherEvaluation = () => {
             if (evaluationType.value === data[0].evaluation_type) {
               setInitialEvluationType(evaluationType);
             }
-          }
+          },
         );
       }
       fetchData();

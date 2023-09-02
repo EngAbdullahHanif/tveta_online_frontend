@@ -15,7 +15,6 @@ import { NavLink } from 'react-router-dom';
 import { BsPencilSquare } from 'react-icons/bs';
 // import { servicePath } from 'constants/defaultValues';
 
-
 import useMousetrap from 'hooks/use-mousetrap';
 import config from '../../../../config';
 import { AuthContext } from 'context/AuthContext';
@@ -220,7 +219,7 @@ const ThumbListPages = ({ match, roles }) => {
     userRole.admin,
   ];
   const authUser = user.groups.filter((group) =>
-    canUpdateRoles.includes(group.name)
+    canUpdateRoles.includes(group.name),
   );
   if (!authUser) columns.pop();
 
@@ -402,7 +401,7 @@ const ThumbListPages = ({ match, roles }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -635,7 +634,7 @@ const ThumbListPages = ({ match, roles }) => {
                   onChange={(name, option) => {
                     setFieldValue(name, option);
                     const dd = districts.filter(
-                      (dis) => dis.province === option.value
+                      (dis) => dis.province === option.value,
                     );
                     setDistrictsOptions(dd);
                   }}
@@ -709,7 +708,7 @@ const ThumbListPages = ({ match, roles }) => {
             capacity: item.capacity,
             quota: item.quota,
             building_ownership: BuildingTypeOptions.find(
-              (op) => op.value === item.building_ownership
+              (op) => op.value === item.building_ownership,
             ).label,
             status: instituteStatusOptions.map((status) => {
               if (status.value == item?.status) {

@@ -43,7 +43,7 @@ const ForgotPassword = ({
         3000,
         null,
         null,
-        ''
+        '',
       );
     } else if (!loading && forgotUserMail === 'success')
       NotificationManager.success(
@@ -52,7 +52,7 @@ const ForgotPassword = ({
         3000,
         null,
         null,
-        ''
+        '',
       );
   }, [error, forgotUserMail, loading]);
 
@@ -66,11 +66,10 @@ const ForgotPassword = ({
             <p className="text-white h2">جادوی کاره مارو توی جزئیاتش ببین</p>
             <p className="white mb-0">
               از ایمیلت میتونی برای پیداکردن رمز عبورت استفاده کنی <br />
-              اگه حساب کاربری نداری نگران نباش، از {' '}
+              اگه حساب کاربری نداری نگران نباش، از{' '}
               <NavLink to="/user/register" className="white">
                 اینجا
-              </NavLink>
-              {' '}
+              </NavLink>{' '}
               میتونی تو سایت اسمتو بویسی
             </p>
           </div>

@@ -97,7 +97,7 @@ const ClassRegister = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -109,7 +109,7 @@ const ClassRegister = () => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:

@@ -13,21 +13,12 @@ import './../../../assets/css/global-style.css';
 
 // Year  and SHift
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -38,7 +29,7 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.InstituteErr" />),
 
   educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
+    <IntlMessages id="forms.educationYearErr" />,
   ),
 
   studyTime: Yup.object()
@@ -139,7 +130,7 @@ const SubjectMarksVerification = ({ match }) => {
     const response = await callApi(
       `institute/institite-department/?institute=${instituteId.value}`,
       '',
-      null
+      null,
     );
     // console.log('response of department', response);
     if (response.data && response.status === 200) {
@@ -204,7 +195,7 @@ const SubjectMarksVerification = ({ match }) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -216,7 +207,7 @@ const SubjectMarksVerification = ({ match }) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -230,7 +221,7 @@ const SubjectMarksVerification = ({ match }) => {
     const response = await callApi(
       `students/marks-verification-subjects-list/?institute=${selectedInstitute.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}&classs=${selectedClass.value}`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       console.log('response of students', response);
@@ -269,7 +260,7 @@ const SubjectMarksVerification = ({ match }) => {
     const response = await callApi(
       'students/verify-subject-marks/',
       'POST',
-      data
+      data,
     );
     if (
       response.status === 200 ||
@@ -365,7 +356,7 @@ const SubjectMarksVerification = ({ match }) => {
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationalYear
+                            values.educationalYear,
                           )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (

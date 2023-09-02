@@ -50,14 +50,7 @@ import {
   teacherEducationValidationSchema,
   teacherHREvaluationValidationSchema,
 } from 'views/app/global-data/forms-validation';
-import {
-  message,
-  Col,
-  InputNumber,
-  Slider,
-  Spin,
-  Popconfirm,
-} from 'antd';
+import { message, Col, InputNumber, Slider, Spin, Popconfirm } from 'antd';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import { Spinner } from 'react-bootstrap';
 import {
@@ -123,7 +116,7 @@ const TeacherProfile = () => {
     const response = await callApi(
       `teachers/${teacherId}/evaluations/`,
       '',
-      null
+      null,
     );
 
     console.log(`${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`);
@@ -144,7 +137,7 @@ const TeacherProfile = () => {
       const response = await callApi(
         `teachers/institute/?teacher_id=${teacherId}`,
         '',
-        null
+        null,
       );
       const data = response.data;
       console.log(`${teacherTransferApiUrl}/?teacher_id=${teacherId}`);
@@ -157,7 +150,7 @@ const TeacherProfile = () => {
     const response = await callApi(
       `teachers/${teacherId}/educations`,
       '',
-      null
+      null,
     );
 
     const data = response.data;
@@ -168,7 +161,7 @@ const TeacherProfile = () => {
     const response = await callApi(
       `teachers/${teacherId}/contracts/`,
       '',
-      null
+      null,
     );
 
     const data = response.data;
@@ -179,7 +172,7 @@ const TeacherProfile = () => {
     const response = await callApi(
       `teachers/${teacherId}/feedbacks/`,
       '',
-      null
+      null,
     );
 
     const data = response.data;
@@ -217,7 +210,7 @@ const TeacherProfile = () => {
       (response) => {
         console.log('Response in Contract Delete: ', response.data);
         fetchTeacherContracts();
-      }
+      },
     );
   };
   const deleteEducation = async (item) => {
@@ -225,7 +218,7 @@ const TeacherProfile = () => {
       (response) => {
         console.log('Response in Education Delete: ', response.data);
         fetchTeacherEducation();
-      }
+      },
     );
   };
   const deleteEvaluation = async (item) => {
@@ -233,13 +226,13 @@ const TeacherProfile = () => {
       (response) => {
         console.log('Response in Education Delete: ', response.data);
         fetchTeacherEvaluation();
-      }
+      },
     );
   };
   const deleteHREvaluation = async (item) => {
     await callApi(
       `teachers/${teacherId}/hr-evaluations/${item}/`,
-      'DELETE'
+      'DELETE',
     ).then((response) => {
       console.log('Response in Education Delete: ', response.data);
       fetchTeacherHREvaluation();
@@ -250,7 +243,7 @@ const TeacherProfile = () => {
       (response) => {
         console.log('Response in Incentive Delete: ', response.data);
         fetchTeacherIncentives();
-      }
+      },
     );
   };
   const addEducation = async (inputData) => {
@@ -286,7 +279,7 @@ const TeacherProfile = () => {
         } else {
           message.error('Data Not Saved Check your Payload');
         }
-      }
+      },
     );
   };
 
@@ -336,7 +329,7 @@ const TeacherProfile = () => {
         } else {
           message.error('Data Not Saved Check your Payload');
         }
-      }
+      },
     );
   };
 
@@ -380,7 +373,7 @@ const TeacherProfile = () => {
         } else {
           message.error('Data Not Saved Check your Payload');
         }
-      }
+      },
     );
   };
 
@@ -417,7 +410,7 @@ const TeacherProfile = () => {
         } else {
           message.error('Data Not Saved Check your Payload');
         }
-      }
+      },
     );
   };
   console.log('ID: ', recId, updatingRecord);
@@ -451,7 +444,7 @@ const TeacherProfile = () => {
         } else {
           message.error('Data Not Saved Check your Payload');
         }
-      }
+      },
     );
     setLoading(false);
   };
@@ -574,7 +567,7 @@ const TeacherProfile = () => {
                         <h3>
                           {
                             genderOptions.find(
-                              (op) => op.value === teacher.gender
+                              (op) => op.value === teacher.gender,
                             )?.label
                           }
                         </h3>
@@ -889,7 +882,7 @@ const TeacherProfile = () => {
                                               updatingRecord.degree
                                             )
                                               return inst;
-                                          }
+                                          },
                                         ),
                                         institute: updatingRecord?.institution,
 
@@ -1283,51 +1276,51 @@ const TeacherProfile = () => {
                                         jobType: jobTypeOptions.find(
                                           (inst) =>
                                             inst.value ===
-                                            updatingRecord.job_type
+                                            updatingRecord.job_type,
                                         ),
                                         grade: gradeOptions.find(
                                           (inst) =>
-                                            inst.value === updatingRecord.grade
+                                            inst.value === updatingRecord.grade,
                                         ),
                                         step: stepOptions.find(
                                           (inst) =>
-                                            inst.value === updatingRecord.step
+                                            inst.value === updatingRecord.step,
                                         ),
                                         teaching_language: langOptions.find(
                                           (inst) =>
                                             inst.value ===
-                                            updatingRecord.teaching_language
+                                            updatingRecord.teaching_language,
                                         ),
                                         hireType: hireTypeOptions.find(
                                           (inst) =>
                                             inst.value ===
-                                            updatingRecord.hire_type
+                                            updatingRecord.hire_type,
                                         ),
                                         contract_type: contractTypeOptions.find(
                                           (inst) =>
                                             inst.value ===
-                                            updatingRecord.contract_type
+                                            updatingRecord.contract_type,
                                         ),
                                         institute: institutes.find(
                                           (inst) =>
                                             inst.value ===
-                                            updatingRecord.institute
+                                            updatingRecord.institute,
                                         ),
                                         field: contextFields.find(
                                           (inst) =>
                                             inst.value ===
-                                            updatingRecord.teaching_field
+                                            updatingRecord.teaching_field,
                                         ),
                                         status:
                                           teacherContractStatusOptions.find(
                                             (inst) =>
                                               inst.value ===
-                                              updatingRecord.status
+                                              updatingRecord.status,
                                           ),
                                         jobType: jobTypeOptions.find(
                                           (inst) =>
                                             inst.value ===
-                                            updatingRecord.job_type
+                                            updatingRecord.job_type,
                                         ),
                                       }
                                 }
@@ -1593,15 +1586,17 @@ const TeacherProfile = () => {
                                             onChange={(e) =>
                                               setStartDate(
                                                 new Date(
-                                                  e.toDate()
+                                                  e.toDate(),
                                                 ).getFullYear() +
                                                   '-' +
                                                   (new Date(
-                                                    e.toDate()
+                                                    e.toDate(),
                                                   ).getMonth() +
                                                     1) +
                                                   '-' +
-                                                  new Date(e.toDate()).getDate()
+                                                  new Date(
+                                                    e.toDate(),
+                                                  ).getDate(),
                                               )
                                             }
                                           />
@@ -1625,15 +1620,17 @@ const TeacherProfile = () => {
                                               if (!e) return;
                                               setEndDate(
                                                 new Date(
-                                                  e.toDate()
+                                                  e.toDate(),
                                                 ).getFullYear() +
                                                   '-' +
                                                   (new Date(
-                                                    e.toDate()
+                                                    e.toDate(),
                                                   ).getMonth() +
                                                     1) +
                                                   '-' +
-                                                  new Date(e.toDate()).getDate()
+                                                  new Date(
+                                                    e.toDate(),
+                                                  ).getDate(),
                                               );
                                             }}
                                           />
@@ -1882,7 +1879,7 @@ const TeacherProfile = () => {
                                           evaluationTypeOptions.find(
                                             (inst) =>
                                               inst.value ===
-                                              updatingRecord.evaluation_type
+                                              updatingRecord.evaluation_type,
                                           ),
                                         strong_points:
                                           updatingRecord.strong_points,
@@ -1893,20 +1890,21 @@ const TeacherProfile = () => {
                                         institute: institutes.find(
                                           (inst) =>
                                             inst.value ===
-                                            updatingRecord.institute
+                                            updatingRecord.institute,
                                         ),
                                         department: departments.find(
                                           (dep) =>
                                             dep.value ===
-                                            updatingRecord.department
+                                            updatingRecord.department,
                                         ),
                                         classs: classes.find(
                                           (dep) =>
-                                            dep.value === updatingRecord.classs
+                                            dep.value === updatingRecord.classs,
                                         ),
                                         subject: subjects.find(
                                           (dep) =>
-                                            dep.value === updatingRecord.subject
+                                            dep.value ===
+                                            updatingRecord.subject,
                                         ),
                                       }
                                 }
@@ -2126,15 +2124,17 @@ const TeacherProfile = () => {
                                             onChange={(e) =>
                                               setEvaluationDate(
                                                 new Date(
-                                                  e.toDate()
+                                                  e.toDate(),
                                                 ).getFullYear() +
                                                   '-' +
                                                   (new Date(
-                                                    e.toDate()
+                                                    e.toDate(),
                                                   ).getMonth() +
                                                     1) +
                                                   '-' +
-                                                  new Date(e.toDate()).getDate()
+                                                  new Date(
+                                                    e.toDate(),
+                                                  ).getDate(),
                                               )
                                             }
                                           />
@@ -2624,15 +2624,17 @@ const TeacherProfile = () => {
                                             onChange={(e) =>
                                               setEvaluationDate(
                                                 new Date(
-                                                  e.toDate()
+                                                  e.toDate(),
                                                 ).getFullYear() +
                                                   '-' +
                                                   (new Date(
-                                                    e.toDate()
+                                                    e.toDate(),
                                                   ).getMonth() +
                                                     1) +
                                                   '-' +
-                                                  new Date(e.toDate()).getDate()
+                                                  new Date(
+                                                    e.toDate(),
+                                                  ).getDate(),
                                               )
                                             }
                                           />
@@ -2882,7 +2884,7 @@ const TeacherProfile = () => {
                                               inst.value === updatingRecord.type
                                             )
                                               return inst;
-                                          }
+                                          },
                                         ),
                                         details: updatingRecord.details,
                                       }

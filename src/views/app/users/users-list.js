@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import IntlMessages from "helpers/IntlMessages";
-import ListPageListing from "views/app/students/bio/students-list/StudentListCatagory";
+import React, { useEffect, useState } from 'react';
+import IntlMessages from 'helpers/IntlMessages';
+import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 function UsersList(props) {
-  const [displayMode, setDisplayMode] = useState("thumblist");
+  const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
 
   const [totalPage, setTotalPage] = useState(1);
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([
     {
-      user_id: "1",
-      student_id: "2",
-      name: "Suhaib",
-      province: "Kabul",
-      role: "Admin",
+      user_id: '1',
+      student_id: '2',
+      name: 'Suhaib',
+      province: 'Kabul',
+      role: 'Admin',
     },
   ]);
   const [lastChecked, setLastChecked] = useState(null);
@@ -26,8 +26,8 @@ function UsersList(props) {
   };
   const onCheckItem = (event, id) => {
     if (
-      event.target.tagName === "A" ||
-      (event.target.parentElement && event.target.parentElement.tagName === "A")
+      event.target.tagName === 'A' ||
+      (event.target.parentElement && event.target.parentElement.tagName === 'A')
     ) {
       return true;
     }
@@ -45,13 +45,13 @@ function UsersList(props) {
 
     if (event.shiftKey) {
       let newItems = [...items];
-      const start = getIndex(id, newItems, "id");
-      const end = getIndex(lastChecked, newItems, "id");
+      const start = getIndex(id, newItems, 'id');
+      const end = getIndex(lastChecked, newItems, 'id');
       newItems = newItems.slice(Math.min(start, end), Math.max(start, end) + 1);
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -61,8 +61,8 @@ function UsersList(props) {
   };
   const onContextMenuClick = (e, data) => {
     // params : (e,data,target)
-    console.log("onContextMenuClick - selected items", selectedItems);
-    console.log("onContextMenuClick - action : ", data.action);
+    console.log('onContextMenuClick - selected items', selectedItems);
+    console.log('onContextMenuClick - action : ', data.action);
   };
 
   const onContextMenu = (e, data) => {
@@ -81,27 +81,27 @@ function UsersList(props) {
       <table className="table">
         <thead
           className="pl-2 d-flex flex-grow-1  table-dark mb-2"
-          style={{ maxHeight: "55px" }}
+          style={{ maxHeight: '55px' }}
         >
           <tr className="card-body align-self-center d-flex flex-column flex-lg-row align-items-lg-center">
             <th
               style={{
-                width: "11%",
-                fontSize: "20px",
-                paddingInline: "0%",
-                textAlign: "right",
-                borderStyle: "hidden",
+                width: '11%',
+                fontSize: '20px',
+                paddingInline: '0%',
+                textAlign: 'right',
+                borderStyle: 'hidden',
               }}
             >
               <IntlMessages id="ایدی" />
             </th>
             <th
               style={{
-                width: "14%",
-                fontSize: "20px",
-                paddingInline: "0%",
-                textAlign: "right",
-                borderStyle: "hidden",
+                width: '14%',
+                fontSize: '20px',
+                paddingInline: '0%',
+                textAlign: 'right',
+                borderStyle: 'hidden',
               }}
             >
               <IntlMessages id="نوم" />
@@ -109,33 +109,33 @@ function UsersList(props) {
 
             <th
               style={{
-                width: "15%",
-                padding: "0%",
-                fontSize: "20px",
-                textAlign: "right",
-                borderStyle: "hidden",
+                width: '15%',
+                padding: '0%',
+                fontSize: '20px',
+                textAlign: 'right',
+                borderStyle: 'hidden',
               }}
             >
               <IntlMessages id="ادرس" />
             </th>
             <th
               style={{
-                width: "15%",
-                padding: "0%",
-                fontSize: "20px",
-                textAlign: "right",
-                borderStyle: "hidden",
+                width: '15%',
+                padding: '0%',
+                fontSize: '20px',
+                textAlign: 'right',
+                borderStyle: 'hidden',
               }}
             >
               <IntlMessages id="رول" />
             </th>
             <th
               style={{
-                width: "15%",
-                padding: "0%",
-                fontSize: "20px",
-                textAlign: "right",
-                borderStyle: "hidden",
+                width: '15%',
+                padding: '0%',
+                fontSize: '20px',
+                textAlign: 'right',
+                borderStyle: 'hidden',
               }}
             >
               <IntlMessages id="یوزر نوم" />

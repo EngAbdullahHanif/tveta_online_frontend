@@ -9,7 +9,7 @@ export const fetchProvinces = async () => {
         response.data.map((province) => ({
           value: province.id,
           label: province.native_name,
-        }))
+        })),
       );
       return response.data.map((province) => ({
         value: province.id,

@@ -16,7 +16,6 @@ import {
   dateOfBirthOptoions,
 } from '../../global-data/options';
 
-
 import { NavLink } from 'react-router-dom';
 import './../../../../assets/css/global-style.css';
 import {
@@ -113,7 +112,7 @@ const TeacherRegister = ({ intl }, values) => {
         const { data } = await callApi(
           `teachers/institute/?teacher_id=${teacherId}`,
           '',
-          null
+          null,
         );
         setInitialName(data[0].teacher_id.name);
         setInitialFatherName(data[0].teacher_id.father_name);
@@ -146,7 +145,7 @@ const TeacherRegister = ({ intl }, values) => {
             ) {
               setInitialLevelOfEducation(teacherLevelOfEducation);
             }
-          }
+          },
         );
         const teacherMainProvince = provinceOptions.map((province) => {
           if (province.value == data[0].teacher_id.main_province) {
@@ -168,21 +167,21 @@ const TeacherRegister = ({ intl }, values) => {
             if (teacherStatus.value == data[0].teacher_id.status_type) {
               setinitialStatus(teacherStatus);
             }
-          }
+          },
         );
         const teacherAppointingOptions = appointmentTypeOptions.map(
           (appointingType) => {
             if (appointingType.value == data[0].job_type) {
               setInitialAppointmentType(appointingType);
             }
-          }
+          },
         );
         const teachingFieldOptions = teacherteachingfieldOptions.map(
           (teachingField) => {
             if (teachingField.value == data[0].teacher_id.education_degree) {
               setInitialTeachingField(teachingField);
             }
-          }
+          },
         );
         const teacherGradeOptions = gradeOptions.map((teacherGrade) => {
           if (teacherGrade.value == data[0].teacher_id.status_type) {
@@ -212,7 +211,7 @@ const TeacherRegister = ({ intl }, values) => {
             if (teacherContractType.value == data[0].contract_type) {
               setInitialContractType(teacherContractType);
             }
-          }
+          },
         );
       }
       fetchStudent();
@@ -230,7 +229,7 @@ const TeacherRegister = ({ intl }, values) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -242,7 +241,7 @@ const TeacherRegister = ({ intl }, values) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -269,7 +268,7 @@ const TeacherRegister = ({ intl }, values) => {
     const response = await callApi(
       `core/districts/?province=${provinceId}`,
       'GET',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -287,7 +286,7 @@ const TeacherRegister = ({ intl }, values) => {
     const response = await callApi(
       `core/districts/?province=${provinceId}`,
       'GET',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
@@ -352,7 +351,7 @@ const TeacherRegister = ({ intl }, values) => {
     const response = await callApi(
       'teachers/teacher-contract/create/',
       'POST',
-      data
+      data,
     );
     if (response.status >= 200 && response.status < 300) {
       createNotification('success', 'filled');
@@ -1194,7 +1193,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                   onClick={setSelectedMainProvince(
-                                    values.mainProvince.value
+                                    values.mainProvince.value,
                                   )}
                                 />
                                 {errors.mainProvince && touched.mainProvince ? (
@@ -1269,7 +1268,7 @@ const TeacherRegister = ({ intl }, values) => {
                                   onChange={setFieldValue}
                                   onBlur={setFieldTouched}
                                   onClick={setSelectedCurrentProvince(
-                                    values.currentProvince.value
+                                    values.currentProvince.value,
                                   )}
                                 />
                                 {errors.currentProvince &&

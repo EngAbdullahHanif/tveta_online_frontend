@@ -56,7 +56,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
   tazkiraNo: Yup.string().when('tazkiraType.value', {
     is: 'electronic',
     then: Yup.string().required(
-      'نمبر تذکره الکترونی الزامی است وقتی نوع تذکره الکترونی باشد'
+      'نمبر تذکره الکترونی الزامی است وقتی نوع تذکره الکترونی باشد',
     ),
     otherwise: Yup.string(),
   }),
@@ -105,7 +105,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
   idCardJoldNo: Yup.string().when('tazkiraType.value', {
     is: 'paper',
     then: Yup.string().required(
-      'شماره جلد الزامی است وقتی نوع تذکره کاغذی است'
+      'شماره جلد الزامی است وقتی نوع تذکره کاغذی است',
     ),
     otherwise: Yup.string(),
   }),
@@ -119,7 +119,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
   sabtNo: Yup.number().when('tazkiraType.value', {
     is: 'paper',
     then: Yup.number().required(
-      'شماره ثبت الزامی است وقتی نوع تذکره کاغذی است'
+      'شماره ثبت الزامی است وقتی نوع تذکره کاغذی است',
     ),
     otherwise: Yup.number(),
   }),
@@ -127,7 +127,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
   sokokNo: Yup.string().when('tazkiraType.value', {
     is: 'paper',
     then: Yup.string().required(
-      'شماره صکوک الزامی است وقتی نوع تذکره کاغذی است'
+      'شماره صکوک الزامی است وقتی نوع تذکره کاغذی است',
     ),
     otherwise: Yup.string(),
   }),
@@ -192,7 +192,7 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
   disability: Yup.object().when('institute.rest.type', {
     is: 'special_education',
     then: Yup.string().required(
-      'وقتی که انستتیوت تعلیمات خاص باشد، اضافه کردن معلولیت/معیوبیت الزامی است.'
+      'وقتی که انستتیوت تعلیمات خاص باشد، اضافه کردن معلولیت/معیوبیت الزامی است.',
     ),
     otherwise: Yup.object().nullable(),
   }),
@@ -311,7 +311,7 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
   tazkiraNo: Yup.string().when('tazkiraType.value', {
     is: 'electronic',
     then: Yup.string().required(
-      'نمبر تذکره الکترونی الزامی است وقتی نوع تذکره الکترونی باشد'
+      'نمبر تذکره الکترونی الزامی است وقتی نوع تذکره الکترونی باشد',
     ),
     otherwise: Yup.string(),
   }),
@@ -357,7 +357,7 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
   idCardJoldNo: Yup.string().when('tazkiraType.value', {
     is: 'paper',
     then: Yup.string().required(
-      'شماره جلد الزامی است وقتی نوع تذکره کاغذی است'
+      'شماره جلد الزامی است وقتی نوع تذکره کاغذی است',
     ),
     otherwise: Yup.string(),
   }),
@@ -371,7 +371,7 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
   sabtNo: Yup.number().when('tazkiraType.value', {
     is: 'paper',
     then: Yup.number().required(
-      'شماره ثبت الزامی است وقتی نوع تذکره کاغذی است'
+      'شماره ثبت الزامی است وقتی نوع تذکره کاغذی است',
     ),
     otherwise: Yup.number(),
   }),
@@ -379,7 +379,7 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
   sokokNo: Yup.string().when('tazkiraType.value', {
     is: 'paper',
     then: Yup.string().required(
-      'شماره صکوک الزامی است وقتی نوع تذکره کاغذی است'
+      'شماره صکوک الزامی است وقتی نوع تذکره کاغذی است',
     ),
     otherwise: Yup.string(),
   }),
@@ -415,7 +415,7 @@ export const teacherRegisterFormStep_1 = Yup.object().shape({
     .required(<IntlMessages id="forms.DistrictErr" />),
   main_village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
   current_village: Yup.string().required(
-    <IntlMessages id="forms.VillageErr" />
+    <IntlMessages id="forms.VillageErr" />,
   ),
 });
 
@@ -522,12 +522,12 @@ export const teacherEvalautionSchema = Yup.object().shape({
     .required(<IntlMessages id="teacher.evaluatorErr" />),
 
   strengthPoints: Yup.string().required(
-    <IntlMessages id="teacher.strengthPointsErr" />
+    <IntlMessages id="teacher.strengthPointsErr" />,
   ),
 
   marks: Yup.string().required(<IntlMessages id="teacher.marksErr" />),
   evaluationDate: Yup.string().required(
-    <IntlMessages id="teacher.evaluationDateErr" />
+    <IntlMessages id="teacher.evaluationDateErr" />,
   ),
 
   institute: Yup.object()
@@ -554,7 +554,7 @@ export const teacherEvalautionSchema = Yup.object().shape({
     .required(<IntlMessages id="teacher.evaluationTypeErr" />),
 
   weaknessPoints: Yup.string().required(
-    <IntlMessages id="teacher.weaknessPointsErr" />
+    <IntlMessages id="teacher.weaknessPointsErr" />,
   ),
 });
 
@@ -570,7 +570,7 @@ export const kankorRegisterValidationSchema = Yup.object().shape({
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="teacher.FatherNameErr" />),
   kankorMarks: Yup.string().required(
-    <IntlMessages id="forms.KankorMarksErr" />
+    <IntlMessages id="forms.KankorMarksErr" />,
   ),
 
   department: Yup.object()
@@ -642,11 +642,11 @@ export const teacherTransferValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
 
   transferDate: Yup.string().required(
-    <IntlMessages id="teacher.transferDateErr" />
+    <IntlMessages id="teacher.transferDateErr" />,
   ),
 
   language: Yup.string().required(
-    <IntlMessages id="forms.mediumOfInstructionErr" />
+    <IntlMessages id="forms.mediumOfInstructionErr" />,
   ),
 
   appointmentType: Yup.object()
@@ -681,7 +681,7 @@ export const teacherTransferValidationSchema = Yup.object().shape({
 
 export const studentdismissalvalidationSchema = Yup.object().shape({
   dismissalDate: Yup.string().required(
-    <IntlMessages id="student.dissmissalDateErr" />
+    <IntlMessages id="student.dissmissalDateErr" />,
   ),
   dismissalDocument: Yup.mixed()
     .test('fileType', 'Unsupported File Format', (value) => {
@@ -710,7 +710,7 @@ export const studentTransferValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.InstituteErr" />),
 
   transferDate: Yup.string().required(
-    <IntlMessages id="teacher.transferDateErr" />
+    <IntlMessages id="teacher.transferDateErr" />,
   ),
 
   educationalYear: Yup.object()

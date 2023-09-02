@@ -2,9 +2,7 @@ import React, { useContext, useState } from 'react';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 
-import {
-  Card,
-} from 'reactstrap';
+import { Card } from 'reactstrap';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -20,7 +18,7 @@ const createNotification = (type, className) => {
         3000,
         null,
         null,
-        cName
+        cName,
       );
       break;
     case 'error':
@@ -32,7 +30,7 @@ const createNotification = (type, className) => {
           alert('callback');
         },
         null,
-        cName
+        cName,
       );
       break;
     default:
@@ -56,7 +54,7 @@ const InstituteDepartmentListBody = ({
     const instituteResponse = await callApi(
       `institute/institute-department/${instituteId}/`,
       'DELETE',
-      null
+      null,
     );
     if (instituteResponse.status >= 200 && instituteResponse.status < 300) {
       console.log('succesfully deleted');
@@ -102,7 +100,7 @@ const InstituteDepartmentListBody = ({
                 >
                   {
                     institutes.find(
-                      (inst) => inst.value === institute.institute
+                      (inst) => inst.value === institute.institute,
                     ).label
                   }
                 </p>

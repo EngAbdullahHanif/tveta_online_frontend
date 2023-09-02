@@ -4,11 +4,11 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 const GroupRegister = React.lazy(() =>
-  import(/* webpackChunkName: "register" */ './group-register')
+  import(/* webpackChunkName: "register" */ './group-register'),
 );
 
 const GroupPremssions = React.lazy(() =>
-  import(/* webpackChunkName: "premissions" */ './group-premissions')
+  import(/* webpackChunkName: "premissions" */ './group-premissions'),
 );
 
 const Groups = ({ match, props }) => (

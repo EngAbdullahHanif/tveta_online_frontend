@@ -26,10 +26,7 @@ import Industerial from '../assets/img/sectors/Industerial.jpg';
 import ScrollAnimation from 'react-animate-on-scroll';
 import IntlMessages from 'helpers/IntlMessages';
 import './carousel.css';
-import {
-  Row,
-  Card,
-} from 'reactstrap';
+import { Row, Card } from 'reactstrap';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const contact = [

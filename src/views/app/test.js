@@ -3,14 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
@@ -40,25 +33,25 @@ const RegisterSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.StdFatherDutyErr" />),
 
   StdFatherDutyLocation: Yup.string().required(
-    <IntlMessages id="forms.StdFatherDutyLocationErr" />
+    <IntlMessages id="forms.StdFatherDutyLocationErr" />,
   ),
 
   StdDoB: Yup.date().required(<IntlMessages id="forms.StdDoBErr" />),
 
   StdTazkiraNo: Yup.string().required(
-    <IntlMessages id="forms.StdTazkiraNoErr" />
+    <IntlMessages id="forms.StdTazkiraNoErr" />,
   ),
 
   StdIdCardPageNo: Yup.string().required(
-    <IntlMessages id="forms.StdIdCardPageNoErr" />
+    <IntlMessages id="forms.StdIdCardPageNoErr" />,
   ),
 
   StdIdCardCover: Yup.string().required(
-    <IntlMessages id="forms.StdIdCardCoverErr" />
+    <IntlMessages id="forms.StdIdCardCoverErr" />,
   ),
 
   StdIdCardSakukNo: Yup.string().required(
-    <IntlMessages id="forms.StdIdCardSakukNoErr" />
+    <IntlMessages id="forms.StdIdCardSakukNoErr" />,
   ),
 
   // Province: Yup.string().required(<IntlMessages id="forms.ProvinceErr" />),
@@ -73,11 +66,11 @@ const RegisterSchema = Yup.object().shape({
 
   C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
   StdPlaceOfBirth: Yup.string().required(
-    <IntlMessages id="forms.StdPlaceOfBirthErr" />
+    <IntlMessages id="forms.StdPlaceOfBirthErr" />,
   ),
 
   StPreShcool: Yup.string().required(
-    <IntlMessages id="forms.StPreShcoolErr" />
+    <IntlMessages id="forms.StPreShcoolErr" />,
   ),
 
   // StudentType: Yup.string().required(
@@ -307,7 +300,7 @@ const StudentRegistraion = (values) => {
   };
   const fetchDepartments = async () => {
     const response = await axios.get(
-      'http://localhost:8000/institute/department/'
+      'http://localhost:8000/institute/department/',
     );
     const updatedData = await response.data.map((item) => ({
       value: item.id,

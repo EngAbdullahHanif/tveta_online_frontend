@@ -4,11 +4,11 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 const ClassRegister = React.lazy(() =>
-  import(/* webpackChunkName: "subject-register" */ './class-register')
+  import(/* webpackChunkName: "subject-register" */ './class-register'),
 );
 
 const ClassList = React.lazy(() =>
-  import(/* webpackChunkName: "subject-list" */ './class-list/ClassListMain')
+  import(/* webpackChunkName: "subject-list" */ './class-list/ClassListMain'),
 );
 
 const Classes = ({ match, props }) => (

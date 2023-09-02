@@ -1,4 +1,4 @@
-import { adminRoot } from "../constants/defaultValues";
+import { adminRoot } from '../constants/defaultValues';
 
 const cakes = [
   {

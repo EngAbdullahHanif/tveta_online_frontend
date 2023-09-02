@@ -162,8 +162,8 @@ const SurveyDetailApp = ({
                           className="mt-3"
                           onClick={() => addQuestion()}
                         >
-                          <i className="simple-icon-plus btn-group-icon" /> افزودن پرسش
-                          
+                          <i className="simple-icon-plus btn-group-icon" />{' '}
+                          افزودن پرسش
                         </Button>
                       </div>
                     </Colxx>
@@ -181,7 +181,8 @@ const SurveyDetailApp = ({
             <div className="loading" />
           )}
         </Colxx>
-      </Row><SurveyDetailApplicationMenu />
+      </Row>
+      <SurveyDetailApplicationMenu />
     </>
   );
 };

@@ -21,8 +21,6 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-
-
 import DisplayMessage from 'components/messages/DisplayMessage';
 
 import config from '../../../../config';
@@ -70,7 +68,7 @@ const ClassTransfer = (values) => {
           9000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'info':
@@ -80,7 +78,7 @@ const ClassTransfer = (values) => {
           9000,
           null,
           null,
-          cName
+          cName,
         );
         break;
 
@@ -93,7 +91,7 @@ const ClassTransfer = (values) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -106,7 +104,7 @@ const ClassTransfer = (values) => {
     const response = await callApi(
       `students/student_accademic/?student_id=${studentId}`,
       '',
-      null
+      null,
     );
     console.log('repsonse is: ', response);
     if (response && response.status === 200) {
@@ -133,7 +131,7 @@ const ClassTransfer = (values) => {
       const response = await callApi(
         `students/student-dissmiss/`,
         'POST',
-        data
+        data,
       );
       if (response.status === 200 || response.status === 201) {
         console.log('success');
@@ -468,7 +466,7 @@ const ClassTransfer = (values) => {
                                     onChange={(event) => {
                                       setFieldValue(
                                         'dismissalDocument',
-                                        event.currentTarget.files[0]
+                                        event.currentTarget.files[0],
                                       );
                                     }}
                                     onBlur={handleBlur}

@@ -119,10 +119,15 @@ const DetailsAltPages = ({ match, intl }) => {
                         <IntlMessages id="pages.description" />
                       </p>
                       <p className="mb-3">
-                        کیک لایه‌ای (به انگلیسی: Layer cake) نوعی کیک است که از دو یا سه لایهٔ هم اندازه که بر روی هم قرار گرفته‌اند، تشکیل شده است. مابین لایه‌های کیک با موادی مانند خامه یا یک مادهٔ پرحجم پر می‌شود و اطراف و سطح بالای کیک نیز معمولاً با مانند خامهٔ زده شده پوشانده شده
+                        کیک لایه‌ای (به انگلیسی: Layer cake) نوعی کیک است که از
+                        دو یا سه لایهٔ هم اندازه که بر روی هم قرار گرفته‌اند،
+                        تشکیل شده است. مابین لایه‌های کیک با موادی مانند خامه یا
+                        یک مادهٔ پرحجم پر می‌شود و اطراف و سطح بالای کیک نیز
+                        معمولاً با مانند خامهٔ زده شده پوشانده شده
                         <br />
-                        <br />
-                        و سپس ممکن بر روی آن چاشنی‌ها یا تزئینات، مختلف مانند شکلات، نارگیل، خشکبار و دیگر مواد غذایی یا گل‌های خوراکی قرار داده شود.
+                        <br />و سپس ممکن بر روی آن چاشنی‌ها یا تزئینات، مختلف
+                        مانند شکلات، نارگیل، خشکبار و دیگر مواد غذایی یا گل‌های
+                        خوراکی قرار داده شود.
                       </p>
 
                       <p className="text-muted text-small mb-2">
@@ -142,22 +147,22 @@ const DetailsAltPages = ({ match, intl }) => {
                       <div className="mb-3">
                         <p className="d-sm-inline-block mb-1">
                           <Badge color="outline-secondary mb-1 mr-1" pill>
-                          تخم مرغ
+                            تخم مرغ
                           </Badge>
                           <Badge color="outline-secondary mb-1 mr-1" pill>
-                          شکر
+                            شکر
                           </Badge>
                           <Badge color="outline-secondary mb-1 mr-1" pill>
-                          وانیل 
+                            وانیل
                           </Badge>
                           <Badge color="outline-secondary mb-1 mr-1" pill>
-                          آرد کیک
+                            آرد کیک
                           </Badge>
                           <Badge color="outline-secondary mb-1 mr-1" pill>
                             شیر
                           </Badge>
                           <Badge color="outline-secondary mb-1 mr-1" pill>
-                          نمک
+                            نمک
                           </Badge>
                           <Badge color="outline-secondary mb-1 mr-1" pill>
                             روغن زیتون

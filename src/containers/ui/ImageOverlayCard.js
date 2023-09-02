@@ -27,7 +27,8 @@ const ImageOverlayCard = () => {
               <CardImgOverlay>
                 <CardTitle>کیک میوه ای</CardTitle>
                 <CardText>
-                این محتوایی که می بینید اینجا وارد شده برای توضیحات خلاصه این کارته
+                  این محتوایی که می بینید اینجا وارد شده برای توضیحات خلاصه این
+                  کارته
                 </CardText>
               </CardImgOverlay>
             </Card>

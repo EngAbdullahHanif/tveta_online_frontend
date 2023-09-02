@@ -26,7 +26,7 @@ const StudentRegistraion = ({ history }) => {
         const { data } = await callApi(
           `api/kankorResults/?id=${kankorStudentId}`,
           '',
-          null
+          null,
         );
         console.log('data of the kankor student', data[0]);
         setInitialName(data[0].name);
@@ -116,7 +116,7 @@ const StudentRegistraion = ({ history }) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -128,7 +128,7 @@ const StudentRegistraion = ({ history }) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -157,7 +157,7 @@ const StudentRegistraion = ({ history }) => {
     const response = await callApi(
       'students/kankor-applicant-create/',
       'POST',
-      data
+      data,
     );
     if (
       response.status === 200 ||
@@ -331,7 +331,7 @@ const StudentRegistraion = ({ history }) => {
                           value={values.district}
                           options={districts?.filter(
                             (district) =>
-                              district.province === values.province.value
+                              district.province === values.province.value,
                           )}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

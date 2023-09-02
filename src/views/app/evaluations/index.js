@@ -6,21 +6,21 @@ import { userRole } from 'constants/defaultValues';
 const EvaluationList = React.lazy(() =>
   import(
     /* webpackChunkName: "evaluation-list" */ './evaluation-list/EvaluationListMain'
-  )
+  ),
 );
 
 const PromotionDemotion = React.lazy(() =>
   import(
     /* webpackChunkName: "promotion-demotion" */ './teacher-promotion-demotion'
-  )
+  ),
 );
 
 const EvaluationDetails = React.lazy(() =>
-  import(/* webpackChunkName: "promotion-demotion" */ './evaluation-details')
+  import(/* webpackChunkName: "promotion-demotion" */ './evaluation-details'),
 );
 
 const TeacherEvaluation = React.lazy(() =>
-  import(/* webpackChunkName: "teacher-evaluation" */ './teacher-evaluation')
+  import(/* webpackChunkName: "teacher-evaluation" */ './teacher-evaluation'),
 );
 
 const Evaluations = ({ match, props }) => (

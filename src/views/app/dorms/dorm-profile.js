@@ -3,17 +3,10 @@ import './../dorms/dorm-register.css';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 
-import {
-  Row,
-  Card,
-  CardBody,
-} from 'reactstrap';
+import { Row, Card, CardBody } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-
-
-
 
 import config from '../../../config';
 import { AuthContext } from 'context/AuthContext';
@@ -40,7 +33,7 @@ const DormProfile = (values) => {
     const dormStudentresponse = await callApi(
       `students/Num_stddorm/?dorm_id=${dormId}`,
       '',
-      null
+      null,
     );
     if (dormStudentresponse.data && dormStudentresponse.status === 200) {
       console.log('dorm student response', dormStudentresponse);

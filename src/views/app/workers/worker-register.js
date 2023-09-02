@@ -4,14 +4,7 @@ import { provinceOptions } from '../global-data/options';
 import { workersGrade } from '../global-data/options';
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
@@ -90,11 +83,11 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="workerGradeTypeErr" />),
 
   workerAppointedDate: Yup.string().required(
-    <IntlMessages id="workerAppointedDateErr" />
+    <IntlMessages id="workerAppointedDateErr" />,
   ),
 
   workerStartDate: Yup.string().required(
-    <IntlMessages id="workerStartDateErr" />
+    <IntlMessages id="workerStartDateErr" />,
   ),
 
   workerAppointedType: Yup.object()

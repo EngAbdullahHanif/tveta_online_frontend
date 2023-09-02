@@ -8,7 +8,6 @@ import {
   StdInteranceOptions,
 } from '../../global-data/options';
 
-
 import './../../../../assets/css/global-style.css';
 import {
   Row,
@@ -66,7 +65,7 @@ const StudentUpdate = ({ intl }, values) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -78,7 +77,7 @@ const StudentUpdate = ({ intl }, values) => {
             // alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -89,13 +88,13 @@ const StudentUpdate = ({ intl }, values) => {
 
   const fetchDistricts = async (provinceId) => {
     setMainDistricts(
-      districts.filter((district) => district.province === provinceId)
+      districts.filter((district) => district.province === provinceId),
     );
   };
 
   const fetchCurrentDistricts = async (provinceId) => {
     setCurrentDistricts(
-      districts.filter((district) => district.province === provinceId)
+      districts.filter((district) => district.province === provinceId),
     );
   };
 
@@ -171,22 +170,22 @@ const StudentUpdate = ({ intl }, values) => {
     coverNumber: student?.cover_number,
     gender: genderOptions.find((gen) => gen.value === student?.gender),
     tazkiraType: tazkiraOptions.find(
-      (option) => option.value == student?.tazkira_type
+      (option) => option.value == student?.tazkira_type,
     ),
     idCardJoldNo: student?.cover_number,
     idCardPageNo: student?.page_number,
 
     currentDistrict: districts.find(
-      (district) => district.value == student?.current_district
+      (district) => district.value == student?.current_district,
     ),
     currentProvince: provinces.find(
-      (province) => province.value == student?.current_province
+      (province) => province.value == student?.current_province,
     ),
     mainProvince: provinces.find(
-      (province) => province.value == student?.main_province
+      (province) => province.value == student?.main_province,
     ),
     mainDistrict: districts.find(
-      (district) => district.value == student?.main_district
+      (district) => district.value == student?.main_district,
     ),
     currentVillage: student?.current_village,
     mainVillage: student?.main_village,
@@ -195,7 +194,7 @@ const StudentUpdate = ({ intl }, values) => {
     // ),
 
     admission_method: StdInteranceOptions.find(
-      (type) => type.value == student?.admission_method
+      (type) => type.value == student?.admission_method,
     ),
   };
   //   console.log('Student: ', student);
@@ -586,7 +585,7 @@ const StudentUpdate = ({ intl }, values) => {
                           }}
                           onBlur={setFieldTouched}
                           onClick={setSelectedMainProvince(
-                            values.mainProvince?.value
+                            values.mainProvince?.value,
                           )}
                         />
                         {errors.mainProvince && touched.mainProvince ? (
@@ -657,7 +656,7 @@ const StudentUpdate = ({ intl }, values) => {
                           }}
                           onBlur={setFieldTouched}
                           onClick={setSelectedCurrentProvince(
-                            values?.currentProvince?.value
+                            values?.currentProvince?.value,
                           )}
                         />
                         {errors.currentProvince && touched.currentProvince ? (

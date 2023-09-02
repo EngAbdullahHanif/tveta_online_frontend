@@ -10,7 +10,7 @@ const ThumbnailImage = ({ alt, src, className, rounded, small }) => {
         {
           'rounded-circle': rounded,
           small,
-        }
+        },
       )}`}
     />
   );

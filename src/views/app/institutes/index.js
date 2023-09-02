@@ -4,10 +4,10 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 const InstituteList = React.lazy(() =>
-  import('./institute-list/InstituteListMain')
+  import('./institute-list/InstituteListMain'),
 );
 const PromotionDemotionList = React.lazy(() =>
-  import('./promotion-demotion-list/PromotionDemortionListMain')
+  import('./promotion-demotion-list/PromotionDemortionListMain'),
 );
 const InstituteRegister = React.lazy(() => import('./institute-register.js'));
 
@@ -15,11 +15,11 @@ const InstitueCreate = React.lazy(() => import('./institute-create'));
 const InstituteUpgrade = React.lazy(() => import('./institute-upgrade'));
 const InstituteProfile = React.lazy(() => import('./institute-profile'));
 const InstituteDepartmentRegister = React.lazy(() =>
-  import('./institute-department-register')
+  import('./institute-department-register'),
 );
 
 const InstituteDepartmentList = React.lazy(() =>
-  import('./institute-department-list/InstituteDepartmentListMain')
+  import('./institute-department-list/InstituteDepartmentListMain'),
 );
 
 const Institues = ({ match, props }) => (

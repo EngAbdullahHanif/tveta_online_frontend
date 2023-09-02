@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  educationalYearsOptions,
-} from '../../../global-data/options';
+import { educationalYearsOptions } from '../../../global-data/options';
 import { Table as TB } from 'antd';
 import useMousetrap from 'hooks/use-mousetrap';
 import callApi from 'helpers/callApi';
@@ -118,7 +116,7 @@ const ThumbListPages = ({ match }) => {
             response?.data?.map((item) => ({
               ...item.student,
               institute: item.institute,
-            }))
+            })),
           );
         } else {
           setItems(response.data.results);
@@ -270,7 +268,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);

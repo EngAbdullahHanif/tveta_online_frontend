@@ -32,7 +32,7 @@ const createNotification = (type, className) => {
         3000,
         null,
         null,
-        cName
+        cName,
       );
       break;
     case 'error':
@@ -44,7 +44,7 @@ const createNotification = (type, className) => {
           alert('callback');
         },
         null,
-        cName
+        cName,
       );
       break;
     default:
@@ -72,7 +72,7 @@ const InstituteListBody = ({
     const instituteResponse = await callApi(
       `institute/${instituteId}/`,
       'DELETE',
-      null
+      null,
     );
     if (instituteResponse.status >= 200 && instituteResponse.status < 300) {
       console.log('succesfully deleted');
@@ -138,13 +138,13 @@ const InstituteListBody = ({
               <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
                 {provinces &&
                   provinces.filter(
-                    (province) => province.value === institute.province
+                    (province) => province.value === institute.province,
                   )[0].label}
               </p>
               <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
                 {districts &&
                   districts.filter(
-                    (province) => province.value === institute.district
+                    (province) => province.value === institute.district,
                   )[0].label}
               </p>
 
@@ -152,7 +152,7 @@ const InstituteListBody = ({
                 <p className="mb-1 " style={{ width: '14%', fontSize: '20px' }}>
                   {
                     instTypeOptions.find(
-                      (op) => op.value === institute.institute_type
+                      (op) => op.value === institute.institute_type,
                     ).label
                   }
                 </p>

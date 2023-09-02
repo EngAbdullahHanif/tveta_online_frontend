@@ -36,7 +36,9 @@ const UserCardExamples = () => {
                     className="img-thumbnail border-0 rounded-circle mb-4 list-thumbnail"
                   />
                   <NavLink to={`${adminRoot}/cards`}>
-                    <CardSubtitle className="mb-1">فاطمه کاظمی زاده</CardSubtitle>
+                    <CardSubtitle className="mb-1">
+                      فاطمه کاظمی زاده
+                    </CardSubtitle>
                   </NavLink>
                   <CardText className="text-muted text-small mb-4">
                     برنامه نویس ارشد فرانت اند
@@ -64,7 +66,7 @@ const UserCardExamples = () => {
                   <div className="min-width-zero">
                     <NavLink to={`${adminRoot}/cards`}>
                       <CardSubtitle className="truncate mb-1">
-                      فاطمه کاظمی زاده
+                        فاطمه کاظمی زاده
                       </CardSubtitle>
                     </NavLink>
                     <CardText className="text-muted text-small mb-2">
@@ -91,7 +93,7 @@ const UserCardExamples = () => {
                   <div className="min-width-zero">
                     <NavLink to={`${adminRoot}/cards`}>
                       <CardSubtitle className="truncate mb-1">
-                      فاطمه کاظمی زاده
+                        فاطمه کاظمی زاده
                       </CardSubtitle>
                     </NavLink>
                     <CardText className="text-muted text-small mb-2">

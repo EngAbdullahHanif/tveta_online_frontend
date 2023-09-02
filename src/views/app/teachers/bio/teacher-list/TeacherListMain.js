@@ -267,7 +267,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -565,7 +565,7 @@ const ThumbListPages = ({ match }) => {
             gender: genderOptions.find((op) => op.value === item.gender).label,
             father_name: item.father_name,
             province: provinces.find(
-              (pro) => pro.value == item.current_province
+              (pro) => pro.value == item.current_province,
             ).label,
             phone_number: item.phone_number,
             status: teacherCurrentStatusOptions.map((status) => {

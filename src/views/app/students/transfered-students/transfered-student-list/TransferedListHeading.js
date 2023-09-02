@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Row,
-  Button,
-  Collapse,
-} from 'reactstrap';
+import { Row, Button, Collapse } from 'reactstrap';
 import { injectIntl } from 'react-intl';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';

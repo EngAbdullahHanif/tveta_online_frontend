@@ -11,22 +11,12 @@ import './../../../assets/css/global-style.css';
 
 // Year  and SHift
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
-
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -138,7 +128,7 @@ const MarksRegistration = ({ match }) => {
     useEffect(() => {
       async function fetchStudent() {
         const { data } = await axios.get(
-          `${studentMarkId}/?student_id=${markId}`
+          `${studentMarkId}/?student_id=${markId}`,
         );
         // console.log(data, 'object of the data');
 
@@ -187,7 +177,7 @@ const MarksRegistration = ({ match }) => {
     const response = await callApi(
       `institute/institite-department/?institute=${instituteId.value}`,
       'GET',
-      null
+      null,
     );
     // console.log('response of department', response);
     if (response.data && response.status === 200) {
@@ -254,7 +244,7 @@ const MarksRegistration = ({ match }) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -266,7 +256,7 @@ const MarksRegistration = ({ match }) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -279,7 +269,7 @@ const MarksRegistration = ({ match }) => {
     const response = await callApi(
       `students/class-marks/list/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       console.log('response of students', response);
@@ -335,7 +325,7 @@ const MarksRegistration = ({ match }) => {
     const response = await callApi(
       'students/class-marks/create/',
       'POST',
-      data
+      data,
     );
     if (response.status >= 200 || response.status < 300 > 201) {
       // console.log('response of students', response);
@@ -428,7 +418,7 @@ const MarksRegistration = ({ match }) => {
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationalYear
+                            values.educationalYear,
                           )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (
@@ -707,7 +697,7 @@ const MarksRegistration = ({ match }) => {
                                             newArr[student.student_id] = {
                                               ...newArr[student.student_id],
                                               [e.target.name]: Number.parseInt(
-                                                e.target.value
+                                                e.target.value,
                                               ),
                                             };
                                             setArr(newArr);

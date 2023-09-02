@@ -24,7 +24,7 @@ import { AuthContext } from 'context/AuthContext';
 
 const StudentListBody = (
   { student, isSelect, collect, onCheckItem },
-  props
+  props,
 ) => {
   const [modalBasic, setModalBasic] = useState(false);
   const [Deletion, setDeletion] = useState(false);
@@ -94,7 +94,7 @@ const StudentListBody = (
               >
                 {provinces.length > 0 &&
                   provinces.filter(
-                    (province) => province.value === student.current_province
+                    (province) => province.value === student.current_province,
                   )[0].label}
               </p>
 

@@ -175,7 +175,7 @@ const ThumbListPages = ({ match }) => {
       const response = await callApi(
         'institute/department-subject/',
         'GET',
-        null
+        null,
       );
       if (response.data && response.status === 200) {
         console.log('list of the curriculum', response.data);
@@ -198,7 +198,7 @@ const ThumbListPages = ({ match }) => {
       const response = await callApi(
         `institute/department-subject/?classs=${newClass}&educational_year=${newEducationalYear}`,
         'GET',
-        null
+        null,
       );
       if (response.data && response.status === 200) {
         console.log('list of the curriculum', response.data);
@@ -218,7 +218,7 @@ const ThumbListPages = ({ match }) => {
       const response = await callApi(
         `institute/department-subject/?department=${newDepartment}&educational_year=${newEducationalYear}`,
         'GET',
-        null
+        null,
       );
       if (response.data && response.status === 200) {
         console.log('list of the curriculum', response.data);
@@ -238,7 +238,7 @@ const ThumbListPages = ({ match }) => {
       const response = await callApi(
         `institute/department-subject/?classs=${newClass}&educational_year=${newEducationalYear}`,
         'GET',
-        null
+        null,
       );
       if (response.data && response.status === 200) {
         console.log('list of the curriculum', response.data);
@@ -264,7 +264,7 @@ const ThumbListPages = ({ match }) => {
       const response = await callApi(
         `institute/department-subject/?classs=${newClass}&educational_year=${newEducationalYear}&department=${newDepartment}`,
         'GET',
-        null
+        null,
       );
       if (response.data && response.status === 200) {
         console.log('list of the curriculum', response.data);
@@ -319,7 +319,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -379,7 +379,7 @@ const ThumbListPages = ({ match }) => {
           // following code is used for order the list based on different element of the prod
           changeDepartmentBy={(value) => {
             setSelectedDepartmentOption(
-              departments.find((x) => x.value === value)
+              departments.find((x) => x.value === value),
             );
           }}
           changeClassBy={(value) => {
@@ -387,7 +387,7 @@ const ThumbListPages = ({ match }) => {
           }}
           changeEducationalYearBy={(value) => {
             setSelectedEducationalYearOption(
-              educationalYearsOptions.find((x) => x.value === value)
+              educationalYearsOptions.find((x) => x.value === value),
             );
           }}
           selectedDepartmentOption={selectedDepartmentOption}

@@ -68,9 +68,7 @@ const ImageCardList = () => {
               <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                 <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                   <NavLink to="#" location={{}} className="w-40 w-sm-100">
-                    <p className="list-item-heading mb-1 truncate">
-                      چیز کیک
-                    </p>
+                    <p className="list-item-heading mb-1 truncate">چیز کیک</p>
                   </NavLink>
                   <p className="mb-1 text-muted text-small w-15 w-sm-100">
                     کاپ کیک

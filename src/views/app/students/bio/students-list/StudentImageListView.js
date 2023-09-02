@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Row,
-  Card,
-  CardBody,
-  CardSubtitle,
-  CardImg,
-  Badge,
-} from 'reactstrap';
+import { Row, Card, CardBody, CardSubtitle, CardImg, Badge } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
@@ -24,30 +17,35 @@ const ImageListView = ({ student, isSelect, collect, onCheckItem }) => {
         >
           <div className="position-relative">
             <NavLink to={`?p=${student.student_id}`} className="w-40 w-sm-100">
-              <CardImg top alt={student.name} src={student.student_photo}  style={{height:'200px'}}/>
+              <CardImg
+                top
+                alt={student.name}
+                src={student.student_photo}
+                style={{ height: '200px' }}
+              />
             </NavLink>
-           
-             {student.graduat_14_types === '1' ? (
-                <div className="position-absolute badge-top-left">
-                  <Badge color="success" pill>
-                    فارغ التحصیل
-                  </Badge>
-                </div>
-              ) : student.graduat_14_types == '3' ? (
-                <div className="position-absolute badge-top-left">
-                  <Badge color="danger" pill>
-                    منفک
-                  </Badge>
-                </div>
-              ) : (
-                <div className="position-absolute badge-top-left">
-                  <Badge color="warning" pill>
-                    جاری
-                  </Badge>
-                </div>
-              )}
+
+            {student.graduat_14_types === '1' ? (
+              <div className="position-absolute badge-top-left">
+                <Badge color="success" pill>
+                  فارغ التحصیل
+                </Badge>
+              </div>
+            ) : student.graduat_14_types == '3' ? (
+              <div className="position-absolute badge-top-left">
+                <Badge color="danger" pill>
+                  منفک
+                </Badge>
+              </div>
+            ) : (
+              <div className="position-absolute badge-top-left">
+                <Badge color="warning" pill>
+                  جاری
+                </Badge>
+              </div>
+            )}
           </div>
-          <CardBody style={{height:'130px'}}>
+          <CardBody style={{ height: '130px' }}>
             <Row>
               <Colxx xxs="2">
                 {/* <CustomInput
@@ -59,9 +57,13 @@ const ImageListView = ({ student, isSelect, collect, onCheckItem }) => {
                   label=""
                 /> */}
               </Colxx>
-              <Colxx xxs="10" className="mb-3" >
-                <CardSubtitle style={{fontSize:'20px'}}>{student.student_id}</CardSubtitle>
-                <CardSubtitle style={{fontSize:'20px'}}>{student.name}</CardSubtitle>
+              <Colxx xxs="10" className="mb-3">
+                <CardSubtitle style={{ fontSize: '20px' }}>
+                  {student.student_id}
+                </CardSubtitle>
+                <CardSubtitle style={{ fontSize: '20px' }}>
+                  {student.name}
+                </CardSubtitle>
               </Colxx>
             </Row>
           </CardBody>

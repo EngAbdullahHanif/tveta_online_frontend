@@ -2,27 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Table as TB } from 'antd';
 import callApi from 'helpers/callApi';
 
-
-import { Badge, Spinner } from 'reactstrap';
+import { Badge } from 'reactstrap';
 // import { servicePath } from 'constants/defaultValues';
 import useMousetrap from 'hooks/use-mousetrap';
 
 import { AuthContext } from 'context/AuthContext';
 import { BsPencilSquare } from 'react-icons/bs';
-import {
-  studentStatusOptions,
-} from './../../../global-data/options';
+import { studentStatusOptions } from './../../../global-data/options';
 import { NavLink } from 'react-router-dom';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { Field, Formik } from 'formik';
-const getIndex = (value, arr, prop) => {
-  for (let i = 0; i < arr.length; i += 1) {
-    if (arr[i][prop] === value) {
-      return i;
-    }
-  }
-  return -1;
-};
 
 const columns = [
   {
@@ -86,34 +75,20 @@ const columns = [
   },
 ];
 
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-const pageSizes = [10, 20, 40, 80];
-
-const ThumbListPages = ({ match }) => {
+const ThumbListPages = () => {
   const { provinces, institutes } = useContext(AuthContext);
-  console.log('iniiiiiiiiiii', institutes);
-  const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
       pageSize: 5,
     },
   });
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
 
-  const [selectedPageSize, setSelectedPageSize] = useState(20);
+  // const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'title',
-    label: 'Product Name',
-  });
 
   const [items, setItems] = useState([]);
-  const [institute, setInstitute] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
   // const [filterId, setFilterId] = useState();
@@ -135,7 +110,6 @@ const ThumbListPages = ({ match }) => {
     console.log('PARAMSSSSSSSSSS: ', params);
     setIsLoading(true);
     let endpoint = 'students/';
-    console.log('institute is: ', institute, 'isFilter', isFilter);
     const params1 = {
       ...params,
       page: !isFilter ? tableParams.pagination.current : params.page,
@@ -151,7 +125,7 @@ const ThumbListPages = ({ match }) => {
             response?.data?.map((item) => ({
               ...item.student,
               institute: item.institute,
-            }))
+            })),
           );
         } else {
           setItems(response.data.results);
@@ -192,8 +166,6 @@ const ThumbListPages = ({ match }) => {
     return false;
   });
 
-  console.log('isLoadedsdfsd', isLoaded);
-
   const genderLabels = {
     male: 'نارینه/ مذکر',
     female: 'ښځینه/ موٌنث',
@@ -205,10 +177,6 @@ const ThumbListPages = ({ match }) => {
   //     fetchData();
   //   }
   // };
-
-  if (isLoaded) {
-    return <Spinner />;
-  }
 
   const onFilter = async (values) => {
     setIsFilter(true);
@@ -323,7 +291,7 @@ const ThumbListPages = ({ match }) => {
             father_name: item.father_name,
             gender: genderLabels[item.gender],
             province: provinces.find(
-              (pro) => pro.value == item.current_province
+              (pro) => pro.value == item.current_province,
             )?.label,
             phone_number: item.phone_number,
             institute_enrollment: item.institute_enrollment?.map((inst) => {
@@ -333,7 +301,7 @@ const ThumbListPages = ({ match }) => {
                     {institutes.find(
                       (pro) =>
                         pro.value == inst.institute &&
-                        inst.status == 'inprogress'
+                        inst.status == 'inprogress',
                     )?.label || null}
                   </p>
                 </div>

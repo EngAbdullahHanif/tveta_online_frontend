@@ -157,7 +157,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/subject/?system_type=${newSytem}&type=${newType}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           console.log('response of subjects', response.data);
@@ -177,7 +177,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/subject/?credit=${selectedCreditOption?.value}&type=${newType}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           console.log('response of subjects', response.data);
@@ -192,7 +192,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/subject/?credit=${selectedCreditOption?.value}&system_type${selectedSystemOption?.value}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           console.log('response of subjects', response.data);
@@ -207,7 +207,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/subject/?credit=${selectedCreditOption?.value}&system_type${selectedSystemOption?.value}&type=${selectedTypeOption?.value}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           console.log('response of subjects', response.data);
@@ -258,7 +258,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -318,17 +318,17 @@ const ThumbListPages = ({ match }) => {
           // following code is used for order the list based on different element of the prod
           changeCreditBy={(value) => {
             setSelectedCreditOption(
-              subjectCreditOptions.find((x) => x.value === value)
+              subjectCreditOptions.find((x) => x.value === value),
             );
           }}
           changeTypeBy={(value) => {
             setSelectedTypeOption(
-              subjectTypeOptions.find((x) => x.value === value)
+              subjectTypeOptions.find((x) => x.value === value),
             );
           }}
           changeSystemBy={(value) => {
             setSelectedSystemOption(
-              subjectSystemOptions.find((x) => x.value === value)
+              subjectSystemOptions.find((x) => x.value === value),
             );
           }}
           selectedCreditOption={selectedCreditOption}

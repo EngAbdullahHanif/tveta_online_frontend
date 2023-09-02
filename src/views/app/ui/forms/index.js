@@ -2,16 +2,16 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const Components = React.lazy(() =>
-  import(/* webpackChunkName: "forms-components" */ './components')
+  import(/* webpackChunkName: "forms-components" */ './components'),
 );
 const Layouts = React.lazy(() =>
-  import(/* webpackChunkName: "forms-layouts" */ './layouts')
+  import(/* webpackChunkName: "forms-layouts" */ './layouts'),
 );
 const Validations = React.lazy(() =>
-  import(/* webpackChunkName: "forms-validations" */ './validations')
+  import(/* webpackChunkName: "forms-validations" */ './validations'),
 );
 const Wizard = React.lazy(() =>
-  import(/* webpackChunkName: "forms-wizard" */ './wizard')
+  import(/* webpackChunkName: "forms-wizard" */ './wizard'),
 );
 
 const Forms = ({ match }) => (

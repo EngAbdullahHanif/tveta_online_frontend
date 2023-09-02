@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function dummyPage(props) {
   return <div>Dummy Page</div>;

@@ -4,21 +4,12 @@ import axios from 'axios';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import config from '../../../config';
 
@@ -48,7 +39,7 @@ const SignupSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.InstituteErr" />),
 
   evaluationDate: Yup.string().required(
-    <IntlMessages id="teacher.evaluationDateErr" />
+    <IntlMessages id="teacher.evaluationDateErr" />,
   ),
 
   promotionType: Yup.object()
@@ -69,7 +60,7 @@ const createNotification = (type, className) => {
         3000,
         null,
         null,
-        cName
+        cName,
       );
       break;
     case 'error':
@@ -81,7 +72,7 @@ const createNotification = (type, className) => {
           alert('callback');
         },
         null,
-        cName
+        cName,
       );
       break;
     default:

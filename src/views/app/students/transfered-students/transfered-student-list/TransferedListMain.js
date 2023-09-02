@@ -112,7 +112,7 @@ const ThumbListPages = ({ match, item_list }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -174,7 +174,7 @@ const ThumbListPages = ({ match, item_list }) => {
           // following code is used for order the list based on different element of the prod
           changeOrderBy={(column) => {
             setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
+              orderOptions.find((x) => x.column === column),
             );
           }}
           changePageSize={setSelectedPageSize}
@@ -196,12 +196,12 @@ const ThumbListPages = ({ match, item_list }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+              genderOptions.find((x) => x.column === column),
             );
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              provinceOptions.find((x) => x.column === column)
+              provinceOptions.find((x) => x.column === column),
             );
           }}
           selectedGenderOption={selectedGenderOption}

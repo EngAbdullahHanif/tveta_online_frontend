@@ -8,16 +8,16 @@ import { AuthContext } from './AuthContext';
 import { useContext } from 'react';
 
 const ViewApp = React.lazy(() =>
-  import(/* webpackChunkName: "views-app" */ '../views/app')
+  import(/* webpackChunkName: "views-app" */ '../views/app'),
 );
 const ViewError = React.lazy(() =>
-  import(/* webpackChunkName: "views-error" */ '../views/error')
+  import(/* webpackChunkName: "views-error" */ '../views/error'),
 );
 const ViewUnauthorized = React.lazy(() =>
-  import(/* webpackChunkName: "views-error" */ '../views/unauthorized')
+  import(/* webpackChunkName: "views-error" */ '../views/unauthorized'),
 );
 const ViewUser = React.lazy(() =>
-  import(/* webpackChunkName: "views-user" */ '../views/user')
+  import(/* webpackChunkName: "views-user" */ '../views/user'),
 );
 
 function Application(props) {

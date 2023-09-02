@@ -1,12 +1,12 @@
-import { Tag } from "antd";
-import React from "react";
+import { Tag } from 'antd';
+import React from 'react';
 
 function DisplayMessage({ type, message }) {
   return (
     <div
       className="text-center justify-content-center"
       style={{
-        width: "97%",
+        width: '97%',
       }}
     >
       <div>

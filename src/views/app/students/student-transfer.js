@@ -25,9 +25,7 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import config from '../../../config';
 const servicePath = config.API_URL;
@@ -84,7 +82,7 @@ const StudentsTransfer = (values) => {
           9000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'info':
@@ -94,7 +92,7 @@ const StudentsTransfer = (values) => {
           9000,
           null,
           null,
-          cName
+          cName,
         );
         break;
 
@@ -107,7 +105,7 @@ const StudentsTransfer = (values) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -123,7 +121,7 @@ const StudentsTransfer = (values) => {
     const response = await callApi(
       `students/student_accademic/?student_id=${values.searchfield}`,
       '',
-      null
+      null,
     );
     if (response && response.status === 200) {
       setStudentIdMatch(true);
@@ -173,7 +171,7 @@ const StudentsTransfer = (values) => {
       const response = await callApi(
         `students/student-transfer/`,
         'POST',
-        data
+        data,
       );
       if (response.status === 200 || response.status === 201) {
         console.log('success');

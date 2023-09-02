@@ -10,11 +10,11 @@ import { FormikReactSelect } from '../../../containers/form-validations/FormikFi
 
 const SignupSchema = Yup.object().shape({
   departmentName: Yup.string().required(
-    <IntlMessages id="department.nameErr" />
+    <IntlMessages id="department.nameErr" />,
   ),
 
   departmentEnglishName: Yup.string().required(
-    <IntlMessages id="department.englishNameErr" />
+    <IntlMessages id="department.englishNameErr" />,
   ),
 
   field: Yup.object()
@@ -55,7 +55,7 @@ const DepartmentRegister = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -67,7 +67,7 @@ const DepartmentRegister = () => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -81,7 +81,7 @@ const DepartmentRegister = () => {
     const response = await callApi(
       'institute/department-create/',
       'POST',
-      data
+      data,
     );
     if (response) {
       createNotification('success', 'filled');

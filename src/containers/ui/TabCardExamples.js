@@ -89,7 +89,7 @@ const TabCardExamples = () => {
                           چیزکیک خانگی با توت تازه و نعناع
                         </CardTitle>
                         <Button outline size="sm" color="primary">
-                         ویرایش
+                          ویرایش
                         </Button>
                       </CardBody>
                     </Colxx>
@@ -103,7 +103,7 @@ const TabCardExamples = () => {
                           کیک عروسی با تزیین گل و توت فرنگی
                         </CardTitle>
                         <Button outline size="sm" color="primary">
-                         ویرایش
+                          ویرایش
                         </Button>
                       </CardBody>
                     </Colxx>
@@ -117,7 +117,7 @@ const TabCardExamples = () => {
                           چیزکیک با تزیین شکلات و فندق
                         </CardTitle>
                         <Button outline size="sm" color="primary">
-                         ویرایش
+                          ویرایش
                         </Button>
                       </CardBody>
                     </Colxx>
@@ -173,7 +173,7 @@ const TabCardExamples = () => {
                           چیزکیک خانگی با توت تازه و نعناع
                         </CardTitle>
                         <Button outline size="sm" color="primary">
-                         ویرایش
+                          ویرایش
                         </Button>
                       </CardBody>
                     </Colxx>
@@ -184,10 +184,10 @@ const TabCardExamples = () => {
                     <Colxx sm="12">
                       <CardBody>
                         <CardTitle className="mb-4">
-                         کیک عروسی با تزیین توت فرنگی و گل
+                          کیک عروسی با تزیین توت فرنگی و گل
                         </CardTitle>
                         <Button outline size="sm" color="primary">
-                         ویرایش
+                          ویرایش
                         </Button>
                       </CardBody>
                     </Colxx>
@@ -201,7 +201,7 @@ const TabCardExamples = () => {
                           چیزکیک با تزیین شکلات و فندق
                         </CardTitle>
                         <Button outline size="sm" color="primary">
-                         ویرایش
+                          ویرایش
                         </Button>
                       </CardBody>
                     </Colxx>

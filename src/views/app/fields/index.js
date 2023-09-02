@@ -4,22 +4,22 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 const FieldRegister = React.lazy(() =>
-  import(/* webpackChunkName: "field-register" */ './field-register')
+  import(/* webpackChunkName: "field-register" */ './field-register'),
 );
 
 const InstituteFieldDepartmentRegister = React.lazy(() =>
   import(
     /* webpackChunkName: "institute-field-department-register" */ './institute-field-department-register'
-  )
+  ),
 );
 const FieldList = React.lazy(() =>
   import(
     /* webpackChunkName: "subject-register" */ './field-list/FieldListMain'
-  )
+  ),
 );
 
 const DepartmentRegister = React.lazy(() =>
-  import(/* webpackChunkName: "subject-register" */ './department-register')
+  import(/* webpackChunkName: "subject-register" */ './department-register'),
 );
 // const DepartmentList = React.lazy(() =>
 //   import(
@@ -30,11 +30,11 @@ const DepartmentRegister = React.lazy(() =>
 const SectorList = React.lazy(() =>
   import(
     /* webpackChunkName: "subject-register" */ './sector-list/SectorListMain'
-  )
+  ),
 );
 
 const SectorRegister = React.lazy(() =>
-  import(/* webpackChunkName: "subject-register" */ './sector-register')
+  import(/* webpackChunkName: "subject-register" */ './sector-register'),
 );
 
 const Fields = ({ match, props }) => (

@@ -38,7 +38,7 @@ const callApi = async (
   endpoint,
   method = 'get',
   data = null,
-  params = null
+  params = null,
 ) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
@@ -65,13 +65,13 @@ const callApi = async (
           10000,
           null,
           null,
-          ''
+          '',
         );
       }
       NotificationManager.error(
         'an error occured while connecting to server at ' + endpoint,
         error?.response?.status + ': Server Error',
-        5000
+        5000,
       );
       console.log('Error in API: ', error?.response);
     } else if (error.request) {
@@ -82,7 +82,7 @@ const callApi = async (
         10000,
         null,
         null,
-        ''
+        '',
       );
     } else {
       // Something happened in setting up the request that triggered an Error
@@ -92,7 +92,7 @@ const callApi = async (
         10000,
         null,
         null,
-        ''
+        '',
       );
     }
     console.log(error);

@@ -1,9 +1,4 @@
-import React, {
-  StrictMode,
-  Suspense,
-  useEffect,
-  useState,
-} from 'react';
+import React, { StrictMode, Suspense, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
@@ -18,10 +13,9 @@ import Authentication from 'context/Authentication';
 import callApi from 'helpers/callApi';
 import { Button, Spinner } from 'reactstrap';
 
-
 const App = ({ locale }) => {
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem('user')) || {}
+    JSON.parse(localStorage.getItem('user')) || {},
   );
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);

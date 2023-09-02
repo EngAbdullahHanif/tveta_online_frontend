@@ -35,7 +35,7 @@ const ResetPassword = ({
         3000,
         null,
         null,
-        ''
+        '',
       );
     } else if (!loading && newPassword === 'success')
       NotificationManager.success(
@@ -44,7 +44,7 @@ const ResetPassword = ({
         3000,
         null,
         null,
-        ''
+        '',
       );
   }, [error, loading, newPassword]);
 
@@ -67,7 +67,7 @@ const ResetPassword = ({
           3000,
           null,
           null,
-          ''
+          '',
         );
       }
     }

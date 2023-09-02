@@ -59,7 +59,7 @@ const createNotification = (type, className) => {
         3000,
         null,
         null,
-        cName
+        cName,
       );
       break;
     case 'warning':
@@ -69,7 +69,7 @@ const createNotification = (type, className) => {
         3000,
         null,
         null,
-        cName
+        cName,
       );
       break;
     case 'error':
@@ -81,7 +81,7 @@ const createNotification = (type, className) => {
           alert('callback');
         },
         null,
-        cName
+        cName,
       );
       break;
     default:
@@ -144,12 +144,12 @@ const ThumbListPages = ({ match }) => {
     async function fetchData() {
       axios
         .get(
-          `${evaluationApiUrl}?evaluated=${selectedFilter.column}&evaluation_year=${evaluationYear}&institute_id=${institute.id}`
+          `${evaluationApiUrl}?evaluated=${selectedFilter.column}&evaluation_year=${evaluationYear}&institute_id=${institute.id}`,
         )
 
         .then((res) => {
           console.log(
-            `${evaluationApiUrl}?evaluated=${selectedFilter.column}&evaluation_year=${evaluationYear}&institute_id=${institute.id}`
+            `${evaluationApiUrl}?evaluated=${selectedFilter.column}&evaluation_year=${evaluationYear}&institute_id=${institute.id}`,
           );
           return res.data;
         })
@@ -212,7 +212,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -295,7 +295,7 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           changeFilterBy={(column) => {
             setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
+              orderOptions.find((x) => x.column === column),
             );
           }}
           orderOptions={orderOptions}

@@ -9,7 +9,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 
 const ValidationSchema = Yup.object().shape({
   sectorName: Yup.string().required(
-    'د سکتور نوم اړین دی / نام سکتور را وارد کنید'
+    'د سکتور نوم اړین دی / نام سکتور را وارد کنید',
   ),
 });
 
@@ -26,7 +26,7 @@ const SectorRegister = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -38,7 +38,7 @@ const SectorRegister = () => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:

@@ -2,16 +2,10 @@ import React from 'react';
 
 // Year  and SHift
 
-import {
-  Row,
-  Card,
-  CardBody,
-} from 'reactstrap';
+import { Row, Card, CardBody } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-
-
 
 const LevelOfEdcationOptions = [
   { value: '1', label: 'اصلی' },

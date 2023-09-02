@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Row,
-} from 'reactstrap';
+import { Row } from 'reactstrap';
 
 import Pagination from '../../../../../containers/pages/Pagination';
 import ContextMenuContainer from '../../../../../containers/pages/ContextMenuContainer';
@@ -23,10 +21,9 @@ const ListPageListing = ({
   onContextMenuClick,
   onContextMenu,
   onChangePage,
-  roughData
+  roughData,
 }) => {
   const [modalBasic, setModalBasic] = useState(true);
-  
 
   return (
     <>

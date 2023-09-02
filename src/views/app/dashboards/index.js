@@ -5,15 +5,17 @@ import { Redirect, Switch } from 'react-router-dom';
 // import { ProtectedRoute, userRole } from 'helpers/authHelper';
 
 const Admin = React.lazy(() =>
-  import(/* webpackChunkName: "dashboard-default" */ './admin')
+  import(/* webpackChunkName: "dashboard-default" */ './admin'),
 );
 
 const Provincial = React.lazy(() =>
-  import(/* webpackChunkName: "dashboard-provincial" */ './ProvincialDashboard')
+  import(
+    /* webpackChunkName: "dashboard-provincial" */ './ProvincialDashboard'
+  ),
 );
 
 const InstituteDashboard = React.lazy(() =>
-  import(/* webpackChunkName: "dashboard-provincial" */ './InstituteDashboard')
+  import(/* webpackChunkName: "dashboard-provincial" */ './InstituteDashboard'),
 );
 
 const Dashboards = ({ match, props }) => (

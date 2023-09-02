@@ -21,9 +21,7 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import config from '../../../config';
 
@@ -56,7 +54,11 @@ const InstituteUpgrade = (values) => {
   };
 
   const handleSearch = async () => {
-    const response = await callApi(`institute/?code=${instituteCode}`, 'GET', null);
+    const response = await callApi(
+      `institute/?code=${instituteCode}`,
+      'GET',
+      null,
+    );
     if (response.data && response.status === 200) {
       setInstitute(response.data);
       setData(true);
@@ -177,7 +179,8 @@ const InstituteUpgrade = (values) => {
                                         {/* <IntlMessages id="forms.Institute[0]Label" /> */}
                                         د انستیتوت نوعیت/ نوعیت انستیتوت
                                       </Label>
-                                      {institute[0].ownership == 'governmental' ? (
+                                      {institute[0].ownership ==
+                                      'governmental' ? (
                                         <h3>دولتی</h3>
                                       ) : (
                                         <h3>خصوصی</h3>
@@ -199,7 +202,8 @@ const InstituteUpgrade = (values) => {
                                       </Label>
                                       {institute[0].climate == 'cold' ? (
                                         <h3>سردسیر</h3>
-                                      ) : institute[0].inst_climaty == 'warm' ? (
+                                      ) : institute[0].inst_climaty ==
+                                        'warm' ? (
                                         <h3>گرم سیر</h3>
                                       ) : (
                                         <h3>زیادسردسیر</h3>
@@ -212,11 +216,12 @@ const InstituteUpgrade = (values) => {
                                         <h3>پشتو</h3>
                                       ) : institute[0].language == 'dari' ? (
                                         <h3>دری</h3>
-                                      ) : institute[0].language == 'pashto_dari' ? (
+                                      ) : institute[0].language ==
+                                        'pashto_dari' ? (
                                         <h3>پشتو او دری</h3>
                                       ) : institute[0].language == 'arabic' ? (
                                         <h3>عربی</h3>
-                                      ) :  (
+                                      ) : (
                                         <h3>انگلیسی</h3>
                                       )}
                                     </Colxx>

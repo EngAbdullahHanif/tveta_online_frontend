@@ -1,13 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { createRef, useState } from 'react';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Spinner,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Spinner } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import { levelOfEdcationOptions } from '../global-data/options';
 import { langOptions } from '../global-data/options';
@@ -206,7 +199,7 @@ const Validation = ({ intl }) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -218,7 +211,7 @@ const Validation = ({ intl }) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:

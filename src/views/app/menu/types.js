@@ -47,7 +47,7 @@ const MenuTypes = ({
     setContainerClassnamesAction(
       0,
       nextClasses.join(' '),
-      selectedMenuHasSubItems
+      selectedMenuHasSubItems,
     );
   };
 

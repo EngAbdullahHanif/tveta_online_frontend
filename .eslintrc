@@ -1,13 +1,14 @@
 {
   "extends": ["plugin:prettier/recommended"],
-  "plugins": ["react", "unused-imports", "prettier"],
+  "parser": "@babel/eslint-parser",
+  "plugins": ["babel", "react", "unused-imports", "prettier"],
   "rules": {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error", // Change from "warn" to "error"
     "unused-imports/no-unused-vars": [
-      "warn",
+      "error",
       {
         "vars": "all",
         "varsIgnorePattern": "^_",

@@ -1,17 +1,10 @@
-import React, { useState } from "react";
-import "./../dorms/dorm-register.css";
+import React, { useState } from 'react';
+import './../dorms/dorm-register.css';
 
-import {
-  Row,
-  Card,
-  CardBody,
-} from "reactstrap";
+import { Row, Card, CardBody } from 'reactstrap';
 
-import IntlMessages from "helpers/IntlMessages";
-import { Colxx, Separator } from "components/common/CustomBootstrap";
-
-
-
+import IntlMessages from 'helpers/IntlMessages';
+import { Colxx, Separator } from 'components/common/CustomBootstrap';
 
 const InstituteDetails = (values) => {
   const [isNext, setIsNext] = useState(true);
@@ -20,7 +13,7 @@ const InstituteDetails = (values) => {
   };
 
   const onRegister = (values) => {
-    console.log(" The Values", values);
+    console.log(' The Values', values);
   };
 
   return (
@@ -42,7 +35,7 @@ const InstituteDetails = (values) => {
               <Row className="">
                 <Colxx>
                   <b>
-                    {" "}
+                    {' '}
                     <IntlMessages id="institute.totalStudentsMale" />
                   </b>
                   <p>58 نفر</p>
@@ -68,7 +61,7 @@ const InstituteDetails = (values) => {
               <Row className="">
                 <Colxx>
                   <b>
-                    {" "}
+                    {' '}
                     <IntlMessages id="institute.totalStudentsMale" />
                   </b>
                   <p>58 نفر</p>
@@ -94,7 +87,7 @@ const InstituteDetails = (values) => {
               <Row className="">
                 <Colxx>
                   <b>
-                    {" "}
+                    {' '}
                     <IntlMessages id="institute.totalStudentsMale" />
                   </b>
                   <p>58 نفر</p>
@@ -120,7 +113,7 @@ const InstituteDetails = (values) => {
               <Row className="">
                 <Colxx>
                   <b>
-                    {" "}
+                    {' '}
                     <IntlMessages id="institute.totalStudentsMale" />
                   </b>
                   <p>58 نفر</p>

@@ -124,7 +124,7 @@ const Curriculum = (values) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -136,7 +136,7 @@ const Curriculum = (values) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -150,7 +150,7 @@ const Curriculum = (values) => {
     const response = await callApi(
       'institute/department-subject-create/',
       'POST',
-      data
+      data,
     );
     if (response) {
       createNotification('success', 'filled');

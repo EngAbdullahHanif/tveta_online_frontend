@@ -8,20 +8,11 @@ import { educationalYearsOptions } from './../../global-data/options';
 
 // Year  and SHift
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import DismissedStudents from './dismissed-student-list/DismissedListMain';
 import config from '../../../../config';
@@ -69,7 +60,7 @@ const MarksRegistration = ({ match }) => {
     useEffect(() => {
       async function fetchStudent() {
         const { data } = await axios.get(
-          `${studentMarkId}/?student_id=${markId}`
+          `${studentMarkId}/?student_id=${markId}`,
         );
         console.log(data, 'object of the data');
 
@@ -106,7 +97,7 @@ const MarksRegistration = ({ match }) => {
     const response = await callApi(
       `students/student_institutes/?institute=${values.institute.value}&status=dismissed&educational_year=${values.educationalYear.value}`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       setDismissedStudents(response.data);
@@ -190,7 +181,7 @@ const MarksRegistration = ({ match }) => {
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationalYear
+                            values.educationalYear,
                           )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (

@@ -217,7 +217,7 @@ const ThumbListPages = ({ match }) => {
                   onChange={(name, option) => {
                     setFieldValue(name, option);
                     const dd = districts.filter(
-                      (dis) => dis.province === option.value
+                      (dis) => dis.province === option.value,
                     );
                     setDistrictsOptions(dd);
                   }}
@@ -297,7 +297,7 @@ const ThumbListPages = ({ match }) => {
             gender: dormGenderOptions.find((pro) => pro.value == item.gender)
               ?.label,
             ownership: BuildingTypeOptions.find(
-              (op) => op.value === item.ownership
+              (op) => op.value === item.ownership,
             ).label,
             status: instituteStatusOptions.map((status) => {
               if (status.value == item.status) {

@@ -4,27 +4,27 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 const SubjectRegister = React.lazy(() =>
-  import(/* webpackChunkName: "subject-register" */ './subject-register')
+  import(/* webpackChunkName: "subject-register" */ './subject-register'),
 );
 
 const Curriculum = React.lazy(() =>
-  import(/* webpackChunkName: "curriculum" */ './curriculum')
+  import(/* webpackChunkName: "curriculum" */ './curriculum'),
 );
 const ProvincialDashboard = React.lazy(() =>
-  import(/* webpackChunkName: "provincial-dash" */ './draftFileJustForTest')
+  import(/* webpackChunkName: "provincial-dash" */ './draftFileJustForTest'),
 );
 const AdminDashboard = React.lazy(() =>
-  import(/* webpackChunkName: "admin-dashboard" */ './admin-dashboard')
+  import(/* webpackChunkName: "admin-dashboard" */ './admin-dashboard'),
 );
 const SubjectList = React.lazy(() =>
   import(
     /* webpackChunkName: "admin-dashboard" */ './subject-list/SubjectListMain'
-  )
+  ),
 );
 const CurriculumList = React.lazy(() =>
   import(
     /* webpackChunkName: "admin-dashboard" */ './curriculum-list/CurriculumListMain'
-  )
+  ),
 );
 
 const Subjects = ({ match, props }) => (

@@ -18,9 +18,7 @@ import {
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import currentUser from 'helpers/currentUser';
 import callApi from 'helpers/callApi';
@@ -34,7 +32,7 @@ const ValidationSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.InstituteErr" />),
 
   educationlaYear: Yup.string().required(
-    <IntlMessages id="forms.educationYearErr" />
+    <IntlMessages id="forms.educationYearErr" />,
   ),
 
   studyTime: Yup.object()
@@ -162,7 +160,7 @@ const StudentUpgrade = ({ match }) => {
     const response = await callApi(
       `api/class_marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear}`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       setStudents(response.data);
@@ -199,7 +197,7 @@ const StudentUpgrade = ({ match }) => {
     });
     //remove undefined values from the passedStudents array
     const fillteredStudents = passedStudents.filter(
-      (student) => student !== undefined && student !== null
+      (student) => student !== undefined && student !== null,
     );
 
     const data = [
@@ -247,7 +245,7 @@ const StudentUpgrade = ({ match }) => {
     const isChecked = event.target.checked;
     const updatedCheckedItems = Object.keys(checkedItems).reduce(
       (acc, index) => ({ ...acc, [index]: isChecked }),
-      {}
+      {},
     );
     setCheckedItems(updatedCheckedItems);
     setIsMasterChecked(isChecked);
@@ -291,7 +289,7 @@ const StudentUpgrade = ({ match }) => {
     console.log('checkedIndesdfxes', checkedIndexes);
     // filter the students array based on the checkedIndexes array
     const selectedStudents = students.filter((student, index) =>
-      checkedIndexes.includes(index)
+      checkedIndexes.includes(index),
     );
     // return the selected students
     // return selectedStudents;
@@ -377,7 +375,7 @@ const StudentUpgrade = ({ match }) => {
                           name="educationlaYear"
                           // assign value to selectedEducationalYear
                           onClick={setSelectedEducationalYear(
-                            values.educationlaYear
+                            values.educationlaYear,
                           )}
                         />
                         {errors.educationlaYear && touched.educationlaYear ? (
@@ -595,7 +593,7 @@ const StudentUpgrade = ({ match }) => {
                                               )}
                                             </>
                                           );
-                                        }
+                                        },
                                       )}
                                       <td
                                         className="border text-center d-flex justify-content-center"

@@ -5,21 +5,13 @@ import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import config from '../../../config';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { useContext } from 'react';
 import { AuthContext } from 'context/AuthContext';
 import { message } from 'antd';
@@ -59,14 +51,14 @@ const InstituteDetails = (values) => {
         // if department id is in data.department
         let department_ids = inst.data.reduce(
           (acc, cur, i) => acc.add(cur.department),
-          new Set()
+          new Set(),
         );
         console.log(department_ids);
         return department_ids.has(dep.value);
       });
       const new2Options = newOptions.map((op) => {
         op.instDeps = inst.data.filter(
-          (instdep) => instdep.department === op.value
+          (instdep) => instdep.department === op.value,
         )[0];
         return op;
       });
@@ -83,7 +75,7 @@ const InstituteDetails = (values) => {
     const response = await callApi(
       `institute/institite-department/?institute=${instituteId}`,
       '',
-      null
+      null,
     );
     // console.log('response of department', response);
     if (response.data && response.status === 200) {
@@ -98,7 +90,7 @@ const InstituteDetails = (values) => {
     const instituteResponse = await callApi(
       `institute/?institute=${instituteId}`,
       '',
-      null
+      null,
     );
     if (instituteResponse.data && instituteResponse.status === 200) {
       const instituteData = await instituteResponse.data;
@@ -109,7 +101,7 @@ const InstituteDetails = (values) => {
     const instituteStatisticsResponse = await callApi(
       `reports/institutes/${instituteId}/teacher-students/`,
       '',
-      null
+      null,
     );
     if (
       instituteStatisticsResponse.data &&

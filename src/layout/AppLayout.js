@@ -27,5 +27,5 @@ const mapStateToProps = ({ menu }) => {
 const mapActionToProps = {};
 
 export default withRouter(
-  connect(mapStateToProps, mapActionToProps)(AppLayout)
+  connect(mapStateToProps, mapActionToProps)(AppLayout),
 );

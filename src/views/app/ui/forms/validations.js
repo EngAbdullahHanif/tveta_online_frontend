@@ -22,7 +22,6 @@ const FormValidationsUi = ({ match }) => {
       <Row>
         <Colxx x="12" md="12" className="mb-3">
           <StudentRegistrationBio />
-        
         </Colxx>
       </Row>
     </>

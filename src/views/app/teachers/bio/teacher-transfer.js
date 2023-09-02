@@ -65,7 +65,7 @@ const TeacherTransfer = (values) => {
     setSearchResult(event);
     //search teacher in the server
     const response = await axios.get(
-      `${teacherSearchApiUrl}?teacher_id=${teacherId}`
+      `${teacherSearchApiUrl}?teacher_id=${teacherId}`,
     );
     const teacherResponse = await response.data;
 
@@ -123,7 +123,7 @@ const TeacherTransfer = (values) => {
         // if department id is in data.department
         let department_ids = inst.data.reduce(
           (acc, cur, i) => acc.add(cur.department),
-          new Set()
+          new Set(),
         );
         console.log(department_ids);
         return department_ids.has(dep.value);
@@ -546,7 +546,7 @@ const TeacherTransfer = (values) => {
                                     onChange={(event) => {
                                       setFieldValue(
                                         'transferDoc',
-                                        event.currentTarget.files[0]
+                                        event.currentTarget.files[0],
                                       );
                                     }}
                                     onBlur={handleBlur}

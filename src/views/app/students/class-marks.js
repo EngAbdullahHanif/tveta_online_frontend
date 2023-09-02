@@ -10,20 +10,11 @@ import './../../../assets/css/global-style.css';
 // Year  and SHift
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import DisplayMessage from 'components/messages/DisplayMessage';
 
 const ValidationSchema = Yup.object().shape({
@@ -118,7 +109,7 @@ const AllSubjectsMarks = ({ match }) => {
     const response = await callApi(
       `institute/institite-department/?institute=${instituteId.value}`,
       '',
-      null
+      null,
     );
     // console.log('response of department', response);
     if (response.data && response.status === 200) {
@@ -177,7 +168,7 @@ const AllSubjectsMarks = ({ match }) => {
     const response = await callApi(
       `students/class_marks?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       setIsNext(false);
@@ -236,7 +227,7 @@ const AllSubjectsMarks = ({ match }) => {
 
   //Check Box
   const [checkedItems, setCheckedItems] = useState(
-    students.reduce((acc, student, index) => ({ ...acc, [index]: false }), {})
+    students.reduce((acc, student, index) => ({ ...acc, [index]: false }), {}),
   );
   const [isMasterChecked, setIsMasterChecked] = useState(false);
 
@@ -244,7 +235,7 @@ const AllSubjectsMarks = ({ match }) => {
     const isChecked = event.target.checked;
     const updatedCheckedItems = Object.keys(checkedItems).reduce(
       (acc, index) => ({ ...acc, [index]: isChecked }),
-      {}
+      {},
     );
     setCheckedItems(updatedCheckedItems);
     setIsMasterChecked(isChecked);
@@ -333,7 +324,7 @@ const AllSubjectsMarks = ({ match }) => {
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationalYear
+                            values.educationalYear,
                           )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (

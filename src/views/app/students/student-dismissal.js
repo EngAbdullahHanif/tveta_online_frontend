@@ -25,9 +25,6 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-
-
-
 import config from '../../../config';
 const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;
@@ -75,7 +72,7 @@ const StudentsDismissal = (values) => {
           9000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'info':
@@ -85,7 +82,7 @@ const StudentsDismissal = (values) => {
           9000,
           null,
           null,
-          cName
+          cName,
         );
         break;
 
@@ -98,7 +95,7 @@ const StudentsDismissal = (values) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -111,7 +108,7 @@ const StudentsDismissal = (values) => {
     const response = await callApi(
       `students/student_accademic/?student_id=${studentId}`,
       '',
-      null
+      null,
     );
     console.log('repsonse is: ', response);
     if (response && response.status === 200) {
@@ -146,7 +143,7 @@ const StudentsDismissal = (values) => {
       const response = await callApi(
         `students/student-dissmiss/`,
         'POST',
-        formData
+        formData,
       );
       if (response.status === 200 || response.status === 201) {
         console.log('success');
@@ -466,8 +463,8 @@ const StudentsDismissal = (values) => {
                                           (new Date(e.toDate()).getMonth() +
                                             1) +
                                           '-' +
-                                          new Date(e.toDate()).getDate()
-                                      )
+                                          new Date(e.toDate()).getDate(),
+                                      ),
                                     )
                                   }
                                 />
@@ -494,7 +491,7 @@ const StudentsDismissal = (values) => {
                                     onChange={(event) => {
                                       setFieldValue(
                                         'dismissalDocument',
-                                        event.currentTarget.files[0]
+                                        event.currentTarget.files[0],
                                       );
                                     }}
                                     onBlur={handleBlur}

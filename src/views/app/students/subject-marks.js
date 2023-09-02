@@ -146,7 +146,7 @@ const MarksDisplay = ({ match }) => {
     const response = await callApi(
       `institute/institite-department/?institute=${instituteId.value}`,
       '',
-      null
+      null,
     );
     // console.log('response of department', response);
     if (response.data && response.status === 200) {
@@ -303,7 +303,7 @@ const MarksDisplay = ({ match }) => {
     const response = await callApi(
       `students/students-marks/?institute_id=${selectedInstitute.value}&class_id=${selectedClass.value}&shift=${selecedStudyTime.value}&department_id=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}&subject_id=${selectedSubject.value}`,
       '',
-      null
+      null,
     );
 
     console.log('responseeeeeeeeeeeeeeE', response.data);
@@ -400,7 +400,7 @@ const MarksDisplay = ({ match }) => {
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationalYear
+                            values.educationalYear,
                           )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (

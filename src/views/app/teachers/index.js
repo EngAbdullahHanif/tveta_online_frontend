@@ -6,39 +6,39 @@ import { Redirect, Switch } from 'react-router-dom';
 const TeacherList = React.lazy(() =>
   import(
     /* webpackChunkName: "teacher-list" */ './bio/teacher-list/TeacherListMain'
-  )
+  ),
 );
 
 // This used to create a sub memu of the sidebar.
 const TeacherRegister = React.lazy(() =>
-  import(/* webpackChunkName: "teacher-register" */ './bio/teacher-register')
+  import(/* webpackChunkName: "teacher-register" */ './bio/teacher-register'),
 );
 
 // This used to create a sub memu of the sidebar.
 const TeacherProfile = React.lazy(() =>
-  import(/* webpackChunkName: "profile" */ './bio/teacher-profile')
+  import(/* webpackChunkName: "profile" */ './bio/teacher-profile'),
 );
 
 const TeacherHrEvaluation = React.lazy(() =>
   import(
     /* webpackChunkName: "hr-evaluation" */ '../hr-evaluation/teacher-hr-evaluation'
-  )
+  ),
 );
 const TeacherPromotionDemotion = React.lazy(() =>
   import(
     /* webpackChunkName: "promotion-demotion" */ './promotion-demotion-list/PromotionDemotionListMain'
-  )
+  ),
 );
 const TeacherTransfer = React.lazy(() =>
-  import(/* webpackChunkName: "teacher-transfer" */ './bio/teacher-transfer')
+  import(/* webpackChunkName: "teacher-transfer" */ './bio/teacher-transfer'),
 );
 
 const Main = React.lazy(() =>
-  import(/* webpackChunkName: "register-1" */ '../main-register-route')
+  import(/* webpackChunkName: "register-1" */ '../main-register-route'),
 );
 
 const Test = React.lazy(() =>
-  import(/* webpackChunkName: "teacher-transfer" */ './test')
+  import(/* webpackChunkName: "teacher-transfer" */ './test'),
 );
 
 const Teachers = ({ match, props }) => (

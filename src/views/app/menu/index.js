@@ -4,10 +4,10 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 const MenuTypes = React.lazy(() =>
-  import(/* webpackChunkName: "menu-types" */ './types')
+  import(/* webpackChunkName: "menu-types" */ './types'),
 );
 const Levels = React.lazy(() =>
-  import(/* webpackChunkName: "menu-levels" */ './levels')
+  import(/* webpackChunkName: "menu-levels" */ './levels'),
 );
 
 const UI = ({ match }) => (

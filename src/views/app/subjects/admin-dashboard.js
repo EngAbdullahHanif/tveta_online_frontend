@@ -5,10 +5,7 @@ import Calendar from 'containers/dashboards/Calendar';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { NavLink } from 'react-router-dom';
 import { adminRoot } from 'constants/defaultValues';
-import {
-  DoughnutChart,
-  PolarAreaChart,
-} from 'components/charts';
+import { DoughnutChart, PolarAreaChart } from 'components/charts';
 import {
   polarAreaChartData,
   polarAreaChartData1,
@@ -32,7 +29,7 @@ import Rating from 'components/common/Rating';
 
 const ProvincailDashboard = (
   values,
-  { className = '', displayRate = false }
+  { className = '', displayRate = false },
 ) => {
   const [isNext, setIsNext] = useState(true);
   const handleClick = (event) => {

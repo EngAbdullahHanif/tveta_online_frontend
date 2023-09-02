@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import {
-  Card,
-} from 'reactstrap';
+import { Card } from 'reactstrap';
 import './carousel.css';
 import CarPhoto2 from '../assets/img/blog/car2.png';
 import CarPhoto3 from '../assets/img/blog/45.png';
@@ -27,7 +25,11 @@ function IndividualIntervalsExample() {
       }}
     >
       <Carousel activeIndex={index} onSelect={handleSelect} className="rounded">
-        <Carousel.Item interval={1900} autoplayTimeout={2000} className="rounded">
+        <Carousel.Item
+          interval={1900}
+          autoplayTimeout={2000}
+          className="rounded"
+        >
           <Card>
             <img
               className="d-block w-100"

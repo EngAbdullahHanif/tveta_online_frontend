@@ -18,7 +18,7 @@ const ReactAutoSuggest = ({ data, value, placeholder, onChange }) => {
       return inputLength === 0
         ? []
         : dataState.filter(
-            (d) => d.name.toLowerCase().slice(0, inputLength) === inputValue
+            (d) => d.name.toLowerCase().slice(0, inputLength) === inputValue,
           );
     }
     return dataState;

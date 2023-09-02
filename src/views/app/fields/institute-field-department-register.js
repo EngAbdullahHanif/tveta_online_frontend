@@ -3,19 +3,10 @@ import { Formik, Form } from 'formik';
 import axios from 'axios';
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from '../../../containers/form-validations/FormikFields';
+import { FormikReactSelect } from '../../../containers/form-validations/FormikFields';
 
 import config from '../../../config';
 
@@ -31,7 +22,7 @@ const SignupSchema = Yup.object().shape({
     .required(<IntlMessages id="field.FieldNameErr" />),
 
   FieldEngName: Yup.string().required(
-    <IntlMessages id="field.FieldEngNameErr" />
+    <IntlMessages id="field.FieldEngNameErr" />,
   ),
 });
 

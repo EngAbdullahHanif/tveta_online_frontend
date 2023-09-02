@@ -7,9 +7,7 @@ import {
   genderOptions,
   langOptions,
 } from '../global-data/options';
-import {
-  InstituteShiftOptions,
-} from '../global-data/options';
+import { InstituteShiftOptions } from '../global-data/options';
 import * as Yup from 'yup';
 
 import {
@@ -28,9 +26,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { NotificationManager } from 'components/common/react-notifications';
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { message, Spin } from 'antd';
 import { CURRENT_SHAMSI_YEAR } from 'constants/defaultValues';
 import { useContext } from 'react';
@@ -142,7 +138,7 @@ const InstituteRegister = () => {
       if (response.data && response.status === 200) {
         console.log('RESPONSE in Fetch Institute for update: ', response.data);
         const updatedData = await response?.data.filter(
-          (item) => item.id == instituteId
+          (item) => item.id == instituteId,
         );
         data = updatedData[0];
         console.log('UPDATED DATA: ', data);
@@ -151,14 +147,14 @@ const InstituteRegister = () => {
         setInitialDistrict(
           districts.find((dist) => {
             return dist.value === data.district;
-          })
+          }),
         );
         setInitialVillage(data.village);
         setInitialProvince(
-          provinces.find((prov) => prov.value === data.province)
+          provinces.find((prov) => prov.value === data.province),
         );
         setInitialOwnershipType(
-          BuildingTypeOptions.find((op) => op.value === data.ownership)
+          BuildingTypeOptions.find((op) => op.value === data.ownership),
         );
         setInstituteTypeGVT({
           value: data.school_type,
@@ -168,18 +164,18 @@ const InstituteRegister = () => {
         setInitialInstType(
           instituteTypeOptions.find((sh) => {
             return sh.value == data.institute_type;
-          })
+          }),
         );
         setCityType(
-          instituteCityOptions.find((op) => op.value === data.location_type)
+          instituteCityOptions.find((op) => op.value === data.location_type),
         );
         setInitialShift(
           InstituteShiftOptions.filter((sh) => {
             return sh.value == data.shift;
-          })
+          }),
         );
         setClimate(
-          instituteClimateOptions.find((op) => op.value === data.climate)
+          instituteClimateOptions.find((op) => op.value === data.climate),
         );
         setInitialCode(data.code);
         setLanguage(langOptions.find((op) => op.value === data.language));
@@ -187,7 +183,7 @@ const InstituteRegister = () => {
         setInitialOwnership(
           instTypeOptions.filter((sh) => {
             return sh.value == data.ownership;
-          })
+          }),
         );
         console.log('UPDATED Institute DATA: ', institute);
       } else {
@@ -217,7 +213,7 @@ const InstituteRegister = () => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -229,7 +225,7 @@ const InstituteRegister = () => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -258,7 +254,7 @@ const InstituteRegister = () => {
         `institute/check-code-unique/`,
         'GET',
         null,
-        { code }
+        { code },
       );
       const isUnique = response.data.is_unique;
       if (!isUnique) {
@@ -285,7 +281,7 @@ const InstituteRegister = () => {
             if (value >= 1000 && value < 10000) {
               try {
                 const response = await callApi(
-                  `institute/check-code-unique/?code=${value}`
+                  `institute/check-code-unique/?code=${value}`,
                 );
                 return response.data.is_unique;
               } catch (error) {
@@ -294,7 +290,7 @@ const InstituteRegister = () => {
               }
             }
             return true;
-          }
+          },
         ),
 
     // instType: Yup.object()
@@ -389,7 +385,7 @@ const InstituteRegister = () => {
       const response = await callApi(
         apiParams.endPoint,
         apiParams.method,
-        data
+        data,
       );
       if (response && response.status >= 200 && response.status < 300) {
         createNotification('success', 'filled');
@@ -519,7 +515,7 @@ const InstituteRegister = () => {
                           onChange={(name, option) => {
                             setFieldValue(name, option);
                             const dd = districts.filter(
-                              (dis) => dis.province === option.value
+                              (dis) => dis.province === option.value,
                             );
                             setDistrictsOptions(dd);
                             setFieldValue('district', []);

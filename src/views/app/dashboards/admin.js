@@ -48,7 +48,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
   };
   const fetchTeachers = async () => {
     await callApi(
-      `reports/teachers/national/all/?year=${settings?.current_educational_year}`
+      `reports/teachers/national/all/?year=${settings?.current_educational_year}`,
     ).then((response) => {
       console.log('Teachers: ', response.data);
       setTeachers(response.data[0]);
@@ -85,7 +85,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
     console.log('Auth User in Dashboard: ', user);
     console.log(
       'Auth User in Dashboard Local Storage: ',
-      JSON.parse(localStorage.getItem('user'))
+      JSON.parse(localStorage.getItem('user')),
     );
   }, []);
   const onRegister = (values) => {
@@ -795,7 +795,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                             <td>
                               {
                                 contextFields.find(
-                                  (f) => f.value === report.field_of_study
+                                  (f) => f.value === report.field_of_study,
                                 )?.label
                               }
                             </td>
@@ -1650,7 +1650,7 @@ const Admin = (values, { className = '', displayRate = false }) => {
                   <p style={{ marginRight: '10%', fontSize: 20 }}>
                     {
                       institutes?.filter(
-                        (inst) => inst.rest.institute_type === 'high_school'
+                        (inst) => inst.rest.institute_type === 'high_school',
                       )?.length
                     }
                   </p>

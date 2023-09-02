@@ -59,7 +59,7 @@ const DataListPages = ({ match }) => {
     async function fetchData() {
       axios
         .get(
-          `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
+          `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`,
         )
         .then((res) => {
           return res.data;
@@ -69,7 +69,7 @@ const DataListPages = ({ match }) => {
           setItems(
             data.data.map((x) => {
               return { ...x, img: x.img.replace('img/', 'img/products/') };
-            })
+            }),
           );
           setSelectedItems([]);
           setTotalItemCount(data.totalItem);
@@ -106,7 +106,7 @@ const DataListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -165,7 +165,7 @@ const DataListPages = ({ match }) => {
           handleChangeSelectAll={handleChangeSelectAll}
           changeOrderBy={(column) => {
             setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
+              orderOptions.find((x) => x.column === column),
             );
           }}
           changePageSize={setSelectedPageSize}

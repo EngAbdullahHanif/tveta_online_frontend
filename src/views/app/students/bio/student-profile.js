@@ -5,30 +5,16 @@ import callApi from 'helpers/callApi';
 import './../../.././../assets/css/global-style.css';
 import profilePhoto from './../../../../assets/img/profiles/user.png';
 
-import {
-  message,
-} from 'antd';
-import {
-  Row,
-  Card,
-  CardBody,
-  Label,
-  Button,
-  Table,
-  Badge,
-} from 'reactstrap';
+import { message } from 'antd';
+import { Row, Card, CardBody, Label, Button, Table, Badge } from 'reactstrap';
 import logo from './../../../../assets/logos/AdminLogo.png';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import config from '../../../../config';
 
-
-
 import { AuthContext } from 'context/AuthContext';
-import {
-  studentStatusOptions,
-} from 'views/app/global-data/options';
+import { studentStatusOptions } from 'views/app/global-data/options';
 
 const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
@@ -64,7 +50,7 @@ const StudentProfile = () => {
     const response = await callApi(
       `teachers/${teacherId}/feedbacks/`,
       '',
-      null
+      null,
     );
 
     const data = response.data;
@@ -87,7 +73,7 @@ const StudentProfile = () => {
     await callApi(`students/${studentId}/feedbacks/${item}/`, 'DELETE').then(
       (response) => {
         fetchStudentInstitutes();
-      }
+      },
     );
   };
   const addInstitute = async (inputData, { resetForm }) => {
@@ -118,7 +104,7 @@ const StudentProfile = () => {
         } else {
           message.error('Data Not Saved Check your Payload');
         }
-      }
+      },
     );
     setLoading(false);
   };
@@ -137,7 +123,7 @@ const StudentProfile = () => {
         const instituteResponse = await callApi(
           `students/student_institutes/?student__id=${studentId}`,
           '',
-          null
+          null,
         );
 
         if (instituteResponse.data && instituteResponse.status === 200) {
@@ -149,7 +135,7 @@ const StudentProfile = () => {
         const classResponse = await callApi(
           `students/student_class/?student=${studentId}&stauts=inprogress`,
           '',
-          null
+          null,
         );
 
         if (classResponse.data && classResponse.status === 200) {
@@ -160,7 +146,7 @@ const StudentProfile = () => {
         const dormResponse = await callApi(
           `students/student_dorms/?student=${studentId}`,
           '',
-          null
+          null,
         );
         if (dormResponse.data && dormResponse.status === 200) {
           const dormData = await dormResponse.data;
@@ -170,7 +156,7 @@ const StudentProfile = () => {
         const marksResponse = await callApi(
           `students/TranscriptData/?student=${studentId}`,
           '',
-          null
+          null,
         );
         if (marksResponse.data && marksResponse.status === 200) {
           const marksData = await marksResponse.data;
@@ -331,7 +317,7 @@ const StudentProfile = () => {
                             >
                               {
                                 studentStatusOptions.find(
-                                  (op) => op.value === student[0].status
+                                  (op) => op.value === student[0].status,
                                 )?.label
                               }
                             </Badge>
@@ -577,7 +563,7 @@ const StudentProfile = () => {
                           {console.log('iiiiiiiii', institutes)}
                           {
                             institutes.find(
-                              (ins) => ins.value === institute[0].institute
+                              (ins) => ins.value === institute[0].institute,
                             )?.label
                           }
                         </h2>

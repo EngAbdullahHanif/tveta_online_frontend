@@ -10,20 +10,11 @@ import './../../.././../assets/css/global-style.css';
 import { useParams } from 'react-router-dom';
 
 import * as Yup from 'yup';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import callApi from 'helpers/callApi';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { NotificationManager } from 'components/common/react-notifications';
 import { AuthContext } from 'context/AuthContext';
 
@@ -71,16 +62,16 @@ const ValidationSchema = Yup.object().shape({
 
 const InnerInpufieldsValidation = Yup.object().shape({
   present: Yup.number().required(
-    <IntlMessages id="forms.totolEduactionalDaysErr" />
+    <IntlMessages id="forms.totolEduactionalDaysErr" />,
   ),
   absent: Yup.number().required(
-    <IntlMessages id="forms.totolEduactionalDaysErr" />
+    <IntlMessages id="forms.totolEduactionalDaysErr" />,
   ),
   necessaryWork: Yup.number().required(
-    <IntlMessages id="forms.totolEduactionalDaysErr" />
+    <IntlMessages id="forms.totolEduactionalDaysErr" />,
   ),
   sickness: Yup.number().required(
-    <IntlMessages id="forms.totolEduactionalDaysErr" />
+    <IntlMessages id="forms.totolEduactionalDaysErr" />,
   ),
 });
 
@@ -104,7 +95,7 @@ const StudentAttendance = ({ match }) => {
     useEffect(() => {
       async function fetchStudent() {
         const { data } = await axios.get(
-          `${StudentAttendanceAPI}/?id=${studentAttendanceId}`
+          `${StudentAttendanceAPI}/?id=${studentAttendanceId}`,
         );
         console.log(data[0].institute_id.name, 'kaknor student data');
         setInitialEducationalYear(data[0].educational_year),
@@ -171,7 +162,7 @@ const StudentAttendance = ({ match }) => {
     const response = await callApi(
       `students/class-students-list/?institute=${selectedInstitute.value}&classs=${selectedClass.value}&shift=${selecedStudyTime.value}&department=${selectedDepartment.value}&educational_year=${selectedEducationalYear.value}`,
       'GET',
-      null
+      null,
     );
     console.log('Div Inner Side', selectedEducationalYear.value);
     console.log('class repspossdfsde', response);
@@ -193,7 +184,7 @@ const StudentAttendance = ({ match }) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -205,7 +196,7 @@ const StudentAttendance = ({ match }) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -264,7 +255,7 @@ const StudentAttendance = ({ match }) => {
     const response = await callApi(
       'students/class-attendance/create/',
       'POST',
-      data
+      data,
     );
     if (response.status === 200 || response.status === 201) {
       setIsSubmitted(true);
@@ -337,7 +328,7 @@ const StudentAttendance = ({ match }) => {
                           options={educationalYearsOptions}
                           onChange={setFieldValue}
                           onClick={setSelectedEducationalYear(
-                            values.educationalYear
+                            values.educationalYear,
                           )}
                           onBlur={setFieldTouched}
                         />

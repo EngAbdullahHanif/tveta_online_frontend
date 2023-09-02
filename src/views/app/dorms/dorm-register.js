@@ -9,14 +9,7 @@ import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
 import { NotificationManager } from 'components/common/react-notifications';
 
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -29,9 +22,7 @@ const dormCreateAPI = `${servicePath}/institute/dorms_create/`;
 const dormAPI = `${servicePath}/institute/dorms`;
 //http://localhost:8000/institute/dorms/?id=1
 
-import {
-  FormikReactSelect,
-} from 'containers/form-validations/FormikFields';
+import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from 'context/AuthContext';
@@ -48,7 +39,7 @@ const SignupSchema = Yup.object().shape({
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
   totalBuildingNo: Yup.string().required(
-    <IntlMessages id="dorm.TotalBuildingNoErr" />
+    <IntlMessages id="dorm.TotalBuildingNoErr" />,
   ),
 
   // PublicBuildingOwner: UpdateMode
@@ -64,7 +55,7 @@ const SignupSchema = Yup.object().shape({
   // quota: Yup.string().required(<IntlMessages id="dorm.QuotaErr" />),
 
   totalKitchens: Yup.string().required(
-    <IntlMessages id="dorm.TotalKitchensErr" />
+    <IntlMessages id="dorm.TotalKitchensErr" />,
   ),
   toilet: Yup.string().required(<IntlMessages id="dorm.ToiletErr" />),
 
@@ -93,10 +84,10 @@ const DormRegistration = (values) => {
   const [initialGender, setInitialGender] = useState([]);
   const [initialBuildingType, setInitialBuildingType] = useState([]);
   const [initialPublicBuildingOwner, setInitialPublicBuildingOwner] = useState(
-    []
+    [],
   );
   const [initialPrivateBuildingType, setInitialPrivateBuildingType] = useState(
-    []
+    [],
   );
   const [initialQuota, setInitialQuota] = useState('');
   const [initialTotalRooms, setInitialTotalRooms] = useState('');
@@ -128,8 +119,8 @@ const DormRegistration = (values) => {
         // });
         setInitialBuildingType(
           BuildingTypeOptions.find(
-            (option) => option.value === updValues.building_ownership
-          )
+            (option) => option.value === updValues.building_ownership,
+          ),
         );
 
         // publicBuildingOwnerOptions.map((publicDorm) => {
@@ -139,8 +130,8 @@ const DormRegistration = (values) => {
         // });
         setInitialPublicBuildingOwner(
           publicBuildingOwnerOptions.find(
-            (option) => option.value === updValues.building_type_option
-          )
+            (option) => option.value === updValues.building_type_option,
+          ),
         );
 
         // privateBuildingTypeOptions.map((privateDormType) => {
@@ -151,16 +142,16 @@ const DormRegistration = (values) => {
 
         setInitialPrivateBuildingType(
           privateBuildingTypeOptions.find(
-            (option) => option.value === updValues.building_type_option
-          )
+            (option) => option.value === updValues.building_type_option,
+          ),
         );
 
         setInitialProvince(
-          provinces.find((option) => option.value === updValues.province)
+          provinces.find((option) => option.value === updValues.province),
         );
 
         setInitialDistrict(
-          districts.find((option) => option.value === updValues.district)
+          districts.find((option) => option.value === updValues.district),
         );
 
         dormGenderOptions.map((gender) => {
@@ -199,7 +190,7 @@ const DormRegistration = (values) => {
     const response = await callApi(
       `core/districts/?province=${provinceId}`,
       'GET',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       const updatedData = await response?.data.map((item) => ({
@@ -250,7 +241,7 @@ const DormRegistration = (values) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -262,7 +253,7 @@ const DormRegistration = (values) => {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:

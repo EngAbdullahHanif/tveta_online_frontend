@@ -4,31 +4,33 @@ import { Redirect, Switch } from 'react-router-dom';
 import { userRole } from 'constants/defaultValues';
 
 const DormList = React.lazy(() =>
-  import(/* webpackChunkName: "dorm-list" */ './dorm-list/DormListMain')
+  import(/* webpackChunkName: "dorm-list" */ './dorm-list/DormListMain'),
 );
 
 const DormRegister = React.lazy(() =>
-  import(/* webpackChunkName: "dorm-register" */ './dorm-register')
+  import(/* webpackChunkName: "dorm-register" */ './dorm-register'),
 );
 
 const StudentDormList = React.lazy(() =>
   import(
     /* webpackChunkName: "student-dorm-list" */ './dorm-students-list/DormStudentsListMain'
-  )
+  ),
 );
 
 const StudentRegistrationInDorm = React.lazy(() =>
   import(
     /* webpackChunkName: "student-register" */ './student-register-in-dorm'
-  )
+  ),
 );
 
 const DormProfile = React.lazy(() =>
-  import(/* webpackChunkName: "details" */ './dorm-profile')
+  import(/* webpackChunkName: "details" */ './dorm-profile'),
 );
 
 const DormStudentDismissal = React.lazy(() =>
-  import(/* webpackChunkName: "student-dismissal" */ './dorm-student-dismissal')
+  import(
+    /* webpackChunkName: "student-dismissal" */ './dorm-student-dismissal'
+  ),
 );
 
 const Dorms = ({ match, props }) => (

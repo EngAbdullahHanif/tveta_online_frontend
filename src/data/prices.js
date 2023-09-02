@@ -155,5 +155,5 @@ const pricesData = {
       ],
     },
   ],
-}
+};
 export default pricesData;

@@ -274,7 +274,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/?id=${institute.id}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setItems(response.data);
@@ -313,7 +313,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/?id=${instituteId}&district=${district}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setItems(response.data);
@@ -345,7 +345,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&district=${district}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setItems(response.data);
@@ -377,7 +377,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/?id=${instituteId}&province=${selectedProvinceOption.column}&district=${district}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setItems(response.data);
@@ -409,7 +409,7 @@ const ThumbListPages = ({ match }) => {
         const response = await callApi(
           `institute/?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`,
           '',
-          null
+          null,
         );
         if (response.data && response.status === 200) {
           setItems(response.data);
@@ -476,7 +476,7 @@ const ThumbListPages = ({ match }) => {
       selectedItems.push(
         ...newItems.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedItems));
       setSelectedItems(selectedList);
@@ -538,7 +538,7 @@ const ThumbListPages = ({ match }) => {
           // following code is used for order the list based on different element of the prod
           changeOrderBy={(column) => {
             setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column)
+              orderOptions.find((x) => x.column === column),
             );
           }}
           changePageSize={setSelectedPageSize}
@@ -560,22 +560,22 @@ const ThumbListPages = ({ match }) => {
           toggleModal={() => setModalOpen(!modalOpen)}
           changeGenderBy={(column) => {
             setSelectedGenderOption(
-              genderOptions.find((x) => x.column === column)
+              genderOptions.find((x) => x.column === column),
             );
           }}
           changeStatusBy={(column) => {
             setSelectedStatusOptions(
-              statusOptions.find((x) => x.column === column)
+              statusOptions.find((x) => x.column === column),
             );
           }}
           changeInstituteBy={(column) => {
             setSelectedInstituteType(
-              instituteTypeOptions.find((x) => x.column === column)
+              instituteTypeOptions.find((x) => x.column === column),
             );
           }}
           changeProvinceBy={(column) => {
             setSelectedProvinceOption(
-              provincesOptionsForList.find((x) => x.column === column)
+              provincesOptionsForList.find((x) => x.column === column),
             );
           }}
           selectedGenderOption={selectedGenderOption}

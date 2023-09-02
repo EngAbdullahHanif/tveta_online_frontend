@@ -25,7 +25,6 @@ const Error = () => {
           <Row className="h-100">
             <Colxx xxs="12" md="7" className="mx-auto my-auto">
               <Card className="auth-card">
-             
                 <div className="form-side">
                   <CardTitle className="mb-4">
                     <NavLink to="/" className="">

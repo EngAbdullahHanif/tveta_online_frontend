@@ -5,10 +5,7 @@ import './style.css';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 
-import {
-  educationalYearsOptions,
-  chanceOptions,
-} from '../global-data/options';
+import { educationalYearsOptions, chanceOptions } from '../global-data/options';
 import './../../../assets/css/global-style.css';
 
 import * as Yup from 'yup';
@@ -129,7 +126,7 @@ function singleStudentSingleSubjectMarks(props) {
     const response = await callApi(
       `students/subject-marks-update/list/?classs=${selectedClass.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}&student_id=${selectedStudentID}&chance=${selectedChance.value}`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       console.log('response of students', response);
@@ -154,7 +151,7 @@ function singleStudentSingleSubjectMarks(props) {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -166,7 +163,7 @@ function singleStudentSingleSubjectMarks(props) {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -189,7 +186,7 @@ function singleStudentSingleSubjectMarks(props) {
       'PUT',
       data,
       '',
-      null
+      null,
     );
 
     if (response.data && response.status === 200) {
@@ -257,7 +254,7 @@ function singleStudentSingleSubjectMarks(props) {
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationalYear
+                            values.educationalYear,
                           )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (

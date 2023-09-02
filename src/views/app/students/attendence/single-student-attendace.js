@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, isEmptyArray } from 'formik';
 import '../style.css';
 import callApi from 'helpers/callApi';
-import {
-  educationalYearsOptions,
-} from '../../global-data/options';
+import { educationalYearsOptions } from '../../global-data/options';
 import '../../../../assets/css/global-style.css';
 
 import * as Yup from 'yup';
@@ -134,7 +132,7 @@ function singleStudentAttendace(props) {
     const response = await callApi(
       `students/student-attendance-update/list/?classs=${selectedClass.value}&educational_year=${selectedEducationalYear.value}&student_id=${selectedStudentID}`,
       '',
-      null
+      null,
     );
     if (response.data && response.status === 200) {
       console.log('response of students attendance', response);
@@ -158,7 +156,7 @@ function singleStudentAttendace(props) {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -170,7 +168,7 @@ function singleStudentAttendace(props) {
             alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -194,7 +192,7 @@ function singleStudentAttendace(props) {
     const response = await callApi(
       `students/student-attendance-update/update/`,
       'POST',
-      data
+      data,
     );
 
     if (response.data && response.status === 200) {
@@ -262,7 +260,7 @@ function singleStudentAttendace(props) {
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           onClick={setSelectedEducationalYear(
-                            values.educationalYear
+                            values.educationalYear,
                           )}
                         />
                         {errors.educationalYear && touched.educationalYear ? (

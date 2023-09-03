@@ -725,12 +725,14 @@ const Home = () => {
                             href="https://www.linkedin.com/in/sharif-rasekh"
                             class="fa fa-linkedin-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                           <a
                             style={{ fontSize: 30 }}
                             href="https://github.com/SharifRasekh"
                             class="fa fa-github-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                         </div>
                       </div>
@@ -772,12 +774,14 @@ const Home = () => {
                             href="https://www.linkedin.com/in/engabdullahhanif/"
                             class="fa fa-linkedin-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                           <a
                             style={{ fontSize: 30 }}
                             href="https://github.com/EngAbdullahHanif"
                             class="fa fa-github-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                         </div>
                       </div>
@@ -826,6 +830,7 @@ const Home = () => {
                             href="https://github.com/sami643"
                             class="fa fa-github-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                         </div>
                       </div>
@@ -869,12 +874,14 @@ const Home = () => {
                             href="https://www.linkedin.com/in/noman-ahmadi-690490248/"
                             class="fa fa-linkedin-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                           <a
                             style={{ fontSize: 30 }}
                             href="https://github.com/Noman-Ahmadi"
                             class="fa fa-github-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                         </div>
                       </div>
@@ -925,6 +932,7 @@ const Home = () => {
                             href="https://github.com/ManAhmadzai"
                             class="fa fa-github-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                         </div>
                       </div>
@@ -967,12 +975,14 @@ const Home = () => {
                             href="https://www.linkedin.com/in/sartajahmad01/"
                             class="fa fa-linkedin-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                           <a
                             style={{ fontSize: 30 }}
                             href="https://github.com/SeSartaj"
                             class="fa fa-github-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                         </div>
                       </div>
@@ -1014,12 +1024,14 @@ const Home = () => {
                             href="https://www.linkedin.com/in/suhaibqanooni/"
                             class="fa fa-linkedin-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                           <a
                             style={{ fontSize: 30 }}
                             href="https://github.com/suhaibqanooni"
                             class="fa fa-github-square"
                             target="_blank"
+                            rel="noreferrer"
                           ></a>
                         </div>
                       </div>

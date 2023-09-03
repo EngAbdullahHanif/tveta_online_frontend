@@ -1,17 +1,17 @@
 {
-  "extends": ["plugin:prettier/recommended"],
-  "parser": "@babel/eslint-parser",
-  "plugins": ["babel", "react", "unused-imports", "prettier"],
+  "extends": ["plugin:prettier/recommended", "react-app"],
+  // "parser": "@babel/eslint-parser",
+  "plugins": ["react", "unused-imports", "prettier"],
   "rules": {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error", // Change from "warn" to "error"
     "unused-imports/no-unused-vars": [
-      "error",
+      "warn",
       {
         "vars": "all",
-        "varsIgnorePattern": "^_",
+        "varsIgnorePattern": "^(?:_|set[A-Z][a-zA-Z]*)",
         "args": "after-used",
         "argsIgnorePattern": "^_"
       }

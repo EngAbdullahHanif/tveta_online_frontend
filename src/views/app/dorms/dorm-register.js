@@ -16,16 +16,16 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import { useParams } from 'react-router-dom';
 
 import config from '../../../config';
-
-const servicePath = config.API_URL;
-const dormCreateAPI = `${servicePath}/institute/dorms_create/`;
-const dormAPI = `${servicePath}/institute/dorms`;
 //http://localhost:8000/institute/dorms/?id=1
 
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from 'context/AuthContext';
+
+const servicePath = config.API_URL;
+const dormCreateAPI = `${servicePath}/institute/dorms_create/`;
+const dormAPI = `${servicePath}/institute/dorms`;
 const UpdateMode = true;
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required(<IntlMessages id="dorm.NameErr" />),

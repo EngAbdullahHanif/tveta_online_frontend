@@ -15,6 +15,10 @@ import {
 } from '../../../global-data/options';
 import useMousetrap from 'hooks/use-mousetrap';
 import { Badge } from 'reactstrap';
+
+import { NavLink } from 'react-router-dom';
+import { BsPencilSquare } from 'react-icons/bs';
+import { AuthContext } from 'context/AuthContext';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -23,10 +27,6 @@ const getIndex = (value, arr, prop) => {
   }
   return -1;
 };
-
-import { NavLink } from 'react-router-dom';
-import { BsPencilSquare } from 'react-icons/bs';
-import { AuthContext } from 'context/AuthContext';
 
 const pageSizes = [4, 8, 12, 20];
 

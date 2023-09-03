@@ -26,11 +26,11 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 import config from '../../../config';
+import DisplayMessage from 'components/messages/DisplayMessage';
 const servicePath = config.API_URL;
 const instituteApiUrl = `${servicePath}/institute/`;
 const studentSearchApiUrl = `${servicePath}/api/student_accademic/`;
 const studentTranferApiUrl = `${servicePath}/api/student-transfer/`;
-import DisplayMessage from 'components/messages/DisplayMessage';
 
 const StudentsDismissal = (values) => {
   const [studentId, setStudentId] = useState('');

@@ -213,6 +213,7 @@ const StudentProfile = () => {
                   href={student[0].photo}
                   className="w-40 w-sm-100"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   <img
                     top

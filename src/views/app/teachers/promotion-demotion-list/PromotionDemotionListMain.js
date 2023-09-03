@@ -10,6 +10,8 @@ import ListPageHeading from 'views/app/teachers/promotion-demotion-list/Promotio
 import ListPageListing from 'views/app/teachers/promotion-demotion-list/PromotionDemotionListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
+import config from '../../../../config';
+
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -18,8 +20,6 @@ const getIndex = (value, arr, prop) => {
   }
   return -1;
 };
-
-import config from '../../../../config';
 const servicePath = config.API_URL;
 
 const apiUrl = `${servicePath}/cakes/paging`;

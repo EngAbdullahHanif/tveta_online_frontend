@@ -17,12 +17,12 @@ import { Colxx } from 'components/common/CustomBootstrap';
 
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
+import { AuthContext } from 'context/AuthContext';
+
 const SignupSchema = Yup.object().shape({
   District: Yup.string().required(<IntlMessages id="forms.DistrictErr" />),
   Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 });
-
-import { AuthContext } from 'context/AuthContext';
 
 const dormTypeOptions = [
   { value: 'in_dorm', label: 'بدل عاشه' },

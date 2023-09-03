@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import {
   Row,
@@ -86,7 +85,7 @@ const TodoApp = ({
       selectedList.push(
         ...items.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedList));
       selectedTodoItemsChangeAction(selectedList);
@@ -266,5 +265,5 @@ export default injectIntl(
     getTodoListWithOrderAction: getTodoListWithOrder,
     getTodoListSearchAction: getTodoListSearch,
     selectedTodoItemsChangeAction: selectedTodoItemsChange,
-  })(TodoApp)
+  })(TodoApp),
 );

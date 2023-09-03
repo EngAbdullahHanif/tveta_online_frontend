@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key, react/no-danger */
 import React, { useState, useEffect, useRef } from 'react';
 import ReactCardCarousel from 'react-card-carousel';
 import classnames from 'classnames';
@@ -6,11 +5,24 @@ import { scroller } from 'react-scroll';
 import Headroom from 'react-headroom';
 import logo from '../assets/img/logo2.png';
 import CarPhotoWithoutBackground from '../assets/img/blog/132.png';
+<<<<<<< HEAD
 
 import Shahamat from '../assets/img/blog/9090.JPG';
 
 import CarPhoto12 from '../assets/img/blog/12.png';
 
+=======
+import Shahamat from '../assets/img/blog/9090.JPG';
+import Photo55 from '../assets/img/blog/img1000.jpeg';
+import mansoor from '../assets/img/blog/mansoor.jpeg';
+import rasikh from '../assets/img/blog/rasikh1.jpg';
+import sartaj from '../assets/img/blog/sartaj.jpg';
+import suhaib from '../assets/img/blog/suhaib.jpeg';
+
+import hanif from '../assets/img/blog/hanif.jpeg';
+import CarPhoto12 from '../assets/img/blog/12.png';
+import RahimiPhoto from '../assets/img/blog/rahimi.jpeg';
+>>>>>>> 79bd375a6372cf2b4c3c4f232fb0a8feedebf7e9
 import CS_Sector from '../assets/img/sectors/CS.jpg';
 import SpecialEducationSector from '../assets/img/sectors/Special_Education.png';
 import Economic_Sector from '../assets/img/sectors/Economic.jpg';
@@ -22,7 +34,14 @@ import Industerial from '../assets/img/sectors/Industerial.jpg';
 import ScrollAnimation from 'react-animate-on-scroll';
 import IntlMessages from 'helpers/IntlMessages';
 import './carousel.css';
+<<<<<<< HEAD
 import { Row, Card } from 'reactstrap';
+=======
+import {
+  Row,
+  Card,
+} from 'reactstrap';
+>>>>>>> 79bd375a6372cf2b4c3c4f232fb0a8feedebf7e9
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const contact = [
@@ -591,38 +610,9 @@ const Home = () => {
               </ReactCardCarousel>
             </div>
 
-            {/* 
-                <ControlledCarousel />
-                <div className="row ">
-                  <div className="col-s-12 col-12  d-md-block">
-                    <div className="home-carousel rounded ">
-                      <GlideComponent settings={slideSettings}>
-                        {slideItems.map((f, index) => (
-                          // eslint-disable-next-line react/no-array-index-key
-
-                          <div key={`slide_${index}`} className="card ">
-                            <div className="card-body text-center">
-                              <div>
-                                <i className={`${f.icon} large-icon`} />
-                                <h5 className="font-weight-semibold">
-                                  {f.title}
-                                </h5>
-                              </div>
-                              <div>
-                                <p className="detail-text">{f.detail}</p>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </GlideComponent>
-                    </div>
-                  </div>
-                </div> */}
-
             <div className="section">
               <div className="container" id="goals">
                 {features.map((feature, i) => (
-                  // eslint-disable-next-line react/no-array-index-key
                   <div key={`feature_${i}`}>
                     {i % 2 === 0 && (
                       <div className="row feature-row">

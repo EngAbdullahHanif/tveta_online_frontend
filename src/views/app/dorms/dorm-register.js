@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
-import { provinceOptions } from '../global-data/options';
 import { publicBuildingOwnerOptions } from '../global-data/options';
 import { privateBuildingTypeOptions } from '../global-data/options';
 import { BuildingTypeOptions } from '../global-data/options';
 import { dormGenderOptions } from '../global-data/options';
 import './dorm-register.css';
-import axios from 'axios';
 import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
 import { NotificationManager } from 'components/common/react-notifications';
@@ -19,10 +16,7 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -37,8 +31,6 @@ const dormAPI = `${servicePath}/institute/dorms`;
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
 import { useContext } from 'react';

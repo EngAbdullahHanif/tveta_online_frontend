@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
@@ -15,16 +15,12 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
 import DismissedStudents from './dismissed-student-list/DismissedListMain';

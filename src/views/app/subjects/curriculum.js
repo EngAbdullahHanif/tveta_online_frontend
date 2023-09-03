@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import './../dorms/dorm-register.css';
 import { NotificationManager } from 'components/common/react-notifications';
 import * as Yup from 'yup';
@@ -10,7 +10,6 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-import { useEffect } from 'react';
 import { AuthContext } from 'context/AuthContext';
 import { inputLabel } from 'config/styling';
 const SignupSchema = Yup.object().shape({

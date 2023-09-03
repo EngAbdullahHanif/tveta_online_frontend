@@ -1,14 +1,7 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { dormGenderOptions } from '../global-data/options';
-import {
-  provincesOptionsForList,
-  dateOfBirthOptoions,
-  studyTimeOptions,
-} from '../global-data/options';
-import * as Yup from 'yup';
+import React, { useState, useEffect, useContext } from 'react';
+import { Formik, Form } from 'formik';
+
+
 
 import {
   Row,
@@ -18,22 +11,17 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 
 import callApi from 'helpers/callApi';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { NotificationManager } from 'components/common/react-notifications';
-import { institute } from 'lang/locales/fa_IR';
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import { message, Spin } from 'antd';
+import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 message.config({
   top: 100,

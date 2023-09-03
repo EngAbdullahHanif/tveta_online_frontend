@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'reactstrap';
 
@@ -18,16 +17,16 @@ const ApplicationMenu = ({ children }) => {
 
   useEffect(() => {
     ['click', 'touchstart'].forEach((event) =>
-      document.addEventListener(event, handleDocumentClick, false)
+      document.addEventListener(event, handleDocumentClick, false),
     );
 
     return () => {
       ['click', 'touchstart'].forEach((event) =>
-        document.removeEventListener(event, handleDocumentClick, false)
+        document.removeEventListener(event, handleDocumentClick, false),
       );
     };
   }, [isOpen]);
- 
+
   return (
     <div ref={containerRef} className={`app-menu ${isOpen ? 'shown' : ''}`}>
       {children}

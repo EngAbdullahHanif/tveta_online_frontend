@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { injectIntl } from 'react-intl';
 import { Row, Card, CardBody, CardTitle } from 'reactstrap';

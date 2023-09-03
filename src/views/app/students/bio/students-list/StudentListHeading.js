@@ -1,23 +1,18 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useContext, useState } from 'react';
 import {
   Row,
   Button,
-  ButtonDropdown,
   UncontrolledDropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-  CustomInput,
   Collapse,
 } from 'reactstrap';
 import { injectIntl } from 'react-intl';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
-import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
-import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
 import { AuthContext } from 'context/AuthContext';
 // import Breadcrumb from '../navs/Breadcrumb';
 
@@ -69,7 +64,7 @@ const ListPageHeading = ({
   let districts = districtsFromContext;
   if (selectedProvinceOption) {
     districts = districtsFromContext.filter(
-      (district) => district.province === selectedProvinceOption.value
+      (district) => district.province === selectedProvinceOption.value,
     );
   }
 
@@ -173,7 +168,7 @@ const ListPageHeading = ({
                   >
                     {console.log(
                       'provincesOptionsForList',
-                      provincesOptionsForList
+                      provincesOptionsForList,
                     )}
                     {provincesOptionsForList &&
                       provincesOptionsForList.map((province, index) => {

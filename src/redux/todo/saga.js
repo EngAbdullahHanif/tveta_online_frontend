@@ -12,7 +12,6 @@ import {
 } from './actions';
 
 const getTodoListRequest = async () => {
-  // eslint-disable-next-line no-return-await
   return await new Promise((success) => {
     setTimeout(() => {
       success(todoData.data);
@@ -33,12 +32,9 @@ function* getTodoListItems() {
 
 const addTodoItemRequest = async (item) => {
   const items = todoData.data;
-  // eslint-disable-next-line no-param-reassign
   item.id = items.length + 1;
-  // eslint-disable-next-line no-param-reassign
   item.createDate = getDateWithFormat();
   items.splice(0, 0, item);
-  // eslint-disable-next-line no-return-await
   return await new Promise((success) => {
     setTimeout(() => {
       success(items);

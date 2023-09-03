@@ -1,5 +1,4 @@
 import { NavLink,useLocation} from 'react-router-dom';
-import { useState } from 'react';
 import StudentRegister from './students/bio/register';
 import TeacherRegister from "./teachers/bio/teacher-register";
 const Random = () => {

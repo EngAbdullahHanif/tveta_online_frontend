@@ -20,7 +20,6 @@ import {
   FormGroup,
   Label,
   Button,
-  Spinner,
 } from 'reactstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';

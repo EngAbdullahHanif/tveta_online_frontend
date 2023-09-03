@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { createRef, useState, Controller, useEffect } from 'react';
+import React, { createRef, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import {
@@ -15,10 +15,8 @@ import {
   teacherCurrentStatusOptions,
   dateOfBirthOptoions,
 } from '../../global-data/options';
-import {
-  teacherRegisterFormStep_1,
-  teacherRegisterFormStep_2,
-} from '../../global-data/forms-validation';
+
+
 import { NavLink } from 'react-router-dom';
 import './../../../../assets/css/global-style.css';
 import {

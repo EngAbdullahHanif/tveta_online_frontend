@@ -1,30 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
+import React from 'react';
 
 // Year  and SHift
 
-import * as Yup from 'yup';
 import {
   Row,
   Card,
   CardBody,
-  FormGroup,
-  Label,
-  Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
+
+
 
 const LevelOfEdcationOptions = [
   { value: '1', label: 'اصلی' },

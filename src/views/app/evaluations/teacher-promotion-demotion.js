@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import axios from 'axios';
 import { NotificationManager } from 'components/common/react-notifications';
 
@@ -12,18 +11,13 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 
 import config from '../../../config';

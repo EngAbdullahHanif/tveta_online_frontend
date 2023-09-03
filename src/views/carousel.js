@@ -1,23 +1,11 @@
 import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import {
-  Row,
   Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 import './carousel.css';
-import Select from 'react-select';
-import logo from '../assets/img/logo2.png';
-import CarPhoto from '../assets/img/blog/car.png';
-import CarPhoto1 from '../assets/img/blog/car1.png';
 import CarPhoto2 from '../assets/img/blog/car2.png';
 import CarPhoto3 from '../assets/img/blog/45.png';
-import CarPhoto22 from '../assets/img/blog/Car22.png';
 import CarPhoto12 from '../assets/img/blog/12.png';
 import CarPhoto13 from '../assets/img/blog/13.png';
 import CarPhoto14 from '../assets/img/blog/14.png';

@@ -1,36 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
+import React, { useState } from 'react';
 
-import ReactAutoSugegst from 'containers/forms/ReactAutoSugegst';
 
 import {
   Row,
   Button,
   ButtonDropdown,
-  UncontrolledDropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
   CustomInput,
   Collapse,
-  Label,
-  FormGroup,
-  Input,
-  Card,
-  CardBody,
-  CardTitle,
 } from 'reactstrap';
 
 import { injectIntl } from 'react-intl';
 //import { FormikReactSelect } from '../../../../../containers/form-validations/FormikFields';
-import { FormikReactSelect } from '../../../../containers/form-validations/FormikFields';
 
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 
 import { DataListIcon, ThumbListIcon, ImageListIcon } from 'components/svg';
-import { province } from 'lang/locales/fa_IR';
 // import Breadcrumb from '../navs/Breadcrumb';
 
 const ListPageHeading = ({

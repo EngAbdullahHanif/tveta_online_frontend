@@ -1,6 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-param-reassign */
 import React from 'react';
 import { WithWizard } from 'react-albus';
 import { Row, Button } from 'reactstrap';

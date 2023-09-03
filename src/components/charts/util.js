@@ -26,7 +26,6 @@ export const centerTextPlugin = {
     let activeLabel = chart.data.labels[0];
     let activeValue = chart.data.datasets[0].data[0];
     let dataset = chart.data.datasets[0];
-    // eslint-disable-next-line no-underscore-dangle
     let meta = dataset._meta[Object.keys(dataset._meta)[0]];
     let { total } = meta;
 
@@ -41,7 +40,6 @@ export const centerTextPlugin = {
         chart.data.datasets[chart.pointDataIndex].data[chart.pointIndex];
 
       dataset = chart.data.datasets[chart.pointDataIndex];
-      // eslint-disable-next-line no-underscore-dangle
       meta = dataset._meta[Object.keys(dataset._meta)[0]];
       total = meta.total;
       activePercentage = parseFloat(((activeValue / total) * 100).toFixed(1));
@@ -69,16 +67,12 @@ export const centerTextPlugin = {
 
     ctx.save();
   },
-  // eslint-disable-next-line no-unused-vars
   beforeEvent(chart, event, options) {
     const firstPoint = chart.getElementAtEvent(event)[0];
 
     if (firstPoint) {
-      // eslint-disable-next-line no-underscore-dangle,no-param-reassign
       chart.pointIndex = firstPoint._index;
-      // eslint-disable-next-line no-underscore-dangle,no-param-reassign
       chart.pointDataIndex = firstPoint._datasetIndex;
-      // eslint-disable-next-line no-param-reassign
       chart.pointAvailable = true;
     }
   },

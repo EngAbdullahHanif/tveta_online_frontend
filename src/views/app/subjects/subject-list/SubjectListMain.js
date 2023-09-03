@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 
@@ -18,7 +17,6 @@ import ListPageHeading from 'views/app/subjects/subject-list/SubjectListHeading'
 import ListPageListing from 'views/app/subjects/subject-list/SubjectListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
-import config from '../../../../config';
 import { AuthContext } from 'context/AuthContext';
 
 const getIndex = (value, arr, prop) => {

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, isEmptyArray } from 'formik';
-import axios from 'axios';
 import '../style.css';
 import callApi from 'helpers/callApi';
 import {
-  studyTimeOptions,
   educationalYearsOptions,
 } from '../../global-data/options';
 import '../../../../assets/css/global-style.css';
@@ -18,7 +16,6 @@ import {
   FormikReactSelect,
   FormikInputText,
 } from 'containers/form-validations/FormikFields';
-import { on } from 'events';
 
 import { NotificationManager } from 'components/common/react-notifications';
 

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
 import { FormGroup, Label, CustomInput } from 'reactstrap';
 import { colors } from 'constants/defaultValues';
@@ -37,12 +36,12 @@ const ColorSwitcher = () => {
 
   useEffect(() => {
     ['click', 'touchstart'].forEach((event) =>
-      document.addEventListener(event, handleDocumentClick, false)
+      document.addEventListener(event, handleDocumentClick, false),
     );
 
     return () => {
       ['click', 'touchstart'].forEach((event) =>
-        document.removeEventListener(event, handleDocumentClick, false)
+        document.removeEventListener(event, handleDocumentClick, false),
       );
     };
   }, [isOpen]);

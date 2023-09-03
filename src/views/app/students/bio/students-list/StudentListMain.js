@@ -1,26 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Select, Spin, Table as TB } from 'antd';
-import IntlMessages from 'helpers/IntlMessages';
+import { Table as TB } from 'antd';
 import callApi from 'helpers/callApi';
-import {
-  educationalYearsOptionsForList,
-  studentType,
-  genderOptionsForList,
-  studyTimeOptionsForList,
-  StdInteranceOptions,
-  genderOptions,
-} from '../../../global-data/options';
-import { Badge, FormGroup, Input, Label, Spinner } from 'reactstrap';
+
+
+import { Badge, Spinner } from 'reactstrap';
 // import { servicePath } from 'constants/defaultValues';
-import ListPageHeading from 'views/app/students/bio/students-list/StudentListHeading';
-import ListPageListing from 'views/app/students/bio/students-list/StudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 import { AuthContext } from 'context/AuthContext';
-import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
+import { BsPencilSquare } from 'react-icons/bs';
 import {
   studentStatusOptions,
-  provinceOptions,
 } from './../../../global-data/options';
 import { NavLink } from 'react-router-dom';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';

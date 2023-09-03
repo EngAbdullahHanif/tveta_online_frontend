@@ -1,8 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable max-classes-per-file */
 import React from 'react';
 import Select from 'react-select';
 import { CustomInput } from 'reactstrap';
@@ -16,7 +11,6 @@ import 'rc-switch/assets/index.css';
 import DatePicker from 'react-multi-date-picker';
 
 import 'react-datepicker/dist/react-datepicker.css';
-import { Field } from 'formik';
 import { Input } from 'antd';
 
 const FormikReactSelect = ({

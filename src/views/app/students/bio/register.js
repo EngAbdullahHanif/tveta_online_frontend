@@ -1,21 +1,9 @@
-/* eslint-disable no-param-reassign */
-import React, {
-  createRef,
-  useState,
-  Controller,
-  useEffect,
-  useRef,
-  useContext,
-} from 'react';
-import { NavLink, useParams } from 'react-router-dom';
-import { FormControl, FormLabel } from 'react-bootstrap';
+import React, { createRef, useState, useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { FormControl } from 'react-bootstrap';
 import './../../.././../assets/css/global-style.css';
 
-import {
-  fetchProvinces,
-  fetchDistricts,
-  langOptions,
-} from '../../global-data/options';
+import { fetchDistricts, langOptions } from '../../global-data/options';
 
 import {
   Row,
@@ -31,8 +19,6 @@ import {
 import { Wizard, Steps, Step } from 'react-albus';
 import {
   educationalYearsOptions,
-  dateOfBirthOptoions,
-  batchOptions,
   genderOptions,
   mediumOfInstructionOptions,
   StdInteranceOptions,
@@ -160,7 +146,7 @@ const StudentRegistration = ({ intl }, values) => {
       sabtNo: step0Data?.sabtNo || '',
       tazkiraType:
         tazkiraOptions.find(
-          (op) => op.value === step0Data?.tazkiraType.value
+          (op) => op.value === step0Data?.tazkiraType.value,
         ) || tazkiraOptions[0],
       phoneNo: step0Data?.phoneNo || '',
       email: step0Data?.email || '',
@@ -169,12 +155,12 @@ const StudentRegistration = ({ intl }, values) => {
     {
       levelOfEducation:
         educationLevelOptions.find(
-          (op) => op.value === step1Data?.levelOfEducation.value
+          (op) => op.value === step1Data?.levelOfEducation.value,
         ) || [],
       preSchool: step1Data?.preSchool || '',
       graduationYear:
         educationalYearsOptions.find(
-          (op) => op.value === step1Data?.graduationYear.value
+          (op) => op.value === step1Data?.graduationYear.value,
         ) || [],
       schoolProvince:
         provinces.find((op) => op.value === step1Data?.schoolProvince.value) ||
@@ -196,27 +182,27 @@ const StudentRegistration = ({ intl }, values) => {
       class: classs.find((op) => op.value === step2Data?.class.value) || [],
       educationalYear:
         educationalYearsOptions.find(
-          (op) => op.value === step2Data?.educationalYear.value
+          (op) => op.value === step2Data?.educationalYear.value,
         ) || [],
       department:
         departments.find((op) => op.value === step2Data?.department.value) ||
         [],
       mediumOfInstruction:
         langOptions.find(
-          (op) => op.value === step2Data?.mediumOfInstruction.value
+          (op) => op.value === step2Data?.mediumOfInstruction.value,
         ) || [],
       studentId: '',
       studyTime:
         studyTimeOptions.find(
-          (op) => op.value === step2Data?.studyTime.value
+          (op) => op.value === step2Data?.studyTime.value,
         ) || [],
       interanceType:
         StdInteranceOptions.find(
-          (op) => op.value === step2Data?.interanceType.value
+          (op) => op.value === step2Data?.interanceType.value,
         ) || [],
       studentType:
         StudentTypeOptions.find(
-          (op) => op.value === step2Data?.studentType.value
+          (op) => op.value === step2Data?.studentType.value,
         ) || [],
       // batch: [],
       // field: [],
@@ -224,7 +210,7 @@ const StudentRegistration = ({ intl }, values) => {
       file: [],
       disability:
         disabilityOptions.find(
-          (op) => op.value === step2Data?.disability?.value
+          (op) => op.value === step2Data?.disability?.value,
         ) || [],
     },
   ]);
@@ -238,7 +224,7 @@ const StudentRegistration = ({ intl }, values) => {
         // if department id is in data.department
         let department_ids = inst.data.reduce(
           (acc, cur, i) => acc.add(cur.department),
-          new Set()
+          new Set(),
         );
         console.log(department_ids);
         return department_ids.has(dep.value);
@@ -276,7 +262,7 @@ const StudentRegistration = ({ intl }, values) => {
           3000,
           null,
           null,
-          cName
+          cName,
         );
         break;
       case 'error':
@@ -288,7 +274,7 @@ const StudentRegistration = ({ intl }, values) => {
             // alert('callback');
           },
           null,
-          cName
+          cName,
         );
         break;
       default:
@@ -1001,7 +987,7 @@ const StudentRegistration = ({ intl }, values) => {
                                     handleProvinceChange(
                                       name,
                                       value,
-                                      setFieldValue
+                                      setFieldValue,
                                     );
                                     setFieldValue(name, value);
                                   }}
@@ -1082,7 +1068,7 @@ const StudentRegistration = ({ intl }, values) => {
                                     handleProvinceChange(
                                       name,
                                       value,
-                                      setFieldValue
+                                      setFieldValue,
                                     );
                                     setFieldValue(name, value);
                                   }}
@@ -1305,13 +1291,13 @@ const StudentRegistration = ({ intl }, values) => {
                                     classs.filter((c) => {
                                       // every class whose id is present in selected department classes
                                       const dep = instituteDeps?.find(
-                                        (dep) => dep.id === value.value
+                                        (dep) => dep.id === value.value,
                                       );
                                       console.log('--------', dep);
                                       return dep.classes
                                         .map((i) => i.classs)
                                         .includes(c.value);
-                                    })
+                                    }),
                                   );
                                 }}
                                 onBlur={setFieldTouched}

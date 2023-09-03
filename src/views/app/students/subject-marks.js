@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field, isEmptyArray } from 'formik';
-import axios from 'axios';
+import { Formik, Form, isEmptyArray } from 'formik';
 import './style.css';
 import callApi from 'helpers/callApi';
 import {

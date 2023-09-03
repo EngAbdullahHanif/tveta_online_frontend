@@ -1,9 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import { NotificationManager } from 'components/common/react-notifications';
 
-import axios from 'axios';
 import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
 import {
@@ -14,15 +12,11 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 import { inputLabel } from 'config/styling';
 

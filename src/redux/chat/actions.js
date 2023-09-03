@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-cycle
 import {
   CHAT_GET_CONTACTS,
   CHAT_GET_CONTACTS_SUCCESS,
@@ -46,7 +45,7 @@ export const addMessageToConversation = (
   currentUserId,
   selectedUserId,
   message,
-  allConversations
+  allConversations,
 ) => ({
   type: CHAT_ADD_MESSAGE_TO_CONVERSATION,
   payload: { currentUserId, selectedUserId, message, allConversations },
@@ -55,7 +54,7 @@ export const addMessageToConversation = (
 export const createConversation = (
   currentUserId,
   selectedUserId,
-  allConversations
+  allConversations,
 ) => {
   return {
     type: CHAT_CREATE_CONVERSATION,

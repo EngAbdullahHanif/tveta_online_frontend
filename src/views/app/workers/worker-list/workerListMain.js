@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { provincesOptionsForList } from '../../global-data/options';
-import axios from 'axios';
 import IntlMessages from 'helpers/IntlMessages';
 
 // import { servicePath } from 'constants/defaultValues';
@@ -12,7 +11,6 @@ import ListPageHeading from 'views/app/workers/worker-list/workerListHeading';
 
 import ListPageListing from 'views/app/workers/worker-list/workerListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
-import { icons } from 'react-icons';
 import config from '../../../../config';
 
 const getIndex = (value, arr, prop) => {

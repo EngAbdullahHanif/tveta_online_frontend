@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/no-danger */
 import React, { useState } from 'react';
 import { Row, Collapse, Card, Button } from 'reactstrap';
 import Breadcrumb from 'containers/navs/Breadcrumb';

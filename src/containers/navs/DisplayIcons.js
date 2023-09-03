@@ -5,15 +5,12 @@ import * as MD from "react-icons/md";
 import * as CG from "react-icons/cg";
 import * as GR from "react-icons/gr";
 import * as IM from "react-icons/im";
-import * as GO from "react-icons/go";
 import * as FA from "react-icons/fa";
 import * as BI from "react-icons/bi";
 import * as RI from "react-icons/ri";
 import * as IO from "react-icons/io5";
 import * as SI from "react-icons/si";
-import * as GI from "react-icons/gi";
 import * as BS from "react-icons/bs";
-import * as TB from "react-icons/tb";
 
 
 

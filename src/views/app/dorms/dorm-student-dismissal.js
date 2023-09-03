@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
-import axios from 'axios';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 
@@ -17,18 +15,13 @@ import {
   InputGroup,
   InputGroupAddon,
   CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from 'containers/form-validations/FormikFields';
+
+
 import config from '../../../config';
 
 const servicePath = config.API_URL;

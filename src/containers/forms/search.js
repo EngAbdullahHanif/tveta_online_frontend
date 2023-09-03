@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './AutoComplete.css';
-import IntlMessages from 'helpers/IntlMessages';
-import { injectIntl } from 'react-intl';
 const Autocomplete = ({ inst, intl, ChangeSelectedOption, placeholder }) => {
   //   const { messages } = intl;
   console.log(inst, 'institute Data');

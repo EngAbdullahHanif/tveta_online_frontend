@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Card, CardBody, CardTitle } from 'reactstrap';

@@ -2,10 +2,8 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import currentUser from 'helpers/currentUser';
 import {
   studyTimeOptions,
   semesterValueOptions,
@@ -23,21 +21,14 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
-import { async } from 'q';
 import { AuthContext } from 'context/AuthContext';
 
 const ValidationSchema = Yup.object().shape({

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -88,7 +87,7 @@ const SurveyApp = ({
       selectedList.push(
         ...items.map((item) => {
           return item.id;
-        })
+        }),
       );
       selectedList = Array.from(new Set(selectedList));
       selectedSurveyItemsChangeAction(selectedList);
@@ -278,5 +277,5 @@ export default injectIntl(
     getSurveyListWithOrderAction: getSurveyListWithOrder,
     getSurveyListSearchAction: getSurveyListSearch,
     selectedSurveyItemsChangeAction: selectedSurveyItemsChange,
-  })(SurveyApp)
+  })(SurveyApp),
 );

@@ -1,5 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
 import callApi from 'helpers/callApi';
 import { NotificationManager } from 'components/common/react-notifications';
 
@@ -7,8 +6,6 @@ import { AuthContext } from 'context/AuthContext';
 
 import {
   Card,
-  CustomInput,
-  Badge,
   Modal,
   ModalHeader,
   ModalBody,
@@ -22,10 +19,8 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { BsTrashFill } from 'react-icons/bs';
 import { BsPencilSquare } from 'react-icons/bs';
-import { async } from 'q';
 import { instTypeOptions } from 'views/app/global-data/options';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { localeOptions } from './../../../../constants/defaultValues';
 
 const createNotification = (type, className) => {
   const cName = className || '';
@@ -199,7 +194,7 @@ const InstituteListBody = ({
                 <NavLink to={`/app/institutes/register/${institute.id}`}>
                   <div>
                     <BsPencilSquare
-                      outline
+                      outline="true"
                       style={{ fontSize: '20px' }}
                       id="updateIcon"
                     />
@@ -208,7 +203,7 @@ const InstituteListBody = ({
                 <div className="ml-2">
                   <BsTrashFill
                     id="deleteIcon"
-                    outline
+                    outline="true"
                     onClick={() => setModalBasic(true)}
                     style={{ fontSize: '20px' }}
                   />

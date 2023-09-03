@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import IntlMessages from 'helpers/IntlMessages';
-import ListPageHeading from './AttendanceListHeading';
 import {
-  provincesOptionsForList,
-  genderOptionsForList,
   educationalYearsOptions,
 } from '../../../global-data/options';
-import { Select, Spin, Table as TB } from 'antd';
-import ListPageListing from './AttendanceListCatagory';
+import { Table as TB } from 'antd';
 import useMousetrap from 'hooks/use-mousetrap';
-import { useAsyncDebounce } from 'react-table';
 import callApi from 'helpers/callApi';
-import DisplayMessage from 'components/messages/DisplayMessage';
 import config from '../../../../../config';
 // import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import { FormGroup, Label, NavLink } from 'reactstrap';
-import { Field, Formik } from 'formik';
+import { Formik } from 'formik';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { AuthContext } from 'context/AuthContext';
 import { useContext } from 'react';

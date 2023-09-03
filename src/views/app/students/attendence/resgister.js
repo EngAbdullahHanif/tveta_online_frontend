@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import axios from 'axios';
 // import useSelector
-import { useSelector } from 'react-redux';
 import { educationalYearsOptions } from '../../global-data/options';
 import { studyTimeOptions } from '../../global-data/options';
 import './../../.././../assets/css/global-style.css';
@@ -18,24 +17,15 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 import callApi from 'helpers/callApi';
-import currentUser from 'helpers/currentUser';
 import IntlMessages from 'helpers/IntlMessages';
-import { Colxx, Separator } from 'components/common/CustomBootstrap';
+import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
-import { getDirection, getCurrentUser } from './../../../../helpers/Utils';
 import { NotificationManager } from 'components/common/react-notifications';
 import { AuthContext } from 'context/AuthContext';
-import { educationalDaysErr } from 'lang/locales/fa_IR';
 
 const pageSizes = [10, 20, 40, 80];
 

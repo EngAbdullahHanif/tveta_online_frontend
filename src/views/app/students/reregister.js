@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import CustomSelectInput from 'components/common/CustomSelectInput';
 import './../dorms/dorm-register.css';
 import profilePhoto from './../../../assets/img/profiles/22.jpg';
-import axios from 'axios';
 import { studyTimeOptions } from '../global-data/options';
 
 import * as Yup from 'yup';
@@ -17,8 +15,6 @@ import {
   InputGroup,
   InputGroupAddon,
   CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
@@ -26,10 +22,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import Institues from '../institutes';
 
 import config from '../../../config';
 

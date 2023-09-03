@@ -1,10 +1,9 @@
-import React, { Suspense, useEffect } from 'react';
-import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AppLayout from 'layout/AppLayout';
 import { ProtectedRoute } from 'helpers/authHelper';
-import { userRole } from 'constants/defaultValues';
 import UsersList from './users-list';
 const Dashboards = React.lazy(() =>
   import(/* webpackChunkName: "dashboards" */ './dashboards')

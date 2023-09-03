@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-cycle
 import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,

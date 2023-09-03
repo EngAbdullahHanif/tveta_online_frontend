@@ -16,22 +16,14 @@ import {
   FormGroup,
   Label,
   Button,
-  CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
 
-import currentUser from 'helpers/currentUser';
 import callApi from 'helpers/callApi';
 
 const ValidationSchema = Yup.object().shape({

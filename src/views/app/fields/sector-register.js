@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import callApi from 'helpers/callApi';
 import * as Yup from 'yup';
@@ -6,7 +6,6 @@ import { NotificationManager } from 'components/common/react-notifications';
 import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { FormikReactSelect } from '../../../containers/form-validations/FormikFields';
 
 const ValidationSchema = Yup.object().shape({
   sectorName: Yup.string().required(

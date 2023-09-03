@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -30,7 +28,7 @@ const SignupSchema = Yup.object().shape({
       Yup.object().shape({
         label: Yup.string().required(),
         value: Yup.string().required(),
-      })
+      }),
     ),
   checkboxSingle: Yup.bool().oneOf([true], 'یه چیزی رو باید بپذیری'),
   checkboxCustomSingle: Yup.bool().oneOf([true], 'یه چیزی رو باید بپذیری'),
@@ -160,7 +158,7 @@ const FormikCustomComponents = () => {
                     ) : null}
                   </FormGroup>
                   <FormGroup className="error-l-150">
-                    <Label className="d-block">چک باکس تکی  </Label>
+                    <Label className="d-block">چک باکس تکی </Label>
                     <FormikCheckbox
                       name="checkboxSingle"
                       value={values.checkboxSingle}

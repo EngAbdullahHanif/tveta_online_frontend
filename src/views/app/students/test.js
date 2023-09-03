@@ -1,5 +1,4 @@
 import React from 'react';
-import Part from './custom-pie-chart';
 import CustomGroupedBarChart from './custome-grouped-bar-chart';
 
 function Test() {

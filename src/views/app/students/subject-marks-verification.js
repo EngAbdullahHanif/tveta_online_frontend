@@ -1,15 +1,11 @@
 // this compoenent is used to show the list of students whose marks have been uploaded and verified, but students upgraded/degraded class has not been assigned yet
 
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
+import { Formik, Form } from 'formik';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
-import currentUser from 'helpers/currentUser';
 import {
   studyTimeOptions,
-  semesterValueOptions,
-  classOptions,
   verificationValueOptions,
   educationalYearsOptions,
 } from '../global-data/options';
@@ -24,21 +20,14 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
-import { async } from 'q';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()

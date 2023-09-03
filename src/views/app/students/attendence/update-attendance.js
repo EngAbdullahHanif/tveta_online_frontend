@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
 
@@ -10,7 +9,6 @@ import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { CgInsertBefore } from 'react-icons/cg';
 
 import config from '../../../../config';
 const servicePath = config.API_URL;

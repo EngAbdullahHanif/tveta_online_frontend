@@ -1,20 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import IntlMessages from 'helpers/IntlMessages';
 import {
   educationalYearsOptions,
-  provincesOptionsForList,
 } from '../../../global-data/options';
 import callApi from 'helpers/callApi';
-import { Select, Spin, Table as TB } from 'antd';
+import { Table as TB } from 'antd';
 // import { servicePath } from 'constants/defaultValues';
-import ListPageHeading from 'views/app/students/bio/kankor-students-list/KankorStudentListHeading';
-import ListPageListing from 'views/app/students/bio/kankor-students-list/KankorStudentListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
-import { department } from 'lang/locales/fa_IR';
 import { FormGroup, Label, NavLink } from 'reactstrap';
-import { BsPencilSquare } from 'react-icons/bs';
-import { Field, Formik } from 'formik';
+import { Formik } from 'formik';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { AuthContext } from 'context/AuthContext';
 import { inputLabel } from 'config/styling';

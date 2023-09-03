@@ -5,8 +5,6 @@ import {
   CardBody,
   CardSubtitle,
   CardImg,
-  CardText,
-  CustomInput,
   Badge,
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';

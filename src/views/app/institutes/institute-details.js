@@ -1,30 +1,17 @@
 import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
-import CustomSelectInput from "components/common/CustomSelectInput";
 import "./../dorms/dorm-register.css";
 
-import * as Yup from "yup";
 import {
   Row,
   Card,
   CardBody,
-  FormGroup,
-  Label,
-  Button,
-  CardTitle,
-  Input,
 } from "reactstrap";
-import Select from "react-select";
 
 import IntlMessages from "helpers/IntlMessages";
 import { Colxx, Separator } from "components/common/CustomBootstrap";
 
-import {
-  FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
-} from "containers/form-validations/FormikFields";
-import { useEffect } from "react";
+
+
 
 const InstituteDetails = (values) => {
   const [isNext, setIsNext] = useState(true);

@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -47,7 +45,6 @@ const options = [
 ];
 
 const FormikCustomWithTopLabels = () => {
-
   const onSubmit = (values, { setSubmitting }) => {
     const payload = {
       ...values,
@@ -173,7 +170,11 @@ const FormikCustomWithTopLabels = () => {
                       ) : null}
                     </FormGroup>
 
-                    <Button color="primary" type="submit" onSubmit={handleSubmit}>
+                    <Button
+                      color="primary"
+                      type="submit"
+                      onSubmit={handleSubmit}
+                    >
                       ارسال فرم
                     </Button>
                   </Form>

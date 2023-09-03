@@ -1,9 +1,7 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { auth } from 'helpers/Firebase';
-import { adminRoot, currentUser } from 'constants/defaultValues';
 import { setCurrentUser } from 'helpers/Utils';
 // import { browserHistory } from 'react-router';
-import { push } from 'react-router-redux';
 import { NotificationManager } from 'components/common/react-notifications';
 
 import axios from 'axios';
@@ -46,7 +44,6 @@ async function getUserDetails() {
 }
 
 export function* watchLoginUser() {
-  // eslint-disable-next-line no-use-before-define
   yield takeEvery(LOGIN_USER, loginWithEmailPasswordAsync);
 }
 
@@ -90,7 +87,6 @@ export function* loginWithEmailPasswordAsync(action) {
 }
 
 export function* watchRegisterUser() {
-  // eslint-disable-next-line no-use-before-define
   yield takeEvery(REGISTER_USER, registerWithEmailPasswordAsync);
 }
 
@@ -101,7 +97,7 @@ function registerWithEmailPassword(
   password,
   role,
   institute_id,
-  province
+  province,
 ) {
   return axios
     .post('http://localhost/tveta/user/register/', {
@@ -133,7 +129,7 @@ export function* registerWithEmailPasswordAsync(action) {
     password,
 
     role,
-    institute_id
+    institute_id,
   );
   try {
     const data = yield call(
@@ -144,7 +140,7 @@ export function* registerWithEmailPasswordAsync(action) {
       password,
       role,
       institute_id,
-      province
+      province,
     );
     if (data) {
       yield put(registerUserSuccess(data));
@@ -160,25 +156,6 @@ export function* registerWithEmailPasswordAsync(action) {
   }
 }
 
-// export function* watchLogoutUser() {
-//   // eslint-disable-next-line no-use-before-define
-//   yield takeEvery(LOGOUT_USER, logout);
-// }
-
-// const logoutAsync = async (history) => {
-//   await auth
-//     .signOut()
-//     .then((user) => user)
-//     .catch((error) => error);
-//   history.push(adminRoot);
-// };
-
-// function* logout({ payload }) {
-//   const { history } = payload;
-//   setCurrentUser();
-//   yield call(logoutAsync, history);
-// }
-
 function* logout({ payload }) {
   const { history } = payload;
   localStorage.removeItem('access_token');
@@ -192,12 +169,10 @@ export function* watchLogoutUser() {
 }
 
 export function* watchForgotPassword() {
-  // eslint-disable-next-line no-use-before-define
   yield takeEvery(FORGOT_PASSWORD, forgotPassword);
 }
 
 const forgotPasswordAsync = async (email) => {
-  // eslint-disable-next-line no-return-await
   return await auth
     .sendPasswordResetEmail(email)
     .then((user) => user)
@@ -219,12 +194,10 @@ function* forgotPassword({ payload }) {
 }
 
 export function* watchResetPassword() {
-  // eslint-disable-next-line no-use-before-define
   yield takeEvery(RESET_PASSWORD, resetPassword);
 }
 
 const resetPasswordAsync = async (resetPasswordCode, newPassword) => {
-  // eslint-disable-next-line no-return-await
   return await auth
     .confirmPasswordReset(resetPasswordCode, newPassword)
     .then((user) => user)
@@ -237,7 +210,7 @@ function* resetPassword({ payload }) {
     const resetPasswordStatus = yield call(
       resetPasswordAsync,
       resetPasswordCode,
-      newPassword
+      newPassword,
     );
     if (!resetPasswordStatus) {
       yield put(resetPasswordSuccess('success'));

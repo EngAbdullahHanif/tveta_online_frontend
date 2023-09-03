@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
 import { studyTimeOptions } from '../../app/global-data/options';
 // Year  and SHift
 
@@ -15,19 +14,13 @@ import {
   Label,
   Button,
   CustomInput,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
 
 import currentUser from 'helpers/currentUser';
 import callApi from 'helpers/callApi';

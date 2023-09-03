@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {
   Card,
-  CustomInput,
-  Badge,
   Modal,
   ModalHeader,
   ModalBody,
@@ -10,7 +8,6 @@ import {
   Button,
 } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
-import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';

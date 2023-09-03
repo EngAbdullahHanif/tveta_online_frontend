@@ -1,11 +1,9 @@
 import React from 'react';
-import { Card, CustomInput, Badge } from 'reactstrap';
+import { Card } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { BsPencilSquare } from 'react-icons/bs';
-import { BsTrashFill } from 'react-icons/bs';
 
 const KankorStudentListBody = ({ student, isSelect, collect, onCheckItem }) => {
   return (

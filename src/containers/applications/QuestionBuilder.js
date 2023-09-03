@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import React, { useState } from 'react';
 import {
   Card,
@@ -42,7 +41,7 @@ const SurveyQuestionBuilder = ({
       ? answerTypes.find((item) => {
           return item.id === answerType;
         })
-      : null
+      : null,
   );
   const [qAnswers, setQAnswers] = useState(answers || []);
 
@@ -264,7 +263,8 @@ const SurveyQuestionBuilder = ({
                     className="mt-3"
                     onClick={() => addAnswer()}
                   >
-                    <i className="simple-icon-plus btn-group-icon" /> افزودن پاسخ
+                    <i className="simple-icon-plus btn-group-icon" /> افزودن
+                    پاسخ
                   </Button>
                 )}
               </div>

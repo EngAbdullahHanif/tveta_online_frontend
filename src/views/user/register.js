@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
   Row,
   Card,
-  CardTitle,
   FormGroup,
   Label,
-  Input,
   Button,
 } from 'reactstrap';
 import * as Yup from 'yup';
@@ -13,18 +11,13 @@ import logo from '../../assets/img/logo2.png';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from 'redux/actions';
-import { NotificationManager } from 'components/common/react-notifications';
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
 import callApi from 'helpers/callApi';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { adminRoot } from 'constants/defaultValues';
-import axios from 'axios';
 import { Formik, Form, Field } from 'formik';
 
 const rollOptions = [

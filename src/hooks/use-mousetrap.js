@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import mousetrap from 'mousetrap';
 import { useEffect, useRef } from 'react';
 

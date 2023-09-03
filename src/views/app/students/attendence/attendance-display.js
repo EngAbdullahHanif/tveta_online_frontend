@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
+import { Formik, Form } from 'formik';
 import callApi from 'helpers/callApi';
 import './../../.././../assets/css/global-style.css';
 import { educationalYearsOptions } from './../../global-data/options';
@@ -15,10 +14,7 @@ import {
   FormGroup,
   Label,
   Button,
-  CardTitle,
-  Input,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
@@ -26,10 +22,7 @@ import { studyTimeOptions } from '../../global-data/options';
 
 import {
   FormikReactSelect,
-  FormikTagsInput,
-  FormikDatePicker,
 } from 'containers/form-validations/FormikFields';
-import userEvent from '@testing-library/user-event';
 import DisplayMessage from 'components/messages/DisplayMessage';
 
 const LevelOfEdcationOptions = [

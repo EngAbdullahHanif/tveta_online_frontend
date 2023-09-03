@@ -59,9 +59,8 @@ export default (state = INIT_STATE, action) => {
           filter: null,
         };
       }
-      // eslint-disable-next-line no-case-declarations
       const filteredItems = state.allTodoItems.filter(
-        (item) => item[action.payload.column] === action.payload.value
+        (item) => item[action.payload.column] === action.payload.value,
       );
       return {
         ...state,
@@ -82,7 +81,6 @@ export default (state = INIT_STATE, action) => {
           orderColumn: null,
         };
       }
-      // eslint-disable-next-line no-case-declarations
       const sortedItems = state.todoItems.sort((a, b) => {
         if (a[action.payload] < b[action.payload]) return -1;
         if (a[action.payload] > b[action.payload]) return 1;
@@ -93,7 +91,7 @@ export default (state = INIT_STATE, action) => {
         loading: true,
         todoItems: sortedItems,
         orderColumn: state.orderColumns.find(
-          (x) => x.column === action.payload
+          (x) => x.column === action.payload,
         ),
       };
 
@@ -101,16 +99,14 @@ export default (state = INIT_STATE, action) => {
       if (action.payload === '') {
         return { ...state, todoItems: state.allTodoItems };
       }
-      // eslint-disable-next-line no-case-declarations
       const keyword = action.payload.toLowerCase();
-      // eslint-disable-next-line no-case-declarations
       const searchItems = state.allTodoItems.filter(
         (item) =>
           item.title.toLowerCase().indexOf(keyword) > -1 ||
           item.detail.toLowerCase().indexOf(keyword) > -1 ||
           item.status.toLowerCase().indexOf(keyword) > -1 ||
           item.category.toLowerCase().indexOf(keyword) > -1 ||
-          item.label.toLowerCase().indexOf(keyword) > -1
+          item.label.toLowerCase().indexOf(keyword) > -1,
       );
       return {
         ...state,

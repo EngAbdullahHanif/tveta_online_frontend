@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import IntlMessages from "helpers/IntlMessages";
-import ListPageHeading from "views/app/students/bio/students-list/StudentListHeading";
 import ListPageListing from "views/app/students/bio/students-list/StudentListCatagory";
-import callApi from "helpers/callApi";
 function UsersList(props) {
   const [displayMode, setDisplayMode] = useState("thumblist");
   const [currentPage, setCurrentPage] = useState(1);

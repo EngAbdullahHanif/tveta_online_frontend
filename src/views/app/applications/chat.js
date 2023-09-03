@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect, useRef } from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -81,7 +79,7 @@ const ChatApp = ({
           currentUser.id,
           selectedUser.id,
           messageInput,
-          conversations
+          conversations,
         );
         setMessageInput('');
         setActiveTab('messages');
@@ -96,7 +94,7 @@ const ChatApp = ({
         currentUser.id,
         selectedUser.id,
         messageInput,
-        conversations
+        conversations,
       );
       setMessageInput('');
       setActiveTab('messages');
@@ -111,7 +109,7 @@ const ChatApp = ({
       ? conversations.find(
           (x) =>
             x.users.includes(currentUser.id) &&
-            x.users.includes(selectedUser.id)
+            x.users.includes(selectedUser.id),
         )
       : null;
 
@@ -191,5 +189,5 @@ export default injectIntl(
     getConversationsAction: getConversations,
     changeConversationAction: changeConversation,
     addMessageToConversationAction: addMessageToConversation,
-  })(ChatApp)
+  })(ChatApp),
 );

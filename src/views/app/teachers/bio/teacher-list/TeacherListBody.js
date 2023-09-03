@@ -14,7 +14,6 @@ import classnames from 'classnames';
 import IntlMessages from 'helpers/IntlMessages';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { BsTrashFill } from 'react-icons/bs';
 import { BsPencilSquare } from 'react-icons/bs';
 import callApi from 'helpers/callApi';
 

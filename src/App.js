@@ -1,4 +1,9 @@
-import React, { Suspense, useContext, useEffect, useState } from 'react';
+import React, {
+  StrictMode,
+  Suspense,
+  useEffect,
+  useState,
+} from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
@@ -13,7 +18,6 @@ import Authentication from 'context/Authentication';
 import callApi from 'helpers/callApi';
 import { Button, Spinner } from 'reactstrap';
 
-import { userRole as userRoles } from './constants/defaultValues';
 
 const App = ({ locale }) => {
   const [user, setUser] = useState(
@@ -155,7 +159,7 @@ const App = ({ locale }) => {
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
-        label: item.name + '-' + item.semester + '-' + item.section,
+        label: item.name,
         grade: item.grade,
         semester: item.semester,
       }));
@@ -326,40 +330,42 @@ const App = ({ locale }) => {
   }
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        setFromSuccessfulLogin,
-        provinces,
-        districts,
-        classes,
-        fetchClasses,
-        subjects,
-        departments,
-        institutes,
-        fetchInstitutes,
-        contextFields,
-        settings,
-        sectors,
-        dorms,
-      }}
-    >
-      <div className="h-100">
-        <IntlProvider
-          locale={currentAppLocale.locale}
-          messages={currentAppLocale.messages}
-        >
-          <>
-            <NotificationContainer />
-            {isMultiColorActive && <ColorSwitcher />}
-            <Suspense fallback={<div className="loading" />}>
-              <Router>{content}</Router>
-            </Suspense>
-          </>
-        </IntlProvider>
-      </div>
-    </AuthContext.Provider>
+    <StrictMode>
+      <AuthContext.Provider
+        value={{
+          user,
+          setUser,
+          setFromSuccessfulLogin,
+          provinces,
+          districts,
+          classes,
+          fetchClasses,
+          subjects,
+          departments,
+          institutes,
+          fetchInstitutes,
+          contextFields,
+          settings,
+          sectors,
+          dorms,
+        }}
+      >
+        <div className="h-100">
+          <IntlProvider
+            locale={currentAppLocale.locale}
+            messages={currentAppLocale.messages}
+          >
+            <>
+              <NotificationContainer />
+              {isMultiColorActive && <ColorSwitcher />}
+              <Suspense fallback={<div className="loading" />}>
+                <Router>{content}</Router>
+              </Suspense>
+            </>
+          </IntlProvider>
+        </div>
+      </AuthContext.Provider>
+    </StrictMode>
   );
 };
 

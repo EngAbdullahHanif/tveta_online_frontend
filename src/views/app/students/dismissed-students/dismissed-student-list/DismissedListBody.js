@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CustomInput, Badge } from 'reactstrap';
+import { Card } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ContextMenuTrigger } from 'react-contextmenu';

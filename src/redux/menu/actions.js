@@ -1,5 +1,3 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable no-param-reassign */
 import {
   MENU_SET_CLASSNAMES,
   MENU_CONTAINER_ADD_CLASSNAME,
@@ -56,7 +54,7 @@ export const clickOnMobileMenu = (strCurrentClasses) => {
 export const setContainerClassnames = (
   clickIndex,
   strCurrentClasses,
-  selectedMenuHasSubItems
+  selectedMenuHasSubItems,
 ) => {
   const currentClasses = strCurrentClasses
     ? strCurrentClasses.split(' ').filter((x) => x !== '')

@@ -1,5 +1,4 @@
 import { ThemeColors } from '../helpers/ThemeColors';
-import IntlMessages from 'helpers/IntlMessages';
 
 const colors = ThemeColors();
 

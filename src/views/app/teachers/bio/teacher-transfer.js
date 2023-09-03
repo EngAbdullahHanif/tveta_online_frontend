@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import './../../dorms/dorm-register.css';
 import profilePhoto from './../../../../../src/assets/img/profiles/user.png';
@@ -6,7 +6,6 @@ import { appointmentTypeOptions } from '../../global-data/options';
 import { contractTypeOptions } from '../../global-data/options';
 import { teacherTransferValidationSchema } from '../../global-data/forms-validation';
 import './../../../../assets/css/global-style.css';
-import * as Yup from 'yup';
 import axios from 'axios';
 import callApi from 'helpers/callApi';
 import {
@@ -20,7 +19,6 @@ import {
   InputGroupAddon,
   CustomInput,
 } from 'reactstrap';
-import Select from 'react-select';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';

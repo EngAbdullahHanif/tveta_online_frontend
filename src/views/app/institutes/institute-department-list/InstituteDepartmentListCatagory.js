@@ -1,11 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
   Row,
-  Modal,
-  Button,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
 } from 'reactstrap';
 
 import Pagination from '../../../../containers/pages/Pagination';

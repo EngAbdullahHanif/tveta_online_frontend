@@ -1,8 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/display-name */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/jsx-key */
 import React from 'react';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import { Card, CardBody, CardTitle } from 'reactstrap'; //
@@ -31,7 +26,7 @@ function Table({ columns, data }) {
       initialState: { pageIndex: 0, pageSize: 6 },
     },
     useSortBy,
-    usePagination
+    usePagination,
   );
 
   return (
@@ -122,7 +117,7 @@ const BestSellers = () => {
         sortType: 'basic',
       },
     ],
-    []
+    [],
   );
 
   return (

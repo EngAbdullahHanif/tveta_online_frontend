@@ -43,6 +43,7 @@ import {
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from 'context/AuthContext';
+import { inputLabel } from 'config/styling';
 const UpdateMode = true;
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required(<IntlMessages id="dorm.NameErr" />),
@@ -352,7 +353,7 @@ const DormRegistration = (values) => {
                     <Colxx xxs="">
                       {/* Dorm Name */}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="dorm.NameLabel" />
                         </Label>
                         <Field className="form-control" name="name" />
@@ -365,7 +366,7 @@ const DormRegistration = (values) => {
 
                       {/* Dorm Capicity */}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="dorm.CapicityLabel" />
                         </Label>
                         <Field
@@ -382,7 +383,7 @@ const DormRegistration = (values) => {
 
                       {/* Building Type */}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="dorm.BuildingTypeLabel" />
                         </Label>
                         <FormikReactSelect
@@ -405,7 +406,7 @@ const DormRegistration = (values) => {
                         <div>
                           {/* DormOwner */}
                           <FormGroup className="form-group has-float-label">
-                            <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                            <Label style={inputLabel}>
                               <IntlMessages id="dorm.PublicBuildingOwnerLabel" />
                             </Label>
                             <FormikReactSelect
@@ -428,7 +429,7 @@ const DormRegistration = (values) => {
                         <div>
                           {/* Private Building Students */}
                           <FormGroup className="form-group has-float-label">
-                            <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                            <Label style={inputLabel}>
                               <IntlMessages id="dorm.PrivateBuildingTypeLabel" />
                             </Label>
                             <FormikReactSelect
@@ -452,7 +453,7 @@ const DormRegistration = (values) => {
 
                       {/* Total Number of Kitchen*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="dorm.TotalKitchensLabel" />
                         </Label>
                         <Field
@@ -468,7 +469,7 @@ const DormRegistration = (values) => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.ProvinceLabel" />
                         </Label>
                         <FormikReactSelect
@@ -488,7 +489,7 @@ const DormRegistration = (values) => {
                       </FormGroup>
                       {/* District  permanent*/}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.DistrictLabel" />
                         </Label>
                         <FormikReactSelect
@@ -510,7 +511,7 @@ const DormRegistration = (values) => {
                     <Colxx xxs="">
                       {/* Dorm Gender*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="dorm.Gender" />
                         </Label>
                         <FormikReactSelect
@@ -531,7 +532,7 @@ const DormRegistration = (values) => {
 
                       {/* Dorm Quota(Sahmiya) */}
                       {/* <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="dorm.QuotaLabel" />
                         </Label>
                         <Field
@@ -548,7 +549,7 @@ const DormRegistration = (values) => {
 
                       {/* Total Number of Buildings*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="dorm.TotalBuildingNoLabel" />
                         </Label>
                         <Field
@@ -565,7 +566,7 @@ const DormRegistration = (values) => {
 
                       {/* Total Number of Rooms*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="dorm.TotalRoomsLabel" />
                         </Label>
                         <Field
@@ -582,7 +583,7 @@ const DormRegistration = (values) => {
 
                       {/* Total Number of Toilet*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="dorm.ToiletLabel" />
                         </Label>
                         <Field
@@ -612,10 +613,7 @@ const DormRegistration = (values) => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span
-                          className="label"
-                          style={{ fontSize: 18, fontWeight: 'bold' }}
-                        >
+                        <span className="label" style={inputLabel}>
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

@@ -93,26 +93,26 @@ const FieldListBody = ({ field, isSelect, collect, onCheckItem, index }) => {
             >
               <p
                 className="list-item-heading mb-1 truncate"
-                style={{ width: '25%' }}
+                style={{ width: '25%', fontSize: 20 }}
               >
                 {index + 1}
               </p>
 
               <p
                 className="mb-1 text-small"
-                style={{ width: '26%', textAlign: 'right' }}
+                style={{ width: '26%', textAlign: 'right', fontSize: 20 }}
               >
                 {field.name}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '25%', textAlign: 'right' }}
+                style={{ width: '25%', textAlign: 'right', fontSize: 20 }}
               >
                 {field.english_name}
               </p>
               <p
                 className="mb-1 text-small"
-                style={{ width: '15%', textAlign: 'right' }}
+                style={{ width: '15%', textAlign: 'right', fontSize: 20 }}
               >
                 {field.sector.sector}
               </p>

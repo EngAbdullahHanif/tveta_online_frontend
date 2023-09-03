@@ -17,6 +17,7 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { Field, Formik } from 'formik';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { AuthContext } from 'context/AuthContext';
+import { inputLabel } from 'config/styling';
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -560,7 +561,7 @@ const ThumbListPages = ({ match }) => {
             }) => (
               <>
                 {/* <FormGroup className="form-group has-float-label error-l-150">
-                  <Label>ایدی</Label>
+                  <Label style={inputLabel}>ایدی</Label>
                   <Field
                     name="filterId"
                     placeholder="ایدی"
@@ -568,8 +569,8 @@ const ThumbListPages = ({ match }) => {
                   />
                 </FormGroup> */}
 
-                <FormGroup className="form-group has-float-label error-l-150 w-100 ">
-                  <Label>ولایت</Label>
+                <FormGroup className="form-group has-float-label error-l-150 w-100">
+                  <Label style={inputLabel}>ولایت</Label>
                   <FormikReactSelect
                     placeholder="ولایت"
                     name="filterProvince"
@@ -580,7 +581,7 @@ const ThumbListPages = ({ match }) => {
                   />
                 </FormGroup>
                 <FormGroup className="form-group has-float-label error-l-150 w-100 ">
-                  <Label>انستیتوت</Label>
+                  <Label style={inputLabel}>انستیتوت</Label>
                   <FormikReactSelect
                     placeholder="انستیتوت"
                     name="filterInstitute"
@@ -591,7 +592,7 @@ const ThumbListPages = ({ match }) => {
                   />
                 </FormGroup>
                 <FormGroup className="form-group has-float-label error-l-150 w-100 ">
-                  <Label>دیپارتمنت</Label>
+                  <Label style={inputLabel}>دیپارتمنت</Label>
                   <FormikReactSelect
                     name="department"
                     id="department"
@@ -602,7 +603,7 @@ const ThumbListPages = ({ match }) => {
                   />
                 </FormGroup>
                 <FormGroup className="form-group has-float-label error-l-150 w-100 ">
-                  <Label>سال تحصیل / تعلیمی</Label>
+                  <Label style={inputLabel}>سال تحصیل / تعلیمی</Label>
                   <FormikReactSelect
                     name="educationalYear"
                     id="educationalYear"

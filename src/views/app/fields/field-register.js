@@ -7,8 +7,9 @@ import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from '../../../containers/form-validations/FormikFields';
+import { inputLabel } from 'config/styling';
 
-const SignupSchema = Yup.object().shape({
+const fieldRegisterSchema = Yup.object().shape({
   fieldId: Yup.string().required(<IntlMessages id="field.FieldIdErr" />),
 
   fieldName: Yup.string()
@@ -127,7 +128,7 @@ const FieldRegister = () => {
                 fieldEnglishName: '',
                 sector: [],
               }}
-              // validationSchema={SignupSchema}
+              validationSchema={fieldRegisterSchema}
               onSubmit={onSubmit}
             >
               {({
@@ -146,7 +147,7 @@ const FieldRegister = () => {
                     <Colxx xxs="10">
                       {/* Field Name */}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="field.FieldNameLabel" />
                         </Label>
 
@@ -160,7 +161,7 @@ const FieldRegister = () => {
 
                       {/* Field Name In English */}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="field.FieldEngNameLabel" />
                         </Label>
                         <Field
@@ -176,7 +177,7 @@ const FieldRegister = () => {
 
                       {/* sector*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.sector" />
                         </Label>
                         <FormikReactSelect
@@ -209,10 +210,7 @@ const FieldRegister = () => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span
-                          className="label"
-                          style={{ fontSize: 18, fontWeight: 'bold' }}
-                        >
+                        <span className="label" style={inputLabel}>
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

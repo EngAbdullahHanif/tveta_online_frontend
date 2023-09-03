@@ -93,14 +93,14 @@ const SectorListBody = ({ sector, isSelect, collect, onCheckItem, index }) => {
             >
               <p
                 className="list-item-heading mb-1 truncate"
-                style={{ width: '25%' }}
+                style={{ width: '25%', fontSize: 20 }}
               >
                 {index + 1}
               </p>
 
               <p
                 className="mb-1 text-small"
-                style={{ width: '26%', textAlign: 'right' }}
+                style={{ width: '26%', textAlign: 'right', fontSize: 20 }}
               >
                 {sector.sector}
               </p>

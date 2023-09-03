@@ -330,7 +330,7 @@ const menuItems = [
       userRole.provinceDataentry,
       userRole.instituteDataentry,
       userRole.provinceDataentry,
-      userRole.tester,
+      // userRole.tester,
     ],
 
     subs: [

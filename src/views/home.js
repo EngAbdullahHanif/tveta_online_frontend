@@ -1,33 +1,16 @@
 /* eslint-disable react/no-array-index-key, react/no-danger */
 import React, { useState, useEffect, useRef } from 'react';
-import { Nav, NavItem, TabContent, TabPane } from 'reactstrap';
 import ReactCardCarousel from 'react-card-carousel';
-import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { scroller } from 'react-scroll';
 import Headroom from 'react-headroom';
-import GlideComponent from 'components/carousel/GlideComponent';
-import { buyUrl, adminRoot } from 'constants/defaultValues';
 import logo from '../assets/img/logo2.png';
-import CarPhoto from '../assets/img/blog/car.png';
 import CarPhotoWithoutBackground from '../assets/img/blog/132.png';
-import CarPhoto2 from '../assets/img/blog/car2.png';
-import CarPhoto3 from '../assets/img/blog/45.png';
-import Shahamat from '../assets/img/blog/9090.JPG';
-import Photo55 from '../assets/img/blog/img1000.jpeg';
-import mansoor from '../assets/img/blog/mansoor.jpeg';
-import rasikh from '../assets/img/blog/rasikh1.jpg';
-import sartaj from '../assets/img/blog/sartaj.jpg';
-import suhaib from '../assets/img/blog/suhaib.jpeg';
 
-import hanif from '../assets/img/blog/hanif.jpeg';
-import CarPhoto22 from '../assets/img/blog/Car22.png';
+import Shahamat from '../assets/img/blog/9090.JPG';
+
 import CarPhoto12 from '../assets/img/blog/12.png';
-import CarPhoto15 from '../assets/img/blog/15.png';
-import CarPhoto13 from '../assets/img/blog/13.png';
-import CarPhoto14 from '../assets/img/blog/14.png';
-import RahimiPhoto from '../assets/img/blog/rahimi.jpeg';
-import Carousel from 'react-grid-carousel';
+
 import CS_Sector from '../assets/img/sectors/CS.jpg';
 import SpecialEducationSector from '../assets/img/sectors/Special_Education.png';
 import Economic_Sector from '../assets/img/sectors/Economic.jpg';
@@ -36,36 +19,31 @@ import literature_sector from '../assets/img/sectors/literature.jpg';
 import OilAndGas_Sector from '../assets/img/sectors/oil_gas.jpeg';
 import civil_Eng from '../assets/img/sectors/civil_Engineering.jpg';
 import Industerial from '../assets/img/sectors/Industerial.jpg';
-import IndividualIntervalsExample from './carousel';
-import DemoCarousel from './../views/app/subjects/draftFileJustForTest';
 import ScrollAnimation from 'react-animate-on-scroll';
 import IntlMessages from 'helpers/IntlMessages';
 import './carousel.css';
-import {
-  Row,
-  Card,
-  CardBody,
-  CardImg,
-  CardSubtitle,
-  CardText,
-  Button,
-} from 'reactstrap';
+import { Row, Card } from 'reactstrap';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 const contact = [
   {
     icon: 'simple-icon-phone',
-    detail: '020656465425',
+    detail: '0794465693',
   },
   {
     icon: 'iconsminds-mail',
-    detail: 'tvetaonline@gov.af',
+    detail: 'mis_it@tveta.gov.af',
+  },
+  {
+    icon: 'iconsminds-mail',
+    detail: 'statistics@tveta.gov.af',
   },
   {
     icon: 'simple-icon-social-facebook',
     detail: 'tvetaonline@gov.af',
   },
 ];
+
 const contact1 = [
   {
     icon: 'simple-icon-social-twitter',
@@ -718,7 +696,7 @@ const Home = () => {
                 ))}
               </div>
             </div>
-            <ScrollAnimation
+            {/* <ScrollAnimation
               animateIn="fadeInUp"
               animateOnce={true}
               duration={2}
@@ -738,9 +716,7 @@ const Home = () => {
                   </Colxx>
                 </Row>
 
-                {/* the developers pictures here */}
                 <Row className="justify-content-center m-4 d-flex-block ">
-                  {/* Sharif Ahmad */}
                   <Colxx
                     xxs="12"
                     sm="4"
@@ -771,7 +747,6 @@ const Home = () => {
                           </span>
                         </h4>
                         <div className="text-center">
-                          {/* <a href="#" class="fa fa-twitter"></a> */}
                           <a
                             style={{ fontSize: 30 }}
                             href="https://www.linkedin.com/in/sharif-rasekh"
@@ -788,7 +763,6 @@ const Home = () => {
                       </div>
                     </Card>
                   </Colxx>
-                  {/* Abdullah Hanif */}
                   <Colxx
                     xxs="12"
                     sm="4"
@@ -835,7 +809,6 @@ const Home = () => {
                       </div>
                     </Card>
                   </Colxx>
-                  {/* samiullah Rahimi */}
                   <Colxx
                     xxs="12"
                     sm="4"
@@ -866,7 +839,6 @@ const Home = () => {
                           </span>
                         </h4>
                         <div className="text-center">
-                          {/* <a href="#" class="fa fa-twitter"></a> */}
                           <a
                             style={{ fontSize: 30 }}
                             href="linkedin.com/in/samiullah-rahimi-64974a20b"
@@ -884,7 +856,6 @@ const Home = () => {
                     </Card>
                   </Colxx>
 
-                  {/* Noman Ahmadi */}
                   <Colxx
                     xxs="12"
                     sm="4"
@@ -915,7 +886,6 @@ const Home = () => {
                           </span>
                         </h4>
                         <div className="text-center">
-                          {/* <a href="#" class="fa fa-twitter"></a> */}
                           <a
                             style={{ fontSize: 30 }}
                             href="https://www.linkedin.com/in/noman-ahmadi-690490248/"
@@ -934,7 +904,6 @@ const Home = () => {
                   </Colxx>
                 </Row>
                 <Row className="justify-content-center m-4 d-flex-block ">
-                  {/* Mansoor AhmadZai */}
                   <Colxx
                     xxs="12"
                     sm="4"
@@ -965,7 +934,6 @@ const Home = () => {
                           </span>
                         </h4>
                         <div className="text-center">
-                          {/* <a href="#" class="fa fa-twitter"></a> */}
                           <a
                             style={{ fontSize: 30 }}
                             href="linkedin.com/in/mansoor-ahmadzai-a5364417b"
@@ -982,7 +950,6 @@ const Home = () => {
                       </div>
                     </Card>
                   </Colxx>
-                  {/* Sartaj Ahmad */}
                   <Colxx
                     xxs="12"
                     sm="4"
@@ -1013,7 +980,6 @@ const Home = () => {
                           </span>
                         </h4>
                         <div className="text-center">
-                          {/* <a href="#" class="fa fa-twitter"></a> */}
                           <a
                             style={{ fontSize: 30 }}
                             href="https://www.linkedin.com/in/sartajahmad01/"
@@ -1030,7 +996,6 @@ const Home = () => {
                       </div>
                     </Card>
                   </Colxx>
-                  {/* Suhaib Qanooni */}
                   <Colxx
                     xxs="12"
                     sm="4"
@@ -1079,7 +1044,7 @@ const Home = () => {
                   </Colxx>
                 </Row>
               </section>
-            </ScrollAnimation>
+            </ScrollAnimation> */}
             <div className="section footer mb-0 " ref={refSectionFooter}>
               <div className="container">
                 <div className="row footer-row ">
@@ -1189,18 +1154,21 @@ const Home = () => {
                         <div className="contact-container">
                           <div>
                             <b style={{ paddingLeft: '5px ' }}>
-                              {' '}
-                              <i className={`${d.icon} `} />
-                            </b>{' '}
+                              <i className={`${d.icon}`} />
+                            </b>
                           </div>
                           <div>
-                            {' '}
-                            <p
-                              style={{ fontSize: '15px' }}
+                            <a
+                              href={
+                                d.icon === 'iconsminds-mail'
+                                  ? `mailto:${d.detail}`
+                                  : `${d.detail}`
+                              }
+                              style={{ fontSize: '18px' }}
                               className="text-white"
                             >
                               {d.detail}
-                            </p>
+                            </a>
                           </div>
                         </div>
                       ))}
@@ -1217,18 +1185,17 @@ const Home = () => {
                         <div className="contact-container ">
                           <div>
                             <b style={{ paddingLeft: '5px ' }}>
-                              {' '}
                               <i className={`${d.icon} `} />
-                            </b>{' '}
+                            </b>
                           </div>
                           <div>
-                            {' '}
-                            <p
-                              style={{ fontSize: '15px' }}
+                            <a
+                              href={d.detail}
+                              style={{ fontSize: '18px' }}
                               className="text-white"
                             >
                               {d.detail}
-                            </p>
+                            </a>
                           </div>
                         </div>
                       ))}

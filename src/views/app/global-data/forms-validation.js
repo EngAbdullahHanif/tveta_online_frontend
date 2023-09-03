@@ -174,8 +174,18 @@ export const studentRegisterFormStep_2 = Yup.object().shape({
     .shape({ value: Yup.string().required() })
     .nullable()
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  C_District: Yup.object().required(<IntlMessages id="forms.DistrictErr" />),
-  district: Yup.object().required(<IntlMessages id="forms.DistrictErr" />),
+  C_District: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
+  district: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
   village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
   C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 });
@@ -612,10 +622,9 @@ export const kankorRegisterValidationSchema = Yup.object().shape({
 
   province: Yup.object()
     .shape({
-      label: Yup.string().required(),
       value: Yup.string().required(),
     })
-
+    .nullable()
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
 
   district: Yup.object()

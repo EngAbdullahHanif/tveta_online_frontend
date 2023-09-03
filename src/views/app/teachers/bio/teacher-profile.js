@@ -1038,7 +1038,7 @@ const TeacherProfile = () => {
                                           for="recipient-name"
                                           className="col-form-label"
                                         >
-                                          Document
+                                          اسناد
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -1060,7 +1060,7 @@ const TeacherProfile = () => {
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
-                                        Close
+                                        لغو
                                       </button>
                                       <button
                                         type="submit"
@@ -1358,7 +1358,7 @@ const TeacherProfile = () => {
                                             for="institute"
                                             className="col-form-label"
                                           >
-                                            Institute
+                                            انستتیوت
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -1384,7 +1384,7 @@ const TeacherProfile = () => {
                                             for="field"
                                             className="col-form-label"
                                           >
-                                            Field
+                                            رشته
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -1411,7 +1411,7 @@ const TeacherProfile = () => {
                                           for="jobType"
                                           className="col-form-label"
                                         >
-                                          job type
+                                          ده دندی ډول
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -1443,7 +1443,7 @@ const TeacherProfile = () => {
                                             for="grade"
                                             className="col-form-label"
                                           >
-                                            Grade
+                                            بست
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -1469,7 +1469,7 @@ const TeacherProfile = () => {
                                             for="step"
                                             className="col-form-label"
                                           >
-                                            Step
+                                            قدم
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -1496,7 +1496,7 @@ const TeacherProfile = () => {
                                           for="teaching_language"
                                           className="col-form-label"
                                         >
-                                          Teaching Language
+                                          ده تدریس ژبه
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -1522,7 +1522,7 @@ const TeacherProfile = () => {
                                           for="contractType"
                                           className="col-form-label"
                                         >
-                                          Contract Type
+                                          قرارداد ډول
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -1548,7 +1548,7 @@ const TeacherProfile = () => {
                                           for="hireType"
                                           className="col-form-label"
                                         >
-                                          hireType
+                                          استخدام ډول
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -1581,7 +1581,7 @@ const TeacherProfile = () => {
                                             for="year_of_completion"
                                             className="col-form-label"
                                           >
-                                            Contract Start Date
+                                            قرارداد شروع تاریخ
                                           </label>
                                           <br />
 
@@ -1612,7 +1612,7 @@ const TeacherProfile = () => {
                                             for="year_of_completion"
                                             className="col-form-label"
                                           >
-                                            Contract End Date
+                                            قرارداد پای تاریخ
                                           </label>
                                           <br />
 
@@ -1672,7 +1672,7 @@ const TeacherProfile = () => {
                                           for="recipient-name"
                                           className="col-form-label"
                                         >
-                                          Document
+                                          اسناد
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -1694,7 +1694,7 @@ const TeacherProfile = () => {
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
-                                        Close
+                                        لغو‍
                                       </button>
                                       <button
                                         type="submit"
@@ -1702,7 +1702,7 @@ const TeacherProfile = () => {
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
-                                        Add Contract
+                                        ثبت
                                       </button>
                                     </div>{' '}
                                   </>
@@ -1939,7 +1939,7 @@ const TeacherProfile = () => {
                                             for="evaluator_name"
                                             className="col-form-label"
                                           >
-                                            Evaluator
+                                            ارزیابی کننده
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -1960,7 +1960,7 @@ const TeacherProfile = () => {
                                             for="evaluation_type"
                                             className="col-form-label"
                                           >
-                                            Evaluation Type
+                                            ارزیابی ډول
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -1994,7 +1994,7 @@ const TeacherProfile = () => {
                                             for="institute"
                                             className="col-form-label"
                                           >
-                                            institute
+                                            انستتیوت
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -2020,7 +2020,7 @@ const TeacherProfile = () => {
                                             for="department"
                                             className="col-form-label"
                                           >
-                                            department
+                                            ډیپارتمنت
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -2047,7 +2047,7 @@ const TeacherProfile = () => {
                                           for="classs"
                                           className="col-form-label"
                                         >
-                                          Class
+                                          صنف
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -2078,7 +2078,7 @@ const TeacherProfile = () => {
                                             for="subject"
                                             className="col-form-label"
                                           >
-                                            subject
+                                            مضمون
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -2104,7 +2104,7 @@ const TeacherProfile = () => {
                                             for="year_of_completion"
                                             className="col-form-label"
                                           >
-                                            Evaluation Date
+                                            ارزیابی تاریخ
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -2147,7 +2147,7 @@ const TeacherProfile = () => {
                                           for="topic"
                                           className="col-form-label"
                                         >
-                                          Topic
+                                          موضوع
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -2167,7 +2167,7 @@ const TeacherProfile = () => {
                                           for="strong_points"
                                           className="col-form-label"
                                         >
-                                          Strong Points
+                                          مثبت پواینت
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -2188,7 +2188,7 @@ const TeacherProfile = () => {
                                           for="weak_points"
                                           className="col-form-label"
                                         >
-                                          Weak Points
+                                          منفی پواینت
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -2210,7 +2210,7 @@ const TeacherProfile = () => {
                                           for="suggestions"
                                           className="col-form-label"
                                         >
-                                          Suggestions
+                                          توسعه
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -2230,7 +2230,7 @@ const TeacherProfile = () => {
                                         for="score"
                                         className="col-form-label"
                                       >
-                                        Score
+                                        نمری
                                         <span style={{ color: 'red' }}>*</span>
                                       </label>
                                       <div
@@ -2270,7 +2270,7 @@ const TeacherProfile = () => {
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
-                                        Close
+                                        لغو
                                       </button>
                                       <button
                                         type="submit"
@@ -2278,7 +2278,7 @@ const TeacherProfile = () => {
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
-                                        Add Contract
+                                        ثبت
                                       </button>
                                     </div>{' '}
                                   </>
@@ -2408,7 +2408,7 @@ const TeacherProfile = () => {
                                 className="modal-title"
                                 id="hrEvaluationModalLabel"
                               >
-                                ثبت ارزیابی
+                                ثبت ارزیابی منابع بشری
                               </h5>
                               <button
                                 type="button"
@@ -2481,7 +2481,7 @@ const TeacherProfile = () => {
                                           for="evaluator_name"
                                           className="col-form-label"
                                         >
-                                          Evaluator
+                                          ارزیابی کننده
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -2509,7 +2509,7 @@ const TeacherProfile = () => {
                                             for="institute"
                                             className="col-form-label"
                                           >
-                                            institute
+                                            انستتیوت
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -2542,7 +2542,7 @@ const TeacherProfile = () => {
                                             for="grade"
                                             className="col-form-label"
                                           >
-                                            Grade
+                                            بست
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -2568,7 +2568,7 @@ const TeacherProfile = () => {
                                             for="step"
                                             className="col-form-label"
                                           >
-                                            Step
+                                            قدم
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -2601,7 +2601,7 @@ const TeacherProfile = () => {
                                             for="year_of_completion"
                                             className="col-form-label"
                                           >
-                                            Evaluation Date
+                                            ارزیابی تاریخ
                                             <span style={{ color: 'red' }}>
                                               *
                                             </span>
@@ -2644,7 +2644,7 @@ const TeacherProfile = () => {
                                         for="score"
                                         className="col-form-label"
                                       >
-                                        Score
+                                        نمری
                                         <span style={{ color: 'red' }}>*</span>
                                       </label>
                                       <div
@@ -2684,7 +2684,7 @@ const TeacherProfile = () => {
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
-                                        Close
+                                        لغو
                                       </button>
                                       <button
                                         type="submit"
@@ -2692,7 +2692,7 @@ const TeacherProfile = () => {
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
-                                        Add HR Evaluation
+                                        ثبت
                                       </button>
                                     </div>{' '}
                                   </>
@@ -2721,7 +2721,7 @@ const TeacherProfile = () => {
                         borderRadius: '10px',
                       }}
                     >
-                      <IntlMessages id="Insentives" />
+                      <IntlMessages id="مکافات" />
                     </h2>
                   </Colxx>
 
@@ -2831,7 +2831,7 @@ const TeacherProfile = () => {
                         data-target="#incentiveModal"
                         data-whatever="@getbootstrap"
                       >
-                        Save Incentive
+                        ثبت مکافات
                       </Button>
 
                       <div
@@ -2847,8 +2847,10 @@ const TeacherProfile = () => {
                             <div className="modal-header">
                               <h5
                                 className="modal-title"
-                                id="incentiveModalLabel"
-                              ></h5>
+                                id="hrEvaluationModalLabel"
+                              >
+                                ثبت مکافات
+                              </h5>
                               <button
                                 type="button"
                                 className="close"
@@ -2908,7 +2910,7 @@ const TeacherProfile = () => {
                                           for="type"
                                           className="col-form-label"
                                         >
-                                          Type
+                                          ډول
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -2933,7 +2935,7 @@ const TeacherProfile = () => {
                                           for="institute"
                                           className="col-form-label"
                                         >
-                                          institute
+                                          انستتیوت
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -2959,7 +2961,7 @@ const TeacherProfile = () => {
                                           for="recipient-name"
                                           className="col-form-label"
                                         >
-                                          Description
+                                          توضیحات
                                           <span style={{ color: 'red' }}>
                                             *
                                           </span>
@@ -2982,7 +2984,7 @@ const TeacherProfile = () => {
                                         data-dismiss="modal"
                                         onClick={resetUpdate}
                                       >
-                                        Close
+                                        لفو
                                       </button>
                                       <button
                                         type="submit"
@@ -2990,7 +2992,7 @@ const TeacherProfile = () => {
                                         // data-dismiss="modal"
                                         onClick={handleSubmit}
                                       >
-                                        Add Insentive
+                                        ثبت
                                         {loading && <Spin />}
                                       </button>
                                     </div>

@@ -12,6 +12,7 @@ import callApi from 'helpers/callApi';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
 import { AuthContext } from 'context/AuthContext';
+import { inputLabel } from 'config/styling';
 const SignupSchema = Yup.object().shape({
   departmentId: Yup.object()
     .shape({
@@ -200,7 +201,7 @@ const Curriculum = (values) => {
                     <Colxx xxs="11">
                       {/* Department Id */}
                       <FormGroup className="form-group has-float-label ">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="curriculum.departmentIdLabel" />
                         </Label>
                         <FormikReactSelect
@@ -221,7 +222,7 @@ const Curriculum = (values) => {
 
                       {/* Subject */}
                       <FormGroup className="form-group has-float-label ">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="curriculum.subjectdLabel" />
                         </Label>
                         <FormikReactSelect
@@ -242,7 +243,7 @@ const Curriculum = (values) => {
 
                       {/* Class */}
                       <FormGroup className="form-group has-float-label ">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="curriculum.classLabel" />
                         </Label>
                         <FormikReactSelect
@@ -261,8 +262,8 @@ const Curriculum = (values) => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
-                        <Label>
-                          <IntlMessages id="forms.educationYear" />
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.educationYearLabel" />
                         </Label>
                         <FormikReactSelect
                           name="educationalYear"
@@ -274,7 +275,7 @@ const Curriculum = (values) => {
                           required
                         />
                         {errors.educationalYear && touched.educationalYear ? (
-                          <div className="invalid-feedback d-block">
+                          <div className="invalid-feedback d-block bg-danger text-white">
                             {errors.educationalYear}
                           </div>
                         ) : null}
@@ -295,10 +296,7 @@ const Curriculum = (values) => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span
-                          className="label"
-                          style={{ fontSize: 18, fontWeight: 'bold' }}
-                        >
+                        <span className="label" style={inputLabel}>
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

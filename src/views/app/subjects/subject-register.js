@@ -16,6 +16,7 @@ import {
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { inputLabel } from 'config/styling';
 
 const subjectOptions = [
   { value: 'general', label: 'عمومی' },
@@ -150,7 +151,7 @@ const SubjectRegister = () => {
                   <Row className="justify-content-center">
                     <Colxx xxs="10">
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="subject.name" />
                         </Label>
                         <Field className="form-control" name="name1" />
@@ -162,7 +163,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="subject.english_name" />
                         </Label>
                         <Field
@@ -178,7 +179,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="subject.code" />
                         </Label>
                         <Field
@@ -194,7 +195,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="subject.credits" />
                         </Label>
                         <Field
@@ -213,7 +214,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="subject.type" />
                         </Label>
                         <FormikReactSelect
@@ -232,7 +233,7 @@ const SubjectRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="subject.system_type" />
                         </Label>
                         <FormikReactSelect
@@ -265,10 +266,7 @@ const SubjectRegister = () => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span
-                          className="label"
-                          style={{ fontSize: 18, fontWeight: 'bold' }}
-                        >
+                        <span className="label" style={inputLabel}>
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

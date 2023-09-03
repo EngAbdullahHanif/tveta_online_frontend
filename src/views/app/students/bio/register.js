@@ -44,6 +44,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import callApi from 'helpers/callApi';
 import { AuthContext } from 'context/AuthContext';
 import { message } from 'antd';
+import { inputLabel } from 'config/styling';
 
 const StudentRegistration = ({ intl }, values) => {
   const {
@@ -514,7 +515,7 @@ const StudentRegistration = ({ intl }, values) => {
                           <div className="p-3">
                             {/* Name */}
                             <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.StdName" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -532,7 +533,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* lastname */}
                             <FormGroup className="form-group has-float-label">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.lastName" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -549,7 +550,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Father Name */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.StdFatherName" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -566,7 +567,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* grandFatherName */}
                             <FormGroup className="form-group has-float-label">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.grandFatherName" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -583,7 +584,7 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
                             {/* Father Duty */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.StdFatherDutyLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -600,7 +601,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Father duty place */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.StdFatherDutyLocationLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -618,7 +619,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* year, month and day of birth */}
                             <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="label.yearOfBirth" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -637,7 +638,7 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="label.monthOfBirth" />
                               </Label>
                               <Field
@@ -656,7 +657,7 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="label.dayOfBirth" />
                               </Label>
                               <Field
@@ -676,7 +677,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Place of birth */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.PlaceOfBirthLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -696,7 +697,7 @@ const StudentRegistration = ({ intl }, values) => {
                           <div className="p-3">
                             {/* Student English Name */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.Eng_name" />
                               </Label>
                               <Field
@@ -712,7 +713,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* englishLastname */}
                             <FormGroup className="form-group has-float-label">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.lastNameEng" />
                               </Label>
                               <Field
@@ -728,7 +729,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/*Students Father English Name */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.Std_father_Eng_Name" />
                               </Label>
                               <Field
@@ -744,7 +745,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Gender */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="gender.gender" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -766,7 +767,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Tazkira Type */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.TazkiraType" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -790,7 +791,7 @@ const StudentRegistration = ({ intl }, values) => {
                             {/* Tazkira Number */}
                             {values.tazkiraType.value === 'electronic' && (
                               <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
+                                <Label style={inputLabel}>
                                   نمبر تذکره الکترونی
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -815,7 +816,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   {/* Jold Number */}
                                   <div>
                                     <FormGroup className="form-group has-float-label error-l-100">
-                                      <Label>
+                                      <Label style={inputLabel}>
                                         <IntlMessages id="teacher.IdCardJoldNoLabel" />
                                       </Label>
                                       <Field
@@ -837,7 +838,7 @@ const StudentRegistration = ({ intl }, values) => {
                                   {/* Safha */}
                                   <div>
                                     <FormGroup className="form-group has-float-label error-l-100">
-                                      <Label>
+                                      <Label style={inputLabel}>
                                         <IntlMessages id="teacher.IdCardPageNoLabel" />
                                       </Label>
                                       <Field
@@ -858,7 +859,9 @@ const StudentRegistration = ({ intl }, values) => {
                                   {/* Sabt */}
                                   <div>
                                     <FormGroup className="form-group has-float-label error-l-100">
-                                      <Label>شماره ثبت</Label>
+                                      <Label style={inputLabel}>
+                                        شماره ثبت
+                                      </Label>
                                       <Field
                                         className="form-control fieldStyle"
                                         name="sabtNo"
@@ -875,7 +878,9 @@ const StudentRegistration = ({ intl }, values) => {
                                 <div>
                                   <div>
                                     <FormGroup className="form-group has-float-label error-l-100">
-                                      <Label>شماره صکوک</Label>
+                                      <Label style={inputLabel}>
+                                        شماره صکوک
+                                      </Label>
                                       <Field
                                         className="form-control fieldStyle"
                                         name="sokokNo"
@@ -894,7 +899,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Contact No */}
                             <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="teacher.PhoneNoLabel" />
                                 {/* <span style={{ color: 'red' }}>*</span> */}
                               </Label>
@@ -912,7 +917,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Email Address */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="teacher.EmailLabel" />
                                 {/* <span style={{ color: 'red' }}>*</span> */}
                               </Label>
@@ -969,7 +974,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                               {/* province permanent*/}
                               <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="forms.ProvinceLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -998,7 +1003,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                               {/* District  permanent*/}
                               <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="forms.DistrictLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -1020,7 +1025,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                               {/* village permanent */}
                               <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="forms.VillageLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -1049,7 +1054,7 @@ const StudentRegistration = ({ intl }, values) => {
                               {/* Current Address */}
                               {/* province Current */}
                               <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="forms.ProvinceLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -1078,7 +1083,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                               {/* District */}
                               <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="forms.DistrictLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -1100,7 +1105,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                               {/* village */}
                               <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="forms.VillageLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -1126,7 +1131,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <div className="square p-3 ">
                               {/*School province*/}
                               <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="forms.StdSchoolProvinceLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -1147,7 +1152,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 ) : null}
                               </FormGroup>
                               <FormGroup className="form-group has-float-label error-l-100 ">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="forms.StdGraduationYearLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -1174,7 +1179,7 @@ const StudentRegistration = ({ intl }, values) => {
                             <div className="p-3">
                               {/* Education */}
                               <FormGroup className="form-group has-float-label error-l-100 ">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="teacher.LevelOfEducationLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -1197,7 +1202,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                               {/* Student Maktab*/}
                               <FormGroup className="form-group has-float-label error-l-100">
-                                <Label>
+                                <Label style={inputLabel}>
                                   <IntlMessages id="forms.StPreShcoolLabel" />
                                   <span style={{ color: 'red' }}>*</span>
                                 </Label>
@@ -1247,7 +1252,7 @@ const StudentRegistration = ({ intl }, values) => {
                           <Colxx xxs="6">
                             {/* Institute Name*/}
                             <FormGroup className=" has-float-label ">
-                              <Label className="fieldStule11">
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.InstituteLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -1271,7 +1276,7 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
                             {/* Departement  */}
                             <FormGroup className="form-group has-float-label ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.studyDepartment" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -1309,7 +1314,7 @@ const StudentRegistration = ({ intl }, values) => {
                             {/*  Class name  */}
                             {console.log('CLASSES: ', classs)}
                             <FormGroup className="form-group has-float-label ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="marks.ClassLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -1331,7 +1336,7 @@ const StudentRegistration = ({ intl }, values) => {
                             </FormGroup>
 
                             <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label>معلولیت/معیوبیت</Label>
+                              <Label style={inputLabel}>معلولیت/معیوبیت</Label>
                               <FormikReactSelect
                                 name="disability"
                                 id="disability"
@@ -1352,7 +1357,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Student Id */}
                             <FormGroup className="form-group has-float-label">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="student.studentId" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -1370,7 +1375,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Eduactional Year*/}
                             <FormGroup className="form-group has-float-label ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="curriculum.eduactionalYearLabel" />
                               </Label>
                               <FormikReactSelect
@@ -1394,7 +1399,7 @@ const StudentRegistration = ({ intl }, values) => {
                             {/* Sector */}
                             {/* <FormGroup className="form-group has-float-label ">
                               <span style={{ color: 'red' }}>*</span>
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.sector" />
                               </Label>
                               <FormikReactSelect
@@ -1416,7 +1421,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* kankor Id */}
                             {/* <FormGroup className="form-group has-float-label">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.kankorId" />
                               </Label>
                               <Field className="form-control" name="kankorId" />
@@ -1429,7 +1434,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* internse type*/}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.StdInteranceTypeLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -1470,7 +1475,7 @@ const StudentRegistration = ({ intl }, values) => {
                           <Colxx xxs="6">
                             {/* field  */}
                             {/* <FormGroup className="form-group has-float-label ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="dash.field-1" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -1493,7 +1498,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Batch */}
                             {/* <FormGroup className="form-group has-float-label ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.batch" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -1516,7 +1521,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* medium OfInstruction (Teaching Language) */}
                             <FormGroup className="form-group has-float-label ">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.mediumOfInstruction" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -1540,7 +1545,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/* Study Time */}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.StudyTimeLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>
@@ -1562,7 +1567,7 @@ const StudentRegistration = ({ intl }, values) => {
 
                             {/*Student Type*/}
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="forms.StudentTypeLabel" />
                                 <span style={{ color: 'red' }}>*</span>
                               </Label>

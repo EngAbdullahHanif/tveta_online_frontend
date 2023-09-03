@@ -31,6 +31,7 @@ import { message, Spin } from 'antd';
 import { CURRENT_SHAMSI_YEAR } from 'constants/defaultValues';
 import { useContext } from 'react';
 import { AuthContext } from 'context/AuthContext';
+import { inputLabel } from 'config/styling';
 message.config({
   top: 100,
   duration: 2,
@@ -476,7 +477,7 @@ const InstituteRegister = () => {
                   <Row className="justify-content-center">
                     <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="inst.name" />
                         </Label>
                         <Field className="form-control" name="institute" />
@@ -487,6 +488,22 @@ const InstituteRegister = () => {
                         )}
                       </FormGroup>
 
+<<<<<<< HEAD
+                      <FormGroup className="form-group has-float-label">
+                        <Label style={inputLabel}>کوډ/کود</Label>
+                        <Field
+                          className="form-control"
+                          name="code"
+                          type="number"
+                          disabled={instituteId ? true : false}
+                        />
+                        {errors.code && touched.code && (
+                          <div className="invalid-feedback d-block bg-danger text-white">
+                            {errors.code}
+                          </div>
+                        )}
+                      </FormGroup>
+=======
                       {!instituteId && (
                         <FormGroup className="form-group has-float-label">
                           <Label>کوډ/کود</Label>
@@ -502,9 +519,10 @@ const InstituteRegister = () => {
                           />
                         </FormGroup>
                       )}
+>>>>>>> 79bd375a6372cf2b4c3c4f232fb0a8feedebf7e9
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.ProvinceLabel" />
                         </Label>
                         <FormikReactSelect
@@ -531,7 +549,7 @@ const InstituteRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.DistrictLabel" />
                         </Label>
                         <FormikReactSelect
@@ -551,7 +569,7 @@ const InstituteRegister = () => {
 
                       {/* village permanent */}
                       <FormGroup className="form-group has-float-label ">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.VillageLabel" />
                         </Label>
                         <Field className="form-control" name="village" />
@@ -563,7 +581,7 @@ const InstituteRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.StudyTimeLabel" />
                         </Label>
                         <FormikReactSelect
@@ -581,9 +599,7 @@ const InstituteRegister = () => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          ملکیت
-                        </Label>
+                        <Label style={inputLabel}>ملکیت</Label>
                         <FormikReactSelect
                           name="ownershipType"
                           id="ownershipType"
@@ -601,7 +617,7 @@ const InstituteRegister = () => {
                     </Colxx>
                     <Colxx xxs="6">
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="gender" />
                         </Label>
                         <FormikReactSelect
@@ -622,9 +638,7 @@ const InstituteRegister = () => {
                       {/* institute type */}
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          ډول/نوع
-                        </Label>
+                        <Label style={inputLabel}>ډول/نوع</Label>
                         <FormikReactSelect
                           name="instType"
                           id="instType"
@@ -642,9 +656,7 @@ const InstituteRegister = () => {
 
                       {/* institue city options */}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          ځای/موقعیت
-                        </Label>
+                        <Label style={inputLabel}>ځای/موقعیت</Label>
                         <FormikReactSelect
                           name="cityType"
                           id="cityType"
@@ -662,9 +674,7 @@ const InstituteRegister = () => {
 
                       {/* institute language  */}
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          ژبې/زبان ها
-                        </Label>
+                        <Label style={inputLabel}>ژبې/زبان ها</Label>
                         <FormikReactSelect
                           name="institueLanguage"
                           id="institueLanguage"
@@ -683,9 +693,7 @@ const InstituteRegister = () => {
                       {/* institute climate*/}
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          اقلیم
-                        </Label>
+                        <Label style={inputLabel}>اقلیم</Label>
                         <FormikReactSelect
                           name="instituteClimate"
                           id="instituteClimate"
@@ -701,7 +709,7 @@ const InstituteRegister = () => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label error-l-100">
-                        <Label>
+                        <Label style={inputLabel}>
                           {/* <IntlMessages id="forms.StdGraduationYearLabel" /> */}
                           د تأسیس کال/ سال تأسیس
                           <span style={{ color: 'red' }}>*</span>
@@ -731,10 +739,7 @@ const InstituteRegister = () => {
                             <span className="bounce2" />
                             <span className="bounce3" />
                           </span>
-                          <span
-                            className="label"
-                            style={{ fontSize: 18, fontWeight: 'bold' }}
-                          >
+                          <span className="label" style={inputLabel}>
                             <IntlMessages id="forms.SubimssionButton" />
                           </span>
                         </Button>

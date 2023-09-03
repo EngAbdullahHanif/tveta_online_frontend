@@ -15,6 +15,7 @@ import './../../.././../assets/css/global-style.css';
 
 import config from '../../../../config';
 import { AuthContext } from 'context/AuthContext';
+import { inputLabel } from 'config/styling';
 const servicePath = config.API_URL;
 const KankorstudentAPI = `${servicePath}/api/kankorResults`;
 const StudentRegistraion = ({ history }) => {
@@ -201,7 +202,7 @@ const StudentRegistraion = ({ history }) => {
                     <Colxx xxs="5" className=" mt-5">
                       {/* Name */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.StdName" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -217,7 +218,7 @@ const StudentRegistraion = ({ history }) => {
                       </FormGroup>
                       {/*Father Name  */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.StdFatherName" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -234,7 +235,7 @@ const StudentRegistraion = ({ history }) => {
 
                       {/* Gender */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="gender.gender" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -255,7 +256,7 @@ const StudentRegistraion = ({ history }) => {
 
                       {/* Institutes */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.InstituteLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -277,7 +278,7 @@ const StudentRegistraion = ({ history }) => {
 
                       {/* Department */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.FieldDepLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -298,7 +299,7 @@ const StudentRegistraion = ({ history }) => {
 
                       {/* province*/}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.ProvinceLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -322,7 +323,7 @@ const StudentRegistraion = ({ history }) => {
 
                       {/* District */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.DistrictLabel" />
                         </Label>
                         <FormikReactSelect
@@ -346,7 +347,7 @@ const StudentRegistraion = ({ history }) => {
 
                     <Colxx xxs="5" className=" mt-5">
                       {/* <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.StdKankorIdLabel" />
                         </Label>
                         <Field className="form-control" name="kankorId" />
@@ -359,7 +360,7 @@ const StudentRegistraion = ({ history }) => {
 
                       {/* Kankor Marks */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.KankorMarksLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -379,7 +380,7 @@ const StudentRegistraion = ({ history }) => {
 
                       {/* Field */}
                       {/* <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.FieldLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -400,7 +401,7 @@ const StudentRegistraion = ({ history }) => {
 
                       {/* Eduactional Year*/}
                       <FormGroup className="form-group has-float-label error-l-175 ">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="curriculum.eduactionalYearLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -422,7 +423,7 @@ const StudentRegistraion = ({ history }) => {
 
                       {/* Study Time */}
                       <FormGroup className="form-group has-float-label error-l-175">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.StudyTimeLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
@@ -430,7 +431,6 @@ const StudentRegistraion = ({ history }) => {
                           name="studyTime"
                           id="studyTime"
                           value={values.studyTime}
-                          placeholder="Select option"
                           options={studyTimeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}

@@ -18,6 +18,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { AuthContext } from 'context/AuthContext';
+import { inputLabel } from 'config/styling';
 
 const ValidationSchema = Yup.object().shape({
   className: Yup.string().required(<IntlMessages id="class.nameErr" />),
@@ -73,7 +74,7 @@ const ClassRegister = () => {
   const { fetchClasses } = useContext(AuthContext);
   const [initialClassName, setInitialClassName] = useState();
   const [initialGrade, setInitialGrade] = useState();
-  const [initialSemester, setInitialSemester] = useState();
+  const [initialSemester, setInitialSemester] = useState([]);
   const [initialSeason, setInitialSeason] = useState([]);
   const [initialSection, setInitialSection] = useState('');
 
@@ -125,7 +126,7 @@ const ClassRegister = () => {
       season: values.season.value,
       section: values.section,
     };
-    console.log('data', data);
+    console.log('data', values);
     const response = await callApi('institute/classs_create/', 'POST', data);
     if (response) {
       createNotification('success', 'filled');
@@ -165,7 +166,7 @@ const ClassRegister = () => {
                   <Row className="justify-content-center">
                     <Colxx xxs="10">
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="class.nameLabel" />
                         </Label>
                         <Field className="form-control" name="className" />
@@ -177,10 +178,7 @@ const ClassRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          {/* <IntlMessages id="class.nameLabel" /> */}
-                          درجه (عدد)
-                        </Label>
+                        <Label style={inputLabel}>درجه (عدد)</Label>
                         <Field
                           className="form-control"
                           name="grade"
@@ -196,7 +194,7 @@ const ClassRegister = () => {
                       </FormGroup>
 
                       <FormGroup className="form-group has-float-label error-l-150">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
+                        <Label style={inputLabel}>
                           <IntlMessages id="class.semesterLabel" />
                         </Label>
                         <FormikReactSelect
@@ -214,9 +212,7 @@ const ClassRegister = () => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
-                        <Label style={{ fontSize: 18, fontWeight: 'bold' }}>
-                          گرمسیر/سردسیر
-                        </Label>
+                        <Label style={inputLabel}>گرمسیر/سردسیر</Label>
                         <FormikReactSelect
                           name="season"
                           id="season"
@@ -232,7 +228,7 @@ const ClassRegister = () => {
                         ) : null}
                       </FormGroup>
                       <FormGroup className="form-group has-float-label">
-                        <Label>سیکشن</Label>
+                        <Label style={inputLabel}>سیکشن</Label>
                         <Field
                           className="form-control"
                           name="section"
@@ -261,10 +257,7 @@ const ClassRegister = () => {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span
-                          className="label"
-                          style={{ fontSize: 18, fontWeight: 'bold' }}
-                        >
+                        <span className="label" style={inputLabel}>
                           <IntlMessages id="forms.SubimssionButton" />
                         </span>
                       </Button>

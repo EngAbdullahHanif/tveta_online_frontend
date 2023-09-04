@@ -26,7 +26,7 @@ class NotificationContainer extends React.Component {
     NotificationManager.remove(notification);
   }
 
-  render() {
+  render = () => {
     const { notifications } = this.state;
     const { enterTimeout, leaveTimeout } = this.props;
     return (
@@ -37,7 +37,7 @@ class NotificationContainer extends React.Component {
         onRequestHide={this.handleRequestHide}
       />
     );
-  }
+  };
 }
 
 NotificationContainer.propTypes = {

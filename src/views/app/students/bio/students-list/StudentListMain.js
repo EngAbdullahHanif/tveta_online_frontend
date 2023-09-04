@@ -118,7 +118,6 @@ const ThumbListPages = () => {
 
     try {
       const response = await callApi(endpoint, null, null, params1);
-      setIsLoading(false);
       if (response.data && response.status === 200) {
         if (params.institute) {
           setItems(
@@ -142,6 +141,8 @@ const ThumbListPages = () => {
       }
     } catch (error) {
       console.log('error: ', error);
+    } finally {
+      setIsLoading(false);
     }
   }
 

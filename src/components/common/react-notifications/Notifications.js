@@ -12,7 +12,7 @@ class Notifications extends React.Component {
     }
   }
 
-  render() {
+  render = () => {
     const { notifications, enterTimeout, leaveTimeout } = this.props;
     const className = classnames('notification-container', {
       'notification-container-empty': notifications.length === 0,
@@ -44,7 +44,7 @@ class Notifications extends React.Component {
         </TransitionGroup>
       </div>
     );
-  }
+  };
 }
 Notifications.propTypes = {
   notifications: PropTypes.array,

@@ -32,7 +32,7 @@ class Sidebar extends Component {
     this.openSubMenu = this.openSubMenu.bind(this);
   }
 
-  handleWindowResize(event) {
+  handleWindowResize = (event) => {
     if (event && !event.isTrusted) {
       return;
     }
@@ -43,7 +43,7 @@ class Sidebar extends Component {
       nextClasses.join(' '),
       this.props.selectedMenuHasSubItems,
     );
-  }
+  };
 
   handleDocumentClick = (e) => {
     const container = this.getContainer();
@@ -82,7 +82,7 @@ class Sidebar extends Component {
     this.toggle();
   };
 
-  getMenuClassesForResize(classes) {
+  getMenuClassesForResize = (classes) => {
     const { menuHiddenBreakpoint, subHiddenBreakpoint } = this.props;
     let nextClasses = classes.split(' ').filter((x) => x !== '');
     const windowWidth = window.innerWidth;
@@ -106,13 +106,13 @@ class Sidebar extends Component {
       }
     }
     return nextClasses;
-  }
+  };
 
   getContainer() {
     return this.containerRef.current;
   }
 
-  toggle() {
+  toggle = () => {
     const hasSubItems = this.getIsHasSubItem();
     this.props.changeSelectedMenuHasSubItems(hasSubItems);
     const { containerClassnames, menuClickCount } = this.props;
@@ -156,7 +156,7 @@ class Sidebar extends Component {
         hasSubItems,
       );
     }
-  }
+  };
 
   handleProps() {
     this.addEvents();
@@ -228,11 +228,11 @@ class Sidebar extends Component {
     }
   }
 
-  setHasSubItemStatus() {
+  setHasSubItemStatus = () => {
     const hasSubmenu = this.getIsHasSubItem();
     this.props.changeSelectedMenuHasSubItems(hasSubmenu);
     this.toggle();
-  }
+  };
 
   getIsHasSubItem() {
     const { selectedParentMenu } = this.state;
@@ -242,14 +242,14 @@ class Sidebar extends Component {
     return false;
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate = (prevProps) => {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.setSelectedLiActive(this.setHasSubItemStatus);
 
       window.scrollTo(0, 0);
     }
     this.handleProps();
-  }
+  };
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
@@ -263,7 +263,7 @@ class Sidebar extends Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  openSubMenu(e, menuItem) {
+  openSubMenu = (e, menuItem) => {
     const selectedParent = menuItem.id;
     const hasSubMenu = menuItem.subs && menuItem.subs.length > 0;
     this.props.changeSelectedMenuHasSubItems(hasSubMenu);
@@ -309,7 +309,7 @@ class Sidebar extends Component {
         viewingParentMenu: selectedParent,
       });
     }
-  }
+  };
 
   toggleMenuCollapse(e, menuKey) {
     e.preventDefault();

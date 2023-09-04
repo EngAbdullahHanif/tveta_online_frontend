@@ -99,7 +99,6 @@ const ThumbListPages = ({ match }) => {
     };
     try {
       const response = await callApi(endpoint, null, null, params1);
-      setIsLoading(false);
       if (response.data && response.status === 200) {
         setItems(response.data?.results);
         setTableParams({
@@ -114,6 +113,8 @@ const ThumbListPages = ({ match }) => {
       }
     } catch (error) {
       console.log('error: ', error);
+    } finally {
+      setIsLoading(false);
     }
   }
   const handleTableChange = (pagination, filter, sorter) => {

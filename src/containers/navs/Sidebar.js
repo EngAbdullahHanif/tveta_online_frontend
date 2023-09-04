@@ -29,6 +29,7 @@ class Sidebar extends Component {
     this.currentUser = JSON.parse(localStorage.getItem('user'));
     this.containerRef = React.createRef();
     this.handleDocumentClick = this.handleDocumentClick.bind(this);
+    this.openSubMenu = this.openSubMenu.bind(this);
   }
 
   handleWindowResize(event) {

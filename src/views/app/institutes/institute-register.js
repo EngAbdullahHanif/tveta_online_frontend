@@ -488,22 +488,6 @@ const InstituteRegister = () => {
                         )}
                       </FormGroup>
 
-<<<<<<< HEAD
-                      <FormGroup className="form-group has-float-label">
-                        <Label style={inputLabel}>کوډ/کود</Label>
-                        <Field
-                          className="form-control"
-                          name="code"
-                          type="number"
-                          disabled={instituteId ? true : false}
-                        />
-                        {errors.code && touched.code && (
-                          <div className="invalid-feedback d-block bg-danger text-white">
-                            {errors.code}
-                          </div>
-                        )}
-                      </FormGroup>
-=======
                       {!instituteId && (
                         <FormGroup className="form-group has-float-label">
                           <Label>کوډ/کود</Label>
@@ -519,7 +503,6 @@ const InstituteRegister = () => {
                           />
                         </FormGroup>
                       )}
->>>>>>> 79bd375a6372cf2b4c3c4f232fb0a8feedebf7e9
 
                       <FormGroup className="form-group has-float-label">
                         <Label style={inputLabel}>

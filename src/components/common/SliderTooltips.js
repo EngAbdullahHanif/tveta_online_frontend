@@ -1,5 +1,5 @@
 import React from 'react';
-import Slider, { Range } from 'rc-slider';
+import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 const sliderHandle = ({ value, dragging, index, offset, ...restProps }) => {
@@ -32,6 +32,6 @@ const SliderTooltip = (props) => {
 };
 
 const RangeTooltip = (props) => {
-  return <Range handle={props.handle || sliderHandle} {...props} />;
+  return <Slider range handle={props.handle || sliderHandle} {...props} />;
 };
 export { SliderTooltip, RangeTooltip };

@@ -36,7 +36,6 @@ const StudentListBody = (
     const response = await callApi(`students/${student_id}/`, 'DELETE', null);
     if (response.data && response.status === 200) {
       setDeletion(event);
-      student;
     } else {
       console.log('student delete error');
     }

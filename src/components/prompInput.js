@@ -7,7 +7,7 @@ const PromptInput = ({ endpoint, colName, title }) => {
 
   const fetchByID = async (value) => {
     await callApi(`${endpoint}/?${colName}=${value}`).then((response) => {
-      setItems(response.data);
+      // setItems(response.data);
       console.log('RESPONSE IN PROMPT: ', response.data);
     });
   };

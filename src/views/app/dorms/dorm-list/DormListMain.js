@@ -5,7 +5,6 @@ import {
   instituteStatusOptions,
 } from '../../global-data/options';
 
-import IntlMessages from 'helpers/IntlMessages';
 import callApi from 'helpers/callApi';
 import { Field, Formik } from 'formik';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
@@ -16,7 +15,6 @@ import { BsPencilSquare } from 'react-icons/bs';
 // import { servicePath } from 'constants/defaultValues';
 
 import useMousetrap from 'hooks/use-mousetrap';
-import config from '../../../../config';
 import { AuthContext } from 'context/AuthContext';
 import { userRole } from 'constants/defaultValues';
 
@@ -29,125 +27,24 @@ const getIndex = (value, arr, prop) => {
   return -1;
 };
 
-const servicePath = config.API_URL;
-
-const apiUrl = `${servicePath}/cakes/paging`;
-const dormUrl = `${servicePath}/institute/dorms`;
-
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-const pageSizes = [4, 8, 12, 20];
-
-const categories = [
-  { label: 'Cakes', value: 'Cakes', key: 0 },
-  { label: 'Cupcakes', value: 'Cupcakes', key: 1 },
-  { label: 'Desserts', value: 'Desserts', key: 2 },
-];
-
-const genderOptions = [
-  {
-    value: 'all',
-    label: 'تول / همه',
-  },
-  { value: 'male', label: 'ذکور' },
-  { value: 'female', label: 'اناث' },
-];
-
-// const statusOptions = [
-//   {
-//     value: 'all',
-//     label: <IntlMessages id="option.all" />,
-//   },
-//   { value: 'active', label: <IntlMessages id="institute.statusOption_1" /> },
-//   { value: 'deactive', label: <IntlMessages id="institute.statusOption_2" /> },
-// ];
-const statusOptions = [
-  {
-    value: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  {
-    value: 'governmental',
-    label: 'دولتی',
-  },
-  { value: 'private', label: 'شخصی' },
-];
-
-const buildingTypeOptions = [
-  {
-    value: 'all',
-    label: <IntlMessages id="option.all" />,
-  },
-  {
-    value: 'tveta',
-    label: <IntlMessages id="dorm.PublicBuildingOwnerLabelOption_1" />,
-  },
-  {
-    value: 'other_org',
-    label: <IntlMessages id="dorm.PublicBuildingOwnerLabelOption_2" />,
-  },
-  {
-    value: 'rent',
-    label: <IntlMessages id="dorm.PrivateBuildingTypeOption_1" />,
-  },
-  {
-    value: 'aid',
-    label: <IntlMessages id="dorm.PrivateBuildingTypeOption_2" />,
-  },
-];
-
 const ThumbListPages = ({ match, roles }) => {
   const { user, provinces, districts } = useContext(AuthContext);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
-  const [selectedOrderOption, setSelectedOrderOption] = useState({
-    column: 'title',
-    label: 'Product Name',
-  });
-  const [modalOpen, setModalOpen] = useState(false);
-  const [totalItemCount, setTotalItemCount] = useState(0);
-  const [totalPage, setTotalPage] = useState(1);
+
   const [selectedItems, setSelectedItems] = useState([]);
   const [dorms, setDorms] = useState([]);
+  const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
-  const [selectedFilter, setSelectFilter] = useState({
-    column: 'all',
-    label: 'تول / همه',
-  });
+
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
       pageSize: 5,
     },
   });
-  const [rest, setRest] = useState(0);
   const [dormsFilterList, setDormsFilterList] = useState([]);
-  const [dormName, setDormName] = useState('');
-  const [studentId, setStudentId] = useState('');
-  const [province, setProvince] = useState('');
-  const [district, setDistrict] = useState('');
-  const [selectedGenderOption, setSelectedGenderOption] = useState({
-    value: 'all',
-    label: 'جنیست',
-  });
-  const [selectedProvinceOption, setSelectedProvinceOption] = useState({
-    value: 'all',
-    label: 'ولایت',
-  });
-  const [selectedStatusOptions, setSelectedStatusOptions] = useState({
-    value: 'all',
-    label: 'ملکیت',
-  });
 
-  const [selectedBuildingType, setSelectedBuildingType] = useState({
-    value: 'all',
-    label: 'نوع تعمیر',
-  });
   const [provinceOptions, setProvinceOptions] = useState([]);
   const [isFilter, setIsFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

@@ -479,42 +479,7 @@ const TeacherProfile = () => {
           style={{ marginRight: '2%' }}
         >
           {' '}
-          <div className="d-inline-block">
-            {/* <Button
-              style={{ backgroundColor: !isNext ? 'blue' : '' }}
-              size="lg"
-              className="m-2"
-              onClick={() => {
-                handleClick(false);
-              }}
-            >
-              <span className="spinner d-inline-block">
-                <span className="bounce1" />
-                <span className="bounce2" />
-                <span className="bounce3" />
-              </span>
-              <span className="label">
-                <IntlMessages id="button.TeacherBackround" />
-              </span>
-            </Button> */}
-            {/* <Button
-              style={{ backgroundColor: isNext ? 'blue' : '' }}
-              size="lg"
-              className="m-2"
-              onClick={() => {
-                handleClick(true);
-              }}
-            >
-              <span className="spinner d-inline-block">
-                <span className="bounce1" />
-                <span className="bounce2" />
-                <span className="bounce3" />
-              </span>
-              <span className="label">
-                <IntlMessages id="button.Teacherprofile" />
-              </span>
-            </Button> */}
-          </div>
+          <div className="d-inline-block">-</div>
         </Colxx>
       </Row>
       {teacher && (
@@ -710,8 +675,7 @@ const TeacherProfile = () => {
                         borderRadius: '10px',
                       }}
                     >
-                      {' '}
-                      <IntlMessages id="تحصیل" />
+                      تحصیلات
                     </h2>
                   </Colxx>
 
@@ -739,7 +703,7 @@ const TeacherProfile = () => {
                             color="danger"
                             onClick={() => {
                               setEducationAlert(false);
-                              deleteEducation(item.id);
+                              // deleteEducation(item?.id);
                             }}
                             style={{ marginLeft: '5%' }}
                           >

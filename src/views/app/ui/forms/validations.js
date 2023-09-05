@@ -21,7 +21,8 @@ const FormValidationsUi = ({ match }) => {
       </Row>
       <Row>
         <Colxx x="12" md="12" className="mb-3">
-          <StudentRegistrationBio />
+          {/* <StudentRegistrationBio /> */}
+          HI
         </Colxx>
       </Row>
     </>

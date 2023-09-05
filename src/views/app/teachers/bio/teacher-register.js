@@ -91,77 +91,76 @@ const TeacherRegister = ({ intl }, values) => {
   const forms = [createRef(null), createRef(null), createRef(null)];
   const history = useHistory();
   const { teacherId } = useParams();
+  async function fetchTeacher() {
+    setIsLoading(true);
+    const { data } = await callApi(`teachers/${teacherId}`, '', null);
+    const initialUpdateValues = data;
 
-  // if teacher id is present, then it is an update form
-  if (teacherId) {
-    useEffect(() => {
-      setIsUpdateForm(true);
-      async function fetchTeacher() {
-        setIsLoading(true);
-        const { data } = await callApi(`teachers/${teacherId}`, '', null);
-        const initialUpdateValues = data;
+    initialUpdateValues.tazkira_type = tazkiraOptions.find(
+      (option) => option.value === data.tazkira_type,
+    );
 
-        initialUpdateValues.tazkira_type = tazkiraOptions.find(
-          (option) => option.value === data.tazkira_type,
-        );
-
-        dateOfBirthOptoions.map((teacherBirth) => {
-          if (teacherBirth.value === data.year_of_birth) {
-            initialUpdateValues.year_of_birth = teacherBirth;
-          }
-        });
-
-        gradeOptions.forEach((teacherGrade) => {
-          if (teacherGrade.value === data.grade) {
-            initialUpdateValues.grade = teacherGrade;
-          }
-        });
-        genderOptions.forEach((teacherGender) => {
-          if (teacherGender.value === data.gender) {
-            initialUpdateValues.gender = teacherGender;
-          }
-        });
-
-        teacherCurrentStatusOptions.forEach((teacherStatus) => {
-          if (teacherStatus.value == data.status) {
-            initialUpdateValues.status = teacherStatus;
-          }
-        });
-
-        provinces.forEach((province) => {
-          if (province.value == data.current_province) {
-            initialUpdateValues.current_province = province;
-          }
-        });
-        provinces.forEach((province) => {
-          if (province.value == data.main_province) {
-            initialUpdateValues.main_province = province;
-          }
-        });
-
-        districts.forEach((district) => {
-          if (district.value == data.main_district) {
-            initialUpdateValues.main_district = district;
-          }
-        });
-        districts.forEach((district) => {
-          if (district.value == data.current_district) {
-            initialUpdateValues.current_district = district;
-          }
-        });
-
-        stepOptions.forEach((teacherStep) => {
-          if (teacherStep.value == data.step) {
-            initialUpdateValues.step = teacherStep;
-          }
-        });
-
-        setinitialValues(initialUpdateValues);
-        setIsLoading(false);
+    dateOfBirthOptoions.map((teacherBirth) => {
+      if (teacherBirth.value === data.year_of_birth) {
+        initialUpdateValues.year_of_birth = teacherBirth;
       }
-      fetchTeacher();
-    }, []);
+    });
+
+    gradeOptions.forEach((teacherGrade) => {
+      if (teacherGrade.value === data.grade) {
+        initialUpdateValues.grade = teacherGrade;
+      }
+    });
+    genderOptions.forEach((teacherGender) => {
+      if (teacherGender.value === data.gender) {
+        initialUpdateValues.gender = teacherGender;
+      }
+    });
+
+    teacherCurrentStatusOptions.forEach((teacherStatus) => {
+      if (teacherStatus.value == data.status) {
+        initialUpdateValues.status = teacherStatus;
+      }
+    });
+
+    provinces.forEach((province) => {
+      if (province.value == data.current_province) {
+        initialUpdateValues.current_province = province;
+      }
+    });
+    provinces.forEach((province) => {
+      if (province.value == data.main_province) {
+        initialUpdateValues.main_province = province;
+      }
+    });
+
+    districts.forEach((district) => {
+      if (district.value == data.main_district) {
+        initialUpdateValues.main_district = district;
+      }
+    });
+    districts.forEach((district) => {
+      if (district.value == data.current_district) {
+        initialUpdateValues.current_district = district;
+      }
+    });
+
+    stepOptions.forEach((teacherStep) => {
+      if (teacherStep.value == data.step) {
+        initialUpdateValues.step = teacherStep;
+      }
+    });
+
+    setinitialValues(initialUpdateValues);
+    setIsLoading(false);
   }
+  // if teacher id is present, then it is an update form
+  useEffect(() => {
+    if (teacherId) {
+      setIsUpdateForm(true);
+    }
+    fetchTeacher();
+  }, [teacherId]);
 
   const createNotification = (type, className) => {
     const cName = className || '';

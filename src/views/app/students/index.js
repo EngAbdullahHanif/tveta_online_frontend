@@ -3,7 +3,7 @@ import { Redirect, Switch } from 'react-router-dom';
 import { getCurrentUser } from 'helpers/Utils';
 import { ProtectedRoute } from 'helpers/authHelper';
 import { userRole } from 'constants/defaultValues';
-import singleStudentSingleSubjectMarks from './single-student-single-subject-marks';
+import SingleStudentSingleSubjectMarks from './single-student-single-subject-marks';
 import singleStudentAttendace from './attendence/single-student-attendace';
 import ClassTransfer from './transfered-students/class-transfer';
 import StudentUpdate from './bio/student-update';
@@ -201,7 +201,7 @@ const Students = ({ match, props }) => {
         <ProtectedRoute
           exact
           path={`${match.url}/single-subject`}
-          component={singleStudentSingleSubjectMarks}
+          component={SingleStudentSingleSubjectMarks}
           roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />

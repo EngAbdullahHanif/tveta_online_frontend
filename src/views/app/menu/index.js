@@ -10,7 +10,7 @@ const Levels = React.lazy(() =>
   import(/* webpackChunkName: "menu-levels" */ './levels'),
 );
 
-const UI = ({ match }) => (
+const UI = ({ match, ...props }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/types`} />

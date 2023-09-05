@@ -503,7 +503,7 @@ const MarksUpdate = ({ match }) => {
                             size="lg"
                             type="submit"
                             onClick={() => {
-                              onSubmit;
+                              onSubmit();
                               handleClick(false);
                             }}
                           >
@@ -622,11 +622,11 @@ const MarksUpdate = ({ match }) => {
                                   className="form-control"
                                   name={`score[${student.student_id}]`}
                                 />
-                                {errors.score && touched.score ? (
+                                {/* {errors.score && touched.score ? (
                                   <div className="invalid-feedback d-block">
                                     {errors.score}
                                   </div>
-                                ) : null}
+                                ) : null} */}
                               </FormGroup>
                             </div>
                           </tr>
@@ -677,7 +677,7 @@ const MarksUpdate = ({ match }) => {
                     {
                       setReload(false);
                       setIsNext(true);
-                      handleSearch(true);
+                      // handleSearch(true);
                     }
                   }}
                 >

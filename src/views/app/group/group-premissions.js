@@ -62,11 +62,11 @@ const GroupPremissions = () => {
     { value: 'Three', label: 'Callisto' },
   ];
 
-  const onChange = (data) => {
-    setAvailableData(data.availableData);
-    setSelectedData(data.selectedData);
-    setAllSelected(data.allSelected);
-  };
+  // const onChange = (data) => {
+  //   setAvailableData(data.availableData);
+  //   setSelectedData(data.selectedData);
+  //   setAllSelected(data.allSelected);
+  // };
   let fields = { text: 'Name' };
   return (
     <>

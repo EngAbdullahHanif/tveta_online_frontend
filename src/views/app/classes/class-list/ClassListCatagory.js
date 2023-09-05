@@ -36,9 +36,9 @@ const ListPageListing = ({
           if (displayMode === 'imagelist') {
             return (
               <ImageListView
-                key={institute.id}
-                institute={institute}
-                isSelect={selectedItems.includes(institute.id)}
+                key={classs.institute}
+                institute={classs.institute}
+                isSelect={selectedItems.includes(classs.institute)}
                 collect={collect}
                 onCheckItem={onCheckItem}
               />
@@ -58,9 +58,9 @@ const ListPageListing = ({
           }
           return (
             <DataListView
-              key={institute.id}
-              institute={institute}
-              isSelect={selectedItems.includes(institute.id)}
+              key={classs.institute}
+              institute={classs.institute}
+              isSelect={selectedItems.includes(classs.institute)}
               onCheckItem={onCheckItem}
               collect={collect}
             />

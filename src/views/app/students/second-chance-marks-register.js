@@ -165,25 +165,26 @@ const MarksRegistration = ({ match }) => {
       setselectedClassLabel({ classs, semester, section });
     }
   }, [selectedClass]);
+  async function fetchStudent() {
+    const { data } = await axios.get(
+      // `${studentMarkId}/?student_id=${markId}`,
+      `${1}/?student_id=${markId}`,
+    );
+    // console.log(data, 'object of the data');
 
-  if (markId) {
-    useEffect(() => {
-      async function fetchStudent() {
-        const { data } = await axios.get(
-          `${studentMarkId}/?student_id=${markId}`,
-        );
-        // console.log(data, 'object of the data');
-
-        // const instGender = genderOptions.map((studentGender) => {
-        //   if (studentGender.value === data[0].gender) {
-        //     setInitialGender(studentGender);
-        //   }
-        // });
-      }
-      fetchStudent();
-      //setUpdateMode(true);
-    }, []);
+    // const instGender = genderOptions.map((studentGender) => {
+    //   if (studentGender.value === data[0].gender) {
+    //     setInitialGender(studentGender);
+    //   }
+    // });
   }
+
+  useEffect(() => {
+    if (markId) {
+      fetchStudent();
+    }
+    //setUpdateMode(true);
+  }, []);
 
   const fetchInstitutes = async () => {
     const response = await callApi('institute/', '', null);
@@ -663,11 +664,11 @@ const MarksRegistration = ({ match }) => {
                                             min="0"
                                             max="100"
                                           />
-                                          {errors.score && touched.score ? (
+                                          {/* {errors.score && touched.score ? (
                                             <div className="invalid-feedback d-block">
                                               {errors.score}
                                             </div>
-                                          ) : null}
+                                          ) : null} */}
                                         </FormGroup>
                                       </div>
                                     </td>

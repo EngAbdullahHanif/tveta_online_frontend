@@ -24,62 +24,62 @@ const TeacherEvaluationAPI = `${servicePath}/teachers/evaluation`;
 const TeacherEvaluation = () => {
   const { teacherId } = useParams();
   console.log('teacher evaluation', teacherId);
+  async function fetchData() {
+    const { data } = await axios.get(
+      `${TeacherEvaluationAPI}/?id=${teacherId}`,
+    );
+    setInitialEvaluator(data[0].evaluator_name);
+    setInitialStrengthPoints(data[0].strong_points);
+    setInitialWeaknessPoint(data[0].weak_points);
+    setInitialMarks(data[0].score);
+    setInitialEvaluationDate(data[0].evaluation_date);
+    setInitialSuggestions(data[0].suggestions);
+    setInitialTopic(data[0].topic);
 
-  if (teacherId) {
-    useEffect(() => {
-      async function fetchData() {
-        const { data } = await axios.get(
-          `${TeacherEvaluationAPI}/?id=${teacherId}`,
-        );
-        setInitialEvaluator(data[0].evaluator_name);
-        setInitialStrengthPoints(data[0].strong_points);
-        setInitialWeaknessPoint(data[0].weak_points);
-        setInitialMarks(data[0].score);
-        setInitialEvaluationDate(data[0].evaluation_date);
-        setInitialSuggestions(data[0].suggestions);
-        setInitialTopic(data[0].topic);
+    setInitialId([
+      { value: data[0].teacher_id.id, label: data[0].teacher_id.name },
+    ]);
+    setInitialDepartment([
+      {
+        value: data[0].department_id.id,
+        label: data[0].department_id.name,
+      },
+    ]);
+    setInitialSubject([
+      {
+        value: data[0].subject_id.id,
+        label: data[0].subject_id.name,
+      },
+    ]);
 
-        setInitialId([
-          { value: data[0].teacher_id.id, label: data[0].teacher_id.name },
-        ]);
-        setInitialDepartment([
-          {
-            value: data[0].department_id.id,
-            label: data[0].department_id.name,
-          },
-        ]);
-        setInitialSubject([
-          {
-            value: data[0].subject_id.id,
-            label: data[0].subject_id.name,
-          },
-        ]);
+    setInitialInsititute([
+      {
+        value: data[0].institute_id.id,
+        label: data[0].institute_id.name,
+      },
+    ]);
+    setInitialClass([
+      {
+        value: data[0].class_id.id,
+        label: data[0].class_id.name,
+      },
+    ]);
 
-        setInitialInsititute([
-          {
-            value: data[0].institute_id.id,
-            label: data[0].institute_id.name,
-          },
-        ]);
-        setInitialClass([
-          {
-            value: data[0].class_id.id,
-            label: data[0].class_id.name,
-          },
-        ]);
-
-        const TeacherEvaluationOptions = evaluationTypeOptions.map(
-          (evaluationType) => {
-            if (evaluationType.value === data[0].evaluation_type) {
-              setInitialEvluationType(evaluationType);
-            }
-          },
-        );
-      }
-      fetchData();
-      //setUpdateMode(true);
-    }, []);
+    const TeacherEvaluationOptions = evaluationTypeOptions.map(
+      (evaluationType) => {
+        if (evaluationType.value === data[0].evaluation_type) {
+          setInitialEvluationType(evaluationType);
+        }
+      },
+    );
   }
+
+  useEffect(() => {
+    if (teacherId) {
+      fetchData();
+    }
+    //setUpdateMode(true);
+  }, []);
 
   const [initialId, setInitialId] = useState([]);
   const [initialDepartment, setInitialDepartment] = useState([]);

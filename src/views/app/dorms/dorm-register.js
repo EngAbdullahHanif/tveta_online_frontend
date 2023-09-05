@@ -18,6 +18,7 @@ import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from 'context/AuthContext';
+import { inputLabel } from 'config/styling';
 
 const DormRegistration = (values) => {
   const { provinces } = useContext(AuthContext);
@@ -44,76 +45,75 @@ const DormRegistration = (values) => {
   const [selectedProvince, setSelectedProvince] = useState('');
   const { dormId } = useParams();
   //console.log('Dorm info', dormId);
+  async function fetchData() {
+    // const { data } = await axios.get(`${dormAPI}/?id=${dormId}`);
+    const response = await callApi(`institute/dorms/?id=${dormId}`);
+    const updValues = response?.data.results[0];
+    setUpdatingDorm(updValues);
+    console.log(updValues, 'response?.data');
+    setInitialName(updValues.name);
+    setInitialCapicity(updValues.capacity);
+    setInitialTotalKitchens(updValues.number_of_kitchens);
+    // BuildingTypeOptions.map((dormType) => {
+    //   if (dormType.value === updValues.building_ownership) {
+    //     setInitialBuildingType(dormType);
+    //   }
+    // });
+    setInitialBuildingType(
+      BuildingTypeOptions.find(
+        (option) => option.value === updValues.building_ownership,
+      ),
+    );
 
-  if (dormId) {
-    useEffect(() => {
-      async function fetchData() {
-        // const { data } = await axios.get(`${dormAPI}/?id=${dormId}`);
-        const response = await callApi(`institute/dorms/?id=${dormId}`);
-        const updValues = response?.data.results[0];
-        setUpdatingDorm(updValues);
-        console.log(updValues, 'response?.data');
-        setInitialName(updValues.name);
-        setInitialCapicity(updValues.capacity);
-        setInitialTotalKitchens(updValues.number_of_kitchens);
-        // BuildingTypeOptions.map((dormType) => {
-        //   if (dormType.value === updValues.building_ownership) {
-        //     setInitialBuildingType(dormType);
-        //   }
-        // });
-        setInitialBuildingType(
-          BuildingTypeOptions.find(
-            (option) => option.value === updValues.building_ownership,
-          ),
-        );
+    // publicBuildingOwnerOptions.map((publicDorm) => {
+    //   if (publicDorm.value === updValues.dorm_type_option) {
+    //     setInitialPublicBuildingOwner(publicDorm);
+    //   }
+    // });
+    setInitialPublicBuildingOwner(
+      publicBuildingOwnerOptions.find(
+        (option) => option.value === updValues.building_type_option,
+      ),
+    );
 
-        // publicBuildingOwnerOptions.map((publicDorm) => {
-        //   if (publicDorm.value === updValues.dorm_type_option) {
-        //     setInitialPublicBuildingOwner(publicDorm);
-        //   }
-        // });
-        setInitialPublicBuildingOwner(
-          publicBuildingOwnerOptions.find(
-            (option) => option.value === updValues.building_type_option,
-          ),
-        );
+    // privateBuildingTypeOptions.map((privateDormType) => {
+    //   if (privateDormType.value === updValues.dorm_type_option) {
+    //     setInitialPrivateBuildingType(privateDormType);
+    //   }
+    // });
 
-        // privateBuildingTypeOptions.map((privateDormType) => {
-        //   if (privateDormType.value === updValues.dorm_type_option) {
-        //     setInitialPrivateBuildingType(privateDormType);
-        //   }
-        // });
+    setInitialPrivateBuildingType(
+      privateBuildingTypeOptions.find(
+        (option) => option.value === updValues.building_type_option,
+      ),
+    );
 
-        setInitialPrivateBuildingType(
-          privateBuildingTypeOptions.find(
-            (option) => option.value === updValues.building_type_option,
-          ),
-        );
+    setInitialProvince(
+      provinces.find((option) => option.value === updValues.province),
+    );
 
-        setInitialProvince(
-          provinces.find((option) => option.value === updValues.province),
-        );
+    setInitialDistrict(
+      districts.find((option) => option.value === updValues.district),
+    );
 
-        setInitialDistrict(
-          districts.find((option) => option.value === updValues.district),
-        );
-
-        dormGenderOptions.map((gender) => {
-          if (gender.value === updValues.gender) {
-            setInitialGender(gender);
-          }
-        });
-
-        setInitialTotalRooms(updValues.number_of_rooms);
-        setInitialTotalBuildingNo(updValues.number_of_buildings);
-        setInitialToilet(updValues.number_of_toilets);
-        // setInitialDistrict(updValues.district);
-        setInitialQuota(updValues.quota);
+    dormGenderOptions.map((gender) => {
+      if (gender.value === updValues.gender) {
+        setInitialGender(gender);
       }
-      fetchData();
-      //setUpdateMode(true);
-    }, []);
+    });
+
+    setInitialTotalRooms(updValues.number_of_rooms);
+    setInitialTotalBuildingNo(updValues.number_of_buildings);
+    setInitialToilet(updValues.number_of_toilets);
+    // setInitialDistrict(updValues.district);
+    setInitialQuota(updValues.quota);
   }
+  useEffect(() => {
+    if (dormId) {
+      fetchData();
+    }
+    //setUpdateMode(true);
+  }, []);
 
   // const fetchProvinces = async () => {
   //   const response = await callApi('core/provinces/', 'GET', null);

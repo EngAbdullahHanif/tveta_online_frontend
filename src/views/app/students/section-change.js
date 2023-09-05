@@ -179,6 +179,12 @@ const DepartmentChange = (props) => {
         console.log('success');
         createNotification('success', 'filled');
         setReload(true);
+      } else if (response.status === 404 || response.status === 400) {
+        console.log('student not found');
+        createNotification('info', 'filled');
+      } else {
+        console.log('error');
+        createNotification('error', 'filled');
       }
     } catch (error) {
       if (error.message === 'Resource not found') {
@@ -188,17 +194,6 @@ const DepartmentChange = (props) => {
         console.log('An error occurred:', error.message);
         createNotification('error', 'filled');
       }
-    }
-
-    if (response.status === 200 || response.status === 201) {
-      console.log('success');
-      createNotification('success', 'filled');
-    } else if (response.status === 404 || response.status === 400) {
-      console.log('student not found');
-      createNotification('info', 'filled');
-    } else {
-      console.log('error');
-      createNotification('error', 'filled');
     }
   };
 

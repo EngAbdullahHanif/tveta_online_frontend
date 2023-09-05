@@ -7,7 +7,7 @@ if (process.env.NODE_ENV) {
     config = require('./development');
   }
 } else {
-  conig = require('./development');
+  config = require('./development');
 }
 
 export default config;

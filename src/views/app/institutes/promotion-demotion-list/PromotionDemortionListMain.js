@@ -388,7 +388,6 @@ const ThumbListPages = ({ match }) => {
           console.log('4, institute error');
         }
       } else {
-        axios;
         // get data from localhost:8000/api/student
         // .get(
         //   `${instituteApiUrl}?id=${instituteId}&gender=${selectedGenderOption.column}&province=${selectedProvinceOption.column}&district=${district}`

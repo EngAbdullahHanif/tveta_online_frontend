@@ -73,7 +73,7 @@ const initialValues2 = {
   necessaryWorkHours: '',
   sicknessHours: '',
 };
-function singleStudentAttendace(props) {
+function SingleStudentAttendace(props) {
   const [isNext, setIsNext] = useState(false);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -695,4 +695,4 @@ function singleStudentAttendace(props) {
   );
 }
 
-export default singleStudentAttendace;
+export default SingleStudentAttendace;

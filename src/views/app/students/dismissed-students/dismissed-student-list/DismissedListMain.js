@@ -142,9 +142,9 @@ const ThumbListPages = ({ match, item_list }) => {
           handleChangeSelectAll={handleChangeSelectAll}
           // following code is used for order the list based on different element of the prod
           changeOrderBy={(column) => {
-            setSelectedOrderOption(
-              orderOptions.find((x) => x.column === column),
-            );
+            // setSelectedOrderOption(
+            //   orderOptions.find((x) => x.column === column),
+            // );
           }}
           changePageSize={setSelectedPageSize}
           selectedPageSize={selectedPageSize}

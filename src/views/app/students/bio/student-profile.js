@@ -48,7 +48,8 @@ const StudentProfile = () => {
   });
   async function fetchStudentInstitutes() {
     const response = await callApi(
-      `teachers/${teacherId}/feedbacks/`,
+      // `teachers/${teacherId}/feedbacks/`,
+      `students/${studentId}/feedbacks/`,
       '',
       null,
     );
@@ -88,7 +89,7 @@ const StudentProfile = () => {
     }
     const data = {
       type: inputData.type?.value,
-      teacher: teacher[0].id,
+      // teacher: teacher[0].id,
       institute: inputData.institute?.value,
       details: inputData.details,
     };
@@ -98,7 +99,7 @@ const StudentProfile = () => {
         if (response.status >= 200 && response.status < 300) {
           setLoading(false);
           message.success('Data Saved Successfully');
-          fetchTeacherIncentives();
+          // fetchTeacherIncentives();
           resetForm();
           resetUpdate();
         } else {
@@ -109,63 +110,64 @@ const StudentProfile = () => {
     setLoading(false);
   };
   //load data of student from database
-  useEffect(() => {
-    async function fetchStudent() {
-      try {
-        const response = await callApi(`students/${studentId}/`, '', null);
 
-        if (response.data && response.status === 200) {
-          const data = await response.data;
-          setStudent([data]);
-          setIsLoaded(true);
-        }
+  async function fetchStudent() {
+    try {
+      const response = await callApi(`students/${studentId}/`, '', null);
 
-        const instituteResponse = await callApi(
-          `students/student_institutes/?student__id=${studentId}`,
-          '',
-          null,
-        );
-
-        if (instituteResponse.data && instituteResponse.status === 200) {
-          const instituteData = await instituteResponse.data;
-          setInstitute(instituteData?.results);
-        }
-
-        //type =1 means current class or current continued class
-        const classResponse = await callApi(
-          `students/student_class/?student=${studentId}&stauts=inprogress`,
-          '',
-          null,
-        );
-
-        if (classResponse.data && classResponse.status === 200) {
-          const classData = await classResponse.data;
-          setClasss(classData);
-        }
-
-        const dormResponse = await callApi(
-          `students/student_dorms/?student=${studentId}`,
-          '',
-          null,
-        );
-        if (dormResponse.data && dormResponse.status === 200) {
-          const dormData = await dormResponse.data;
-          setDorm(dormData);
-        }
-
-        const marksResponse = await callApi(
-          `students/TranscriptData/?student=${studentId}`,
-          '',
-          null,
-        );
-        if (marksResponse.data && marksResponse.status === 200) {
-          const marksData = await marksResponse.data;
-          setMarks(marksData);
-        }
-      } catch (error) {
-        console.log(error);
+      if (response.data && response.status === 200) {
+        const data = await response.data;
+        setStudent([data]);
+        setIsLoaded(true);
       }
+
+      const instituteResponse = await callApi(
+        `students/student_institutes/?student__id=${studentId}`,
+        '',
+        null,
+      );
+
+      if (instituteResponse.data && instituteResponse.status === 200) {
+        const instituteData = await instituteResponse.data;
+        setInstitute(instituteData?.results);
+      }
+
+      //type =1 means current class or current continued class
+      const classResponse = await callApi(
+        `students/student_class/?student=${studentId}&stauts=inprogress`,
+        '',
+        null,
+      );
+
+      if (classResponse.data && classResponse.status === 200) {
+        const classData = await classResponse.data;
+        setClasss(classData);
+      }
+
+      const dormResponse = await callApi(
+        `students/student_dorms/?student=${studentId}`,
+        '',
+        null,
+      );
+      if (dormResponse.data && dormResponse.status === 200) {
+        const dormData = await dormResponse.data;
+        setDorm(dormData);
+      }
+
+      const marksResponse = await callApi(
+        `students/TranscriptData/?student=${studentId}`,
+        '',
+        null,
+      );
+      if (marksResponse.data && marksResponse.status === 200) {
+        const marksData = await marksResponse.data;
+        setMarks(marksData);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
+  useEffect(() => {
     fetchStudent();
   }, []);
 

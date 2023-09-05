@@ -64,7 +64,7 @@ const initialValues = {
 const initialValues2 = {
   marks: '',
 };
-function singleStudentSingleSubjectMarks(props) {
+function SingleStudentSingleSubjectMarks(props) {
   const [isNext, setIsNext] = useState(false);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -122,7 +122,7 @@ function singleStudentSingleSubjectMarks(props) {
     fetchSubjects();
   }, []);
 
-  const fetchStudents = async (values) => {
+  const fetchStudents = async () => {
     const response = await callApi(
       `students/subject-marks-update/list/?classs=${selectedClass.value}&educational_year=${selectedEducationalYear.value}&subject=${selectedSubject.value}&student_id=${selectedStudentID}&chance=${selectedChance.value}`,
       '',
@@ -405,7 +405,7 @@ function singleStudentSingleSubjectMarks(props) {
                 onSubmit={onSubmit}
                 validationSchema={validationSchema2}
               >
-                {({ errors }) => (
+                {({ errors, touched }) => (
                   <Form className="av-tooltip tooltip-label-right ">
                     <Row
                       className="justify-content-center  border border"
@@ -649,4 +649,4 @@ function singleStudentSingleSubjectMarks(props) {
   );
 }
 
-export default singleStudentSingleSubjectMarks;
+export default SingleStudentSingleSubjectMarks;

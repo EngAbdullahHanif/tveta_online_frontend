@@ -56,24 +56,20 @@ const MarksRegistration = ({ match }) => {
 
   const { markId } = useParams();
 
-  if (markId) {
-    useEffect(() => {
-      async function fetchStudent() {
-        const { data } = await axios.get(
-          `${studentMarkId}/?student_id=${markId}`,
-        );
-        console.log(data, 'object of the data');
+  async function fetchStudent() {
+    const { data } = await axios.get(
+      // `${studentMarkId}/?student_id=${markId}`,
+      `${1}/?student_id=${markId}`,
+    );
+    console.log(data, 'object of the data');
+  }
 
-        // const instGender = genderOptions.map((studentGender) => {
-        //   if (studentGender.value === data[0].gender) {
-        //     setInitialGender(studentGender);
-        //   }
-        // });
-      }
+  useEffect(() => {
+    if (markId) {
       fetchStudent();
       //setUpdateMode(true);
-    }, []);
-  }
+    }
+  }, [markId]);
 
   const fetchTransferedStudents = async (values) => {
     const response = await callApi(

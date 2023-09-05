@@ -454,7 +454,7 @@ const MarskStatusCheckedStudents = ({ match }) => {
                     onSubmit={onSubmit}
                     // validationSchema={ValidationSchema}
                   >
-                    {({ errors, values, setFieldValue, setFieldTouched }) => (
+                    {({ errors, touched, setFieldValue, setFieldTouched }) => (
                       <Form className="av-tooltip tooltip-label-right ">
                         <Row
                           className="justify-content-center  border border"

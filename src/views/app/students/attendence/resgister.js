@@ -91,40 +91,41 @@ const initialValues = {
 const StudentAttendance = ({ match }) => {
   const { studentAttendanceId } = useParams();
   console.log('id of the attendacne', studentAttendanceId);
-  if (studentAttendanceId) {
-    useEffect(() => {
-      async function fetchStudent() {
-        const { data } = await axios.get(
-          `${StudentAttendanceAPI}/?id=${studentAttendanceId}`,
-        );
-        console.log(data[0].institute_id.name, 'kaknor student data');
-        setInitialEducationalYear(data[0].educational_year),
-          setInititalInstitute([
-            {
-              value: data[0].institute_id.id,
-              label: data[0].institute_id.name,
-            },
-          ]);
-        setInitialClass([
-          { value: data[0].class_id.id, label: data[0].class_id.name },
-        ]);
-        setInitialDepartment([
-          {
-            value: data[0].department_id.id,
-            label: data[0].department_id.name,
-          },
-        ]);
-        setInitialSubject([
-          {
-            value: data[0].student_id.student_id,
-            label: data[0].student_id.name,
-          },
-        ]);
-      }
-      fetchStudent();
-      //setUpdateMode(true);
-    }, []);
+
+  async function fetchStudent() {
+    const { data } = await axios.get(
+      // `${StudentAttendanceAPI}/?id=${studentAttendanceId}`,
+      `testing/?id=${studentAttendanceId}`,
+    );
+    setInitialEducationalYear(data[0].educational_year);
+    setInititalInstitute([
+      {
+        value: data[0].institute_id.id,
+        label: data[0].institute_id.name,
+      },
+    ]);
+    setInitialClass([
+      { value: data[0].class_id.id, label: data[0].class_id.name },
+    ]);
+    setInitialDepartment([
+      {
+        value: data[0].department_id.id,
+        label: data[0].department_id.name,
+      },
+    ]);
+    setInitialSubject([
+      {
+        value: data[0].student_id.student_id,
+        label: data[0].student_id.name,
+      },
+    ]);
   }
+  useEffect(() => {
+    if (studentAttendanceId) {
+      fetchStudent();
+    }
+    //setUpdateMode(true);
+  }, []);
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -136,9 +137,7 @@ const StudentAttendance = ({ match }) => {
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selecedStudyTime, setSelectedStudyTime] = useState('');
   const [selectedEducationalYear, setSelectedEducationalYear] = useState('');
-  const [passingScore, setPassingScore] = useState(55);
-  const [subjectGrad, setSubjectGrad] = useState();
-  const [subjectGPA, setSubjectGPA] = useState();
+
   const [initialInstitue, setInititalInstitute] = useState([]);
   const [initailEducationalYear, setInitialEducationalYear] = useState('');
   const [initalClass, setInitialClass] = useState([]);
@@ -146,10 +145,7 @@ const StudentAttendance = ({ match }) => {
   const [initalSubject, setInitialSubject] = useState([]);
   const [arr, setArr] = useState({});
   const {
-    provinces,
-    districts,
     classes,
-    subjects,
     departments,
     institutes,
     contextFields: fields,

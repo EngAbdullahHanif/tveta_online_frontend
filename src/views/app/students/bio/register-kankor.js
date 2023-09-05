@@ -21,54 +21,55 @@ const KankorstudentAPI = `${servicePath}/api/kankorResults`;
 const StudentRegistraion = ({ history }) => {
   const { kankorStudentId } = useParams();
   console.log('Kankor ID', kankorStudentId);
-  if (kankorStudentId) {
-    useEffect(() => {
-      async function fetchStudent() {
-        const { data } = await callApi(
-          `api/kankorResults/?id=${kankorStudentId}`,
-          '',
-          null,
-        );
-        console.log('data of the kankor student', data[0]);
-        setInitialName(data[0].name);
-        setInitialFatherName(data[0].father_name);
-        setInitialDistrict(data[0].district);
-        const educationYearsOptions = educationalYearsOptions.map((year) => {
-          if (year.value == data[0].educational_year) {
-            setInitialEducationalYear(year);
-          }
-        });
-        setInitialProvince({ value: '1', label: data[0].provence });
-        setInitailDepartment([
-          {
-            value: data[0].department_id.id,
-            label: data[0].department_id.name,
-          },
-        ]);
-        const genderOption = genderOptions.map((gender) => {
-          if (gender.value === data[0].gender) {
-            setInitialGender(gender);
-          }
-        });
-        setInitailField([
-          {
-            value: data[0].field_id.id,
-            label: data[0].field_id.name,
-          },
-        ]);
-        setInitialKankorMarks(data[0].score);
-        const shiftOptions = studyTimeOptions.map((timeOptions) => {
-          if (timeOptions.value === data[0].shift) {
-            setInitialstudyTime(timeOptions);
-          }
-        });
-        setInitialInstitute([
-          { value: data[0].Institute.id, label: data[0].Institute.name },
-        ]);
+  async function fetchStudent() {
+    const { data } = await callApi(
+      `api/kankorResults/?id=${kankorStudentId}`,
+      '',
+      null,
+    );
+    console.log('data of the kankor student', data[0]);
+    setInitialName(data[0].name);
+    setInitialFatherName(data[0].father_name);
+    setInitialDistrict(data[0].district);
+    const educationYearsOptions = educationalYearsOptions.map((year) => {
+      if (year.value == data[0].educational_year) {
+        setInitialEducationalYear(year);
       }
-      fetchStudent();
-    }, []);
+    });
+    setInitialProvince({ value: '1', label: data[0].provence });
+    setInitailDepartment([
+      {
+        value: data[0].department_id.id,
+        label: data[0].department_id.name,
+      },
+    ]);
+    const genderOption = genderOptions.map((gender) => {
+      if (gender.value === data[0].gender) {
+        setInitialGender(gender);
+      }
+    });
+    setInitailField([
+      {
+        value: data[0].field_id.id,
+        label: data[0].field_id.name,
+      },
+    ]);
+    setInitialKankorMarks(data[0].score);
+    const shiftOptions = studyTimeOptions.map((timeOptions) => {
+      if (timeOptions.value === data[0].shift) {
+        setInitialstudyTime(timeOptions);
+      }
+    });
+    setInitialInstitute([
+      { value: data[0].Institute.id, label: data[0].Institute.name },
+    ]);
   }
+
+  useEffect(() => {
+    if (kankorStudentId) {
+      fetchStudent();
+    }
+  }, []);
 
   const [intialName, setInitialName] = useState('');
   const [initialFatherName, setInitialFatherName] = useState('');

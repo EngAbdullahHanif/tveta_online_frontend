@@ -5,6 +5,7 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { adminRoot } from 'constants/defaultValues';
 import { AuthContext } from 'context/AuthContext';
+import callApi from 'helpers/callApi';
 
 const Unauthorized = ({ location, ...rest }) => {
   const { setUser } = useContext(AuthContext);

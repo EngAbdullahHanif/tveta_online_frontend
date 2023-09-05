@@ -93,6 +93,7 @@ const ThumbListPages = ({ match }) => {
   const [totalPage, setTotalPage] = useState(1);
   const [selectedItems, setSelectedItems] = useState([]);
   const [dorms, setDorms] = useState([]);
+  const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
   const [selectedFilter, setSelectFilter] = useState({
     value: 'all',

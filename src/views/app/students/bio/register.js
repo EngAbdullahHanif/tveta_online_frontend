@@ -179,7 +179,7 @@ const StudentRegistration = ({ intl }, values) => {
     {
       institute:
         institutes.find((op) => op.value === step2Data?.institute.value) || [],
-      class: classs.find((op) => op.value === step2Data?.class.value) || [],
+      class: classs.find((op) => op.value === step2Data?.class?.value) || [],
       educationalYear:
         educationalYearsOptions.find(
           (op) => op.value === step2Data?.educationalYear.value,
@@ -1287,7 +1287,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 options={instDepartmentOptions}
                                 onChange={(name, value) => {
                                   setFieldValue(name, value);
-                                  setFieldValue('class', '');
+                                  setFieldValue('class', []);
                                   console.log(
                                     'selected department: ',
                                     value.value,
@@ -1620,7 +1620,7 @@ const StudentRegistration = ({ intl }, values) => {
                     </p>
                   </div>
                 )}
-                {isSuccess ? (
+                {isSuccess && !loading ? (
                   <div>
                     <h1 className="mb-2">
                       <IntlMessages id="wizard.content-thanks" />
@@ -1658,7 +1658,7 @@ const StudentRegistration = ({ intl }, values) => {
               </div>
             </Step>
           </Steps>
-          {!isSuccess && (
+          {!isSuccess && !loading && (
             <BottomNavigation
               onClickNext={onClickNext}
               onClickPrev={onClickPrev}

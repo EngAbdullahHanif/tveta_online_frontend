@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/teacher-register.61f4f2b5.chunk.js","mappings":"sKAAO,IAAMA,EAAa,CAAEC,SAAU,GAAIC,WAAY,O","sources":["config/styling.js"],"sourcesContent":["export const inputLabel = { fontSize: 16, fontWeight: 'bold' };\n"],"names":["inputLabel","fontSize","fontWeight"],"sourceRoot":""}

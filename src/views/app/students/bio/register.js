@@ -18,7 +18,6 @@ import {
 } from 'reactstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import {
-  educationalYearsOptions,
   genderOptions,
   mediumOfInstructionOptions,
   StdInteranceOptions,
@@ -45,6 +44,14 @@ import callApi from 'helpers/callApi';
 import { AuthContext } from 'context/AuthContext';
 import { message } from 'antd';
 import { inputLabel } from 'config/styling';
+import {
+  MyErrorLabel,
+  MyFormGroup,
+  MyLabel,
+  RequiredHash,
+} from 'components/form_components/form_components';
+
+import { scrollToTop } from 'helpers/Utils';
 
 const StudentRegistration = ({ intl }, values) => {
   const {
@@ -158,10 +165,7 @@ const StudentRegistration = ({ intl }, values) => {
           (op) => op.value === step1Data?.levelOfEducation.value,
         ) || [],
       preSchool: step1Data?.preSchool || '',
-      graduationYear:
-        educationalYearsOptions.find(
-          (op) => op.value === step1Data?.graduationYear.value,
-        ) || [],
+      graduationYear: step1Data?.graduationYear || '',
       schoolProvince:
         provinces.find((op) => op.value === step1Data?.schoolProvince.value) ||
         [],
@@ -180,10 +184,7 @@ const StudentRegistration = ({ intl }, values) => {
       institute:
         institutes.find((op) => op.value === step2Data?.institute.value) || [],
       class: classs.find((op) => op.value === step2Data?.class?.value) || [],
-      educationalYear:
-        educationalYearsOptions.find(
-          (op) => op.value === step2Data?.educationalYear.value,
-        ) || [],
+      educationalYear: step2Data?.educationalYear || '',
       department:
         departments.find((op) => op.value === step2Data?.department.value) ||
         [],
@@ -402,8 +403,7 @@ const StudentRegistration = ({ intl }, values) => {
             // students_status: 'active',
             gender: newFields.gender.value,
             institute: newFields.institute.value,
-            educational_year: newFields.educationalYear.label,
-            student_type: newFields.studentType.value,
+            educational_year: newFields.educationalYear,
             teaching_language: newFields.mediumOfInstruction.value,
             shift: newFields.studyTime.value,
 
@@ -446,6 +446,7 @@ const StudentRegistration = ({ intl }, values) => {
           // posting data to the server
           postStudentRecord(formData2);
         }
+        scrollToTop();
         goToNext();
         step.isDone = true;
       }
@@ -459,6 +460,7 @@ const StudentRegistration = ({ intl }, values) => {
     if (steps.indexOf(step) <= 0) {
       return;
     }
+    scrollToTop();
     goToPrev();
   };
 
@@ -514,39 +516,22 @@ const StudentRegistration = ({ intl }, values) => {
                         <Colxx xxs="6">
                           <div className="p-3">
                             {/* Name */}
-                            <FormGroup className="form-group has-float-label error-l-100 ">
-                              <Label style={inputLabel}>
+                            {/* test it for some time, if successed, use this approach in all forms */}
+                            <MyFormGroup>
+                              <MyLabel required>
                                 <IntlMessages id="forms.StdName" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
+                              </MyLabel>
                               <Field
                                 className="form-control fieldStyle"
                                 name="name1"
                                 // style={{ fontSize: '100%' }}
                               />
-                              {errors.name1 && touched.name1 ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.name1}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* lastname */}
-                            <FormGroup className="form-group has-float-label">
-                              <Label style={inputLabel}>
-                                <IntlMessages id="forms.lastName" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="lastName"
-                              />
-                              {errors.lastName && touched.lastName ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.lastName}
-                                </div>
-                              ) : null}
-                            </FormGroup>
+                              <MyErrorLabel
+                                hide={!errors.name1 || !touched.name1}
+                              >
+                                {errors.name1}
+                              </MyErrorLabel>
+                            </MyFormGroup>
 
                             {/* Father Name */}
                             <FormGroup className="form-group has-float-label error-l-100">
@@ -582,6 +567,163 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
+                            {/* Gender */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label style={inputLabel}>
+                                <IntlMessages id="gender.gender" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+                              <FormikReactSelect
+                                name="gender"
+                                id="gender"
+                                value={values.gender}
+                                options={genderOptions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                isSearchable={false}
+                              />
+                              {errors.gender && touched.gender ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.gender}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+
+                            {/* Tazkira Type */}
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label style={inputLabel}>
+                                <IntlMessages id="forms.TazkiraType" />
+                                <span style={{ color: 'red' }}>*</span>
+                              </Label>
+
+                              <FormikReactSelect
+                                name="tazkiraType"
+                                id="tazkiraType"
+                                value={values.tazkiraType}
+                                // defaultValue={}
+                                options={tazkiraOptions}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                isSearchable={false}
+                              />
+                              {errors.tazkiraType && touched.tazkiraType ? (
+                                <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
+                                  {errors.tazkiraType}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+                            {/* Tazkira Number */}
+                            {values.tazkiraType.value === 'electronic' && (
+                              <FormGroup className="form-group has-float-label error-l-100">
+                                <Label style={inputLabel}>
+                                  نمبر تذکره الکترونی
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <Field
+                                  className="form-control fieldStyle"
+                                  name="tazkiraNo"
+                                  type="text"
+                                  maxLength="14"
+                                  minLength="12"
+                                />
+                                {errors.tazkiraNo && touched.tazkiraNo ? (
+                                  <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                    {errors.tazkiraNo}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+                            )}
+
+                            {values.tazkiraType.value === 'paper' ? (
+                              <>
+                                <div>
+                                  {/* Jold Number */}
+                                  <div>
+                                    <FormGroup className="form-group has-float-label error-l-100">
+                                      <Label style={inputLabel}>
+                                        <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                                        <RequiredHash />
+                                      </Label>
+                                      <Field
+                                        className="form-control fieldStyle"
+                                        name="idCardJoldNo"
+                                        type="string"
+                                      />
+                                      {errors.idCardJoldNo &&
+                                      touched.idCardJoldNo ? (
+                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                          {errors.idCardJoldNo}
+                                        </div>
+                                      ) : null}
+                                    </FormGroup>
+                                  </div>
+                                </div>
+
+                                <div>
+                                  {/* Safha */}
+                                  <div>
+                                    <FormGroup className="form-group has-float-label error-l-100">
+                                      <Label style={inputLabel}>
+                                        <IntlMessages id="teacher.IdCardPageNoLabel" />
+                                        <RequiredHash />
+                                      </Label>
+                                      <Field
+                                        className="form-control fieldStyle"
+                                        name="idCardPageNo"
+                                        type="number"
+                                      />
+                                      {errors.idCardPageNo &&
+                                      touched.idCardPageNo ? (
+                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                          {errors.idCardPageNo}
+                                        </div>
+                                      ) : null}
+                                    </FormGroup>
+                                  </div>
+                                </div>
+                                <div>
+                                  {/* Sabt */}
+                                  <div>
+                                    <FormGroup className="form-group has-float-label error-l-100">
+                                      <Label style={inputLabel}>
+                                        شماره ثبت
+                                        <RequiredHash />
+                                      </Label>
+                                      <Field
+                                        className="form-control fieldStyle"
+                                        name="sabtNo"
+                                        type="number"
+                                      />
+                                      {errors.sabtNo && touched.sabtNo ? (
+                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                          {errors.sabtNo}
+                                        </div>
+                                      ) : null}
+                                    </FormGroup>
+                                  </div>
+                                </div>
+                                <div>
+                                  <div>
+                                    <FormGroup className="form-group has-float-label error-l-100">
+                                      <Label style={inputLabel}>
+                                        شماره صکوک
+                                        <RequiredHash />
+                                      </Label>
+                                      <Field
+                                        className="form-control fieldStyle"
+                                        name="sokokNo"
+                                        type="number"
+                                      />
+                                      {errors.sokokNo && touched.sokokNo ? (
+                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                          {errors.sokokNo}
+                                        </div>
+                                      ) : null}
+                                    </FormGroup>
+                                  </div>
+                                </div>
+                              </>
+                            ) : null}
                             {/* Father Duty */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label style={inputLabel}>
@@ -695,6 +837,21 @@ const StudentRegistration = ({ intl }, values) => {
                         </Colxx>
                         <Colxx xxs="6">
                           <div className="p-3">
+                            {/* lastname */}
+                            <FormGroup className="form-group has-float-label">
+                              <Label style={inputLabel}>
+                                <IntlMessages id="forms.lastName" />
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="lastName"
+                              />
+                              {errors.lastName && touched.lastName ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.lastName}
+                                </div>
+                              ) : null}
+                            </FormGroup>
                             {/* Student English Name */}
                             <FormGroup className="form-group has-float-label error-l-100">
                               <Label style={inputLabel}>
@@ -742,160 +899,6 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
-
-                            {/* Gender */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label style={inputLabel}>
-                                <IntlMessages id="gender.gender" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-                              <FormikReactSelect
-                                name="gender"
-                                id="gender"
-                                value={values.gender}
-                                options={genderOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                isSearchable={false}
-                              />
-                              {errors.gender && touched.gender ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.gender}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-
-                            {/* Tazkira Type */}
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label style={inputLabel}>
-                                <IntlMessages id="forms.TazkiraType" />
-                                <span style={{ color: 'red' }}>*</span>
-                              </Label>
-
-                              <FormikReactSelect
-                                name="tazkiraType"
-                                id="tazkiraType"
-                                value={values.tazkiraType}
-                                // defaultValue={}
-                                options={tazkiraOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                isSearchable={false}
-                              />
-                              {errors.tazkiraType && touched.tazkiraType ? (
-                                <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
-                                  {errors.tazkiraType}
-                                </div>
-                              ) : null}
-                            </FormGroup>
-                            {/* Tazkira Number */}
-                            {values.tazkiraType.value === 'electronic' && (
-                              <FormGroup className="form-group has-float-label error-l-100">
-                                <Label style={inputLabel}>
-                                  نمبر تذکره الکترونی
-                                  <span style={{ color: 'red' }}>*</span>
-                                </Label>
-                                <Field
-                                  className="form-control fieldStyle"
-                                  name="tazkiraNo"
-                                  type="text"
-                                  maxLength="14"
-                                  minLength="12"
-                                />
-                                {errors.tazkiraNo && touched.tazkiraNo ? (
-                                  <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                    {errors.tazkiraNo}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            )}
-
-                            {values.tazkiraType.value === 'paper' ? (
-                              <>
-                                <div>
-                                  {/* Jold Number */}
-                                  <div>
-                                    <FormGroup className="form-group has-float-label error-l-100">
-                                      <Label style={inputLabel}>
-                                        <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                      </Label>
-                                      <Field
-                                        className="form-control fieldStyle"
-                                        name="idCardJoldNo"
-                                        type="string"
-                                      />
-                                      {errors.idCardJoldNo &&
-                                      touched.idCardJoldNo ? (
-                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                          {errors.idCardJoldNo}
-                                        </div>
-                                      ) : null}
-                                    </FormGroup>
-                                  </div>
-                                </div>
-
-                                <div>
-                                  {/* Safha */}
-                                  <div>
-                                    <FormGroup className="form-group has-float-label error-l-100">
-                                      <Label style={inputLabel}>
-                                        <IntlMessages id="teacher.IdCardPageNoLabel" />
-                                      </Label>
-                                      <Field
-                                        className="form-control fieldStyle"
-                                        name="idCardPageNo"
-                                        type="number"
-                                      />
-                                      {errors.idCardPageNo &&
-                                      touched.idCardPageNo ? (
-                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                          {errors.idCardPageNo}
-                                        </div>
-                                      ) : null}
-                                    </FormGroup>
-                                  </div>
-                                </div>
-                                <div>
-                                  {/* Sabt */}
-                                  <div>
-                                    <FormGroup className="form-group has-float-label error-l-100">
-                                      <Label style={inputLabel}>
-                                        شماره ثبت
-                                      </Label>
-                                      <Field
-                                        className="form-control fieldStyle"
-                                        name="sabtNo"
-                                        type="number"
-                                      />
-                                      {errors.sabtNo && touched.sabtNo ? (
-                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                          {errors.sabtNo}
-                                        </div>
-                                      ) : null}
-                                    </FormGroup>
-                                  </div>
-                                </div>
-                                <div>
-                                  <div>
-                                    <FormGroup className="form-group has-float-label error-l-100">
-                                      <Label style={inputLabel}>
-                                        شماره صکوک
-                                      </Label>
-                                      <Field
-                                        className="form-control fieldStyle"
-                                        name="sokokNo"
-                                        type="number"
-                                      />
-                                      {errors.sokokNo && touched.sokokNo ? (
-                                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                          {errors.sokokNo}
-                                        </div>
-                                      ) : null}
-                                    </FormGroup>
-                                  </div>
-                                </div>
-                              </>
-                            ) : null}
 
                             {/* Contact No */}
                             <FormGroup className="form-group has-float-label error-l-100 ">
@@ -1128,57 +1131,9 @@ const StudentRegistration = ({ intl }, values) => {
 
                         <Row style={{ marginInline: '2%' }}>
                           <Colxx xxs="6" className="pt-3">
-                            <div className="square p-3 ">
-                              {/*School province*/}
-                              <FormGroup className="form-group has-float-label error-l-100">
-                                <Label style={inputLabel}>
-                                  <IntlMessages id="forms.StdSchoolProvinceLabel" />
-                                  <span style={{ color: 'red' }}>*</span>
-                                </Label>
-                                <FormikReactSelect
-                                  name="schoolProvince"
-                                  id="schoolProvince"
-                                  value={values.schoolProvince}
-                                  options={provinces}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                  isSearchable={true}
-                                />
-                                {errors.schoolProvince &&
-                                touched.schoolProvince ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                    {errors.schoolProvince}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                              <FormGroup className="form-group has-float-label error-l-100 ">
-                                <Label style={inputLabel}>
-                                  <IntlMessages id="forms.StdGraduationYearLabel" />
-                                  <span style={{ color: 'red' }}>*</span>
-                                </Label>
-                                <FormikReactSelect
-                                  name="graduationYear"
-                                  id="graduationYear"
-                                  value={values.graduationYear}
-                                  options={educationalYearsOptions}
-                                  onChange={setFieldValue}
-                                  onBlur={setFieldTouched}
-                                  isSearchable={false}
-                                  required
-                                />
-                                {errors.graduationYear &&
-                                touched.graduationYear ? (
-                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                    {errors.graduationYear}
-                                  </div>
-                                ) : null}
-                              </FormGroup>
-                            </div>
-                          </Colxx>{' '}
-                          <Colxx xxs="6" className="pt-3">
                             <div className="p-3">
                               {/* Education */}
-                              <FormGroup className="form-group has-float-label error-l-100 ">
+                              <FormGroup className="form-group has-float-label error-l-100">
                                 <Label style={inputLabel}>
                                   <IntlMessages id="teacher.LevelOfEducationLabel" />
                                   <span style={{ color: 'red' }}>*</span>
@@ -1200,6 +1155,41 @@ const StudentRegistration = ({ intl }, values) => {
                                 ) : null}
                               </FormGroup>
 
+                              <FormGroup className="form-group has-float-label error-l-100">
+                                <Label style={inputLabel}>
+                                  <IntlMessages id="forms.StdGraduationYearLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                {/* <FormikReactSelect
+                                  name="graduationYear"
+                                  id="graduationYear"
+                                  value={values.graduationYear}
+                                  options={educationalYearsOptions}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                  isSearchable={false}
+                                  required
+                                /> */}
+                                <Field
+                                  className="form-control fieldStyle"
+                                  name="graduationYear"
+                                  id="graduationYear"
+                                  value={values.graduationYear}
+                                  type="number"
+                                  min={1300}
+                                  max={1450}
+                                />
+                                {errors.graduationYear &&
+                                touched.graduationYear ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                    {errors.graduationYear}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+                            </div>
+                          </Colxx>
+                          <Colxx xxs="6" className="pt-3">
+                            <div className="p-3">
                               {/* Student Maktab*/}
                               <FormGroup className="form-group has-float-label error-l-100">
                                 <Label style={inputLabel}>
@@ -1213,6 +1203,29 @@ const StudentRegistration = ({ intl }, values) => {
                                 {errors.preSchool && touched.preSchool ? (
                                   <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                     {errors.preSchool}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+
+                              {/*School province*/}
+                              <FormGroup className="form-group has-float-label error-l-100">
+                                <Label style={inputLabel}>
+                                  <IntlMessages id="forms.StdSchoolProvinceLabel" />
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <FormikReactSelect
+                                  name="schoolProvince"
+                                  id="schoolProvince"
+                                  value={values.schoolProvince}
+                                  options={provinces}
+                                  onChange={setFieldValue}
+                                  onBlur={setFieldTouched}
+                                  isSearchable={true}
+                                />
+                                {errors.schoolProvince &&
+                                touched.schoolProvince ? (
+                                  <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                    {errors.schoolProvince}
                                   </div>
                                 ) : null}
                               </FormGroup>
@@ -1392,16 +1405,13 @@ const StudentRegistration = ({ intl }, values) => {
                             <FormGroup className="form-group has-float-label ">
                               <Label style={inputLabel}>
                                 <IntlMessages id="curriculum.eduactionalYearLabel" />
+                                <RequiredHash />
                               </Label>
-                              <FormikReactSelect
+
+                              <Field
+                                className="form-control fieldStyle"
                                 name="educationalYear"
-                                id="educationalYear"
-                                value={values.educationalYear}
-                                options={educationalYearsOptions}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                isSearchable={false}
-                                required
+                                type="number"
                               />
                               {errors.educationalYear &&
                               touched.educationalYear ? (

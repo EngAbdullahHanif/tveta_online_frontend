@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import IntlMessages from 'helpers/IntlMessages';
+import { EDUCATIONAL_YEAR_VALIDATOR } from '../ui/forms/validations';
 
 // Student Registrations form step one
 export const studentRegisterFormStep_1 = Yup.object().shape({
@@ -18,7 +19,7 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
   lastName: Yup.string()
-    .required(<IntlMessages id="forms.lastNameErr" />)
+    .nullable()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
@@ -157,13 +158,7 @@ export const studentRegisterFormStep_2 = Yup.object().shape({
   // graduationYear: Yup.date().required(
   //   <IntlMessages id="forms.StdGraduationYearErr" />
   // ),
-  graduationYear: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.StdGraduationYearErr" />),
-
+  graduationYear: EDUCATIONAL_YEAR_VALIDATOR,
   province: Yup.object()
     .shape({
       value: Yup.string().required(),
@@ -220,13 +215,7 @@ export const studentRegisterFormStep_3 = Yup.object().shape({
     .nullable()
     .required(<IntlMessages id="marks.ClassErr" />),
 
-  educationalYear: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.educationYearErr" />),
-
+  educationalYear: EDUCATIONAL_YEAR_VALIDATOR,
   department: Yup.object()
     .shape({
       value: Yup.string().required(),

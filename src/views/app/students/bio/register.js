@@ -1173,11 +1173,7 @@ const StudentRegistration = ({ intl }, values) => {
                                 <Field
                                   className="form-control fieldStyle"
                                   name="graduationYear"
-                                  id="graduationYear"
-                                  value={values.graduationYear}
                                   type="number"
-                                  min={1300}
-                                  max={1450}
                                 />
                                 {errors.graduationYear &&
                                 touched.graduationYear ? (

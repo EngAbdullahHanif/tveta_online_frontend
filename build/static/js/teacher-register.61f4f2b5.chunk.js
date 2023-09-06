@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunktveta_online=self.webpackChunktveta_online||[]).push([[2398],{48907:function(){},66135:function(n,t,e){e.d(t,{X:function(){return i}});var i={fontSize:16,fontWeight:"bold"}}}]);
-//# sourceMappingURL=teacher-register.61f4f2b5.chunk.js.map

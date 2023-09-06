@@ -59,7 +59,7 @@ function UsersList(props) {
                 borderStyle: 'hidden',
               }}
             >
-              <IntlMessages id="ایدی" />
+              ایدی
             </th>
             <th
               style={{
@@ -70,7 +70,7 @@ function UsersList(props) {
                 borderStyle: 'hidden',
               }}
             >
-              <IntlMessages id="نوم" />
+              نوم
             </th>
 
             <th
@@ -82,7 +82,7 @@ function UsersList(props) {
                 borderStyle: 'hidden',
               }}
             >
-              <IntlMessages id="ادرس" />
+              ادرس
             </th>
             <th
               style={{

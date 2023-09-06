@@ -297,9 +297,7 @@ const StudentProfile = () => {
                     </Row>
                     <Row className="justify-content-center   rounded ">
                       <Colxx style={{ paddingInline: '4%' }} xxs="">
-                        <Label className="data-style">
-                          <IntlMessages id="ایدی" />
-                        </Label>
+                        <Label className="data-style">"ایدی"</Label>
 
                         <h2>
                           {student[0].student_id}{' '}

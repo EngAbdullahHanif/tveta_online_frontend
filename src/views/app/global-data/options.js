@@ -867,10 +867,10 @@ export const teacherCurrentStatusOptions = [
 ];
 
 export const studentStatusOptions = [
-  { value: 'inprogress', label: <IntlMessages id="جاری" /> },
-  { value: 'dismissed', label: <IntlMessages id="منفک" /> },
-  { value: 'freeze', label: <IntlMessages id="تعجیل" /> },
-  { value: 'temporary', label: <IntlMessages id="موقت" /> },
+  { value: 'inprogress', label: 'جاری' },
+  { value: 'dismissed', label: 'منفک' },
+  { value: 'freeze', label: 'تعجیل' },
+  { value: 'temporary', label: 'موقت' },
 ];
 
 export const teacherContractStatusOptions = [

@@ -116,7 +116,7 @@ const StudentRegistration = ({ intl }, values) => {
   const [bottomNavHidden, setBottomNavHidden] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [instDepartments, setInstDepartments] = useState([]);
+  const [instDepartmentOptions, setInstDepartmentOptions] = useState([]);
   // get data of each step from localstorage
   const step0Data = JSON.parse(localStorage.getItem('step0'));
   const step1Data = JSON.parse(localStorage.getItem('step1'));
@@ -229,7 +229,7 @@ const StudentRegistration = ({ intl }, values) => {
         console.log(department_ids);
         return department_ids.has(dep.value);
       });
-      setInstDepartments(newOptions);
+      setInstDepartmentOptions(newOptions);
     });
   };
 
@@ -1284,20 +1284,35 @@ const StudentRegistration = ({ intl }, values) => {
                                 name="department"
                                 id="department"
                                 value={values.department}
-                                options={instDepartments}
+                                options={instDepartmentOptions}
                                 onChange={(name, value) => {
                                   setFieldValue(name, value);
+                                  setFieldValue('class', '');
+                                  console.log(
+                                    'selected department: ',
+                                    value.value,
+                                  );
+                                  console.log(
+                                    'institute deps: ',
+                                    instituteDeps,
+                                  );
+                                  // get selected department
+                                  const dep = instituteDeps?.find(
+                                    (d) => d.department === value.value,
+                                  );
+
+                                  console.log('departments: ', departments);
+                                  // get classes array from department
+                                  const class_ids = dep?.classes.map(
+                                    (c) => c.classs,
+                                  );
+                                  console.log('class_ids', class_ids);
+
+                                  // filter classes options from context
                                   setClassOptions(
-                                    classs.filter((c) => {
-                                      // every class whose id is present in selected department classes
-                                      const dep = instituteDeps?.find(
-                                        (dep) => dep.id === value.value,
-                                      );
-                                      console.log('--------', dep);
-                                      return dep.classes
-                                        .map((i) => i.classs)
-                                        .includes(c.value);
-                                    }),
+                                    classs.filter((c) =>
+                                      class_ids.includes(c.value),
+                                    ),
                                   );
                                 }}
                                 onBlur={setFieldTouched}

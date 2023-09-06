@@ -7,6 +7,13 @@ import {
   themeRadiusStorageKey,
 } from 'constants/defaultValues';
 
+export const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth', // Add smooth scrolling behavior
+  });
+};
+
 export const mapOrder = (array, order, key) => {
   array.sort(function (a, b) {
     const A = a[key];

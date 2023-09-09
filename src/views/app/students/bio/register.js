@@ -623,8 +623,6 @@ const StudentRegistration = ({ intl }, values) => {
                                   className="form-control fieldStyle"
                                   name="tazkiraNo"
                                   type="text"
-                                  maxLength="14"
-                                  minLength="12"
                                 />
                                 {errors.tazkiraNo && touched.tazkiraNo ? (
                                   <div className="invalid-feedback d-block  bg-danger text-white messageStyle">

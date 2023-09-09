@@ -84,6 +84,7 @@ const StudentRegistration = ({ intl }, values) => {
     dayOfBirth: '',
     gender: '',
     tazkiraNo: '',
+    kankor_id: '',
     phoneNo: '',
     email: '',
     idCardPageNo: '',
@@ -145,8 +146,9 @@ const StudentRegistration = ({ intl }, values) => {
       monthOfBirth: step0Data?.monthOfBirth || '',
       dayOfBirth: step0Data?.dayOfBirth || '',
       gender:
-        genderOptions.find((op) => op.value == step0Data?.gender.value) || [],
+        genderOptions.find((op) => op.value === step0Data?.gender.value) || [],
       tazkiraNo: step0Data?.tazkiraNo || '',
+      kankor_id: step0Data?.kankor_id || '',
       sokokNo: step0Data?.sokokNo || '',
       idCardPageNo: step0Data?.idCardPageNo || '',
       idCardJoldNo: step0Data?.idCardJoldNo || '',
@@ -368,7 +370,7 @@ const StudentRegistration = ({ intl }, values) => {
             //personal info,
             name: newFields.name1,
             student_id: newFields.studentId,
-            kankor_id: newFields.kankorId,
+            kankor_id: newFields.kankor_id,
             previous_grade_year: newFields.graduationYear.label,
             previous_school_name: newFields.preSchool,
             previous_school_province: newFields.schoolProvince.value,
@@ -1472,6 +1474,27 @@ const StudentRegistration = ({ intl }, values) => {
                                 </div>
                               ) : null}
                             </FormGroup>
+
+                            {/* Kankor Id Number */}
+                            {values.interanceType.value ===
+                              'general_kankor' && (
+                              <FormGroup className="form-group has-float-label error-l-100">
+                                <Label style={inputLabel}>
+                                  نمبر کانکور
+                                  <span style={{ color: 'red' }}>*</span>
+                                </Label>
+                                <Field
+                                  className="form-control fieldStyle"
+                                  name="kankor_id"
+                                  type="text"
+                                />
+                                {errors.kankor_id && touched.kankor_id ? (
+                                  <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                    {errors.kankor_id}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
+                            )}
 
                             {/* Upload Photo */}
                             <FormGroup className="form-group has-float-label error-l-100">

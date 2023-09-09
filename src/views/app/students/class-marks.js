@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form } from 'formik';
 import callApi from 'helpers/callApi';
 import {
@@ -16,6 +16,7 @@ import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import DisplayMessage from 'components/messages/DisplayMessage';
+import { AuthContext } from 'context/AuthContext';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -55,10 +56,11 @@ const ValidationSchema = Yup.object().shape({
 });
 
 const AllSubjectsMarks = ({ match }) => {
+  const { institutes } = useContext(AuthContext);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNext, setIsNext] = useState(true);
   const [fields, setFields] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
+  // const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -78,18 +80,18 @@ const AllSubjectsMarks = ({ match }) => {
   const [semester, setSemester] = useState();
   const [section, setSection] = useState();
 
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
+  // const fetchInstitutes = async () => {
+  //   const response = await callApi('institute/', '', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     setInstitutes(updatedData);
+  //   } else {
+  //     console.log('institute error');
+  //   }
+  // };
   const fetchFields = async () => {
     const response = await callApi('institute/field/', '', null);
     if (response.data && response.status === 200) {
@@ -115,8 +117,8 @@ const AllSubjectsMarks = ({ match }) => {
     if (response.data && response.status === 200) {
       console.log('response of department', response);
       const updatedData = await response.data.map((item) => ({
-        value: item.department.id,
-        label: item.department.name,
+        value: item.department,
+        label: item.department,
       }));
       console.log('updatedData of department', updatedData);
       setDepartments(updatedData); //Set it up when data in Backend is ready
@@ -152,7 +154,7 @@ const AllSubjectsMarks = ({ match }) => {
   };
 
   useEffect(() => {
-    fetchInstitutes();
+    // fetchInstitutes();
     fetchFields();
     fetchClasses();
     fetchSubjects();

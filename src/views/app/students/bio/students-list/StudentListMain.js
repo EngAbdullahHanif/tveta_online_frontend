@@ -17,20 +17,16 @@ const columns = [
   {
     title: 'نمبر اساس',
     dataIndex: 'student_id',
-    // sorter: (a, b) => a.student_id - b.student_id,
     width: '5%',
   },
   {
     title: 'تذکره',
     dataIndex: 'registration_number',
-    // sorter: (a, b) => a.student_id - b.student_id,
-    width: '5%',
+    width: '15%',
   },
   {
     title: 'نوم/نام',
     dataIndex: 'name',
-    // sorter: (a, b) => a.name - b.name,
-    // render: (name) => `${name.first} ${name.last}`,
     width: '15%',
   },
   {
@@ -41,28 +37,23 @@ const columns = [
   {
     title: 'جنسیت',
     dataIndex: 'gender',
-    // filters: [
-    //   { text: 'Male', value: 'male' },
-    //   { text: 'Female', value: 'female' },
-    // ],
-    // onFilter: (value, record) => record.gender.indexOf(value) === 0,
-    width: '10%',
+    width: '8%',
   },
 
   {
     title: 'ولایت',
     dataIndex: 'province',
-    width: '10%',
+    width: '8%',
   },
   {
     title: 'تلفون شمیره',
     dataIndex: 'phone_number',
-    width: '20%',
+    width: '10%',
   },
   {
     title: 'شمولیت انستیتوت',
     dataIndex: 'institute_enrollment',
-    width: '20%',
+    width: '17%',
   },
   {
     title: 'حالت',

@@ -1,6 +1,6 @@
 // this compoenent is used to show the list of students whose marks have been uploaded and verified, but students upgraded/degraded class has not been assigned yet
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form } from 'formik';
 import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
@@ -19,6 +19,7 @@ import { NotificationManager } from 'components/common/react-notifications';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { AuthContext } from 'context/AuthContext';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -68,11 +69,12 @@ const submitInitialValues = {
 };
 
 const SubjectMarksVerification = ({ match }) => {
+  const { institutes } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(false);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [fields, setFields] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
+  // const [institutes, setInstitutes] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -110,18 +112,18 @@ const SubjectMarksVerification = ({ match }) => {
   //     }, []);
   //   }
 
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
+  // const fetchInstitutes = async () => {
+  //   const response = await callApi('institute/', '', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     setInstitutes(updatedData);
+  //   } else {
+  //     console.log('institute error');
+  //   }
+  // };
 
   const fetchDepartments = async (instituteId) => {
     if (!instituteId || !instituteId.value) {
@@ -179,7 +181,7 @@ const SubjectMarksVerification = ({ match }) => {
   };
 
   useEffect(() => {
-    fetchInstitutes();
+    // fetchInstitutes();
     fetchClasses();
     fetchSubjects();
   }, []);

@@ -582,6 +582,11 @@ const menuItems = [
         label: 'menu.teacher-evaluation',
         to: `${adminRoot}/evaluations/teacher-evalaution`,
       },
+      // {
+      //   icon: 'MD.MdAddBox',
+      //   label: 'menu.teacher-evaluation',
+      //   to: `${adminRoot}/evaluations/teacher-selection`,
+      // },
       {
         icon: 'MD.MdAddBox',
         label: 'menu.teacher-promotion-demotion',

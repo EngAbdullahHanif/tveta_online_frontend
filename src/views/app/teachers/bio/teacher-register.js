@@ -27,32 +27,7 @@ import { inputLabel } from 'config/styling';
 const TeacherRegister = ({ intl }, values) => {
   // why used seperate states for each field?
   const { provinces, districts } = useContext(AuthContext);
-  const [initialName, setInitialName] = useState('');
-  const [initiallast_name, setInitiallast_name] = useState('');
-  const [initialenglish_name, setInitialenglish_name] = useState('');
-  const [initialenglish_last_name, setInitialenglish_last_name] = useState('');
-  const [initialenglish_father_name, setInitialenglish_father_name] =
-    useState('');
-  const [initialfather_name, setInitialfather_name] = useState('');
-  const [initialGender, setInitialGender] = useState([]);
-  const [initialGrandfather_name, setInitialGrandfather_name] = useState('');
-  const [initialregistration_number, setInitialregistration_number] =
-    useState('');
-  const [initialphone_number, setInitialphone_number] = useState('');
-  const [year_of_birth, setyear_of_birth] = useState([]);
-  const [initialplace_of_birth, setInitialplace_of_birth] = useState('');
-  const [initialEmail, setInitialEmail] = useState('');
-  const [initialpage_number, setInitialpage_number] = useState('');
-  const [initialcover_number, setInitialcover_number] = useState('');
-  const [initialStatus, setinitialStatus] = useState([]);
-  const [initialGrade, setInitialGrade] = useState([]);
-  const [initialStep, setInitialStep] = useState([]);
-  const [initialcurrent_province, setInitialcurrent_province] = useState([]);
-  const [initialcurrent_district, setInitialcurrent_district] = useState([]);
-  const [initialcurrent_village, setInitialcurrent_village] = useState('');
-  const [initialmain_province, setInitialmain_province] = useState([]);
-  const [initialmain_district, setInitialmain_district] = useState([]);
-  const [initialmain_village, setInitialmain_village] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdateForm, setIsUpdateForm] = useState(false);
 
@@ -75,7 +50,7 @@ const TeacherRegister = ({ intl }, values) => {
     idCardPageNo: '',
     sabtNo: '',
     idCardJoldNo: '',
-    tazkiraType: tazkiraOptions[0],
+    tazkiraType: tazkiraOptions[0] || [],
     sokokNo: '',
     grade: [],
     step: [],
@@ -105,7 +80,6 @@ const TeacherRegister = ({ intl }, values) => {
         initialUpdateValues.year_of_birth = teacherBirth;
       }
     });
-
     gradeOptions.forEach((teacherGrade) => {
       if (teacherGrade.value === data.grade) {
         initialUpdateValues.grade = teacherGrade;
@@ -158,8 +132,8 @@ const TeacherRegister = ({ intl }, values) => {
   useEffect(() => {
     if (teacherId) {
       setIsUpdateForm(true);
+      fetchTeacher();
     }
-    fetchTeacher();
   }, [teacherId]);
 
   const createNotification = (type, className) => {
@@ -194,12 +168,11 @@ const TeacherRegister = ({ intl }, values) => {
   };
 
   const RegisterTeacher = async (newFields) => {
-    // setIsLoading(true);
+    setIsLoading(true);
     let apiParams = {
       endPoint: 'teachers/',
       method: 'POST',
     };
-
     if (isUpdateForm && teacherId) {
       apiParams.endPoint = `teachers/${teacherId}/`;
       apiParams.method = 'PATCH';
@@ -241,6 +214,7 @@ const TeacherRegister = ({ intl }, values) => {
         data,
       );
       message.success('استاد ثبت شو');
+      setIsLoading(false);
       // nagivate back to teacher profile
       history.push(`/app/teachers/teacher/${response.data.id}`);
     } catch (error) {
@@ -253,7 +227,7 @@ const TeacherRegister = ({ intl }, values) => {
       message.error('استاد ثبت نشو/استاد ثبت نشد');
       return true;
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
       // return false;
     }
   };
@@ -346,7 +320,6 @@ const TeacherRegister = ({ intl }, values) => {
                         name="tazkiraType"
                         id="tazkiraType"
                         value={values.tazkiraType}
-                        // defaultValue={}
                         options={tazkiraOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
@@ -359,26 +332,33 @@ const TeacherRegister = ({ intl }, values) => {
                       ) : null}
                     </FormGroup>
                     {/* Tazkira Number */}
-                    {values.tazkiraType?.value === 'electronic' && (
-                      <FormGroup className="form-group has-float-label error-l-100">
-                        <Label style={inputLabel}>
-                          نمبر تذکره الکترونی
-                          <span style={{ color: 'red' }}>*</span>
-                        </Label>
-                        <Field
-                          className="form-control fieldStyle"
-                          name="tazkiraNo"
-                          type="text"
-                          maxLength="14"
-                          minLength="12"
-                        />
-                        {errors.tazkiraNo && touched.tazkiraNo ? (
-                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                            {errors.tazkiraNo}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-                    )}
+
+                    {/* {values.tazkiraType?.value === 'electronic' && ( */}
+                    <FormGroup className="form-group has-float-label error-l-100">
+                      {/* {alert(values.tazkiraType?.value === 'electronic')} */}
+                      {values.tazkiraType?.value === 'electronic' ? (
+                        <>
+                          <Label style={inputLabel}>
+                            نمبر تذکره الکترونی
+                            <span style={{ color: 'red' }}>*</span>
+                          </Label>
+                          <Field
+                            className="form-control fieldStyle"
+                            name="tazkiraNo"
+                            value={values.tazkiraNo}
+                            type="text"
+                            maxLength="14"
+                            minLength="12"
+                          />
+                          {errors.tazkiraNo && touched.tazkiraNo ? (
+                            <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                              {errors.tazkiraNo}
+                            </div>
+                          ) : null}
+                        </>
+                      ) : null}
+                    </FormGroup>
+                    {/* )} */}
 
                     {values.tazkiraType?.value === 'paper' ? (
                       <>
@@ -738,7 +718,7 @@ const TeacherRegister = ({ intl }, values) => {
                           value={values.main_province}
                           options={provinces}
                           onChange={(name, value) => {
-                            setFieldValue('main_district', '');
+                            setFieldValue('main_district', []);
                             setFieldValue(name, value);
                           }}
                           onBlur={setFieldTouched}
@@ -809,7 +789,7 @@ const TeacherRegister = ({ intl }, values) => {
                           value={values.current_province}
                           options={provinces}
                           onChange={(name, value) => {
-                            setFieldValue('current_district', '');
+                            setFieldValue('current_district', []);
                             setFieldValue(name, value);
                           }}
                           onBlur={setFieldTouched}

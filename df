@@ -1,0 +1,260 @@
+[33mcommit e3c2a6d0481386ba2fd87b53284b90c2bd33fcbd[m[33m ([m[1;36mHEAD -> [m[1;32mdevelopment[m[33m, [m[1;31morigin/development[m[33m)[m
+Author: Suhaib Qanooni <suhaibqanooni2000@gmail.com>
+Date:   Tue Sep 5 10:26:01 2023 +0430
+
+    Eslint error resolved
+
+[33mcommit 9f093456e77bed005bdd807645920ca6c1e1b4b4[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Mon Sep 4 12:02:05 2023 +0430
+
+    fix issues
+
+[33mcommit a8eeec090690e7fdba1cd2d5891583089d264ed5[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Mon Sep 4 09:32:52 2023 +0430
+
+    fix issues after upgrade
+
+[33mcommit e9fe43dafe5d4a7b898d9020949bfcc6975a66ce[m
+Merge: dd134ed 4450ce3
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Sun Sep 3 14:21:13 2023 +0430
+
+    setup eslint
+
+[33mcommit dd134ed866425db98ccf80a89edcd3fbb0cb3f28[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Sun Sep 3 13:18:18 2023 +0430
+
+    add eslint configs
+
+[33mcommit 4450ce3d8a1ab93c2185fa894463486839f6d69d[m
+Merge: 103a828 79bd375
+Author: Suhaib Qanooni <suhaibqanooni2000@gmail.com>
+Date:   Sun Sep 3 09:48:42 2023 +0430
+
+    design and fonts issue resolved
+
+[33mcommit 103a82896245dab9f85e859e535fd9b96aa0608c[m
+Author: Suhaib Qanooni <suhaibqanooni2000@gmail.com>
+Date:   Sun Sep 3 09:45:45 2023 +0430
+
+    design and fonts issue resolved
+
+[33mcommit 60dbd7256d794610313577f4a726849750410a38[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Sat Sep 2 12:26:25 2023 +0430
+
+    fixes
+
+[33mcommit 79bd375a6372cf2b4c3c4f232fb0a8feedebf7e9[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Sat Sep 2 10:54:08 2023 +0430
+
+    cleanup again
+
+[33mcommit efee56715e557e924f37ce547f04eecf981bf601[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Thu Aug 31 12:51:39 2023 +0430
+
+    cleanup
+
+[33mcommit bb451454c35a33858386836bcfe7cf54b59b2039[m[33m ([m[1;31morigin/production[m[33m)[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Wed Aug 30 16:56:40 2023 +0430
+
+    build version 0.1.5
+
+[33mcommit 7b87ac7a7db2199b870e074b833742b6119ed798[m
+Merge: cce438b 1a07a5f
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Wed Aug 30 16:38:48 2023 +0430
+
+    merge development
+
+[33mcommit 1a07a5f6a4c9394b8e22314481adacf757d795ec[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Wed Aug 30 16:37:32 2023 +0430
+
+    fixes with institute list and register
+
+[33mcommit 770776e03fc38bf71a3df7480528c09de0dfd916[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Wed Aug 30 13:43:53 2023 +0430
+
+    fix issue with institute update
+
+[33mcommit 98488a2358f2ec4cc8f7b58fd45a6734f53bfd7b[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Wed Aug 30 11:28:31 2023 +0430
+
+    development ip and add strict mode to app
+
+[33mcommit cce438bfc8ea62101e6ede1f456e280ca40f8a0b[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Wed Aug 30 11:00:51 2023 +0430
+
+    add institute list request to try-catch
+
+[33mcommit fd38349f9252857a85983812017ebc4d5b74ed01[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 16:28:10 2023 +0430
+
+    build to fix institute registration issue
+
+[33mcommit d42f176bd7dce101a2fbc5fcb99806fa303535d7[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 16:23:56 2023 +0430
+
+    fix issue with institute registration
+
+[33mcommit dc6dfc0855305ad07d777c53925ce56b4d94461d[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 15:45:59 2023 +0430
+
+    fix url from callAPi
+
+[33mcommit 9d4f9de805a2373bfcae1b3d822174ee3325ba1a[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 15:38:41 2023 +0430
+
+    build version v0.1.4
+
+[33mcommit 4adb413d81229a1759e448452e09b7e87de1c5a3[m
+Merge: 6a53efc 1150d24
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 15:34:32 2023 +0430
+
+    Merge branch 'development' into production
+
+[33mcommit 1150d24f216f2950b2ca5936760b48ca591bf531[m
+Merge: c8be706 e148bcb
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 15:34:21 2023 +0430
+
+    Merge branch 'development' of github.com:EngAbdullahHanif/tveta_online_frontend into development
+
+[33mcommit e148bcbf2fe2af80189ddc2601544fceff5ff763[m
+Author: Suhaib Qanooni <suhaibqanooni2000@gmail.com>
+Date:   Tue Aug 29 15:32:35 2023 +0430
+
+    Institute register and validation on code resolved
+
+[33mcommit 6a53efc6f21716516ba5f988d09751db0d9b77d8[m
+Merge: 0025859 c8be706
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 15:24:47 2023 +0430
+
+    Merge branch 'development' into production
+
+[33mcommit c8be7068d653d07050b2ccb42c636e9327ef3aae[m
+Merge: db217a4 9b3399a
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 15:24:25 2023 +0430
+
+    Merge branch 'development' of github.com:EngAbdullahHanif/tveta_online_frontend into development
+
+[33mcommit 0025859628894cb2a1e47a74c8ab008d070ed877[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 15:24:10 2023 +0430
+
+    service path
+
+[33mcommit 9b3399a59aa194b4968077f06faa519ffeabd45c[m
+Author: Suhaib Qanooni <suhaibqanooni2000@gmail.com>
+Date:   Tue Aug 29 15:21:54 2023 +0430
+
+    Institute register and validation on code resolved
+
+[33mcommit 16b71dc1a7d4425cfe397b6ff882e9dc1d63a45c[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 12:05:09 2023 +0430
+
+    build version 0.1.3 fix issue with sidebar
+
+[33mcommit 2f99e7e4659bae0cc4c6134128c849d586a18d0c[m
+Merge: 5c4caa0 db217a4
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 12:00:49 2023 +0430
+
+    Merge branch 'development' into production
+
+[33mcommit db217a4df87adea17552c2144c4776a0f905da2a[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 12:00:34 2023 +0430
+
+    fix issue with sidebar
+
+[33mcommit 983fdc76028e1df8a581df8dd703cc8c88a133fb[m
+Merge: 3f6c0db 2747a5e
+Author: Suhaib Qanooni <suhaibqanooni2000@gmail.com>
+Date:   Tue Aug 29 11:49:02 2023 +0430
+
+    Merge branch 'development' of https://github.com/EngAbdullahHanif/tveta_online_frontend into development
+
+[33mcommit 3f6c0db3b2bb7a8e07b11530e1bcac918f6990c8[m
+Author: Suhaib Qanooni <suhaibqanooni2000@gmail.com>
+Date:   Tue Aug 29 11:45:51 2023 +0430
+
+    code aligned
+
+[33mcommit 2747a5e950f661f70099da4803df2767eea39fb6[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 11:42:07 2023 +0430
+
+    fix labels in class register
+
+[33mcommit 5c4caa0f18c2346002de87c7930e94695daf68eb[m
+Merge: f7ec201 e326616
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 10:56:19 2023 +0430
+
+    buid version 0.1.2
+
+[33mcommit e326616dda5cb279c1daf66b5f8fcb245351f0e9[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 10:50:44 2023 +0430
+
+    add tester
+
+[33mcommit f7ec201749bdfa20c3763ce26a71141feceec232[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 09:54:43 2023 +0430
+
+    build version 0.1.1
+
+[33mcommit d01ecc16e14203f2b30f298598474494dac3c46e[m
+Merge: c32588d 435c07b
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 09:48:39 2023 +0430
+
+    Merge branch 'development' into production
+
+[33mcommit 435c07ba7fab79b405f6f3f376e1a57118b686fb[m
+Merge: a140ef2 b60def4
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 09:48:05 2023 +0430
+
+    Merge branch 'development' of github.com:EngAbdullahHanif/tveta_online_frontend into development
+
+[33mcommit a140ef26aa30929d957eba2d183f3e61dc94d756[m
+Author: sartaj Ahmad <sartajahmad1529@gmail.com>
+Date:   Tue Aug 29 09:47:56 2023 +0430
+
+    fix: send real student_type value in request
+
+[33mcommit b60def4c6ef01c8ffd015050aaf46d9861b943dc[m
+Merge: 6f9bafa 581e9ae
+Author: Suhaib Qanooni <suhaibqanooni2000@gmail.com>
+Date:   Tue Aug 29 09:34:29 2023 +0430
+
+    Merge branch 'development' of https://github.com/EngAbdullahHanif/tveta_online_frontend into development
+
+[33mcommit 6f9bafa12b270bfbba888a931eeb27c1be881081[m
+Author: Suhaib Qanooni <suhaibqanooni2000@gmail.com>
+Date:   Tue Aug 29 09:33:03 2023 +0430
+
+    teacher list filters and language conflict resolved
+
+[33mcommit 581e9ae7ef156690b0949b4c

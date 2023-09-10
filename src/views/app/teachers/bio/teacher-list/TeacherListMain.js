@@ -1,24 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { Table as TB } from 'antd';
-import IntlMessages from 'helpers/IntlMessages';
+// import { Table as TB } from 'antd';
+// import IntlMessages from 'helpers/IntlMessages';
 import './list.css';
 import callApi from 'helpers/callApi';
-import { Field, Formik } from 'formik';
-import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+// import { Field, Formik } from 'formik';
+// import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
-import {
-  genderOptions,
-  gradeOptions,
-  instituteStatusOptions,
-  teacherCurrentStatusOptions,
-} from '../../../global-data/options';
+// import {
+//   genderOptions,
+//   gradeOptions,
+//   instituteStatusOptions,
+//   teacherCurrentStatusOptions,
+// } from '../../../global-data/options';
 import useMousetrap from 'hooks/use-mousetrap';
-import { Badge } from 'reactstrap';
+// import { Badge } from 'reactstrap';
 
-import { NavLink } from 'react-router-dom';
-import { BsPencilSquare } from 'react-icons/bs';
+// import { NavLink } from 'react-router-dom';
+// import { BsPencilSquare } from 'react-icons/bs';
 import { AuthContext } from 'context/AuthContext';
+import TeacherList from '../../Components/TeacherList';
+
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i][prop] === value) {
@@ -40,12 +42,7 @@ const ThumbListPages = ({ match }) => {
     },
   });
 
-  const provincesOptionsForList = provinces.map((province) => ({
-    column: province.value,
-    label: province.label,
-  }));
   const [isLoaded, setIsLoaded] = useState(false);
-  const [displayMode, setDisplayMode] = useState('thumblist');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedGenderOption, setSelectedGenderOption] = useState({
@@ -62,17 +59,9 @@ const ThumbListPages = ({ match }) => {
       label: 'سطح تحصیلی',
     });
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [totalItemCount, setTotalItemCount] = useState(0);
-  const [totalPage, setTotalPage] = useState(1);
-  const [teacherId, setTeacherId] = useState('');
-  const [province, setProvince] = useState('');
-  const [district, setDistrict] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
-  const [rest, setRest] = useState(0);
-  const [institute, setInstitute] = useState('');
   const [instituteTeachers, setInstituteTeachers] = useState([]);
   const [isFilter, setIsFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -240,41 +229,6 @@ const ThumbListPages = ({ match }) => {
     fetchData();
   }, [!isFilter ? JSON.stringify(tableParams) : null]);
 
-  const onCheckItem = (event, id) => {
-    if (
-      event.target.tagName === 'A' ||
-      (event.target.parentElement && event.target.parentElement.tagName === 'A')
-    ) {
-      return true;
-    }
-    if (lastChecked === null) {
-      setLastChecked(id);
-    }
-
-    let selectedList = [...selectedItems];
-    if (selectedList.includes(id)) {
-      selectedList = selectedList.filter((x) => x !== id);
-    } else {
-      selectedList.push(id);
-    }
-    setSelectedItems(selectedList);
-
-    if (event.shiftKey) {
-      let newItems = [...items];
-      const start = getIndex(id, newItems, 'id');
-      const end = getIndex(lastChecked, newItems, 'id');
-      newItems = newItems.slice(Math.min(start, end), Math.max(start, end) + 1);
-      selectedItems.push(
-        ...newItems.map((item) => {
-          return item.id;
-        }),
-      );
-      selectedList = Array.from(new Set(selectedItems));
-      setSelectedItems(selectedList);
-    }
-    document.activeElement.blur();
-    return false;
-  };
   const handleChangeSelectAll = (isToggle) => {
     if (selectedItems.length >= items.length) {
       if (isToggle) {
@@ -287,19 +241,6 @@ const ThumbListPages = ({ match }) => {
     return false;
   };
 
-  const onContextMenuClick = (e, data) => {
-    // params : (e,data,target)
-  };
-
-  const onContextMenu = (e, data) => {
-    const clickedProductId = data.data;
-    if (!selectedItems.includes(clickedProductId)) {
-      setSelectedItems([clickedProductId]);
-    }
-
-    return true;
-  };
-
   useMousetrap(['ctrl+a', 'command+a'], () => {
     handleChangeSelectAll(false);
   });
@@ -309,185 +250,13 @@ const ThumbListPages = ({ match }) => {
     return false;
   });
 
-  const startIndex = (currentPage - 1) * selectedPageSize;
-  const endIndex = currentPage * selectedPageSize;
-
   return !isLoaded ? (
     <div className="loading" />
   ) : (
     <>
       <div className="disable-text-selection">
         <h1>د استاد لست/ لست استادان</h1>
-        {/* <ListPageHeading
-          heading="د استاد لست/ لست استادان"
-          displayMode={displayMode}
-          changeDisplayMode={setDisplayMode}
-          handleChangeSelectAll={handleChangeSelectAll}
-          changeGenderBy={(column) => {
-            setSelectedGenderOption(
-              genderOptionsForList.find((x) => x.value === column)
-            );
-          }}
-          changeProvinceBy={(column) => {
-            setSelectedProvinceOption(
-              provincesOptionsForList.find((x) => x.column === column)
-            );
-          }}
-          selectedGenderOption={selectedGenderOption}
-          selectedProvinceOption={selectedProvinceOption}
-          selectLevelOfEducationOption={selectLevelOfEducationOption}
-          genderOptionsForList={genderOptionsForList}
-          provincesOptionsForList={provincesOptionsForList}
-          changePageSize={setSelectedPageSize}
-          selectedPageSize={selectedPageSize}
-          totalItemCount={totalItemCount}
-          match={match}
-          startIndex={startIndex}
-          endIndex={endIndex}
-          selectedItemsLength={selectedItems ? selectedItems.length : 0}
-          itemsLength={items ? items.length : 0}
-          onIdSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setTeacherId(e.target.value.toLowerCase());
-            }
-          }}
-          onProvinceSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setProvince(e.target.value.toLowerCase());
-            }
-          }}
-          onDistrictSearchKey={(e) => {
-            if (e.key === 'Enter') {
-              setDistrict(e.target.value.toLowerCase());
-            }
-          }}
-          // Level of Education
-          changeLevelOfEducationBy={(column) => {
-            setSelectLevelOfEducationOption(
-              levelOfEdcationForList.find((x) => x.column === column)
-            );
-          }}
-          levelOfEdcationForList={levelOfEdcationForList}
-          onResetClick={setRest}
-          reset={rest}
-          pageSizes={pageSizes}
-          toggleModal={() => setModalOpen(!modalOpen)}
-          institutes={institutes}
-          onInstituteSelect={setInstitute}
-        /> */}
-        {/* <table className="table">
-          <thead
-            style={{ maxHeight: '55px ' }}
-            className="pl-2 d-flex flex-grow-1  table-dark"
-          >
-            <tr className="card-body align-self-center d-flex flex-lg-row align-items-lg-center">
-              <th
-                className=""
-                style={{
-                  width: '110px',
-                  paddingInline: '0%',
-                  textAlign: 'right',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                <IntlMessages id="marks.No" />
-              </th>
-              <th
-                className="header-responsiveness"
-                style={{
-                  width: '170px',
-                  paddingInline: '0%',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                <IntlMessages id="forms.StdName" />
-              </th>
-              <th
-                className="header-responsiveness"
-                style={{
-                  width: '170px',
-                  paddingInline: '0%',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                <IntlMessages id="forms.StdFatherName" />
-              </th>
-              <th
-                className="header-responsiveness1 "
-                style={{
-                  width: '110px',
-                  paddingInline: '0%',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                {' '}
-                <IntlMessages id="teacher.GradeLabel" />
-              </th>
-              <th
-                className="header-responsiveness2 "
-                style={{
-                  width: '110px',
-                  paddingInline: '0%',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                {' '}
-                <IntlMessages id="teacher.Step" />
-              </th>
-              <th
-                className="header-responsiveness3 "
-                style={{
-                  width: '170px',
-                  paddingInline: '0%',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                {' '}
-                <IntlMessages id="teacher.LevelOfEducationList" />
-              </th>
-              <th
-                className="header-responsiveness4 "
-                style={{
-                  width: '170px',
-                  paddingInline: '0%',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                <IntlMessages id="teacher-list.MajorLabel" />
-              </th>
-              <th
-                className="header-responsiveness4 "
-                style={{
-                  width: '100px',
-                  paddingInline: '0%',
-                  borderStyle: 'hidden',
-                  fontSize: '20px',
-                }}
-              >
-                <IntlMessages id="teacher.status" />
-              </th>
-            </tr>
-          </thead>
-          <ListPageListing
-            items={items}
-            displayMode={displayMode}
-            selectedItems={selectedItems}
-            onCheckItem={onCheckItem}
-            currentPage={currentPage}
-            totalPage={totalPage}
-            onContextMenuClick={onContextMenuClick}
-            onContextMenu={onContextMenu}
-            onChangePage={setCurrentPage}
-          />
-        </table> */}
-        <div
+        {/* <div
           style={{
             padding: 10,
             display: 'flex',
@@ -615,6 +384,15 @@ const ThumbListPages = ({ match }) => {
               </NavLink>
             ),
           }))}
+        /> */}
+        <TeacherList
+          onFilter={onFilter}
+          handleResetFields={handleResetFields}
+          handleTableChange={handleTableChange}
+          data={items}
+          columns={columns}
+          isLoading={isLoading}
+          teacherLink={`teacher/`}
         />
       </div>
     </>

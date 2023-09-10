@@ -2,6 +2,7 @@ import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 import { userRole } from 'constants/defaultValues';
+import TeacherSelection from './teacher-selection';
 
 const EvaluationList = React.lazy(() =>
   import(
@@ -35,8 +36,15 @@ const Evaluations = ({ match, props }) => (
       />
       <ProtectedRoute
         exact
-        path={`${match.url}/teacher-evalaution`}
+        path={`${match.url}/teacher-evalaution/:teacherId`}
         component={TeacherEvaluation}
+        roles={[userRole.superUser, userRole.authenticated]}
+        props={props}
+      />
+      <ProtectedRoute
+        exact
+        path={`${match.url}/teacher-evalaution`}
+        component={TeacherSelection}
         roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />

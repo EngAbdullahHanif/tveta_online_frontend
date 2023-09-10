@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { evaluationTypeOptions } from '../global-data/options';
 
@@ -11,6 +11,8 @@ import { gradeOptions } from '../global-data/options';
 import { stepOptions } from '../global-data/options';
 
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { inputLabel } from 'config/styling';
+import { AuthContext } from 'context/AuthContext';
 
 const SignupSchema = Yup.object().shape({
   teacherId: Yup.object()
@@ -63,6 +65,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 const TeacherEvaluation = () => {
+  const { institutes } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(false);
   const initialValues = {
     teacherId: [],
@@ -104,7 +107,7 @@ const TeacherEvaluation = () => {
                     <Colxx xxs="5">
                       {/* Teacher Id */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.IdLabel" />
                         </Label>
                         <FormikReactSelect
@@ -124,7 +127,7 @@ const TeacherEvaluation = () => {
 
                       {/* Achieved Marks */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.marksLabel" />
                         </Label>
                         <Field
@@ -140,7 +143,7 @@ const TeacherEvaluation = () => {
                       </FormGroup>
                       {/* Current Grade */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.curretGradeLabel" />
                         </Label>
                         <FormikReactSelect
@@ -160,7 +163,7 @@ const TeacherEvaluation = () => {
 
                       {/* New Grade */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.newGradeLabel" />
                         </Label>
                         <FormikReactSelect
@@ -182,14 +185,14 @@ const TeacherEvaluation = () => {
                     <Colxx xxs="5">
                       {/* ّInstitute ID*/}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.InstituteIdLabel" />
                         </Label>
                         <FormikReactSelect
                           name="institute"
                           id="institute"
                           value={values.institute}
-                          options={evaluationTypeOptions}
+                          options={institutes}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           required
@@ -203,7 +206,7 @@ const TeacherEvaluation = () => {
 
                       {/* Evalualtion Date */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.evaluationDateLabel" />
                         </Label>
                         <Field
@@ -220,7 +223,7 @@ const TeacherEvaluation = () => {
 
                       {/* current Step */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.currentStepLabel" />
                         </Label>
                         <FormikReactSelect
@@ -241,7 +244,7 @@ const TeacherEvaluation = () => {
 
                       {/* New Step */}
                       <FormGroup className="form-group has-float-label">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.newStepLabel" />
                         </Label>
                         <FormikReactSelect

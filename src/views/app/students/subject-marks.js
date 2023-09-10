@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, isEmptyArray } from 'formik';
 import './style.css';
 import callApi from 'helpers/callApi';
@@ -14,6 +14,7 @@ import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
+import { AuthContext } from 'context/AuthContext';
 
 const orderOptions = [
   { column: 'title', label: 'Product Name' },
@@ -81,10 +82,11 @@ const initialValues = {
   subject: [],
 };
 const MarksDisplay = ({ match }) => {
+  const { institutes } = useContext(AuthContext);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNext, setIsNext] = useState(false);
   const [fields, setFields] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
+  // const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -113,18 +115,18 @@ const MarksDisplay = ({ match }) => {
     }
   }, [selectedClass]);
 
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
+  // const fetchInstitutes = async () => {
+  //   const response = await callApi('institute/', '', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     setInstitutes(updatedData);
+  //   } else {
+  //     console.log('institute error');
+  //   }
+  // };
 
   const fetchFields = async () => {
     const response = await callApi('institute/field/', '', null);
@@ -152,8 +154,8 @@ const MarksDisplay = ({ match }) => {
     if (response.data && response.status === 200) {
       console.log('response of department', response);
       const updatedData = await response.data.map((item) => ({
-        value: item.department.id,
-        label: item.department.name,
+        value: item.department,
+        label: item.department,
       }));
       console.log('updatedData of department', updatedData);
       setDepartments(updatedData); //Set it up when data in Backend is ready
@@ -190,7 +192,7 @@ const MarksDisplay = ({ match }) => {
   };
 
   useEffect(() => {
-    fetchInstitutes();
+    // fetchInstitutes();
     fetchFields();
     fetchClasses();
     fetchSubjects();

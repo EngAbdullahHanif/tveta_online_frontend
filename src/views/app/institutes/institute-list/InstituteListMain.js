@@ -25,7 +25,7 @@ const ThumbListPages = ({ match }) => {
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
-      pageSize: 5,
+      pageSize: 10,
     },
   });
   const [isLoading, setIsLoading] = useState(false);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -16,6 +16,7 @@ import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
 import DismissedStudents from './dismissed-student-list/DismissedListMain';
 import config from '../../../../config';
+import { AuthContext } from 'context/AuthContext';
 const servicePath = config.API_URL;
 const studentApi = `${servicePath}/api`;
 const dismissedStudentsAPI = `${servicePath}/api/student_institutes`;
@@ -47,8 +48,9 @@ const initialValues = {
   educationalYear: [],
 };
 const MarksRegistration = ({ match }) => {
+  const { institutes } = useContext(AuthContext);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [institutes, setInstitutes] = useState([]);
+  // const [institutes, setInstitutes] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState('');
   const [selectedEducationalYear, setSelectedEducationalYear] = useState([]);
   const [dismissedStudents, setDismissedStudents] = useState([]);
@@ -77,21 +79,21 @@ const MarksRegistration = ({ match }) => {
   }, []);
 
   // fetch institute lists
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
-  useEffect(() => {
-    fetchInstitutes();
-  }, []);
+  // const fetchInstitutes = async () => {
+  //   const response = await callApi('institute/all', '', null);
+  //   if (response?.data && response?.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     setInstitutes(updatedData);
+  //   } else {
+  //     console.log('institute error');
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchInstitutes();
+  // }, []);
 
   const fetchDismissedStudents = async (values) => {
     const response = await callApi(

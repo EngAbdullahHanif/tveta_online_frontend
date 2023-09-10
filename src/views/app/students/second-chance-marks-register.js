@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field, isEmptyArray } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -17,62 +17,7 @@ import { NotificationManager } from 'components/common/react-notifications';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-
-import config from '../../../config';
-
-const servicePath = config.API_URL;
-const studentApi = `${servicePath}/api`;
-// http://localhost:8000/api/?student_id=1232
-
-const LevelOfEdcationOptions = [
-  { value: '1', label: 'اصلی' },
-  { value: '2', label: 'فرعی' },
-];
-
-const FieldOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
-
-const SemesterOptions = [
-  { value: '1', label: <IntlMessages id="marks.SemesterOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SemesterOption_2" /> },
-  // { value: '3', label: <IntlMessages id="marks.SemesterOption_3" /> },
-  //   { value: '4', label: <IntlMessages id="marks.SemesterOption_4" /> },
-];
-
-const SectionOptions = [
-  { value: '1', label: <IntlMessages id="marks.SectionOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.SectionOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.SectionOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.SectionOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.SectionOption_5" /> },
-];
-
-const ClassOptions = [
-  { value: '1', label: <IntlMessages id="marks.ClassOption_1" /> },
-  { value: '2', label: <IntlMessages id="marks.ClassOption_2" /> },
-  { value: '3', label: <IntlMessages id="marks.ClassOption_3" /> },
-  { value: '4', label: <IntlMessages id="marks.ClassOption_4" /> },
-  { value: '5', label: <IntlMessages id="marks.ClassOption_5" /> },
-  { value: '6', label: <IntlMessages id="marks.ClassOption_6" /> },
-];
-
-const SubjectOptions = [
-  { value: '14th', label: 'Computer Science' },
-  { value: 'bachelor', label: 'Agriculture' },
-  { value: 'master', label: 'BBA' },
-  { value: 'PHD', label: 'Mechenical Engineering' },
-];
-
-const orderOptions = [
-  { column: 'title', label: 'Product Name' },
-  { column: 'category', label: 'Category' },
-  { column: 'status', label: 'Status' },
-];
-const pageSizes = [10, 20, 40, 80];
+import { AuthContext } from 'context/AuthContext';
 
 const ValidationSchema = Yup.object().shape({
   institute: Yup.object()
@@ -127,11 +72,12 @@ const initialValues = {
   subject: [],
 };
 const MarksRegistration = ({ match }) => {
+  const { institutes } = useContext(AuthContext);
   const [isNext, setIsNext] = useState(false);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [fields, setFields] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
+  // const [institutes, setInstitutes] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -186,18 +132,18 @@ const MarksRegistration = ({ match }) => {
     //setUpdateMode(true);
   }, []);
 
-  const fetchInstitutes = async () => {
-    const response = await callApi('institute/', '', null);
-    if (response.data && response.status === 200) {
-      const updatedData = await response.data.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }));
-      setInstitutes(updatedData);
-    } else {
-      console.log('institute error');
-    }
-  };
+  // const fetchInstitutes = async () => {
+  //   const response = await callApi('institute/', '', null);
+  //   if (response.data && response.status === 200) {
+  //     const updatedData = await response.data.map((item) => ({
+  //       value: item.id,
+  //       label: item.name,
+  //     }));
+  //     setInstitutes(updatedData);
+  //   } else {
+  //     console.log('institute error');
+  //   }
+  // };
   const fetchFields = async () => {
     const response = await callApi('institute/field/', '', null);
     if (response.data && response.status === 200) {
@@ -212,7 +158,6 @@ const MarksRegistration = ({ match }) => {
   };
   const fetchDepartments = async () => {
     const response = await callApi('institute/department/', '', null);
-    // console.log('response of department', response);
     if (response.data && response.status === 200) {
       const updatedData = await response.data.map((item) => ({
         value: item.id,
@@ -251,7 +196,7 @@ const MarksRegistration = ({ match }) => {
   };
 
   useEffect(() => {
-    fetchInstitutes();
+    // fetchInstitutes();
     fetchFields();
     fetchDepartments();
     fetchClasses();

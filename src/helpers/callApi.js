@@ -42,7 +42,6 @@ const callApi = async (
 ) => {
   const headers = getHeaders(data);
   const url = `${servicePath}/${endpoint}`;
-
   try {
     const response = await axios({
       method,

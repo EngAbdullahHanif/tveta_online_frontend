@@ -387,6 +387,8 @@ const StudentRegistration = ({ intl }, values) => {
         setFieldError('studentId', 'شاگرد به ای شماره اساس وجود دارد');
       }
       createNotification('error', 'filled');
+    } finally {
+      setLoading(false);
     }
   };
 

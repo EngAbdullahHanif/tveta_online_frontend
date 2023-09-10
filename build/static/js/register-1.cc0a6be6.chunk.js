@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunktveta_online=self.webpackChunktveta_online||[]).push([[9916],{13819:function(e,t,n){n.r(t);var s=n(14037),a=n(6369),r=n(53812),i=n(36622),c=n(62559);t.default=function(){var e=(0,s.useLocation)().state.data;return(0,c.jsx)(c.Fragment,{children:"TEACHER"===e?(0,c.jsx)(a.OL,{to:"/app/teachers/register",children:(0,c.jsx)("div",{children:(0,c.jsx)(i.default,{})})}):(0,c.jsx)(a.OL,{to:"/app/students/register",children:(0,c.jsx)("div",{children:(0,c.jsx)(r.default,{})})})})}}}]);
-//# sourceMappingURL=register-1.cc0a6be6.chunk.js.map

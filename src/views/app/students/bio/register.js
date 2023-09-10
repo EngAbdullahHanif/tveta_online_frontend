@@ -569,7 +569,7 @@ const StudentRegistration = ({ intl }, values) => {
    <Steps>
      <Step id="step1"> */}
           <div>
-            <h3>معلومات شخصی</h3>
+            <h1>معلومات شمولیت جدید</h1>
             <hr />
             <Formik
               enableReinitialize={true}
@@ -606,10 +606,9 @@ const StudentRegistration = ({ intl }, values) => {
                             name="maktoobDate"
                             calendar={persian}
                             locale={persian_fa}
-                            value={values.maktoobDate}
                             months={persianMonthOptions}
                             onChange={(e) =>
-                              setFieldValue(
+                              console.log(
                                 'maktoobDate',
                                 new Date(e.toDate()).getFullYear() +
                                   '-' +
@@ -676,19 +675,14 @@ const StudentRegistration = ({ intl }, values) => {
                               setFieldValue('class', []);
                               console.log('selected department: ', value.value);
                               console.log('institute deps: ', instituteDeps);
-                              // get selected department
                               const dep = instituteDeps?.find(
                                 (d) => d.department === value.value,
                               );
-
                               console.log('departments: ', departments);
-                              // get classes array from department
                               const class_ids = dep?.classes.map(
                                 (c) => c.classs,
                               );
                               console.log('class_ids', class_ids);
-
-                              // filter classes options from context
                               setClassOptions(
                                 classs.filter((c) =>
                                   class_ids.includes(c.value),
@@ -839,6 +833,7 @@ const StudentRegistration = ({ intl }, values) => {
                         </FormGroup>
                       </div>
 
+                      <h1>معلومات شخصی</h1>
                       <hr />
                       <div className="p-3 w-50">
                         {/* Name */}
@@ -1001,27 +996,24 @@ const StudentRegistration = ({ intl }, values) => {
 
                         {values.tazkiraType.value === 'paper' ? (
                           <>
+                            {/* Jold Number */}
                             <div>
-                              {/* Jold Number */}
-                              <div>
-                                <FormGroup className="form-group has-float-label error-l-100">
-                                  <Label style={inputLabel}>
-                                    <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                                    <RequiredHash />
-                                  </Label>
-                                  <Field
-                                    className="form-control fieldStyle"
-                                    name="idCardJoldNo"
-                                    type="string"
-                                  />
-                                  {errors.idCardJoldNo &&
-                                  touched.idCardJoldNo ? (
-                                    <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                      {errors.idCardJoldNo}
-                                    </div>
-                                  ) : null}
-                                </FormGroup>
-                              </div>
+                              <FormGroup className="form-group has-float-label error-l-100">
+                                <Label style={inputLabel}>
+                                  <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                                  <RequiredHash />
+                                </Label>
+                                <Field
+                                  className="form-control fieldStyle"
+                                  name="idCardJoldNo"
+                                  type="string"
+                                />
+                                {errors.idCardJoldNo && touched.idCardJoldNo ? (
+                                  <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                    {errors.idCardJoldNo}
+                                  </div>
+                                ) : null}
+                              </FormGroup>
                             </div>
 
                             <div>
@@ -1415,6 +1407,10 @@ const StudentRegistration = ({ intl }, values) => {
                           ) : null}
                         </FormGroup>
                         {/* Education */}
+                      </div>
+                      <h1>سوابق تعلیمی</h1>
+                      <hr />
+                      <div className="p-3 w-50">
                         <FormGroup className="form-group has-float-label error-l-100">
                           <Label style={inputLabel}>
                             <IntlMessages id="teacher.LevelOfEducationLabel" />

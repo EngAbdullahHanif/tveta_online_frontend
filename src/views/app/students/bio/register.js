@@ -312,8 +312,8 @@ const StudentRegistration = ({ intl }, values) => {
     storeDataToLocalStorage(localStorageData);
     const data = {
       //personal info,
-      maktob_date: newFields.maktoobDate,
-      maktob_number: newFields.maktoobNumber,
+      maktob_date: newFields.maktoobDate || null,
+      maktob_number: newFields.maktoobNumber || null,
       name: newFields.name1,
       student_id: newFields.studentId,
       kankor_id: newFields.kankorId,
@@ -334,7 +334,7 @@ const StudentRegistration = ({ intl }, values) => {
       page_number: newFields.idCardPageNo || null,
       sabt_number: newFields.sabtNo || null,
       tazkira_type: newFields.tazkiraType.value,
-      registration_number: newFields.tazkiraNo,
+      registration_number: newFields.tazkiraNo || null,
       sokok_number: newFields.sokokNo || null,
       main_province: newFields.province.value,
       main_district: newFields.district.value,
@@ -605,18 +605,23 @@ const StudentRegistration = ({ intl }, values) => {
                             name="maktoobDate"
                             calendar={persian}
                             locale={persian_fa}
-                            value={values.maktoobDate}
                             months={persianMonthOptions}
-                            onChange={(e) =>
+                            onChange={(e) => {
+                              // if no date is selected set field to empty string
+                              if (!e) {
+                                setFieldValue('maktoobDate', '');
+                                return;
+                              }
+
                               setFieldValue(
                                 'maktoobDate',
-                                new Date(e.toDate()).getFullYear() +
+                                new Date(e.toDate()?.getFullYear()) +
                                   '-' +
-                                  (new Date(e.toDate()).getMonth() + 1) +
+                                  (new Date(e.toDate()?.getMonth()) + 1) +
                                   '-' +
-                                  new Date(e.toDate()).getDate(),
-                              )
-                            }
+                                  new Date(e.toDate()?.getDate()),
+                              );
+                            }}
                           />
                         </FormGroup>
                         <FormGroup className="form-group has-float-label">

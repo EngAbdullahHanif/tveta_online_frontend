@@ -1,4 +1,4 @@
-import React, { createRef, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 // import { NavLink } from 'react-router-dom';
 import { FormControl } from 'react-bootstrap';
 import './../../.././../assets/css/global-style.css';
@@ -217,6 +217,7 @@ const StudentRegistration = ({ intl }, values) => {
       ) || [],
   });
 
+  // fetch department based on selected institute
   const fetchInstDepts = (inst) => {
     const instId = inst.value;
     callApi(`institute/${instId}/departments/`).then((inst) => {
@@ -234,8 +235,6 @@ const StudentRegistration = ({ intl }, values) => {
       setInstDepartmentOptions(newOptions);
     });
   };
-
-  const forms = [createRef(null), createRef(null), createRef(null)];
 
   const handleFileChange = (event) => {
     const file = event.currentTarget.files[0];
@@ -363,7 +362,6 @@ const StudentRegistration = ({ intl }, values) => {
     setLoading(true);
     try {
       const response = await callApi('students/register/', 'POST', data);
-      createNotification('success', 'filled');
 
       // const stdId = response?.data.id;
       // history.push(`/app/students/student/${stdId}`);
@@ -372,17 +370,20 @@ const StudentRegistration = ({ intl }, values) => {
       console.log('error.response', error.response);
       if (error?.response?.data?.errors?.registration_number) {
         setFieldError('tazkiraNo', 'شاگرد به ای تذکره نمبر وجود دارد');
-        scrollToTop();
       }
       if (error?.response?.data?.errors?.student_id) {
         setFieldError('studentId', 'شاگرد به ای شماره اساس وجود دارد');
-        scrollToTop();
       }
       setIsSuccess(false);
-      createNotification('error', 'filled');
+    } finally {
+      setLoading(false);
+      if (isSuccess) {
+        createNotification('success', 'filled');
+      } else {
+        createNotification('error', 'filled');
+      }
+      scrollToTop();
     }
-    setLoading(false);
-    scrollToTop();
   };
 
   const resetformFields = () => {

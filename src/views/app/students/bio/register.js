@@ -591,10 +591,7 @@ const StudentRegistration = ({ intl }, values) => {
                     <Colxx xxs="12">
                       <div className="p-3 w-50">
                         <FormGroup className="form-group has-float-label ">
-                          <Label style={inputLabel}>
-                            مکتوب تاریخ
-                            <span style={{ color: 'red' }}>*</span>
-                          </Label>
+                          <Label style={inputLabel}>مکتوب تاریخ</Label>
                           <DatePicker
                             style={{
                               width: '100%',
@@ -621,10 +618,7 @@ const StudentRegistration = ({ intl }, values) => {
                           />
                         </FormGroup>
                         <FormGroup className="form-group has-float-label">
-                          <Label style={inputLabel}>
-                            مکتوب نمبر
-                            <span style={{ color: 'red' }}>*</span>
-                          </Label>
+                          <Label style={inputLabel}>مکتوب نمبر</Label>
                           <Field
                             className="form-control fieldStyle"
                             name="maktoobNumber"

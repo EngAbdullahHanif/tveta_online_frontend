@@ -4,8 +4,8 @@ import { EDUCATIONAL_YEAR_VALIDATOR } from '../ui/forms/validations';
 
 // Student Registrations form step one
 export const studentRegisterFormStep_1 = Yup.object().shape({
-  maktoobNumber: Yup.string().required('مکتوب نمبر الزامی است'),
-  maktoobDate: Yup.string().required('مکتوب تاریخ الزامی است'),
+  // maktoobNumber: Yup.string().required('مکتوب نمبر الزامی است'),
+  // maktoobDate: Yup.string().required('مکتوب تاریخ الزامی است'),
   name1: Yup.string()
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)

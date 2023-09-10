@@ -868,7 +868,6 @@ const StudentRegistration = ({ intl }, values) => {
                           ) : null}
                         </FormGroup>
                       )}
-
                       {/* Gender */}
                       <FormGroup className="form-group has-float-label error-l-100">
                         <Label style={inputLabel}>
@@ -1293,11 +1292,9 @@ const StudentRegistration = ({ intl }, values) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
                       <h6 className=" mb-4">
                         {<IntlMessages id="forms.CurrentAddresslabel" />}
                       </h6>
-
                       {/* Current Address */}
                       {/* province Current */}
                       <FormGroup className="form-group has-float-label error-l-100">

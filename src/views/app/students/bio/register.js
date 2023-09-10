@@ -565,7 +565,7 @@ const StudentRegistration = ({ intl }, values) => {
           <Steps>
             <Step id="step1"> */}
         <div>
-          <h3>معلومات شخصی</h3>
+          <h3>شخصی معلومات / معلومات شخصی</h3>
           <hr />
           <Formik
             enableReinitialize={true}
@@ -655,7 +655,7 @@ const StudentRegistration = ({ intl }, values) => {
                       {/*  Class name  */}
                       <FormGroup className="form-group has-float-label ">
                         <Label style={inputLabel}>
-                          <IntlMessages id="marks.ClassLabel" />
+                          <IntlMessages id="curriculum.admissionGrade" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
@@ -678,7 +678,7 @@ const StudentRegistration = ({ intl }, values) => {
                       {/* Eduactional Year*/}
                       <FormGroup className="form-group has-float-label ">
                         <Label style={inputLabel}>
-                          <IntlMessages id="curriculum.eduactionalYearLabel" />
+                          <IntlMessages id="curriculum.admissionYear" />
                           <RequiredHash />
                         </Label>
 

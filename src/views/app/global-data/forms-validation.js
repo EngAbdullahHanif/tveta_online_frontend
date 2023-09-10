@@ -8,10 +8,6 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />)
     .required(<IntlMessages id="teacher.NameErr" />),
-  // idCardJoldNo: Yup.string()
-  //   .min(3, <IntlMessages id="min.minInputValue" />)
-  //   .max(50, <IntlMessages id="max.maxInputValue" />)
-  //   .required(<IntlMessages id="teacher.NameErr" />),
 
   fatherName: Yup.string()
     .required(<IntlMessages id="teacher.FatherNameErr" />)
@@ -46,7 +42,6 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .max(50, <IntlMessages id="max.maxInputValue" />),
 
   fatherDutyLocation: Yup.string()
-    .required(<IntlMessages id="forms.StdFatherDutyLocationErr" />)
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
   placeOfBirth: Yup.string()
@@ -62,28 +57,127 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     otherwise: Yup.string(),
   }),
 
-  // DoB: Yup.string().required(<IntlMessages id="forms.StdDoBErr" />),
+  //Step 2
+  levelOfEducation: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
+
+  preSchool: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="forms.StPreShcoolErr" />),
+
+  schoolProvince: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
+
+  // graduationYear: Yup.date().required(
+  //   <IntlMessages id="forms.StdGraduationYearErr" />
+  // ),
+  graduationYear: EDUCATIONAL_YEAR_VALIDATOR,
+  province: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  C_Province: Yup.object()
+    .shape({ value: Yup.string().required() })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  C_District: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
+  district: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.DistrictErr" />),
+  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+  C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+
+  //Step 3
+  institute: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.InstituteErr" />),
+
+  disability: Yup.object().when('institute.rest.type', {
+    is: 'special_education',
+    then: Yup.string().required(
+      'وقتی که انستتیوت تعلیمات خاص باشد، اضافه کردن معلولیت/معیوبیت الزامی است.',
+    ),
+    otherwise: Yup.object().nullable(),
+  }),
+
+  studyTime: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudyTimeErr" />),
+
+  class: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.ClassErr" />),
+
+  educationalYear: EDUCATIONAL_YEAR_VALIDATOR,
+  department: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.departmentIdErr" />),
+
+  interanceType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
+  // kankorId: Yup.string().required('ایدی کانکور الزامی است'),
+  studentType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudentTypeErr" />),
+
+  mediumOfInstruction: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.mediumOfInstructionErr" />),
+  studentId: Yup.number().required(<IntlMessages id="student.studentIdErr" />),
+
   DoB: Yup.number()
     .min(1350, 'سال تولد درست نیست/د تولد کال سم ندی')
     .max(1420, 'سال تولد درست نیست/د تولد کال سم ندی')
-    // .shape({
-    //   value: Yup.string().required(),
-    // })
     .nullable()
     .required(<IntlMessages id="forms.StdDoBErr" />),
   monthOfBirth: Yup.number()
     .min(1, 'ماه تولد درست نیست / د تولد میاشت سم ندی')
     .max(12, 'ماه تولد درست نیست / د تولد میاشت سم ندی')
-    // .shape({
-    //   value: Yup.string().required(),
-    // })
     .nullable(),
   dayOfBirth: Yup.number()
     .min(1, ' روز تولد درست نیست / د تولد ورځ سم ندی')
     .max(31, ' روز تولد درست نیست / د تولد ورځ سم ندی')
-    // .shape({
-    //   value: Yup.string().required(),
-    // })
     .nullable(),
 
   tazkiraType: Yup.object()
@@ -102,7 +196,6 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
 
   email: Yup.string().email(<IntlMessages id="teacher.EmailRequiredErr" />),
 
-  // phoneNo: Yup.string().required(<IntlMessages id="teacher.PhoneNoErr" />),
   idCardJoldNo: Yup.string().when('tazkiraType.value', {
     is: 'paper',
     then: Yup.string().required(
@@ -494,12 +587,12 @@ export const teacherRegisterFormStep_2 = Yup.object().shape({
 
 //   Teacher Evaluation ValiationSchema
 export const teacherEvalautionSchema = Yup.object().shape({
-  id: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="teacher.IdErr" />),
+  // id: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="teacher.IdErr" />),
 
   department: Yup.object()
     .shape({

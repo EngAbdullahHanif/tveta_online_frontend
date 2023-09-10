@@ -152,7 +152,6 @@ const StudentUpdate = ({ intl }, values) => {
       .catch((err) => console.log('Error in Teacher Save: ', err))
       .finally(() => setIsLoading(false));
   };
-  console.log('SSSSSSSSSSSSSSSSSSSSSSS', student);
   const initValues = {
     name: student?.name,
     englishName: student?.english_name,

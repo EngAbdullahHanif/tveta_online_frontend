@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
+// import axios from 'axios';
 
 // import { servicePath } from 'constants/defaultValues';
 
@@ -10,6 +10,7 @@ import ListPageListing from './HREvaluationListCatagory';
 import useMousetrap from 'hooks/use-mousetrap';
 
 import config from '../../../../config';
+import callApi from 'helpers/callApi';
 
 const getIndex = (value, arr, prop) => {
   for (let i = 0; i < arr.length; i += 1) {
@@ -56,42 +57,35 @@ const ThumbListPages = ({ match }) => {
   const [items, setItems] = useState([]);
   const [lastChecked, setLastChecked] = useState(null);
 
+  async function fetchTeacherHREvaluation() {
+    await callApi(`teachers/${1}/hr-evaluations/`).then((response) => {
+      const data = response.data;
+      setItems(data);
+      console.log('HR Evaluations: ', data);
+      setIsLoaded(true);
+    });
+  }
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedPageSize, selectedOrderOption]);
 
   useEffect(() => {
-    async function fetchData() {
-      axios
-        // .get(
-        //   `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`
-        // )
-        // get data from localhost:8000/institute
-        .get(`${instituteApiUrl}`)
-        .then((res) => {
-          console.log('res.data', res.data);
-          return res.data;
-        })
-        .then((data) => {
-          // setTotalPage(data.totalPage);
-          // setItems(data.data);
-          // set fecahed data to items
-          setItems(data);
-
-          // setSelectedItems([]);
-
-          // setItems(
-          //   data.data.map((x) => {
-          //     console.log('Single Value of the array ', x);
-          //     return { ...x, img: x.img.replace('img/', 'img/products/') };
-          //   })
-          // );
-          setSelectedItems([]);
-          setTotalItemCount(data.totalItem);
-          setIsLoaded(true);
-        });
-    }
-    fetchData();
+    fetchTeacherHREvaluation();
+    // async function fetchData() {
+    //   axios
+    //     .get(`${instituteApiUrl}`)
+    //     .then((res) => {
+    //       console.log('res.data', res.data);
+    //       return res.data;
+    //     })
+    //     .then((data) => {
+    //       setItems(data);
+    //       setSelectedItems([]);
+    //       setTotalItemCount(data.totalItem);
+    //       setIsLoaded(true);
+    //     });
+    // }
+    // fetchData();
   }, [selectedPageSize, currentPage, selectedOrderOption, search]);
 
   const onCheckItem = (event, id) => {

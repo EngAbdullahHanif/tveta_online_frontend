@@ -272,14 +272,14 @@ const InstituteDetails = (values) => {
                     instDepartments?.map((item) => {
                       return (
                         <Colxx key={item.value}>
-                          {item.label}
+                          {item?.label}
 
                           {item.instDeps.classes.map((cl) => {
                             return (
                               <li key={cl.classs}>
                                 {
                                   classs.find((cls) => cls.value === cl.classs)
-                                    .label
+                                    ?.label
                                 }
                               </li>
                             );
@@ -370,7 +370,7 @@ const InstituteDetails = (values) => {
                             className="btn btn-primary"
                             onClick={handleSubmit}
                           >
-                            Add Class
+                            ثبت صنف
                           </button>
                         </Colxx>
                       </Row>

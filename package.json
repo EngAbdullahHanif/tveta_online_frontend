@@ -28,6 +28,7 @@
     "moment": "^2.29.4",
     "mousetrap": "^1.6.5",
     "node-sass": "^6.0.0",
+    "primereact": "^9.6.2",
     "prop-types": "^15.7.2",
     "rc-slider": "^10.2.1",
     "rc-switch": "^4.1.0",

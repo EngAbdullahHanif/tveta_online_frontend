@@ -372,6 +372,8 @@ const StudentProfile = () => {
                         <br />
                       </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
+                        <Label className="data-style">ایدی کانکور</Label>
+                        <h2>{student[0].kankor_id}</h2>
                         {/* if person has paper-based ID card, not electronic */}
                         {student[0].tazkira_type === 'paper' && (
                           <>

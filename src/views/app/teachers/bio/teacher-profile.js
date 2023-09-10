@@ -12,10 +12,10 @@ import {
   Button,
   CardTitle,
   Table,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+  // Modal,
+  // ModalHeader,
+  // ModalBody,
+  // ModalFooter,
 } from 'reactstrap';
 
 import DatePicker from 'react-multi-date-picker';
@@ -57,6 +57,7 @@ import {
   teacherEvaluationValidationSchema,
   teacherIncentivesValidationSchema,
 } from './../../global-data/forms-validation';
+import { buttonStyle, inputLabel } from 'config/styling';
 const servicePath = config.API_URL;
 const teacherApiUrl = `${servicePath}/teachers/`;
 const teacherEvaluationApiUrl = `${servicePath}/teachers/evaluation`;
@@ -200,10 +201,6 @@ const TeacherProfile = () => {
     fetchTeacherIncentives();
     // fetchFields();
   }, []);
-
-  const handleClick = (event) => {
-    setIsNext(event);
-  };
 
   const deleteContract = async (item) => {
     await callApi(`teachers/${teacherId}/contracts/${item}/`, 'DELETE').then(
@@ -390,6 +387,7 @@ const TeacherProfile = () => {
     const data = {
       evaluator_name: inputData.evaluator_name,
       score,
+      educational_year: '1402',
       evaluation_date: evaluationDate,
       teacher: teacher.id,
       institute: inputData.institute?.value,
@@ -413,7 +411,6 @@ const TeacherProfile = () => {
       },
     );
   };
-  console.log('ID: ', recId, updatingRecord);
   const addIncentive = async (inputData, { resetForm }) => {
     setLoading(true);
     let apiParams = {
@@ -453,7 +450,7 @@ const TeacherProfile = () => {
     <>
       <Row>
         <Colxx className="mt-5 m-5" xxs="8">
-          <h3>{<IntlMessages id="teacher.Profile" />}</h3>
+          <h2>{<IntlMessages id="teacher.Profile" />}</h2>
         </Colxx>
         <Colxx className="mt-4 max">
           <div className="d-flex align-items-center flex-column">
@@ -470,7 +467,7 @@ const TeacherProfile = () => {
       <Row>
         <Colxx xxs="1"></Colxx>
         <Colxx>
-          <img src={teacher?.photo || profilePhoto} alt="Photo" width={'10%'} />{' '}
+          <img src={teacher?.photo || profilePhoto} alt="Photo" width={'10%'} />
         </Colxx>
       </Row>
       <Row>
@@ -478,7 +475,6 @@ const TeacherProfile = () => {
           className=" d-flex justify-content-center"
           style={{ marginRight: '2%' }}
         >
-          {' '}
           <div className="d-inline-block">-</div>
         </Colxx>
       </Row>
@@ -491,7 +487,6 @@ const TeacherProfile = () => {
                   <div>
                     <Row>
                       <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                        {' '}
                         <h2
                           className="bg-primary "
                           style={{
@@ -506,155 +501,141 @@ const TeacherProfile = () => {
                     </Row>
                     <Row className="justify-content-center   rounded ">
                       <Colxx style={{ paddingInline: '4%' }} xxs="">
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.NameLabel" />
                         </Label>
-                        <h3>{teacher.name}</h3>
-                        {/* <Label>
-                          <IntlMessages id="forms.Eng_name" />
-                        </Label>
-                        <h3>Ahmad Samim</h3> */}
-                        <Label>
+                        <h2>{teacher.name}</h2>
+
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.FatherNameLabel" />
                         </Label>
-                        <h3>{teacher.father_name}</h3>
-                        <Label>
+                        <h2>{teacher.father_name}</h2>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.GrandFatherNameLabel" />
                         </Label>
-                        <h3>{teacher.father_name}</h3>
-                        {/* <Label>
-                          <IntlMessages id="forms.Std_father_Eng_Name" />
-                        </Label>
-                        <h3>Muhammad Wali</h3> */}
-                        <Label>
+                        <h2>{teacher.father_name}</h2>
+
+                        <Label style={inputLabel}>
                           <IntlMessages id="gender.gender" />
                         </Label>
-                        <h3>
+                        <h2>
                           {
                             genderOptions.find(
                               (op) => op.value === teacher.gender,
                             )?.label
                           }
-                        </h3>
+                        </h2>
 
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.PhoneNoLabel" />
                         </Label>
-                        <h3>{teacher.phone_number}</h3>
-                        <Label>
+                        <h2>{teacher.phone_number}</h2>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.EmailLabel" />
                         </Label>
-                        <h3>{teacher.email}</h3>
+                        <h2>{teacher.email}</h2>
                         <br />
                         <br />
                       </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
-                        <Label>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.StdTazkiraNoLabel" />
                         </Label>
-                        <h3>{teacher.registration_number}</h3>
-                        <Label>
+                        <h2>{teacher.registration_number}</h2>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.StdIdCardCoverLabel" />
                         </Label>
-                        <h3>{teacher.cover_number}</h3>
-                        <Label>
+                        <h2>{teacher.cover_number}</h2>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.StdIdCardPageNoLabel" />
                         </Label>
-                        <h3>{teacher.page_number}</h3>
-                        <Label>
+                        <h2>{teacher.page_number}</h2>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.StdDoBLabel" />
                         </Label>
-                        <h3>
+                        <h2>
                           {teacher.year_of_birth}-
                           {teacher.month_of_birth || 'میاشت'}-
                           {teacher.day_of_birth || 'ورځ'}
-                        </h3>
-                        <Label>
+                        </h2>
+                        <Label style={inputLabel}>
                           <IntlMessages id="forms.EducationLevelLabel" />
                         </Label>
-                        <h3>ماستر</h3>
-                        <Label>
+                        <h2>ماستر</h2>
+                        <Label style={inputLabel}>
                           <IntlMessages id="teacher.MajorLabel" />
                         </Label>
-                        <h3>Mechannical Engineering</h3>
+                        <h2>Mechannical Engineering</h2>
                         <br />
                         <br />
                       </Colxx>
                     </Row>
                     <Row>
                       <Colxx style={{ paddingInline: '4%' }}>
-                        {' '}
-                        <h3
+                        <h2
                           className="bg-primary rounded "
                           style={{ padding: '1%', paddingInline: '3%' }}
                         >
-                          {' '}
                           <IntlMessages id="forms.PermanentAddressLabel" />
-                        </h3>
+                        </h2>
                         <Separator />
                         <br />
                         <Row>
                           <Colxx>
-                            {' '}
-                            <Label>
+                            <Label style={inputLabel}>
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>
+                            <h2>
                               {provinces.map((pro) => {
                                 if (teacher.main_province === pro.value)
                                   return pro.label;
                               })}
-                            </h3>
+                            </h2>
                           </Colxx>
                           <Colxx>
-                            {' '}
-                            <Label>
+                            <Label style={inputLabel}>
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>
+                            <h2>
                               {districts.map((pro) => {
                                 if (teacher.main_district === pro.value)
                                   return pro.label;
                               })}
-                            </h3>
+                            </h2>
                           </Colxx>
                         </Row>
                       </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
-                        {' '}
-                        <h3
+                        <h2
                           className="bg-primary rounded "
                           style={{ padding: '1%', paddingInline: '3%' }}
                         >
-                          {' '}
                           <IntlMessages id="forms.CurrentAddresslabel" />
-                        </h3>
+                        </h2>
                         <Separator />
                         <br />
                         <Row>
                           <Colxx>
-                            {' '}
-                            <Label>
+                            <Label style={inputLabel}>
                               <IntlMessages id="forms.ProvinceLabel" />
                             </Label>
-                            <h3>
+                            <h2>
                               {provinces.map((pro) => {
                                 if (teacher.current_province === pro.value)
                                   return pro.label;
                               })}
-                            </h3>
+                            </h2>
                           </Colxx>
                           <Colxx>
-                            {' '}
-                            <Label>
+                            <Label style={inputLabel}>
                               <IntlMessages id="forms.DistrictLabel" />
                             </Label>
-                            <h3>
+                            <h2>
                               {districts.map((pro) => {
                                 if (teacher.current_district === pro.value)
                                   return pro.label;
                               })}
-                            </h3>
+                            </h2>
                           </Colxx>
                         </Row>
                       </Colxx>
@@ -666,7 +647,6 @@ const TeacherProfile = () => {
               <Card className="rounded m-4 mt-5">
                 <CardBody>
                   <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                    {' '}
                     <h2
                       className="bg-primary "
                       style={{
@@ -681,7 +661,7 @@ const TeacherProfile = () => {
 
                   <Row className="justify-content-center   rounded ">
                     <Colxx style={{ paddingInline: '4%' }}>
-                      <Modal
+                      {/* <Modal
                         isOpen={educationAlert}
                         toggle={() => setEducationAlert(!educationAlert)}
                         style={{ marginTop: '10%' }}
@@ -694,23 +674,23 @@ const TeacherProfile = () => {
                         </ModalBody>
                         <ModalFooter>
                           <Button
+                            style={buttonStyle}
                             onClick={() => setEducationAlert(false)}
-                            style={{ marginLeft: '55%' }}
                           >
                             نه/ نخیر
                           </Button>
                           <Button
+                            style={buttonStyle}
                             color="danger"
                             onClick={() => {
                               setEducationAlert(false);
                               // deleteEducation(item?.id);
                             }}
-                            style={{ marginLeft: '5%' }}
                           >
                             هو / بلی
-                          </Button>{' '}
+                          </Button>
                         </ModalFooter>
-                      </Modal>
+                      </Modal> */}
                       <table
                         className="table table-striped  table-lg"
                         style={{ fontSize: 18 }}
@@ -791,6 +771,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
+                        style={buttonStyle}
                         className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#exampleModal"
@@ -882,6 +863,7 @@ const TeacherProfile = () => {
                                     <form>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="degree"
                                           className="col-form-label"
                                         >
@@ -907,6 +889,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="recipient-name"
                                           className="col-form-label"
                                         >
@@ -928,6 +911,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="field_of_study"
                                           className="col-form-label"
                                         >
@@ -949,6 +933,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="year_of_completion"
                                           className="col-form-label"
                                         >
@@ -979,6 +964,7 @@ const TeacherProfile = () => {
 
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="description"
                                           className="col-form-label"
                                         >
@@ -991,6 +977,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="recipient-name"
                                           className="col-form-label"
                                         >
@@ -1011,6 +998,7 @@ const TeacherProfile = () => {
                                     </form>
                                     <div className="modal-footer">
                                       <button
+                                        style={buttonStyle}
                                         type="button"
                                         className="btn btn-secondary"
                                         data-dismiss="modal"
@@ -1019,6 +1007,7 @@ const TeacherProfile = () => {
                                         لغو
                                       </button>
                                       <button
+                                        style={buttonStyle}
                                         type="submit"
                                         className="btn btn-primary"
                                         // data-dismiss="modal"
@@ -1043,7 +1032,6 @@ const TeacherProfile = () => {
               <Card className="rounded m-4 mt-5">
                 <CardBody>
                   <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                    {' '}
                     <h2
                       className="bg-primary "
                       style={{
@@ -1185,6 +1173,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
+                        style={buttonStyle}
                         className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#contractModal"
@@ -1311,6 +1300,7 @@ const TeacherProfile = () => {
                                       >
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="institute"
                                             className="col-form-label"
                                           >
@@ -1337,6 +1327,7 @@ const TeacherProfile = () => {
                                         </div>
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="field"
                                             className="col-form-label"
                                           >
@@ -1345,15 +1336,17 @@ const TeacherProfile = () => {
                                               *
                                             </span>
                                           </label>
+
                                           <FormikReactSelect
                                             name="field"
                                             id="field"
-                                            value={values.field}
+                                            value={values?.field}
                                             options={contextFields}
                                             onChange={setFieldValue}
                                             onBlur={setFieldTouched}
                                             required
                                           />
+
                                           {errors.field && touched.field ? (
                                             <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                                               {errors.field}
@@ -1364,6 +1357,7 @@ const TeacherProfile = () => {
 
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="jobType"
                                           className="col-form-label"
                                         >
@@ -1396,6 +1390,7 @@ const TeacherProfile = () => {
                                       >
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="grade"
                                             className="col-form-label"
                                           >
@@ -1422,6 +1417,7 @@ const TeacherProfile = () => {
                                         </div>
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="step"
                                             className="col-form-label"
                                           >
@@ -1449,6 +1445,7 @@ const TeacherProfile = () => {
 
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="teaching_language"
                                           className="col-form-label"
                                         >
@@ -1475,6 +1472,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="contractType"
                                           className="col-form-label"
                                         >
@@ -1501,6 +1499,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="hireType"
                                           className="col-form-label"
                                         >
@@ -1534,6 +1533,7 @@ const TeacherProfile = () => {
                                       >
                                         <div>
                                           <label
+                                            style={inputLabel}
                                             for="year_of_completion"
                                             className="col-form-label"
                                           >
@@ -1567,6 +1567,7 @@ const TeacherProfile = () => {
                                         </div>
                                         <div>
                                           <label
+                                            style={inputLabel}
                                             for="year_of_completion"
                                             className="col-form-label"
                                           >
@@ -1603,6 +1604,7 @@ const TeacherProfile = () => {
 
                                       <div className="form-group w-100">
                                         <label
+                                          style={inputLabel}
                                           for="institute"
                                           className="col-form-label"
                                         >
@@ -1629,6 +1631,7 @@ const TeacherProfile = () => {
 
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="recipient-name"
                                           className="col-form-label"
                                         >
@@ -1649,6 +1652,7 @@ const TeacherProfile = () => {
                                     </form>
                                     <div className="modal-footer">
                                       <button
+                                        style={buttonStyle}
                                         type="button"
                                         className="btn btn-secondary"
                                         data-dismiss="modal"
@@ -1657,6 +1661,7 @@ const TeacherProfile = () => {
                                         لغو‍
                                       </button>
                                       <button
+                                        style={buttonStyle}
                                         type="submit"
                                         className="btn btn-primary"
                                         // data-dismiss="modal"
@@ -1664,7 +1669,7 @@ const TeacherProfile = () => {
                                       >
                                         ثبت
                                       </button>
-                                    </div>{' '}
+                                    </div>
                                   </>
                                 )}
                               </Formik>
@@ -1681,7 +1686,6 @@ const TeacherProfile = () => {
               <Card className="rounded m-4 mt-5">
                 <CardBody>
                   <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                    {' '}
                     <h2
                       className="bg-primary "
                       style={{
@@ -1783,6 +1787,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
+                        style={buttonStyle}
                         className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#evaluationModal"
@@ -1897,6 +1902,7 @@ const TeacherProfile = () => {
                                       >
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="evaluator_name"
                                             className="col-form-label"
                                           >
@@ -1918,6 +1924,7 @@ const TeacherProfile = () => {
                                         </div>
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="evaluation_type"
                                             className="col-form-label"
                                           >
@@ -1952,6 +1959,7 @@ const TeacherProfile = () => {
                                       >
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="institute"
                                             className="col-form-label"
                                           >
@@ -1978,6 +1986,7 @@ const TeacherProfile = () => {
                                         </div>
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="department"
                                             className="col-form-label"
                                           >
@@ -2005,6 +2014,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="classs"
                                           className="col-form-label"
                                         >
@@ -2036,6 +2046,7 @@ const TeacherProfile = () => {
                                       >
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="subject"
                                             className="col-form-label"
                                           >
@@ -2062,6 +2073,7 @@ const TeacherProfile = () => {
                                         </div>
                                         <div className="">
                                           <label
+                                            style={inputLabel}
                                             for="year_of_completion"
                                             className="col-form-label"
                                           >
@@ -2107,6 +2119,7 @@ const TeacherProfile = () => {
 
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="topic"
                                           className="col-form-label"
                                         >
@@ -2127,6 +2140,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="strong_points"
                                           className="col-form-label"
                                         >
@@ -2148,6 +2162,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="weak_points"
                                           className="col-form-label"
                                         >
@@ -2170,6 +2185,7 @@ const TeacherProfile = () => {
 
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="suggestions"
                                           className="col-form-label"
                                         >
@@ -2190,6 +2206,7 @@ const TeacherProfile = () => {
                                         ) : null}
                                       </div>
                                       <label
+                                        style={inputLabel}
                                         for="score"
                                         className="col-form-label"
                                       >
@@ -2228,6 +2245,7 @@ const TeacherProfile = () => {
                                     </form>
                                     <div className="modal-footer">
                                       <button
+                                        style={buttonStyle}
                                         type="button"
                                         className="btn btn-secondary"
                                         data-dismiss="modal"
@@ -2236,6 +2254,7 @@ const TeacherProfile = () => {
                                         لغو
                                       </button>
                                       <button
+                                        style={buttonStyle}
                                         type="submit"
                                         className="btn btn-primary"
                                         // data-dismiss="modal"
@@ -2243,7 +2262,7 @@ const TeacherProfile = () => {
                                       >
                                         ثبت
                                       </button>
-                                    </div>{' '}
+                                    </div>
                                   </>
                                 )}
                               </Formik>
@@ -2256,7 +2275,6 @@ const TeacherProfile = () => {
 
                   {/* HR Evaluation */}
                   <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                    {' '}
                     <h2
                       className="bg-primary "
                       style={{
@@ -2348,6 +2366,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
+                        style={buttonStyle}
                         className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#hrEvaluationModal"
@@ -2441,6 +2460,7 @@ const TeacherProfile = () => {
                                     <form>
                                       <div className="form-group w-100">
                                         <label
+                                          style={inputLabel}
                                           for="evaluator_name"
                                           className="col-form-label"
                                         >
@@ -2469,6 +2489,7 @@ const TeacherProfile = () => {
                                       >
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="institute"
                                             className="col-form-label"
                                           >
@@ -2502,6 +2523,7 @@ const TeacherProfile = () => {
                                       >
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="grade"
                                             className="col-form-label"
                                           >
@@ -2528,6 +2550,7 @@ const TeacherProfile = () => {
                                         </div>
                                         <div className="form-group w-100">
                                           <label
+                                            style={inputLabel}
                                             for="step"
                                             className="col-form-label"
                                           >
@@ -2561,6 +2584,7 @@ const TeacherProfile = () => {
                                       >
                                         <div className="">
                                           <label
+                                            style={inputLabel}
                                             for="year_of_completion"
                                             className="col-form-label"
                                           >
@@ -2606,6 +2630,7 @@ const TeacherProfile = () => {
                                       </div>
 
                                       <label
+                                        style={inputLabel}
                                         for="score"
                                         className="col-form-label"
                                       >
@@ -2644,6 +2669,7 @@ const TeacherProfile = () => {
                                     </form>
                                     <div className="modal-footer">
                                       <button
+                                        style={buttonStyle}
                                         type="button"
                                         className="btn btn-secondary"
                                         data-dismiss="modal"
@@ -2652,6 +2678,7 @@ const TeacherProfile = () => {
                                         لغو
                                       </button>
                                       <button
+                                        style={buttonStyle}
                                         type="submit"
                                         className="btn btn-primary"
                                         // data-dismiss="modal"
@@ -2659,7 +2686,7 @@ const TeacherProfile = () => {
                                       >
                                         ثبت
                                       </button>
-                                    </div>{' '}
+                                    </div>
                                   </>
                                 )}
                               </Formik>
@@ -2677,7 +2704,6 @@ const TeacherProfile = () => {
               <Card className="rounded m-4 mt-5">
                 <CardBody>
                   <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                    {' '}
                     <h2
                       className="bg-primary "
                       style={{
@@ -2750,7 +2776,7 @@ const TeacherProfile = () => {
                                     />
                                   </Popconfirm>
                                 </td>
-                                <Modal
+                                {/* <Modal
                                   isOpen={insentiveAlert}
                                   toggle={() =>
                                     setInsentiveAlert(!insentiveAlert)
@@ -2781,7 +2807,7 @@ const TeacherProfile = () => {
                                       هو / بلی
                                     </Button>
                                   </ModalFooter>
-                                </Modal>
+                                </Modal> */}
                               </tr>
                             );
                           })}
@@ -2791,6 +2817,7 @@ const TeacherProfile = () => {
                       <br />
                       <br />
                       <Button
+                        style={buttonStyle}
                         className="btn btn-primary"
                         data-toggle="modal"
                         data-target="#incentiveModal"
@@ -2872,6 +2899,7 @@ const TeacherProfile = () => {
                                     <form>
                                       <div className="form-group w-100">
                                         <label
+                                          style={inputLabel}
                                           for="type"
                                           className="col-form-label"
                                         >
@@ -2897,6 +2925,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group w-100">
                                         <label
+                                          style={inputLabel}
                                           for="institute"
                                           className="col-form-label"
                                         >
@@ -2923,6 +2952,7 @@ const TeacherProfile = () => {
                                       </div>
                                       <div className="form-group">
                                         <label
+                                          style={inputLabel}
                                           for="recipient-name"
                                           className="col-form-label"
                                         >
@@ -2944,6 +2974,7 @@ const TeacherProfile = () => {
                                     </form>
                                     <div className="modal-footer">
                                       <button
+                                        style={buttonStyle}
                                         type="button"
                                         className="btn btn-secondary"
                                         data-dismiss="modal"
@@ -2952,6 +2983,7 @@ const TeacherProfile = () => {
                                         لفو
                                       </button>
                                       <button
+                                        style={buttonStyle}
                                         type="submit"
                                         className="btn btn-primary"
                                         // data-dismiss="modal"
@@ -2973,73 +3005,6 @@ const TeacherProfile = () => {
                 </CardBody>
               </Card>
               {/* Insentives End */}
-              <Card className="rounded m-4 mt-5">
-                <CardBody>
-                  <div>
-                    <Row>
-                      <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                        {' '}
-                        <h2
-                          className="bg-primary "
-                          style={{
-                            padding: '8px',
-                            paddingInline: '30px',
-                            borderRadius: '10px',
-                          }}
-                        >
-                          <IntlMessages id="teacher.JobDeteilsLabel" />
-                        </h2>
-                      </Colxx>
-                    </Row>
-                    <Row className="justify-content-center   rounded ">
-                      <Colxx style={{ paddingInline: '4%' }} xxs="">
-                        <Label>
-                          <IntlMessages id="teacher.ProfessionalRanksLabel" />
-                        </Label>
-                        <h3>مسلک پوه</h3>
-                        <Label>
-                          <IntlMessages id="teacher.StatusLabel" />
-                        </Label>
-                        <h3>فعال</h3>
-
-                        <Label>
-                          <IntlMessages id="teacher.GradeLabel" />
-                        </Label>
-                        <h3>پنجم / پنځم</h3>
-                        <Label>
-                          <IntlMessages id="teacher.StepLabel" />
-                        </Label>
-                        <h3>لومړی/ اول</h3>
-
-                        <br />
-                        <br />
-                      </Colxx>
-                      <Colxx style={{ paddingInline: '4%' }}>
-                        <Label>
-                          <IntlMessages id="teacher.jobLocationLabel" />
-                        </Label>
-                        <h3>انستیتوت زراعت و وترنری کابل</h3>
-                        <Label>
-                          <IntlMessages id="teacher.teachingFieldLabel" />
-                        </Label>
-                        <h3>هارتیکلچر</h3>
-                        <Label>
-                          <IntlMessages id="teacher.appointmentTypeLabel" />
-                        </Label>
-                        <h3>رسمی</h3>
-
-                        <Label>
-                          <IntlMessages id="teacher.contractTypeLabel" />
-                        </Label>
-                        <h3>داخل د تشکیل</h3>
-
-                        <br />
-                        <br />
-                      </Colxx>
-                    </Row>
-                  </div>
-                </CardBody>
-              </Card>
             </>
           ) : (
             <div className="p-2">
@@ -3059,26 +3024,21 @@ const TeacherProfile = () => {
                               <IntlMessages id="forms.InstituteLabel" />
                             </th>
                             <th>
-                              {' '}
                               <IntlMessages id="teacher.curretGradeLabel" />
                             </th>
                             <th>
-                              {' '}
                               <IntlMessages id="teacher.currentStepLabel" />
                             </th>
                             <th>
                               <IntlMessages id="teacher.newGradeLabel" />
                             </th>
                             <th>
-                              {' '}
                               <IntlMessages id="teacher.newStepLabel" />
                             </th>
                             <th>
-                              {' '}
                               <IntlMessages id="marks.Marks" />
                             </th>
                             <th>
-                              {' '}
                               <IntlMessages id="teacher.evaluationDateLabel" />
                             </th>
                           </tr>
@@ -3113,32 +3073,6 @@ const TeacherProfile = () => {
 
                       <Table striped>
                         <thead>
-                          {/* <tr>
-                                <th># </th>
-                                <th>
-                                  <IntlMessages id="forms.InstituteLabel" />
-                                </th>
-                                <th>
-                                  {' '}
-                                  <IntlMessages id="teacher.curretGradeLabel" />
-                                </th>
-                                <th>
-                                  {' '}
-                                  <IntlMessages id="teacher.currentStepLabel" />
-                                </th>
-                                <th>
-                                  <IntlMessages id="teacher.newGradeLabel" />
-                                </th>
-
-                                <th>
-                                  {' '}
-                                  <IntlMessages id="marks.Marks" />
-                                </th>
-                                <th>
-                                  {' '}
-                                  <IntlMessages id="teacher.evaluationDateLabel" />
-                                </th>
-                              </tr> */}
                           <tr>
                             <th># </th>
                             <th>
@@ -3149,11 +3083,9 @@ const TeacherProfile = () => {
                             <th>مضمون</th>
 
                             <th>
-                              {' '}
                               <IntlMessages id="marks.Marks" />
                             </th>
                             <th>
-                              {' '}
                               <IntlMessages id="teacher.evaluationDateLabel" />
                             </th>
                           </tr>
@@ -3191,20 +3123,6 @@ const TeacherProfile = () => {
 
                       <Table striped>
                         <thead>
-                          {/* <tr>
-                                <th># </th>
-                                <th>
-                                  <IntlMessages id="forms.InstituteLabel" />
-                                </th>
-                                <th>
-                                  {' '}
-                                  <IntlMessages id="teacher.curretGradeLabel" />
-                                </th>
-                                <th>
-                                  {' '}
-                                  <IntlMessages id="teacher.currentStepLabel" />
-                                </th>
-                              </tr> */}
                           <tr>
                             <th># </th>
                             <th>
@@ -3212,9 +3130,6 @@ const TeacherProfile = () => {
                             </th>
                             <th> ولایت</th>
                             <th> د مقرری تاریخ</th>
-                            {/* <th>
-                                  <IntlMessages id="teacher.newGradeLabel" />
-                                </th> */}
                           </tr>
                         </thead>
                         <tbody>
@@ -3226,16 +3141,6 @@ const TeacherProfile = () => {
                               <td>{item.hire_date}</td>
                             </tr>
                           ))}
-
-                          {/*                           
-                              <tr>
-                                <th scope="row">2</th>
-
-                                <td>شریفی</td>
-                                <td>@hsn_shrf548</td>
-                                <td>حسن</td>
-                                <td>شریفی</td>
-                              </tr> */}
                         </tbody>
                       </Table>
                     </CardBody>
@@ -3250,7 +3155,6 @@ const TeacherProfile = () => {
                     style={{ borderRadius: '5px', minHeight: '200px' }}
                   >
                     <Colxx className="m-3 border">
-                      {' '}
                       <h1 className="p-2">مکافات</h1>
                       <div className="p-2" style={{ minHeight: '150px' }}>
                         یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری
@@ -3279,7 +3183,6 @@ const TeacherProfile = () => {
                     </Colxx>
 
                     <Colxx className="m-3 border">
-                      {' '}
                       <h1 className="p-2">مجازات</h1>
                       <div className="p-2" style={{ minHeight: '150px' }}>
                         یک استاد (یا معلم خصوصی) خوب در مرحله اول باید به کاری

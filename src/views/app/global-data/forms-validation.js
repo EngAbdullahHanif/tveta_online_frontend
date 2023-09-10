@@ -47,7 +47,6 @@ export const studentRegisterFormStep_1 = Yup.object().shape({
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
   placeOfBirth: Yup.string()
-    .required(<IntlMessages id="forms.StdPlaceOfBirthErr" />)
     .min(3, <IntlMessages id="min.minInputValue" />)
     .max(50, <IntlMessages id="max.maxInputValue" />),
 

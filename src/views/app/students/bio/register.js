@@ -4,7 +4,6 @@ import { FormControl } from 'react-bootstrap';
 import './../../.././../assets/css/global-style.css';
 import { InputMask } from 'primereact/inputmask';
 import {
-  fetchDistricts,
   genderOptions,
   mediumOfInstructionOptions,
   StdInteranceOptions,
@@ -18,7 +17,6 @@ import {
 import DatePicker from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import {
   Row,
   Card,
@@ -71,55 +69,6 @@ const StudentRegistration = ({ intl }, values) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const [instituteDeps, setInstituteDeps] = useState([]);
-  const history = useHistory();
-  // const [fields, setFields] = useState({
-  //   name1: '',
-  //   fatherName: '',
-  //   lastName: '',
-  //   lastNameEng: '',
-  //   fatherDuty: '',
-  //   englishName: '',
-  //   fatherEngName: '',
-  //   grandFatherName: '',
-  //   fatherDutyLocation: '',
-  //   placeOfBirth: '',
-  //   DoB: '',
-  //   monthOfBirth: '',
-  //   dayOfBirth: '',
-  //   gender: '',
-  //   tazkiraNo: '',
-  //   phoneNo: '',
-  //   email: '',
-  //   idCardPageNo: '',
-  //   sabtNo: '',
-  //   sokokNo: '',
-  //   idCardJoldNo: '',
-  //   tazkiraType: tazkiraOptions[0],
-  //   levelOfEducation: '',
-  //   preSchool: '',
-  //   graduationYear: '',
-  //   schoolProvince: '',
-  //   province: '',
-  //   C_Province: '',
-  //   C_District: '',
-  //   district: '',
-  //   village: '',
-  //   C_Village: '',
-  //   institute: '',
-  //   class: '',
-  //   educationalYear: '',
-  //   department: '',
-  //   mediumOfInstruction: '',
-  //   // kankorId: initialKankorId,
-  //   studentId: '',
-  //   studyTime: '',
-  //   interanceType: '',
-  //   studentType: '',
-  //   batch: '',
-  //   field: '',
-  //   sector: '',
-  //   file: '',
-  // });
 
   const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
   const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
@@ -243,20 +192,6 @@ const StudentRegistration = ({ intl }, values) => {
   const handleFileChange = (event) => {
     const file = event.currentTarget.files[0];
     setSelectedFile(file);
-  };
-
-  const handleProvinceChange = async (name, value, setFieldValue) => {
-    console.log('name is ', name);
-    console.log('value is ', value);
-    const districts = await fetchDistricts(value.value);
-    console.log('Filtered Districts: ', districts);
-    if (name === 'C_Province') {
-      setCurrentDistrictOptions(districts);
-      setFieldValue('C_District', []);
-    } else {
-      setMainDistrictOptions(districts);
-      setFieldValue('district', []);
-    }
   };
 
   const createNotification = (type, className) => {
@@ -1288,7 +1223,7 @@ const StudentRegistration = ({ intl }, values) => {
                             value={values.province}
                             options={provinces}
                             onChange={(name, value) => {
-                              handleProvinceChange(name, value, setFieldValue);
+                              setFieldValue('district', []);
                               setFieldValue(name, value);
                             }}
                             isSearchable={true}
@@ -1311,7 +1246,10 @@ const StudentRegistration = ({ intl }, values) => {
                             name="district"
                             id="district"
                             value={values.district}
-                            options={mainDistrictOptions}
+                            options={districts?.filter(
+                              (district) =>
+                                district.province === values.province.value,
+                            )}
                             onChange={setFieldValue}
                             onBlur={setFieldTouched}
                             isSearchable={true}
@@ -1356,7 +1294,7 @@ const StudentRegistration = ({ intl }, values) => {
                             options={provinces}
                             isSearchable={true}
                             onChange={(name, value) => {
-                              handleProvinceChange(name, value, setFieldValue);
+                              setFieldValue('C_District', []);
                               setFieldValue(name, value);
                             }}
                             onBlur={setFieldTouched}
@@ -1378,7 +1316,10 @@ const StudentRegistration = ({ intl }, values) => {
                             name="C_District"
                             id="C_District"
                             value={values.C_District}
-                            options={currentDistrictOptions}
+                            options={districts?.filter(
+                              (district) =>
+                                district.province === values.C_Province.value,
+                            )}
                             onChange={setFieldValue}
                             onBlur={setFieldTouched}
                             isSearchable={true}

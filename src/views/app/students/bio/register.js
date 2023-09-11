@@ -521,7 +521,6 @@ const StudentRegistration = ({ intl }, values) => {
                 handleSubmit,
                 setFieldTouched,
                 setFieldValue,
-                setFieldError,
               }) => (
                 <Form className="av-tooltip tooltip-label-right has-float-label error-l-100 style ">
                   <Row>

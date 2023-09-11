@@ -6,7 +6,16 @@ import {
   genderOptions,
   tazkiraOptions,
   StdInteranceOptions,
+  mediumOfInstructionOptions,
+  StudentTypeOptions,
+  studyTimeOptions,
+  persianMonthOptions,
 } from '../../global-data/options';
+import DatePicker from 'react-multi-date-picker';
+import { inputLabel } from 'config/styling';
+
+import persian from 'react-date-object/calendars/persian';
+import persian_fa from 'react-date-object/locales/persian_fa';
 
 import './../../../../assets/css/global-style.css';
 import {
@@ -27,9 +36,20 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import {
+  MyLabel,
+  RequiredHash,
+} from 'components/form_components/form_components';
 
 const StudentUpdate = ({ intl }, values) => {
-  const { contextFields, provinces, districts } = useContext(AuthContext);
+  const {
+    contextFields,
+    provinces,
+    districts,
+    departments,
+    institutes,
+    classes: classs,
+  } = useContext(AuthContext);
 
   const [mainDistricts, setMainDistricts] = useState(districts);
   const [currentDistricts, setCurrentDistricts] = useState([]);
@@ -39,6 +59,28 @@ const StudentUpdate = ({ intl }, values) => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const forms = [createRef(null), createRef(null), createRef(null)];
+  const [instituteDeps, setInstituteDeps] = useState([]);
+  const [instDepartmentOptions, setInstDepartmentOptions] = useState([]);
+  const [classOptions, setClassOptions] = useState([]);
+
+  // fetch department based on selected institute
+  const fetchInstDepts = (inst) => {
+    const instId = inst.value;
+    callApi(`institute/${instId}/departments/`).then((inst) => {
+      console.log('Institutes Departments: ', inst.data);
+      setInstituteDeps(inst.data);
+      const newOptions = departments.filter((dep) => {
+        // if department id is in data.department
+        let department_ids = inst.data.reduce(
+          (acc, cur, i) => acc.add(cur.department),
+          new Set(),
+        );
+        console.log(department_ids);
+        return department_ids.has(dep.value);
+      });
+      setInstDepartmentOptions(newOptions);
+    });
+  };
 
   async function fetchStudent() {
     const { data } = await callApi(`students/${studentId}/`, '', null);
@@ -224,7 +266,6 @@ const StudentUpdate = ({ intl }, values) => {
               values,
               setFieldTouched,
               setFieldValue,
-              isSubmitting,
               handleSubmit,
             }) => (
               <Form className="av-tooltip tooltip-label-right style">
@@ -704,7 +745,276 @@ const StudentUpdate = ({ intl }, values) => {
                 </Row>
 
                 <Button className="mt-5 bg-primary" onClick={handleSubmit}>
-                  <IntlMessages id="ثبت" />
+                  آپدیت معلومات شاګرد
+                </Button>
+              </Form>
+            )}
+          </Formik>
+
+          <Formik
+            enableReinitialize={true}
+            innerRef={forms[1]}
+            initialValues={initValues}
+            // validateOnMount
+            // validationSchema={studentRegisterFormStep_1}
+            onSubmit={updateStudent}
+          >
+            {({
+              errors,
+              touched,
+              values,
+              setFieldTouched,
+              setFieldValue,
+              handleSubmit,
+            }) => (
+              <Form className="av-tooltip tooltip-label-right style">
+                <Row className="justify-content-center">
+                  <Colxx xxs="5">
+                    <div className="pt-5">
+                      <FormGroup className="form-group has-float-label ">
+                        <MyLabel>مکتوب تاریخ</MyLabel>
+                        <DatePicker
+                          style={{
+                            width: '100%',
+                            height: 40,
+                            borderRadius: 0,
+                            border: 'none',
+                          }}
+                          containerClassName="form-control fieldStyle"
+                          name="maktoobDate"
+                          calendar={persian}
+                          locale={persian_fa}
+                          months={persianMonthOptions}
+                          onChange={(e) => {
+                            if (!e) {
+                              setFieldValue('maktoobDate', '');
+                              return;
+                            }
+                            setFieldValue(
+                              'maktoobDate',
+                              new Date(e.toDate()).getFullYear() +
+                                '-' +
+                                (new Date(e.toDate()).getMonth() + 1) +
+                                '-' +
+                                new Date(e.toDate()).getDate(),
+                            );
+                          }}
+                        />
+                      </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label style={inputLabel}>مکتوب نمبر</Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="maktoobNumber"
+                          type="number"
+                        />
+                        {errors.maktoobNumber && touched.maktoobNumber ? (
+                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                            {errors.maktoobNumber}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Institute Name*/}
+                      <FormGroup className=" has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.InstituteLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="institute"
+                          id="institute"
+                          value={values.institute}
+                          options={institutes}
+                          onChange={(name, value) => {
+                            setFieldValue('institute', value);
+                            fetchInstDepts(value);
+                          }}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                        />
+                        {errors.institute && touched.institute ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.institute}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Departement  */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.studyDepartment" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="department"
+                          id="department"
+                          value={values.department}
+                          options={instDepartmentOptions}
+                          onChange={(name, value) => {
+                            setFieldValue(name, value);
+                            setFieldValue('class', []);
+                            console.log('selected department: ', value.value);
+                            console.log('institute deps: ', instituteDeps);
+                            const dep = instituteDeps?.find(
+                              (d) => d.department === value.value,
+                            );
+                            console.log('departments: ', departments);
+                            const class_ids = dep?.classes.map((c) => c.classs);
+                            console.log('class_ids', class_ids);
+                            setClassOptions(
+                              classs.filter((c) => class_ids.includes(c.value)),
+                            );
+                          }}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                          required
+                        />
+                        {errors.department && touched.department ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.department}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/*Student Type*/}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.StudentTypeLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="studentType"
+                          id="studentType"
+                          value={values.studentType}
+                          options={StudentTypeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                        />
+                        {errors.studentType && touched.studentType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.studentType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </div>
+                  </Colxx>
+                  <Colxx xxs="5">
+                    <div className="pt-5">
+                      {/*  Class name  */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="curriculum.admissionGrade" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="class"
+                          id="class"
+                          value={values.class}
+                          options={classOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                          required
+                        />
+                        {errors.class && touched.class ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.class}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Eduactional Year*/}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="curriculum.admissionYear" />
+                          <RequiredHash />
+                        </Label>
+
+                        <Field
+                          className="form-control fieldStyle"
+                          name="educationalYear"
+                          type="number"
+                        />
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.educationalYear}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* admission method*/}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.StdInteranceTypeLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="interanceType"
+                          id="interanceType"
+                          value={values.interanceType}
+                          options={StdInteranceOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                        />
+                        {errors.interanceType && touched.interanceType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.interanceType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* medium OfInstruction (Teaching Language) */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.mediumOfInstruction" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="mediumOfInstruction"
+                          id="mediumOfInstruction"
+                          value={values.mediumOfInstruction}
+                          options={mediumOfInstructionOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                          required
+                        />
+                        {errors.mediumOfInstruction &&
+                        touched.mediumOfInstruction ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.mediumOfInstruction}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Study Time */}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.StudyTimeLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="studyTime"
+                          id="studyTime"
+                          value={values.studyTime}
+                          options={studyTimeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                        />
+                        {errors.studyTime && touched.studyTime ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.studyTime}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </div>
+                  </Colxx>
+                </Row>
+
+                <Button className="mt-5 bg-primary" onClick={handleSubmit}>
+                  آپدیت معلومات شمولیت
                 </Button>
               </Form>
             )}

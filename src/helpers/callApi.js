@@ -1,7 +1,7 @@
 import { message } from 'antd';
 
-import { NotificationManager } from 'components/common/react-notifications';
 import axios from 'axios';
+import { NotificationManager } from 'components/common/react-notifications';
 
 message.config({
   top: 100,

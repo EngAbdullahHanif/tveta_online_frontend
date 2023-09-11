@@ -11,11 +11,13 @@ import {
   persianMonthOptions,
   StudentEnrollmentTypeOptions,
 } from '../../global-data/options';
-import DatePicker from 'react-multi-date-picker';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
 import { inputLabel } from 'config/styling';
 
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
+import gregorian from 'react-date-object/calendars/gregorian';
+import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import './../../../../assets/css/global-style.css';
 import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
@@ -153,7 +155,9 @@ const StudentUpdate = ({ intl }, values) => {
     console.log('Form Data: ', newFields);
     setIsLoading(true);
     const data = {
-      maktob_date: newFields?.maktoobDate,
+      maktob_date: newFields?.maktoobDate
+        .convert(gregorian, gregorian_en)
+        .format('YYYY-MM-DD'),
       maktob_number: newFields?.maktoobNumber || null,
       institute: newFields.institute?.value,
       department: newFields.department?.value,
@@ -174,7 +178,7 @@ const StudentUpdate = ({ intl }, values) => {
   };
 
   const initValues = {
-    maktoobDate: studentEnrollmentData?.maktoobDate || '',
+    maktoobDate: studentEnrollmentData?.maktoobDate || null,
     maktoobNumber: studentEnrollmentData?.maktoobNumber || '',
     institute:
       institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
@@ -227,7 +231,11 @@ const StudentUpdate = ({ intl }, values) => {
     ),
   };
   const initValues2 = {
-    maktoobDate: studentEnrollmentData?.maktob_date || '',
+    maktoobDate:
+      new DateObject(studentEnrollmentData?.maktob_date).convert(
+        persian,
+        persian_fa,
+      ) || null,
     maktoobNumber: studentEnrollmentData?.maktob_number || '',
     institute:
       institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
@@ -788,25 +796,17 @@ const StudentUpdate = ({ intl }, values) => {
                             borderRadius: 0,
                             border: 'none',
                           }}
-                          value={studentEnrollmentData.maktob_date}
                           containerClassName="form-control fieldStyle"
                           name="maktoobDate"
+                          value={values.maktoobDate}
                           calendar={persian}
                           locale={persian_fa}
                           months={persianMonthOptions}
-                          format="YYYY-MM-YY"
-                          onChange={(e) => {
-                            if (!e) {
-                              setFieldValue('maktoobDate', '');
-                              return;
-                            }
+                          format="YYYY-MM-DD"
+                          onChange={(date) => {
                             setFieldValue(
                               'maktoobDate',
-                              new Date(e.toDate()).getFullYear() +
-                                '-' +
-                                (new Date(e.toDate()).getMonth() + 1) +
-                                '-' +
-                                new Date(e.toDate()).getDate(),
+                              date?.isValid ? date : '',
                             );
                           }}
                         />

@@ -457,30 +457,6 @@ const StudentProfile = () => {
                       studentEnrollmentData,
                     )}
                     <Row className="justify-content-center   rounded ">
-                      <Colxx style={{ paddingInline: '4%' }} xxs="">
-                        <Label className="data-style">شمولیت کال</Label>
-                        <h2>{studentEnrollmentData.educational_year}</h2>
-                        <Label className="data-style">
-                          <IntlMessages id="forms.StdInteranceTypeLabel" />
-                        </Label>
-                        {student.admission_method === 'decree' ? (
-                          <h2>حکمی</h2>
-                        ) : student.internse_type === 'general_kankor' ? (
-                          <h2>کانکور اختصاصی</h2>
-                        ) : (
-                          <h2>کانکور عمومی</h2>
-                        )}
-                        <Label className="data-style">
-                          <IntlMessages id="student.educationType" />
-                        </Label>
-                        {student.student_type === 'continuous' ? (
-                          <h2>پیوسته</h2>
-                        ) : (
-                          <h2>غیر پیوسته</h2>
-                        )}
-                        <br />
-                        <br />
-                      </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
                         <Label className="data-style">
                           <IntlMessages id="menu.institutes" />
@@ -536,6 +512,30 @@ const StudentProfile = () => {
                           </>
                         )}
 
+                        <br />
+                        <br />
+                      </Colxx>
+                      <Colxx style={{ paddingInline: '4%' }} xxs="">
+                        <Label className="data-style">شمولیت کال</Label>
+                        <h2>{studentEnrollmentData.educational_year}</h2>
+                        <Label className="data-style">
+                          <IntlMessages id="forms.StdInteranceTypeLabel" />
+                        </Label>
+                        {student.admission_method === 'decree' ? (
+                          <h2>حکمی</h2>
+                        ) : student.internse_type === 'general_kankor' ? (
+                          <h2>کانکور اختصاصی</h2>
+                        ) : (
+                          <h2>کانکور عمومی</h2>
+                        )}
+                        <Label className="data-style">
+                          <IntlMessages id="student.educationType" />
+                        </Label>
+                        {student.student_type === 'continuous' ? (
+                          <h2>پیوسته</h2>
+                        ) : (
+                          <h2>غیر پیوسته</h2>
+                        )}
                         <br />
                         <br />
                       </Colxx>

@@ -608,7 +608,7 @@ const StudentRegistration = ({ intl }, values) => {
                             locale={persian_fa}
                             months={persianMonthOptions}
                             onChange={(e) =>
-                              console.log(
+                              setFieldValue(
                                 'maktoobDate',
                                 new Date(e.toDate()).getFullYear() +
                                   '-' +

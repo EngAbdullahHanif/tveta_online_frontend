@@ -2,11 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Field } from 'formik';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import {
-  evaluationTypeOptions,
-  genderOptions,
-  persianMonthOptions,
-} from '../global-data/options';
+import { genderOptions, persianMonthOptions } from '../global-data/options';
 import {
   // teacherEvalautionSchema,
   teacherEvaluationValidationSchema,
@@ -14,7 +10,6 @@ import {
 import { Row, Card, CardBody, Label, Button } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx } from 'components/common/CustomBootstrap';
-import { Col, InputNumber, Slider } from 'antd';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import config from '../../../config';
 // import TeacherList from '../teachers/Components/TeacherList';
@@ -37,7 +32,7 @@ const TeacherEvaluationAPI = `${servicePath}/teachers/evaluation`;
 //http://localhost:8000/teachers/evaluation/?id=1
 
 const TeacherEvaluation = (props) => {
-  const { provinces, districts } = useContext(AuthContext);
+  const { institutes, provinces, districts } = useContext(AuthContext);
   const [updatingRecord, setUpdatingRecord] = useState({});
   const [evaluationDate, setEvaluationDate] = useState();
 
@@ -48,50 +43,6 @@ const TeacherEvaluation = (props) => {
     const { data } = await axios.get(
       `${TeacherEvaluationAPI}/?id=${teacherId}`,
     );
-    setInitialEvaluator(data[0].evaluator_name);
-    setInitialStrengthPoints(data[0].strong_points);
-    setInitialWeaknessPoint(data[0].weak_points);
-    setInitialMarks(data[0].score);
-    setInitialEvaluationDate(data[0].evaluation_date);
-    setInitialSuggestions(data[0].suggestions);
-    setInitialTopic(data[0].topic);
-
-    setInitialId([
-      { value: data[0].teacher_id.id, label: data[0].teacher_id.name },
-    ]);
-    setInitialDepartment([
-      {
-        value: data[0].department_id.id,
-        label: data[0].department_id.name,
-      },
-    ]);
-    setInitialSubject([
-      {
-        value: data[0].subject_id.id,
-        label: data[0].subject_id.name,
-      },
-    ]);
-
-    setInitialInsititute([
-      {
-        value: data[0].institute_id.id,
-        label: data[0].institute_id.name,
-      },
-    ]);
-    setInitialClass([
-      {
-        value: data[0].class_id.id,
-        label: data[0].class_id.name,
-      },
-    ]);
-
-    const TeacherEvaluationOptions = evaluationTypeOptions.map(
-      (evaluationType) => {
-        if (evaluationType.value === data[0].evaluation_type) {
-          setInitialEvluationType(evaluationType);
-        }
-      },
-    );
   }
 
   useEffect(() => {
@@ -101,36 +52,18 @@ const TeacherEvaluation = (props) => {
     //setUpdateMode(true);
   }, []);
 
-  const [initialId, setInitialId] = useState([]);
-  const [initialDepartment, setInitialDepartment] = useState([]);
-  const [initialSubject, setInitialSubject] = useState([]);
-  const [initialEvaluator, setInitialEvaluator] = useState();
-  const [initialMarks, setInitialMarks] = useState('');
-  const [initialStrengthPoints, setInitialStrengthPoints] = useState('');
-  const [initialEvaluationDate, setInitialEvaluationDate] = useState('');
-  const [initialInsititute, setInitialInsititute] = useState([]);
-  const [initialClass, setInitialClass] = useState([]);
-  const [initialTopic, setInitialTopic] = useState('');
-  const [initialEvluationType, setInitialEvluationType] = useState([]);
-  const [initialSuggestions, setInitialSuggestions] = useState('');
-  const [initialWeaknessPoint, setInitialWeaknessPoint] = useState('');
   const [teachers, setTeachers] = useState([]);
   const [teacher, setTeacher] = useState([]);
-  const [institutes, setInstitutes] = useState([]);
-  const [departments, setDepartments] = useState([]);
-  const [classes, setClasses] = useState([]);
-  const [subjects, setSubjects] = useState([]);
-  const [strengthPoints, setStrengthPoints] = useState('');
-  const [weaknessPoints, setWeaknessPoints] = useState('');
-  const [suggestion, setSuggestion] = useState([]);
+  // const [institutes, setInstitutes] = useState([]);
 
-  const [isFilter, setIsFilter] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [instituteTeacher, setInstituteTeachers] = useState([]);
   const [items, setItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [instituteTeachers, setInstituteTeachers] = useState([]);
-  const [score, setScore] = useState(1);
+  const [isFilter, setIsFilter] = useState(false);
 
   const [tableParams, setTableParams] = useState({
     pagination: {
@@ -138,266 +71,155 @@ const TeacherEvaluation = (props) => {
       pageSize: 10,
     },
   });
-  const columns = [
-    {
-      // title: <PromptInput title="اساس نمبر" colName="id" endpoint="teachers" />,
-      title: 'اساس نمبر',
-      dataIndex: 'student_id',
-      sorter: (a, b) => a.student_id - b.student_id,
-      width: '5%',
-    },
-    {
-      title: 'نوم/نام',
-      dataIndex: 'name',
-      sorter: (a, b) => a.name - b.name,
-      // render: (name) => `${name.first} ${name.last}`,
-      width: '15%',
-    },
-    {
-      title: 'د پلار نوم',
-      dataIndex: 'father_name',
-      width: '15%',
-    },
-    {
-      title: 'جنسیت',
-      dataIndex: 'gender',
-      // filters: [
-      //   { text: 'Male', value: 'male' },
-      //   { text: 'Female', value: 'female' },
-      // ],
-      // filterSearch: true,
-      // onFilter: (value, record) => {
-      //   record.gender.indexOf(value) === 0;
-      // },
-      width: '10%',
-    },
-    {
-      title: 'ولایت',
-      dataIndex: 'province',
-      width: '10%',
-    },
-    {
-      title: 'تلفون شمیره',
-      dataIndex: 'phone_number',
-      width: '12%',
-    },
-    {
-      title: 'بست',
-      dataIndex: 'grade',
-      width: '15%',
-    },
-    {
-      title: 'حالت',
-      dataIndex: 'status',
-      width: '5%',
-    },
-    {
-      title: 'اپډیټ',
-      dataIndex: 'action',
-      width: '5%',
-    },
-  ];
-  const fetchTeachers = async () => {
-    const response = await axios.get(teachersApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setTeachers(updatedData);
-  };
+  // const columns = [
+  //   {
+  //     title: 'اساس نمبر',
+  //     dataIndex: 'student_id',
+  //     sorter: (a, b) => a.student_id - b.student_id,
+  //     width: '5%',
+  //   },
+  //   {
+  //     title: 'نوم/نام',
+  //     dataIndex: 'name',
+  //     sorter: (a, b) => a.name - b.name,
+  //     width: '15%',
+  //   },
+  //   {
+  //     title: 'د پلار نوم',
+  //     dataIndex: 'father_name',
+  //     width: '15%',
+  //   },
+  //   {
+  //     title: 'جنسیت',
+  //     dataIndex: 'gender',
+  //     width: '10%',
+  //   },
+  //   {
+  //     title: 'ولایت',
+  //     dataIndex: 'province',
+  //     width: '10%',
+  //   },
+  //   {
+  //     title: 'تلفون شمیره',
+  //     dataIndex: 'phone_number',
+  //     width: '12%',
+  //   },
+  //   {
+  //     title: 'بست',
+  //     dataIndex: 'grade',
+  //     width: '15%',
+  //   },
+  //   {
+  //     title: 'حالت',
+  //     dataIndex: 'status',
+  //     width: '5%',
+  //   },
+  //   {
+  //     title: 'اپډیټ',
+  //     dataIndex: 'action',
+  //     width: '5%',
+  //   },
+  // ];
+  // const fetchTeachers = async () => {
+  //   const response = await axios.get(teachersApiUrl);
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name,
+  //   }));
+  //   setTeachers(updatedData);
+  // };
 
-  const fetchInstitutes = async () => {
-    const response = await axios.get(institutesApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setInstitutes(updatedData);
-  };
+  // const fetchInstitutes = async () => {
+  //   const response = await axios.get(institutesApiUrl);
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name,
+  //   }));
+  //   setInstitutes(updatedData);
+  // };
 
-  const fetchDepartments = async () => {
-    const response = await axios.get(departmentsApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setDepartments(updatedData);
-  };
+  // const fetchDepartments = async () => {
+  //   const response = await axios.get(departmentsApiUrl);
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name,
+  //   }));
+  //   setDepartments(updatedData);
+  // };
 
-  const fetchClasses = async () => {
-    const response = await axios.get(classesApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name + ' - ' + item.semester + ' - ' + item.section,
-    }));
-    setClasses(updatedData);
-  };
-  const fetchSubjects = async () => {
-    const response = await axios.get(subjectApiUrl);
-    const updatedData = await response.data.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-    setSubjects(updatedData);
-  };
-  useEffect(() => {
-    fetchData();
-  }, [!isFilter ? JSON.stringify(tableParams) : null]);
+  // const fetchClasses = async () => {
+  //   const response = await axios.get(classesApiUrl);
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name + ' - ' + item.semester + ' - ' + item.section,
+  //   }));
+  //   setClasses(updatedData);
+  // };
+  // const fetchSubjects = async () => {
+  //   const response = await axios.get(subjectApiUrl);
+  //   const updatedData = await response.data.map((item) => ({
+  //     value: item.id,
+  //     label: item.name,
+  //   }));
+  //   setSubjects(updatedData);
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, [!isFilter ? JSON.stringify(tableParams) : null]);
 
-  async function fetchData(params = {}) {
-    console.log('PARAMSSSSSSSSSS: ', params);
-    setIsLoading(true);
-    let endpoint = `institute/`;
-    const params1 = {
-      ...params,
-      // if filters reseted, goto first page
-      page: !isFilter ? tableParams.pagination.current : params.page,
-      page_size: tableParams.pagination.pageSize || null,
-    };
-    // const params = {
-    //   id: teacherId,
-    //   // current_district: district,
-    //   page: currentPage,
-    //   limit: selectedPageSize,
-    //   gender: selectedGenderOption?.value,
-    //   current_province:
-    //     selectedProvinceOption?.column === 'all'
-    //       ? ''
-    //       : selectedProvinceOption?.column,
-    // };
-    // console.log('GENDER OPT', selectedProvinceOption);
-    // if (institute !== '') {
-    //   params.institute_id = institute.id;
-    // } else if (
-    //   selectedProvinceOption?.column === 'all' &&
-    //   selectedGenderOption?.column === 'all'
-    // ) {
-    //   if (rest == true) {
-    //     setDistrict('');
-    //     setTeacherId('');
-    //     setRest(false);
-    //   }
-    //   params.current_province = null;
-    //   params.gender = null;
-    // } else if (selectedProvinceOption?.column === 'all') {
-    //   params.province = null;
-    //   params.gender = selectedGenderOption?.value;
-    // } else if (selectedGenderOption?.column === 'all') {
-    //   params.gender = null;
-    // }
-    const response = await callApi(`teachers/`, '', null, params1);
-    setIsLoading(false);
-    if (response.data && response.status === 200) {
-      setInstituteTeachers(response.data);
-      console.log('TTTTTTTTTTTTTTTTTTTTTTTTT', response?.data);
-      setItems(response?.data.results);
-      setSelectedItems([]);
-      // setTotalItemCount(data);
-      setIsLoaded(true);
-    } else {
-      console.log('students error');
-    }
-  }
+  // async function fetchData(params = {}) {
+  //   console.log('PARAMSSSSSSSSSS: ', params);
+  //   setIsLoading(true);
+  //   let endpoint = `institute/`;
+  //   const params1 = {
+  //     ...params,
+  //     // if filters reseted, goto first page
+  //     page: !isFilter ? tableParams.pagination.current : params.page,
+  //     page_size: tableParams.pagination.pageSize || null,
+  //   };
+  //   const response = await callApi(`teachers/`, '', null, params1);
+  //   setIsLoading(false);
+  //   if (response.data && response.status === 200) {
+  //     setInstituteTeachers(response.data);
+  //     console.log('TTTTTTTTTTTTTTTTTTTTTTTTT', response?.data);
+  //     setItems(response?.data.results);
+  //     setSelectedItems([]);
+  //     // setTotalItemCount(data);
+  //     setIsLoaded(true);
+  //   } else {
+  //     console.log('students error');
+  //   }
+  // }
 
-  const handleTableChange = (pagination, filter, sorter) => {
-    setIsFilter(false);
-    setTableParams({ pagination, filter, ...sorter });
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setItems([]);
-    }
-  };
-  const onFilter = async (values) => {
-    setIsFilter(true);
-    setTableParams({
-      ...tableParams,
-      pagination: {
-        ...tableParams.pagination,
-        current: 1,
-      },
-    });
-    let params = {
-      page: 1,
-    };
-
-    params.current_province = values.filterProvince?.value;
-    params.gender = values.filterGender?.value;
-    params.status = values.filterStatus?.value;
-    params.id = values.filterId || null;
-    fetchData(params);
-  };
-  const handleResetFields = (resetForm) => {
-    resetForm({
-      values: {
-        filterId: '',
-        filterInstitute: [],
-        filterProvince: [],
-        filterGender: [],
-      },
-    });
-    setIsFilter(false);
-    fetchData();
-  };
   useEffect(() => {
     console.log('state: ', location);
     setTeacher(location.state?.item);
-    fetchTeachers();
-    fetchInstitutes();
-    fetchDepartments();
-    fetchClasses();
-    fetchSubjects();
+    // fetchTeachers();
+    // fetchInstitutes();
+    // fetchDepartments();
+    // fetchClasses();
+    // fetchSubjects();
   }, []);
 
-  const initialValues = {
-    id: initialId,
-    department: initialDepartment,
-    subject: initialSubject,
-    evaluator: initialEvaluator,
-    strengthPoints: initialStrengthPoints,
-    marks: initialMarks,
-    evaluationDate: initialEvaluationDate,
-    institute: initialInsititute,
-    class: initialClass,
-    topic: initialTopic,
-    evaluationType: initialEvluationType,
-    weaknessPoints: initialWeaknessPoint,
-    suggestion: initialSuggestions,
-  };
-  const onSubmit = (values) => {
-    setIsNext(true);
-    console.log(values);
-    const data = {
-      teacher_id: teacher.id,
-      institute_id: values.institute.value,
-      department_id: values.department.value,
-      class_id: values.class.value,
-      subject_id: values.subject.value,
-      topic: values.topic,
-      evaluator_name: values.evaluator,
-      evaluation_type: values.evaluationType.value,
-      strong_points: strengthPoints,
-      weak_points: weaknessPoints,
-      suggestions: suggestion,
-      score: values.marks,
-      evaluation_date: values.evaluationDate,
-      user_id: 1,
-    };
-    console.log('Evaluation Data', values);
-    // axios
-    //   .post(evaluationApiUrl, data)
-    //   .then((response) => {
-    //     console.log('response', response);
-    //   })
-    //   .catch((error) => {
-    //     console.log('error', error);
-    //   });
+  const onSubmit = async (values) => {
+    values.institute = values.institute.value;
+    values.teacher = parseInt(teacherId);
+    values.date = evaluationDate;
+    console.log('Evaluation values', values);
+    await callApi('evaluations/nasab/', 'POST', values)
+      .then((response) => {
+        console.log('response in teacher evaluation', response.data);
+        setIsNext(true);
+      })
+      .catch((error) => {
+        console.log('Error in teacher evaluation', error);
+      });
   };
   const [isNext, setIsNext] = useState(false);
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">
-          {<IntlMessages id="teacher.EvalautionTitle" />}
-        </h3>
+        <h3 className="mt-5 m-5">فورم نیازسنجی</h3>
         <Card className="rounded m-4">
           <CardBody>
             <div>
@@ -762,45 +584,20 @@ const TeacherEvaluation = (props) => {
             // </Formik>
             <Formik
               enableReinitialize={true}
-              initialValues={
-                !updatingRecord
-                  ? {
-                      topic: '',
-                      evaluator_name: '',
-                      evaluation_type: [],
-                      strong_points: '',
-                      weak_points: '',
-                      suggestions: '',
-                      evaluation_date: '',
-                      institute: [],
-                      department: [],
-                      classs: [],
-                      subject: [],
-                    }
-                  : {
-                      topic: updatingRecord.topic,
-                      evaluator_name: updatingRecord.evaluator_name,
-                      evaluation_type: evaluationTypeOptions.find(
-                        (inst) => inst.value === updatingRecord.evaluation_type,
-                      ),
-                      strong_points: updatingRecord.strong_points,
-                      weak_points: updatingRecord.weak_points,
-                      suggestions: updatingRecord.suggestions,
-                      evaluation_date: updatingRecord.evaluation_date,
-                      institute: institutes.find(
-                        (inst) => inst.value === updatingRecord.institute,
-                      ),
-                      department: departments.find(
-                        (dep) => dep.value === updatingRecord.department,
-                      ),
-                      classs: classes.find(
-                        (dep) => dep.value === updatingRecord.classs,
-                      ),
-                      subject: subjects.find(
-                        (dep) => dep.value === updatingRecord.subject,
-                      ),
-                    }
-              }
+              initialValues={{
+                topic: '',
+                evaluator_name: '',
+                educational_year: '',
+                semester: '',
+                institute: [],
+                subject: '',
+                excellent: '',
+                outstanding: '',
+                good: '',
+                average: '',
+                weak: '',
+                not_applicable: '',
+              }}
               validationSchema={teacherEvaluationValidationSchema}
               onSubmit={onSubmit}
             >
@@ -814,6 +611,28 @@ const TeacherEvaluation = (props) => {
               }) => (
                 <>
                   <form>
+                    <div className="form-group">
+                      <label
+                        style={inputLabel}
+                        for="educational_year"
+                        className="col-form-label"
+                      >
+                        سال تعلیمی
+                        <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <Field
+                        className="form-control fieldStyle"
+                        name="educational_year"
+                        type="number"
+                        min="1390"
+                        max="1500"
+                      />
+                      {errors.educational_year && touched.educational_year ? (
+                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          {errors.educational_year}
+                        </div>
+                      ) : null}
+                    </div>
                     <div
                       style={{
                         display: 'flex',
@@ -836,30 +655,6 @@ const TeacherEvaluation = (props) => {
                         {errors.evaluator_name && touched.evaluator_name ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
                             {errors.evaluator_name}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group w-100">
-                        <label
-                          style={inputLabel}
-                          for="evaluation_type"
-                          className="col-form-label"
-                        >
-                          ارزیابی ډول
-                          <span style={{ color: 'red' }}>*</span>
-                        </label>
-                        <FormikReactSelect
-                          name="evaluation_type"
-                          id="evaluation_type"
-                          value={values.evaluation_type}
-                          options={evaluationTypeOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          required
-                        />
-                        {errors.evaluation_type && touched.evaluation_type ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.evaluation_type}
                           </div>
                         ) : null}
                       </div>
@@ -895,55 +690,30 @@ const TeacherEvaluation = (props) => {
                           </div>
                         ) : null}
                       </div>
-                      <div className="form-group w-100">
+                      <div className="form-group">
                         <label
                           style={inputLabel}
-                          for="department"
+                          for="semester"
                           className="col-form-label"
                         >
-                          ډیپارتمنت
+                          سمستر
                           <span style={{ color: 'red' }}>*</span>
                         </label>
-                        <FormikReactSelect
-                          name="department"
-                          id="department"
-                          value={values.department}
-                          options={departments}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          required
+                        <Field
+                          className="form-control fieldStyle"
+                          name="semester"
+                          type="number"
+                          min="1"
+                          max="8"
                         />
-                        {errors.department && touched.department ? (
+                        {errors.semester && touched.semester ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.department}
+                            {errors.semester}
                           </div>
                         ) : null}
                       </div>
                     </div>
-                    <div className="form-group">
-                      <label
-                        style={inputLabel}
-                        for="classs"
-                        className="col-form-label"
-                      >
-                        صنف
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <FormikReactSelect
-                        name="classs"
-                        id="classs"
-                        value={values.classs}
-                        options={classes}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.classs && touched.classs ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.classs}
-                        </div>
-                      ) : null}
-                    </div>
+
                     <div
                       style={{
                         display: 'flex',
@@ -960,13 +730,10 @@ const TeacherEvaluation = (props) => {
                           <span style={{ color: 'red' }}>*</span>
                         </label>
 
-                        <FormikReactSelect
+                        <Field
+                          className="form-control fieldStyle"
                           name="subject"
                           id="subject"
-                          value={values.subject}
-                          options={subjects}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
                           required
                         />
                         {errors.subject && touched.subject ? (
@@ -987,6 +754,7 @@ const TeacherEvaluation = (props) => {
                         <br />
 
                         <DatePicker
+                          className="form-control fieldStyle"
                           style={{
                             width: '100%',
                             height: 38,
@@ -1009,7 +777,6 @@ const TeacherEvaluation = (props) => {
                         />
                       </div>
                     </div>
-
                     <div className="form-group">
                       <label
                         style={inputLabel}
@@ -1026,97 +793,166 @@ const TeacherEvaluation = (props) => {
                         </div>
                       ) : null}
                     </div>
-                    <div className="form-group">
-                      <label
-                        style={inputLabel}
-                        for="strong_points"
-                        className="col-form-label"
-                      >
-                        مثبت پواینت
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="strong_points"
-                      />
-                      {errors.strong_points && touched.strong_points ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.strong_points}
-                        </div>
-                      ) : null}
+                    <h1>نمره نیازسنجی</h1>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <div className="form-group">
+                        <label
+                          style={inputLabel}
+                          for="excellent"
+                          className="col-form-label"
+                        >
+                          اعلی
+                          <span style={{ color: 'red' }}>*</span>
+                        </label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="excellent"
+                          type="number"
+                          min="0"
+                          max="100"
+                        />
+                        {errors.excellent && touched.excellent ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.excellent}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-group">
+                        <label
+                          style={inputLabel}
+                          for="outstanding"
+                          className="col-form-label"
+                        >
+                          عالی
+                          <span style={{ color: 'red' }}>*</span>
+                        </label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="outstanding"
+                          type="number"
+                          min="0"
+                          max="100"
+                        />
+                        {errors.outstanding && touched.outstanding ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.outstanding}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-group">
+                        <label
+                          style={inputLabel}
+                          for="good"
+                          className="col-form-label"
+                        >
+                          خوب
+                          <span style={{ color: 'red' }}>*</span>
+                        </label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="good"
+                          type="number"
+                          min="0"
+                          max="100"
+                        />
+                        {errors.good && touched.good ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.good}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-group">
+                        <label
+                          style={inputLabel}
+                          for="average"
+                          className="col-form-label"
+                        >
+                          متوسط
+                          <span style={{ color: 'red' }}>*</span>
+                        </label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="average"
+                          type="number"
+                          min="0"
+                          max="100"
+                        />
+                        {errors.average && touched.average ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.average}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-group">
+                        <label
+                          style={inputLabel}
+                          for="weak"
+                          className="col-form-label"
+                        >
+                          ضعیف
+                          <span style={{ color: 'red' }}>*</span>
+                        </label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="weak"
+                          type="number"
+                          min="0"
+                          max="100"
+                        />
+                        {errors.weak && touched.weak ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.weak}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-group">
+                        <label
+                          style={inputLabel}
+                          for="not_applicable"
+                          className="col-form-label"
+                        >
+                          موجود نیست
+                          <span style={{ color: 'red' }}>*</span>
+                        </label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="not_applicable"
+                          type="number"
+                          min="0"
+                          max="100"
+                        />
+                        {errors.not_applicable && touched.not_applicable ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.not_applicable}
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
                     <div className="form-group">
                       <label
                         style={inputLabel}
-                        for="weak_points"
+                        for="description"
                         className="col-form-label"
                       >
-                        منفی پواینت
+                        تبصره
                         <span style={{ color: 'red' }}>*</span>
                       </label>
                       <Field
                         className="form-control fieldStyle"
-                        name="weak_points"
+                        name="description"
                       />
-                      {errors.weak_points && touched.weak_points ? (
+                      {errors.description && touched.description ? (
                         <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.weak_points}
+                          {errors.description}
                         </div>
                       ) : null}
                     </div>
 
-                    <div className="form-group">
-                      <label
-                        style={inputLabel}
-                        for="suggestions"
-                        className="col-form-label"
-                      >
-                        توسعه
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="suggestions"
-                      />
-                      {errors.suggestions && touched.suggestions ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.suggestions}
-                        </div>
-                      ) : null}
-                    </div>
-                    <label
-                      style={inputLabel}
-                      for="score"
-                      className="col-form-label"
-                    >
-                      نمری
-                      <span style={{ color: 'red' }}>*</span>
-                    </label>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <Col span={4}>
-                        <InputNumber
-                          min={1}
-                          max={10}
-                          style={{ margin: '0 16px' }}
-                          value={score}
-                          onChange={(val) => setScore(val)}
-                        />
-                      </Col>
-                      <Col span={17}>
-                        <Slider
-                          min={1}
-                          max={10}
-                          onChange={(val) => setScore(val)}
-                          value={typeof score === 'number' ? score : 0}
-                        />
-                      </Col>
-                    </div>
                     <br />
                     <button className="btn btn-primary" onClick={handleSubmit}>
                       ثبت

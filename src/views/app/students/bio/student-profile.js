@@ -236,7 +236,6 @@ const StudentProfile = () => {
               className=" d-flex justify-content-center "
               style={{ marginBottom: '2%' }}
             >
-              {' '}
               <div className="d-inline-block">
                 <Button
                   style={{

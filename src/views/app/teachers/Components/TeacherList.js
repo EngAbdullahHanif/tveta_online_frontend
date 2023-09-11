@@ -54,7 +54,11 @@ const TeacherList = ({
             resetForm,
           }) => (
             <>
-              <Field name="filterId" placeholder="ایدی" />
+              <Field
+                className="form-control fieldStyle"
+                name="filterId"
+                placeholder="ایدی"
+              />
               <FormikReactSelect
                 className="w-100"
                 placeholder="ولایت"

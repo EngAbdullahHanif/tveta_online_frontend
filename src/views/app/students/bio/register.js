@@ -4,7 +4,6 @@ import { FormControl } from 'react-bootstrap';
 import './../../.././../assets/css/global-style.css';
 import { InputMask } from 'primereact/inputmask';
 import {
-  fetchDistricts,
   genderOptions,
   mediumOfInstructionOptions,
   StdInteranceOptions,
@@ -18,7 +17,6 @@ import {
 import DatePicker from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import {
   Row,
   Card,
@@ -71,55 +69,6 @@ const StudentRegistration = ({ intl }, values) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const [instituteDeps, setInstituteDeps] = useState([]);
-  const history = useHistory();
-  // const [fields, setFields] = useState({
-  //   name1: '',
-  //   fatherName: '',
-  //   lastName: '',
-  //   lastNameEng: '',
-  //   fatherDuty: '',
-  //   englishName: '',
-  //   fatherEngName: '',
-  //   grandFatherName: '',
-  //   fatherDutyLocation: '',
-  //   placeOfBirth: '',
-  //   DoB: '',
-  //   monthOfBirth: '',
-  //   dayOfBirth: '',
-  //   gender: '',
-  //   tazkiraNo: '',
-  //   phoneNo: '',
-  //   email: '',
-  //   idCardPageNo: '',
-  //   sabtNo: '',
-  //   sokokNo: '',
-  //   idCardJoldNo: '',
-  //   tazkiraType: tazkiraOptions[0],
-  //   levelOfEducation: '',
-  //   preSchool: '',
-  //   graduationYear: '',
-  //   schoolProvince: '',
-  //   province: '',
-  //   C_Province: '',
-  //   C_District: '',
-  //   district: '',
-  //   village: '',
-  //   C_Village: '',
-  //   institute: '',
-  //   class: '',
-  //   educationalYear: '',
-  //   department: '',
-  //   mediumOfInstruction: '',
-  //   // kankorId: initialKankorId,
-  //   studentId: '',
-  //   studyTime: '',
-  //   interanceType: '',
-  //   studentType: '',
-  //   batch: '',
-  //   field: '',
-  //   sector: '',
-  //   file: '',
-  // });
 
   const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
   const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
@@ -245,20 +194,6 @@ const StudentRegistration = ({ intl }, values) => {
     setSelectedFile(file);
   };
 
-  const handleProvinceChange = async (name, value, setFieldValue) => {
-    console.log('name is ', name);
-    console.log('value is ', value);
-    const districts = await fetchDistricts(value.value);
-    console.log('Filtered Districts: ', districts);
-    if (name === 'C_Province') {
-      setCurrentDistrictOptions(districts);
-      setFieldValue('C_District', []);
-    } else {
-      setMainDistrictOptions(districts);
-      setFieldValue('district', []);
-    }
-  };
-
   const createNotification = (type, className) => {
     const cName = className || '';
     switch (type) {
@@ -312,8 +247,8 @@ const StudentRegistration = ({ intl }, values) => {
     storeDataToLocalStorage(localStorageData);
     const data = {
       //personal info,
-      maktob_date: newFields.maktoobDate,
-      maktob_number: newFields.maktoobNumber,
+      maktob_date: newFields.maktoobDate || null,
+      maktob_number: newFields.maktoobNumber || null,
       name: newFields.name1,
       student_id: newFields.studentId,
       kankor_id: newFields.kankorId,
@@ -334,7 +269,7 @@ const StudentRegistration = ({ intl }, values) => {
       page_number: newFields.idCardPageNo || null,
       sabt_number: newFields.sabtNo || null,
       tazkira_type: newFields.tazkiraType.value,
-      registration_number: newFields.tazkiraNo,
+      registration_number: newFields.tazkiraNo || null,
       sokok_number: newFields.sokokNo || null,
       main_province: newFields.province.value,
       main_district: newFields.district.value,
@@ -387,6 +322,8 @@ const StudentRegistration = ({ intl }, values) => {
         setFieldError('studentId', 'شاگرد به ای شماره اساس وجود دارد');
       }
       createNotification('error', 'filled');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -584,17 +521,13 @@ const StudentRegistration = ({ intl }, values) => {
                 handleSubmit,
                 setFieldTouched,
                 setFieldValue,
-                setFieldError,
               }) => (
                 <Form className="av-tooltip tooltip-label-right has-float-label error-l-100 style ">
                   <Row>
                     <Colxx xxs="12">
                       <div className="p-3 w-50">
                         <FormGroup className="form-group has-float-label ">
-                          <Label style={inputLabel}>
-                            مکتوب تاریخ
-                            <span style={{ color: 'red' }}>*</span>
-                          </Label>
+                          <Label style={inputLabel}>مکتوب تاریخ</Label>
                           <DatePicker
                             style={{
                               width: '100%',
@@ -607,7 +540,11 @@ const StudentRegistration = ({ intl }, values) => {
                             calendar={persian}
                             locale={persian_fa}
                             months={persianMonthOptions}
-                            onChange={(e) =>
+                            onChange={(e) => {
+                              if (!e) {
+                                setFieldValue('maktoobDate', '');
+                                return;
+                              }
                               setFieldValue(
                                 'maktoobDate',
                                 new Date(e.toDate()).getFullYear() +
@@ -615,15 +552,12 @@ const StudentRegistration = ({ intl }, values) => {
                                   (new Date(e.toDate()).getMonth() + 1) +
                                   '-' +
                                   new Date(e.toDate()).getDate(),
-                              )
-                            }
+                              );
+                            }}
                           />
                         </FormGroup>
                         <FormGroup className="form-group has-float-label">
-                          <Label style={inputLabel}>
-                            مکتوب نمبر
-                            <span style={{ color: 'red' }}>*</span>
-                          </Label>
+                          <Label style={inputLabel}>مکتوب نمبر</Label>
                           <Field
                             className="form-control fieldStyle"
                             name="maktoobNumber"
@@ -703,7 +637,7 @@ const StudentRegistration = ({ intl }, values) => {
                         {/*  Class name  */}
                         <FormGroup className="form-group has-float-label ">
                           <Label style={inputLabel}>
-                            <IntlMessages id="marks.ClassLabel" />
+                            <IntlMessages id="curriculum.admissionGrade" />
                             <span style={{ color: 'red' }}>*</span>
                           </Label>
                           <FormikReactSelect
@@ -726,7 +660,7 @@ const StudentRegistration = ({ intl }, values) => {
                         {/* Eduactional Year*/}
                         <FormGroup className="form-group has-float-label ">
                           <Label style={inputLabel}>
-                            <IntlMessages id="curriculum.eduactionalYearLabel" />
+                            <IntlMessages id="curriculum.admissionYear" />
                             <RequiredHash />
                           </Label>
 
@@ -1288,7 +1222,7 @@ const StudentRegistration = ({ intl }, values) => {
                             value={values.province}
                             options={provinces}
                             onChange={(name, value) => {
-                              handleProvinceChange(name, value, setFieldValue);
+                              setFieldValue('district', []);
                               setFieldValue(name, value);
                             }}
                             isSearchable={true}
@@ -1311,7 +1245,10 @@ const StudentRegistration = ({ intl }, values) => {
                             name="district"
                             id="district"
                             value={values.district}
-                            options={mainDistrictOptions}
+                            options={districts?.filter(
+                              (district) =>
+                                district.province === values.province.value,
+                            )}
                             onChange={setFieldValue}
                             onBlur={setFieldTouched}
                             isSearchable={true}
@@ -1356,7 +1293,7 @@ const StudentRegistration = ({ intl }, values) => {
                             options={provinces}
                             isSearchable={true}
                             onChange={(name, value) => {
-                              handleProvinceChange(name, value, setFieldValue);
+                              setFieldValue('C_District', []);
                               setFieldValue(name, value);
                             }}
                             onBlur={setFieldTouched}
@@ -1378,7 +1315,10 @@ const StudentRegistration = ({ intl }, values) => {
                             name="C_District"
                             id="C_District"
                             value={values.C_District}
-                            options={currentDistrictOptions}
+                            options={districts?.filter(
+                              (district) =>
+                                district.province === values.C_Province.value,
+                            )}
                             onChange={setFieldValue}
                             onBlur={setFieldTouched}
                             isSearchable={true}
@@ -1557,7 +1497,8 @@ const StudentRegistration = ({ intl }, values) => {
                     </Colxx>
                   </Row>
                   <button className="btn btn-primary" onClick={handleSubmit}>
-                    Submit
+                    ثبت
+                    {loading && <Spinner />}
                   </button>
                 </Form>
               )}

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunktveta_online=self.webpackChunktveta_online||[]).push([[368],{10368:function(e,n,t){t.r(n);t(50390);var u=t(62559);n.default=function(){return(0,u.jsx)(u.Fragment,{})}}}]);
+//# sourceMappingURL=368.9858b078.chunk.js.map

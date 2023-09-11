@@ -1204,8 +1204,10 @@ module.exports = {
   'curriculum.subjectdErr': 'مضمون اړین دی/ مضمون ضروری است',
 
   'curriculum.classLabel': 'ټولګی/ صنف',
+  'curriculum.admissionGrade': 'د شامېلېدو ټولګی/ صنف شمولیت',
   'curriculum.classErr': 'ټولګی اړین دی/ صنف ضروری است',
-  'curriculum.eduactionalYearLabel': 'تعلیمی کال/سال تعلیمی',
+  'curriculum.eduactionalYearLabel': 'تعلیمی/تحصیلی کال/سال تعلیمی/تحصیلی',
+  'curriculum.admissionYear': 'شامېلېدو کال/ سال شمولیت',
   'curriculum.eduactionalYearList': 'سال تعلیمی',
   'curriculum.eduactionalYearErr': 'ټعلیمی کال اړین دی / سال تعلیمی ضروری است',
 

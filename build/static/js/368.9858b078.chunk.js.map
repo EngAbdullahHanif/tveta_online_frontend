@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/368.9858b078.chunk.js","mappings":"iJAMA,UAJuB,WACrB,OAAOA,EAAAA,EAAAA,KAAAC,EAAAA,SAAA,GACT,C","sources":["views/app/institutes/institute-create.js"],"sourcesContent":["import React from 'react';\n\nconst InstitutCreate = () => {\n  return <></>;\n};\n\nexport default InstitutCreate;\n"],"names":["_jsx","_Fragment"],"sourceRoot":""}

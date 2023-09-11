@@ -7,9 +7,9 @@ import {
   tazkiraOptions,
   StdInteranceOptions,
   mediumOfInstructionOptions,
-  StudentTypeOptions,
   studyTimeOptions,
   persianMonthOptions,
+  StudentEnrollmentTypeOptions,
 } from '../../global-data/options';
 import DatePicker from 'react-multi-date-picker';
 import { inputLabel } from 'config/styling';
@@ -18,15 +18,7 @@ import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
 
 import './../../../../assets/css/global-style.css';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-  Spinner,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
@@ -102,6 +94,7 @@ const StudentUpdate = ({ intl }, values) => {
       '',
       null,
     );
+    console.log('STD ENRRRRRRRRRRRRRRRRRRRRRR', data);
     setStudentEnrollmentData(data);
   }
 
@@ -154,7 +147,42 @@ const StudentUpdate = ({ intl }, values) => {
       .catch((err) => console.log('Error in Teacher Save: ', err))
       .finally(() => setIsLoading(false));
   };
+
+  const updateStudentEnrollment = async (newFields) => {
+    // alert('Form Submitted');
+    console.log('Form Data: ', newFields);
+    setIsLoading(true);
+    const data = {
+      maktob_date: newFields?.maktoobDate,
+      maktob_number: newFields?.maktoobNumber || null,
+      institute: newFields.institute?.value,
+      department: newFields.department?.value,
+      student_type: newFields.enrollment_type?.value,
+      classs: newFields.class?.value,
+      educational_year: newFields.educationalYear,
+      study_time: newFields.studyTime?.value,
+    };
+    await callApi(`students/${studentId}/institute/`, 'PATCH', data)
+      .then((response) => {
+        if (response.data) {
+          message.success('شاګرد آپډیټ شو');
+          history.push(`/app/students/student/${studentId}`);
+        }
+      })
+      .catch((err) => console.log('Error in Teacher Save: ', err))
+      .finally(() => setIsLoading(false));
+  };
+
   const initValues = {
+    maktoobDate: studentEnrollmentData?.maktoobDate || '',
+    maktoobNumber: studentEnrollmentData?.maktoobNumber || '',
+    institute:
+      institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
+      '',
+    department:
+      departments.find(
+        (op) => op.value === studentEnrollmentData?.department,
+      ) || '',
     name: student?.name,
     englishName: student?.english_name,
     lastName: student?.last_name,
@@ -198,12 +226,32 @@ const StudentUpdate = ({ intl }, values) => {
       (type) => type.value == student?.admission_method,
     ),
   };
+  const initValues2 = {
+    maktoobDate: studentEnrollmentData?.maktob_date || '',
+    maktoobNumber: studentEnrollmentData?.maktob_number || '',
+    institute:
+      institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
+      [],
+    department:
+      departments.find(
+        (op) => op.value === studentEnrollmentData?.department,
+      ) || [],
+    studentType:
+      StudentEnrollmentTypeOptions.find(
+        (op) => op.value === studentEnrollmentData.enrollment_type,
+      ) || [],
+    class: classs.find((op) => op.value === studentEnrollmentData.classs),
+    educationalYear: studentEnrollmentData.educational_year,
+    studyTime: studyTimeOptions.find(
+      (op) => op.value === studentEnrollmentData.shift,
+    ),
+  };
   //   console.log('Student: ', student);
-  console.log('Student Init Values: ', initValues);
+  console.log('Student Init Values: ', studyTimeOptions);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
   return (
     <Card>
       <div className="mt-4 ml-5">
@@ -714,10 +762,10 @@ const StudentUpdate = ({ intl }, values) => {
           <Formik
             enableReinitialize={true}
             innerRef={forms[1]}
-            initialValues={initValues}
+            initialValues={initValues2}
             // validateOnMount
             // validationSchema={studentRegisterFormStep_1}
-            onSubmit={updateStudent}
+            onSubmit={updateStudentEnrollment}
           >
             {({
               errors,
@@ -740,11 +788,13 @@ const StudentUpdate = ({ intl }, values) => {
                             borderRadius: 0,
                             border: 'none',
                           }}
+                          value={studentEnrollmentData.maktob_date}
                           containerClassName="form-control fieldStyle"
                           name="maktoobDate"
                           calendar={persian}
                           locale={persian_fa}
                           months={persianMonthOptions}
+                          format="YYYY-MM-YY"
                           onChange={(e) => {
                             if (!e) {
                               setFieldValue('maktoobDate', '');
@@ -838,14 +888,14 @@ const StudentUpdate = ({ intl }, values) => {
                       {/*Student Type*/}
                       <FormGroup className="form-group has-float-label error-l-100">
                         <Label style={inputLabel}>
-                          <IntlMessages id="forms.StudentTypeLabel" />
+                          <IntlMessages id="forms.EnrollmentType" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
                           name="studentType"
                           id="studentType"
                           value={values.studentType}
-                          options={StudentTypeOptions}
+                          options={StudentEnrollmentTypeOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           isSearchable={false}
@@ -903,26 +953,6 @@ const StudentUpdate = ({ intl }, values) => {
                       </FormGroup>
 
                       {/* admission method*/}
-                      <FormGroup className="form-group has-float-label error-l-100">
-                        <Label style={inputLabel}>
-                          <IntlMessages id="forms.StdInteranceTypeLabel" />
-                          <span style={{ color: 'red' }}>*</span>
-                        </Label>
-                        <FormikReactSelect
-                          name="interanceType"
-                          id="interanceType"
-                          value={values.interanceType}
-                          options={StdInteranceOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          isSearchable={false}
-                        />
-                        {errors.interanceType && touched.interanceType ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.interanceType}
-                          </div>
-                        ) : null}
-                      </FormGroup>
 
                       {/* medium OfInstruction (Teaching Language) */}
                       <FormGroup className="form-group has-float-label ">

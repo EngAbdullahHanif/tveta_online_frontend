@@ -381,6 +381,12 @@ export const StudentTypeOptions = [
   },
 ];
 
+export const StudentEnrollmentTypeOptions = [
+  { value: 'new', label: 'جدید/ نوی' },
+  { value: 'renew', label: 'مجدد' },
+  { value: 'transfer', label: 'تبدیلی' },
+];
+
 export const InstituteShiftOptions = [
   { value: 'morning', label: <IntlMessages id="forms.morningShift" /> },
   { value: 'afternoon', label: <IntlMessages id="forms.afternoonShift" /> },

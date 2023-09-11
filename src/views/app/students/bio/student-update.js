@@ -30,7 +30,6 @@ import {
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
-import { NotificationManager } from 'components/common/react-notifications';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 import { message } from 'antd';
@@ -62,6 +61,7 @@ const StudentUpdate = ({ intl }, values) => {
   const [instituteDeps, setInstituteDeps] = useState([]);
   const [instDepartmentOptions, setInstDepartmentOptions] = useState([]);
   const [classOptions, setClassOptions] = useState([]);
+  const [studentEnrollmentData, setStudentEnrollmentData] = useState([]);
 
   // fetch department based on selected institute
   const fetchInstDepts = (inst) => {
@@ -83,9 +83,26 @@ const StudentUpdate = ({ intl }, values) => {
   };
 
   async function fetchStudent() {
-    const { data } = await callApi(`students/${studentId}/`, '', null);
-    console.log('already existing data:', data);
-    setStudent(data);
+    try {
+      setIsLoading(true);
+      const { data } = await callApi(`students/${studentId}/`, '', null);
+      console.log('already existing data:', data);
+      setStudent(data);
+      await fetchStudentEnrollment();
+    } catch (error) {
+      console.log('Error in fetching student: ', error);
+    } finally {
+      setIsLoading(true);
+    }
+  }
+
+  async function fetchStudentEnrollment() {
+    const { data } = await callApi(
+      `students/${studentId}/institute/`,
+      '',
+      null,
+    );
+    setStudentEnrollmentData(data);
   }
 
   const { studentId } = useParams();
@@ -95,64 +112,7 @@ const StudentUpdate = ({ intl }, values) => {
       fetchStudent();
       setIsLoading(false);
     }
-  }, []);
-
-  const createNotification = (type, className) => {
-    const cName = className || '';
-    switch (type) {
-      case 'success':
-        NotificationManager.success(
-          'استاد موفقانه رجستر شو',
-          'موفقیت',
-          3000,
-          null,
-          null,
-          cName,
-        );
-        break;
-      case 'error':
-        NotificationManager.error(
-          'استاد ثبت نشو،لطفا معلومات دقیق دننه کی',
-          'خطا',
-          5000,
-          () => {
-            // alert('callback');
-          },
-          null,
-          cName,
-        );
-        break;
-      default:
-        NotificationManager.info('Info message');
-        break;
-    }
-  };
-
-  const fetchDistricts = async (provinceId) => {
-    setMainDistricts(
-      districts.filter((district) => district.province === provinceId),
-    );
-  };
-
-  const fetchCurrentDistricts = async (provinceId) => {
-    setCurrentDistricts(
-      districts.filter((district) => district.province === provinceId),
-    );
-  };
-
-  useEffect(() => {
-    console.log('selectedmainProvince', selectedMainProvince);
-    if (selectedMainProvince) {
-      fetchDistricts(selectedMainProvince);
-    }
-  }, [selectedMainProvince]);
-
-  useEffect(() => {
-    console.log('selectedProvince', selectedCurrentProvince);
-    if (selectedCurrentProvince) {
-      fetchCurrentDistricts(selectedCurrentProvince);
-    }
-  }, [selectedCurrentProvince]);
+  }, [studentId]);
 
   const updateStudent = (newFields) => {
     // alert('Form Submitted');

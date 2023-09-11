@@ -15,7 +15,7 @@ export const YEAR_VALIDATOR = Yup.number()
 export const EDUCATIONAL_YEAR_VALIDATOR = Yup.number()
   .min(1350, 'از ۱۳۴۹ باید بیشتر باشد')
   .max(CURRENT_SHAMSI_YEAR, 'باید از سال فعلی بزرگتر نباشد')
-  .required('سال تاسیس الزامی است');
+  .required('سال تعلیمی الزامی است');
 
 const FormValidationsUi = ({ match }) => {
   return (

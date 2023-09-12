@@ -22,7 +22,10 @@ import { Colxx, Separator } from 'components/common/CustomBootstrap';
 import config from '../../../../config';
 
 import { AuthContext } from 'context/AuthContext';
-import { studentStatusOptions } from 'views/app/global-data/options';
+import {
+  studentStatusOptions,
+  studyTimeOptions,
+} from 'views/app/global-data/options';
 // import { BsPencilSquare } from 'react-icons/bs';
 
 const servicePath = config.API_URL;
@@ -452,10 +455,6 @@ const StudentProfile = () => {
                         </h2>
                       </Colxx>
                     </Row>
-                    {console.log(
-                      'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
-                      studentEnrollmentData,
-                    )}
                     <Row className="justify-content-center   rounded ">
                       <Colxx style={{ paddingInline: '4%' }}>
                         <Label className="data-style">
@@ -475,6 +474,14 @@ const StudentProfile = () => {
                             departments.find(
                               (d) =>
                                 d.value === studentEnrollmentData.department,
+                            )?.label
+                          }
+                        </h2>
+                        <Label className="data-style">شفت/وخت</Label>
+                        <h2>
+                          {
+                            studyTimeOptions.find(
+                              (d) => d.value === studentEnrollmentData.shift,
                             )?.label
                           }
                         </h2>

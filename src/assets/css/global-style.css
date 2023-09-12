@@ -1,3 +1,7 @@
+.ant-table-tbody .ant-table-row:nth-child(even) {
+  background-color:#F3F1F1;
+}
+
 .style {
   font-size: 170%;
 }

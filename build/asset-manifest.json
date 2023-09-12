@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.259e1f65.css",
-    "main.js": "/static/js/main.9f0aa395.js",
+    "main.js": "/static/js/main.bdfd652d.js",
     "static/css/5495.917dbab3.chunk.css": "/static/css/5495.917dbab3.chunk.css",
     "static/js/5495.80ca8e5e.chunk.js": "/static/js/5495.80ca8e5e.chunk.js",
     "static/css/4298.1d6fef99.chunk.css": "/static/css/4298.1d6fef99.chunk.css",
@@ -94,7 +94,7 @@
     "kankor-student-list.js": "/static/js/kankor-student-list.2508c450.chunk.js",
     "marks-register.js": "/static/js/marks-register.97c48599.chunk.js",
     "attendance-register.js": "/static/js/attendance-register.210d93ed.chunk.js",
-    "student-profile.js": "/static/js/student-profile.23aed170.chunk.js",
+    "student-profile.js": "/static/js/student-profile.9849e73c.chunk.js",
     "student-transfer.js": "/static/js/student-transfer.d1de73cd.chunk.js",
     "marks-display.js": "/static/js/marks-display.eec1a3aa.chunk.js",
     "marks-display-allsubs.js": "/static/js/marks-display-allsubs.ff152108.chunk.js",
@@ -258,7 +258,7 @@
     "static/js/4804.0a0d7e68.chunk.js": "/static/js/4804.0a0d7e68.chunk.js",
     "static/js/4558.9f8df5d2.chunk.js": "/static/js/4558.9f8df5d2.chunk.js",
     "static/js/1032.aafaa4e1.chunk.js": "/static/js/1032.aafaa4e1.chunk.js",
-    "static/js/345.10d8618c.chunk.js": "/static/js/345.10d8618c.chunk.js",
+    "static/js/345.982205ad.chunk.js": "/static/js/345.982205ad.chunk.js",
     "static/js/6622.c05e6504.chunk.js": "/static/js/6622.c05e6504.chunk.js",
     "static/js/610.91796b5c.chunk.js": "/static/js/610.91796b5c.chunk.js",
     "static/media/12.png": "/static/media/12.04be03fa1acb22d366ea.png",
@@ -294,7 +294,7 @@
     "static/media/white-full.svg": "/static/media/white-full.0fc3d8acffdda6d64e27.svg",
     "index.html": "/index.html",
     "main.259e1f65.css.map": "/static/css/main.259e1f65.css.map",
-    "main.9f0aa395.js.map": "/static/js/main.9f0aa395.js.map",
+    "main.bdfd652d.js.map": "/static/js/main.bdfd652d.js.map",
     "5495.917dbab3.chunk.css.map": "/static/css/5495.917dbab3.chunk.css.map",
     "5495.80ca8e5e.chunk.js.map": "/static/js/5495.80ca8e5e.chunk.js.map",
     "4298.1d6fef99.chunk.css.map": "/static/css/4298.1d6fef99.chunk.css.map",
@@ -387,7 +387,7 @@
     "kankor-student-list.2508c450.chunk.js.map": "/static/js/kankor-student-list.2508c450.chunk.js.map",
     "marks-register.97c48599.chunk.js.map": "/static/js/marks-register.97c48599.chunk.js.map",
     "attendance-register.210d93ed.chunk.js.map": "/static/js/attendance-register.210d93ed.chunk.js.map",
-    "student-profile.23aed170.chunk.js.map": "/static/js/student-profile.23aed170.chunk.js.map",
+    "student-profile.9849e73c.chunk.js.map": "/static/js/student-profile.9849e73c.chunk.js.map",
     "student-transfer.d1de73cd.chunk.js.map": "/static/js/student-transfer.d1de73cd.chunk.js.map",
     "marks-display.eec1a3aa.chunk.js.map": "/static/js/marks-display.eec1a3aa.chunk.js.map",
     "marks-display-allsubs.ff152108.chunk.js.map": "/static/js/marks-display-allsubs.ff152108.chunk.js.map",
@@ -551,12 +551,12 @@
     "4804.0a0d7e68.chunk.js.map": "/static/js/4804.0a0d7e68.chunk.js.map",
     "4558.9f8df5d2.chunk.js.map": "/static/js/4558.9f8df5d2.chunk.js.map",
     "1032.aafaa4e1.chunk.js.map": "/static/js/1032.aafaa4e1.chunk.js.map",
-    "345.10d8618c.chunk.js.map": "/static/js/345.10d8618c.chunk.js.map",
+    "345.982205ad.chunk.js.map": "/static/js/345.982205ad.chunk.js.map",
     "6622.c05e6504.chunk.js.map": "/static/js/6622.c05e6504.chunk.js.map",
     "610.91796b5c.chunk.js.map": "/static/js/610.91796b5c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.259e1f65.css",
-    "static/js/main.9f0aa395.js"
+    "static/js/main.bdfd652d.js"
   ]
 }

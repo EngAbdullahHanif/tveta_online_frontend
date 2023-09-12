@@ -171,6 +171,7 @@ const ThumbListPages = () => {
   // };
 
   const onFilter = async (values) => {
+    console.log('FILTER VALUES');
     setIsFilter(true);
     setTableParams({
       ...tableParams,
@@ -182,8 +183,10 @@ const ThumbListPages = () => {
     let params = {
       page: 1,
     };
+
     params.institute_enrollment__institute = values.filterInstitute?.value;
     params.current_province = values.filterProvince?.value;
+    params.search = values.search || null;
     params.student_id = values.filterId || null;
 
     fetchData(params);
@@ -195,7 +198,12 @@ const ThumbListPages = () => {
 
   const handleResetFields = (resetForm) => {
     resetForm({
-      values: { filterId: '', filterInstitute: [], filterProvince: [] },
+      values: {
+        filterId: '',
+        search: '',
+        filterInstitute: [],
+        filterProvince: [],
+      },
     });
     setIsFilter(false);
     fetchData();
@@ -232,9 +240,16 @@ const ThumbListPages = () => {
               <>
                 <Field
                   className="form-control fieldStyle"
+                  name="search"
+                  placeholder="جستجو/پلټنه"
+                />
+                <Field
+                  className="form-control fieldStyle"
                   name="filterId"
                   placeholder="ایدی"
+                  type="number"
                 />
+
                 <FormikReactSelect
                   className="w-100"
                   placeholder="ولایت"

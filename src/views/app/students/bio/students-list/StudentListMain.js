@@ -30,7 +30,7 @@ const columns = [
     width: '15%',
   },
   {
-    title: 'د پلار نوم',
+    title: 'نام پدر/ د پلار نوم',
     dataIndex: 'father_name',
     width: '10%',
   },
@@ -46,7 +46,7 @@ const columns = [
     width: '8%',
   },
   {
-    title: 'تلفون شمیره',
+    title: 'شماره تلفون/تلفون شمیره',
     dataIndex: 'phone_number',
     width: '10%',
   },
@@ -230,7 +230,11 @@ const ThumbListPages = () => {
               resetForm,
             }) => (
               <>
-                <Field name="filterId" placeholder="ایدی" />
+                <Field
+                  className="form-control fieldStyle"
+                  name="filterId"
+                  placeholder="ایدی"
+                />
                 <FormikReactSelect
                   className="w-100"
                   placeholder="ولایت"

@@ -33,6 +33,7 @@ import {
   MyLabel,
   RequiredHash,
 } from 'components/form_components/form_components';
+import { studentRegisterFormStep_1 } from 'views/app/global-data/forms-validation';
 
 const StudentUpdate = ({ intl }, values) => {
   const {
@@ -62,6 +63,7 @@ const StudentUpdate = ({ intl }, values) => {
 
   const fetchInstDepts = (inst, selectedDepartment) => {
     const instId = inst.value;
+    if (!instId) return;
 
     callApi(`institute/${instId}/departments/`).then((inst) => {
       console.log('Institutes Departments: ', inst.data);
@@ -165,8 +167,10 @@ const StudentUpdate = ({ intl }, values) => {
     setIsLoading(true);
     const data = {
       maktob_date: newFields?.maktoobDate
-        .convert(gregorian, gregorian_en)
-        .format('YYYY-MM-DD'),
+        ? newFields?.maktoobDate
+            .convert(gregorian, gregorian_en)
+            .format('YYYY-MM-DD')
+        : null,
       roll_number: newFields?.rollNumber,
       maktob_number: newFields?.maktoobNumber || null,
       institute: newFields.institute?.value,
@@ -241,11 +245,13 @@ const StudentUpdate = ({ intl }, values) => {
     ),
   };
   const initValues2 = {
-    maktoobDate:
-      new DateObject(studentEnrollmentData?.maktob_date).convert(
-        persian,
-        persian_fa,
-      ) || null,
+    // if maktob_date is empty, keep it null
+    maktoobDate: studentEnrollmentData?.maktob_date
+      ? new DateObject(studentEnrollmentData?.maktob_date).convert(
+          persian,
+          persian_fa,
+        )
+      : null,
     maktoobNumber: studentEnrollmentData?.maktob_number || '',
     institute:
       institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
@@ -284,7 +290,7 @@ const StudentUpdate = ({ intl }, values) => {
             innerRef={forms[0]}
             initialValues={initValues}
             // validateOnMount
-            // validationSchema={studentRegisterFormStep_1}
+            validationSchema={studentRegisterFormStep_1}
             onSubmit={updateStudent}
           >
             {({
@@ -783,7 +789,6 @@ const StudentUpdate = ({ intl }, values) => {
             innerRef={forms[1]}
             initialValues={initValues2}
             // validateOnMount
-            // validationSchema={studentRegisterFormStep_1}
             onSubmit={updateStudentEnrollment}
           >
             {({
@@ -897,10 +902,14 @@ const StudentUpdate = ({ intl }, values) => {
                             );
                             console.log('departments: ', departments);
                             const class_ids = dep?.classes.map((c) => c.classs);
+                            if (class_ids) {
+                              setClassOptions(
+                                classs.filter((c) =>
+                                  class_ids.includes(c.value),
+                                ),
+                              );
+                            }
                             console.log('class_ids', class_ids);
-                            setClassOptions(
-                              classs.filter((c) => class_ids.includes(c.value)),
-                            );
                           }}
                           onBlur={setFieldTouched}
                           isSearchable={false}

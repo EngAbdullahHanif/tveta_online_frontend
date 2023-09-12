@@ -1,0 +1,21 @@
+  /* Apply general styles for printing */
+  @media print {
+    /* Adjust page margins and layout for printing */
+    body {
+      margin: 0;
+      padding: 10px;
+    }
+  
+    /* Hide elements not relevant for printing */
+    #header, #sidebar {
+      display: none;
+    }
+
+    /* Customize fonts, colors, and other styles as needed */
+    p {
+      font-size: 12pt;
+    }
+
+    /* Add any other print-specific styles you need */
+  }
+  

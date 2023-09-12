@@ -3,33 +3,22 @@ import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 
 import './../../.././../assets/css/global-style.css';
+import './../../.././../assets/css/print.css';
 import profilePhoto from './../../../../assets/img/profiles/user.png';
 
-import {
-  Row,
-  Card,
-  CardBody,
-  Label,
-  Button,
-  Table,
-  Badge,
-  // NavLink,
-} from 'reactstrap';
+import { Row, Card, CardBody, Label, Button, Table, Badge } from 'reactstrap';
 import logo from './../../../../assets/logos/AdminLogo.png';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import config from '../../../../config';
 
 import { AuthContext } from 'context/AuthContext';
 import {
   studentStatusOptions,
   studyTimeOptions,
 } from 'views/app/global-data/options';
-// import { BsPencilSquare } from 'react-icons/bs';
-
-const servicePath = config.API_URL;
-const studentApiUrl = `${servicePath}/api/`;
+import { BsPencilSquare } from 'react-icons/bs';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 const StudentProfile = () => {
   const { institutes, provinces, districts, departments, classes } =
@@ -101,7 +90,10 @@ const StudentProfile = () => {
   useEffect(() => {
     fetchStudent();
   }, []);
-
+  const printStudentInfo = () => {
+    localStorage.setItem('student', JSON.stringify(student));
+    window.print();
+  };
   const handleClick = (event) => {
     setIsNext(event);
   };
@@ -197,18 +189,22 @@ const StudentProfile = () => {
                 >
                   <IntlMessages id="student.results" />
                 </Button>
-                {/* <NavLink
-                  to={`/app/students/student-update/${student[0].id}`}
-                  // style={{ width: '10%' }}
+                <Button
+                  style={{
+                    backgroundColor: 'blue',
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                  }}
                 >
-                  <div>
-                    <BsPencilSquare
-                      outline
-                      style={{ fontSize: '20px' }}
-                      id="updateIcon"
-                    />
-                  </div>
-                </NavLink> */}
+                  <a
+                    href={`/app/students/print/${student[0].id}`}
+                    target="_blank"
+                  >
+                    <span className="label" style={{ color: '#fff' }}>
+                      پرنت
+                    </span>
+                  </a>
+                </Button>
               </div>
             </Colxx>
           </Row>
@@ -218,7 +214,7 @@ const StudentProfile = () => {
       {student?.length > 0 && (
         <>
           {isNext ? (
-            <>
+            <div id="student-info">
               <Card className="rounded m-4">
                 <CardBody>
                   <div>
@@ -230,9 +226,27 @@ const StudentProfile = () => {
                             padding: '8px',
                             paddingInline: '30px',
                             borderRadius: '10px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
                           }}
                         >
-                          <IntlMessages id="forms.personalInfo" />
+                          <span>
+                            <IntlMessages
+                              id="forms.personalInfo"
+                              style={{ display: 'inline' }}
+                            />
+                          </span>
+                          <NavLink
+                            to={`/app/students/student-update/${student[0]?.id}`}
+                          >
+                            <div style={{ display: 'inline' }}>
+                              <BsPencilSquare
+                                outline
+                                style={{ fontSize: '20px' }}
+                                id="updateIcon"
+                              />
+                            </div>
+                          </NavLink>
                         </h2>
                       </Colxx>
                     </Row>
@@ -595,310 +609,7 @@ const StudentProfile = () => {
                   </div>
                 </CardBody>
               </Card>
-              {/* <Card className="rounded m-4 mt-5">
-                <CardBody>
-                  <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                    {' '}
-                    <h2
-                      className="bg-primary "
-                      style={{
-                        padding: '8px',
-                        paddingInline: '30px',
-                        borderRadius: '10px',
-                      }}
-                    >
-                      <IntlMessages id="Student Institute" />
-                    </h2>
-                  </Colxx>
-
-                  <Row className="justify-content-center   rounded">
-                    <Colxx style={{ paddingInline: '4%' }}>
-                      <table
-                        className="table table-striped table-lg"
-                        style={{ fontSize: 18 }}
-                      >
-                        <thead>
-                          <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Teacher</th>
-                            <th scope="col">Institute</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Details</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {[
-                            {
-                              id: 123,
-                              name: 'name',
-                              institute: 'institute',
-                              type: 'type',
-                            },
-                          ].map((item, index) => {
-                            return (
-                              <tr key={item.id}>
-                                <th scope="row">{item.id}</th>
-                                <td>{item.teacher}</td>
-                                <td>{item.institute}</td>
-                                <td>{item.type}</td>
-                                <td>{item.details}</td>
-                                <td>
-                                  <BsPencilSquare
-                                    color="green"
-                                    data-toggle="modal"
-                                    data-target="#instituteModal"
-                                    data-whatever="@getbootstrap"
-                                    outline
-                                    style={{ fontSize: '20px' }}
-                                    id="updateIcon"
-                                    onClick={() => handleRecord(item)}
-                                  />
-                                  <Popconfirm
-                                    title="ډلیټ"
-                                    icon={
-                                      <BsTrashFill
-                                        color="red"
-                                        id="deleteIcon"
-                                        outline
-                                        style={{ fontSize: '20px' }}
-                                      />
-                                    }
-                                    description={`مطمعین یاست چې   برای ${studentId} (${item.id})  ډیلیټ کړی. `}
-                                    onConfirm={() => deleteInsentive(item.id)}
-                                    okText="ډیلیټ"
-                                    okType="danger"
-                                    cancelText="نه"
-                                  >
-                                    <BsTrashFill
-                                      color="red"
-                                      id="deleteIcon"
-                                      outline
-                                      // onClick={() => setInsentiveAlert(true)}
-                                      style={{ fontSize: '20px' }}
-                                    />
-                                  </Popconfirm>
-                                </td>
-                                <Modal
-                                  isOpen={insentiveAlert}
-                                  toggle={() =>
-                                    setInsentiveAlert(!insentiveAlert)
-                                  }
-                                  style={{ marginTop: '10%' }}
-                                >
-                                  <ModalHeader>
-                                    <IntlMessages id="modal.deletion-message-title" />
-                                  </ModalHeader>
-                                  <ModalBody className="text-center">
-                                    <IntlMessages id="modal.deletion-message-details" />
-                                  </ModalBody>
-                                  <ModalFooter>
-                                    <Button
-                                      onClick={() => setInsentiveAlert(false)}
-                                      style={{ marginLeft: '55%' }}
-                                    >
-                                      نه/ نخیر
-                                    </Button>
-                                    <Button
-                                      color="danger"
-                                      onClick={() => {
-                                        setInsentiveAlert(false);
-                                        deleteInsentive(item.id);
-                                      }}
-                                      style={{ marginLeft: '5%' }}
-                                    >
-                                      هو / بلی
-                                    </Button>
-                                  </ModalFooter>
-                                </Modal>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-
-                      <br />
-                      <Button
-                        className="btn btn-primary"
-                        data-toggle="modal"
-                        data-target="#instituteModal"
-                        data-whatever="@getbootstrap"
-                      >
-                        Save Institute
-                      </Button>
-
-                      <div
-                        className="modal fade"
-                        id="instituteModal"
-                        tabindex="-1"
-                        role="dialog"
-                        aria-labelledby="instituteModalLabel"
-                        aria-hidden="true"
-                      >
-                        <div className="modal-dialog" role="document">
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5
-                                className="modal-title"
-                                id="instituteModalLabel"
-                              ></h5>
-                              <button
-                                type="button"
-                                className="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                                onClick={resetUpdate}
-                              >
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div className="modal-body">
-                              <Formik
-                                enableReinitialize={true}
-                                initialValues={
-                                  !updatingRecord
-                                    ? {
-                                        institute: [],
-                                        type: [],
-                                        details: '',
-                                      }
-                                    : {
-                                        institute: institutes.filter((inst) => {
-                                          if (
-                                            inst.value ===
-                                            updatingRecord.institute
-                                          )
-                                            return inst;
-                                        }),
-                                        type: teacherFeedbackOptions.filter(
-                                          (inst) => {
-                                            if (
-                                              inst.value === updatingRecord.type
-                                            )
-                                              return inst;
-                                          }
-                                        ),
-                                        details: updatingRecord.details,
-                                      }
-                                }
-                                // validationSchema={
-                                //   teacherInstitutesValidationSchema
-                                // }
-                                onSubmit={addInstitute}
-                              >
-                                {({
-                                  errors,
-                                  touched,
-                                  values,
-                                  setFieldTouched,
-                                  setFieldValue,
-                                  handleSubmit,
-                                }) => (
-                                  <>
-                                    <form>
-                                      <div className="form-group w-100">
-                                        <label
-                                          for="institute"
-                                          className="col-form-label"
-                                        >
-                                          institute
-                                          <span style={{ color: 'red' }}>
-                                            *
-                                          </span>
-                                        </label>
-                                        <FormikReactSelect
-                                          name="institute"
-                                          id="institute"
-                                          value={values.institute}
-                                          options={institutes}
-                                          onChange={setFieldValue}
-                                          onBlur={setFieldTouched}
-                                          required
-                                        />
-                                        {errors.institute &&
-                                        touched.institute ? (
-                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                            {errors.institute}
-                                          </div>
-                                        ) : null}
-                                      </div>
-                                      <div className="form-group w-100">
-                                        <label
-                                          for="type"
-                                          className="col-form-label"
-                                        >
-                                          Type
-                                          <span style={{ color: 'red' }}>
-                                            *
-                                          </span>
-                                        </label>
-                                        <FormikReactSelect
-                                          name="type"
-                                          id="type"
-                                          value={values.type}
-                                          options={teacherFeedbackOptions}
-                                          onChange={setFieldValue}
-                                          onBlur={setFieldTouched}
-                                          required
-                                        />
-                                        {errors.type && touched.type ? (
-                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                            {errors.type}
-                                          </div>
-                                        ) : null}
-                                      </div>
-
-                                      <div className="form-group">
-                                        <label
-                                          for="recipient-name"
-                                          className="col-form-label"
-                                        >
-                                          Description
-                                          <span style={{ color: 'red' }}>
-                                            *
-                                          </span>
-                                        </label>
-                                        <Field
-                                          className="form-control fieldStyle"
-                                          name="details"
-                                        />
-                                        {errors.details && touched.details ? (
-                                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                            {errors.details}
-                                          </div>
-                                        ) : null}
-                                      </div>
-                                    </form>
-                                    <div className="modal-footer">
-                                      <button
-                                        type="button"
-                                        className="btn btn-secondary"
-                                        data-dismiss="modal"
-                                        onClick={resetUpdate}
-                                      >
-                                        Close
-                                      </button>
-                                      <button
-                                        type="submit"
-                                        className="btn btn-primary"
-                                        // data-dismiss="modal"
-                                        onClick={handleSubmit}
-                                      >
-                                        Add Institute
-                                        {loading && <Spin />}
-                                      </button>
-                                    </div>
-                                  </>
-                                )}
-                              </Formik>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Colxx>
-                  </Row>
-                </CardBody>
-              </Card> */}
-            </>
+            </div>
           ) : (
             <>
               {marks.length > 0 && (

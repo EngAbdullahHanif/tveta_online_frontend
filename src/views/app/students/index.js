@@ -7,6 +7,7 @@ import SingleStudentSingleSubjectMarks from './single-student-single-subject-mar
 import singleStudentAttendace from './attendence/single-student-attendace';
 import ClassTransfer from './transfered-students/class-transfer';
 import StudentUpdate from './bio/student-update';
+import PrintScreen from './bio/PrintScreen';
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "register" */ './bio/register'),
 );
@@ -437,7 +438,11 @@ const Students = ({ match, props }) => {
           roles={[userRole.admin, userRole.authenticated]}
           props={props}
         />
-
+        <ProtectedRoute
+          path={`${match.url}/print/:studentId`}
+          component={PrintScreen}
+          props={props}
+        />
         {/* <ProtectedRoute
         path={`${match.url}/default`}
         component={DashboardDefault}

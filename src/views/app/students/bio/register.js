@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 // import { NavLink } from 'react-router-dom';
 import { FormControl } from 'react-bootstrap';
 import './../../.././../assets/css/global-style.css';
@@ -171,7 +171,7 @@ const StudentRegistration = ({ intl }, values) => {
   });
 
   // fetch department based on selected institute
-  const fetchInstDepts = (inst) => {
+  const fetchInstDepts = (inst, selectedDepartment) => {
     const instId = inst.value;
     callApi(`institute/${instId}/departments/`).then((inst) => {
       console.log('Institutes Departments: ', inst.data);
@@ -186,8 +186,18 @@ const StudentRegistration = ({ intl }, values) => {
         return department_ids.has(dep.value);
       });
       setInstDepartmentOptions(newOptions);
+      const class_ids = inst.data
+        .find((d) => d.id === selectedDepartment)
+        ?.classes.map((c) => c.classs);
+      console.log('class_ids', class_ids);
+      setClassOptions(classs.filter((c) => class_ids?.includes(c.value)));
     });
   };
+
+  useEffect(() => {
+    const formData = JSON.parse(localStorage.getItem('formData'));
+    fetchInstDepts(formData.institute, formData.department.value);
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.currentTarget.files[0];
@@ -326,161 +336,12 @@ const StudentRegistration = ({ intl }, values) => {
       setLoading(false);
     }
   };
-
   const resetformFields = () => {
     if (localStorage.getItem('formData')) {
       localStorage.removeItem('formData');
       window.location.reload();
     } else message.warning('فورم پاک هست');
   };
-
-  // const handleInitialValues = (steps, step) => {
-  //   console.log('steps is ', steps);
-  //   const formIndex = steps.indexOf(step);
-  //   if (formIndex > 2) return;
-  //   const form = forms[formIndex].current;
-
-  //   console.log('step is ', step);
-  //   const initialValuesCopy = [
-  //     { ...initialValues[0] },
-  //     { ...initialValues[1] },
-  //     { ...initialValues[2] },
-  //   ];
-  //   initialValuesCopy[steps.indexOf(step)] = form.values;
-  //   setInitialValues(initialValuesCopy);
-  // };
-
-  // handle when user clicks on next button
-  // const onClickNext = (goToNext, steps, step, values) => {
-  //   console.log('inside goToNext function');
-  //   // if last step, do nothing
-  //   const isLastStep = steps.length - 1 <= steps.indexOf(step);
-  //   if (isLastStep) {
-  //     console.log('last step, do nothing');
-  //     return;
-  //   }
-
-  //   const formIndex = steps.indexOf(step);
-  //   const form = forms[formIndex].current;
-  //   console.log('ref form value: ', form);
-  //   console.log('form values of index ${formIndex}: ', form.values);
-  //   // submitForm() only triggers formik validation
-  //   form.submitForm().then(() => {
-  //     if (!form.isDirty && form.isValid) {
-  //       // add step's data into fields state
-  //       // add fields of this step to the fields state
-  //       console.log('form values: ', form.values);
-  //       const newFields = { ...fields, ...form.values };
-  //       handleInitialValues(steps, step);
-  //       setFields(newFields);
-  //       // store data in localstorage data loss prevention
-  //       localStorage.setItem('step' + formIndex, JSON.stringify(form.values));
-
-  //       // if last step, submit the form
-  //       // if next on last step is clicked, call the api to register student
-  //       if (steps.length - 2 <= steps.indexOf(step)) {
-  //         // setBottomNavHidden(true);
-  //         console.log('new fields', newFields);
-
-  //         const data = {
-  //           //personal info,
-  //           name: newFields.name1,
-  //           student_id: newFields.studentId,
-  //           kankor_id: newFields.kankorId,
-  //           previous_grade_year: newFields.graduationYear.label,
-  //           previous_school_name: newFields.preSchool,
-  //           previous_school_province: newFields.schoolProvince.value,
-  //           previous_grade: newFields.levelOfEducation.value,
-  //           student_type: newFields.studentType.value,
-  //           english_name: newFields.englishName,
-  //           last_name: newFields.lastName,
-  //           english_last_name: newFields.lastNameEng,
-  //           father_name: newFields.fatherName,
-  //           english_father_name: newFields.fatherEngName,
-  //           phone_number: newFields.phoneNo,
-  //           email: newFields.email,
-  //           grandfather_name: newFields.grandFatherName,
-  //           cover_number: newFields.idCardJoldNo,
-  //           page_number: newFields.idCardPageNo,
-  //           sabt_number: newFields.sabtNo,
-  //           tazkira_type: newFields.tazkiraType.value,
-  //           registration_number: newFields.tazkiraNo,
-  //           sokok_number: newFields.sokokNo,
-  //           main_province: newFields.province.value,
-  //           main_district: newFields.district.value,
-  //           main_village: newFields.village,
-  //           current_province: newFields.C_Province.value,
-  //           current_district: newFields.C_District.value,
-  //           current_village: newFields.C_Village,
-  //           year_of_birth: newFields.DoB,
-  //           month_of_birth: newFields.monthOfBirth,
-  //           day_of_birth: newFields.dayOfBirth,
-  //           father_profession: newFields.fatherDuty,
-  //           father_place_of_duty: newFields.fatherDutyLocation,
-  //           admission_method: newFields.interanceType.value,
-  //           // students_status: 'active',
-  //           gender: newFields.gender.value,
-  //           institute: newFields.institute.value,
-  //           educational_year: newFields.educationalYear,
-  //           teaching_language: newFields.mediumOfInstruction.value,
-  //           shift: newFields.studyTime.value,
-
-  //           // fields info
-  //           department: newFields.department.value,
-  //           field_of_study: newFields.field.value,
-
-  //           // sector:
-  //           sector: newFields.sector.value,
-  //           batch: newFields.batch.value,
-
-  //           // class info,
-  //           classs: newFields.class.value,
-  //           place_of_birth: newFields.placeOfBirth,
-  //         };
-
-  //         // check if a file is selected
-  //         if (selectedFile) {
-  //           console.log(selectedFile);
-  //           data['photo'] = selectedFile;
-  //         }
-  //         if (newFields.disability) {
-  //           data['disability'] = newFields.disability.value;
-  //         }
-
-  //         const formValues2 = new formValues();
-  //         for (let key in data) {
-  //           // remove undefined values from data that's being sent to the server
-  //           if (data[key]) {
-  //             formValues2.append(key, data[key]);
-  //           }
-  //         }
-
-  //         console.log('formValues: ', formValues2.entries());
-
-  //         for (const entry of formValues2.entries()) {
-  //           console.log(entry);
-  //         }
-
-  //         // posting data to the server
-  //         postStudentRecord(formValues2);
-  //       }
-  //       scrollToTop();
-  //       goToNext();
-  //       step.isDone = true;
-  //     }
-  //   });
-  // };
-
-  // handle when user clicks on previous button
-  // const onClickPrev = (goToPrev, steps, step) => {
-  //   handleInitialValues(steps, step);
-  //   console.log('initialValues: ', initialValues);
-  //   if (steps.indexOf(step) <= 0) {
-  //     return;
-  //   }
-  //   scrollToTop();
-  //   goToPrev();
-  // };
 
   const [classOptions, setClassOptions] = useState([]);
 

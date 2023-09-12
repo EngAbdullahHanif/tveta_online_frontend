@@ -208,7 +208,11 @@ const ThumbListPages = ({ match }) => {
               resetForm,
             }) => (
               <>
-                <Field name="filterId" placeholder="کوډ" />
+                <Field
+                  className="form-control fieldStyle"
+                  name="filterId"
+                  placeholder="کوډ"
+                />
                 <FormikReactSelect
                   className="w-100"
                   placeholder="ولایت"

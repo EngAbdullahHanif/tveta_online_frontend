@@ -41,7 +41,8 @@ const StudentUpdate = ({ intl }, values) => {
     institutes,
     classes: classs,
   } = useContext(AuthContext);
-
+  const [filterDepartmentClasses, setFilterDepartmentClasses] =
+    useState(departments);
   const [mainDistricts, setMainDistricts] = useState(districts);
   const [currentDistricts, setCurrentDistricts] = useState([]);
   const [selectedMainProvince, setSelectedMainProvince] = useState('');
@@ -56,8 +57,10 @@ const StudentUpdate = ({ intl }, values) => {
   const [studentEnrollmentData, setStudentEnrollmentData] = useState([]);
 
   // fetch department based on selected institute
-  const fetchInstDepts = (inst) => {
+
+  const fetchInstDepts = (inst, selectedDepartment) => {
     const instId = inst.value;
+
     callApi(`institute/${instId}/departments/`).then((inst) => {
       console.log('Institutes Departments: ', inst.data);
       setInstituteDeps(inst.data);
@@ -71,6 +74,11 @@ const StudentUpdate = ({ intl }, values) => {
         return department_ids.has(dep.value);
       });
       setInstDepartmentOptions(newOptions);
+      const class_ids = inst.data
+        .find((d) => d.id === selectedDepartment)
+        ?.classes.map((c) => c.classs);
+      console.log('class_ids', class_ids);
+      setClassOptions(classs.filter((c) => class_ids.includes(c.value)));
     });
   };
 
@@ -96,6 +104,7 @@ const StudentUpdate = ({ intl }, values) => {
     );
     console.log('STD ENRRRRRRRRRRRRRRRRRRRRRR', data);
     setStudentEnrollmentData(data);
+    fetchInstDepts({ value: data.institute }, data?.department);
   }
 
   const { studentId } = useParams();
@@ -153,6 +162,7 @@ const StudentUpdate = ({ intl }, values) => {
     console.log('Form Data: ', newFields);
     setIsLoading(true);
     const data = {
+      roll_number: newFields?.rollNumber,
       maktob_date: newFields?.maktoobDate,
       maktob_number: newFields?.maktoobNumber || null,
       institute: newFields.institute?.value,
@@ -245,6 +255,7 @@ const StudentUpdate = ({ intl }, values) => {
     studyTime: studyTimeOptions.find(
       (op) => op.value === studentEnrollmentData.shift,
     ),
+    rollNumber: studentEnrollmentData.roll_number,
   };
   //   console.log('Student: ', student);
   console.log('Student Init Values: ', studyTimeOptions);
@@ -780,6 +791,23 @@ const StudentUpdate = ({ intl }, values) => {
                   <Colxx xxs="5">
                     <div className="pt-5">
                       <FormGroup className="form-group has-float-label ">
+                        <Label style={inputLabel}>
+                          نمبر اساس
+                          <RequiredHash />
+                        </Label>
+
+                        <Field
+                          className="form-control fieldStyle"
+                          name="rollNumber"
+                          type="number"
+                        />
+                        {errors.rollNumber && touched.rollNumber ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.rollNumber}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      <FormGroup className="form-group has-float-label ">
                         <MyLabel>مکتوب تاریخ</MyLabel>
                         <DatePicker
                           style={{
@@ -884,32 +912,6 @@ const StudentUpdate = ({ intl }, values) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
-                      {/*Student Type*/}
-                      <FormGroup className="form-group has-float-label error-l-100">
-                        <Label style={inputLabel}>
-                          <IntlMessages id="forms.EnrollmentType" />
-                          <span style={{ color: 'red' }}>*</span>
-                        </Label>
-                        <FormikReactSelect
-                          name="studentType"
-                          id="studentType"
-                          value={values.studentType}
-                          options={StudentEnrollmentTypeOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          isSearchable={false}
-                        />
-                        {errors.studentType && touched.studentType ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.studentType}
-                          </div>
-                        ) : null}
-                      </FormGroup>
-                    </div>
-                  </Colxx>
-                  <Colxx xxs="5">
-                    <div className="pt-5">
                       {/*  Class name  */}
                       <FormGroup className="form-group has-float-label ">
                         <Label style={inputLabel}>
@@ -932,7 +934,31 @@ const StudentUpdate = ({ intl }, values) => {
                           </div>
                         ) : null}
                       </FormGroup>
-
+                    </div>
+                  </Colxx>
+                  <Colxx xxs="5">
+                    <div className="pt-5">
+                      {/*Student Type*/}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.EnrollmentType" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="studentType"
+                          id="studentType"
+                          value={values.studentType}
+                          options={StudentEnrollmentTypeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                        />
+                        {errors.studentType && touched.studentType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.studentType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
                       {/* Eduactional Year*/}
                       <FormGroup className="form-group has-float-label ">
                         <Label style={inputLabel}>

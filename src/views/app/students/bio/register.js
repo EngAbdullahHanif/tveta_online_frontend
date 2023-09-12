@@ -521,7 +521,6 @@ const StudentRegistration = ({ intl }, values) => {
                 handleSubmit,
                 setFieldTouched,
                 setFieldValue,
-                setFieldError,
               }) => (
                 <Form className="av-tooltip tooltip-label-right has-float-label error-l-100 style ">
                   <Row>
@@ -535,6 +534,7 @@ const StudentRegistration = ({ intl }, values) => {
                               height: 40,
                               borderRadius: 0,
                               border: 'none',
+                              boxShadow: 'none',
                             }}
                             containerClassName="form-control fieldStyle"
                             name="maktoobDate"
@@ -1112,7 +1112,6 @@ const StudentRegistration = ({ intl }, values) => {
                         <FormGroup className="form-group has-float-label error-l-100">
                           <Label style={inputLabel}>
                             <IntlMessages id="forms.PlaceOfBirthLabel" />
-                            <span style={{ color: 'red' }}>*</span>
                           </Label>
                           <Field
                             className="form-control fieldStyle"

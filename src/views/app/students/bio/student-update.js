@@ -6,30 +6,43 @@ import {
   genderOptions,
   tazkiraOptions,
   StdInteranceOptions,
+  mediumOfInstructionOptions,
+  studyTimeOptions,
+  persianMonthOptions,
+  StudentEnrollmentTypeOptions,
 } from '../../global-data/options';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
+import { inputLabel } from 'config/styling';
+
+import persian from 'react-date-object/calendars/persian';
+import persian_fa from 'react-date-object/locales/persian_fa';
+import gregorian from 'react-date-object/calendars/gregorian';
+import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import './../../../../assets/css/global-style.css';
-import {
-  Row,
-  Card,
-  CardBody,
-  FormGroup,
-  Label,
-  Button,
-  Spinner,
-} from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
-import { NotificationManager } from 'components/common/react-notifications';
 import { Colxx } from 'components/common/CustomBootstrap';
 
 import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import {
+  MyLabel,
+  RequiredHash,
+} from 'components/form_components/form_components';
 
 const StudentUpdate = ({ intl }, values) => {
-  const { contextFields, provinces, districts } = useContext(AuthContext);
+  const {
+    contextFields,
+    provinces,
+    districts,
+    departments,
+    institutes,
+    classes: classs,
+  } = useContext(AuthContext);
 
   const [mainDistricts, setMainDistricts] = useState(districts);
   const [currentDistricts, setCurrentDistricts] = useState([]);
@@ -39,11 +52,52 @@ const StudentUpdate = ({ intl }, values) => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const forms = [createRef(null), createRef(null), createRef(null)];
+  const [instituteDeps, setInstituteDeps] = useState([]);
+  const [instDepartmentOptions, setInstDepartmentOptions] = useState([]);
+  const [classOptions, setClassOptions] = useState([]);
+  const [studentEnrollmentData, setStudentEnrollmentData] = useState([]);
+
+  // fetch department based on selected institute
+  const fetchInstDepts = (inst) => {
+    const instId = inst.value;
+    callApi(`institute/${instId}/departments/`).then((inst) => {
+      console.log('Institutes Departments: ', inst.data);
+      setInstituteDeps(inst.data);
+      const newOptions = departments.filter((dep) => {
+        // if department id is in data.department
+        let department_ids = inst.data.reduce(
+          (acc, cur, i) => acc.add(cur.department),
+          new Set(),
+        );
+        console.log(department_ids);
+        return department_ids.has(dep.value);
+      });
+      setInstDepartmentOptions(newOptions);
+    });
+  };
 
   async function fetchStudent() {
-    const { data } = await callApi(`students/${studentId}/`, '', null);
-    console.log('already existing data:', data);
-    setStudent(data);
+    try {
+      setIsLoading(true);
+      const { data } = await callApi(`students/${studentId}/`, '', null);
+      console.log('already existing data:', data);
+      setStudent(data);
+      await fetchStudentEnrollment();
+    } catch (error) {
+      console.log('Error in fetching student: ', error);
+    } finally {
+      setIsLoading(true);
+    }
+  }
+
+  async function fetchStudentEnrollment() {
+    const { data } = await callApi(
+      `students/${studentId}/institute/`,
+      '',
+      null,
+    );
+    console.log('STD ENRRRRRRRRRRRRRRRRRRRRRR', data);
+    setStudentEnrollmentData(data);
   }
 
   const { studentId } = useParams();
@@ -53,64 +107,7 @@ const StudentUpdate = ({ intl }, values) => {
       fetchStudent();
       setIsLoading(false);
     }
-  }, []);
-
-  const createNotification = (type, className) => {
-    const cName = className || '';
-    switch (type) {
-      case 'success':
-        NotificationManager.success(
-          'استاد موفقانه رجستر شو',
-          'موفقیت',
-          3000,
-          null,
-          null,
-          cName,
-        );
-        break;
-      case 'error':
-        NotificationManager.error(
-          'استاد ثبت نشو،لطفا معلومات دقیق دننه کی',
-          'خطا',
-          5000,
-          () => {
-            // alert('callback');
-          },
-          null,
-          cName,
-        );
-        break;
-      default:
-        NotificationManager.info('Info message');
-        break;
-    }
-  };
-
-  const fetchDistricts = async (provinceId) => {
-    setMainDistricts(
-      districts.filter((district) => district.province === provinceId),
-    );
-  };
-
-  const fetchCurrentDistricts = async (provinceId) => {
-    setCurrentDistricts(
-      districts.filter((district) => district.province === provinceId),
-    );
-  };
-
-  useEffect(() => {
-    console.log('selectedmainProvince', selectedMainProvince);
-    if (selectedMainProvince) {
-      fetchDistricts(selectedMainProvince);
-    }
-  }, [selectedMainProvince]);
-
-  useEffect(() => {
-    console.log('selectedProvince', selectedCurrentProvince);
-    if (selectedCurrentProvince) {
-      fetchCurrentDistricts(selectedCurrentProvince);
-    }
-  }, [selectedCurrentProvince]);
+  }, [studentId]);
 
   const updateStudent = (newFields) => {
     // alert('Form Submitted');
@@ -152,7 +149,44 @@ const StudentUpdate = ({ intl }, values) => {
       .catch((err) => console.log('Error in Teacher Save: ', err))
       .finally(() => setIsLoading(false));
   };
+
+  const updateStudentEnrollment = async (newFields) => {
+    // alert('Form Submitted');
+    console.log('Form Data: ', newFields);
+    setIsLoading(true);
+    const data = {
+      maktob_date: newFields?.maktoobDate
+        .convert(gregorian, gregorian_en)
+        .format('YYYY-MM-DD'),
+      maktob_number: newFields?.maktoobNumber || null,
+      institute: newFields.institute?.value,
+      department: newFields.department?.value,
+      student_type: newFields.enrollment_type?.value,
+      classs: newFields.class?.value,
+      educational_year: newFields.educationalYear,
+      study_time: newFields.studyTime?.value,
+    };
+    await callApi(`students/${studentId}/institute/`, 'PATCH', data)
+      .then((response) => {
+        if (response.data) {
+          message.success('شاګرد آپډیټ شو');
+          history.push(`/app/students/student/${studentId}`);
+        }
+      })
+      .catch((err) => console.log('Error in Teacher Save: ', err))
+      .finally(() => setIsLoading(false));
+  };
+
   const initValues = {
+    maktoobDate: studentEnrollmentData?.maktoobDate || null,
+    maktoobNumber: studentEnrollmentData?.maktoobNumber || '',
+    institute:
+      institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
+      '',
+    department:
+      departments.find(
+        (op) => op.value === studentEnrollmentData?.department,
+      ) || '',
     name: student?.name,
     englishName: student?.english_name,
     lastName: student?.last_name,
@@ -196,12 +230,36 @@ const StudentUpdate = ({ intl }, values) => {
       (type) => type.value == student?.admission_method,
     ),
   };
+  const initValues2 = {
+    maktoobDate:
+      new DateObject(studentEnrollmentData?.maktob_date).convert(
+        persian,
+        persian_fa,
+      ) || null,
+    maktoobNumber: studentEnrollmentData?.maktob_number || '',
+    institute:
+      institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
+      [],
+    department:
+      departments.find(
+        (op) => op.value === studentEnrollmentData?.department,
+      ) || [],
+    studentType:
+      StudentEnrollmentTypeOptions.find(
+        (op) => op.value === studentEnrollmentData.enrollment_type,
+      ) || [],
+    class: classs.find((op) => op.value === studentEnrollmentData.classs),
+    educationalYear: studentEnrollmentData.educational_year,
+    studyTime: studyTimeOptions.find(
+      (op) => op.value === studentEnrollmentData.shift,
+    ),
+  };
   //   console.log('Student: ', student);
-  console.log('Student Init Values: ', initValues);
+  console.log('Student Init Values: ', studyTimeOptions);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
   return (
     <Card>
       <div className="mt-4 ml-5">
@@ -224,7 +282,6 @@ const StudentUpdate = ({ intl }, values) => {
               values,
               setFieldTouched,
               setFieldValue,
-              isSubmitting,
               handleSubmit,
             }) => (
               <Form className="av-tooltip tooltip-label-right style">
@@ -704,7 +761,250 @@ const StudentUpdate = ({ intl }, values) => {
                 </Row>
 
                 <Button className="mt-5 bg-primary" onClick={handleSubmit}>
-                  <IntlMessages id="ثبت" />
+                  آپدیت معلومات شاګرد
+                </Button>
+              </Form>
+            )}
+          </Formik>
+
+          <Formik
+            enableReinitialize={true}
+            innerRef={forms[1]}
+            initialValues={initValues2}
+            // validateOnMount
+            // validationSchema={studentRegisterFormStep_1}
+            onSubmit={updateStudentEnrollment}
+          >
+            {({
+              errors,
+              touched,
+              values,
+              setFieldTouched,
+              setFieldValue,
+              handleSubmit,
+            }) => (
+              <Form className="av-tooltip tooltip-label-right style">
+                <Row className="justify-content-center">
+                  <Colxx xxs="5">
+                    <div className="pt-5">
+                      <FormGroup className="form-group has-float-label ">
+                        <MyLabel>مکتوب تاریخ</MyLabel>
+                        <DatePicker
+                          style={{
+                            width: '100%',
+                            height: 40,
+                            borderRadius: 0,
+                            border: 'none',
+                          }}
+                          containerClassName="form-control fieldStyle"
+                          name="maktoobDate"
+                          value={values.maktoobDate}
+                          calendar={persian}
+                          locale={persian_fa}
+                          months={persianMonthOptions}
+                          format="YYYY-MM-DD"
+                          onChange={(date) => {
+                            setFieldValue(
+                              'maktoobDate',
+                              date?.isValid ? date : '',
+                            );
+                          }}
+                        />
+                      </FormGroup>
+                      <FormGroup className="form-group has-float-label">
+                        <Label style={inputLabel}>مکتوب نمبر</Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="maktoobNumber"
+                          type="number"
+                        />
+                        {errors.maktoobNumber && touched.maktoobNumber ? (
+                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                            {errors.maktoobNumber}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Institute Name*/}
+                      <FormGroup className=" has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.InstituteLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="institute"
+                          id="institute"
+                          value={values.institute}
+                          options={institutes}
+                          onChange={(name, value) => {
+                            setFieldValue('institute', value);
+                            fetchInstDepts(value);
+                          }}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                        />
+                        {errors.institute && touched.institute ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.institute}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Departement  */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.studyDepartment" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="department"
+                          id="department"
+                          value={values.department}
+                          options={instDepartmentOptions}
+                          onChange={(name, value) => {
+                            setFieldValue(name, value);
+                            setFieldValue('class', []);
+                            console.log('selected department: ', value.value);
+                            console.log('institute deps: ', instituteDeps);
+                            const dep = instituteDeps?.find(
+                              (d) => d.department === value.value,
+                            );
+                            console.log('departments: ', departments);
+                            const class_ids = dep?.classes.map((c) => c.classs);
+                            console.log('class_ids', class_ids);
+                            setClassOptions(
+                              classs.filter((c) => class_ids.includes(c.value)),
+                            );
+                          }}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                          required
+                        />
+                        {errors.department && touched.department ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.department}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/*Student Type*/}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.EnrollmentType" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="studentType"
+                          id="studentType"
+                          value={values.studentType}
+                          options={StudentEnrollmentTypeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                        />
+                        {errors.studentType && touched.studentType ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.studentType}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </div>
+                  </Colxx>
+                  <Colxx xxs="5">
+                    <div className="pt-5">
+                      {/*  Class name  */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="curriculum.admissionGrade" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="class"
+                          id="class"
+                          value={values.class}
+                          options={classOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                          required
+                        />
+                        {errors.class && touched.class ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.class}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Eduactional Year*/}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="curriculum.admissionYear" />
+                          <RequiredHash />
+                        </Label>
+
+                        <Field
+                          className="form-control fieldStyle"
+                          name="educationalYear"
+                          type="number"
+                        />
+                        {errors.educationalYear && touched.educationalYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.educationalYear}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* admission method*/}
+
+                      {/* medium OfInstruction (Teaching Language) */}
+                      <FormGroup className="form-group has-float-label ">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.mediumOfInstruction" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="mediumOfInstruction"
+                          id="mediumOfInstruction"
+                          value={values.mediumOfInstruction}
+                          options={mediumOfInstructionOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                          required
+                        />
+                        {errors.mediumOfInstruction &&
+                        touched.mediumOfInstruction ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.mediumOfInstruction}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/* Study Time */}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.StudyTimeLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="studyTime"
+                          id="studyTime"
+                          value={values.studyTime}
+                          options={studyTimeOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                        />
+                        {errors.studyTime && touched.studyTime ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.studyTime}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </div>
+                  </Colxx>
+                </Row>
+
+                <Button className="mt-5 bg-primary" onClick={handleSubmit}>
+                  آپدیت معلومات شمولیت
                 </Button>
               </Form>
             )}

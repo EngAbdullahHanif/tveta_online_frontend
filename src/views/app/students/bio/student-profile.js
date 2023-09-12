@@ -5,8 +5,16 @@ import callApi from 'helpers/callApi';
 import './../../.././../assets/css/global-style.css';
 import profilePhoto from './../../../../assets/img/profiles/user.png';
 
-import { message } from 'antd';
-import { Row, Card, CardBody, Label, Button, Table, Badge } from 'reactstrap';
+import {
+  Row,
+  Card,
+  CardBody,
+  Label,
+  Button,
+  Table,
+  Badge,
+  // NavLink,
+} from 'reactstrap';
 import logo from './../../../../assets/logos/AdminLogo.png';
 
 import IntlMessages from 'helpers/IntlMessages';
@@ -15,26 +23,30 @@ import config from '../../../../config';
 
 import { AuthContext } from 'context/AuthContext';
 import { studentStatusOptions } from 'views/app/global-data/options';
+// import { BsPencilSquare } from 'react-icons/bs';
 
 const servicePath = config.API_URL;
 const studentApiUrl = `${servicePath}/api/`;
 
 const StudentProfile = () => {
-  const { institutes, provinces, districts } = useContext(AuthContext);
+  const { institutes, provinces, districts, departments, classes } =
+    useContext(AuthContext);
   const { studentId } = useParams();
   const [isNext, setIsNext] = useState(true);
   const [student, setStudent] = useState([]);
-  const [institute, setInstitute] = useState([]);
-  const [classs, setClasss] = useState([]); //classs is used because class is a reserved word
   const [dorm, setDorm] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [insentiveAlert, setInsentiveAlert] = useState(false);
-  const [updatingRecord, setUpdatingRecord] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [studentInstitute, setStudentInstitutes] = useState();
+  const [studentEnrollmentData, setStudentEnrollmentData] = useState([]);
+
+  async function fetchStudentEnrollment() {
+    const { data } = await callApi(
+      `students/${studentId}/institute/`,
+      '',
+      null,
+    );
+    setStudentEnrollmentData(data);
+  }
 
   const provincesList = {};
   const districtsList = {};
@@ -46,70 +58,8 @@ const StudentProfile = () => {
   districts.forEach((districts) => {
     districtsList[districts.value] = districts.label;
   });
-  async function fetchStudentInstitutes() {
-    const response = await callApi(
-      // `teachers/${teacherId}/feedbacks/`,
-      `students/${studentId}/feedbacks/`,
-      '',
-      null,
-    );
 
-    const data = response.data;
-    setStudentInstitutes(data);
-  }
   let recId;
-  const resetUpdate = () => {
-    setUpdatingRecord(null);
-    recId = null;
-    setStartDate(null);
-    setEndDate(null);
-  };
-  const handleRecord = (item) => {
-    recId = item.id;
-    setUpdatingRecord(item);
-    setStartDate(item.startDate);
-    setEndDate(item.endDate);
-  };
-  const deleteInsentive = async (item) => {
-    await callApi(`students/${studentId}/feedbacks/${item}/`, 'DELETE').then(
-      (response) => {
-        fetchStudentInstitutes();
-      },
-    );
-  };
-  const addInstitute = async (inputData, { resetForm }) => {
-    setLoading(true);
-    let apiParams = {
-      endPoint: `students/${studentId}/institute/`,
-      method: 'POST',
-    };
-    if (recId || updatingRecord.id) {
-      apiParams.endPoint = `students/${studentId}/institute/${updatingRecord.id}/`;
-      apiParams.method = 'PATCH';
-    }
-    const data = {
-      type: inputData.type?.value,
-      // teacher: teacher[0].id,
-      institute: inputData.institute?.value,
-      details: inputData.details,
-    };
-    await callApi(apiParams.endPoint, apiParams.method, data).then(
-      (response) => {
-        resetUpdate();
-        if (response.status >= 200 && response.status < 300) {
-          setLoading(false);
-          message.success('Data Saved Successfully');
-          // fetchTeacherIncentives();
-          resetForm();
-          resetUpdate();
-        } else {
-          message.error('Data Not Saved Check your Payload');
-        }
-      },
-    );
-    setLoading(false);
-  };
-  //load data of student from database
 
   async function fetchStudent() {
     try {
@@ -118,30 +68,8 @@ const StudentProfile = () => {
       if (response.data && response.status === 200) {
         const data = await response.data;
         setStudent([data]);
+        fetchStudentEnrollment();
         setIsLoaded(true);
-      }
-
-      const instituteResponse = await callApi(
-        `students/student_institutes/?student__id=${studentId}`,
-        '',
-        null,
-      );
-
-      if (instituteResponse.data && instituteResponse.status === 200) {
-        const instituteData = await instituteResponse.data;
-        setInstitute(instituteData?.results);
-      }
-
-      //type =1 means current class or current continued class
-      const classResponse = await callApi(
-        `students/student_class/?student=${studentId}&stauts=inprogress`,
-        '',
-        null,
-      );
-
-      if (classResponse.data && classResponse.status === 200) {
-        const classData = await classResponse.data;
-        setClasss(classData);
       }
 
       const dormResponse = await callApi(
@@ -231,12 +159,12 @@ const StudentProfile = () => {
               </Colxx>
             )}
           </Row>
+
           <Row>
             <Colxx
               className=" d-flex justify-content-center "
               style={{ marginBottom: '2%' }}
             >
-              {' '}
               <div className="d-inline-block">
                 <Button
                   style={{
@@ -265,14 +193,26 @@ const StudentProfile = () => {
                   }}
                 >
                   <IntlMessages id="student.results" />
-                </Button>{' '}
+                </Button>
+                {/* <NavLink
+                  to={`/app/students/student-update/${student[0].id}`}
+                  // style={{ width: '10%' }}
+                >
+                  <div>
+                    <BsPencilSquare
+                      outline
+                      style={{ fontSize: '20px' }}
+                      id="updateIcon"
+                    />
+                  </div>
+                </NavLink> */}
               </div>
             </Colxx>
           </Row>
         </div>
       )}
       {/* if student is loaded show it, if not show empty  */}
-      {student?.length > 0 && institute?.length > 0 && classs?.length > 0 && (
+      {student?.length > 0 && (
         <>
           {isNext ? (
             <>
@@ -280,8 +220,7 @@ const StudentProfile = () => {
                 <CardBody>
                   <div>
                     <Row>
-                      <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
-                        {' '}
+                      <Colxx className=" pt-5 " style={{ paddingInline: '3%' }}>
                         <h2
                           className="bg-primary data-style "
                           style={{
@@ -290,7 +229,6 @@ const StudentProfile = () => {
                             borderRadius: '10px',
                           }}
                         >
-                          {' '}
                           <IntlMessages id="forms.personalInfo" />
                         </h2>
                       </Colxx>
@@ -510,8 +448,117 @@ const StudentProfile = () => {
                             borderRadius: '10px',
                           }}
                         >
+                          شمولیت معلومات
+                        </h2>
+                      </Colxx>
+                    </Row>
+                    {console.log(
+                      'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
+                      studentEnrollmentData,
+                    )}
+                    <Row className="justify-content-center   rounded ">
+                      <Colxx style={{ paddingInline: '4%' }}>
+                        <Label className="data-style">
+                          <IntlMessages id="menu.institutes" />
+                        </Label>
+                        <h2>
+                          {
+                            institutes.find(
+                              (ins) =>
+                                ins.value === studentEnrollmentData.institute,
+                            )?.label
+                          }
+                        </h2>
+                        <Label className="data-style">رشته</Label>
+                        <h2>
+                          {
+                            departments.find(
+                              (d) =>
+                                d.value === studentEnrollmentData.department,
+                            )?.label
+                          }
+                        </h2>
+                        {/* <Label className="data-style">
+                          <IntlMessages id="field.SemesterLabel" />
+                        </Label>
+                        <h2>{classs[0].classs.semester}</h2> */}
+                        <Label className="data-style">
+                          <IntlMessages id="curriculum.classLabel" />
+                        </Label>
+                        <h2>
+                          {
+                            classes.find(
+                              (c) => c.value === studentEnrollmentData.classs,
+                            )?.label
+                          }
+                        </h2>
+                        {/* <Label className="data-style">
+                          <IntlMessages id="field.SectionLabel" />
+                        </Label>
+                        <h2>{classs[0].classs.section}</h2> */}
+                        {dorm.length > 0 && (
+                          <>
+                            <Label className="data-style">
+                              <IntlMessages id="menu.dorms" />
+                            </Label>
+                            <h2>{dorm[0].dorm.name}</h2>
+                            <Label>نوعیت</Label>
+
+                            {dorm.dorm_type == 1 ? (
+                              <h2> بدل عاشه</h2>
+                            ) : (
+                              <h2> بدیل عاشه</h2>
+                            )}
+                          </>
+                        )}
+
+                        <br />
+                        <br />
+                      </Colxx>
+                      <Colxx style={{ paddingInline: '4%' }} xxs="">
+                        <Label className="data-style">شمولیت کال</Label>
+                        <h2>{studentEnrollmentData.educational_year}</h2>
+                        <Label className="data-style">
+                          <IntlMessages id="forms.StdInteranceTypeLabel" />
+                        </Label>
+                        {student.admission_method === 'decree' ? (
+                          <h2>حکمی</h2>
+                        ) : student.internse_type === 'general_kankor' ? (
+                          <h2>کانکور اختصاصی</h2>
+                        ) : (
+                          <h2>کانکور عمومی</h2>
+                        )}
+                        <Label className="data-style">
+                          <IntlMessages id="student.educationType" />
+                        </Label>
+                        {student.student_type === 'continuous' ? (
+                          <h2>پیوسته</h2>
+                        ) : (
+                          <h2>غیر پیوسته</h2>
+                        )}
+                        <br />
+                        <br />
+                      </Colxx>
+                    </Row>
+                  </div>
+                </CardBody>
+              </Card>
+              <Card className="rounded m-4 mt-5">
+                <CardBody>
+                  <div>
+                    <Row>
+                      <Colxx className=" pt-5" style={{ paddingInline: '3%' }}>
+                        {' '}
+                        <h2
+                          className="bg-primary "
+                          style={{
+                            padding: '8px',
+                            paddingInline: '30px',
+                            borderRadius: '10px',
+                          }}
+                        >
                           {' '}
-                          <IntlMessages id="teacher.LevelOfEducationLabel" />
+                          سوابق تعلیمی
                         </h2>
                       </Colxx>
                     </Row>
@@ -536,70 +583,6 @@ const StudentProfile = () => {
                         <h2>
                           {provincesList[student[0].previous_school_province]}
                         </h2>
-
-                        <Label className="data-style">
-                          <IntlMessages id="forms.StdInteranceTypeLabel" />
-                        </Label>
-                        {student.admission_method === 'decree' ? (
-                          <h2>حکمی</h2>
-                        ) : student.internse_type === 'general_kankor' ? (
-                          <h2>کانکور اختصاصی</h2>
-                        ) : (
-                          <h2>کانکور عمومی</h2>
-                        )}
-                        <Label className="data-style">
-                          <IntlMessages id="student.educationType" />
-                        </Label>
-                        {student.student_type === 'continuous' ? (
-                          <h2>پیوسته</h2>
-                        ) : (
-                          <h2>غیر پیوسته</h2>
-                        )}
-                        <br />
-                        <br />
-                      </Colxx>
-                      <Colxx style={{ paddingInline: '4%' }}>
-                        <Label className="data-style">
-                          <IntlMessages id="menu.institutes" />
-                        </Label>
-                        <h2>
-                          {console.log('iiiiiiiii', institutes)}
-                          {
-                            institutes.find(
-                              (ins) => ins.value === institute[0].institute,
-                            )?.label
-                          }
-                        </h2>
-                        <Label className="data-style">
-                          <IntlMessages id="field.SemesterLabel" />
-                        </Label>
-                        <h2>{classs[0].classs.semester}</h2>
-                        <Label className="data-style">
-                          <IntlMessages id="curriculum.classLabel" />
-                        </Label>
-                        <h2>{classs[0].classs.name}</h2>
-                        <Label className="data-style">
-                          <IntlMessages id="field.SectionLabel" />
-                        </Label>
-                        <h2>{classs[0].classs.section}</h2>
-                        {dorm.length > 0 && (
-                          <>
-                            <Label className="data-style">
-                              <IntlMessages id="menu.dorms" />
-                            </Label>
-                            <h2>{dorm[0].dorm.name}</h2>
-                            <Label>نوعیت</Label>
-
-                            {dorm.dorm_type == 1 ? (
-                              <h2> بدل عاشه</h2>
-                            ) : (
-                              <h2> بدیل عاشه</h2>
-                            )}
-                          </>
-                        )}
-
-                        <br />
-                        <br />
                       </Colxx>
                     </Row>
                   </div>

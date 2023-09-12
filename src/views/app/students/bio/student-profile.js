@@ -15,6 +15,8 @@ import {
   Badge,
   // NavLink,
 } from 'reactstrap';
+
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import logo from './../../../../assets/logos/AdminLogo.png';
 
 import IntlMessages from 'helpers/IntlMessages';
@@ -26,6 +28,7 @@ import {
   studentStatusOptions,
   studyTimeOptions,
 } from 'views/app/global-data/options';
+import { BsPencilSquare } from 'react-icons/bs';
 // import { BsPencilSquare } from 'react-icons/bs';
 
 const servicePath = config.API_URL;
@@ -197,18 +200,6 @@ const StudentProfile = () => {
                 >
                   <IntlMessages id="student.results" />
                 </Button>
-                {/* <NavLink
-                  to={`/app/students/student-update/${student[0].id}`}
-                  // style={{ width: '10%' }}
-                >
-                  <div>
-                    <BsPencilSquare
-                      outline
-                      style={{ fontSize: '20px' }}
-                      id="updateIcon"
-                    />
-                  </div>
-                </NavLink> */}
               </div>
             </Colxx>
           </Row>
@@ -230,9 +221,27 @@ const StudentProfile = () => {
                             padding: '8px',
                             paddingInline: '30px',
                             borderRadius: '10px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
                           }}
                         >
-                          <IntlMessages id="forms.personalInfo" />
+                          <span>
+                            <IntlMessages
+                              id="forms.personalInfo"
+                              style={{ display: 'inline' }}
+                            />
+                          </span>
+                          <NavLink
+                            to={`/app/students/student-update/${student[0]?.id}`}
+                          >
+                            <div style={{ display: 'inline' }}>
+                              <BsPencilSquare
+                                outline
+                                style={{ fontSize: '20px' }}
+                                id="updateIcon"
+                              />
+                            </div>
+                          </NavLink>
                         </h2>
                       </Colxx>
                     </Row>

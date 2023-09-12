@@ -476,9 +476,9 @@ const StudentProfile = () => {
                         </Label>
                         <h2>
                           {
-                            institutes.find(
+                            institutes?.find(
                               (ins) =>
-                                ins.value === studentEnrollmentData.institute,
+                                ins.value === studentEnrollmentData?.institute,
                             )?.label
                           }
                         </h2>

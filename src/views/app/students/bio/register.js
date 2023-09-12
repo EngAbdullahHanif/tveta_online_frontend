@@ -172,6 +172,7 @@ const StudentRegistration = ({ intl }, values) => {
 
   // fetch department based on selected institute
   const fetchInstDepts = (inst, selectedDepartment) => {
+    if (!inst || !inst?.value) return;
     const instId = inst.value;
     callApi(`institute/${instId}/departments/`).then((inst) => {
       console.log('Institutes Departments: ', inst.data);
@@ -196,7 +197,7 @@ const StudentRegistration = ({ intl }, values) => {
 
   useEffect(() => {
     const formData = JSON.parse(localStorage.getItem('formData'));
-    fetchInstDepts(formData.institute, formData.department.value);
+    fetchInstDepts(formData?.institute, formData?.department.value);
   }, []);
 
   const handleFileChange = (event) => {
@@ -312,6 +313,7 @@ const StudentRegistration = ({ intl }, values) => {
       classs: newFields.class.value,
       place_of_birth: newFields.placeOfBirth,
     };
+
     console.log('Form Data', data);
     setLoading(true);
     try {

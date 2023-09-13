@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.259e1f65.css",
-    "main.js": "/static/js/main.bdfd652d.js",
+    "main.js": "/static/js/main.94602038.js",
     "static/css/5495.917dbab3.chunk.css": "/static/css/5495.917dbab3.chunk.css",
     "static/js/5495.80ca8e5e.chunk.js": "/static/js/5495.80ca8e5e.chunk.js",
     "static/css/4298.1d6fef99.chunk.css": "/static/css/4298.1d6fef99.chunk.css",
@@ -90,7 +90,7 @@
     "register.css": "/static/css/register.9bc13429.chunk.css",
     "register.js": "/static/js/register.83a22a70.chunk.js",
     "kankor-result.js": "/static/js/kankor-result.0d8d1c1d.chunk.js",
-    "student-list.js": "/static/js/student-list.42e4de46.chunk.js",
+    "student-list.js": "/static/js/student-list.5834c5f5.chunk.js",
     "kankor-student-list.js": "/static/js/kankor-student-list.2508c450.chunk.js",
     "marks-register.js": "/static/js/marks-register.97c48599.chunk.js",
     "attendance-register.js": "/static/js/attendance-register.210d93ed.chunk.js",
@@ -143,7 +143,7 @@
     "admin-dashboard.js": "/static/js/admin-dashboard.5e4a3bd8.chunk.js",
     "subject-list.js": "/static/js/subject-list.cffbf201.chunk.js",
     "field-register.css": "/static/css/field-register.b7455280.chunk.css",
-    "field-register.js": "/static/js/field-register.6ce00d10.chunk.js",
+    "field-register.js": "/static/js/field-register.dcb303e4.chunk.js",
     "institute-field-department-register.css": "/static/css/institute-field-department-register.b7455280.chunk.css",
     "institute-field-department-register.js": "/static/js/institute-field-department-register.747a32b4.chunk.js",
     "evaluation-list.css": "/static/css/evaluation-list.b7455280.chunk.css",
@@ -294,7 +294,7 @@
     "static/media/white-full.svg": "/static/media/white-full.0fc3d8acffdda6d64e27.svg",
     "index.html": "/index.html",
     "main.259e1f65.css.map": "/static/css/main.259e1f65.css.map",
-    "main.bdfd652d.js.map": "/static/js/main.bdfd652d.js.map",
+    "main.94602038.js.map": "/static/js/main.94602038.js.map",
     "5495.917dbab3.chunk.css.map": "/static/css/5495.917dbab3.chunk.css.map",
     "5495.80ca8e5e.chunk.js.map": "/static/js/5495.80ca8e5e.chunk.js.map",
     "4298.1d6fef99.chunk.css.map": "/static/css/4298.1d6fef99.chunk.css.map",
@@ -383,7 +383,7 @@
     "register.9bc13429.chunk.css.map": "/static/css/register.9bc13429.chunk.css.map",
     "register.83a22a70.chunk.js.map": "/static/js/register.83a22a70.chunk.js.map",
     "kankor-result.0d8d1c1d.chunk.js.map": "/static/js/kankor-result.0d8d1c1d.chunk.js.map",
-    "student-list.42e4de46.chunk.js.map": "/static/js/student-list.42e4de46.chunk.js.map",
+    "student-list.5834c5f5.chunk.js.map": "/static/js/student-list.5834c5f5.chunk.js.map",
     "kankor-student-list.2508c450.chunk.js.map": "/static/js/kankor-student-list.2508c450.chunk.js.map",
     "marks-register.97c48599.chunk.js.map": "/static/js/marks-register.97c48599.chunk.js.map",
     "attendance-register.210d93ed.chunk.js.map": "/static/js/attendance-register.210d93ed.chunk.js.map",
@@ -436,7 +436,7 @@
     "admin-dashboard.5e4a3bd8.chunk.js.map": "/static/js/admin-dashboard.5e4a3bd8.chunk.js.map",
     "subject-list.cffbf201.chunk.js.map": "/static/js/subject-list.cffbf201.chunk.js.map",
     "field-register.b7455280.chunk.css.map": "/static/css/field-register.b7455280.chunk.css.map",
-    "field-register.6ce00d10.chunk.js.map": "/static/js/field-register.6ce00d10.chunk.js.map",
+    "field-register.dcb303e4.chunk.js.map": "/static/js/field-register.dcb303e4.chunk.js.map",
     "institute-field-department-register.b7455280.chunk.css.map": "/static/css/institute-field-department-register.b7455280.chunk.css.map",
     "institute-field-department-register.747a32b4.chunk.js.map": "/static/js/institute-field-department-register.747a32b4.chunk.js.map",
     "evaluation-list.b7455280.chunk.css.map": "/static/css/evaluation-list.b7455280.chunk.css.map",
@@ -557,6 +557,6 @@
   },
   "entrypoints": [
     "static/css/main.259e1f65.css",
-    "static/js/main.bdfd652d.js"
+    "static/js/main.94602038.js"
   ]
 }

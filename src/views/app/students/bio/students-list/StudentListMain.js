@@ -213,7 +213,9 @@ const ThumbListPages = () => {
     <>
       <div className="disable-text-selection">
         {/* This is he */}
-        <h1>د شاگرد لست/لست شاگردان</h1>
+        <h1>
+          د زده کوونکو لست/لست شاگردان ({tableParams.pagination?.total || null})
+        </h1>
         <br />
 
         <div

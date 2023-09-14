@@ -37,6 +37,11 @@ const ThumbListPages = ({ match }) => {
 
   const columns = [
     {
+      title: 'ګڼه/شماره',
+      dataIndex: 'sno',
+      width: '5%',
+    },
+    {
       title: 'نمبر اساس',
       dataIndex: 'number',
       width: '5%',
@@ -288,6 +293,7 @@ const ThumbListPages = ({ match }) => {
           loading={isLoading}
           dataSource={items?.map((item, index) => ({
             key: item.id,
+            sno: (tableParams.pagination.current - 1) * 10 + (index + 1),
             number: item.id,
             code: item.code,
             name: (

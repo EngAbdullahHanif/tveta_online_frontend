@@ -192,8 +192,6 @@ const StudentUpdate = ({ intl }, values) => {
   };
 
   const initValues = {
-    maktoobDate: studentEnrollmentData?.maktoobDate || null,
-    maktoobNumber: studentEnrollmentData?.maktoobNumber || '',
     institute:
       institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
       '',

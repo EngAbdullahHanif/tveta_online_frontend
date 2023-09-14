@@ -182,6 +182,11 @@ const ThumbListPages = ({ match }) => {
   // }, []);
   const columns = [
     {
+      title: 'ګڼه/شماره',
+      dataIndex: 'sno',
+      width: '5%',
+    },
+    {
       title: 'شماره',
       dataIndex: 'id',
       // sorter: (a, b) => a.student_id - b.student_id,
@@ -630,6 +635,7 @@ const ThumbListPages = ({ match }) => {
           onChange={handleTableChange}
           dataSource={items?.map((item, index) => ({
             key: index,
+            sno: (tableParams.pagination.current - 1) * 10 + (index + 1),
             id: item.id,
             name: <NavLink to={`student/${item.id}`}>{item.name}</NavLink>,
             province: provinces.find((pro) => pro.value == item.province)

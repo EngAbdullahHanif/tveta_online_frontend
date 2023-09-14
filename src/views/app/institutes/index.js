@@ -2,6 +2,7 @@ import { userRole } from 'constants/defaultValues';
 import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
+import PrintScreen from './PrintScreen';
 
 const InstituteList = React.lazy(() =>
   import('./institute-list/InstituteListMain'),
@@ -69,6 +70,11 @@ const Institues = ({ match, props }) => (
         path={`${match.url}/institute/:instituteId`}
         component={InstituteProfile}
         roles={[userRole.superUser, userRole.authenticated]}
+        props={props}
+      />
+      <ProtectedRoute
+        path={`${match.url}/print/:instituteId`}
+        component={PrintScreen}
         props={props}
       />
       <ProtectedRoute

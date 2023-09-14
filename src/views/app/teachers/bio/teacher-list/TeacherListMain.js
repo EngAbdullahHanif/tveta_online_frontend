@@ -390,7 +390,6 @@ const ThumbListPages = ({ match }) => {
           handleResetFields={handleResetFields}
           handleTableChange={handleTableChange}
           data={items}
-          columns={columns}
           isLoading={isLoading}
           teacherLink={`teacher/`}
         />

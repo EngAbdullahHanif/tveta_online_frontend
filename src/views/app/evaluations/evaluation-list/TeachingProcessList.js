@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { Badge } from 'reactstrap';
 import { Table as TB } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { BsPencilSquare } from 'react-icons/bs';
@@ -9,12 +8,12 @@ import {
   genderOptions,
   gradeOptions,
   instituteStatusOptions,
-  teacherCurrentStatusOptions,
+  stepOptions,
 } from '../../global-data/options';
 import { Field, Formik } from 'formik';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 
-const TeacherList = ({
+const TeachingProcessList = ({
   onFilter,
   handleResetFields,
   handleTableChange,
@@ -37,40 +36,97 @@ const TeacherList = ({
     },
     {
       title: 'اساس نمبر',
-      dataIndex: 'student_id',
-      sorter: (a, b) => a.student_id - b.student_id,
+      dataIndex: 'id',
+      sorter: (a, b) => a.id - b.id,
       width: '5%',
     },
     {
-      title: 'نوم/نام',
-      dataIndex: 'name',
+      title: 'تاریخ',
+      dataIndex: 'date',
+      sorter: (a, b) => a.id - b.id,
+      width: '5%',
+    },
+    {
+      title: 'ارزیابی کننده نوم',
+      dataIndex: 'evaluator_name',
       sorter: (a, b) => a.name - b.name,
-      width: '15%',
-    },
-    {
-      title: 'د پلار نوم',
-      dataIndex: 'father_name',
-      width: '15%',
-    },
-    {
-      title: 'جنسیت',
-      dataIndex: 'gender',
       width: '10%',
     },
     {
-      title: 'ولایت',
-      dataIndex: 'province',
+      title: 'استاد نوم/نام',
+      dataIndex: 'teacher_name',
+      sorter: (a, b) => a.name - b.name,
       width: '10%',
     },
     {
-      title: 'تلفون شمیره',
-      dataIndex: 'phone_number',
-      width: '12%',
+      title: 'سال تعلیمی',
+      dataIndex: 'educational_year',
+      width: '15%',
+    },
+    {
+      title: 'مضمون',
+      dataIndex: 'subject',
+      width: '15%',
+    },
+    {
+      title: 'سمستر',
+      dataIndex: 'semester',
+      width: '5%',
     },
     {
       title: 'بست',
       dataIndex: 'grade',
-      width: '15%',
+      width: '10%',
+    },
+    {
+      title: 'قدم',
+      dataIndex: 'step',
+      width: '10%',
+    },
+    {
+      title: 'اعلی',
+      dataIndex: 'excellent',
+      width: '5%',
+    },
+    {
+      title: 'عالی',
+      dataIndex: 'outstanding',
+      width: '5%',
+    },
+    {
+      title: 'خوب',
+      dataIndex: 'good',
+      width: '5%',
+    },
+    {
+      title: 'متوسط',
+      dataIndex: 'average',
+      width: '5%',
+    },
+    {
+      title: 'ضعیف',
+      dataIndex: 'weak',
+      width: '5%',
+    },
+    {
+      title: 'موجود نیست',
+      dataIndex: 'not_applicable',
+      width: '5%',
+    },
+    {
+      title: 'جمله',
+      dataIndex: 'total',
+      width: '5%',
+    },
+    {
+      title: 'topic',
+      dataIndex: 'topic',
+      width: '10%',
+    },
+    {
+      title: 'description',
+      dataIndex: 'description',
+      width: '10%',
     },
     {
       title: 'حالت',
@@ -159,48 +215,33 @@ const TeacherList = ({
         dataSource={data?.map((item, index) => ({
           key: index,
           sno: (tableParams.pagination.current - 1) * 10 + (index + 1),
-          student_id: item.id,
-
-          name: (
+          id: item.id,
+          date: item.date,
+          evaluator_name: (
             <NavLink to={{ pathname: teacherLink + item.id, state: { item } }}>
-              {item.name}
+              {item.evaluator_name}
             </NavLink>
           ),
-          gender: genderOptions.find((op) => op.value === item.gender).label,
-          father_name: item.father_name,
-          province: provinces.find((pro) => pro.value == item.current_province)
-            ?.label,
-          phone_number: item.phone_number,
-          status: teacherCurrentStatusOptions.map((status) => {
-            if (status.value == item.status) {
-              return (
-                <div
-                  className="mb-1 text-small"
-                  style={{ fontSize: '20px', width: '10%' }}
-                >
-                  <Badge
-                    color={
-                      status.value == 'dismissed'
-                        ? 'danger'
-                        : status.value == 'inprogress' ||
-                          status.value == 'active'
-                        ? 'success'
-                        : status.value == 'freeze'
-                        ? 'secondary'
-                        : 'warning'
-                    }
-                    pill
-                  >
-                    {status.label}
-                  </Badge>
-                </div>
-              );
-            }
-          }),
+          teacher_name: item.teacher?.name,
+          educational_year: item.educational_year,
+          subject: item.subject,
+          semester: item.semester,
           grade: gradeOptions.map((g) => {
             if (g.value === item.grade)
               return <IntlMessages id={g.label.props.id} />;
           }),
+          step: stepOptions.map((g) => {
+            if (g.value === item.step)
+              return <IntlMessages id={g.label.props.id} />;
+          }),
+          excellent: item.excellent,
+          outstanding: item.outstanding,
+          good: item.good,
+          average: item.average,
+          weak: item.weak,
+          not_applicable: item.not_applicable,
+          topic: item.topic,
+          description: item.description,
           action: (
             <NavLink
               to={`/app/teachers/register/${item.id}`}
@@ -222,4 +263,4 @@ const TeacherList = ({
   );
 };
 
-export default TeacherList;
+export default TeachingProcessList;

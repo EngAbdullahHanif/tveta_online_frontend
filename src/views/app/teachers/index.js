@@ -2,6 +2,7 @@ import { userRole } from 'constants/defaultValues';
 import { ProtectedRoute } from 'helpers/authHelper';
 import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
+import PrintScreen from './bio/PrintScreen';
 
 const TeacherList = React.lazy(() =>
   import(
@@ -101,6 +102,11 @@ const Teachers = ({ match, props }) => (
           userRole.provincial,
           userRole.institute,
         ]}
+        props={props}
+      />
+      <ProtectedRoute
+        path={`${match.url}/print/:teacherId`}
+        component={PrintScreen}
         props={props}
       />
       {/* <ProtectedRoute

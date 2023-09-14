@@ -1,11 +1,15 @@
+
   /* Apply general styles for printing */
   @media print {
     /* Adjust page margins and layout for printing */
     body {
+      font-size: 20;
       margin: 0;
       padding: 10px;
     }
-  
+    .no-print {
+      display: none;
+    }
     /* Hide elements not relevant for printing */
     #header, #sidebar {
       display: none;

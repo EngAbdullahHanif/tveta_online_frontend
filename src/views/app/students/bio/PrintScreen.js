@@ -59,8 +59,6 @@ const PrintScreen = () => {
     districtsList[districts.value] = districts.label;
   });
 
-  let recId;
-
   async function fetchStudent() {
     try {
       const response = await callApi(`students/${studentId}/`, '', null);
@@ -99,17 +97,6 @@ const PrintScreen = () => {
   useEffect(() => {
     fetchStudent();
   }, []);
-
-  const handleClick = (event) => {
-    setIsNext(event);
-  };
-
-  const style2 = {
-    padding: '',
-  };
-  const style1 = {
-    backgroungColor: 'blue',
-  };
 
   return (
     <>

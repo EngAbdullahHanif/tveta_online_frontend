@@ -3,6 +3,8 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 import { userRole } from 'constants/defaultValues';
 import TeacherSelection from './teacher-selection';
+import EmployeeEvaluation from './employee-evaluation';
+import EvaluationListing from './evaluation-list/EvaluationListing';
 
 const EvaluationList = React.lazy(() =>
   import(
@@ -36,18 +38,39 @@ const Evaluations = ({ match, props }) => (
       />
       <ProtectedRoute
         exact
-        path={`${match.url}/teacher-evalaution/:teacherId`}
+        path={`${match.url}/employee-evalaution`}
+        component={EmployeeEvaluation}
+        roles={[userRole.superUser, userRole.authenticated]}
+        props={props}
+      />
+      <ProtectedRoute
+        exact
+        path={`${match.url}/teacher-evalaution/:type/:teacherId`}
         component={TeacherEvaluation}
         roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
       <ProtectedRoute
         exact
-        path={`${match.url}/teacher-evalaution`}
+        path={`${match.url}/teacher-evalaution/:type`}
         component={TeacherSelection}
         roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
+      <ProtectedRoute
+        exact
+        path={`${match.url}/employee/:type`}
+        component={EvaluationListing}
+        roles={[userRole.superUser, userRole.authenticated]}
+        props={props}
+      />
+      {/* <ProtectedRoute
+        exact
+        path={`${match.url}/teacher-evalaution/needs`}
+        component={TeacherSelection}
+        roles={[userRole.superUser, userRole.authenticated]}
+        props={props}
+      /> */}
       <ProtectedRoute
         path={`${match.url}/promotion-demotion`}
         component={PromotionDemotion}

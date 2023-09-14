@@ -1,3 +1,9 @@
+/*
+  - only part of form data is stored to localstorage, not all of it. the reason this decision is made is to prevent entry of wrong data--data of previous student submited for current studetn. 
+
+
+  */
+
 import React, { useState, useContext, useEffect } from 'react';
 // import { NavLink } from 'react-router-dom';
 import { FormControl } from 'react-bootstrap';
@@ -14,9 +20,11 @@ import {
   disabilityOptions,
   persianMonthOptions,
 } from '../../global-data/options';
-import DatePicker from 'react-multi-date-picker';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
+import gregorian from 'react-date-object/calendars/gregorian';
+import gregorian_en from 'react-date-object/locales/gregorian_en';
 import {
   Row,
   Card,
@@ -72,16 +80,23 @@ const StudentRegistration = ({ intl }, values) => {
 
   const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
   const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
-
+  const [formValues, setFormValues] = useState(
+    JSON.parse(localStorage.getItem('formData')),
+  );
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [instDepartmentOptions, setInstDepartmentOptions] = useState([]);
   // get data of each step from localstorage
-  const formValues = JSON.parse(localStorage.getItem('formData'));
   // used arrays as intial values because other things will throw error
+  console.log(
+    'formValues: ',
+    new DateObject(formValues?.maktoobDate).convert(persian, persian_fa),
+  );
   const [initialValues, setInitialValues] = useState({
     maktoobNumber: formValues?.maktoobNumber || '',
-    maktoobDate: formValues?.maktoobDate || '',
+    maktoobDate: formValues?.maktoobDate
+      ? new DateObject(formValues?.maktoobDate).convert(persian, persian_fa)
+      : null,
     kankorId: formValues?.kankorId || '',
     name1: formValues?.name1 || '',
     englishName: formValues?.englishName || '',
@@ -196,8 +211,7 @@ const StudentRegistration = ({ intl }, values) => {
   };
 
   useEffect(() => {
-    const formData = JSON.parse(localStorage.getItem('formData'));
-    fetchInstDepts(formData?.institute, formData?.department.value);
+    fetchInstDepts(formValues?.institute, formValues?.department.value);
   }, []);
 
   const handleFileChange = (event) => {
@@ -237,11 +251,12 @@ const StudentRegistration = ({ intl }, values) => {
   };
 
   const storeDataToLocalStorage = (data) => {
+    localStorage.removeItem('formData');
+    console.log('FFFFFFFFFFFFFFFFFFFFFFFFFFFF', formValues);
     localStorage.setItem('formData', JSON.stringify(data));
   };
   // post student record to server
   const postStudentRecord = async (newFields, { setFieldError }) => {
-    // localStorage.setItem('formData', JSON.stringify(newFields));
     const localStorageData = {
       interanceType: newFields.interanceType,
       institute: newFields.institute,
@@ -251,14 +266,19 @@ const StudentRegistration = ({ intl }, values) => {
       department: newFields.department,
       class: newFields.class,
       studentType: newFields.studentType,
-      maktoobDate: newFields.maktoobDate,
+      maktoobDate: newFields?.maktoobDate
+        ? newFields?.maktoobDate
+            .convert(gregorian, gregorian_en)
+            .format('YYYY-MM-DD')
+        : null,
       maktoobNumber: newFields.maktoobNumber,
     };
-
-    storeDataToLocalStorage(localStorageData);
     const data = {
-      //personal info,
-      maktob_date: newFields.maktoobDate || null,
+      maktob_date: newFields?.maktoobDate
+        ? newFields?.maktoobDate
+            .convert(gregorian, gregorian_en)
+            .format('YYYY-MM-DD')
+        : null,
       maktob_number: newFields.maktoobNumber || null,
       name: newFields.name1,
       student_id: newFields.studentId,
@@ -318,7 +338,6 @@ const StudentRegistration = ({ intl }, values) => {
     setLoading(true);
     try {
       const response = await callApi('students/register/', 'POST', data);
-
       // const stdId = response?.data.id;
       // history.push(`/app/students/student/${stdId}`);
       createNotification('success', 'filled');
@@ -335,11 +354,13 @@ const StudentRegistration = ({ intl }, values) => {
       }
       createNotification('error', 'filled');
     } finally {
+      setInitialValues({ ...initialValues, ...localStorageData });
+      storeDataToLocalStorage(localStorageData);
       setLoading(false);
     }
   };
   const resetformFields = () => {
-    if (localStorage.getItem('formData')) {
+    if (JSON.parse(localStorage.getItem('formData'))) {
       localStorage.removeItem('formData');
       window.location.reload();
     } else message.warning('فورم پاک هست');
@@ -401,21 +422,15 @@ const StudentRegistration = ({ intl }, values) => {
                             }}
                             containerClassName="form-control fieldStyle"
                             name="maktoobDate"
+                            value={values.maktoobDate}
                             calendar={persian}
                             locale={persian_fa}
                             months={persianMonthOptions}
-                            onChange={(e) => {
-                              if (!e) {
-                                setFieldValue('maktoobDate', '');
-                                return;
-                              }
+                            format="YYYY-MM-DD"
+                            onChange={(date) => {
                               setFieldValue(
                                 'maktoobDate',
-                                new Date(e.toDate()).getFullYear() +
-                                  '-' +
-                                  (new Date(e.toDate()).getMonth() + 1) +
-                                  '-' +
-                                  new Date(e.toDate()).getDate(),
+                                date?.isValid ? date : '',
                               );
                             }}
                           />
@@ -1385,7 +1400,10 @@ const StudentRegistration = ({ intl }, values) => {
             </h3>
             <Button
               className="m-5 bg-primary"
-              onClick={() => setIsSuccess(false)}
+              onClick={() => {
+                setFormValues(JSON.parse(localStorage.getItem('formData')));
+                setIsSuccess(false);
+              }}
             >
               {loading ? <Spinner /> : <IntlMessages id="button.back" />}
             </Button>

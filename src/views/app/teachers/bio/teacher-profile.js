@@ -475,7 +475,33 @@ const TeacherProfile = () => {
           className=" d-flex justify-content-center"
           style={{ marginRight: '2%' }}
         >
-          <div className="d-inline-block">-</div>
+          <div className="d-inline-block">
+            <Row>
+              <Colxx
+                className=" d-flex justify-content-center "
+                style={{ marginBottom: '2%' }}
+              >
+                <div className="d-inline-block">
+                  <Button
+                    style={{
+                      backgroundColor: 'blue',
+                      fontWeight: 'bold',
+                      fontSize: '18px',
+                    }}
+                  >
+                    <a
+                      href={`/app/teachers/print/${teacherId}`}
+                      target="_blank"
+                    >
+                      <span className="label" style={{ color: '#fff' }}>
+                        پرنت
+                      </span>
+                    </a>
+                  </Button>
+                </div>
+              </Colxx>
+            </Row>
+          </div>
         </Colxx>
       </Row>
       {teacher && (
@@ -2138,6 +2164,7 @@ const TeacherProfile = () => {
                                           </div>
                                         ) : null}
                                       </div>
+
                                       <div className="form-group">
                                         <label
                                           style={inputLabel}

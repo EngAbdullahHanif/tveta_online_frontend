@@ -942,12 +942,6 @@ export const teacherEvaluationValidationSchema = Yup.object().shape({
   evaluator_name: Yup.string().required('Evaluator name is required'),
   educational_year: EDUCATIONAL_YEAR_VALIDATOR,
   semester: Yup.number().required('سمستر الزامی است'),
-  // evaluation_type: Yup.object()
-  //   .shape({
-  //     value: Yup.string().required(),
-  //   })
-  //   .nullable()
-  //   .required('Evaluation Type is Required Field'),
 
   institute: Yup.object()
     .shape({
@@ -955,20 +949,6 @@ export const teacherEvaluationValidationSchema = Yup.object().shape({
     })
     .nullable()
     .required('Institute is Required Field'),
-
-  // department: Yup.object()
-  //   .shape({
-  //     value: Yup.string().required(),
-  //   })
-  //   .nullable()
-  //   .required('Department is Required Field'),
-
-  // classs: Yup.object()
-  //   .shape({
-  //     value: Yup.string().required(),
-  //   })
-  //   .nullable()
-  //   .required('Class is Required'),
 
   subject: Yup.string().required('Subject is Required Field'),
   excellent: Yup.string().required('excellent marks is required'),

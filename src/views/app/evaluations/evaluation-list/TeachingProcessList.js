@@ -30,6 +30,11 @@ const TeachingProcessList = ({
   });
   const columns = [
     {
+      title: 'ګڼه/شماره',
+      dataIndex: 'sno',
+      width: '5%',
+    },
+    {
       title: 'اساس نمبر',
       dataIndex: 'id',
       sorter: (a, b) => a.id - b.id,
@@ -209,6 +214,7 @@ const TeachingProcessList = ({
         onChange={handleTableChange}
         dataSource={data?.map((item, index) => ({
           key: index,
+          sno: (tableParams.pagination.current - 1) * 10 + (index + 1),
           id: item.id,
           date: item.date,
           evaluator_name: (

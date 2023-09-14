@@ -15,6 +15,11 @@ import { Field, Formik } from 'formik';
 
 const columns = [
   {
+    title: 'ګڼه/شماره',
+    dataIndex: 'sno',
+    width: '5%',
+  },
+  {
     title: 'نمبر اساس',
     dataIndex: 'student_id',
     width: '5%',
@@ -65,7 +70,7 @@ const columns = [
     dataIndex: 'action',
   },
 ];
-
+let totalStudents = 0;
 const ThumbListPages = () => {
   const { provinces, institutes } = useContext(AuthContext);
   const [tableParams, setTableParams] = useState({
@@ -119,6 +124,7 @@ const ThumbListPages = () => {
           );
         } else {
           setItems(response.data.results);
+          totalStudents = response?.data?.count;
         }
         setTableParams({
           ...tableParams,
@@ -213,7 +219,7 @@ const ThumbListPages = () => {
     <>
       <div className="disable-text-selection">
         {/* This is he */}
-        <h1>د شاگرد لست/لست شاگردان</h1>
+        <h1>د شاگرد لست/لست شاگردان({totalStudents})</h1>
         <br />
 
         <div
@@ -292,6 +298,7 @@ const ThumbListPages = () => {
           loading={isLoading}
           dataSource={items?.map((item, index) => ({
             key: index,
+            sno: (tableParams.pagination.current - 1) * 10 + (index + 1),
             student_id: item.student_id,
             registration_number: item.registration_number,
             name: (

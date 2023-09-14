@@ -31,6 +31,11 @@ const TeacherList = ({
   });
   const columns = [
     {
+      title: 'ګڼه/شماره',
+      dataIndex: 'sno',
+      width: '5%',
+    },
+    {
       title: 'اساس نمبر',
       dataIndex: 'student_id',
       sorter: (a, b) => a.student_id - b.student_id,
@@ -153,6 +158,7 @@ const TeacherList = ({
         onChange={handleTableChange}
         dataSource={data?.map((item, index) => ({
           key: index,
+          sno: (tableParams.pagination.current - 1) * 10 + (index + 1),
           student_id: item.id,
 
           name: (

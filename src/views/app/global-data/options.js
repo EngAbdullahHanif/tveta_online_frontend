@@ -369,7 +369,44 @@ export const disabilityOptions = [
     label: 'گنگ/ګنګ',
   },
 ];
-
+export const evaluationTypes = [
+  {
+    value: 'need_assessment',
+    label: 'اقتضایی',
+  },
+  {
+    value: 'probation',
+    label: 'آزمایشی',
+  },
+  {
+    value: 'annual',
+    label: 'سالانه',
+  },
+];
+export const outcomeOptions = [
+  {
+    value: 'promotion',
+    label: 'ارتقاأ',
+  },
+  {
+    value: 'continue',
+    label: 'ادامه',
+  },
+  {
+    value: 'dismissal',
+    label: 'انفصال',
+  },
+];
+export const placeOfDutyOptions = [
+  {
+    value: 'local',
+    label: 'محلی',
+  },
+  {
+    value: 'central',
+    label: 'مرکزی',
+  },
+];
 export const StudentTypeOptions = [
   {
     value: 'continuous',

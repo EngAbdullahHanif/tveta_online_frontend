@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-// import { Formik, Form, Field } from 'formik';
-// import { teacherEvalautionSchema } from '../global-data/forms-validation';
+import React, { useState, useEffect, useContext } from 'react';
 import { Card } from 'reactstrap';
 import IntlMessages from 'helpers/IntlMessages';
-// import { Colxx } from 'components/common/CustomBootstrap';
-// import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-import TeacherList from '../teachers/Components/TeacherList';
 import callApi from 'helpers/callApi';
 import { useParams } from 'react-router-dom';
 
-const TeacherSelection = () => {
+import { AuthContext } from 'context/AuthContext';
+import NeedsList from './NeedsList';
+import PublicServiceList from './PublicServiceList';
+
+const EvaluationListing = () => {
+  const { provinces } = useContext(AuthContext);
   const { type } = useParams();
   const [isFilter, setIsFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -69,7 +69,7 @@ const TeacherSelection = () => {
 
   useEffect(() => {
     fetchData();
-  }, [!isFilter ? JSON.stringify(tableParams) : null]);
+  }, [!isFilter ? JSON.stringify(tableParams) : null, type]);
 
   async function fetchData(params = {}) {
     console.log('PARAMSSSSSSSSSS: ', params);
@@ -81,9 +81,17 @@ const TeacherSelection = () => {
       page: !isFilter ? tableParams.pagination.current : params.page,
       page_size: tableParams.pagination.pageSize || null,
     };
-    const response = await callApi(`teachers/`, '', null, params1);
+    if (type === 'teaching_proccess') {
+      endpoint = 'evaluations/teaching-process/';
+    } else if (type === 'needs') {
+      endpoint = 'evaluations/nasab/';
+    } else {
+      endpoint = 'evaluations/public_service/';
+    }
+    const response = await callApi(endpoint, '', 'GET', params1);
     setIsLoading(false);
     if (response.data && response.status === 200) {
+      console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN', response?.data.results);
       setItems(response?.data.results);
       setSelectedItems([]);
       // setTotalItemCount(data);
@@ -139,17 +147,27 @@ const TeacherSelection = () => {
         <h3 className="mt-5 m-5">
           {<IntlMessages id="teacher.EvalautionTitle" />}
         </h3>
-        <TeacherList
-          onFilter={onFilter}
-          handleResetFields={handleResetFields}
-          handleTableChange={handleTableChange}
-          data={items}
-          columns={columns}
-          isLoading={isLoading}
-          teacherLink={`${type}/`}
-        />
+        {type === 'needs' || type === 'teaching_proccess' ? (
+          <NeedsList
+            onFilter={onFilter}
+            handleResetFields={handleResetFields}
+            handleTableChange={handleTableChange}
+            data={items}
+            isLoading={isLoading}
+            teacherLink={`${type}/`}
+          />
+        ) : type === 'public_service' ? (
+          <PublicServiceList
+            onFilter={onFilter}
+            handleResetFields={handleResetFields}
+            handleTableChange={handleTableChange}
+            data={items}
+            isLoading={isLoading}
+            teacherLink={`${type}/`}
+          />
+        ) : null}
       </Card>
     </>
   );
 };
-export default TeacherSelection;
+export default EvaluationListing;

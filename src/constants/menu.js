@@ -582,6 +582,36 @@ const menuItems = [
         label: 'menu.teacher-evaluation',
         to: `${adminRoot}/evaluations/teacher-evalaution`,
       },
+      {
+        icon: 'FA.FaList',
+        label: 'menu.teacher-teaching_proccess-evaluation',
+        to: `${adminRoot}/evaluations/employee/teaching_proccess`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.teacher-teaching_proccess-evaluation',
+        to: `${adminRoot}/evaluations/teacher-evalaution/teaching_proccess`,
+      },
+      {
+        icon: 'FA.FaList',
+        label: 'menu.teacher-nyazsanji',
+        to: `${adminRoot}/evaluations/employee/needs`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.teacher-nyazsanji',
+        to: `${adminRoot}/evaluations/teacher-evalaution/needs`,
+      },
+      {
+        icon: 'FA.FaList',
+        label: 'menu.employee-evaluation',
+        to: `${adminRoot}/evaluations/employee/public_service`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.employee-evaluation',
+        to: `${adminRoot}/evaluations/teacher-evalaution/public_service`,
+      },
       // {
       //   icon: 'MD.MdAddBox',
       //   label: 'menu.teacher-evaluation',

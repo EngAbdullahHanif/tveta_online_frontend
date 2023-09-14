@@ -72,12 +72,13 @@ const StudentRegistration = ({ intl }, values) => {
 
   const [mainDistrictOptions, setMainDistrictOptions] = useState([]);
   const [currentDistrictOptions, setCurrentDistrictOptions] = useState([]);
-
+  const [formValues, setFormValues] = useState(
+    JSON.parse(localStorage.getItem('formData')),
+  );
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [instDepartmentOptions, setInstDepartmentOptions] = useState([]);
   // get data of each step from localstorage
-  const formValues = JSON.parse(localStorage.getItem('formData'));
   // used arrays as intial values because other things will throw error
   const [initialValues, setInitialValues] = useState({
     maktoobNumber: formValues?.maktoobNumber || '',
@@ -195,8 +196,7 @@ const StudentRegistration = ({ intl }, values) => {
   };
 
   useEffect(() => {
-    const formData = JSON.parse(localStorage.getItem('formData'));
-    fetchInstDepts(formData.institute, formData.department.value);
+    fetchInstDepts(formValues?.institute, formValues?.department.value);
   }, []);
 
   const handleFileChange = (event) => {
@@ -236,11 +236,12 @@ const StudentRegistration = ({ intl }, values) => {
   };
 
   const storeDataToLocalStorage = (data) => {
+    localStorage.removeItem('formData');
+    console.log('FFFFFFFFFFFFFFFFFFFFFFFFFFFF', formValues);
     localStorage.setItem('formData', JSON.stringify(data));
   };
   // post student record to server
   const postStudentRecord = async (newFields, { setFieldError }) => {
-    // localStorage.setItem('formData', JSON.stringify(newFields));
     const localStorageData = {
       interanceType: newFields.interanceType,
       institute: newFields.institute,
@@ -253,10 +254,7 @@ const StudentRegistration = ({ intl }, values) => {
       maktoobDate: newFields.maktoobDate,
       maktoobNumber: newFields.maktoobNumber,
     };
-
-    storeDataToLocalStorage(localStorageData);
     const data = {
-      //personal info,
       maktob_date: newFields.maktoobDate || null,
       maktob_number: newFields.maktoobNumber || null,
       name: newFields.name1,
@@ -316,7 +314,6 @@ const StudentRegistration = ({ intl }, values) => {
     setLoading(true);
     try {
       const response = await callApi('students/register/', 'POST', data);
-
       // const stdId = response?.data.id;
       // history.push(`/app/students/student/${stdId}`);
       createNotification('success', 'filled');
@@ -333,11 +330,13 @@ const StudentRegistration = ({ intl }, values) => {
       }
       createNotification('error', 'filled');
     } finally {
+      setInitialValues({ ...initialValues, ...localStorageData });
+      storeDataToLocalStorage(localStorageData);
       setLoading(false);
     }
   };
   const resetformFields = () => {
-    if (localStorage.getItem('formData')) {
+    if (JSON.parse(localStorage.getItem('formData'))) {
       localStorage.removeItem('formData');
       window.location.reload();
     } else message.warning('فورم پاک هست');
@@ -1383,7 +1382,10 @@ const StudentRegistration = ({ intl }, values) => {
             </h3>
             <Button
               className="m-5 bg-primary"
-              onClick={() => setIsSuccess(false)}
+              onClick={() => {
+                setFormValues(JSON.parse(localStorage.getItem('formData')));
+                setIsSuccess(false);
+              }}
             >
               {loading ? <Spinner /> : <IntlMessages id="button.back" />}
             </Button>

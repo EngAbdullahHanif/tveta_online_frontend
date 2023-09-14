@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 
 import * as Yup from 'yup';
-import { Row, Card, CardBody, FormGroup, Label } from 'reactstrap';
+import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
@@ -140,10 +140,20 @@ const InstituteDetails = (values) => {
 
   return (
     <>
-      <h2 className="mt-5 m-3">
-        {<IntlMessages id="institute.detailsTitle" />}
-      </h2>
-
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <h2>{<IntlMessages id="institute.detailsTitle" />}</h2>
+        <Button
+          style={{
+            backgroundColor: 'blue',
+            fontWeight: 'bold',
+            fontSize: '18px',
+          }}
+        >
+          <a href={`/app/institutes/print/${instituteId}`} target="_blank">
+            <span style={{ color: '#fff' }}>پرنت</span>
+          </a>
+        </Button>
+      </div>
       <Separator className="mb-5" />
       {instituteStatistics && (
         <Row>

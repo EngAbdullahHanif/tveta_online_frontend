@@ -751,7 +751,7 @@ module.exports = {
   'forms.StudyTypeErr': 'د شاگرد وضعیت اړین دی/ حالت شاگرد ضروری است',
   'forms.StdInteranceOption_1': 'حکمی',
   'forms.StdInteranceOption_2': 'اختصاصی کانکور/کانکور اختصاصی',
-  'forms.StdInteranceOption_3': 'عمومی کانکور / کانکور عمومی',
+  'forms.StdInteranceOption_3': 'د لوړو زده کړو کانکور / کانکور تحصیلات عالی',
   'student.studentId': 'اساس نمبر',
   'student.studentIdErr': 'اساس نمبر اړین دی/ اساس نمبر ضروری است',
   'inst.file': 'عکس',

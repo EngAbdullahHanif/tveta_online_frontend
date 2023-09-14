@@ -11,17 +11,14 @@ import logo from './../../../../assets/logos/AdminLogo.png';
 
 import IntlMessages from 'helpers/IntlMessages';
 import { Colxx, Separator } from 'components/common/CustomBootstrap';
-import config from '../../../../config';
 
 import { AuthContext } from 'context/AuthContext';
 import {
   studentStatusOptions,
   studyTimeOptions,
 } from 'views/app/global-data/options';
-// import { BsPencilSquare } from 'react-icons/bs';
-
-const servicePath = config.API_URL;
-const studentApiUrl = `${servicePath}/api/`;
+import { BsPencilSquare } from 'react-icons/bs';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 const StudentProfile = () => {
   const { institutes, provinces, districts, departments, classes } =
@@ -229,9 +226,27 @@ const StudentProfile = () => {
                             padding: '8px',
                             paddingInline: '30px',
                             borderRadius: '10px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
                           }}
                         >
-                          <IntlMessages id="forms.personalInfo" />
+                          <span>
+                            <IntlMessages
+                              id="forms.personalInfo"
+                              style={{ display: 'inline' }}
+                            />
+                          </span>
+                          <NavLink
+                            to={`/app/students/student-update/${student[0]?.id}`}
+                          >
+                            <div style={{ display: 'inline' }}>
+                              <BsPencilSquare
+                                outline
+                                style={{ fontSize: '20px' }}
+                                id="updateIcon"
+                              />
+                            </div>
+                          </NavLink>
                         </h2>
                       </Colxx>
                     </Row>
@@ -455,39 +470,15 @@ const StudentProfile = () => {
                       </Colxx>
                     </Row>
                     <Row className="justify-content-center   rounded ">
-                      <Colxx style={{ paddingInline: '4%' }} xxs="">
-                        <Label className="data-style">شمولیت کال</Label>
-                        <h2>{studentEnrollmentData.educational_year}</h2>
-                        <Label className="data-style">
-                          <IntlMessages id="forms.StdInteranceTypeLabel" />
-                        </Label>
-                        {student.admission_method === 'decree' ? (
-                          <h2>حکمی</h2>
-                        ) : student.internse_type === 'general_kankor' ? (
-                          <h2>کانکور اختصاصی</h2>
-                        ) : (
-                          <h2>کانکور عمومی</h2>
-                        )}
-                        <Label className="data-style">
-                          <IntlMessages id="student.educationType" />
-                        </Label>
-                        {student.student_type === 'continuous' ? (
-                          <h2>پیوسته</h2>
-                        ) : (
-                          <h2>غیر پیوسته</h2>
-                        )}
-                        <br />
-                        <br />
-                      </Colxx>
                       <Colxx style={{ paddingInline: '4%' }}>
                         <Label className="data-style">
                           <IntlMessages id="menu.institutes" />
                         </Label>
                         <h2>
                           {
-                            institutes.find(
+                            institutes?.find(
                               (ins) =>
-                                ins.value === studentEnrollmentData.institute,
+                                ins.value === studentEnrollmentData?.institute,
                             )?.label
                           }
                         </h2>
@@ -542,6 +533,30 @@ const StudentProfile = () => {
                           </>
                         )}
 
+                        <br />
+                        <br />
+                      </Colxx>
+                      <Colxx style={{ paddingInline: '4%' }} xxs="">
+                        <Label className="data-style">شمولیت کال</Label>
+                        <h2>{studentEnrollmentData.educational_year}</h2>
+                        <Label className="data-style">
+                          <IntlMessages id="forms.StdInteranceTypeLabel" />
+                        </Label>
+                        {student.admission_method === 'decree' ? (
+                          <h2>حکمی</h2>
+                        ) : student.internse_type === 'general_kankor' ? (
+                          <h2>کانکور اختصاصی</h2>
+                        ) : (
+                          <h2>کانکور عمومی</h2>
+                        )}
+                        <Label className="data-style">
+                          <IntlMessages id="student.educationType" />
+                        </Label>
+                        {student.student_type === 'continuous' ? (
+                          <h2>پیوسته</h2>
+                        ) : (
+                          <h2>غیر پیوسته</h2>
+                        )}
                         <br />
                         <br />
                       </Colxx>

@@ -1,3 +1,9 @@
+/*
+  - only part of form data is stored to localstorage, not all of it. the reason this decision is made is to prevent entry of wrong data--data of previous student submited for current studetn. 
+
+
+  */
+
 import React, { useState, useContext, useEffect } from 'react';
 // import { NavLink } from 'react-router-dom';
 import { FormControl } from 'react-bootstrap';
@@ -14,9 +20,11 @@ import {
   disabilityOptions,
   persianMonthOptions,
 } from '../../global-data/options';
-import DatePicker from 'react-multi-date-picker';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
+import gregorian from 'react-date-object/calendars/gregorian';
+import gregorian_en from 'react-date-object/locales/gregorian_en';
 import {
   Row,
   Card,
@@ -80,9 +88,15 @@ const StudentRegistration = ({ intl }, values) => {
   const [instDepartmentOptions, setInstDepartmentOptions] = useState([]);
   // get data of each step from localstorage
   // used arrays as intial values because other things will throw error
+  console.log(
+    'formValues: ',
+    new DateObject(formValues?.maktoobDate).convert(persian, persian_fa),
+  );
   const [initialValues, setInitialValues] = useState({
     maktoobNumber: formValues?.maktoobNumber || '',
-    maktoobDate: formValues?.maktoobDate || '',
+    maktoobDate: formValues?.maktoobDate
+      ? new DateObject(formValues?.maktoobDate).convert(persian, persian_fa)
+      : null,
     kankorId: formValues?.kankorId || '',
     name1: formValues?.name1 || '',
     englishName: formValues?.englishName || '',
@@ -173,6 +187,7 @@ const StudentRegistration = ({ intl }, values) => {
 
   // fetch department based on selected institute
   const fetchInstDepts = (inst, selectedDepartment) => {
+    if (!inst || !inst?.value) return;
     const instId = inst.value;
     callApi(`institute/${instId}/departments/`).then((inst) => {
       console.log('Institutes Departments: ', inst.data);
@@ -251,11 +266,19 @@ const StudentRegistration = ({ intl }, values) => {
       department: newFields.department,
       class: newFields.class,
       studentType: newFields.studentType,
-      maktoobDate: newFields.maktoobDate,
+      maktoobDate: newFields?.maktoobDate
+        ? newFields?.maktoobDate
+            .convert(gregorian, gregorian_en)
+            .format('YYYY-MM-DD')
+        : null,
       maktoobNumber: newFields.maktoobNumber,
     };
     const data = {
-      maktob_date: newFields.maktoobDate || null,
+      maktob_date: newFields?.maktoobDate
+        ? newFields?.maktoobDate
+            .convert(gregorian, gregorian_en)
+            .format('YYYY-MM-DD')
+        : null,
       maktob_number: newFields.maktoobNumber || null,
       name: newFields.name1,
       student_id: newFields.studentId,
@@ -310,6 +333,7 @@ const StudentRegistration = ({ intl }, values) => {
       classs: newFields.class.value,
       place_of_birth: newFields.placeOfBirth,
     };
+
     console.log('Form Data', data);
     setLoading(true);
     try {
@@ -394,24 +418,19 @@ const StudentRegistration = ({ intl }, values) => {
                               height: 40,
                               borderRadius: 0,
                               border: 'none',
+                              boxShadow: 'none',
                             }}
                             containerClassName="form-control fieldStyle"
                             name="maktoobDate"
+                            value={values.maktoobDate}
                             calendar={persian}
                             locale={persian_fa}
                             months={persianMonthOptions}
-                            onChange={(e) => {
-                              if (!e) {
-                                setFieldValue('maktoobDate', '');
-                                return;
-                              }
+                            format="YYYY-MM-DD"
+                            onChange={(date) => {
                               setFieldValue(
                                 'maktoobDate',
-                                new Date(e.toDate()).getFullYear() +
-                                  '-' +
-                                  (new Date(e.toDate()).getMonth() + 1) +
-                                  '-' +
-                                  new Date(e.toDate()).getDate(),
+                                date?.isValid ? date : '',
                               );
                             }}
                           />
@@ -971,7 +990,6 @@ const StudentRegistration = ({ intl }, values) => {
                         <FormGroup className="form-group has-float-label error-l-100">
                           <Label style={inputLabel}>
                             <IntlMessages id="forms.PlaceOfBirthLabel" />
-                            <span style={{ color: 'red' }}>*</span>
                           </Label>
                           <Field
                             className="form-control fieldStyle"

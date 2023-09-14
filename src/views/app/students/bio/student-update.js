@@ -11,11 +11,13 @@ import {
   persianMonthOptions,
   StudentEnrollmentTypeOptions,
 } from '../../global-data/options';
-import DatePicker from 'react-multi-date-picker';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
 import { inputLabel } from 'config/styling';
 
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
+import gregorian from 'react-date-object/calendars/gregorian';
+import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import './../../../../assets/css/global-style.css';
 import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
@@ -31,6 +33,7 @@ import {
   MyLabel,
   RequiredHash,
 } from 'components/form_components/form_components';
+import { studentRegisterFormStep_1 } from 'views/app/global-data/forms-validation';
 
 const StudentUpdate = ({ intl }, values) => {
   const {
@@ -60,6 +63,7 @@ const StudentUpdate = ({ intl }, values) => {
 
   const fetchInstDepts = (inst, selectedDepartment) => {
     const instId = inst.value;
+    if (!instId) return;
 
     callApi(`institute/${instId}/departments/`).then((inst) => {
       console.log('Institutes Departments: ', inst.data);
@@ -162,8 +166,12 @@ const StudentUpdate = ({ intl }, values) => {
     console.log('Form Data: ', newFields);
     setIsLoading(true);
     const data = {
+      maktob_date: newFields?.maktoobDate
+        ? newFields?.maktoobDate
+            .convert(gregorian, gregorian_en)
+            .format('YYYY-MM-DD')
+        : null,
       roll_number: newFields?.rollNumber,
-      maktob_date: newFields?.maktoobDate,
       maktob_number: newFields?.maktoobNumber || null,
       institute: newFields.institute?.value,
       department: newFields.department?.value,
@@ -184,8 +192,6 @@ const StudentUpdate = ({ intl }, values) => {
   };
 
   const initValues = {
-    maktoobDate: studentEnrollmentData?.maktoobDate || '',
-    maktoobNumber: studentEnrollmentData?.maktoobNumber || '',
     institute:
       institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
       '',
@@ -237,7 +243,13 @@ const StudentUpdate = ({ intl }, values) => {
     ),
   };
   const initValues2 = {
-    maktoobDate: studentEnrollmentData?.maktob_date || '',
+    // if maktob_date is empty, keep it null
+    maktoobDate: studentEnrollmentData?.maktob_date
+      ? new DateObject(studentEnrollmentData?.maktob_date).convert(
+          persian,
+          persian_fa,
+        )
+      : null,
     maktoobNumber: studentEnrollmentData?.maktob_number || '',
     institute:
       institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
@@ -276,7 +288,7 @@ const StudentUpdate = ({ intl }, values) => {
             innerRef={forms[0]}
             initialValues={initValues}
             // validateOnMount
-            // validationSchema={studentRegisterFormStep_1}
+            validationSchema={studentRegisterFormStep_1}
             onSubmit={updateStudent}
           >
             {({
@@ -775,7 +787,6 @@ const StudentUpdate = ({ intl }, values) => {
             innerRef={forms[1]}
             initialValues={initValues2}
             // validateOnMount
-            // validationSchema={studentRegisterFormStep_1}
             onSubmit={updateStudentEnrollment}
           >
             {({
@@ -816,25 +827,17 @@ const StudentUpdate = ({ intl }, values) => {
                             borderRadius: 0,
                             border: 'none',
                           }}
-                          value={studentEnrollmentData.maktob_date}
                           containerClassName="form-control fieldStyle"
                           name="maktoobDate"
+                          value={values.maktoobDate}
                           calendar={persian}
                           locale={persian_fa}
                           months={persianMonthOptions}
-                          format="YYYY-MM-YY"
-                          onChange={(e) => {
-                            if (!e) {
-                              setFieldValue('maktoobDate', '');
-                              return;
-                            }
+                          format="YYYY-MM-DD"
+                          onChange={(date) => {
                             setFieldValue(
                               'maktoobDate',
-                              new Date(e.toDate()).getFullYear() +
-                                '-' +
-                                (new Date(e.toDate()).getMonth() + 1) +
-                                '-' +
-                                new Date(e.toDate()).getDate(),
+                              date?.isValid ? date : '',
                             );
                           }}
                         />
@@ -897,10 +900,14 @@ const StudentUpdate = ({ intl }, values) => {
                             );
                             console.log('departments: ', departments);
                             const class_ids = dep?.classes.map((c) => c.classs);
+                            if (class_ids) {
+                              setClassOptions(
+                                classs.filter((c) =>
+                                  class_ids.includes(c.value),
+                                ),
+                              );
+                            }
                             console.log('class_ids', class_ids);
-                            setClassOptions(
-                              classs.filter((c) => class_ids.includes(c.value)),
-                            );
                           }}
                           onBlur={setFieldTouched}
                           isSearchable={false}

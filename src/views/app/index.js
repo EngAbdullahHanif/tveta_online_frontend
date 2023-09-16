@@ -41,6 +41,12 @@ const Fields = React.lazy(() =>
 const Evaluations = React.lazy(() =>
   import(/* webpackChunkName: "evaluation" */ './evaluations'),
 );
+const Workshops = React.lazy(() =>
+  import(/* webpackChunkName: "evaluation" */ './workshops'),
+);
+const Needs = React.lazy(() =>
+  import(/* webpackChunkName: "evaluation" */ './needs'),
+);
 const HREvaluations = React.lazy(() =>
   import(/* webpackChunkName: "hr-evaluation" */ './hr-evaluation'),
 );
@@ -253,6 +259,32 @@ const App = ({ match, props }) => {
             <ProtectedRoute
               path={`${match.url}/evaluations`}
               component={Evaluations}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
+              ]}
+              props={props}
+            />
+            <ProtectedRoute
+              path={`${match.url}/workshops`}
+              component={Workshops}
+              roles={[
+                userRole.superUser,
+                userRole.admin,
+                userRole.instituteDataentry,
+                userRole.instituteManager,
+                userRole.provinceSupervisor,
+                userRole.provinceDataentry,
+              ]}
+              props={props}
+            />
+            <ProtectedRoute
+              path={`${match.url}/needs`}
+              component={Needs}
               roles={[
                 userRole.superUser,
                 userRole.admin,

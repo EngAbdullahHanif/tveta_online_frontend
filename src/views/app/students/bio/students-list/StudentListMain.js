@@ -44,7 +44,6 @@ const columns = [
     dataIndex: 'gender',
     width: '8%',
   },
-
   {
     title: 'ولایت',
     dataIndex: 'province',
@@ -72,6 +71,7 @@ const columns = [
 ];
 let totalStudents = 0;
 const ThumbListPages = () => {
+  const [filters, setFilters] = useState();
   const { provinces, institutes } = useContext(AuthContext);
   const [tableParams, setTableParams] = useState({
     pagination: {
@@ -79,39 +79,35 @@ const ThumbListPages = () => {
       pageSize: 10,
     },
   });
-  // const [isLoaded, setIsLoaded] = useState(false);
 
-  // const [selectedPageSize, setSelectedPageSize] = useState(20);
   const [selectedItems, setSelectedItems] = useState([]);
 
   const [items, setItems] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
-  // const [filterId, setFilterId] = useState();
-  // const [filterProvince, setFilterProvince] = useState([]);
-  // const [filterInstitute, setFilterInstitute] = useState([]);
   const [isFilter, setIsFilter] = useState(false);
-  console.log(isFilter);
-  const handleTableChange = (pagination, filter, sorter) => {
-    setIsFilter(false);
+
+  const handleTableChange = async (pagination, filter, sorter) => {
     setTableParams({ pagination, filter, ...sorter });
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
       setItems([]);
     }
+    paging.current = pagination.current;
+    if (filters) {
+      let fils = filters;
+      fils.page = pagination.current;
+      await fetchData(fils);
+    } else await fetchData();
   };
-
+  let paging = { current: 1 };
   async function fetchData(params = {}) {
-    // params['institute_enrollment__status'] = 'inprogress';
-
-    console.log('PARAMSSSSSSSSSS: ', params);
     setIsLoading(true);
     let endpoint = 'students/';
     const params1 = {
       ...params,
-      page: !isFilter ? tableParams.pagination.current : params.page,
+      page: !isFilter ? paging.current : params.page || 1,
       page_size: tableParams.pagination.pageSize || null,
     };
-
     try {
       const response = await callApi(endpoint, null, null, params1);
       if (response.data && response.status === 200) {
@@ -131,6 +127,7 @@ const ThumbListPages = () => {
           pagination: {
             ...tableParams.pagination,
             total: response?.data?.count,
+            current: params1.page,
           },
         });
       } else {
@@ -169,15 +166,7 @@ const ThumbListPages = () => {
     female: 'ښځینه/ موٌنث',
   };
 
-  // const handleStudentIdSearch = (e) => {
-  //   if (e.key === 'Enter') {
-  //     // handleStudentSearch(e.target.value.trim().toLowerCase());
-  //     fetchData();
-  //   }
-  // };
-
   const onFilter = async (values) => {
-    console.log('FILTER VALUES');
     setIsFilter(true);
     setTableParams({
       ...tableParams,
@@ -189,20 +178,21 @@ const ThumbListPages = () => {
     let params = {
       page: 1,
     };
-
+    paging.current = 1;
     params.institute_enrollment__institute = values.filterInstitute?.value;
     params.current_province = values.filterProvince?.value;
     params.search = values.search || null;
     params.student_id = values.filterId || null;
-
+    setFilters(params);
     fetchData(params);
   };
 
   useEffect(() => {
     fetchData();
-  }, [!isFilter ? JSON.stringify(tableParams) : null]);
+  }, []);
 
-  const handleResetFields = (resetForm) => {
+  const handleResetFields = async (resetForm) => {
+    setFilters(null);
     resetForm({
       values: {
         filterId: '',
@@ -212,7 +202,15 @@ const ThumbListPages = () => {
       },
     });
     setIsFilter(false);
-    fetchData();
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
+    });
+    paging.current = 1;
+    await fetchData();
   };
 
   return (

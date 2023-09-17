@@ -128,11 +128,6 @@ const NeedsList = ({
       dataIndex: 'description',
       width: '10%',
     },
-    {
-      title: 'حالت',
-      dataIndex: 'status',
-      width: '5%',
-    },
   ];
   return (
     <>

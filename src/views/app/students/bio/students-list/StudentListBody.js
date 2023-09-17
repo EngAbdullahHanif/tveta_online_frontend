@@ -94,7 +94,7 @@ const StudentListBody = (
                 {provinces.length > 0 &&
                   provinces.filter(
                     (province) => province.value === student.current_province,
-                  )[0].label}
+                  )[0]?.label}
               </p>
 
               <p
@@ -106,7 +106,7 @@ const StudentListBody = (
 
               {StdInteranceOptions.map((type) => {
                 if (type.value == student?.admission_method) {
-                  return <p>{type.label}</p>;
+                  return <p>{type?.label}</p>;
                 }
               })}
 
@@ -130,7 +130,7 @@ const StudentListBody = (
                         }
                         pill
                       >
-                        {status.label}
+                        {status?.label}
                       </Badge>
                     </div>
                   );

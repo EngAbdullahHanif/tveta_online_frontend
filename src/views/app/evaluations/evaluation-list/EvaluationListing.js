@@ -86,7 +86,7 @@ const EvaluationListing = () => {
     } else if (type === 'needs') {
       endpoint = 'evaluations/nasab/';
     } else {
-      endpoint = 'evaluations/public_service/';
+      endpoint = 'evaluations/public-service/';
     }
     const response = await callApi(endpoint, '', 'GET', params1);
     setIsLoading(false);

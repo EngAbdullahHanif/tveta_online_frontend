@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 import { userRole } from 'constants/defaultValues';
 import TeacherSelection from './teacher-selection';
-import EmployeeEvaluation from './employee-evaluation';
+// import EmployeeEvaluation from './employee-evaluation';
 import EvaluationListing from './evaluation-list/EvaluationListing';
 
 const EvaluationList = React.lazy(() =>
@@ -36,13 +36,20 @@ const Evaluations = ({ match, props }) => (
         roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
-      <ProtectedRoute
+      {/* <ProtectedRoute
         exact
-        path={`${match.url}/employee-evalaution`}
-        component={EmployeeEvaluation}
+        path={`${match.url}/employee-evaluation`}
+        component={TeacherSelection}
         roles={[userRole.superUser, userRole.authenticated]}
         props={props}
       />
+      <ProtectedRoute
+        exact
+        path={`${match.url}/employee-evaluation/:employeeId`}
+        component={EmployeeEvaluation}
+        roles={[userRole.superUser, userRole.authenticated]}
+        props={props}
+      /> */}
       <ProtectedRoute
         exact
         path={`${match.url}/teacher-evalaution/:type/:teacherId`}

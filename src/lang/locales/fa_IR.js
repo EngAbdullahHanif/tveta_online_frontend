@@ -93,6 +93,7 @@ module.exports = {
   'menu.app': 'خانه',
   'menu.teacher': 'استاد',
   'menu.teacher-evaluation': 'د استاد ارزیابی/ ارزیابی استاد',
+  'menu.employe-evaluation': 'نیاز سنجی کارمندان',
   'menu.teacher-nyazsanji': 'د استاد نیازسنجی/ نیازسنجی استاد',
   'menu.employee-evaluation': 'ارزیابی مامور خدمات ملکی',
   'menu.teacher-teaching_proccess-evaluation': 'د استاد ارزیابی پروسه درسی',

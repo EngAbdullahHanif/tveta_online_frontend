@@ -579,8 +579,8 @@ const menuItems = [
       },
       {
         icon: 'MD.MdAddBox',
-        label: 'menu.teacher-evaluation',
-        to: `${adminRoot}/evaluations/teacher-evalaution`,
+        label: 'menu.employe-evaluation',
+        to: `${adminRoot}/evaluations/teacher-evalaution/employee-evaluation`,
       },
       {
         icon: 'FA.FaList',

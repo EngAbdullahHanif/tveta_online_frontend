@@ -26,12 +26,13 @@ import {
   contractTypeOptions,
   dateOfBirthOptoions,
   degreeTypeOptions,
-  evaluationTypeOptions,
+  // evaluationTypeOptions,
   genderOptions,
   gradeOptions,
   hireTypeOptions,
   jobTypeOptions,
   langOptions,
+  outcomeOptions,
   persianMonthOptions,
   stepOptions,
   teacherContractStatusOptions,
@@ -48,33 +49,26 @@ import config from '../../../../config';
 import {
   teacherContractValidationSchema,
   teacherEducationValidationSchema,
-  teacherHREvaluationValidationSchema,
+  // teacherHREvaluationValidationSchema,
 } from 'views/app/global-data/forms-validation';
-import { message, Col, InputNumber, Slider, Spin, Popconfirm } from 'antd';
+import { message, Spin, Popconfirm } from 'antd';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import { Spinner } from 'react-bootstrap';
 import {
-  teacherEvaluationValidationSchema,
+  // teacherEvaluationValidationSchema,
   teacherIncentivesValidationSchema,
 } from './../../global-data/forms-validation';
 import { buttonStyle, inputLabel } from 'config/styling';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 const servicePath = config.API_URL;
-const teacherApiUrl = `${servicePath}/teachers/`;
-const teacherEvaluationApiUrl = `${servicePath}/teachers/evaluation`;
-const teacherHREvaluationApiUrl = `${servicePath}/teachers/hr-evaluation`;
+// const teacherApiUrl = `${servicePath}/teachers/`;
+// const teacherHREvaluationApiUrl = `${servicePath}/teachers/hr-evaluation`;
 const teacherTransferApiUrl = `${servicePath}/teachers/institute`;
 // const { RangePicker } = DatePicker;
 
 const TeacherProfile = () => {
-  const {
-    departments,
-    classes,
-    subjects,
-    institutes,
-    contextFields,
-    provinces,
-    districts,
-  } = useContext(AuthContext);
+  const { institutes, contextFields, provinces, districts } =
+    useContext(AuthContext);
   console.log('INSTITUTES: ', institutes);
   const [isNext, setIsNext] = useState(true);
   const { teacherId } = useParams();
@@ -91,13 +85,24 @@ const TeacherProfile = () => {
   const [endDate, setEndDate] = useState();
   const [score, setScore] = useState(1);
   const [evaluationDate, setEvaluationDate] = useState();
-  const [contractAlert, setContractAlert] = useState(false);
-  const [educationAlert, setEducationAlert] = useState(false);
-  const [evaluationAlert, setEvaluationAlert] = useState(false);
-  const [insentiveAlert, setInsentiveAlert] = useState(false);
+
   const [updatingRecord, setUpdatingRecord] = useState({});
   const [loading, setLoading] = useState(false);
 
+  async function fetchTeacherEvaluation() {
+    setLoading(true);
+    const response = await callApi(
+      `evaluations/teaching-process/?teacher=${teacherId}`,
+    );
+    setLoading(false);
+    if (response.data && response.status === 200) {
+      setTeacherEvaluation(response?.data.results);
+      console.log('EVVVVVVVVVVVVVVVVVVVVVVVV', response.data.results);
+      setIsLoaded(true);
+    } else {
+      console.log('students error');
+    }
+  }
   const resetUpdate = () => {
     setUpdatingRecord(null);
     recId = null;
@@ -113,25 +118,26 @@ const TeacherProfile = () => {
     setTeacher(data);
     setIsLoaded(true);
   }
-  async function fetchTeacherEvaluation() {
-    const response = await callApi(
-      `teachers/${teacherId}/evaluations/`,
-      '',
-      null,
-    );
+  // async function fetchTeacherEvaluation() {
+  //   const response = await callApi(
+  //     `teachers/${teacherId}/evaluations/`,
+  //     '',
+  //     null,
+  //   );
 
-    console.log(`${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`);
-    const data = response.data;
-    console.log('TEACHER EVALUATIONS: ', data);
+  //   console.log(`${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`);
+  //   const data = response.data;
+  //   console.log('TEACHER EVALUATIONS: ', data);
 
-    setTeacherEvaluation(data);
-  }
+  //   setTeacherEvaluation(data);
+  // }
   async function fetchTeacherHREvaluation() {
-    await callApi(`teachers/${teacherId}/hr-evaluations/`).then((response) => {
-      const data = response.data;
-      setTeacherHREvaluation(data);
-      console.log('HR Evaluations: ', data);
-    });
+    await callApi(`evaluations/public-service/?employee=${teacherId}`).then(
+      (response) => {
+        setTeacherHREvaluation(response?.data.results);
+        console.log('HR Evaluations: ', response?.data.results);
+      },
+    );
   }
   async function fetchTeacherTransfer() {
     try {
@@ -182,7 +188,6 @@ const TeacherProfile = () => {
   }
   let recId;
   const handleRecord = (item) => {
-    console.log('ITEMMMMM: ', item);
     recId = item.id;
     setUpdatingRecord(item);
     setStartDate(item.startDate);
@@ -219,21 +224,18 @@ const TeacherProfile = () => {
     );
   };
   const deleteEvaluation = async (item) => {
-    await callApi(`teachers/${teacherId}/evaluations/${item}/`, 'DELETE').then(
+    await callApi(`evaluations/teaching-process/${item}/`, 'DELETE').then(
       (response) => {
-        console.log('Response in Education Delete: ', response.data);
         fetchTeacherEvaluation();
       },
     );
   };
   const deleteHREvaluation = async (item) => {
-    await callApi(
-      `teachers/${teacherId}/hr-evaluations/${item}/`,
-      'DELETE',
-    ).then((response) => {
-      console.log('Response in Education Delete: ', response.data);
-      fetchTeacherHREvaluation();
-    });
+    await callApi(`evaluations/public-service/${item}/`, 'DELETE').then(
+      (response) => {
+        fetchTeacherHREvaluation();
+      },
+    );
   };
   const deleteInsentive = async (item) => {
     await callApi(`teachers/${teacherId}/feedbacks/${item}/`, 'DELETE').then(
@@ -1733,17 +1735,18 @@ const TeacherProfile = () => {
                         <thead>
                           <tr>
                             <th scope="col">آیدی</th>
-                            <th scope="col">
-                              د ارزوونکی نوم/ نام ارزیابی کننده
-                            </th>
-                            <th scope="col">د ارزونی ډول/ نوع ارزیابی</th>
-                            <th scope="col">د ارزیابی نېټه/ تاریخ ارزیابی</th>
+                            <th scope="col">ارزوونکی / ارزیابی کننده</th>
+                            <th scope="col">نېټه/ تاریخ </th>
                             <th scope="col">انسستیوت</th>
-                            <th scope="col">نمره</th>
-                            <th scope="col">قوی نقطې/نقاط قوت</th>
-                            <th scope="col">ضعیفې نقطې/ نقاط ضعف</th>
-                            <th scope="col">توسعه</th>
-                            <th scope="col">آیډیټ/ دیلیت</th>
+                            <th scope="col">سمستر</th>
+                            <th scope="col">مضمون</th>
+                            <th scope="col">اعلی</th>
+                            <th scope="col">عالی</th>
+                            <th scope="col">خوب</th>
+                            <th scope="col">متوسط</th>
+                            <th scope="col">ضعیف</th>
+                            <th scope="col">موجود نیست</th>
+                            <th scope="col"> دیلیت</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1752,14 +1755,22 @@ const TeacherProfile = () => {
                               <tr>
                                 <th scope="row">{item.id}</th>
                                 <td>{item.evaluator_name}</td>
-                                <td>{item.evaluation_type}</td>
-                                <td>{item.evaluation_date}</td>
-                                <td>{item.institute}</td>
-
-                                <td>{item.score}</td>
-                                <td>{item.strong_points}</td>
-                                <td>{item.weak_points}</td>
-                                <td>{item.suggestions}</td>
+                                <td>{item.date}</td>
+                                <td>
+                                  {
+                                    institutes.find(
+                                      (op) => op.value === item.institute,
+                                    )?.label
+                                  }
+                                </td>
+                                <td>{item.semester}</td>
+                                <td>{item.subject}</td>
+                                <td>{item.outstanding}</td>
+                                <td>{item.excellent}</td>
+                                <td>{item.good}</td>
+                                <td>{item.average}</td>
+                                <td>{item.weak}</td>
+                                <td>{item.not_applicable}</td>
                                 <td>
                                   {/* <a
                                     data-toggle="modal"
@@ -1769,7 +1780,8 @@ const TeacherProfile = () => {
                                     Edit
                                   </a>
                                   /<a>Delete</a> */}
-                                  <BsPencilSquare
+
+                                  {/* <BsPencilSquare
                                     color="green"
                                     data-toggle="modal"
                                     data-target="#evaluationModal"
@@ -1778,7 +1790,7 @@ const TeacherProfile = () => {
                                     style={{ fontSize: '20px' }}
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
-                                  />
+                                  /> */}
 
                                   <Popconfirm
                                     title="ډلیټ"
@@ -1812,17 +1824,23 @@ const TeacherProfile = () => {
                       </table>
                       <br />
                       <br />
-                      <Button
+                      <NavLink
+                        to={{
+                          pathname:
+                            `/app/evaluations/teacher-evalaution/teaching_proccess/` +
+                            teacherId,
+                          state: { item: teacher },
+                        }}
                         style={buttonStyle}
                         className="btn btn-primary"
-                        data-toggle="modal"
-                        data-target="#evaluationModal"
-                        data-whatever="@getbootstrap"
+                        // data-toggle="modal"
+                        // data-target="#evaluationModal"
+                        // data-whatever="@getbootstrap"
                       >
                         اضافه نمودن ارزیابی
-                      </Button>
+                      </NavLink>
 
-                      <div
+                      {/* <div
                         className="modal fade"
                         id="evaluationModal"
                         tabindex="-1"
@@ -2296,7 +2314,7 @@ const TeacherProfile = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </Colxx>
                   </Row>
 
@@ -2323,13 +2341,14 @@ const TeacherProfile = () => {
                         <thead>
                           <tr>
                             <th scope="col">آیدی</th>
-                            <th scope="col">اسم ارزیابی کننده</th>
+                            <th scope="col">عنوان</th>
                             <th scope="col">تاریخ ارزیابی نېټه</th>
                             <th scope="col">انسستتیوت</th>
-                            <th scope="col">نمره</th>
-                            <th scope="col">بست فعلی</th>
-                            <th scope="col">بست جدید</th>
-                            <th scope="col">حالت</th>
+                            <th scope="col">نمره خود</th>
+                            <th scope="col">نمره امر </th>
+                            <th scope="col">نمره امر مافوق</th>
+                            <th scope="col"> ارزیابی نتیجه</th>
+                            <th scope="col">بست</th>
                             <th scope="col">ایډیټ/ډیلیټ</th>
                           </tr>
                         </thead>
@@ -2338,16 +2357,29 @@ const TeacherProfile = () => {
                             return (
                               <tr>
                                 <th scope="row">{item.id}</th>
-                                <td>{item.evaluator_name}</td>
+                                <td>{item.title}</td>
                                 <td>{item.evaluation_date}</td>
-                                <td>{item.institute}</td>
-
-                                <td>{item.score}</td>
-                                <td>{item.current_grade}</td>
-                                <td>{item.new_grade}</td>
-                                <td>{item.review_status}</td>
                                 <td>
-                                  <BsPencilSquare
+                                  {
+                                    institutes.find(
+                                      (op) => op.value === item.institute,
+                                    )?.label
+                                  }
+                                </td>
+                                <td>{item.self_total_score}</td>
+                                <td>{item.upper_director_score}</td>
+                                <td>{item.director_total_score}</td>
+                                <td>
+                                  {
+                                    outcomeOptions.find(
+                                      (op) =>
+                                        op.value === item.evaluation_outcome,
+                                    )?.label
+                                  }
+                                </td>
+                                <td>{item.step}</td>
+                                <td>
+                                  {/* <BsPencilSquare
                                     color="green"
                                     data-toggle="modal"
                                     data-target="#hrEvaluationModal"
@@ -2356,7 +2388,7 @@ const TeacherProfile = () => {
                                     style={{ fontSize: '20px' }}
                                     id="updateIcon"
                                     onClick={() => handleRecord(item)}
-                                  />
+                                  /> */}
 
                                   <Popconfirm
                                     title="ډلیټ"
@@ -2392,17 +2424,23 @@ const TeacherProfile = () => {
                       </table>
                       <br />
                       <br />
-                      <Button
+                      <NavLink
+                        to={{
+                          pathname:
+                            `/app/evaluations/teacher-evalaution/public_service/` +
+                            teacherId,
+                          state: { item: teacher },
+                        }}
                         style={buttonStyle}
                         className="btn btn-primary"
-                        data-toggle="modal"
-                        data-target="#hrEvaluationModal"
-                        data-whatever="@getbootstrap"
+                        // data-toggle="modal"
+                        // data-target="#hrEvaluationModal"
+                        // data-whatever="@getbootstrap"
                       >
                         اضافه نمودن ارزیابی منابع بشری
-                      </Button>
+                      </NavLink>
 
-                      <div
+                      {/* <div
                         className="modal fade"
                         id="hrEvaluationModal"
                         tabindex="-1"
@@ -2720,7 +2758,7 @@ const TeacherProfile = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </Colxx>
                   </Row>
                   {/* HR Evaluation End */}

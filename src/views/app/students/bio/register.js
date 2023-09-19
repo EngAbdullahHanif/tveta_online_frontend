@@ -266,11 +266,6 @@ const StudentRegistration = ({ intl }, values) => {
       department: newFields.department,
       class: newFields.class,
       studentType: newFields.studentType,
-      maktoobDate: newFields?.maktoobDate
-        ? newFields?.maktoobDate
-            .convert(gregorian, gregorian_en)
-            .format('YYYY-MM-DD')
-        : null,
       maktoobNumber: newFields.maktoobNumber,
     };
     const data = {
@@ -299,9 +294,9 @@ const StudentRegistration = ({ intl }, values) => {
       cover_number: newFields.idCardJoldNo || null,
       page_number: newFields.idCardPageNo || null,
       sabt_number: newFields.sabtNo || null,
-      tazkira_type: newFields.tazkiraType.value,
       registration_number: newFields.tazkiraNo || null,
       sokok_number: newFields.sokokNo || null,
+      tazkira_type: newFields.tazkiraType.value,
       main_province: newFields.province.value,
       main_district: newFields.district.value,
       main_village: newFields.village,
@@ -354,7 +349,16 @@ const StudentRegistration = ({ intl }, values) => {
       }
       createNotification('error', 'filled');
     } finally {
-      setInitialValues({ ...initialValues, ...localStorageData });
+      setInitialValues({
+        ...initialValues,
+        ...localStorageData,
+        maktoobDate: newFields?.maktoobDate ? newFields?.maktoobDate : null,
+      });
+      localStorageData['maktoobDate'] = newFields?.maktoobDate
+        ? newFields?.maktoobDate
+            .convert(gregorian, gregorian_en)
+            .format('YYYY-MM-DD')
+        : null;
       storeDataToLocalStorage(localStorageData);
       setLoading(false);
     }
@@ -397,6 +401,7 @@ const StudentRegistration = ({ intl }, values) => {
               initialValues={initialValues}
               validationSchema={studentRegisterFormStep_1}
               onSubmit={postStudentRecord}
+              validateOnChange={false}
             >
               {({
                 errors,

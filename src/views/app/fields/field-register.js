@@ -10,8 +10,6 @@ import { FormikReactSelect } from '../../../containers/form-validations/FormikFi
 import { inputLabel } from 'config/styling';
 
 const fieldRegisterSchema = Yup.object().shape({
-  fieldId: Yup.string().required(<IntlMessages id="field.FieldIdErr" />),
-
   fieldName: Yup.string()
     //  .min(3, <IntlMessages id="forms.StdId" />)
     .required(<IntlMessages id="field.FieldNameErr" />),

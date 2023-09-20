@@ -267,6 +267,11 @@ const StudentUpdate = ({ intl }, values) => {
       year_of_birth: newFields.yearOfBirth?.value,
       // status: newFields.status?.value,
       admission_method: newFields.admission_method?.value,
+      previous_grade_year: newFields?.previous_grade_year || null,
+      previous_school_name: newFields?.previous_school_name || '',
+      previous_school_province:
+        newFields?.previous_school_province?.value || null,
+      previous_grade: newFields?.previous_grade?.value || null,
     };
     callApi(`students/${studentId}/`, 'PATCH', data)
       .then((response) => {
@@ -893,26 +898,28 @@ const StudentUpdate = ({ intl }, values) => {
                     </div>
                   </Colxx>
                 </Row>
-                <Row className="mr-5">
+                <Row className="justify-content-center">
                   <Colxx xxs="5">
                     <div className="pt-5">
+                      <h1>سوابق تعلیمی/تحصیلی</h1>
+
                       <FormGroup className="form-group has-float-label error-l-100">
                         <Label style={inputLabel}>
                           <IntlMessages id="teacher.LevelOfEducationLabel" />
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
-                          name="levelOfEducation"
-                          id="levelOfEducation"
-                          value={values.levelOfEducation}
+                          name="previous_grade"
+                          id="previous_grade"
+                          value={values.previous_grade}
                           options={educationLevelOptions}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           isSearchable={false}
                         />
-                        {errors.levelOfEducation && touched.levelOfEducation ? (
+                        {errors.previous_grade && touched.previous_grade ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.levelOfEducation}
+                            {errors.previous_grade}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -934,15 +941,23 @@ const StudentUpdate = ({ intl }, values) => {
                          /> */}
                         <Field
                           className="form-control fieldStyle"
-                          name="graduationYear"
+                          name="previous_grade_year"
                           type="number"
                         />
-                        {errors.graduationYear && touched.graduationYear ? (
+                        {errors.previous_grade_year &&
+                        touched.previous_grade_year ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.graduationYear}
+                            {errors.previous_grade_year}
                           </div>
                         ) : null}
                       </FormGroup>
+                    </div>
+                  </Colxx>
+
+                  <Colxx xxs="5">
+                    <div className="pt-5">
+                      <h1>-</h1>
+
                       {/* Student Maktab*/}
                       <FormGroup className="form-group has-float-label error-l-100">
                         <Label style={inputLabel}>
@@ -951,11 +966,12 @@ const StudentUpdate = ({ intl }, values) => {
                         </Label>
                         <Field
                           className="form-control fieldStyle"
-                          name="preSchool"
+                          name="previous_school_name"
                         />
-                        {errors.preSchool && touched.preSchool ? (
+                        {errors.previous_school_name &&
+                        touched.previous_school_name ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.preSchool}
+                            {errors.previous_school_name}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -967,17 +983,18 @@ const StudentUpdate = ({ intl }, values) => {
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <FormikReactSelect
-                          name="schoolProvince"
-                          id="schoolProvince"
-                          value={values.schoolProvince}
+                          name="previous_school_province"
+                          id="previous_school_province"
+                          value={values.previous_school_province}
                           options={provinces}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                           isSearchable={true}
                         />
-                        {errors.schoolProvince && touched.schoolProvince ? (
+                        {errors.previous_school_province &&
+                        touched.previous_school_province ? (
                           <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.schoolProvince}
+                            {errors.previous_school_province}
                           </div>
                         ) : null}
                       </FormGroup>
@@ -991,7 +1008,7 @@ const StudentUpdate = ({ intl }, values) => {
               </Form>
             )}
           </Formik>
-
+          {/* Enrollment Info */}
           <Formik
             enableReinitialize={true}
             innerRef={forms[1]}
@@ -1198,7 +1215,10 @@ const StudentUpdate = ({ intl }, values) => {
                       {/* admission method*/}
 
                       {/* medium OfInstruction (Teaching Language) */}
-                      <FormGroup className="form-group has-float-label ">
+                      <FormGroup
+                        className="form-group has-float-label "
+                        style={{ display: 'none' }}
+                      >
                         <Label style={inputLabel}>
                           <IntlMessages id="forms.mediumOfInstruction" />
                           <span style={{ color: 'red' }}>*</span>

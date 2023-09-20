@@ -11,6 +11,7 @@ import {
   gradeOptions,
   jobTypeOptions,
   langOptions,
+  outcomeOptions,
   stepOptions,
 } from '../../global-data/options';
 import logo from './../../../../assets/logos/AdminLogo.png';
@@ -39,6 +40,7 @@ const PrintScreen = () => {
   const [teacherContracts, setTeacherContracts] = useState([]);
   const [teacherIncentives, setTeacherIncentives] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function fetchTeacher() {
     const response = await callApi(`teachers/${teacherId}`, '', null);
@@ -47,24 +49,25 @@ const PrintScreen = () => {
     setIsLoaded(true);
   }
   async function fetchTeacherEvaluation() {
+    setLoading(true);
     const response = await callApi(
-      `teachers/${teacherId}/evaluations/`,
-      '',
-      null,
+      `evaluations/teaching-process/?teacher=${teacherId}`,
     );
-
-    console.log(`${teacherEvaluationApiUrl}/?teacher_id=${teacherId}`);
-    const data = response.data;
-    console.log('TEACHER EVALUATIONS: ', data);
-
-    setTeacherEvaluation(data);
+    setLoading(false);
+    if (response.data && response.status === 200) {
+      setTeacherEvaluation(response?.data.results);
+      setIsLoaded(true);
+    } else {
+      console.log('students error');
+    }
   }
   async function fetchTeacherHREvaluation() {
-    await callApi(`teachers/${teacherId}/hr-evaluations/`).then((response) => {
-      const data = response.data;
-      setTeacherHREvaluation(data);
-      console.log('HR Evaluations: ', data);
-    });
+    await callApi(`evaluations/public-service/?employee=${teacherId}`).then(
+      (response) => {
+        setTeacherHREvaluation(response?.data.results);
+        console.log('HR Evaluations: ', response?.data.results);
+      },
+    );
   }
   async function fetchTeacherTransfer() {
     try {
@@ -459,7 +462,7 @@ const PrintScreen = () => {
               >
                 <IntlMessages id="ارزیابی" />
               </h2>
-              {teacherEvaluation.lenght > 0 ? (
+              {teacherEvaluation.length > 0 ? (
                 <table
                   className="table table-striped table-lg"
                   style={{ fontSize: 18 }}
@@ -467,14 +470,17 @@ const PrintScreen = () => {
                   <thead>
                     <tr>
                       <th scope="col">آیدی</th>
-                      <th scope="col">د ارزوونکی نوم/ نام ارزیابی کننده</th>
-                      <th scope="col">د ارزونی ډول/ نوع ارزیابی</th>
-                      <th scope="col">د ارزیابی نېټه/ تاریخ ارزیابی</th>
+                      <th scope="col">ارزوونکی / ارزیابی کننده</th>
+                      <th scope="col">نېټه/ تاریخ </th>
                       <th scope="col">انسستیوت</th>
-                      <th scope="col">نمره</th>
-                      <th scope="col">قوی نقطې/نقاط قوت</th>
-                      <th scope="col">ضعیفې نقطې/ نقاط ضعف</th>
-                      <th scope="col">توسعه</th>
+                      <th scope="col">سمستر</th>
+                      <th scope="col">مضمون</th>
+                      <th scope="col">اعلی</th>
+                      <th scope="col">عالی</th>
+                      <th scope="col">خوب</th>
+                      <th scope="col">متوسط</th>
+                      <th scope="col">ضعیف</th>
+                      <th scope="col">موجود نیست</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -483,14 +489,22 @@ const PrintScreen = () => {
                         <tr>
                           <th scope="row">{item.id}</th>
                           <td>{item.evaluator_name}</td>
-                          <td>{item.evaluation_type}</td>
-                          <td>{item.evaluation_date}</td>
-                          <td>{item.institute}</td>
-
-                          <td>{item.score}</td>
-                          <td>{item.strong_points}</td>
-                          <td>{item.weak_points}</td>
-                          <td>{item.suggestions}</td>
+                          <td>{item.date}</td>
+                          <td>
+                            {
+                              institutes.find(
+                                (op) => op.value === item.institute,
+                              )?.label
+                            }
+                          </td>
+                          <td>{item.semester}</td>
+                          <td>{item.subject}</td>
+                          <td>{item.outstanding}</td>
+                          <td>{item.excellent}</td>
+                          <td>{item.good}</td>
+                          <td>{item.average}</td>
+                          <td>{item.weak}</td>
+                          <td>{item.not_applicable}</td>
                         </tr>
                       );
                     })}
@@ -510,7 +524,7 @@ const PrintScreen = () => {
               >
                 <IntlMessages id="ارزیابی منابع بشری" />
               </h2>
-              {teacherHREvaluation.lenght > 0 ? (
+              {teacherHREvaluation.length > 0 ? (
                 <table
                   className="table table-striped table-lg"
                   style={{ fontSize: 18 }}
@@ -518,13 +532,14 @@ const PrintScreen = () => {
                   <thead>
                     <tr>
                       <th scope="col">آیدی</th>
-                      <th scope="col">اسم ارزیابی کننده</th>
+                      <th scope="col">عنوان</th>
                       <th scope="col">تاریخ ارزیابی نېټه</th>
                       <th scope="col">انسستتیوت</th>
-                      <th scope="col">نمره</th>
-                      <th scope="col">بست فعلی</th>
-                      <th scope="col">بست جدید</th>
-                      <th scope="col">حالت</th>
+                      <th scope="col">نمره خود</th>
+                      <th scope="col">نمره امر </th>
+                      <th scope="col">نمره امر مافوق</th>
+                      <th scope="col"> ارزیابی نتیجه</th>
+                      <th scope="col">بست</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -532,14 +547,26 @@ const PrintScreen = () => {
                       return (
                         <tr>
                           <th scope="row">{item.id}</th>
-                          <td>{item.evaluator_name}</td>
+                          <td>{item.title}</td>
                           <td>{item.evaluation_date}</td>
-                          <td>{item.institute}</td>
-
-                          <td>{item.score}</td>
-                          <td>{item.current_grade}</td>
-                          <td>{item.new_grade}</td>
-                          <td>{item.review_status}</td>
+                          <td>
+                            {
+                              institutes.find(
+                                (op) => op.value === item.institute,
+                              )?.label
+                            }
+                          </td>
+                          <td>{item.self_total_score}</td>
+                          <td>{item.upper_director_score}</td>
+                          <td>{item.director_total_score}</td>
+                          <td>
+                            {
+                              outcomeOptions.find(
+                                (op) => op.value === item.evaluation_outcome,
+                              )?.label
+                            }
+                          </td>
+                          <td>{item.step}</td>
                         </tr>
                       );
                     })}

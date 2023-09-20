@@ -296,9 +296,9 @@ const TopNav = ({
       </NavLink> */}
       {user?.institute && (
         <NavLink to={`/app/institutes/institute/${user?.institute.id}`}>
-          <h1>
+          <h3>
             {institutes.find((i) => i.value === user?.institute?.id)?.label}
-          </h1>
+          </h3>
         </NavLink>
       )}
       <div className="navbar-right">

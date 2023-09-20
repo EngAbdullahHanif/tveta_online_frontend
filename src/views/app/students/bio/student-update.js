@@ -10,6 +10,7 @@ import {
   studyTimeOptions,
   persianMonthOptions,
   StudentEnrollmentTypeOptions,
+  educationLevelOptions,
 } from '../../global-data/options';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 import { inputLabel } from 'config/styling';
@@ -20,7 +21,15 @@ import gregorian from 'react-date-object/calendars/gregorian';
 import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import './../../../../assets/css/global-style.css';
-import { Row, Card, CardBody, FormGroup, Label, Button } from 'reactstrap';
+import {
+  Row,
+  Card,
+  CardBody,
+  FormGroup,
+  Label,
+  Button,
+  Spinner,
+} from 'reactstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
@@ -33,7 +42,7 @@ import {
   MyLabel,
   RequiredHash,
 } from 'components/form_components/form_components';
-import { studentRegisterFormStep_1 } from 'views/app/global-data/forms-validation';
+import { InputMask } from 'primereact/inputmask';
 
 const StudentUpdate = ({ intl }, values) => {
   const {
@@ -58,6 +67,47 @@ const StudentUpdate = ({ intl }, values) => {
   const [instDepartmentOptions, setInstDepartmentOptions] = useState([]);
   const [classOptions, setClassOptions] = useState([]);
   const [studentEnrollmentData, setStudentEnrollmentData] = useState([]);
+  const [initialValues, setInitialValues] = useState({
+    institute: [],
+    department: [],
+    name: '',
+    englishName: '',
+    lastName: '',
+    englishLastName: '',
+    fatherName: '',
+    englishFatherName: '',
+    grandFatherName: '',
+    yearOfBirth: '',
+    placeOfBirth: '',
+    phoneNumber: '',
+    previous_grade_year: '',
+    previous_school_name: '',
+    previous_school_province: '',
+    previous_grade: '',
+
+    registrationNumber: '',
+    pageNumber: '',
+    coverNumber: '',
+    gender: [],
+    tazkiraNo: '',
+    sokokNo: '',
+    idCardPageNo: '',
+    idCardJoldNo: '',
+    sabtNo: '',
+    tazkiraType: [],
+
+    currentDistrict: [],
+    currentProvince: [],
+    mainProvince: [],
+    mainDistrict: [],
+    currentVillage: '',
+    mainVillage: '',
+    // status: studentStatusOptions.find(
+    //   (status) => status.value == data?.status
+    // ),
+
+    admission_method: StdInteranceOptions.find((type) => type.value === ''),
+  });
 
   // fetch department based on selected institute
 
@@ -82,7 +132,7 @@ const StudentUpdate = ({ intl }, values) => {
         .find((d) => d.id === selectedDepartment)
         ?.classes.map((c) => c.classs);
       console.log('class_ids', class_ids);
-      setClassOptions(classs.filter((c) => class_ids.includes(c.value)));
+      setClassOptions(classs.filter((c) => class_ids?.includes(c.value)));
     });
   };
 
@@ -92,11 +142,80 @@ const StudentUpdate = ({ intl }, values) => {
       const { data } = await callApi(`students/${studentId}/`, '', null);
       console.log('already existing data:', data);
       setStudent(data);
+      // console.log(
+      //   'tz: ',
+      //   tazkiraOptions.find((op) => op.value === data?.tazkira_type),
+      // );
+      setInitialValues({
+        institute:
+          institutes.find(
+            (op) => op.value === studentEnrollmentData?.institute,
+          ) || '',
+        department:
+          departments.find(
+            (op) => op.value === studentEnrollmentData?.department,
+          ) || '',
+        name: data?.name,
+        englishName: data?.english_name,
+        lastName: data?.last_name,
+        englishLastName: data?.english_last_name,
+        fatherName: data?.father_name,
+        englishFatherName: data?.english_father_name,
+        grandFatherName: data?.grandfather_name,
+        yearOfBirth: data?.year_of_birth,
+        placeOfBirth: data?.place_of_birth,
+        phoneNumber: data?.phone_number,
+
+        registrationNumber: data?.registration_number,
+        pageNumber: data?.page_number,
+        coverNumber: data?.cover_number,
+        gender: genderOptions.find((gen) => gen.value === data?.gender),
+        tazkiraNo: data?.registration_number || '',
+        sokokNo: data?.sokok_number || '',
+        idCardPageNo: data?.page_number || '',
+        idCardJoldNo: data?.cover_number || '',
+        sabtNo: data?.sabt_number || '',
+        tazkiraType: tazkiraOptions.find(
+          (op) => op.value === data?.tazkira_type,
+        ),
+
+        currentDistrict: districts.find(
+          (district) => district.value === data?.current_district,
+        ),
+        currentProvince: provinces.find(
+          (province) => province.value === data?.current_province,
+        ),
+        mainProvince: provinces.find(
+          (province) => province.value === data?.main_province,
+        ),
+        mainDistrict: districts.find(
+          (district) => district.value === data?.main_district,
+        ),
+        currentVillage: data?.current_village,
+        mainVillage: data?.main_village,
+        // status: studentStatusOptions.find(
+        //   (status) => status.value == data?.status
+        // ),
+
+        admission_method: StdInteranceOptions.find(
+          (type) => type.value === data?.admission_method,
+        ),
+
+        previous_grade_year: data?.previous_grade_year || '',
+        previous_school_name: data?.previous_school_name || '',
+        previous_school_province:
+          provinces.find((op) => op.value === data?.previous_school_province) ||
+          [],
+        previous_grade:
+          educationLevelOptions.find(
+            (op) => op.value === data?.previous_grade,
+          ) || [],
+      });
       await fetchStudentEnrollment();
     } catch (error) {
       console.log('Error in fetching student: ', error);
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   }
 
@@ -114,9 +233,7 @@ const StudentUpdate = ({ intl }, values) => {
   const { studentId } = useParams();
   useEffect(() => {
     if (studentId) {
-      setIsLoading(true);
       fetchStudent();
-      setIsLoading(false);
     }
   }, [studentId]);
 
@@ -125,7 +242,6 @@ const StudentUpdate = ({ intl }, values) => {
     console.log('Form Data: ', newFields);
     setIsLoading(true);
     const data = {
-      cover_number: newFields.coverNumber,
       current_district: newFields.currentDistrict?.value,
       current_province: newFields.currentProvince?.value,
       current_village: newFields.currentVillage,
@@ -140,12 +256,14 @@ const StudentUpdate = ({ intl }, values) => {
       main_province: newFields.mainProvince?.value,
       main_village: newFields.mainVillage,
       name: newFields.name,
-      cover_number: newFields.idCardJoldNo,
-      page_number: newFields.idCardPageNo,
-      sabt_number: newFields.sabtNo,
+      cover_number: newFields.idCardJoldNo || null,
+      page_number: newFields.idCardPageNo || null,
+      sabt_number: newFields.sabtNo || null,
+      registration_number: newFields.tazkiraNo || null,
+      sokok_number: newFields.sokokNo || null,
+      tazkira_type: newFields.tazkiraType.value,
       phone_number: newFields.phoneNumber,
       place_of_birth: newFields.placeOfBirth,
-      registration_number: newFields.registrationNumber,
       year_of_birth: newFields.yearOfBirth?.value,
       // status: newFields.status?.value,
       admission_method: newFields.admission_method?.value,
@@ -191,57 +309,6 @@ const StudentUpdate = ({ intl }, values) => {
       .finally(() => setIsLoading(false));
   };
 
-  const initValues = {
-    institute:
-      institutes.find((op) => op.value === studentEnrollmentData?.institute) ||
-      '',
-    department:
-      departments.find(
-        (op) => op.value === studentEnrollmentData?.department,
-      ) || '',
-    name: student?.name,
-    englishName: student?.english_name,
-    lastName: student?.last_name,
-    englishLastName: student?.english_last_name,
-    fatherName: student?.father_name,
-    englishFatherName: student?.english_father_name,
-    grandFatherName: student?.grandfather_name,
-    yearOfBirth: student?.year_of_birth,
-    placeOfBirth: student?.place_of_birth,
-    phoneNumber: student?.phone_number,
-
-    registrationNumber: student?.registration_number,
-    pageNumber: student?.page_number,
-    coverNumber: student?.cover_number,
-    gender: genderOptions.find((gen) => gen.value === student?.gender),
-    tazkiraType: tazkiraOptions.find(
-      (option) => option.value == student?.tazkira_type,
-    ),
-    idCardJoldNo: student?.cover_number,
-    idCardPageNo: student?.page_number,
-
-    currentDistrict: districts.find(
-      (district) => district.value == student?.current_district,
-    ),
-    currentProvince: provinces.find(
-      (province) => province.value == student?.current_province,
-    ),
-    mainProvince: provinces.find(
-      (province) => province.value == student?.main_province,
-    ),
-    mainDistrict: districts.find(
-      (district) => district.value == student?.main_district,
-    ),
-    currentVillage: student?.current_village,
-    mainVillage: student?.main_village,
-    // status: studentStatusOptions.find(
-    //   (status) => status.value == student?.status
-    // ),
-
-    admission_method: StdInteranceOptions.find(
-      (type) => type.value == student?.admission_method,
-    ),
-  };
   const initValues2 = {
     // if maktob_date is empty, keep it null
     maktoobDate: studentEnrollmentData?.maktob_date
@@ -271,10 +338,7 @@ const StudentUpdate = ({ intl }, values) => {
   };
   //   console.log('Student: ', student);
   console.log('Student Init Values: ', studyTimeOptions);
-
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
+  if (isLoading) return <Spinner />;
   return (
     <Card>
       <div className="mt-4 ml-5">
@@ -286,9 +350,9 @@ const StudentUpdate = ({ intl }, values) => {
           <Formik
             enableReinitialize={true}
             innerRef={forms[0]}
-            initialValues={initValues}
+            initialValues={initialValues}
             // validateOnMount
-            validationSchema={studentRegisterFormStep_1}
+            // validationSchema={studentRegisterFormStep_1}
             onSubmit={updateStudent}
           >
             {({
@@ -349,8 +413,8 @@ const StudentUpdate = ({ intl }, values) => {
                       ) : null}
                     </FormGroup>
                     {/* Tazkira Type */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
+                    <FormGroup className="form-group has-float-label error-l-100">
+                      <Label style={inputLabel}>
                         <IntlMessages id="forms.TazkiraType" />
                         <span style={{ color: 'red' }}>*</span>
                       </Label>
@@ -362,6 +426,7 @@ const StudentUpdate = ({ intl }, values) => {
                         options={tazkiraOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
+                        isSearchable={false}
                       />
                       {errors.tazkiraType && touched.tazkiraType ? (
                         <div className="invalid-feedback d-block   bg-danger text-white messageStyle">
@@ -369,55 +434,68 @@ const StudentUpdate = ({ intl }, values) => {
                         </div>
                       ) : null}
                     </FormGroup>
-
                     {/* Tazkira Number */}
-                    <FormGroup className="form-group has-float-label error-l-175">
-                      <Label>
-                        نمبر تذکره الکترونی/صکوک نمبر
-                        <span style={{ color: 'red' }}>*</span>
-                      </Label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="registrationNumber"
-                        type="number"
-                      />
-                      {errors.registrationNumber &&
-                      touched.registrationNumber ? (
-                        <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                          {errors.registrationNumber}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    {values?.tazkiraType?.value === 'paper' ? (
-                      <>
-                        <div>
-                          {/* Jold Number */}
-                          <div>
-                            <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
-                                <IntlMessages id="teacher.IdCardJoldNoLabel" />
-                              </Label>
-                              <Field
-                                className="form-control fieldStyle"
-                                name="idCardJoldNo"
-                                type="string"
-                              />
-                              {errors.idCardJoldNo && touched.idCardJoldNo ? (
-                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                                  {errors.idCardJoldNo}
-                                </div>
-                              ) : null}
-                            </FormGroup>
+                    {values.tazkiraType.value === 'electronic' && (
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          نمبر تذکره الکترونی
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        {/* <Field
+                     className="form-control fieldStyle"
+                     name="tazkiraNo"
+                     type="text"
+                     maxLength="14"
+                     minLength="12"
+                   /> */}
+                        <InputMask
+                          style={{ width: '100%' }}
+                          name="tazkiraNo"
+                          value={values.tazkiraNo}
+                          id="ssn"
+                          mask="9999-9999-99999"
+                          placeholder="9999-9999-99999"
+                          onChange={(e) =>
+                            setFieldValue('tazkiraNo', e.target.value)
+                          }
+                        />
+                        {errors.tazkiraNo && touched.tazkiraNo ? (
+                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                            {errors.tazkiraNo}
                           </div>
+                        ) : null}
+                      </FormGroup>
+                    )}
+
+                    {values.tazkiraType.value === 'paper' ? (
+                      <>
+                        {/* Jold Number */}
+                        <div>
+                          <FormGroup className="form-group has-float-label error-l-100">
+                            <Label style={inputLabel}>
+                              <IntlMessages id="teacher.IdCardJoldNoLabel" />
+                              <RequiredHash />
+                            </Label>
+                            <Field
+                              className="form-control fieldStyle"
+                              name="idCardJoldNo"
+                              type="string"
+                            />
+                            {errors.idCardJoldNo && touched.idCardJoldNo ? (
+                              <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                {errors.idCardJoldNo}
+                              </div>
+                            ) : null}
+                          </FormGroup>
                         </div>
 
                         <div>
                           {/* Safha */}
                           <div>
                             <FormGroup className="form-group has-float-label error-l-100">
-                              <Label>
+                              <Label style={inputLabel}>
                                 <IntlMessages id="teacher.IdCardPageNoLabel" />
+                                <RequiredHash />
                               </Label>
                               <Field
                                 className="form-control fieldStyle"
@@ -427,6 +505,47 @@ const StudentUpdate = ({ intl }, values) => {
                               {errors.idCardPageNo && touched.idCardPageNo ? (
                                 <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
                                   {errors.idCardPageNo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+                          </div>
+                        </div>
+                        <div>
+                          {/* Sabt */}
+                          <div>
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label style={inputLabel}>
+                                شماره ثبت
+                                <RequiredHash />
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="sabtNo"
+                                type="number"
+                              />
+                              {errors.sabtNo && touched.sabtNo ? (
+                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                  {errors.sabtNo}
+                                </div>
+                              ) : null}
+                            </FormGroup>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                            <FormGroup className="form-group has-float-label error-l-100">
+                              <Label style={inputLabel}>
+                                شماره صکوک
+                                <RequiredHash />
+                              </Label>
+                              <Field
+                                className="form-control fieldStyle"
+                                name="sokokNo"
+                                type="number"
+                              />
+                              {errors.sokokNo && touched.sokokNo ? (
+                                <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
+                                  {errors.sokokNo}
                                 </div>
                               ) : null}
                             </FormGroup>
@@ -774,6 +893,97 @@ const StudentUpdate = ({ intl }, values) => {
                     </div>
                   </Colxx>
                 </Row>
+                <Row className="mr-5">
+                  <Colxx xxs="5">
+                    <div className="pt-5">
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="teacher.LevelOfEducationLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="levelOfEducation"
+                          id="levelOfEducation"
+                          value={values.levelOfEducation}
+                          options={educationLevelOptions}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={false}
+                        />
+                        {errors.levelOfEducation && touched.levelOfEducation ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.levelOfEducation}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.StdGraduationYearLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        {/* <FormikReactSelect
+                           name="graduationYear"
+                           id="graduationYear"
+                           value={values.graduationYear}
+                           options={educationalYearsOptions}
+                           onChange={setFieldValue}
+                           onBlur={setFieldTouched}
+                           isSearchable={false}
+                           required
+                         /> */}
+                        <Field
+                          className="form-control fieldStyle"
+                          name="graduationYear"
+                          type="number"
+                        />
+                        {errors.graduationYear && touched.graduationYear ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.graduationYear}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                      {/* Student Maktab*/}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.StPreShcoolLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <Field
+                          className="form-control fieldStyle"
+                          name="preSchool"
+                        />
+                        {errors.preSchool && touched.preSchool ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.preSchool}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      {/*School province*/}
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        <Label style={inputLabel}>
+                          <IntlMessages id="forms.StdSchoolProvinceLabel" />
+                          <span style={{ color: 'red' }}>*</span>
+                        </Label>
+                        <FormikReactSelect
+                          name="schoolProvince"
+                          id="schoolProvince"
+                          value={values.schoolProvince}
+                          options={provinces}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          isSearchable={true}
+                        />
+                        {errors.schoolProvince && touched.schoolProvince ? (
+                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                            {errors.schoolProvince}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+                    </div>
+                  </Colxx>
+                </Row>
 
                 <Button className="mt-5 bg-primary" onClick={handleSubmit}>
                   آپدیت معلومات شاګرد
@@ -903,7 +1113,7 @@ const StudentUpdate = ({ intl }, values) => {
                             if (class_ids) {
                               setClassOptions(
                                 classs.filter((c) =>
-                                  class_ids.includes(c.value),
+                                  class_ids?.includes(c.value),
                                 ),
                               );
                             }

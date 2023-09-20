@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Formik, Field } from 'formik';
-import axios from 'axios';
+// import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import {
   evaluationTypeOptions,
@@ -20,24 +20,20 @@ import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import config from '../../../config';
 // import TeacherList from '../teachers/Components/TeacherList';
 import callApi from 'helpers/callApi';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { inputLabel } from 'config/styling';
 import { AuthContext } from 'context/AuthContext';
 import DatePicker from 'react-multi-date-picker';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
+import EmployeeEvaluation from './employee-evaluation';
 const servicePath = config.API_URL;
-const teachersApiUrl = `${servicePath}/teachers/`;
-const institutesApiUrl = `${servicePath}/institute/`;
-const departmentsApiUrl = `${servicePath}/institute/department/`;
-const classesApiUrl = `${servicePath}/institute/classs/`;
-const subjectApiUrl = `${servicePath}/institute/subject/`;
-// const fieldsApiUrl = `${servicePath}/institute/field/`;
-const evaluationApiUrl = `${servicePath}/teachers/evaluation-create/`;
+
 const TeacherEvaluationAPI = `${servicePath}/teachers/evaluation`;
 //http://localhost:8000/teachers/evaluation/?id=1
 
 const TeacherEvaluation = (props) => {
+  const history = useHistory();
   const { institutes, provinces, districts } = useContext(AuthContext);
   const [updatingRecord, setUpdatingRecord] = useState({});
   const [evaluationDate, setEvaluationDate] = useState();
@@ -46,38 +42,10 @@ const TeacherEvaluation = (props) => {
 
   const location = useLocation();
   console.log('teacher evaluation', teacherId);
-  async function fetchData() {
-    const { data } = await axios.get(
-      `${TeacherEvaluationAPI}/?id=${teacherId}`,
-    );
-  }
 
-  useEffect(() => {
-    if (teacherId) {
-      fetchData();
-    }
-    //setUpdateMode(true);
-  }, []);
-
-  const [teachers, setTeachers] = useState([]);
   const [teacher, setTeacher] = useState([]);
   // const [institutes, setInstitutes] = useState([]);
-
-  const [subjects, setSubjects] = useState([]);
-  const [instituteTeacher, setInstituteTeachers] = useState([]);
-  const [items, setItems] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isFilter, setIsFilter] = useState(false);
-
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
+  const [isNext, setIsNext] = useState(false);
 
   const evaluationTypes = [
     {
@@ -125,7 +93,6 @@ const TeacherEvaluation = (props) => {
   const onSubmit = async (values) => {
     values.institute = values.institute?.value;
     values.evaluation_type = values.evaluation_type?.value;
-
     console.log('Evaluation values', values);
     let endPoint = 'evaluations/nasab/';
     if (type === 'teaching_proccess') {
@@ -141,7 +108,7 @@ const TeacherEvaluation = (props) => {
       values.step = values.step?.value;
       values.employee = parseInt(teacherId);
       values.evaluation_date = evaluationDate;
-      endPoint = 'evaluations/public_service/';
+      endPoint = 'evaluations/public-service/';
     }
 
     await callApi(endPoint, 'POST', values)
@@ -153,7 +120,7 @@ const TeacherEvaluation = (props) => {
         console.log('Error in teacher evaluation', error);
       });
   };
-  const [isNext, setIsNext] = useState(false);
+
   return (
     <>
       <Card>
@@ -243,284 +210,6 @@ const TeacherEvaluation = (props) => {
         </Card>
         <CardBody className="w-50">
           {!isNext ? (
-            // <Formik
-            //   enableReinitialize={true}
-            //   initialValues={initialValues}
-            //   onSubmit={onSubmit}
-            //   validationSchema={teacherEvalautionSchema}
-            // >
-            //   {({
-            //     errors,
-            //     touched,
-            //     values,
-            //     setFieldTouched,
-            //     setFieldValue,
-            //   }) => (
-            //     <Form className="av-tooltip tooltip-label-right error-l-150 ">
-            //       <Row className="justify-content-center">
-            //         <Colxx xxs="5">
-            //           {/* teacher Name*/}
-            //           {/* <FormGroup className="form-group has-float-label ">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="teacher.IdLabel" />
-            //             </Label>
-
-            //             <FormikReactSelect
-            //               name="id"
-            //               id="id"
-            //               value={values.id}
-            //               options={teachers}
-            //               onChange={setFieldValue}
-            //               onBlur={setFieldTouched}
-            //             />
-            //             {errors.id && touched.id ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.id}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup> */}
-
-            //           {/* Departement Id */}
-
-            //           <FormGroup className="form-group has-float-label ">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="forms.studyDepartment" />
-            //             </Label>
-            //             <FormikReactSelect
-            //               name="department"
-            //               id="department"
-            //               value={values.department}
-            //               options={departments}
-            //               onChange={setFieldValue}
-            //               onBlur={setFieldTouched}
-            //               required
-            //             />
-            //             {errors.department && touched.department ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.department}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-
-            //           {/* Subject Id */}
-            //           <FormGroup className="form-group has-float-label ">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="marks.SubjectLabel" />
-            //             </Label>
-            //             <FormikReactSelect
-            //               name="subject"
-            //               id="subject"
-            //               value={values.subject}
-            //               options={subjects}
-            //               onChange={setFieldValue}
-            //               onBlur={setFieldTouched}
-            //               required
-            //             />
-            //             {errors.subject && touched.subject ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.subject}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-
-            //           {/* evaluator Name */}
-            //           <FormGroup className="form-group has-float-label">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="teacher.evaluatorLabel" />
-            //             </Label>
-            //             <Field className="form-control" name="evaluator" />
-            //             {errors.evaluator && touched.evaluator ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.evaluator}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-
-            //           {/* Strength Points */}
-            //           <FormGroup className="form-group has-float-label">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="teacher.strengthPointsLabel" />
-            //             </Label>
-            //             <Field
-            //               className="form-control"
-            //               name="strengthPoints"
-            //               as="textarea"
-            //             />
-            //             {errors.strengthPoints && touched.strengthPoints ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.strengthPoints}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-
-            //           {/* Achieved Marks */}
-            //           <FormGroup className="form-group has-float-label">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="teacher.marksLabel" />
-            //             </Label>
-            //             <Field
-            //               className="form-control"
-            //               name="marks"
-            //               type="number"
-            //             />
-            //             {errors.marks && touched.marks ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.marks}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-
-            //           {/* Evalualtion Date */}
-            //           <FormGroup className="form-group has-float-label">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="teacher.evaluationDateLabel" />
-            //             </Label>
-            //             <Field
-            //               className="form-control"
-            //               name="evaluationDate"
-            //               type="date"
-            //             />
-            //             {errors.evaluationDate && touched.evaluationDate ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.evaluationDate}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-            //         </Colxx>
-            //         <Colxx xxs="5">
-            //           {/* Institute Name*/}
-            //           <FormGroup className="form-group has-float-label ">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="forms.InstituteLabel" />
-            //             </Label>
-
-            //             <FormikReactSelect
-            //               name="institute"
-            //               id="institute"
-            //               value={values.institute}
-            //               options={institutes}
-            //               onChange={setFieldValue}
-            //               onBlur={setFieldTouched}
-            //             />
-            //             {errors.institute && touched.institute ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.institute}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-            //           {/*  Class Id  */}
-            //           <FormGroup className="form-group has-float-label ">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="marks.ClassLabel" />
-            //             </Label>
-            //             <FormikReactSelect
-            //               name="class"
-            //               id="class"
-            //               value={values.class}
-            //               options={classes}
-            //               onChange={setFieldValue}
-            //               onBlur={setFieldTouched}
-            //             />
-            //             {errors.class && touched.class ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.class}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-
-            //           {/* Topic */}
-            //           <FormGroup className="form-group has-float-label">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="teacher.topicLabel" />
-            //             </Label>
-            //             <Field className="form-control" name="topic" />
-            //             {errors.topic && touched.topic ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.topic}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-
-            //           {/* Evlaution type */}
-            //           <FormGroup className="form-group has-float-label">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="teacher.evaluationTypeLabel" />
-            //             </Label>
-            //             <FormikReactSelect
-            //               name="evaluationType"
-            //               id="evaluationType"
-            //               value={values.evaluationType}
-            //               options={evaluationTypeOptions}
-            //               onChange={setFieldValue}
-            //               onBlur={setFieldTouched}
-            //               required
-            //             />
-            //             {errors.evaluationType && touched.evaluationType ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.evaluationType}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-
-            //           {/* Weakness Points */}
-            //           <FormGroup className="form-group has-float-label">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="teacher.weaknessPointsLabel" />
-            //             </Label>
-            //             <Field
-            //               className="form-control"
-            //               name="weaknessPoints"
-            //               as="textarea"
-            //             />
-            //             {errors.weaknessPoints && touched.weaknessPoints ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.weaknessPoints}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-
-            //           {/* Suggestion */}
-            //           <FormGroup className="form-group has-float-label">
-            //             <Label style={inputLabel}>
-            //               <IntlMessages id="teacher.suggestionLabel" />
-            //             </Label>
-            //             <Field
-            //               className="form-control"
-            //               name="suggestion"
-            //               as="textarea"
-            //               rows={4}
-            //             />
-            //             {errors.suggestion && touched.suggestion ? (
-            //               <div className="invalid-feedback d-block bg-danger text-white">
-            //                 {errors.suggestion}
-            //               </div>
-            //             ) : null}
-            //           </FormGroup>
-            //         </Colxx>
-            //       </Row>
-
-            //       <Row>
-            //         <Colxx>
-            //           <Button
-            //             color="primary"
-            //             className="float-right m-5"
-            //             size="lg"
-            //             type="submit"
-            //           >
-            //             <span className="spinner d-inline-block">
-            //               <span className="bounce1" />
-            //               <span className="bounce2" />
-            //               <span className="bounce3" />
-            //             </span>
-            //             <span className="label">
-            //               <IntlMessages id="button.SubmitButton" />
-            //             </span>
-            //           </Button>
-            //         </Colxx>
-            //       </Row>
-            //     </Form>
-            //   )}
-            // </Formik>
             type === 'public_service' ? (
               <Formik
                 enableReinitialize={true}
@@ -938,7 +627,7 @@ const TeacherEvaluation = (props) => {
                             name="evaluation_date"
                             calendar={persian}
                             locale={persian_fa}
-                            value={updatingRecord?.evaluation_date}
+                            value={values.evaluation_date}
                             months={persianMonthOptions}
                             onChange={(e) =>
                               setEvaluationDate(
@@ -990,7 +679,8 @@ const TeacherEvaluation = (props) => {
                   </>
                 )}
               </Formik>
-            ) : (
+            ) : type === 'teaching_proccess' ? (
+              //teaching_proccess
               <Formik
                 enableReinitialize={true}
                 initialValues={{
@@ -1464,7 +1154,7 @@ const TeacherEvaluation = (props) => {
                   </>
                 )}
               </Formik>
-            )
+            ) : null
           ) : (
             <div
               className="wizard-basic-step text-center pt-3 "
@@ -1479,7 +1169,10 @@ const TeacherEvaluation = (props) => {
                 </h3>
                 <Button
                   className="m-5 bg-primary"
-                  onClick={() => setIsNext(false)}
+                  onClick={() => {
+                    setIsNext(false);
+                    history.push(`/app/teachers/teacher/${teacherId}`);
+                  }}
                 >
                   <IntlMessages id="button.back" />
                 </Button>
@@ -1487,6 +1180,9 @@ const TeacherEvaluation = (props) => {
             </div>
           )}
         </CardBody>
+        {type === 'employee-evaluation' && (
+          <EmployeeEvaluation employeeId={teacherId} />
+        )}
       </Card>
     </>
   );

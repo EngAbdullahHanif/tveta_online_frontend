@@ -579,8 +579,8 @@ const menuItems = [
       },
       {
         icon: 'MD.MdAddBox',
-        label: 'menu.teacher-evaluation',
-        to: `${adminRoot}/evaluations/teacher-evalaution`,
+        label: 'menu.employe-evaluation',
+        to: `${adminRoot}/evaluations/teacher-evalaution/employee-evaluation`,
       },
       {
         icon: 'FA.FaList',
@@ -626,6 +626,54 @@ const menuItems = [
         icon: 'BI.BiMessageAltDetail',
         label: 'جزیات ارزیابی',
         to: `${adminRoot}/evaluations/evaluation-details`,
+      },
+    ],
+  },
+  {
+    id: 'workshops',
+    icon: 'BS.BsCardChecklist',
+    label: 'menu.workshop',
+    to: `${adminRoot}/workshops`,
+    roles: [
+      userRole.admin,
+      // userRole.instituteDataentry,
+      // userRole.provinceDataentry,
+      userRole.tester,
+    ],
+    subs: [
+      {
+        icon: 'FA.FaList',
+        label: 'workshop.list',
+        to: `${adminRoot}/workshops/workshops`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'workshop.register',
+        to: `${adminRoot}/workshops/register`,
+      },
+    ],
+  },
+  {
+    id: 'needs',
+    icon: 'BS.BsCardChecklist',
+    label: 'menu.needs',
+    to: `${adminRoot}/needs`,
+    roles: [
+      userRole.admin,
+      // userRole.instituteDataentry,
+      // userRole.provinceDataentry,
+      userRole.tester,
+    ],
+    subs: [
+      {
+        icon: 'FA.FaList',
+        label: 'needs.list',
+        to: `${adminRoot}/needs/needs`,
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'needs.register',
+        to: `${adminRoot}/needs/register`,
       },
     ],
   },

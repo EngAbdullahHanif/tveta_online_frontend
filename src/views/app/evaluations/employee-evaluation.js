@@ -1,45 +1,30 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Field } from 'formik';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import {
-  gradeOptions,
-  persianMonthOptions,
-  stepOptions,
-} from '../global-data/options';
+import { useLocation } from 'react-router-dom';
+import { Table as TB } from 'antd';
 // import {
 //   teacherEvaluationValidationSchema,
 // } from '../global-data/forms-validation';
-import { Card, CardBody, Button } from 'reactstrap';
-import IntlMessages from 'helpers/IntlMessages';
+import { Card, CardBody } from 'reactstrap';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
-import config from '../../../config';
 // import TeacherList from '../teachers/Components/TeacherList';
 import callApi from 'helpers/callApi';
-import { useLocation } from 'react-router-dom';
 import { inputLabel } from 'config/styling';
-import { AuthContext } from 'context/AuthContext';
-import DatePicker from 'react-multi-date-picker';
-import persian from 'react-date-object/calendars/persian';
-import persian_fa from 'react-date-object/locales/persian_fa';
-const servicePath = config.API_URL;
 
-const TeacherEvaluationAPI = `${servicePath}/teachers/evaluation`;
 //http://localhost:8000/teachers/evaluation/?id=1
 
-const EmployeeEvaluation = (props) => {
-  const { institutes } = useContext(AuthContext);
-  const [updatingRecord, setUpdatingRecord] = useState({});
-  const [evaluationDate, setEvaluationDate] = useState();
-
-  const { type, teacherId } = useParams();
+const EmployeeEvaluation = ({ employeeId }) => {
+  const [evaluations, setEvaluations] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [topics, setTopics] = useState([]);
 
   const location = useLocation();
-  console.log('teacher evaluation', teacherId);
+
   async function fetchData() {
-    const { data } = await axios.get(
-      `${TeacherEvaluationAPI}/?id=${teacherId}`,
-    );
+    const { data } = await callApi(`programs/employee-training/`);
+    console.log('programs/employee-training', data.results);
+
+    setEvaluations(data.results);
   }
   const evaluationTypes = [
     {
@@ -55,36 +40,32 @@ const EmployeeEvaluation = (props) => {
       label: 'سالانه',
     },
   ];
-  const outcomeOptions = [
+
+  const boolOptions = [
     {
-      value: 'promotion',
-      label: 'ارتقاأ',
+      value: false,
+      label: 'نی',
     },
     {
-      value: 'continue',
-      label: 'ادامه',
-    },
-    {
-      value: 'dismissal',
-      label: 'انفصال',
-    },
-  ];
-  const placeOfDutyOptions = [
-    {
-      value: 'local',
-      label: 'محلی',
-    },
-    {
-      value: 'central',
-      label: 'مرکزی',
+      value: true,
+      label: 'بلی',
     },
   ];
 
+  const fetchCategories = async () => {
+    await callApi('programs/categories/').then(async (response) => {
+      console.log('CCCCCCCCCCCCCCCCCC', response.data);
+      setTopics(response.data?.results);
+      const updatedData = await response.data.results.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }));
+      setCategories(updatedData);
+    });
+  };
   useEffect(() => {
-    if (teacherId) {
-      fetchData();
-    }
-    //setUpdateMode(true);
+    fetchData();
+    fetchCategories();
   }, []);
 
   const [teacher, setTeacher] = useState([]);
@@ -96,60 +77,272 @@ const EmployeeEvaluation = (props) => {
   }, []);
 
   const onSubmit = async (values) => {
-    console.log('EEEEEEEEEEEEEEEEEEEEEMPLOYEE', values);
-    values.evaluation_outcome = values.evaluation_outcome.value;
-    values.institute = values.institute.value;
-    values.evaluation_type = values.evaluation_type.value;
-    values.grade = values.grade.value;
-    values.step = values.step.value;
-    values.employee = parseInt(teacherId);
-    values.evaluation_date = evaluationDate;
     console.log('Evaluation values', values);
-    let endPoint = 'evaluations/public_service/';
+    values.is_during_service = values.is_during_service.value;
+    values.is_required_again = values.is_required_again.value;
+    values.category = values.category.value;
+    values.survey = values.survey.value || null;
+    values.employee = employeeId;
+    let endPoint = 'programs/employee-training/';
     await callApi(endPoint, 'POST', values)
       .then((response) => {
         console.log('response in teacher evaluation', response.data);
-        setIsNext(true);
+        fetchData();
       })
       .catch((error) => {
         console.log('Error in teacher evaluation', error);
       });
   };
   const [isNext, setIsNext] = useState(false);
+  const columns = [
+    {
+      title: 'اساس نمبر',
+      dataIndex: 'id',
+      sorter: (a, b) => a.id - b.id,
+      width: '5%',
+    },
+    {
+      title: 'نوم',
+      dataIndex: 'name',
+      width: '5%',
+    },
+    {
+      title: 'اداره',
+      dataIndex: 'organization',
+      width: '10%',
+    },
+    {
+      title: 'duration_in_days',
+      dataIndex: 'duration_in_days',
+      width: '10%',
+    },
+    {
+      title: 'is_during_service',
+      dataIndex: 'is_during_service',
+      width: '10%',
+    },
+    {
+      title: 'is_required_again',
+      dataIndex: 'is_required_again',
+      width: '10%',
+    },
+    {
+      title: 'survey',
+      dataIndex: 'survey',
+      width: '10%',
+    },
+    {
+      title: 'category',
+      dataIndex: 'category',
+      width: '10%',
+    },
+  ];
   return (
     <>
       <Card>
-        <h3 className="mt-5 m-5">فورم ارزیابی مامور ملکی</h3>
+        <h3 className="mt-5 m-5">فورم نیاز سنجی کارمندان</h3>
 
-        <CardBody className="w-50">
-          {!isNext ? (
+        <CardBody className="w-100">
+          <TB
+            columns={columns}
+            // rowKey={(record) => record.login.uuid}
+            // pagination={tableParams.pagination}
+            // loading={isLoading}
+            // onChange={handleTableChange}
+            dataSource={evaluations?.map((item, index) => ({
+              key: index,
+              id: item.id,
+              name: item.name,
+              organization: item.organization,
+              duration_in_days: item.duration_in_days,
+              is_during_service: item.is_during_service ? 'Yes' : 'No',
+              is_required_again: item.is_required_again ? 'Yes' : 'No',
+              survey: item.survey,
+              category: item.category,
+            }))}
+          />
+
+          <Formik
+            enableReinitialize={true}
+            initialValues={{
+              name: '',
+              organization: '',
+              duration_in_days: '',
+              survey: [],
+              category: [],
+              is_during_service: [],
+              is_required_again: [],
+            }}
+            // validationSchema={teacherEvaluationValidationSchema}
+            onSubmit={onSubmit}
+          >
+            {({
+              errors,
+              touched,
+              values,
+              setFieldTouched,
+              setFieldValue,
+              handleSubmit,
+            }) => (
+              <>
+                <form>
+                  <div style={{ display: 'flex' }}>
+                    <div className="form-group w-100">
+                      <label
+                        style={inputLabel}
+                        for="educational_year"
+                        className="col-form-label"
+                      >
+                        Name
+                        <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <Field className="form-control fieldStyle" name="name" />
+                    </div>
+                    <div className="form-group w-100">
+                      <label
+                        style={inputLabel}
+                        for="educational_year"
+                        className="col-form-label"
+                      >
+                        organization
+                        <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <Field
+                        className="form-control fieldStyle"
+                        name="organization"
+                      />
+                    </div>
+                    <div className="form-group w-100">
+                      <label
+                        style={inputLabel}
+                        for="educational_year"
+                        className="col-form-label"
+                      >
+                        Duration in Days
+                        <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <Field
+                        className="form-control fieldStyle"
+                        name="duration_in_days"
+                        type="number"
+                        min="0"
+                      />
+                    </div>
+                    <div className="form-group w-100">
+                      <label
+                        style={inputLabel}
+                        for="survey"
+                        className="col-form-label"
+                      >
+                        survey
+                        <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <FormikReactSelect
+                        name="survey"
+                        id="survey"
+                        value={values.survey}
+                        options={evaluationTypes}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                        required
+                      />
+                      {errors.survey && touched.survey ? (
+                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          {errors.survey}
+                        </div>
+                      ) : null}
+                    </div>
+                    <div className="form-group w-100">
+                      <label
+                        style={inputLabel}
+                        for="category"
+                        className="col-form-label"
+                      >
+                        category
+                        <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <FormikReactSelect
+                        name="category"
+                        id="category"
+                        value={values.category}
+                        options={categories}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                        required
+                      />
+                      {errors.category && touched.category ? (
+                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          {errors.category}
+                        </div>
+                      ) : null}
+                    </div>
+                    <div className="form-group w-100">
+                      <label
+                        style={inputLabel}
+                        for="is_during_service"
+                        className="col-form-label"
+                      >
+                        is_during_service
+                        <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <FormikReactSelect
+                        name="is_during_service"
+                        id="is_during_service"
+                        value={values.is_during_service}
+                        options={boolOptions}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                        required
+                      />
+                      {errors.is_during_service && touched.is_during_service ? (
+                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          {errors.is_during_service}
+                        </div>
+                      ) : null}
+                    </div>
+                    <div className="form-group w-100">
+                      <label
+                        style={inputLabel}
+                        for="is_required_again"
+                        className="col-form-label"
+                      >
+                        is_required_again
+                        <span style={{ color: 'red' }}>*</span>
+                      </label>
+                      <FormikReactSelect
+                        name="is_required_again"
+                        id="is_required_again"
+                        value={values.is_required_again}
+                        options={boolOptions}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                        required
+                      />
+                      {errors.is_required_again && touched.is_required_again ? (
+                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                          {errors.is_required_again}
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
+
+                  <br />
+                  <button className="btn btn-primary" onClick={handleSubmit}>
+                    ثبت
+                  </button>
+                </form>
+              </>
+            )}
+          </Formik>
+          <br />
+          <CardBody className="w-40">
             <Formik
               enableReinitialize={true}
-              initialValues={{
-                title: '',
-                grade: [],
-                step: [],
-                place_of_duty: '',
-                evaluation_type: '',
-                evaluation_date: '',
-                self_plan_execution_score: '',
-                self_competency_score: '',
-                self_behavioral_score: '',
-                director_plan_execution_score: '',
-                director_competency_score: '',
-                director_behavioral_score: '',
-                direct_director: '',
-                direct_director_suggestions: '',
-                upper_director: '',
-                upper_director_score: [],
-                evaluation_outcome: '',
-                self_total_score: '',
-                director_total_score: '',
-                employee: [],
-                institute: [],
-              }}
+              initialValues={{}}
               // validationSchema={teacherEvaluationValidationSchema}
-              onSubmit={onSubmit}
+              onSubmit={(data) => {
+                console.log('DDDDDDDDDDDDDDDATA: ', data);
+              }}
             >
               {({
                 errors,
@@ -161,409 +354,67 @@ const EmployeeEvaluation = (props) => {
               }) => (
                 <>
                   <form>
-                    <div className="form-group">
-                      <label
-                        style={inputLabel}
-                        for="educational_year"
-                        className="col-form-label"
-                      >
-                        Title
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <Field className="form-control fieldStyle" name="title" />
-
-                      <label
-                        style={inputLabel}
-                        for="institute"
-                        className="col-form-label"
-                      >
-                        انستتیوت
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <FormikReactSelect
-                        name="institute"
-                        id="institute"
-                        value={values.institute}
-                        options={institutes}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.institute && touched.institute ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.institute}
-                        </div>
-                      ) : null}
-                      <label
-                        style={inputLabel}
-                        for="institute"
-                        className="col-form-label"
-                      >
-                        محل کار
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <FormikReactSelect
-                        name="place_of_duty"
-                        id="place_of_duty"
-                        value={values.place_of_duty}
-                        options={placeOfDutyOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.place_of_duty && touched.place_of_duty ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.place_of_duty}
-                        </div>
-                      ) : null}
-                      <div className="form-group">
-                        <label style={inputLabel}>
-                          <IntlMessages id="teacher.GradeLabel" />
-                          <span style={{ color: 'red' }}>*</span>
-                        </label>
-                        <FormikReactSelect
-                          name="grade"
-                          id="grade"
-                          value={values.grade}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          options={gradeOptions}
-                          required
-                        />
-                        {errors.grade && touched.grade ? (
-                          <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
-                            {errors.grade}
+                    {topics.map((item) => {
+                      return (
+                        <>
+                          <h3>{item.name}</h3>
+                          <div style={{ display: 'flex' }}>
+                            <div className="form-group w-100">
+                              <label
+                                style={inputLabel}
+                                for="category"
+                                className="col-form-label"
+                              >
+                                حتمی
+                                <span style={{ color: 'red' }}>*</span>
+                              </label>
+                              <FormikReactSelect
+                                name={item.type + '_hatmi'}
+                                id={item.type}
+                                options={item.topics.map((op) => ({
+                                  value: op.id,
+                                  label: op.name,
+                                }))}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                required
+                              />
+                              {errors.category && touched.category ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.category}
+                                </div>
+                              ) : null}
+                            </div>
+                            <div className="form-group w-100">
+                              <label
+                                style={inputLabel}
+                                for={item.type}
+                                className="col-form-label"
+                              >
+                                اختیاری
+                                <span style={{ color: 'red' }}>*</span>
+                              </label>
+                              <FormikReactSelect
+                                name={item.type + '_ikhtyari'}
+                                id={item.type}
+                                options={item.topics.map((op) => ({
+                                  value: op.id,
+                                  label: op.name,
+                                }))}
+                                onChange={setFieldValue}
+                                onBlur={setFieldTouched}
+                                required
+                              />
+                              {errors.category && touched.category ? (
+                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                  {errors.category}
+                                </div>
+                              ) : null}
+                            </div>
                           </div>
-                        ) : null}
-                      </div>
-                      <div className="form-group">
-                        <label style={inputLabel}>
-                          <IntlMessages id="teacher.StepLabel" />
-                          <span style={{ color: 'red' }}>*</span>
-                        </label>
-                        <FormikReactSelect
-                          name="step"
-                          id="step"
-                          value={values.step}
-                          options={stepOptions}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          required
-                        />
-                        {errors.step && touched.step ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.step}
-                          </div>
-                        ) : null}
-                      </div>
-                      <label
-                        style={inputLabel}
-                        for="educational_year"
-                        className="col-form-label"
-                      >
-                        نمره نیازسنجی کارمند خود
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                        }}
-                      >
-                        <div className="form-group">
-                          <label
-                            style={inputLabel}
-                            for="excellent"
-                            className="col-form-label"
-                          >
-                            plan_execution_score
-                            <span style={{ color: 'red' }}>*</span>
-                          </label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="self_plan_execution_score"
-                            type="number"
-                            min="0"
-                            max="100"
-                          />
-                          {errors.excellent && touched.excellent ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.excellent}
-                            </div>
-                          ) : null}
-                        </div>
-                        <div className="form-group">
-                          <label
-                            style={inputLabel}
-                            for="outstanding"
-                            className="col-form-label"
-                          >
-                            competency_score
-                            <span style={{ color: 'red' }}>*</span>
-                          </label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="self_competency_score"
-                            type="number"
-                            min="0"
-                            max="100"
-                          />
-                          {errors.outstanding && touched.outstanding ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.outstanding}
-                            </div>
-                          ) : null}
-                        </div>
-                        <div className="form-group">
-                          <label
-                            style={inputLabel}
-                            for="good"
-                            className="col-form-label"
-                          >
-                            behavioral_score
-                            <span style={{ color: 'red' }}>*</span>
-                          </label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="self_behavioral_score"
-                            type="number"
-                            min="0"
-                            max="100"
-                          />
-                          {errors.good && touched.good ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.good}
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-                      <label
-                        style={inputLabel}
-                        for="educational_year"
-                        className="col-form-label"
-                      >
-                        نمره نیازسنجی امر
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                        }}
-                      >
-                        <div className="form-group">
-                          <label
-                            style={inputLabel}
-                            for="average"
-                            className="col-form-label"
-                          >
-                            plan_execution_score
-                            <span style={{ color: 'red' }}>*</span>
-                          </label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="director_plan_execution_score"
-                            type="number"
-                            min="0"
-                            max="100"
-                          />
-                          {errors.average && touched.average ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.average}
-                            </div>
-                          ) : null}
-                        </div>
-                        <div className="form-group">
-                          <label
-                            style={inputLabel}
-                            for="weak"
-                            className="col-form-label"
-                          >
-                            competency_score
-                            <span style={{ color: 'red' }}>*</span>
-                          </label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="director_competency_score"
-                            type="number"
-                            min="0"
-                            max="100"
-                          />
-                          {errors.weak && touched.weak ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.weak}
-                            </div>
-                          ) : null}
-                        </div>
-                        <div className="form-group">
-                          <label
-                            style={inputLabel}
-                            for="not_applicable"
-                            className="col-form-label"
-                          >
-                            behavioral_score
-                            <span style={{ color: 'red' }}>*</span>
-                          </label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="director_behavioral_score"
-                            type="number"
-                            min="0"
-                            max="100"
-                          />
-                          {errors.not_applicable && touched.not_applicable ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.not_applicable}
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-                      <label
-                        style={inputLabel}
-                        for="educational_year"
-                        className="col-form-label"
-                      >
-                        نمره نیازسنجی امر مافوق
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                        }}
-                      >
-                        <div className="form-group">
-                          <Field
-                            className="form-control fieldStyle"
-                            name="upper_director_score"
-                            type="number"
-                            min="0"
-                            max="100"
-                          />
-                          {errors.average && touched.average ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.average}
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-                      <label
-                        style={inputLabel}
-                        for="educational_year"
-                        className="col-form-label"
-                      >
-                        direct_director_suggestions
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="direct_director_suggestions"
-                      />
-                      <label
-                        style={inputLabel}
-                        for="educational_year"
-                        className="col-form-label"
-                      >
-                        upper_director
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <Field
-                        className="form-control fieldStyle"
-                        name="upper_director"
-                      />
-                    </div>
-
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                      }}
-                    >
-                      <div className="form-group w-100">
-                        <label
-                          style={inputLabel}
-                          for="evaluation_type"
-                          className="col-form-label"
-                        >
-                          ارزیابی ډول
-                          <span style={{ color: 'red' }}>*</span>
-                        </label>
-                        <FormikReactSelect
-                          name="evaluation_type"
-                          id="evaluation_type"
-                          value={values.evaluation_type}
-                          options={evaluationTypes}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                          required
-                        />
-                        {errors.evaluation_type && touched.evaluation_type ? (
-                          <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                            {errors.evaluation_type}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="">
-                        <label
-                          style={inputLabel}
-                          for="year_of_completion"
-                          className="col-form-label"
-                        >
-                          ارزیابی تاریخ
-                          <span style={{ color: 'red' }}>*</span>
-                        </label>
-                        <br />
-
-                        <DatePicker
-                          className="form-control fieldStyle"
-                          style={{
-                            width: '100%',
-                            height: 38,
-                            borderRadius: 0,
-                          }}
-                          name="evaluation_date"
-                          calendar={persian}
-                          locale={persian_fa}
-                          value={updatingRecord?.evaluation_date}
-                          months={persianMonthOptions}
-                          onChange={(e) =>
-                            setEvaluationDate(
-                              new Date(e.toDate()).getFullYear() +
-                                '-' +
-                                (new Date(e.toDate()).getMonth() + 1) +
-                                '-' +
-                                new Date(e.toDate()).getDate(),
-                            )
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-group w-100">
-                      <label
-                        style={inputLabel}
-                        for="evaluation_outcome"
-                        className="col-form-label"
-                      >
-                        evaluation_outcome
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <FormikReactSelect
-                        name="evaluation_outcome"
-                        id="evaluation_outcome"
-                        value={values.evaluation_outcome}
-                        options={outcomeOptions}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.evaluation_outcome &&
-                      touched.evaluation_outcome ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.evaluation_outcome}
-                        </div>
-                      ) : null}
-                    </div>
+                        </>
+                      );
+                    })}
 
                     <br />
                     <button className="btn btn-primary" onClick={handleSubmit}>
@@ -573,27 +424,7 @@ const EmployeeEvaluation = (props) => {
                 </>
               )}
             </Formik>
-          ) : (
-            <div
-              className="wizard-basic-step text-center pt-3 "
-              style={{ minHeight: '400px' }}
-            >
-              <div>
-                <h1 className="mb-2">
-                  <IntlMessages id="wizard.content-thanks" />
-                </h1>
-                <h3>
-                  <IntlMessages id="wizard.registered" />
-                </h3>
-                <Button
-                  className="m-5 bg-primary"
-                  onClick={() => setIsNext(false)}
-                >
-                  <IntlMessages id="button.back" />
-                </Button>
-              </div>
-            </div>
-          )}
+          </CardBody>
         </CardBody>
       </Card>
     </>

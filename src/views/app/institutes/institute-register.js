@@ -39,10 +39,6 @@ message.config({
   rtl: true,
   prefixCls: 'my-message',
 });
-const options = [
-  { value: 'Electronic', label: 'الکترونیکی' },
-  { value: 'paper', label: 'کاغذی' },
-];
 
 const instTypeOptions = [
   { value: 'governmental', label: 'دولتی' },
@@ -71,7 +67,6 @@ const instituteTypeOptions = [
 ];
 
 const servicePath = 'http://localhost:8000';
-const instituteApiUrl = `${servicePath}/institute/institute_create`;
 //http://localhost:8000/institute/institute_create
 
 const MyErrorMessage = ({ name, errors, touched }) => {

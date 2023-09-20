@@ -20,6 +20,7 @@ const TeachingProcessList = ({
   data,
   isLoading,
   teacherLink,
+  filters,
 }) => {
   const { provinces } = useContext(AuthContext);
   const [tableParams, setTableParams] = useState({
@@ -136,76 +137,77 @@ const TeachingProcessList = ({
   ];
   return (
     <>
-      <div
-        style={{
-          padding: 10,
-          display: 'flex',
-        }}
-      >
-        <Formik
-          initialValues={{
-            filterId: '',
-            filterInstitute: [],
-            filterProvince: [],
+      {filters && (
+        <div
+          style={{
+            padding: 10,
+            display: 'flex',
           }}
-          onSubmit={onFilter}
         >
-          {({
-            values,
-            setFieldValue,
-            handleSubmit,
-            setFieldTouched,
-            resetForm,
-          }) => (
-            <>
-              <Field
-                className="form-control fieldStyle"
-                name="filterId"
-                placeholder="ایدی"
-              />
-              <FormikReactSelect
-                className="w-100"
-                placeholder="ولایت"
-                name="filterProvince"
-                options={provinces}
-                value={values.filterProvince}
-                onChange={setFieldValue}
-                onBlur={setFieldTouched}
-              />
-              <FormikReactSelect
-                className="w-100"
-                placeholder="جنسیت"
-                name="filterGender"
-                options={genderOptions}
-                value={values.filterGender}
-                onChange={setFieldValue}
-                onBlur={setFieldTouched}
-              />
-              <FormikReactSelect
-                className="w-100"
-                placeholder="حالت"
-                name="filterStatus"
-                options={instituteStatusOptions}
-                value={values.filterStatus}
-                onChange={setFieldValue}
-                onBlur={setFieldTouched}
-              />
-              <button className="btn btn-secondary" onClick={handleSubmit}>
-                فلټر
-              </button>
+          <Formik
+            initialValues={{
+              filterId: '',
+              filterInstitute: [],
+              filterProvince: [],
+            }}
+            onSubmit={onFilter}
+          >
+            {({
+              values,
+              setFieldValue,
+              handleSubmit,
+              setFieldTouched,
+              resetForm,
+            }) => (
+              <>
+                <Field
+                  className="form-control fieldStyle"
+                  name="filterId"
+                  placeholder="ایدی"
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="ولایت"
+                  name="filterProvince"
+                  options={provinces}
+                  value={values.filterProvince}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="جنسیت"
+                  name="filterGender"
+                  options={genderOptions}
+                  value={values.filterGender}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="حالت"
+                  name="filterStatus"
+                  options={instituteStatusOptions}
+                  value={values.filterStatus}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <button className="btn btn-secondary" onClick={handleSubmit}>
+                  فلټر
+                </button>
 
-              <button
-                type="button"
-                className="btn btn-warning"
-                onClick={() => handleResetFields(resetForm)}
-              >
-                ریسیټ
-              </button>
-            </>
-          )}
-        </Formik>
-      </div>
-
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  onClick={() => handleResetFields(resetForm)}
+                >
+                  ریسیټ
+                </button>
+              </>
+            )}
+          </Formik>
+        </div>
+      )}
       <TB
         columns={columns}
         // rowKey={(record) => record.login.uuid}

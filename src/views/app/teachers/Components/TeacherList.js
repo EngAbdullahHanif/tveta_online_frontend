@@ -77,6 +77,11 @@ const TeacherList = ({
       dataIndex: 'status',
       width: '5%',
     },
+    {
+      title: 'اپدید',
+      dataIndex: 'action',
+      width: '10%',
+    },
   ];
   return (
     <>

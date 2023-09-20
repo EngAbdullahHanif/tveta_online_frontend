@@ -2,6 +2,228 @@ import * as Yup from 'yup';
 import IntlMessages from 'helpers/IntlMessages';
 import { EDUCATIONAL_YEAR_VALIDATOR } from '../ui/forms/validations';
 
+export const studentUpdateFormSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />)
+    .required(<IntlMessages id="teacher.NameErr" />),
+
+  fatherName: Yup.string()
+    .required(<IntlMessages id="teacher.FatherNameErr" />)
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  lastName: Yup.string()
+    .nullable()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  lastNameEng: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  grandFatherName: Yup.string()
+    .required(<IntlMessages id="forms.grandFatherNameErr" />)
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  fatherDuty: Yup.string()
+    .required(<IntlMessages id="forms.StdFatherDutyErr" />)
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  englishName: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  fatherEngName: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  fatherDutyLocation: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+  placeOfBirth: Yup.string()
+    .min(3, <IntlMessages id="min.minInputValue" />)
+    .max(50, <IntlMessages id="max.maxInputValue" />),
+
+  tazkiraNo: Yup.string().when('tazkiraType.value', {
+    is: 'electronic',
+    then: Yup.string().required(
+      'نمبر تذکره الکترونی الزامی است وقتی نوع تذکره الکترونی باشد',
+    ),
+    otherwise: Yup.string(),
+  }),
+
+  // //Step 2
+  // levelOfEducation: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="teacher.LevelOfEducationErr" />),
+
+  // preSchool: Yup.string()
+  //   .min(3, <IntlMessages id="min.minInputValue" />)
+  //   .max(50, <IntlMessages id="max.maxInputValue" />)
+  //   .required(<IntlMessages id="forms.StPreShcoolErr" />),
+
+  // schoolProvince: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
+
+  // graduationYear: Yup.date().required(
+  //   <IntlMessages id="forms.StdGraduationYearErr" />
+  // ),
+  graduationYear: EDUCATIONAL_YEAR_VALIDATOR,
+  province: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  // C_Province: Yup.object()
+  //   .shape({ value: Yup.string().required() })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
+  // C_District: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.DistrictErr" />),
+  // district: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.DistrictErr" />),
+  // village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+  // C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+
+  // //Step 3
+  // institute: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.InstituteErr" />),
+
+  // disability: Yup.object().when('institute.rest.type', {
+  //   is: 'special_education',
+  //   then: Yup.string().required(
+  //     'وقتی که انستتیوت تعلیمات خاص باشد، اضافه کردن معلولیت/معیوبیت الزامی است.',
+  //   ),
+  //   otherwise: Yup.object().nullable(),
+  // }),
+
+  studyTime: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudyTimeErr" />),
+
+  class: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="marks.ClassErr" />),
+
+  educationalYear: EDUCATIONAL_YEAR_VALIDATOR,
+  department: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="teacher.departmentIdErr" />),
+
+  interanceType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdInteranceTypeErr" />),
+  // kankorId: Yup.string().required('ایدی کانکور الزامی است'),
+  studentType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StudentTypeErr" />),
+
+  mediumOfInstruction: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.mediumOfInstructionErr" />),
+  studentId: Yup.number().required(<IntlMessages id="student.studentIdErr" />),
+
+  DoB: Yup.number()
+    .min(1350, 'سال تولد درست نیست/د تولد کال سم ندی')
+    .max(1420, 'سال تولد درست نیست/د تولد کال سم ندی')
+    .nullable()
+    .required(<IntlMessages id="forms.StdDoBErr" />),
+  monthOfBirth: Yup.number()
+    .min(1, 'ماه تولد درست نیست / د تولد میاشت سم ندی')
+    .max(12, 'ماه تولد درست نیست / د تولد میاشت سم ندی')
+    .nullable(),
+  dayOfBirth: Yup.number()
+    .min(1, ' روز تولد درست نیست / د تولد ورځ سم ندی')
+    .max(31, ' روز تولد درست نیست / د تولد ورځ سم ندی')
+    .nullable(),
+
+  tazkiraType: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.StdTazkiraTypeErr" />),
+
+  gender: Yup.object()
+    .shape({
+      value: Yup.string().required(),
+    })
+    .nullable()
+    .required(<IntlMessages id="forms.genderErr" />),
+
+  email: Yup.string().email(<IntlMessages id="teacher.EmailRequiredErr" />),
+
+  idCardJoldNo: Yup.string().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.string().required(
+      'شماره جلد الزامی است وقتی نوع تذکره کاغذی است',
+    ),
+    otherwise: Yup.string(),
+  }),
+
+  idCardPageNo: Yup.number().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.number().required('صفحه الزامی است وقتی نوع تذکره کاغذی است'),
+    otherwise: Yup.number(),
+  }),
+
+  sabtNo: Yup.number().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.number().required(
+      'شماره ثبت الزامی است وقتی نوع تذکره کاغذی است',
+    ),
+    otherwise: Yup.number(),
+  }),
+
+  sokokNo: Yup.string().when('tazkiraType.value', {
+    is: 'paper',
+    then: Yup.string().required(
+      'شماره صکوک الزامی است وقتی نوع تذکره کاغذی است',
+    ),
+    otherwise: Yup.string(),
+  }),
+});
 // Student Registrations form step one
 export const studentRegisterFormStep_1 = Yup.object().shape({
   // maktoobNumber: Yup.string().required('مکتوب نمبر الزامی است'),

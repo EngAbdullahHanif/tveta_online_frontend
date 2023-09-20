@@ -17,6 +17,7 @@ const EmployeeEvaluation = ({ employeeId }) => {
   const [evaluations, setEvaluations] = useState([]);
   const [categories, setCategories] = useState([]);
   const [topics, setTopics] = useState([]);
+  const [topicOptions, setTopicOptions] = useState([]);
 
   const location = useLocation();
 
@@ -54,8 +55,26 @@ const EmployeeEvaluation = ({ employeeId }) => {
 
   const fetchCategories = async () => {
     await callApi('programs/categories/').then(async (response) => {
-      console.log('CCCCCCCCCCCCCCCCCC', response.data);
+      console.log('CCCCCCCCCCCCCCCCCC', response.data.results);
       setTopics(response.data?.results);
+
+      const typeArrays = {};
+      response.data.results.forEach((parentItem) => {
+        parentItem.topics.forEach((topicItem) => {
+          const type = parentItem.type;
+          if (!typeArrays[type]) {
+            typeArrays[type] = [];
+          }
+          typeArrays[type].push({
+            category: parentItem.type,
+
+            value: topicItem.id,
+            label: topicItem.name,
+          });
+        });
+      });
+      setTopicOptions(typeArrays);
+      console.log('RRRRRRRRRRRRRESULT ARRAY: ', typeArrays);
       const updatedData = await response.data.results.map((item) => ({
         value: item.id,
         label: item.name,
@@ -93,7 +112,6 @@ const EmployeeEvaluation = ({ employeeId }) => {
         console.log('Error in teacher evaluation', error);
       });
   };
-  const [isNext, setIsNext] = useState(false);
   const columns = [
     {
       title: 'اساس نمبر',
@@ -112,27 +130,22 @@ const EmployeeEvaluation = ({ employeeId }) => {
       width: '10%',
     },
     {
-      title: 'duration_in_days',
+      title: 'مدت (روز)',
       dataIndex: 'duration_in_days',
       width: '10%',
     },
     {
-      title: 'is_during_service',
+      title: 'داخل خدمت؟',
       dataIndex: 'is_during_service',
       width: '10%',
     },
     {
-      title: 'is_required_again',
+      title: 'نیاز مجدد است؟',
       dataIndex: 'is_required_again',
       width: '10%',
     },
     {
-      title: 'survey',
-      dataIndex: 'survey',
-      width: '10%',
-    },
-    {
-      title: 'category',
+      title: 'کتگوری',
       dataIndex: 'category',
       width: '10%',
     },
@@ -157,7 +170,6 @@ const EmployeeEvaluation = ({ employeeId }) => {
               duration_in_days: item.duration_in_days,
               is_during_service: item.is_during_service ? 'Yes' : 'No',
               is_required_again: item.is_required_again ? 'Yes' : 'No',
-              survey: item.survey,
               category: item.category,
             }))}
           />
@@ -168,7 +180,6 @@ const EmployeeEvaluation = ({ employeeId }) => {
               name: '',
               organization: '',
               duration_in_days: '',
-              survey: [],
               category: [],
               is_during_service: [],
               is_required_again: [],
@@ -193,7 +204,7 @@ const EmployeeEvaluation = ({ employeeId }) => {
                         for="educational_year"
                         className="col-form-label"
                       >
-                        Name
+                        نوم
                         <span style={{ color: 'red' }}>*</span>
                       </label>
                       <Field className="form-control fieldStyle" name="name" />
@@ -204,7 +215,7 @@ const EmployeeEvaluation = ({ employeeId }) => {
                         for="educational_year"
                         className="col-form-label"
                       >
-                        organization
+                        ارګان
                         <span style={{ color: 'red' }}>*</span>
                       </label>
                       <Field
@@ -218,7 +229,7 @@ const EmployeeEvaluation = ({ employeeId }) => {
                         for="educational_year"
                         className="col-form-label"
                       >
-                        Duration in Days
+                        مدت (روز)
                         <span style={{ color: 'red' }}>*</span>
                       </label>
                       <Field
@@ -228,37 +239,14 @@ const EmployeeEvaluation = ({ employeeId }) => {
                         min="0"
                       />
                     </div>
-                    <div className="form-group w-100">
-                      <label
-                        style={inputLabel}
-                        for="survey"
-                        className="col-form-label"
-                      >
-                        survey
-                        <span style={{ color: 'red' }}>*</span>
-                      </label>
-                      <FormikReactSelect
-                        name="survey"
-                        id="survey"
-                        value={values.survey}
-                        options={evaluationTypes}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        required
-                      />
-                      {errors.survey && touched.survey ? (
-                        <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                          {errors.survey}
-                        </div>
-                      ) : null}
-                    </div>
+
                     <div className="form-group w-100">
                       <label
                         style={inputLabel}
                         for="category"
                         className="col-form-label"
                       >
-                        category
+                        کتگوری
                         <span style={{ color: 'red' }}>*</span>
                       </label>
                       <FormikReactSelect
@@ -282,7 +270,7 @@ const EmployeeEvaluation = ({ employeeId }) => {
                         for="is_during_service"
                         className="col-form-label"
                       >
-                        is_during_service
+                        داخل خدمت؟
                         <span style={{ color: 'red' }}>*</span>
                       </label>
                       <FormikReactSelect
@@ -292,7 +280,7 @@ const EmployeeEvaluation = ({ employeeId }) => {
                         options={boolOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                        required
+                        isSearchable={false}
                       />
                       {errors.is_during_service && touched.is_during_service ? (
                         <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -306,7 +294,7 @@ const EmployeeEvaluation = ({ employeeId }) => {
                         for="is_required_again"
                         className="col-form-label"
                       >
-                        is_required_again
+                        نیاز مجدد است؟
                         <span style={{ color: 'red' }}>*</span>
                       </label>
                       <FormikReactSelect
@@ -316,7 +304,7 @@ const EmployeeEvaluation = ({ employeeId }) => {
                         options={boolOptions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                        required
+                        isSearchable={false}
                       />
                       {errors.is_required_again && touched.is_required_again ? (
                         <div className="invalid-feedback d-block bg-danger text-white messageStyle">
@@ -335,7 +323,8 @@ const EmployeeEvaluation = ({ employeeId }) => {
             )}
           </Formik>
           <br />
-          <CardBody className="w-40">
+
+          <CardBody className="w-50">
             <Formik
               enableReinitialize={true}
               initialValues={{}}
@@ -354,10 +343,10 @@ const EmployeeEvaluation = ({ employeeId }) => {
               }) => (
                 <>
                   <form>
-                    {topics.map((item) => {
+                    {/* {topics.map((item, index) => {
                       return (
                         <>
-                          <h3>{item.name}</h3>
+                          <h3>{`${item.name} (${item.type})`}</h3>
                           <div style={{ display: 'flex' }}>
                             <div className="form-group w-100">
                               <label
@@ -414,8 +403,39 @@ const EmployeeEvaluation = ({ employeeId }) => {
                           </div>
                         </>
                       );
-                    })}
-
+                    })} */}
+                    {Object.keys(topicOptions).map((type) => (
+                      <div style={{ display: 'flex' }}>
+                        <div key={type} className="w-100">
+                          <h3>{` حتمی (${type})`}</h3>
+                          <FormikReactSelect
+                            name={type + '_hatmi'}
+                            id={type}
+                            options={topicOptions[type].map((option) => ({
+                              value: option.value,
+                              label: option.label,
+                            }))}
+                            onChange={setFieldValue}
+                            onBlur={setFieldTouched}
+                            required
+                          />
+                        </div>
+                        <div key={type} className="w-100">
+                          <h3>{` اختیاری (${type})`}</h3>
+                          <FormikReactSelect
+                            name={type + '_ikhtyari'}
+                            id={type}
+                            options={topicOptions[type].map((option) => ({
+                              value: option.value,
+                              label: option.label,
+                            }))}
+                            onChange={setFieldValue}
+                            onBlur={setFieldTouched}
+                            required
+                          />
+                        </div>
+                      </div>
+                    ))}
                     <br />
                     <button className="btn btn-primary" onClick={handleSubmit}>
                       ثبت

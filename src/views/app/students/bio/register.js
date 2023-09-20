@@ -786,20 +786,17 @@ const StudentRegistration = ({ intl }, values) => {
                               نمبر تذکره الکترونی
                               <span style={{ color: 'red' }}>*</span>
                             </Label>
-                            {/* <Field
-                     className="form-control fieldStyle"
-                     name="tazkiraNo"
-                     type="text"
-                     maxLength="14"
-                     minLength="12"
-                   /> */}
                             <InputMask
                               style={{ width: '100%' }}
                               name="tazkiraNo"
                               value={values.tazkiraNo}
-                              id="ssn"
+                              id="tazkiraNo"
                               mask="9999-9999-99999"
                               placeholder="9999-9999-99999"
+                              onClick={(e) => {
+                                if (!values.tazkiraNo)
+                                  e.target.setSelectionRange(0, 0);
+                              }}
                               onChange={(e) =>
                                 setFieldValue('tazkiraNo', e.target.value)
                               }

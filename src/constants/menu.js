@@ -420,7 +420,11 @@ const menuItems = [
         icon: 'MD.MdAddBox',
         label: 'menu.institute_department_register',
         to: `${adminRoot}/institutes/institute-department/register`,
-        roles: [userRole.instituteDataentry, userRole.instituteManager],
+        roles: [
+          userRole.instituteDataentry,
+          userRole.instituteManager,
+          userRole.admin,
+        ],
       },
       // {
       //   icon: "FA.FaLevelUpAlt",

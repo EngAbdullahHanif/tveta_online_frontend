@@ -252,8 +252,8 @@ const TeacherProfile = () => {
       endPoint: `teachers/${teacherId}/educations/`,
       method: 'POST',
     };
-    if (recId || updatingRecord.id) {
-      apiParams.endPoint = `teachers/${teacherId}/educations/${updatingRecord.id}/`;
+    if (recId || updatingRecord?.id) {
+      apiParams.endPoint = `teachers/${teacherId}/educations/${updatingRecord?.id}/`;
       apiParams.method = 'PATCH';
     }
     console.log('File: ', cvFile);
@@ -739,7 +739,7 @@ const TeacherProfile = () => {
                         <tbody>
                           {teacherEducation.map((item, index) => {
                             return (
-                              <tr>
+                              <tr key={index + 1}>
                                 <th scope="row">{item.id}</th>
                                 <td>{item.institution}</td>
                                 <td>{item.degree}</td>

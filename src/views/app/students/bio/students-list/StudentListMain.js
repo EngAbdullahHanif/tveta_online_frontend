@@ -142,6 +142,7 @@ const ThumbListPages = () => {
           );
         } else {
           setItems(response.data.results);
+          console.log('studentsssssssssss', response.data.results);
           totalStudents = response?.data?.count;
         }
         setTableParams({

@@ -314,20 +314,20 @@ export const studentRegisterForm = Yup.object().shape({
     .shape({ value: Yup.string().required() })
     .nullable()
     .required(<IntlMessages id="forms.StdSchoolProvinceErr" />),
-  C_District: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.DistrictErr" />),
-  district: Yup.object()
-    .shape({
-      value: Yup.string().required(),
-    })
-    .nullable()
-    .required(<IntlMessages id="forms.DistrictErr" />),
-  village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
-  C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+  // C_District: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.DistrictErr" />),
+  // district: Yup.object()
+  //   .shape({
+  //     value: Yup.string().required(),
+  //   })
+  //   .nullable()
+  //   .required(<IntlMessages id="forms.DistrictErr" />),
+  // village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
+  // C_Village: Yup.string().required(<IntlMessages id="forms.VillageErr" />),
 
   //Step 3
   institute: Yup.object()

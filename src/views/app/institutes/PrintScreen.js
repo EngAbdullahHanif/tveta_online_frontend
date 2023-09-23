@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 
 import * as Yup from 'yup';
-
+import '../../../assets/css/print.css';
 import IntlMessages from 'helpers/IntlMessages';
 import { Separator } from 'components/common/CustomBootstrap';
 import config from '../../../config';

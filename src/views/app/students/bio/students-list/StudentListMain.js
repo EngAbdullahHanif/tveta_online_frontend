@@ -73,21 +73,33 @@ let totalStudents = 0;
 const ThumbListPages = () => {
   const [filters, setFilters] = useState();
   const { provinces, institutes } = useContext(AuthContext);
+  const [pageSize, setPageSize] = useState(15);
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
-      pageSize: 10,
+      pageSize: pageValue,
+      showSizeChanger: true, // Enable the page size changer dropdown
+      pageSizeOptions: [10, 15, 20, 25, 30, 35, 40, 45, 50, 100], // Define available page sizes
+      onShowSizeChange: handlePageSizeChange,
     },
   });
+  let pageValue = 15;
 
+  function handlePageSizeChange(current, pageSize) {
+    setPageSize(pageSize);
+    pageValue = pageSize;
+    const params = { page_size: pageSize };
+    fetchData(params);
+  }
   const [selectedItems, setSelectedItems] = useState([]);
 
   const [items, setItems] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
-
   const handleTableChange = async (pagination, filter, sorter) => {
+    setPageSize(pagination.pageSize);
+    pageValue = pagination.pageSize;
     setTableParams({ pagination, filter, ...sorter });
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
       setItems([]);
@@ -97,7 +109,10 @@ const ThumbListPages = () => {
       let fils = filters;
       fils.page = pagination.current;
       await fetchData(fils);
-    } else await fetchData();
+    } else {
+      const params = { page_size: pagination.pageSize };
+      await fetchData(params);
+    }
   };
   let paging = { current: 1 };
   async function fetchData(params = {}) {
@@ -106,7 +121,7 @@ const ThumbListPages = () => {
     const params1 = {
       ...params,
       page: !isFilter ? paging.current : params.page || 1,
-      page_size: tableParams.pagination.pageSize || null,
+      page_size: pageValue || null,
     };
     try {
       const response = await callApi(endpoint, null, null, params1);
@@ -128,6 +143,7 @@ const ThumbListPages = () => {
             ...tableParams.pagination,
             total: response?.data?.count,
             current: params1.page,
+            pageSize: pageValue,
           },
         });
       } else {

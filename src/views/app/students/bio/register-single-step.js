@@ -391,8 +391,8 @@ const StudentRegistration = ({ intl }, values) => {
             <Button onClick={() => resetformFields()}>پاک کردن فورم</Button>
           </div>
           {/* <Wizard>
-   <Steps>
-     <Step id="step1"> */}
+     <Steps>
+       <Step id="step1"> */}
           <div>
             <h1>معلومات شمولیت جدید</h1>
             <hr />
@@ -1009,51 +1009,51 @@ const StudentRegistration = ({ intl }, values) => {
 
                         {/* Student English Name */}
                         {/* <FormGroup className="form-group has-float-label error-l-100">
-                          <Label style={inputLabel}>
-                            <IntlMessages id="forms.Eng_name" />
-                          </Label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="englishName"
-                          />
-                          {errors.englishName && touched.englishName ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.englishName}
-                            </div>
-                          ) : null}
-                        </FormGroup> */}
+                            <Label style={inputLabel}>
+                              <IntlMessages id="forms.Eng_name" />
+                            </Label>
+                            <Field
+                              className="form-control fieldStyle"
+                              name="englishName"
+                            />
+                            {errors.englishName && touched.englishName ? (
+                              <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                {errors.englishName}
+                              </div>
+                            ) : null}
+                          </FormGroup> */}
 
                         {/* englishLastname */}
                         {/* <FormGroup className="form-group has-float-label">
-                          <Label style={inputLabel}>
-                            <IntlMessages id="forms.lastNameEng" />
-                          </Label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="lastNameEng"
-                          />
-                          {errors.lastNameEng && touched.lastNameEng ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.lastNameEng}
-                            </div>
-                          ) : null}
-                        </FormGroup> */}
+                            <Label style={inputLabel}>
+                              <IntlMessages id="forms.lastNameEng" />
+                            </Label>
+                            <Field
+                              className="form-control fieldStyle"
+                              name="lastNameEng"
+                            />
+                            {errors.lastNameEng && touched.lastNameEng ? (
+                              <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                {errors.lastNameEng}
+                              </div>
+                            ) : null}
+                          </FormGroup> */}
 
                         {/*Students Father English Name */}
                         {/* <FormGroup className="form-group has-float-label error-l-100">
-                          <Label style={inputLabel}>
-                            <IntlMessages id="forms.Std_father_Eng_Name" />
-                          </Label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="fatherEngName"
-                          />
-                          {errors.fatherEngName && touched.fatherEngName ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.fatherEngName}
-                            </div>
-                          ) : null}
-                        </FormGroup> */}
+                            <Label style={inputLabel}>
+                              <IntlMessages id="forms.Std_father_Eng_Name" />
+                            </Label>
+                            <Field
+                              className="form-control fieldStyle"
+                              name="fatherEngName"
+                            />
+                            {errors.fatherEngName && touched.fatherEngName ? (
+                              <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                {errors.fatherEngName}
+                              </div>
+                            ) : null}
+                          </FormGroup> */}
 
                         {/* Contact No */}
                         <FormGroup className="form-group has-float-label error-l-100 ">
@@ -1075,20 +1075,20 @@ const StudentRegistration = ({ intl }, values) => {
 
                         {/* Email Address */}
                         {/* <FormGroup className="form-group has-float-label error-l-100">
-                          <Label style={inputLabel}>
-                            <IntlMessages id="teacher.EmailLabel" />
-                          </Label>
-                          <Field
-                            className="form-control fieldStyle"
-                            name="email"
-                            type="email"
-                          />
-                          {errors.email && touched.email ? (
-                            <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                              {errors.email}
-                            </div>
-                          ) : null}
-                        </FormGroup> */}
+                            <Label style={inputLabel}>
+                              <IntlMessages id="teacher.EmailLabel" />
+                            </Label>
+                            <Field
+                              className="form-control fieldStyle"
+                              name="email"
+                              type="email"
+                            />
+                            {errors.email && touched.email ? (
+                              <div className="invalid-feedback d-block bg-danger text-white messageStyle">
+                                {errors.email}
+                              </div>
+                            ) : null}
+                          </FormGroup> */}
                         <h6 className=" mb-4">
                           {<IntlMessages id="forms.PermanentAddressLabel" />}
                         </h6>
@@ -1262,15 +1262,15 @@ const StudentRegistration = ({ intl }, values) => {
                             <span style={{ color: 'red' }}>*</span>
                           </Label>
                           {/* <FormikReactSelect
-                           name="graduationYear"
-                           id="graduationYear"
-                           value={values.graduationYear}
-                           options={educationalYearsOptions}
-                           onChange={setFieldValue}
-                           onBlur={setFieldTouched}
-                           isSearchable={false}
-                           required
-                         /> */}
+                             name="graduationYear"
+                             id="graduationYear"
+                             value={values.graduationYear}
+                             options={educationalYearsOptions}
+                             onChange={setFieldValue}
+                             onBlur={setFieldTouched}
+                             isSearchable={false}
+                             required
+                           /> */}
                           <Field
                             className="form-control fieldStyle"
                             name="graduationYear"
@@ -1388,8 +1388,8 @@ const StudentRegistration = ({ intl }, values) => {
             </Formik>
           </div>
           {/* </Step>
-   </Steps>
- </Wizard> */}
+     </Steps>
+   </Wizard> */}
         </CardBody>
       ) : (
         <div

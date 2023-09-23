@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Field } from 'formik';
 import { useLocation } from 'react-router-dom';
-import { Table as TB } from 'antd';
+import { Table as TB, message } from 'antd';
 // import {
 //   teacherEvaluationValidationSchema,
 // } from '../global-data/forms-validation';
@@ -27,18 +27,22 @@ const EmployeeEvaluation = ({ employeeId }) => {
 
     setEvaluations(data.results);
   }
-  const evaluationTypes = [
+  const institutions = [
     {
-      value: 'need_assessment',
-      label: 'اقتضایی',
+      value: 'institute',
+      label: 'مرکز تعلیمی تخنیکی و مسلکی',
     },
     {
-      value: 'probation',
-      label: 'آزمایشی',
+      value: 'province',
+      label: 'آمریت ولایتی',
     },
     {
-      value: 'annual',
-      label: 'سالانه',
+      value: 'zone',
+      label: 'زون انکشافی',
+    },
+    {
+      value: 'center',
+      label: 'اداره مرکزی',
     },
   ];
 
@@ -158,10 +162,6 @@ const EmployeeEvaluation = ({ employeeId }) => {
         <CardBody className="w-100">
           <TB
             columns={columns}
-            // rowKey={(record) => record.login.uuid}
-            // pagination={tableParams.pagination}
-            // loading={isLoading}
-            // onChange={handleTableChange}
             dataSource={evaluations?.map((item, index) => ({
               key: index,
               id: item.id,
@@ -173,7 +173,6 @@ const EmployeeEvaluation = ({ employeeId }) => {
               category: item.category,
             }))}
           />
-
           <Formik
             enableReinitialize={true}
             initialValues={{
@@ -323,128 +322,139 @@ const EmployeeEvaluation = ({ employeeId }) => {
             )}
           </Formik>
           <br />
-
-          <CardBody className="w-50">
-            <Formik
-              enableReinitialize={true}
-              initialValues={{}}
-              // validationSchema={teacherEvaluationValidationSchema}
-              onSubmit={(data) => {
-                console.log('DDDDDDDDDDDDDDDATA: ', data);
-              }}
-            >
-              {({
-                errors,
-                touched,
-                values,
-                setFieldTouched,
-                setFieldValue,
-                handleSubmit,
-              }) => (
-                <>
-                  <form>
-                    {/* {topics.map((item, index) => {
-                      return (
-                        <>
-                          <h3>{`${item.name} (${item.type})`}</h3>
-                          <div style={{ display: 'flex' }}>
-                            <div className="form-group w-100">
-                              <label
-                                style={inputLabel}
-                                for="category"
-                                className="col-form-label"
-                              >
-                                حتمی
-                                <span style={{ color: 'red' }}>*</span>
-                              </label>
-                              <FormikReactSelect
-                                name={item.type + '_hatmi'}
-                                id={item.type}
-                                options={item.topics.map((op) => ({
-                                  value: op.id,
-                                  label: op.name,
-                                }))}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                required
-                              />
-                              {errors.category && touched.category ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.category}
-                                </div>
-                              ) : null}
-                            </div>
-                            <div className="form-group w-100">
-                              <label
-                                style={inputLabel}
-                                for={item.type}
-                                className="col-form-label"
-                              >
-                                اختیاری
-                                <span style={{ color: 'red' }}>*</span>
-                              </label>
-                              <FormikReactSelect
-                                name={item.type + '_ikhtyari'}
-                                id={item.type}
-                                options={item.topics.map((op) => ({
-                                  value: op.id,
-                                  label: op.name,
-                                }))}
-                                onChange={setFieldValue}
-                                onBlur={setFieldTouched}
-                                required
-                              />
-                              {errors.category && touched.category ? (
-                                <div className="invalid-feedback d-block bg-danger text-white messageStyle">
-                                  {errors.category}
-                                </div>
-                              ) : null}
-                            </div>
-                          </div>
-                        </>
-                      );
-                    })} */}
-                    {Object.keys(topicOptions).map((type) => (
-                      <div style={{ display: 'flex' }}>
-                        <div key={type} className="w-100">
-                          <h3>{` حتمی (${type})`}</h3>
-                          <FormikReactSelect
-                            name={type + '_hatmi'}
-                            id={type}
-                            options={topicOptions[type].map((option) => ({
-                              value: option.value,
-                              label: option.label,
-                            }))}
-                            onChange={setFieldValue}
-                            onBlur={setFieldTouched}
-                            required
-                          />
-                        </div>
-                        <div key={type} className="w-100">
-                          <h3>{` اختیاری (${type})`}</h3>
-                          <FormikReactSelect
-                            name={type + '_ikhtyari'}
-                            id={type}
-                            options={topicOptions[type].map((option) => ({
-                              value: option.value,
-                              label: option.label,
-                            }))}
-                            onChange={setFieldValue}
-                            onBlur={setFieldTouched}
-                            required
-                          />
-                        </div>
+        </CardBody>
+        <CardBody className="w-100">
+          <Formik
+            enableReinitialize={true}
+            initialValues={{}}
+            onSubmit={(data) => {
+              console.log('DDDDDDDDDDDDDDDATA: ', data);
+            }}
+          >
+            {({ setFieldTouched, setFieldValue, handleSubmit }) => (
+              <>
+                <form>
+                  {Object.keys(topicOptions).map((type) => (
+                    <div style={{ display: 'flex' }}>
+                      <div key={type} className="w-100">
+                        <h3>{` حتمی (${type})`}</h3>
+                        <FormikReactSelect
+                          name={type + '_hatmi'}
+                          id={type}
+                          options={topicOptions[type].map((option) => ({
+                            value: option.value,
+                            label: option.label,
+                          }))}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
                       </div>
-                    ))}
-                    <br />
+                      <div key={type} className="w-100">
+                        <h3>{` اختیاری (${type})`}</h3>
+                        <FormikReactSelect
+                          name={type + '_ikhtyari'}
+                          id={type}
+                          options={topicOptions[type].map((option) => ({
+                            value: option.value,
+                            label: option.label,
+                          }))}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                          required
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <br />
+                  {topicOptions.length > 0 && (
                     <button className="btn btn-primary" onClick={handleSubmit}>
                       ثبت
                     </button>
-                  </form>
-                </>
-              )}
-            </Formik>
-          </CardBody>
+                  )}
+                </form>
+              </>
+            )}
+          </Formik>
+        </CardBody>
+        <CardBody className="w-100">
+          <Formik
+            enableReinitialize={true}
+            initialValues={{
+              other_required_program: '',
+              training_location_preference: [],
+            }}
+            onSubmit={async (data, { resetForm }) => {
+              if (
+                data.training_location_preference ||
+                data.other_required_program
+              ) {
+                message.warning('لطفا فورم پر کنین');
+                return;
+              }
+              data.employee = employeeId;
+              data.training_location_preference =
+                data.training_location_preference.value;
+              await callApi('need-assessments/survey/', 'POST', data)
+                .then((response) => {
+                  console.log('NEED ASSESS', response.data);
+                  message.success('ثبت شد');
+                  resetForm({
+                    values: {
+                      other_required_program: '',
+                      training_location_preference: [],
+                    },
+                  });
+                })
+                .catch((err) => {
+                  message.error('ثبت نشد');
+                });
+            }}
+          >
+            {({ setFieldTouched, setFieldValue, handleSubmit }) => (
+              <>
+                <form>
+                  <div className="form-group w-100">
+                    <label
+                      style={inputLabel}
+                      for="educational_year"
+                      className="col-form-label"
+                    >
+                      یک برنامه اموزشی که در این فورم درج نشده مگر نیاز مبرم
+                      پنداشته می شود برای رفع مشکلات وظیفوی را بنویسید؟
+                      <span style={{ color: 'red' }}>*</span>
+                    </label>
+                    <Field
+                      className="form-control fieldStyle"
+                      name="other_required_program"
+                    />
+                  </div>
+
+                  <div className="form-group w-100">
+                    <label
+                      style={inputLabel}
+                      for="educational_year"
+                      className="col-form-label"
+                    >
+                      به نظر شما برنامه های اموزشی حوزه در مدیریتی در کجا بر
+                      گزار گردد؟
+                      <span style={{ color: 'red' }}>*</span>
+                    </label>
+                    <FormikReactSelect
+                      name="training_location_preference"
+                      options={institutions}
+                      onChange={setFieldValue}
+                      onBlur={setFieldTouched}
+                    />
+                  </div>
+                  <br />
+                  <button className="btn btn-primary" onClick={handleSubmit}>
+                    ثبت
+                  </button>
+                </form>
+              </>
+            )}
+          </Formik>
         </CardBody>
       </Card>
     </>

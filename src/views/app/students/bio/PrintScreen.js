@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 
 import './../../.././../assets/css/global-style.css';
-import './../../.././../assets/css/print.css';
 import profilePhoto from './../../../../assets/img/profiles/user.png';
-
+import '../../../../assets/css/print.css';
 import {
   Label,
   Badge,
@@ -38,6 +37,9 @@ const PrintScreen = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [studentEnrollmentData, setStudentEnrollmentData] = useState([]);
 
+  const printScreen = () => {
+    window.print();
+  };
   async function fetchStudentEnrollment() {
     const { data } = await callApi(
       `students/${studentId}/institute/`,
@@ -45,7 +47,7 @@ const PrintScreen = () => {
       null,
     );
     setStudentEnrollmentData(data);
-    window.print();
+    printScreen();
   }
 
   const provincesList = {};
@@ -158,7 +160,7 @@ const PrintScreen = () => {
               <div>
                 <Label className="data-style">"ایدی"</Label>
                 <h2>
-                  {student[0].student_id}{' '}
+                  {student[0].student_id}
                   {
                     <Badge
                       color={
@@ -266,7 +268,7 @@ const PrintScreen = () => {
                 <br />
               </div>
             </div>
-
+            <br />
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
               <div>
                 <h2
@@ -321,9 +323,7 @@ const PrintScreen = () => {
                 <h2>{student[0].current_village}</h2>
               </div>
             </div>
-            <br />
-            <br />
-            <br />
+
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
               <div>
                 <h2

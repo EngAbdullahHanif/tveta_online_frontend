@@ -272,7 +272,7 @@ const StudentUpdate = ({ intl }, values) => {
       .then((response) => {
         if (response.data) {
           message.success('شاګرد آپډیټ شو');
-          history.push(`/app/students/student/${studentId}`);
+          history.replace(`/app/students/student/${studentId}`);
         }
       })
       .catch((err) => console.log('Error in Teacher Save: ', err))
@@ -441,15 +441,8 @@ const StudentUpdate = ({ intl }, values) => {
                           نمبر تذکره الکترونی
                           <span style={{ color: 'red' }}>*</span>
                         </Label>
-                        {/* <Field
-                     className="form-control fieldStyle"
-                     name="tazkiraNo"
-                     type="text"
-                     maxLength="14"
-                     minLength="12"
-                   /> */}
                         <InputMask
-                          style={{ width: '100%' }}
+                          style={{ width: '100%', border: '1px solid #CECECE' }}
                           name="tazkiraNo"
                           value={values.tazkiraNo}
                           id="ssn"

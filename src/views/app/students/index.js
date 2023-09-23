@@ -11,7 +11,9 @@ import PrintScreen from './bio/PrintScreen';
 const Register = React.lazy(() =>
   import(/* webpackChunkName: "register" */ './bio/register'),
 );
-
+const RegisterSingleStep = React.lazy(() =>
+  import(/* webpackChunkName: "register" */ './bio/register-single-step'),
+);
 const RegisterKankor = React.lazy(() =>
   import(/* webpackChunkName: "kankor-result" */ './bio/register-kankor'),
 );
@@ -190,7 +192,18 @@ const Students = ({ match, props }) => {
           ]}
           props={props}
         />
-
+        <ProtectedRoute
+          path={`${match.url}/register-single-step`}
+          component={RegisterSingleStep}
+          roles={[
+            userRole.admin,
+            userRole.institute,
+            userRole.superUser,
+            userRole.instituteDataentry,
+            userRole.provinceDataentry,
+          ]}
+          props={props}
+        />
         <ProtectedRoute
           path={`${match.url}/student-update/:studentId`}
           component={StudentUpdate}

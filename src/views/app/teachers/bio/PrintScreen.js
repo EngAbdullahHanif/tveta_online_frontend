@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import callApi from 'helpers/callApi';
 import { AuthContext } from 'context/AuthContext';
 import { Label } from 'reactstrap';
-
+import '../../../../assets/css/print.css';
 import {
   contractTypeOptions,
   genderOptions,
@@ -136,7 +136,7 @@ const PrintScreen = () => {
   }, []);
 
   return (
-    <>
+    <div id="printingContent">
       <div
         style={{
           width: '100%',
@@ -233,7 +233,7 @@ const PrintScreen = () => {
                   <Label style={inputLabel}>
                     <IntlMessages id="teacher.MajorLabel" />
                   </Label>
-                  <h2>Mechannical Engineering</h2>
+                  {/* <h2>Mechannical Engineering</h2> */}
                 </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -621,7 +621,11 @@ const PrintScreen = () => {
           ) : null}
         </>
       )}
-    </>
+      {/* <iframe
+        id="ifmcontentstoprint"
+        style={{ height: 0, width: 0, position: 'absolute' }}
+      ></iframe> */}
+    </div>
   );
 };
 

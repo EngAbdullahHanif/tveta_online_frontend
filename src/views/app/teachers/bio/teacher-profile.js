@@ -101,6 +101,7 @@ const TeacherProfile = () => {
       setIsLoaded(true);
     } else {
       console.log('students error');
+      setLoading(false);
     }
   }
   const resetUpdate = () => {
@@ -593,7 +594,7 @@ const TeacherProfile = () => {
                         <Label style={inputLabel}>
                           <IntlMessages id="teacher.MajorLabel" />
                         </Label>
-                        <h2>Mechannical Engineering</h2>
+                        {/* <h2>Mechannical Engineering</h2> */}
                         <br />
                         <br />
                       </Colxx>

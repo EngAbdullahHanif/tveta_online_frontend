@@ -45,6 +45,20 @@ const menuItems = [
         ],
       },
       {
+        icon: 'GR.GrUserAdd',
+        label: 'forms.studentRegisterTitleSingleStep',
+        to: `${adminRoot}/students/register-single-step`,
+        roles: [
+          userRole.admin,
+          userRole.institute,
+          userRole.superUser,
+          userRole.instituteDataentry,
+          userRole.provinceDataentry,
+          userRole.provinceSupervisor,
+          userRole.dataentry,
+        ],
+      },
+      {
         icon: 'FA.FaList',
         label: 'menu.kankor-student-list',
         to: `${adminRoot}/students/kankor-students`,

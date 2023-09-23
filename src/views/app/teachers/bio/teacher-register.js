@@ -18,11 +18,11 @@ import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
 import { Formik, Form, Field } from 'formik';
 import IntlMessages from 'helpers/IntlMessages';
-import { NotificationManager } from 'components/common/react-notifications';
 import { Colxx } from 'components/common/CustomBootstrap';
 import { message } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 import { inputLabel } from 'config/styling';
+import { InputMask } from 'primereact/inputmask';
 
 const TeacherRegister = ({ intl }, values) => {
   // why used seperate states for each field?
@@ -63,7 +63,7 @@ const TeacherRegister = ({ intl }, values) => {
     status: [],
   });
 
-  const forms = [createRef(null), createRef(null), createRef(null)];
+  const forms = createRef(null);
   const history = useHistory();
   const { teacherId } = useParams();
   async function fetchTeacher() {
@@ -71,9 +71,10 @@ const TeacherRegister = ({ intl }, values) => {
     const { data } = await callApi(`teachers/${teacherId}`, '', null);
     const initialUpdateValues = data;
 
-    initialUpdateValues.tazkira_type = tazkiraOptions.find(
+    initialUpdateValues.tazkiraType = tazkiraOptions.find(
       (option) => option.value === data.tazkira_type,
     );
+    initialUpdateValues.tazkiraNo = data.registration_number;
 
     dateOfBirthOptoions.map((teacherBirth) => {
       if (teacherBirth.value === data.year_of_birth) {
@@ -136,37 +137,6 @@ const TeacherRegister = ({ intl }, values) => {
     }
   }, [teacherId]);
 
-  const createNotification = (type, className) => {
-    const cName = className || '';
-    switch (type) {
-      case 'success':
-        NotificationManager.success(
-          'استاد موفقانه رجستر شو',
-          'موفقیت',
-          3000,
-          null,
-          null,
-          cName,
-        );
-        break;
-      case 'error':
-        NotificationManager.error(
-          'استاد ثبت نشو،لطفا معلومات دقیق دننه کی',
-          'خطا',
-          5000,
-          () => {
-            // alert('callback');
-          },
-          null,
-          cName,
-        );
-        break;
-      default:
-        NotificationManager.info('Info message');
-        break;
-    }
-  };
-
   const RegisterTeacher = async (newFields) => {
     setIsLoading(true);
     let apiParams = {
@@ -194,7 +164,7 @@ const TeacherRegister = ({ intl }, values) => {
       cover_number: newFields.idCardJoldNo || undefined,
       page_number: newFields.idCardPageNo || undefined,
       sabt_number: newFields.sabtNo || undefined,
-      tazkira_type: newFields.tazkiraType.value,
+      tazkira_type: newFields.tazkiraType?.value,
       registration_number: newFields.tazkiraNo || null,
       sokok_number: newFields.sokokNo || undefined,
     };
@@ -221,7 +191,7 @@ const TeacherRegister = ({ intl }, values) => {
       if (error?.response) {
         // set field error which is send from server
         Object.keys(error.response.data).forEach((key) => {
-          forms[0].current.setFieldError(key, error.response.data[key]);
+          forms.current.setFieldError(key, error.response.data[key]);
         });
       }
       message.error('استاد ثبت نشو/استاد ثبت نشد');
@@ -242,8 +212,8 @@ const TeacherRegister = ({ intl }, values) => {
       <CardBody className="wizard wizard-default">
         <div className="wizard-basic-step">
           <Formik
+            innerRef={forms}
             enableReinitialize={true}
-            innerRef={forms[0]}
             disabled={isLoading}
             initialValues={initialValues}
             validateOnMount
@@ -333,22 +303,33 @@ const TeacherRegister = ({ intl }, values) => {
                     </FormGroup>
                     {/* Tazkira Number */}
 
-                    {/* {values.tazkiraType?.value === 'electronic' && ( */}
-                    <FormGroup className="form-group has-float-label error-l-100">
-                      {/* {alert(values.tazkiraType?.value === 'electronic')} */}
-                      {values.tazkiraType?.value === 'electronic' ? (
+                    {values.tazkiraType?.value === 'electronic' && (
+                      <FormGroup className="form-group has-float-label error-l-100">
+                        {/* {alert(values.tazkiraType?.value === 'electronic')} */}
+                        {/* {values.tazkiraType?.value === 'electronic' && ( */}
                         <>
                           <Label style={inputLabel}>
                             نمبر تذکره الکترونی
                             <span style={{ color: 'red' }}>*</span>
                           </Label>
-                          <Field
-                            className="form-control fieldStyle"
+
+                          <InputMask
+                            style={{
+                              width: '100%',
+                              border: '1px solid #CECECE',
+                            }}
                             name="tazkiraNo"
                             value={values.tazkiraNo}
-                            type="text"
-                            maxLength="14"
-                            minLength="12"
+                            id="tazkiraNo"
+                            mask="9999-9999-99999"
+                            placeholder="9999-9999-99999"
+                            onClick={(e) => {
+                              if (!values.tazkiraNo)
+                                e.target.setSelectionRange(0, 0);
+                            }}
+                            onChange={(e) =>
+                              setFieldValue('tazkiraNo', e.target.value)
+                            }
                           />
                           {errors.tazkiraNo && touched.tazkiraNo ? (
                             <div className="invalid-feedback d-block  bg-danger text-white messageStyle">
@@ -356,9 +337,9 @@ const TeacherRegister = ({ intl }, values) => {
                             </div>
                           ) : null}
                         </>
-                      ) : null}
-                    </FormGroup>
-                    {/* )} */}
+                        {/* )} */}
+                      </FormGroup>
+                    )}
 
                     {values.tazkiraType?.value === 'paper' ? (
                       <>

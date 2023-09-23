@@ -1160,8 +1160,8 @@ export const teacherContractValidationSchema = Yup.object().shape({
 });
 
 export const teacherEvaluationValidationSchema = Yup.object().shape({
-  topic: Yup.string().required('Topic is Required Field'),
-  evaluator_name: Yup.string().required('Evaluator name is required'),
+  topic: Yup.string().required('موضوع الزامی است'),
+  evaluator_name: Yup.string().required('ارزیابی کننده الزامی است'),
   educational_year: EDUCATIONAL_YEAR_VALIDATOR,
   semester: Yup.number().required('سمستر الزامی است'),
 
@@ -1170,15 +1170,15 @@ export const teacherEvaluationValidationSchema = Yup.object().shape({
       value: Yup.string().required(),
     })
     .nullable()
-    .required('Institute is Required Field'),
+    .required('انستستوت الزامی است'),
 
-  subject: Yup.string().required('Subject is Required Field'),
-  excellent: Yup.string().required('excellent marks is required'),
-  outstanding: Yup.string().required('outstanding marks is required'),
-  good: Yup.string().required('good marks is required'),
-  average: Yup.string().required('average marks is required'),
-  weak: Yup.string().required('weak marks is required'),
-  not_applicable: Yup.string().required('not_applicable marks is required'),
+  subject: Yup.string().required('مضمون الزامی است'),
+  excellent: Yup.string().required('الزامی است'),
+  outstanding: Yup.string().required('الزامی است'),
+  good: Yup.string().required('الزامی است'),
+  average: Yup.string().required('الزامی است'),
+  weak: Yup.string().required('الزامی است'),
+  not_applicable: Yup.string().required('الزامی است'),
 });
 
 export const teacherHREvaluationValidationSchema = Yup.object().shape({

@@ -673,6 +673,8 @@ module.exports = {
 
   // Student Register
   'forms.studentRegisterTitle': 'د شاګرد ثبت/ ثبت شاگرد',
+  'forms.studentRegisterTitleSingleStep':
+    'د شاګرد ثبت یو صفحه/ ثبت شاگرد یک صفحه',
   'forms.StdName': 'نوم/نام',
   'forms.Eng_name': 'انګریزی نوم / نام انگلسی',
   'forms.StdFatherName': 'د پلار نوم/نام پدر',

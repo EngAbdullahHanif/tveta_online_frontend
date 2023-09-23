@@ -1,25 +1,30 @@
 
   /* Apply general styles for printing */
   @media print {
+     /* Hide the footer content */
+
+    @page {
+      size: A4; /* Set the page size */
+      margin-bottom: 0px;
+    }
+
     /* Adjust page margins and layout for printing */
     body {
-      font-size: 20;
-      margin: 0;
-      padding: 10px;
+      font-size: 18px;
+      margin: 0px;
+      transform: scale(0.8); /* Adjust the scaling factor as needed */
     }
-    .no-print {
-      display: none;
-    }
-    /* Hide elements not relevant for printing */
-    #header, #sidebar {
-      display: none;
-    }
-
-    /* Customize fonts, colors, and other styles as needed */
-    p {
-      font-size: 12pt;
-    }
-
+    /* Hide the footer content */
+      footer {
+        display: none;
+        position: fixed;
+        bottom: 0;
+      }
     /* Add any other print-specific styles you need */
   }
+
+  /* Example to force a page break before a specific element */
+.print-break {
+  page-break-before: always;
+}
   

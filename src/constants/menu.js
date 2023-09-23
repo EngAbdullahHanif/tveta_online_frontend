@@ -581,66 +581,74 @@ const menuItems = [
     to: `${adminRoot}/evaluations`,
     roles: [
       userRole.admin,
-      // userRole.instituteDataentry,
-      // userRole.provinceDataentry,
+      userRole.humanResource,
+      userRole.teacherTraining,
       userRole.tester,
     ],
     subs: [
-      {
-        icon: 'FA.FaList',
-        label: 'evaluation.list',
-        to: `${adminRoot}/evaluations/evaluations`,
-      },
-      {
-        icon: 'MD.MdAddBox',
-        label: 'menu.employe-evaluation',
-        to: `${adminRoot}/evaluations/teacher-evalaution/employee-evaluation`,
-      },
+      // {
+      //   icon: 'FA.FaList',
+      //   label: 'evaluation.list',
+      //   to: `${adminRoot}/evaluations/evaluations`,
+      //   roles: [userRole.humanResource, userRole.admin],
+      // },
+      // {
+      //   icon: 'MD.MdAddBox',
+      //   label: 'menu.employe-evaluation',
+      //   to: `${adminRoot}/evaluations/teacher-evalaution/employee-evaluation`,
+      //   roles: [userRole.humanResource, userRole.admin],
+      // },
       {
         icon: 'FA.FaList',
         label: 'menu.teacher-teaching_proccess-evaluation',
         to: `${adminRoot}/evaluations/employee/teaching_proccess`,
+        roles: [userRole.evaluation, userRole.admin],
       },
       {
         icon: 'MD.MdAddBox',
         label: 'menu.teacher-teaching_proccess-evaluation',
         to: `${adminRoot}/evaluations/teacher-evalaution/teaching_proccess`,
+        roles: [userRole.evaluation, userRole.admin],
       },
-      {
-        icon: 'FA.FaList',
-        label: 'menu.teacher-nyazsanji',
-        to: `${adminRoot}/evaluations/employee/needs`,
-      },
-      {
-        icon: 'MD.MdAddBox',
-        label: 'menu.teacher-nyazsanji',
-        to: `${adminRoot}/evaluations/teacher-evalaution/needs`,
-      },
+      // {
+      //   icon: 'FA.FaList',
+      //   label: 'menu.teacher-nyazsanji',
+      //   to: `${adminRoot}/evaluations/employee/needs`,
+      //   roles: [userRole.teacherTraining, userRole.admin],
+      // },
+      // {
+      //   icon: 'MD.MdAddBox',
+      //   label: 'menu.teacher-nyazsanji',
+      //   to: `${adminRoot}/evaluations/teacher-evalaution/needs`,
+      //   roles: [userRole.teacherTraining, userRole.admin],
+      // },
       {
         icon: 'FA.FaList',
         label: 'menu.employee-evaluation',
         to: `${adminRoot}/evaluations/employee/public_service`,
+        roles: [userRole.humanResource, userRole.admin],
       },
       {
         icon: 'MD.MdAddBox',
         label: 'menu.employee-evaluation',
         to: `${adminRoot}/evaluations/teacher-evalaution/public_service`,
+        roles: [userRole.humanResource, userRole.admin],
       },
       // {
       //   icon: 'MD.MdAddBox',
       //   label: 'menu.teacher-evaluation',
       //   to: `${adminRoot}/evaluations/teacher-selection`,
       // },
-      {
-        icon: 'MD.MdAddBox',
-        label: 'menu.teacher-promotion-demotion',
-        to: `${adminRoot}/evaluations/promotion-demotion`,
-      },
-      {
-        icon: 'BI.BiMessageAltDetail',
-        label: 'جزیات ارزیابی',
-        to: `${adminRoot}/evaluations/evaluation-details`,
-      },
+      // {
+      //   icon: 'MD.MdAddBox',
+      //   label: 'menu.teacher-promotion-demotion',
+      //   to: `${adminRoot}/evaluations/promotion-demotion`,
+      // },
+      // {
+      //   icon: 'BI.BiMessageAltDetail',
+      //   label: 'جزیات ارزیابی',
+      //   to: `${adminRoot}/evaluations/evaluation-details`,
+      // },
     ],
   },
   {
@@ -651,7 +659,7 @@ const menuItems = [
     roles: [
       userRole.admin,
       // userRole.instituteDataentry,
-      // userRole.provinceDataentry,
+      userRole.teacherTraining,
       userRole.tester,
     ],
     subs: [
@@ -674,108 +682,132 @@ const menuItems = [
     to: `${adminRoot}/needs`,
     roles: [
       userRole.admin,
-      // userRole.instituteDataentry,
-      // userRole.provinceDataentry,
-      userRole.tester,
-    ],
-    subs: [
-      {
-        icon: 'FA.FaList',
-        label: 'needs.list',
-        to: `${adminRoot}/needs/needs`,
-      },
-      {
-        icon: 'MD.MdAddBox',
-        label: 'needs.register',
-        to: `${adminRoot}/needs/register`,
-      },
-    ],
-  },
-
-  {
-    id: 'hr-evaluations',
-    icon: 'MD.MdManageAccounts',
-    label: 'menu.hr-evaluation',
-    to: `${adminRoot}/hr-evaluations`,
-    roles: [
-      userRole.admin,
-      // userRole.instituteDataentry,
-      // userRole.provinceDataentry,
+      // userRole.humanResource,
+      // userRole.teacherTraining,
       userRole.tester,
     ],
     subs: [
       {
         icon: 'FA.FaList',
         label: 'evaluation.list',
-        to: `${adminRoot}/hr-evaluations/hr-evaluations`,
+        to: `${adminRoot}/evaluations/evaluations`,
+        roles: [userRole.humanResource, userRole.admin],
       },
       {
         icon: 'MD.MdAddBox',
-        label: 'menu.teacher-HR-evaluation',
-        to: `${adminRoot}/hr-evaluations/teacher-hr-evaluation`,
+        label: 'menu.employe-evaluation',
+        to: `${adminRoot}/evaluations/teacher-evalaution/employee-evaluation`,
+        roles: [userRole.humanResource, userRole.admin],
       },
-    ],
-  },
-
-  {
-    id: 'groups',
-    icon: 'MD.MdManageAccounts',
-    label: 'menu.group-label',
-    to: `${adminRoot}/groups`,
-    roles: [userRole.admin, userRole.tester],
-    subs: [
+      {
+        icon: 'FA.FaList',
+        label: 'menu.teacher-nyazsanji',
+        to: `${adminRoot}/evaluations/employee/needs`,
+        roles: [userRole.teacherTraining, userRole.admin],
+      },
+      {
+        icon: 'MD.MdAddBox',
+        label: 'menu.teacher-nyazsanji',
+        to: `${adminRoot}/evaluations/teacher-evalaution/needs`,
+        roles: [userRole.teacherTraining, userRole.admin],
+      },
       // {
       //   icon: 'FA.FaList',
-      //   label: 'evaluation.list',
-      //   to: `${adminRoot}/hr-evaluations/hr-evaluations`,
+      //   label: 'needs.list',
+      //   to: `${adminRoot}/needs/needs`,
       // },
-      {
-        icon: 'MD.MdAddBox',
-        label: 'menu.group-register',
-        to: `${adminRoot}/groups/register`,
-      },
-      {
-        icon: 'MD.MdAddBox',
-        label: 'menu.group-premissions',
-        to: `${adminRoot}/groups/premissions`,
-      },
+      // {
+      //   icon: 'MD.MdAddBox',
+      //   label: 'needs.register',
+      //   to: `${adminRoot}/needs/register`,
+      // },
     ],
   },
-  {
-    id: 'workers',
-    icon: 'FA.FaUsers',
-    // label: 'menu.students',
-    label: 'menu.workers',
-    to: `${adminRoot}/workers`,
-    roles: [
-      userRole.admin,
-      // userRole.instituteDataentry,
-      // userRole.provinceDataentry,
-      userRole.tester,
-    ],
 
-    subs: [
-      {
-        icon: 'CG.CgUserList',
-        label: 'menu.workers-list',
-        to: `${adminRoot}/workers/worker-list`,
-        newWindow: false,
-      },
-      {
-        icon: 'GR.GrUserAdd',
-        label: 'menu.worker-register',
-        to: `${adminRoot}/workers/worker`,
-        newWindow: false,
-      },
+  // {
+  //   id: 'hr-evaluations',
+  //   icon: 'MD.MdManageAccounts',
+  //   label: 'menu.hr-evaluation',
+  //   to: `${adminRoot}/hr-evaluations`,
+  //   roles: [
+  //     userRole.admin,
+  //     // userRole.humanResource,
+  //     // userRole.teacherTraining,
+  //     userRole.tester,
+  //   ],
+  //   subs: [
+  //     {
+  //       icon: 'FA.FaList',
+  //       label: 'evaluation.list',
+  //       to: `${adminRoot}/hr-evaluations/hr-evaluations`,
+  //     },
+  //     {
+  //       icon: 'MD.MdAddBox',
+  //       label: 'menu.teacher-HR-evaluation',
+  //       to: `${adminRoot}/hr-evaluations/teacher-hr-evaluation`,
+  //     },
+  //   ],
+  // },
 
-      {
-        icon: 'IM.ImProfile',
-        label: 'menu.workers-profile',
-        to: `${adminRoot}/workers/workerId`,
-        newWindow: false,
-      },
-    ],
-  },
+  // {
+  //   id: 'groups',
+  //   icon: 'MD.MdManageAccounts',
+  //   label: 'menu.group-label',
+  //   to: `${adminRoot}/groups`,
+  //   roles: [userRole.admin, userRole.tester],
+  //   subs: [
+  //     // {
+  //     //   icon: 'FA.FaList',
+  //     //   label: 'evaluation.list',
+  //     //   to: `${adminRoot}/hr-evaluations/hr-evaluations`,
+  //     // },
+  //     {
+  //       icon: 'MD.MdAddBox',
+  //       label: 'menu.group-register',
+  //       to: `${adminRoot}/groups/register`,
+  //     },
+  //     {
+  //       icon: 'MD.MdAddBox',
+  //       label: 'menu.group-premissions',
+  //       to: `${adminRoot}/groups/premissions`,
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 'workers',
+  //   icon: 'FA.FaUsers',
+  //   // label: 'menu.students',
+  //   label: 'menu.workers',
+  //   to: `${adminRoot}/workers`,
+  //   roles: [
+  //     userRole.admin,
+  //     // userRole.instituteDataentry,
+  //     // userRole.provinceDataentry,
+  //     userRole.tester,
+  //   ],
+
+  //   subs: [
+  //     {
+  //       icon: 'CG.CgUserList',
+  //       label: 'menu.workers-list',
+  //       to: `${adminRoot}/workers/worker-list`,
+  //       newWindow: false,
+  //     },
+  //     {
+  //       icon: 'GR.GrUserAdd',
+  //       label: 'menu.worker-register',
+  //       to: `${adminRoot}/workers/worker`,
+  //       newWindow: false,
+  //     },
+
+  //     {
+  //       icon: 'IM.ImProfile',
+  //       label: 'menu.workers-profile',
+  //       to: `${adminRoot}/workers/workerId`,
+  //       newWindow: false,
+  //     },
+  //   ],
+  // },
   {
     id: 'users',
     icon: 'BS.BsCardChecklist',

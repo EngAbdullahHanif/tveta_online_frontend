@@ -15,6 +15,9 @@ export const userRole = {
   supervisor: 'supervisor',
   authenticated: 'authenticated',
   tester: 'tester',
+  teacherTraining: 'teacher_training',
+  evaluation: 'evaluation',
+  humanResource: 'human_resource',
 };
 
 export const CURRENT_SHAMSI_YEAR = 1403;

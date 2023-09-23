@@ -30,6 +30,11 @@ const columns = [
     width: '15%',
   },
   {
+    title: 'سال تعلیمی',
+    dataIndex: 'educational_year',
+    width: '5%',
+  },
+  {
     title: 'نوم/نام',
     dataIndex: 'name',
     width: '15%',
@@ -45,15 +50,15 @@ const columns = [
     width: '8%',
   },
   {
-    title: 'ولایت',
+    title: 'ولایت اصلی',
     dataIndex: 'province',
     width: '8%',
   },
-  {
-    title: 'شماره تلفون/تلفون شمیره',
-    dataIndex: 'phone_number',
-    width: '10%',
-  },
+  // {
+  //   title: 'شماره تلفون/تلفون شمیره',
+  //   dataIndex: 'phone_number',
+  //   width: '10%',
+  // },
   {
     title: 'شمولیت انستیتوت',
     dataIndex: 'institute_enrollment',
@@ -89,7 +94,7 @@ const ThumbListPages = () => {
     setPageSize(pageSize);
     pageValue = pageSize;
     const params = { page_size: pageSize };
-    fetchData(params);
+    // fetchData(params);
   }
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -97,6 +102,7 @@ const ThumbListPages = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
+
   const handleTableChange = async (pagination, filter, sorter) => {
     setPageSize(pagination.pageSize);
     pageValue = pagination.pageSize;
@@ -108,6 +114,7 @@ const ThumbListPages = () => {
     if (filters) {
       let fils = filters;
       fils.page = pagination.current;
+      fils.pageSize = pageValue;
       await fetchData(fils);
     } else {
       const params = { page_size: pagination.pageSize };
@@ -196,7 +203,11 @@ const ThumbListPages = () => {
     };
     paging.current = 1;
     params.institute_enrollment__institute = values.filterInstitute?.value;
-    params.current_province = values.filterProvince?.value;
+    params.main_province = values.main_province?.value;
+    params.institute_enrollment__institute__province =
+      values.filterProvince?.value;
+    params.institute_enrollment__educational_year =
+      values.educational_year || null;
     params.search = values.search || null;
     params.student_id = values.filterId || null;
     setFilters(params);
@@ -212,9 +223,11 @@ const ThumbListPages = () => {
     resetForm({
       values: {
         filterId: '',
+        educational_year: '',
         search: '',
         filterInstitute: [],
         filterProvince: [],
+        main_province: [],
       },
     });
     setIsFilter(false);
@@ -269,13 +282,27 @@ const ThumbListPages = () => {
                   placeholder="ایدی"
                   type="number"
                 />
-
+                <Field
+                  className="form-control fieldStyle"
+                  name="educational_year"
+                  placeholder="سال تعلیمی"
+                  type="number"
+                />
                 <FormikReactSelect
                   className="w-100"
-                  placeholder="ولایت"
+                  placeholder="ولایت انستیتوت"
                   name="filterProvince"
                   options={provinces}
                   value={values.filterProvince}
+                  onChange={setFieldValue}
+                  onBlur={setFieldTouched}
+                />
+                <FormikReactSelect
+                  className="w-100"
+                  placeholder="ولایت اصلی"
+                  name="main_province"
+                  options={provinces}
+                  value={values.main_province}
                   onChange={setFieldValue}
                   onBlur={setFieldTouched}
                 />
@@ -314,6 +341,7 @@ const ThumbListPages = () => {
             key: index,
             sno: (tableParams.pagination.current - 1) * 10 + (index + 1),
             student_id: item.student_id,
+            educational_year: item.institute_enrollment[0].educational_year,
             registration_number: item.registration_number,
             name: (
               <NavLink to={`student/${item.id}`} style={{ width: '10%' }}>
@@ -322,9 +350,8 @@ const ThumbListPages = () => {
             ),
             father_name: item.father_name,
             gender: genderLabels[item.gender],
-            province: provinces.find(
-              (pro) => pro.value == item.current_province,
-            )?.label,
+            province: provinces.find((pro) => pro.value == item.main_province)
+              ?.label,
             phone_number: item.phone_number,
             institute_enrollment: item.institute_enrollment?.map((inst) => {
               return (

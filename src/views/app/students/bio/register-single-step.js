@@ -39,11 +39,7 @@ import {
 } from 'reactstrap';
 // import { Wizard, Steps, Step } from 'react-albus';
 
-import {
-  studentRegisterFormStep_1,
-  // studentRegisterFormStep_2,
-  // studentRegisterFormStep_3,
-} from '../../global-data/forms-validation';
+import { studentRegisterForm } from '../../global-data/forms-validation';
 import { FormikReactSelect } from 'containers/form-validations/FormikFields';
 import { injectIntl } from 'react-intl';
 import { Formik, Form, Field } from 'formik';
@@ -277,6 +273,7 @@ const StudentRegistration = ({ intl }, values) => {
       maktob_number: newFields.maktoobNumber || null,
       name: newFields.name1,
       student_id: newFields.studentId,
+      roll_number: newFields.studentId,
       kankor_id: newFields.kankorId,
       previous_grade_year: newFields.graduationYear.label,
       previous_school_name: newFields.preSchool,
@@ -399,7 +396,7 @@ const StudentRegistration = ({ intl }, values) => {
             <Formik
               enableReinitialize={true}
               initialValues={initialValues}
-              validationSchema={studentRegisterFormStep_1}
+              validationSchema={studentRegisterForm}
               onSubmit={postStudentRecord}
               validateOnChange={false}
             >

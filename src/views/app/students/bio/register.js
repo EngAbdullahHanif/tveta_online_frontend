@@ -420,6 +420,7 @@ const StudentRegistration = ({ intl }, values) => {
 
             // class info,
             classs: newFields.class.value,
+            classs_id: newFields.class.value,
             place_of_birth: newFields.placeOfBirth,
           };
 

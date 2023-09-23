@@ -266,7 +266,7 @@ const menuItems = [
       {
         icon: 'MD.MdAddBox',
         // label: 'menu.student.upgrade-class',
-        label: 'class marks completion confirmation',
+        label: 'تأیدی نمرات صنف',
         to: `${adminRoot}/students/students-class-status-upgrade`,
         roles: [
           userRole.admin,
